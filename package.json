@@ -52,7 +52,7 @@
         "@vitejs/plugin-react": "~4.4.1",
         "@vitest/coverage-v8": "^3.1.2",
         "classnames": "~2.5.0",
-        "color-convert": "~2.0.1",
+        "color-convert": "~3.0.1",
         "daisyui": "^5.0.27",
         "deep-diff": "~1.0.2",
         "deep-object-diff": "~1.1.9",
