@@ -91,6 +91,7 @@
         "remove_from_group": "Remove from group"
     },
     "logs": {
+        "log_level_config": "Log level config",
         "empty_logs_message": "Nothing to display",
         "filter_by_text": "Filter by text",
         "show_only": "Show only",

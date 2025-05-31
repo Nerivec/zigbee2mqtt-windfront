@@ -1,4 +1,4 @@
-export const LOG_LEVELS = ["all", "debug", "info", "warning", "error"];
+export const LOG_LEVELS = ["debug", "info", "warning", "error"];
 
 export const LOG_LIMITS = [100, 200, 500, 1000];
 

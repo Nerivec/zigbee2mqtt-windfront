@@ -1,7 +1,8 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import Button from "../components/Button.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
@@ -20,11 +21,13 @@ const HIGHLIGHT_LEVEL_CMAP = {
 };
 
 export default function LogsPage() {
+    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const [filterValue, setFilterValue] = useState<string>("");
     const [logLevel, setLogLevel] = useState<string>("all");
     const [highlightOnly, setHighlightOnly] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const logsLimit = useAppSelector((state) => state.logsLimit);
+    const logLevelConfig = useAppSelector((state) => state.bridgeInfo.config.advanced.log_level);
     const { t } = useTranslation("logs");
     const logs = useAppSelector((state) => state.logs);
     const filteredLogs = useMemo(
@@ -43,10 +46,20 @@ export default function LogsPage() {
         [filterValue],
     );
 
+    const setLogLevelConfig = useCallback(
+        async (level: string) => {
+            await sendMessage("bridge/request/options", { options: { advanced: { log_level: level } } });
+        },
+        [sendMessage],
+    );
+
     return (
         <>
             <div className="flex flex-row flex-wrap gap-3 items-top">
                 <SelectField name="log_level" label={t("show_only")} value={logLevel} onChange={(e) => setLogLevel(e.target.value)}>
+                    <option key="all" value="all">
+                        all
+                    </option>
                     {LOG_LEVELS.map((level) => (
                         <option key={level} value={level}>
                             {level}
@@ -109,6 +122,20 @@ export default function LogsPage() {
                 >
                     {t("common:clear")}
                 </Button>
+                <div className="ml-auto">
+                    <SelectField
+                        name="log_level_config"
+                        label={t("log_level_config")}
+                        value={logLevelConfig}
+                        onChange={(e) => !e.target.validationMessage && setLogLevelConfig(e.target.value)}
+                    >
+                        {LOG_LEVELS.map((level) => (
+                            <option key={level} value={level}>
+                                {level}
+                            </option>
+                        ))}
+                    </SelectField>
+                </div>
             </div>
             <div className="mockup-code w-full mt-1">
                 {filteredLogs.length > 0 ? (
