@@ -33,7 +33,7 @@ const EndDeviceNode = memo(({ data, selected }: NodeProps<Node<RawMapNode>>) => 
                         <span title={t("zigbee:network_address_hex")} className="justify-self-end">
                             {toHex(data.networkAddress, 4)} | <span title={t("zigbee:network_address_dec")}>{data.networkAddress}</span>
                         </span>
-                        {data.failed.length > 0 && (
+                        {data.failed && data.failed.length > 0 && (
                             <div className="badge badge-ghost">
                                 <FontAwesomeIcon icon={faExclamationTriangle} className="text-error" beatFade />
                                 {t("common:failed")}: {data.failed}

@@ -78,7 +78,7 @@ const RawNetworkData = memo(({ map }: RawNetworkMapProps) => {
                                             <PowerSource device={device} showLevel={false} />
                                         </span>
                                     )}
-                                    {node.failed.length > 0 && (
+                                    {node.failed && node.failed.length > 0 && (
                                         <span className="badge badge-ghost" title={`${t("common:failed")}: ${node.failed}`}>
                                             <FontAwesomeIcon icon={faExclamationTriangle} className="text-error" beatFade />
                                         </span>
