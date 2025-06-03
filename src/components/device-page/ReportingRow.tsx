@@ -167,7 +167,7 @@ const ReportingRow = memo((props: ReportingRowProps) => {
                 />
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend">{t("actions")}</legend>
-                    <div className="join join-vertical lg:join-horizontal">
+                    <div className="join join-horizontal">
                         <Button<NiceReportingRule> className="btn btn-primary join-item" item={state.rule} onClick={onApply} disabled={!isValidRule}>
                             {t("common:apply")}
                         </Button>

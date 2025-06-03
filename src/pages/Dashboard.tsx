@@ -88,7 +88,7 @@ export default function Dashboard() {
                                 featureWrapperClass={DashboardFeatureWrapper}
                                 lastSeenConfig={bridgeConfig.advanced.last_seen}
                             >
-                                <div className="join join-vertical lg:join-horizontal">
+                                <div className="join join-horizontal">
                                     <DeviceControlEditName
                                         name={device.friendly_name}
                                         renameDevice={renameDevice}

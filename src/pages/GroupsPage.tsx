@@ -93,7 +93,7 @@ export default function GroupsPage() {
                 header: "",
                 id: "actions",
                 cell: ({ row: { original: group } }) => (
-                    <div className="join join-vertical lg:join-horizontal">
+                    <div className="join join-horizontal">
                         <Button<void>
                             className="btn btn-primary btn-sm join-item"
                             onClick={async () =>

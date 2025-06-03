@@ -211,7 +211,7 @@ const BindRow = memo((props: BindRowProps) => {
                 </div>
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend">{t("actions")}</legend>
-                    <div className="join join-vertical lg:join-horizontal">
+                    <div className="join join-horizontal">
                         <Button<Action>
                             item={"Bind"}
                             disabled={!isValidRule}

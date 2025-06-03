@@ -29,7 +29,7 @@ export default function DeviceControlGroup(props: DeviceControlGroupProps): JSX.
         (state && state.update?.state === "updating");
 
     return (
-        <div className="join join-vertical lg:join-horizontal">
+        <div className="join join-horizontal">
             <DeviceControlEditName
                 name={device.friendly_name}
                 renameDevice={renameDevice}

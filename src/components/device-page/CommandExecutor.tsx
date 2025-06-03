@@ -163,7 +163,7 @@ export const CommandExecutor = (props: CommandExecutorProps): JSX.Element => {
                 className="textarea validator w-full"
                 required
             />
-            <div className="join join-vertical lg:join-horizontal">
+            <div className="join join-horizontal">
                 <Button<void> onClick={onExecute} disabled={!canExecute} className="btn btn-success">
                     {t("execute")}
                 </Button>

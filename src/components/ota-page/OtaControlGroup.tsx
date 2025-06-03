@@ -48,7 +48,7 @@ const OtaControlGroup = memo((props: OtaControlGroup) => {
 
     if (state == null || state.state === "idle") {
         return (
-            <div className="join join-vertical lg:join-horizontal">
+            <div className="join join-horizontal">
                 <Button<string> className="btn btn-primary btn-sm join-item" onClick={onCheckClick} item={device.ieee_address}>
                     {t("check")}
                 </Button>
@@ -71,7 +71,7 @@ const OtaControlGroup = memo((props: OtaControlGroup) => {
     }
 
     return (
-        <div className="join join-vertical lg:join-horizontal">
+        <div className="join join-horizontal">
             {state.state === "available" ? (
                 <>
                     <ConfirmButton<string>

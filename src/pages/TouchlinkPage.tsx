@@ -72,7 +72,7 @@ export default function TouchlinkPage() {
                 header: "",
                 cell: ({ row: { original: touchlinkDevice } }) => {
                     return (
-                        <div className="join join-vertical lg:join-horizontal">
+                        <div className="join join-horizontal">
                             <Button<TouchlinkDevice>
                                 disabled={touchlinkInProgress}
                                 item={touchlinkDevice}

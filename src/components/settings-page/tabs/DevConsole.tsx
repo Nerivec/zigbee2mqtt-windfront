@@ -79,7 +79,7 @@ const MqttTab = () => {
                 onChange={(e) => setMqttPayload(e.target.value)}
                 className="textarea validator w-full"
             />
-            <div className="join join-vertical lg:join-horizontal mt-2">
+            <div className="join join-horizontal mt-2">
                 <Button<void> onClick={onSend} disabled={!canSend} className="btn btn-success">
                     {t("common:send")}
                 </Button>
@@ -185,7 +185,7 @@ const ExternalConverterTab = () => {
                 className="textarea validator w-full"
                 required
             />
-            <div className="join join-vertical lg:join-horizontal mt-2">
+            <div className="join join-horizontal mt-2">
                 <Button<void> onClick={onSave} disabled={!canSave} className="btn btn-success join-item">
                     {t("common:save")}
                 </Button>
@@ -298,7 +298,7 @@ const ExternalExtensionTab = () => {
                 className="textarea validator w-full"
                 required
             />
-            <div className="join join-vertical lg:join-horizontal mt-2">
+            <div className="join join-horizontal mt-2">
                 <Button<void> onClick={onSave} disabled={!canSave} className="btn btn-success join-item">
                     {t("common:save")}
                 </Button>
