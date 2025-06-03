@@ -128,9 +128,6 @@ export default function DevicesPage(): JSX.Element {
                                         batteryLow={state.battery_low as boolean}
                                     />
                                 </span>
-                                <span className="badge badge-soft badge-ghost cursor-default" title={t("lqi")}>
-                                    <Lqi value={state.linkquality as number | undefined} />
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -180,6 +177,17 @@ export default function DevicesPage(): JSX.Element {
                         </div>
                     </>
                 ),
+            },
+            {
+                id: "lqi",
+                header: t("lqi"),
+                accessorFn: ({ state }) => state.linkquality,
+                cell: ({
+                    row: {
+                        original: { state },
+                    },
+                }) => <Lqi value={state.linkquality as number | undefined} />,
+                enableColumnFilter: false,
             },
             {
                 id: "last_seen",
