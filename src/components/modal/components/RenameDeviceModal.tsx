@@ -28,7 +28,7 @@ export const RenameDeviceModal = NiceModal.create((props: RenameActionProps): JS
             title={`${t("rename_device")} ${name}`}
             footer={
                 <>
-                    <Button className="btn btn-secondary" onClick={modal.remove}>
+                    <Button className="btn btn-neutral" onClick={modal.remove}>
                         {t("common:cancel")}
                     </Button>
                     <Button

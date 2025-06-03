@@ -44,7 +44,7 @@ export const DialogConfirmationModal = NiceModal.create((props: DialogConfirmati
             title={modalTitle}
             footer={
                 <>
-                    <Button className="btn btn-secondary" onClick={modal.remove}>
+                    <Button className="btn btn-neutral" onClick={modal.remove}>
                         {modalCancelLabel}
                     </Button>
                     <Button className="btn btn-primary ms-1" onClick={onConfirm}>

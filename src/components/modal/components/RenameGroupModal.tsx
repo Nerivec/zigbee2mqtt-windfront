@@ -26,7 +26,7 @@ export const RenameGroupForm = NiceModal.create((props: RenameGroupFormProps): J
             title={`${t("rename_group")} ${name}`}
             footer={
                 <>
-                    <Button className="btn btn-secondary" onClick={modal.remove}>
+                    <Button className="btn btn-neutral" onClick={modal.remove}>
                         {t("common:cancel")}
                     </Button>
                     <Button
