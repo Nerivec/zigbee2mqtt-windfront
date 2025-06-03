@@ -126,14 +126,14 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
                     <div className="stat">
                         <div className="stat-title">{device.type}</div>
-                        <div className="stat-value">{toHex(device.network_address)}</div>
+                        <div className="stat-value text-xl">{toHex(device.network_address)}</div>
                         <div className="stat-desc">
                             {t("network_address_dec")}: {device.network_address}
                         </div>
                     </div>
                     <div className="stat">
                         <div className="stat-title">{t("last_seen")}</div>
-                        <div className="stat-value">
+                        <div className="stat-value text-xl">
                             <LastSeen config={bridgeConfig.advanced.last_seen} lastSeen={deviceState.last_seen} />
                         </div>
                         <div className="stat-desc">
@@ -149,7 +149,7 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                     </div>
                     <div className="stat">
                         <div className="stat-title">{t("power")}</div>
-                        <div className="stat-value">
+                        <div className="stat-value text-xl">
                             <PowerSource
                                 showLevel={true}
                                 device={device}
@@ -163,7 +163,7 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                     {
                         <div className="stat">
                             <div className="stat-title">{t("firmware_id")}</div>
-                            <div className="stat-value">{device.software_build_id || t("unknown")}</div>
+                            <div className="stat-value text-xl">{device.software_build_id || t("unknown")}</div>
                             <div className="stat-desc">{device.date_code || t("unknown")}</div>
                         </div>
                     }
@@ -171,14 +171,14 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
                     <div className="stat">
                         <div className="stat-title">{t("zigbee_model")}</div>
-                        <div className="stat-value">{device.model_id}</div>
+                        <div className="stat-value text-xl">{device.model_id}</div>
                         <div className="stat-desc">
                             {device.manufacturer} ({definitionDescription})
                         </div>
                     </div>
                     <div className="stat">
                         <div className="stat-title">{t("model")}</div>
-                        <div className="stat-value">
+                        <div className="stat-value text-xl">
                             <ModelLink device={device} />
                         </div>
                         <div className="stat-desc">

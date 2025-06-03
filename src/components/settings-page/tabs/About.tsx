@@ -72,26 +72,26 @@ export default function About() {
             <div className="stats stats-vertical lg:stats-horizontal shadow">
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("zigbee2mqtt_version")}</div>
-                    <div className="stat-value">{zigbee2mqttVersion}</div>
+                    <div className="stat-value text-xl">{zigbee2mqttVersion}</div>
                     <div className="stat-desc">{zigbee2mqttCommit}</div>
                 </div>
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("frontend_version")}</div>
-                    <div className="stat-value">{frontendVersion}</div>
+                    <div className="stat-value text-xl">{frontendVersion}</div>
                 </div>
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("zigbee_herdsman_converters_version")}</div>
-                    <div className="stat-value">{zhcVersion}</div>
+                    <div className="stat-value text-xl">{zhcVersion}</div>
                 </div>
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("zigbee_herdsman_version")}</div>
-                    <div className="stat-value">{zhVersion}</div>
+                    <div className="stat-value text-xl">{zhVersion}</div>
                 </div>
             </div>
             <div className="stats stats-vertical lg:stats-horizontal shadow">
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("coordinator")}</div>
-                    <div className="stat-value">{bridgeInfo.coordinator.type}</div>
+                    <div className="stat-value text-xl">{bridgeInfo.coordinator.type}</div>
                     <div className="stat-desc flex flex-col gap-2 items-center">
                         <span className="badge badge-primary" title={t("coordinator_ieee_address")}>
                             {bridgeInfo.coordinator.ieee_address}
