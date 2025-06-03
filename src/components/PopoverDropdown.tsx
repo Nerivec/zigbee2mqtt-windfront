@@ -13,7 +13,11 @@ const PopoverDropdown = memo((props: PopoverDropdownProps) => {
     const popoverId = `popover-${name}`;
     const anchorName = `--anchor-${name}`;
 
-    const onPopoverClick = useCallback((event: MouseEvent<HTMLUListElement>) => event.currentTarget.togglePopover(false), []);
+    const onPopoverClick = useCallback((event: MouseEvent<HTMLUListElement>) => {
+        if ((event.target as HTMLElement).tagName !== "INPUT") {
+            event.currentTarget.togglePopover(false);
+        }
+    }, []);
 
     return (
         <>
