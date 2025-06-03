@@ -24,7 +24,7 @@ const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, last
 
     return (
         <>
-            <li className="list-row grow">
+            <li className="list-row grow p-3">
                 <div className="h-12 w-12" style={{ overflow: "visible" }}>
                     {/* disabled always false because dashboard does not contain disabled devices */}
                     <DeviceImage disabled={false} device={device} otaState={deviceState.update?.state} />
@@ -61,7 +61,7 @@ const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, last
                     </div>
                 </div>
             </li>
-            <li className="flex flex-row flex-wrap gap-1 m-4 justify-around items-center">
+            <li className="flex flex-row flex-wrap gap-1 m-2 justify-around items-center">
                 <span className="badge badge-soft badge-ghost cursor-default" title={t("last_seen")}>
                     <LastSeen lastSeen={deviceState.last_seen} config={lastSeenConfig} />
                 </span>
@@ -74,6 +74,7 @@ const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, last
                         batteryPercent={deviceState.battery as number}
                         batteryState={deviceState.battery_state as string}
                         batteryLow={deviceState.battery_low as boolean}
+                        showLevel
                     />
                 </span>
                 {children}

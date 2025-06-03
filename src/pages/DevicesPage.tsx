@@ -126,6 +126,7 @@ export default function DevicesPage(): JSX.Element {
                                         batteryPercent={state.battery as number}
                                         batteryState={state.battery_state as string}
                                         batteryLow={state.battery_low as boolean}
+                                        showLevel
                                     />
                                 </span>
                             </div>
@@ -148,7 +149,7 @@ export default function DevicesPage(): JSX.Element {
                                 {device.ieee_address}
                             </Link>
                         </div>
-                        <div className="flex flex-row gap-1 mt-2">
+                        <div className="flex flex-row gap-1">
                             <span className="badge badge-ghost badge-sm cursor-default" title={t("network_address_hex")}>
                                 {toHex(device.network_address, 4)}
                             </span>
@@ -170,7 +171,7 @@ export default function DevicesPage(): JSX.Element {
                 }) => (
                     <>
                         <ModelLink device={device} />
-                        <div className="flex flex-row gap-1 mt-2">
+                        <div className="flex flex-row gap-1">
                             <span className="badge badge-ghost" title={t("manufacturer")}>
                                 <VendorLink device={device} />
                             </span>
