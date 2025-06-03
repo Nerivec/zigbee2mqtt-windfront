@@ -18,7 +18,7 @@ const Availability = memo((props: AvailabilityStateProps): JSX.Element => {
     }
 
     return (availabilityEnabledForDevice ?? availabilityFeatureEnabled) ? (
-        <span className={availability.state === "online" ? "text-success" : "text-error animate-ping"}>{t(availability.state)}</span>
+        <span className={availability.state === "online" ? "text-success" : "text-error animate-pulse"}>{t(availability.state)}</span>
     ) : (
         <a
             className="link link-hover"

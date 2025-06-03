@@ -11,7 +11,7 @@ type DevicesProps = {
 export default function Devices({ group }: DevicesProps) {
     return (
         <>
-            <div className="flex flex-row flex-wrap justify-evenly gap-4 mb-3">
+            <div className="flex flex-row flex-wrap justify-evenly gap-4 mb-4">
                 <div className="flex-1">
                     <AddDeviceToGroup group={group} />
                 </div>

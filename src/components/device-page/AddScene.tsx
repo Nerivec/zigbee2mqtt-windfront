@@ -86,7 +86,7 @@ const AddScene = memo((props: AddSceneProps) => {
                     onChange={(e) => setSceneName(e.target.value)}
                 />
                 {filteredFeatures.length > 0 && (
-                    <div className="card card-border bg-base-100 shadow my-2">
+                    <div className="card card-border bg-base-200 shadow my-2">
                         <div className="card-body">
                             {filteredFeatures.map((feature) => (
                                 <Feature

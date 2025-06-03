@@ -18,10 +18,10 @@ const BooleanValueView = memo((props: DisplayValueProps) => {
             return value ? t("occupied") : t("clear");
         }
         case "water_leak": {
-            return value ? <span className="text-error animate-ping">{t("leaking")}</span> : t("clear");
+            return value ? <span className="text-error animate-pulse">{t("leaking")}</span> : t("clear");
         }
         case "tamper": {
-            return value ? <span className="text-error animate-ping">{t("tampered")}</span> : t("clear");
+            return value ? <span className="text-error animate-pulse">{t("tampered")}</span> : t("clear");
         }
         case "supported": {
             return value ? t("supported") : t("not_supported");

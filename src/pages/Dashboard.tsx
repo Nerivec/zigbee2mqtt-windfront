@@ -66,7 +66,7 @@ export default function Dashboard() {
 
                 if (filteredFeatures.length > 0) {
                     filteredDevices.push(
-                        <ul className="flex-auto basis-sm list rounded-box shadow-md" key={device.ieee_address}>
+                        <ul className="flex-auto basis-sm list bg-base-200 rounded-box shadow-md" key={device.ieee_address}>
                             <DeviceCard
                                 features={filteredFeatures}
                                 device={device}

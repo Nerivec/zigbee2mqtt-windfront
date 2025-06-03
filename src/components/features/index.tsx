@@ -81,61 +81,61 @@ export interface BaseWithSubFeaturesProps<T extends FeatureWithAnySubFeatures> e
 export type FaIconFlip = "horizontal" | "vertical" | "both";
 export type TemperatureUnit = "°C" | "°F";
 
-export const TYPE_TO_CLASS_MAP: Record<string, [IconDefinition, { className?: string; flip?: FaIconFlip; rotate?: number }]> = {
-    battery_low: [faBatteryEmpty, { className: "text-error" }],
-    humidity: [faTint, {}],
-    illuminance: [faSun, {}],
-    pressure: [faCloudDownloadAlt, {}],
-    co2: [faAtom, { className: "text-warning" }],
-    voltage: [faBolt, {}],
-    state: [faStarHalfAlt, {}],
-    brightness: [faSun, {}],
-    occupancy: [faWalking, {}],
-    presence: [faPersonRays, {}],
-    current: [faCopyright, {}],
-    power: [faPowerOff, {}],
-    energy: [faPlug, {}],
-    frequency: [faWaveSquare, {}],
-    tamper: [faExclamationCircle, { className: "text-error" }],
-    smoke: [faSmoking, { className: "text-error" }],
-    radiation_dose_per_hour: [faRadiation, { className: "text-error" }],
-    radioactive_events_per_minute: [faRadiationAlt, { className: "text-warning" }],
-    power_factor: [faIndustry, {}],
-    mode: [faUserCog, {}],
-    sound: [faVolumeUp, {}],
-    position: [faPercent, {}],
-    alarm: [faExclamationTriangle, { className: "text-error" }],
-    color_xy: [faPalette, {}],
-    color_hs: [faPalette, {}],
-    color_temp: [faSlidersH, {}],
-    color_temp_startup: [faSlidersH, { className: "opacity-70" }],
-    illuminance_lux: [faSun, {}],
-    soil_moisture: [faFillDrip, {}],
-    water_leak: [faWater, {}],
-    week: [faCalendarWeek, {}],
-    workdays_schedule: [faCalendarDay, {}],
-    holidays_schedule: [faCalendarDay, {}],
-    away_mode: [faPlane, {}],
-    vibration: [faWater, { rotate: 270 }],
-    power_outage_count: [faPlugCircleXmark, {}],
-    action: [faA, {}],
-    angle_x: [faX, {}],
-    angle_y: [faY, {}],
-    angle_z: [faZ, {}],
-    side: [faCube, {}],
-    humidity_alarm: [faTriangleExclamation, {}],
-    temperature_alarm: [faTriangleExclamation, {}],
-    approach_distance: [faArrowsLeftRightToLine, {}],
-    distance: [faArrowsLeftRightToLine, {}],
-    trigger_count: [faTurnUp, { flip: "horizontal" }],
-    level_config: [faGear, {}],
-    station: [faWarehouse, {}],
-    effect: [faWandMagicSparkles, {}],
-    linkquality: [faSignal, {}],
-    system_mode: [faCog, {}],
-    gradient: [faRainbow, {}],
-    sensitivity: [faFeather, {}],
-    test: [faCheck, { className: "text-success" }],
+export const TYPE_TO_CLASS_MAP: Record<string, IconDefinition> = {
+    battery_low: faBatteryEmpty,
+    humidity: faTint,
+    illuminance: faSun,
+    pressure: faCloudDownloadAlt,
+    co2: faAtom,
+    voltage: faBolt,
+    state: faStarHalfAlt,
+    brightness: faSun,
+    occupancy: faWalking,
+    presence: faPersonRays,
+    current: faCopyright,
+    power: faPowerOff,
+    energy: faPlug,
+    frequency: faWaveSquare,
+    tamper: faExclamationCircle,
+    smoke: faSmoking,
+    radiation_dose_per_hour: faRadiation,
+    radioactive_events_per_minute: faRadiationAlt,
+    power_factor: faIndustry,
+    mode: faUserCog,
+    sound: faVolumeUp,
+    position: faPercent,
+    alarm: faExclamationTriangle,
+    color_xy: faPalette,
+    color_hs: faPalette,
+    color_temp: faSlidersH,
+    color_temp_startup: faSlidersH,
+    illuminance_lux: faSun,
+    soil_moisture: faFillDrip,
+    water_leak: faWater,
+    week: faCalendarWeek,
+    workdays_schedule: faCalendarDay,
+    holidays_schedule: faCalendarDay,
+    away_mode: faPlane,
+    vibration: faWater,
+    power_outage_count: faPlugCircleXmark,
+    action: faA,
+    angle_x: faX,
+    angle_y: faY,
+    angle_z: faZ,
+    side: faCube,
+    humidity_alarm: faTriangleExclamation,
+    temperature_alarm: faTriangleExclamation,
+    approach_distance: faArrowsLeftRightToLine,
+    distance: faArrowsLeftRightToLine,
+    trigger_count: faTurnUp,
+    level_config: faGear,
+    station: faWarehouse,
+    effect: faWandMagicSparkles,
+    linkquality: faSignal,
+    system_mode: faCog,
+    gradient: faRainbow,
+    sensitivity: faFeather,
+    test: faCheck,
 };
 
 const getBatteryIcon = (level: number | undefined, outClasses: string[]) => {
@@ -233,6 +233,13 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
             icon = getBatteryStateIcon(value as string, classes);
             break;
         }
+        case "battery_low": {
+            if (value) {
+                classes.push("text-error");
+            }
+
+            break;
+        }
         case "device_temperature":
         case "temperature":
         case "local_temperature": {
@@ -251,7 +258,6 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
 
             if (!value) {
                 classes.push("text-primary");
-                spec.flip = true;
             }
 
             break;
@@ -274,6 +280,7 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
         }
         case "tamper": {
             if (value) {
+                classes.push("text-error");
                 spec.beatFade = true;
                 spec.shake = true;
             }
@@ -302,15 +309,9 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
         return [icon, classes.join(" "), spec];
     }
 
-    const mappedType = TYPE_TO_CLASS_MAP[name] ?? [undefined, {}];
-    icon = mappedType[0];
-    const mappedSpec = mappedType[1];
+    icon = TYPE_TO_CLASS_MAP[name];
 
-    if (mappedSpec.className) {
-        classes.push(mappedSpec.className);
-    }
-
-    return icon ? [icon, classes.join(" "), { flip: mappedSpec.flip, rotate: mappedSpec.rotate, ...spec }] : [faCircle, "opacity-0", {}];
+    return icon ? [icon, classes.join(" "), spec] : [faCircle, "opacity-0", {}];
 };
 
 export const getFeatureKey = (feature: FeatureWithAnySubFeatures) =>
