@@ -9,22 +9,27 @@ import { toHex } from "../../../utils.js";
 import DeviceImage from "../../device/DeviceImage.js";
 import type { RawMapNode } from "../index.js";
 
-const RouterNode = memo(({ data, selected }: NodeProps<Node<RawMapNode>>) => {
+const RouterNode = memo(({ data }: NodeProps<Node<RawMapNode>>) => {
     const { t } = useTranslation(["network"]);
 
     return (
         <>
-            <div className={`w-16 h-16 p-1${selected ? " animate-pulse" : ""}`}>
+            <div className="w-16 h-16 p-1">
                 <DeviceImage
                     disabled={false}
                     device={{ ieee_address: data.ieeeAddr, supported: !!data.definition, definition: data.definition } as unknown as Device}
                 />
             </div>
+            <NodeToolbar position={Position.Bottom} isVisible>
+                <Link to={`/device/${data.ieeeAddr}/about`} className="link link-hover">
+                    {data.friendlyName}
+                </Link>
+            </NodeToolbar>
             <NodeToolbar position={Position.Bottom}>
                 <div className="card bg-secondary text-secondary-content shadow-sm">
                     <div className="card-body">
                         <h2 className="card-title">
-                            <Link to={`/device/${data.friendlyName}/about`} className="link link-hover">
+                            <Link to={`/device/${data.ieeeAddr}/about`} className="link link-hover">
                                 {data.friendlyName}
                             </Link>
                         </h2>

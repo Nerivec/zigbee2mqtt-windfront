@@ -18,7 +18,6 @@ const ChildEdge = memo(({ id, sourceX, sourceY, targetX, targetY, sourcePosition
             <BaseEdge id={id} path={edgePath} className={`!stroke-info ${selected ? "" : "opacity-50"}`} />
             {data && (
                 <EdgeLabelRenderer>
-                    <EdgeLabel className="" transform={`translate(-50%, 0%) translate(${sourceX}px,${sourceY}px)`} label={data.source.ieeeAddr} />
                     <EdgeLabel
                         className="text-info"
                         transform={`translate(50%, -50%) translate(${labelX}px,${labelY}px)`}

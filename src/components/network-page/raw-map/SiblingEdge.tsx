@@ -19,7 +19,6 @@ const SiblingEdge = memo(
                 <BaseEdge id={id} path={edgePath} className={`!stroke-success ${selected ? "" : "opacity-50"}`} />
                 {data && (
                     <EdgeLabelRenderer>
-                        <EdgeLabel className="" transform={`translate(-50%, 0%) translate(${sourceX}px,${sourceY}px)`} label={data.source.ieeeAddr} />
                         <EdgeLabel
                             className="text-success"
                             transform={`translate(50%, -50%) translate(${labelX}px,${labelY}px)`}

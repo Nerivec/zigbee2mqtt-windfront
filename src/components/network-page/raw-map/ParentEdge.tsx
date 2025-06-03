@@ -19,7 +19,6 @@ const EdgeMidLabel = memo(
                 <BaseEdge id={id} path={edgePath} className={`!stroke-warning ${selected ? "" : "opacity-50"}`} />
                 {data && (
                     <EdgeLabelRenderer>
-                        <EdgeLabel className="" transform={`translate(-50%, 0%) translate(${sourceX}px,${sourceY}px)`} label={data.source.ieeeAddr} />
                         <EdgeLabel
                             className="text-warning"
                             transform={`translate(-150%, -50%) translate(${labelX}px,${labelY}px)`}

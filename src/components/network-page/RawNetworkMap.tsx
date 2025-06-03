@@ -42,7 +42,7 @@ const DEFAULT_NODE_HEIGHT = 64;
 
 const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
 
-const buildGraph = (nodes: RawMapNode[], edges: RawMapEdge[], direction: DagreDirection = "TB"): [Node<RawMapNode>[], Edge[]] => {
+const buildGraph = (nodes: RawMapNode[], edges: RawMapEdge[], direction: DagreDirection = "TB"): [Node<RawMapNode>[], Edge<RawMapEdge>[]] => {
     const isHorizontal = direction === "LR";
 
     dagreGraph.setGraph({
@@ -61,7 +61,7 @@ const buildGraph = (nodes: RawMapNode[], edges: RawMapEdge[], direction: DagreDi
         });
     }
 
-    const processedEdges: Edge[] = [];
+    const processedEdges: Edge<RawMapEdge>[] = [];
 
     for (const edge of edges) {
         if (edge.relationship > 2) {
@@ -74,7 +74,7 @@ const buildGraph = (nodes: RawMapNode[], edges: RawMapEdge[], direction: DagreDi
             source: edge.source.ieeeAddr,
             target: edge.target.ieeeAddr,
             type: `${edge.relationship}`,
-            animated: true,
+            animated: false,
             data: edge,
         });
     }
@@ -137,8 +137,8 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
                 edgesReconnectable={false}
                 connectionLineType={ConnectionLineType.SmoothStep}
                 fitView
-                minZoom={0.5}
-                maxZoom={2}
+                minZoom={0.1}
+                maxZoom={3}
                 className="!bg-base-100"
             >
                 <Controls onLayout={onLayout} />
