@@ -13,7 +13,6 @@ import InputField from "../components/form-fields/InputField.js";
 import { RenameGroupForm } from "../components/modal/components/RenameGroupModal.js";
 import Table from "../components/table/Table.js";
 import { useAppSelector } from "../hooks/useApp.js";
-import { GROUP_TABLE_PAGE_SIZE_KEY } from "../localStoreConsts.js";
 import type { Group } from "../types.js";
 
 export default function GroupsPage() {
@@ -159,7 +158,7 @@ export default function GroupsPage() {
                     </div>
                 </div>
             </div>
-            <Table id="all-groups" columns={columns} data={groups} pageSizeStoreKey={GROUP_TABLE_PAGE_SIZE_KEY} />
+            <Table id="all-groups" columns={columns} data={groups} />
         </>
     );
 }

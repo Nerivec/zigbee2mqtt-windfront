@@ -2,16 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import LanguageSwitcher from "../../../i18n/LanguageSwitcher.js";
-import {
-    DEVICE_TABLE_PAGE_SIZE_KEY,
-    GROUP_TABLE_PAGE_SIZE_KEY,
-    HOMEPAGE_KEY,
-    I18NEXTLNG_KEY,
-    MAX_ON_SCREEN_NOTIFICATIONS_KEY,
-    OTA_TABLE_PAGE_SIZE_KEY,
-    PERMIT_JOIN_TIME_KEY,
-    THEME_KEY,
-} from "../../../localStoreConsts.js";
+import { HOMEPAGE_KEY, I18NEXTLNG_KEY, MAX_ON_SCREEN_NOTIFICATIONS_KEY, PERMIT_JOIN_TIME_KEY, THEME_KEY } from "../../../localStoreConsts.js";
 import Button from "../../Button.js";
 import ThemeSwitcher from "../../ThemeSwitcher.js";
 import InputField from "../../form-fields/InputField.js";
@@ -39,9 +30,6 @@ export default function Frontend() {
     }, [maxOnScreenNotifications]);
 
     const resetAll = () => {
-        local.remove(DEVICE_TABLE_PAGE_SIZE_KEY);
-        local.remove(OTA_TABLE_PAGE_SIZE_KEY);
-        local.remove(GROUP_TABLE_PAGE_SIZE_KEY);
         local.remove(THEME_KEY);
         local.remove(HOMEPAGE_KEY);
         local.remove(PERMIT_JOIN_TIME_KEY);

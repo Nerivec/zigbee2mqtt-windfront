@@ -15,7 +15,6 @@ import OtaLink from "../components/value-decorators/OtaLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useAppSelector } from "../hooks/useApp.js";
-import { OTA_TABLE_PAGE_SIZE_KEY } from "../localStoreConsts.js";
 import type { Device, DeviceState } from "../types.js";
 
 type OtaTableData = {
@@ -290,5 +289,5 @@ export default function OtaPage() {
         ],
     );
 
-    return <Table id="ota-devices" columns={columns} data={otaDevices} pageSizeStoreKey={OTA_TABLE_PAGE_SIZE_KEY} />;
+    return <Table id="ota-devices" columns={columns} data={otaDevices} />;
 }

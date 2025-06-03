@@ -15,7 +15,7 @@ import ModelLink from "../components/value-decorators/ModelLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useAppSelector } from "../hooks/useApp.js";
-import { DEVICES_HIDE_DISABLED_KEY, DEVICE_TABLE_PAGE_SIZE_KEY } from "../localStoreConsts.js";
+import { DEVICES_HIDE_DISABLED_KEY } from "../localStoreConsts.js";
 import type { AvailabilityState, Device, DeviceState } from "../types.js";
 import { convertLastSeenToDate, toHex } from "../utils.js";
 
@@ -263,5 +263,5 @@ export default function DevicesPage(): JSX.Element {
         [bridgeConfig.advanced.last_seen, bridgeConfig.availability.enabled, data],
     );
 
-    return <Table id="all-devices" columns={columns} data={data} pageSizeStoreKey={DEVICE_TABLE_PAGE_SIZE_KEY} visibleColumns={visibleColumns} />;
+    return <Table id="all-devices" columns={columns} data={data} visibleColumns={visibleColumns} />;
 }
