@@ -76,6 +76,7 @@ const initialState: State = {
             device_options: {},
             frontend: {
                 enabled: true,
+                package: "zigbee2mqtt-windfront",
                 port: 8080,
                 base_url: "/",
             },

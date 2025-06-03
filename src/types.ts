@@ -3,7 +3,6 @@ import type {
     Zigbee2MQTTDevice,
     Zigbee2MQTTFeatures,
     Zigbee2MQTTGroup,
-    Zigbee2MQTTRequestEndpoints,
     Zigbee2MQTTResponse,
     Zigbee2MQTTResponseEndpoints,
     Zigbee2MQTTScene,
@@ -60,17 +59,6 @@ export interface Message<T = string | Record<string, unknown> | Record<string, u
 export interface ResponseMessage<T extends Zigbee2MQTTResponseEndpoints> extends Message {
     payload: Zigbee2MQTTResponse<T>;
 }
-
-export type SendMessageEndpoints =
-    | Zigbee2MQTTRequestEndpoints
-    | "{friendlyNameOrId}/set"
-    | "{friendlyNameOrId}/set/{attribute}"
-    | "{friendlyNameOrId}/{endpoint}/set"
-    | "{friendlyNameOrId}/{endpoint}/set/{attribute}"
-    | "{friendlyNameOrId}/get"
-    | "{friendlyNameOrId}/get/{attribute}"
-    | "{friendlyNameOrId}/{endpoint}/get"
-    | "{friendlyNameOrId}/{endpoint}/get/{attribute}";
 
 // #endregion
 

@@ -128,17 +128,9 @@ const BindRow = memo((props: BindRowProps) => {
             };
 
             if (action === "Bind") {
-                await sendMessage(
-                    "bridge/request/device/bind",
-                    // @ts-expect-error bad typing TODO: remove me once fixed
-                    bindParams,
-                );
+                await sendMessage("bridge/request/device/bind", bindParams);
             } else {
-                await sendMessage(
-                    "bridge/request/device/unbind",
-                    // @ts-expect-error bad typing TODO: remove me once fixed
-                    bindParams,
-                );
+                await sendMessage("bridge/request/device/unbind", bindParams);
             }
         },
         [device, state.rule, sendMessage, devices, groups],

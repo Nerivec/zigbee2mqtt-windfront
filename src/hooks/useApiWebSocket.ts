@@ -2,10 +2,10 @@ import NiceModal from "@ebay/nice-modal-react";
 import { useCallback, useEffect, useRef } from "react";
 import useWebSocket from "react-use-websocket";
 import store2 from "store2";
-import type { Zigbee2MQTTAPI, Zigbee2MQTTResponse } from "zigbee2mqtt";
+import type { Zigbee2MQTTAPI, Zigbee2MQTTRequestEndpoints, Zigbee2MQTTResponse } from "zigbee2mqtt";
 import { AUTH_FLAG_KEY, TOKEN_KEY } from "../localStoreConsts.js";
 import * as store from "../store.js";
-import type { Message, RecursiveMutable, ResponseMessage, SendMessageEndpoints } from "../types.js";
+import type { Message, RecursiveMutable, ResponseMessage } from "../types.js";
 import { isSecurePage, randomString, stringifyWithPreservingUndefinedAsNull } from "../utils.js";
 import { useAppDispatch } from "./useApp.js";
 
@@ -216,7 +216,7 @@ export function useApiWebSocket() {
 
     // wrap raw sendMessage
     const sendMessage = useCallback(
-        async <T extends SendMessageEndpoints>(topic: T, payload: Zigbee2MQTTAPI[T]): Promise<void> => {
+        async <T extends Zigbee2MQTTRequestEndpoints>(topic: T, payload: Zigbee2MQTTAPI[T]): Promise<void> => {
             if (topic.startsWith("bridge/request/")) {
                 if (payload !== "" && typeof payload === "string") {
                     console.error("Only `Record<string, unknown>` or empty string payloads allowed");

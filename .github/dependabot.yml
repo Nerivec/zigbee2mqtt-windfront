@@ -1,6 +1,8 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
+    commit-message:
+      prefix: fix
     directory: "/"
     schedule:
       interval: "weekly"
@@ -19,6 +21,8 @@ updates:
           - "patch"
 
   - package-ecosystem: github-actions
+    commit-message:
+      prefix: fix
     directory: "/"
     schedule:
       interval: weekly
