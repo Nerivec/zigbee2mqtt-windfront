@@ -79,14 +79,10 @@ const LOCALES_NAMES_MAP = {
     en: "English",
 };
 
-const LanguageSwitcher = memo(({ useExistingChildren }: { useExistingChildren?: true }) => {
+const LanguageSwitcher = memo(() => {
     const { i18n } = useTranslation("localeNames");
     const currentLanguage = useMemo(() => (LOCALES_MAP[i18n.language] ? i18n.language : i18n.language.split("-")[0]), [i18n.language]);
     const children = useMemo(() => {
-        if (useExistingChildren) {
-            return null;
-        }
-
         const languages: JSX.Element[] = [];
 
         for (const language in i18n.options.resources ?? []) {
@@ -106,7 +102,7 @@ const LanguageSwitcher = memo(({ useExistingChildren }: { useExistingChildren?: 
         }
 
         return languages;
-    }, [useExistingChildren, i18n.changeLanguage, i18n.options.resources]);
+    }, [i18n.changeLanguage, i18n.options.resources]);
 
     return (
         <PopoverDropdown

@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
-import LanguageSwitcher from "../../../i18n/LanguageSwitcher.js";
 import { HOMEPAGE_KEY, I18NEXTLNG_KEY, MAX_ON_SCREEN_NOTIFICATIONS_KEY, PERMIT_JOIN_TIME_KEY, THEME_KEY } from "../../../localStoreConsts.js";
 import Button from "../../Button.js";
-import ThemeSwitcher from "../../ThemeSwitcher.js";
 import InputField from "../../form-fields/InputField.js";
 import SelectField from "../../form-fields/SelectField.js";
 
@@ -48,12 +46,6 @@ export default function Frontend() {
                         {t("reset_all")}
                     </Button>
                 </div>
-            </div>
-            <div>
-                {t("language")} <LanguageSwitcher useExistingChildren />
-            </div>
-            <div>
-                {t("theme")} <ThemeSwitcher useExistingChildren />
             </div>
             <div>
                 <SelectField

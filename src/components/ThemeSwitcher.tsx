@@ -47,7 +47,7 @@ const ALL_THEMES = [
 // XXX: workaround typing
 const local = store2 as unknown as typeof store2.default;
 
-const ThemeSwitcher = memo(({ useExistingChildren }: { useExistingChildren?: true }) => {
+const ThemeSwitcher = memo(() => {
     const [currentTheme, setCurrentTheme] = useState<string>(local.get(THEME_KEY, ""));
 
     useEffect(() => {
@@ -62,19 +62,18 @@ const ThemeSwitcher = memo(({ useExistingChildren }: { useExistingChildren?: tru
             buttonStyle="mx-1"
             dropdownStyle="dropdown-end"
         >
-            {!useExistingChildren &&
-                ALL_THEMES.map((theme) => (
-                    <li key={theme || "default"}>
-                        <input
-                            type="radio"
-                            name="theme-dropdown"
-                            className="theme-controller w-full btn btn-block btn-ghost"
-                            aria-label={theme || "Default"}
-                            value={theme.toLowerCase()}
-                            onChange={() => setCurrentTheme(theme.toLowerCase())}
-                        />
-                    </li>
-                ))}
+            {ALL_THEMES.map((theme) => (
+                <li key={theme || "default"}>
+                    <input
+                        type="radio"
+                        name="theme-dropdown"
+                        className="theme-controller w-full btn btn-block btn-ghost"
+                        aria-label={theme || "Default"}
+                        value={theme.toLowerCase()}
+                        onChange={() => setCurrentTheme(theme.toLowerCase())}
+                    />
+                </li>
+            ))}
         </PopoverDropdown>
     );
 });
