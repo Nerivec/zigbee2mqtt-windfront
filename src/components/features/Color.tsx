@@ -6,21 +6,26 @@ import type { BaseFeatureProps } from "./index.js";
 type ColorProps = BaseFeatureProps<ColorFeature>;
 
 const Color = memo((props: ColorProps) => {
-    const { deviceValue, feature, onChange, minimal } = props;
+    const {
+        deviceValue,
+        feature: { name, features, property },
+        onChange,
+        minimal,
+    } = props;
 
     const value = useMemo(() => {
         const val = {} as AnyColor;
 
-        for (const innerFeature of feature.features) {
+        for (const innerFeature of features) {
             val[innerFeature.name] = deviceValue?.[innerFeature.property] ?? 0;
         }
 
         return val;
-    }, [deviceValue, feature]);
+    }, [deviceValue, features]);
 
-    const onEditorChange = useCallback((color: AnyColor | { hex: string }) => onChange({ color }), [onChange]);
+    const onEditorChange = useCallback((color: AnyColor | { hex: string }) => onChange({ [property ?? "color"]: color }), [property, onChange]);
 
-    return <ColorEditor onChange={onEditorChange} value={value} format={feature.name} minimal={minimal} />;
+    return <ColorEditor onChange={onEditorChange} value={value} format={name} minimal={minimal} />;
 });
 
 export default Color;
