@@ -52,15 +52,9 @@ const PowerSource = memo((props: PowerSourceProps) => {
                     batteryIcon = faBatteryHalf;
                 } else if (batteryPercent >= 20) {
                     batteryIcon = faBatteryQuarter;
-                } else if (batteryPercent >= 10) {
+                } else {
                     batteryIcon = faBatteryEmpty;
                     fade = true;
-                } else {
-                    return (
-                        <span className="animate-pulse text-error" role="alert">
-                            {batteryPercent}%
-                        </span>
-                    );
                 }
             } else if (batteryState != null) {
                 batteryFormatted = batteryState;
@@ -92,10 +86,10 @@ const PowerSource = memo((props: PowerSourceProps) => {
             }
 
             return (
-                <>
-                    <FontAwesomeIcon icon={batteryIcon} fade={fade} title={title} className={fade ? "text-error" : ""} {...rest} />
+                <span className={fade ? "text-error" : ""}>
+                    <FontAwesomeIcon icon={batteryIcon} fade={fade} title={title} {...rest} />
                     {showLevel && <span className="ps-2">{batteryFormatted}</span>}
-                </>
+                </span>
             );
         }
         case "Mains (single phase)":

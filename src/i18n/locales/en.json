@@ -54,6 +54,7 @@
         "failed": "Failed",
         "disabled": "Disabled",
         "hide_disabled": "Hide disabled",
+        "battery_low_only": "Battery low only",
         "execute": "Execute",
         "command": "Command",
         "payload": "Payload",

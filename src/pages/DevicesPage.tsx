@@ -36,6 +36,7 @@ export default function DevicesPage(): JSX.Element {
     const bridgeConfig = useAppSelector((state) => state.bridgeInfo.config);
     const availability = useAppSelector((state) => state.availability);
     const [hideDisabled, setHideDisabled] = useState<boolean>(local.get(DEVICES_HIDE_DISABLED_KEY, false));
+    const [batteryLowOnly, setBatteryLowOnly] = useState(false);
     const { t } = useTranslation(["zigbee", "common", "availability"]);
 
     const data = useMemo((): DeviceTableData[] => {
@@ -45,6 +46,28 @@ export default function DevicesPage(): JSX.Element {
             if (device.type !== "Coordinator" && (!hideDisabled || !device.disabled)) {
                 const state = deviceStates[device.friendly_name] ?? {};
                 const deviceAvailability = bridgeConfig.devices[device.ieee_address]?.availability;
+
+                if (batteryLowOnly) {
+                    if (device.power_source !== "Battery") {
+                        continue;
+                    }
+
+                    if ("battery" in state) {
+                        if ((state.battery as number) >= 20) {
+                            continue;
+                        }
+                    } else if ("battery_state" in state) {
+                        if (state.battery_state !== "low") {
+                            continue;
+                        }
+                    } else if ("battery_low" in state) {
+                        if (!state.battery_low) {
+                            continue;
+                        }
+                    } else {
+                        continue;
+                    }
+                }
 
                 renderDevices.push({
                     device,
@@ -56,11 +79,15 @@ export default function DevicesPage(): JSX.Element {
         }
 
         return renderDevices;
-    }, [devices, deviceStates, bridgeConfig.devices, availability, hideDisabled]);
+    }, [devices, deviceStates, bridgeConfig.devices, availability, hideDisabled, batteryLowOnly]);
 
     const onHideDisabledChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         local.set(DEVICES_HIDE_DISABLED_KEY, e.target.checked);
         setHideDisabled(e.target.checked);
+    }, []);
+
+    const onBatteryLowOnlyChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setBatteryLowOnly(e.target.checked);
     }, []);
 
     const renameDevice = useCallback(
@@ -226,7 +253,22 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "controls",
                 header: () => (
-                    <CheckboxField name="hide_disabled" detail={t("common:hide_disabled")} onChange={onHideDisabledChange} checked={hideDisabled} />
+                    <>
+                        <CheckboxField
+                            name="battery_low_only"
+                            detail={t("common:battery_low_only")}
+                            onChange={onBatteryLowOnlyChange}
+                            checked={batteryLowOnly}
+                            className="checkbox checkbox-sm"
+                        />
+                        <CheckboxField
+                            name="hide_disabled"
+                            detail={t("common:hide_disabled")}
+                            onChange={onHideDisabledChange}
+                            checked={hideDisabled}
+                            className="checkbox checkbox-sm"
+                        />
+                    </>
                 ),
                 cell: ({
                     row: {
@@ -251,10 +293,12 @@ export default function DevicesPage(): JSX.Element {
         ],
         [
             hideDisabled,
+            batteryLowOnly,
             bridgeConfig.advanced.last_seen,
             bridgeConfig.availability.enabled,
             bridgeConfig.homeassistant.enabled,
             onHideDisabledChange,
+            onBatteryLowOnlyChange,
             renameDevice,
             removeDevice,
             configureDevice,
