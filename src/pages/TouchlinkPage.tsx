@@ -57,6 +57,8 @@ export default function TouchlinkPage() {
                     ) : (
                         touchlinkDevice.ieee_address
                     ),
+                // XXX: for some reason, the default sorting algorithm does not sort properly
+                sortingFn: (rowA, rowB) => rowA.original.ieee_address.localeCompare(rowB.original.ieee_address),
             },
             {
                 header: t("common:friendly_name"),

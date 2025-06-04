@@ -159,6 +159,8 @@ export default function DevicesPage(): JSX.Element {
                         </div>
                     </>
                 ),
+                // XXX: for some reason, the default sorting algorithm does not sort properly
+                sortingFn: (rowA, rowB) => rowA.original.device.ieee_address.localeCompare(rowB.original.device.ieee_address),
             },
             {
                 id: "model",
