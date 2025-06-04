@@ -5,11 +5,11 @@ import type { Device } from "../../types.js";
 import { getZ2MDeviceImage } from "./index.js";
 
 type LazyImageProps = {
-    device: Device;
+    device?: Device;
     className?: string;
 };
 
-const LazyImage = memo(({ device, className }: Readonly<LazyImageProps>) => {
+const LazyImage = memo(({ device = {} as Device, className }: Readonly<LazyImageProps>) => {
     const fromDefinition = device.definition?.icon;
     const fromZ2MDocs = getZ2MDeviceImage(device);
     const srcList: string[] = [];

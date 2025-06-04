@@ -9,7 +9,7 @@ import ErrorBoundary from "./ErrorBoundary.js";
 import LazyImage from "./LazyImage.js";
 
 type DeviceImageProps = {
-    device: Device;
+    device?: Device;
     otaState?: string;
     disabled: boolean;
     className?: string;

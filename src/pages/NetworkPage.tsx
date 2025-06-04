@@ -118,7 +118,7 @@ export default function NetworkPage() {
                 >
                     {networkMap ? <FontAwesomeIcon icon={faSync} /> : <FontAwesomeIcon icon={faDownLong} />}
                 </Button>
-                {networkMap?.type === "raw" && (
+                {mapType === "raw" && (
                     <SelectField name="display_type" label={t("display_type")} value={displayType} onChange={onDisplayTypeChange}>
                         <option value="data">data</option>
                         <option value="map">map</option>
