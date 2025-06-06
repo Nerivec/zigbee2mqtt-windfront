@@ -62,7 +62,7 @@ const NumberField = memo((props: NumberFieldProps) => {
             )}
             {!minimal && (
                 <input
-                    className={`input${props.pattern || props.required ? " validator" : ""}`}
+                    className={`input min-w-xs${props.pattern || props.required ? " validator" : ""}`}
                     onChange={onChangeHandler}
                     onBlur={onSubmitHandler}
                     {...rest}

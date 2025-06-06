@@ -104,9 +104,10 @@ export function AttributeEditor(props: AttributeEditorProps) {
             attributes.length > 0 && (
                 <fieldset className="fieldset gap-2 p-3 rounded-box shadow-md">
                     {attributes.map(({ attribute, value = "", definition }) => (
-                        <div key={attribute} className="join join-horizontal">
+                        <div key={attribute} className="join join-horizontal min-w-xs">
                             {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
                             <label className="input join-item">
+                                {attribute}
                                 <AttributeValueInput
                                     value={value}
                                     attribute={attribute}
@@ -122,7 +123,6 @@ export function AttributeEditor(props: AttributeEditorProps) {
                                         setAttributes(newAttributes);
                                     }}
                                 />
-                                {attribute}
                             </label>
                             <Button<string>
                                 className="btn btn-error btn-outline join-item"

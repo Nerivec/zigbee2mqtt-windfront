@@ -38,7 +38,7 @@ const ArrayField = memo((props: ArrayFieldProps) => {
             <div className="flex flex-row flex-wrap gap-2">
                 {currentValues.map((value, idx) => (
                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                    <div className="join" key={`${value}-${idx}`}>
+                    <div className="join min-w-xs" key={`${value}-${idx}`}>
                         <input
                             className="input join-item"
                             onBlur={(e: FocusEvent<HTMLInputElement>) => {
