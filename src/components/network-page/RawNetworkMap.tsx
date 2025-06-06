@@ -10,25 +10,13 @@ import {
     NETWORK_MAP_NODE_STRENGTH_KEY,
 } from "../../localStoreConsts.js";
 import fontUrl from "./../../styles/NotoSans-Regular.ttf";
-import { type NetworkMapLink, ZigbeeRelationship } from "./index.js";
+import { EDGE_RELATIONSHIP_FILL_COLORS, NODE_TYPE_FILL_COLORS, type NetworkMapLink, ZigbeeRelationship } from "./index.js";
 import ContextMenu from "./raw-map/ContextMenu.js";
 import Controls from "./raw-map/Controls.js";
+import Legend from "./raw-map/Legend.js";
 
 type RawNetworkMapProps = {
     map: Zigbee2MQTTNetworkMap;
-};
-
-const NODE_TYPE_FILL_COLORS = {
-    Coordinator: "#ffff00",
-    Router: "#0000ff",
-    EndDevice: "#00ff00",
-};
-
-const EDGE_RELATIONSHIP_FILL_COLORS = {
-    [ZigbeeRelationship.NeighborIsParent]: "#ff0000",
-    [ZigbeeRelationship.NeighborIsAChild]: "#00ffff",
-    [ZigbeeRelationship.NeighborIsASibling]: "#000000",
-    // others ignored by Z2M
 };
 
 const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
@@ -188,6 +176,7 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
 
     return (
         <>
+            <Legend />
             <div className="relative h-screen">
                 <Controls
                     graphRef={graphRef}

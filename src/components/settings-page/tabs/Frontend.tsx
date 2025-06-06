@@ -115,90 +115,78 @@ export default function Frontend() {
                 </div>
             </div>
             <div className="flex flex-row flex-wrap gap-2 mt-3">
-                <div className="w-72">
-                    <SelectField
-                        name="homepage"
-                        label={t("homepage")}
-                        onChange={(e) => !e.target.validationMessage && setHomepage(e.target.value)}
-                        value={homepage}
-                        required
-                    >
-                        <option value="devices">{t("navbar:devices")}</option>
-                        <option value="dashboard">{t("navbar:dashboard")}</option>
-                    </SelectField>
-                </div>
-                <div className="w-72">
-                    <InputField
-                        type="number"
-                        name="permit_join_time"
-                        label={t("permit_join_time")}
-                        min={10}
-                        max={254}
-                        required
-                        value={permitJoinTime}
-                        onChange={(e) => !e.target.validationMessage && !!e.target.value && setPermitJoinTime(e.target.valueAsNumber)}
-                    />
-                </div>
-                <div className="w-72">
-                    <InputField
-                        type="number"
-                        name="max_on_screen_notifications"
-                        label={t("max_on_screen_notifications")}
-                        min={1}
-                        max={5}
-                        required
-                        value={maxOnScreenNotifications}
-                        onChange={(e) => !e.target.validationMessage && !!e.target.value && setMaxOnScreenNotifications(e.target.valueAsNumber)}
-                    />
-                </div>
+                <SelectField
+                    name="homepage"
+                    label={t("homepage")}
+                    onChange={(e) => !e.target.validationMessage && setHomepage(e.target.value)}
+                    value={homepage}
+                    required
+                >
+                    <option value="devices">{t("navbar:devices")}</option>
+                    <option value="dashboard">{t("navbar:dashboard")}</option>
+                </SelectField>
+                <InputField
+                    type="number"
+                    name="permit_join_time"
+                    label={t("permit_join_time")}
+                    min={10}
+                    max={254}
+                    required
+                    value={permitJoinTime}
+                    onChange={(e) => !e.target.validationMessage && !!e.target.value && setPermitJoinTime(e.target.valueAsNumber)}
+                />
+                <InputField
+                    type="number"
+                    name="max_on_screen_notifications"
+                    label={t("max_on_screen_notifications")}
+                    min={1}
+                    max={5}
+                    required
+                    value={maxOnScreenNotifications}
+                    onChange={(e) => !e.target.validationMessage && !!e.target.value && setMaxOnScreenNotifications(e.target.valueAsNumber)}
+                />
             </div>
             <h2 className="text-lg mt-2">{t("network_raw")}</h2>
             <div className="flex flex-row flex-wrap gap-2">
-                <div className="w-72">
-                    <SelectField
-                        name="network:display_type"
-                        label={t("network:display_type")}
-                        onChange={(e) => !e.target.validationMessage && setNetworkRawDisplayType(e.target.value as NetworkRawDisplayType)}
-                        value={networkRawDisplayType}
-                        required
-                    >
-                        <option value="data">{t("network:data")}</option>
-                        <option value="map">{t("network:map")}</option>
-                    </SelectField>
-                </div>
+                <SelectField
+                    name="network:display_type"
+                    label={t("network:display_type")}
+                    onChange={(e) => !e.target.validationMessage && setNetworkRawDisplayType(e.target.value as NetworkRawDisplayType)}
+                    value={networkRawDisplayType}
+                    required
+                >
+                    <option value="data">{t("network:data")}</option>
+                    <option value="map">{t("network:map")}</option>
+                </SelectField>
             </div>
             <h2 className="text-lg mt-2">{t("network_map")}</h2>
             <div className="flex flex-row flex-wrap gap-2">
-                <div className="w-72">
-                    <SelectField
-                        name="network:layout_type"
-                        label={t("network:layout_type")}
-                        onChange={(e) => !e.target.validationMessage && setNetworkMapLayoutType(e.target.value as LayoutTypes)}
-                        value={networkMapLayoutType}
-                        required
-                    >
-                        <option value="forceDirected2d">forceDirected2d</option>
-                        <option value="forceDirected3d">forceDirected3d</option>
-                        <option value="radialOut2d">radialOut2d</option>
-                        <option value="radialOut3d">radialOut3d</option>
-                    </SelectField>
-                </div>
-                <div className="w-72">
-                    <SelectField
-                        name="network:label_type"
-                        label={t("network:label_type")}
-                        onChange={(e) => !e.target.validationMessage && setNetworkMapLabelType(e.target.value as LabelVisibilityType)}
-                        value={networkMapLabelType}
-                        required
-                    >
-                        <option value="all">all</option>
-                        <option value="auto">auto</option>
-                        <option value="none">none</option>
-                        <option value="nodes">nodes</option>
-                        <option value="edges">edges</option>
-                    </SelectField>
-                </div>
-                <div className="w-72">
+                <SelectField
+                    name="network:layout_type"
+                    label={t("network:layout_type")}
+                    onChange={(e) => !e.target.validationMessage && setNetworkMapLayoutType(e.target.value as LayoutTypes)}
+                    value={networkMapLayoutType}
+                    required
+                >
+                    <option value="forceDirected2d">forceDirected2d</option>
+                    <option value="forceDirected3d">forceDirected3d</option>
+                    <option value="radialOut2d">radialOut2d</option>
+                    <option value="radialOut3d">radialOut3d</option>
+                </SelectField>
+                <SelectField
+                    name="network:label_type"
+                    label={t("network:label_type")}
+                    onChange={(e) => !e.target.validationMessage && setNetworkMapLabelType(e.target.value as LabelVisibilityType)}
+                    value={networkMapLabelType}
+                    required
+                >
+                    <option value="all">all</option>
+                    <option value="auto">auto</option>
+                    <option value="none">none</option>
+                    <option value="nodes">nodes</option>
+                    <option value="edges">edges</option>
+                </SelectField>
+                <div className="min-w-xs">
                     <NumberField
                         name="network:node_strength"
                         label={t("network:node_strength")}
@@ -209,7 +197,7 @@ export default function Frontend() {
                         defaultValue={networkMapNodeStrength}
                     />
                 </div>
-                <div className="w-72">
+                <div className="min-w-xs">
                     <NumberField
                         name="network:link_distance"
                         label={t("network:link_distance")}

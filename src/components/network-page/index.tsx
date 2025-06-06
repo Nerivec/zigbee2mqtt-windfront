@@ -11,3 +11,16 @@ export const enum ZigbeeRelationship {
     NoneOfTheAbove = 0x03,
     NeighborIsPreviousChild = 0x04,
 }
+
+export const NODE_TYPE_FILL_COLORS = {
+    Coordinator: "#ffff00",
+    Router: "#0000ff",
+    EndDevice: "#00ff00",
+};
+
+export const EDGE_RELATIONSHIP_FILL_COLORS = {
+    [ZigbeeRelationship.NeighborIsParent]: "#ff0000",
+    [ZigbeeRelationship.NeighborIsAChild]: "#44ff88",
+    [ZigbeeRelationship.NeighborIsASibling]: "#8888ff",
+    // others ignored by Z2M
+};

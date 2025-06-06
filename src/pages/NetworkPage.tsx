@@ -112,9 +112,9 @@ export default function NetworkPage() {
         <>
             <div className="flex flex-row justify-center gap-3 mb-2">
                 <SelectField name="type" label={t("type")} value={mapType} onChange={onMapTypeChange}>
-                    <option value="raw">raw</option>
-                    <option value="graphviz">graphviz</option>
-                    <option value="plantuml">plantuml</option>
+                    <option value="raw">{t("raw")}</option>
+                    <option value="graphviz">{t("graphviz")}</option>
+                    <option value="plantuml">{t("plantuml")}</option>
                 </SelectField>
                 <CheckboxField name="enable_routes" label={t("enable_routes")} checked={enableRoutes} onChange={onEnableRoutesChange} />
                 <Button
