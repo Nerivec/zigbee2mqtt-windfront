@@ -49,7 +49,7 @@ export default function Table<T>(props: Props<T>) {
 
     return (
         <div className="overflow-x-auto">
-            <table id={id} className="table table-sm">
+            <table id={id} className="table table-sm mb-3">
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>

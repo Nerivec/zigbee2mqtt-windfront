@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
         "outDir": "./dist",
-        "moduleResolution": "nodenext",
-        "module": "NodeNext",
-        "target": "ES2022",
-        "lib": ["ES2022", "DOM"],
+        "moduleResolution": "bundler",
+        "module": "esnext",
+        "target": "esnext",
+        "lib": ["ESNext", "DOM"],
         "noImplicitAny": false,
         "removeComments": true,
         "sourceMap": true,

@@ -1,150 +1,236 @@
-import "@xyflow/react/dist/base.css";
-import dagre from "@dagrejs/dagre";
-import {
-    Background,
-    BackgroundVariant,
-    ConnectionLineType,
-    type Edge,
-    type Node,
-    Position,
-    ReactFlow,
-    useEdgesState,
-    useNodesState,
-} from "@xyflow/react";
-import { memo, useCallback, useMemo } from "react";
+import { type ChangeEvent, memo, useCallback, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { GraphCanvas, type GraphCanvasRef, type GraphEdge, type GraphNode, type LabelVisibilityType, type LayoutTypes, useSelection } from "reagraph";
+import store2 from "store2";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
-import { type DagreDirection, type RawMapEdge, type RawMapNode, ZigbeeRelationship } from "./index.js";
-import ChildEdge from "./raw-map/ChildEdge.js";
+import {
+    NETWORK_MAP_LABEL_TYPE_KEY,
+    NETWORK_MAP_LAYOUT_TYPE_KEY,
+    NETWORK_MAP_LINK_DISTANCE_KEY,
+    NETWORK_MAP_NODE_STRENGTH_KEY,
+} from "../../localStoreConsts.js";
+import fontUrl from "./../../styles/NotoSans-Regular.ttf";
+import { type NetworkMapLink, ZigbeeRelationship } from "./index.js";
+import ContextMenu from "./raw-map/ContextMenu.js";
 import Controls from "./raw-map/Controls.js";
-import CoordinatorNode from "./raw-map/CoordinatorNode.js";
-import EndDeviceNode from "./raw-map/EndDeviceNode.js";
-import ParentEdge from "./raw-map/ParentEdge.js";
-import RouterNode from "./raw-map/RouterNode.js";
-import SiblingEdge from "./raw-map/SiblingEdge.js";
 
 type RawNetworkMapProps = {
     map: Zigbee2MQTTNetworkMap;
 };
 
-const DEFAULT_EDGE_TYPES = {
-    [ZigbeeRelationship.NeighborIsParent]: ParentEdge,
-    [ZigbeeRelationship.NeighborIsAChild]: ChildEdge,
-    [ZigbeeRelationship.NeighborIsASibling]: SiblingEdge,
-    // [ZigbeeRelationship.NoneOfTheAbove]: ,
+const NODE_TYPE_FILL_COLORS = {
+    Coordinator: "#ffff00",
+    Router: "#0000ff",
+    EndDevice: "#00ff00",
 };
-const DEFAULT_NODE_TYPES = {
-    Coordinator: CoordinatorNode,
-    Router: RouterNode,
-    EndDevice: EndDeviceNode,
-};
-const DEFAULT_NODE_WIDTH = 64;
-const DEFAULT_NODE_HEIGHT = 64;
 
-const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
-
-const buildGraph = (nodes: RawMapNode[], edges: RawMapEdge[], direction: DagreDirection = "TB"): [Node<RawMapNode>[], Edge<RawMapEdge>[]] => {
-    const isHorizontal = direction === "LR";
-
-    dagreGraph.setGraph({
-        rankdir: direction,
-        nodesep: 128,
-        edgesep: 64,
-        ranksep: 128,
-        // network-simplex, tight-tree or longest-path
-        ranker: "network-simplex",
-    });
-
-    for (const node of nodes) {
-        dagreGraph.setNode(node.ieeeAddr, {
-            width: DEFAULT_NODE_WIDTH,
-            height: DEFAULT_NODE_HEIGHT,
-        });
-    }
-
-    const processedEdges: Edge<RawMapEdge>[] = [];
-
-    for (const edge of edges) {
-        if (edge.relationship > 2) {
-            continue;
-        }
-
-        dagreGraph.setEdge(edge.source.ieeeAddr, edge.target.ieeeAddr);
-        processedEdges.push({
-            id: `${edge.source.ieeeAddr}-${edge.target.ieeeAddr}-${edge.relationship}`,
-            source: edge.source.ieeeAddr,
-            target: edge.target.ieeeAddr,
-            type: `${edge.relationship}`,
-            animated: false,
-            data: edge,
-        });
-    }
-
-    dagre.layout(dagreGraph);
-
-    return [
-        nodes.map((node): Node<RawMapNode> => {
-            const nodeWithPosition = dagreGraph.node(node.ieeeAddr);
-
-            return {
-                id: node.ieeeAddr,
-                type: node.type,
-                targetPosition: isHorizontal ? Position.Left : Position.Top,
-                sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
-                // We are shifting the dagre node position (anchor=center center) to the top left so it matches the React Flow node anchor point (top left).
-                position: {
-                    x: nodeWithPosition.x - DEFAULT_NODE_WIDTH / 2,
-                    y: nodeWithPosition.y - DEFAULT_NODE_HEIGHT / 2,
-                },
-                data: node,
-            };
-        }),
-        processedEdges,
-    ];
+const EDGE_RELATIONSHIP_FILL_COLORS = {
+    [ZigbeeRelationship.NeighborIsParent]: "#ff0000",
+    [ZigbeeRelationship.NeighborIsAChild]: "#00ffff",
+    [ZigbeeRelationship.NeighborIsASibling]: "#000000",
+    // others ignored by Z2M
 };
 
 const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
-    const [processedNodes, processedEdges] = useMemo(() => buildGraph(map.nodes, map.links), [map]);
-    const [nodes, setNodes, onNodesChange] = useNodesState(processedNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(processedEdges);
+    const { t } = useTranslation("network");
+    const [layoutType, setLayoutType] = useState<LayoutTypes>(store2.get(NETWORK_MAP_LAYOUT_TYPE_KEY, "forceDirected2d"));
+    const [labelType, setLabelType] = useState<LabelVisibilityType>(store2.get(NETWORK_MAP_LABEL_TYPE_KEY, "all"));
+    const [nodeStrength, setNodeStrength] = useState<number>(store2.get(NETWORK_MAP_NODE_STRENGTH_KEY, -750));
+    const [linkDistance, setLinkDistance] = useState<number>(store2.get(NETWORK_MAP_LINK_DISTANCE_KEY, 50));
+    const graphRef = useRef<GraphCanvasRef | null>(null);
 
-    const onLayout = useCallback(
-        (direction: DagreDirection) => {
-            const [processedNodes, processedEdges] = buildGraph(map.nodes, map.links, direction);
+    const [nodes, edges] = useMemo(() => {
+        const computedNodes: GraphNode[] = [];
+        const computedEdges: GraphEdge[] = [];
+        const processedLinks: [NetworkMapLink, NetworkMapLink | undefined][] = [];
 
-            setNodes(processedNodes);
-            setEdges(processedEdges);
-        },
-        [map, setNodes, setEdges],
-    );
+        for (const node of map.nodes) {
+            // determine the parent friendly name for clustering from either the target (parent is source) or the source (parent is target)
+            const parent = map.links.find(
+                (link) => link.relationship === ZigbeeRelationship.NeighborIsParent && link.target.ieeeAddr === node.ieeeAddr,
+            );
+            let parentFriendlyName = parent ? map.nodes.find((n) => n.ieeeAddr === parent!.source.ieeeAddr)?.friendlyName : undefined;
+
+            if (!parent) {
+                const child = map.links.find(
+                    (link) => link.relationship === ZigbeeRelationship.NeighborIsAChild && link.source.ieeeAddr === node.ieeeAddr,
+                );
+                parentFriendlyName = child ? map.nodes.find((n) => n.ieeeAddr === child!.target.ieeeAddr)?.friendlyName : undefined;
+
+                if (parentFriendlyName) {
+                    parentFriendlyName += ` - ${t("children")}`;
+                }
+            }
+
+            computedNodes.push({
+                id: node.ieeeAddr,
+                data: {
+                    ...node,
+                    parent: parentFriendlyName,
+                },
+                label: node.friendlyName,
+                // subLabel: node.ieeeAddr,
+                labelVisible: true,
+                // icon: device.definition.icon
+                fill: NODE_TYPE_FILL_COLORS[node.type],
+            });
+        }
+
+        const bestSiblings = new Map<string, NetworkMapLink>();
+
+        for (const link of map.links) {
+            if (link.relationship === ZigbeeRelationship.NeighborIsASibling) {
+                const bestSibling = bestSiblings.get(link.source.ieeeAddr);
+
+                // pick lowest depth, or highest LQI, de-dupe LQI by lowest depth
+                // not "perfect", but should represent the network mostly accurately, without crowding with pointless sibling links
+                if (
+                    !bestSibling ||
+                    link.depth < bestSibling.depth ||
+                    link.linkquality > bestSibling.linkquality ||
+                    (bestSibling.linkquality === link.linkquality && link.depth < bestSibling.depth)
+                ) {
+                    bestSiblings.set(link.source.ieeeAddr, link);
+                }
+
+                continue;
+            }
+
+            const oppositeLink = map.links.find(
+                (oLink) => oLink.source.ieeeAddr === link.target.ieeeAddr && oLink.target.ieeeAddr === link.source.ieeeAddr,
+            );
+
+            // only add Parent when Parent+Child present
+            if (!(link.relationship === ZigbeeRelationship.NeighborIsAChild && oppositeLink?.relationship === ZigbeeRelationship.NeighborIsParent)) {
+                processedLinks.push([link, oppositeLink]);
+            }
+        }
+
+        for (const [, bestSibling] of bestSiblings) {
+            const oppositeLink = map.links.find(
+                (oLink) => oLink.source.ieeeAddr === bestSibling.target.ieeeAddr && oLink.target.ieeeAddr === bestSibling.source.ieeeAddr,
+            );
+
+            processedLinks.push([bestSibling, oppositeLink]);
+        }
+
+        const ignoreLinks: NetworkMapLink[] = [];
+
+        for (const [link, oppositeLink] of processedLinks) {
+            if (ignoreLinks.includes(link)) {
+                continue;
+            }
+
+            if (link.relationship === ZigbeeRelationship.NeighborIsASibling) {
+                if (
+                    oppositeLink?.relationship === ZigbeeRelationship.NeighborIsParent ||
+                    oppositeLink?.relationship === ZigbeeRelationship.NeighborIsAChild
+                ) {
+                    // skip Sibling link when Parent/Child link also present
+                    continue;
+                }
+            }
+
+            computedEdges.push({
+                id: `${link.source.ieeeAddr}-${link.target.ieeeAddr}-${link.relationship}`,
+                data: link,
+                label: oppositeLink ? `${link.linkquality} / ${oppositeLink.linkquality ?? "?"}` : `${link.linkquality}`,
+                size:
+                    link.relationship === ZigbeeRelationship.NeighborIsParent || link.relationship === ZigbeeRelationship.NeighborIsAChild
+                        ? 1.5
+                        : 0.75,
+                labelVisible: true,
+                source: link.source.ieeeAddr,
+                target: link.target.ieeeAddr,
+                fill: EDGE_RELATIONSHIP_FILL_COLORS[link.relationship],
+            });
+        }
+
+        return [computedNodes, computedEdges];
+    }, [map, t]);
+
+    const { selections, actives, onNodeClick, onCanvasClick } = useSelection({
+        ref: graphRef,
+        nodes: nodes,
+        edges: edges,
+        type: "single",
+        pathSelectionType: "out",
+        /** XXX: camera reset on unselect is annoying */
+        focusOnSelect: false,
+    });
+
+    const onLayoutTypeChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+        if (event.target.value) {
+            store2.set(NETWORK_MAP_LAYOUT_TYPE_KEY, event.target.value);
+            setLayoutType(event.target.value as LayoutTypes);
+            graphRef.current?.resetControls();
+            graphRef.current?.centerGraph();
+            graphRef.current?.fitNodesInView();
+        }
+    }, []);
+
+    const onLabelTypeChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+        if (event.target.value) {
+            store2.set(NETWORK_MAP_LABEL_TYPE_KEY, event.target.value);
+            setLabelType(event.target.value as LabelVisibilityType);
+        }
+    }, []);
+
+    const onNodeStrengthChange = useCallback((value: number) => {
+        store2.set(NETWORK_MAP_NODE_STRENGTH_KEY, value);
+        setNodeStrength(value);
+    }, []);
+
+    const onLinkDistanceChange = useCallback((value: number) => {
+        store2.set(NETWORK_MAP_LINK_DISTANCE_KEY, value);
+        setLinkDistance(value);
+    }, []);
 
     return (
-        <div className="h-screen px-6">
-            <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                nodeTypes={DEFAULT_NODE_TYPES}
-                edgeTypes={DEFAULT_EDGE_TYPES}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                elementsSelectable
-                selectNodesOnDrag={false}
-                elevateNodesOnSelect
-                elevateEdgesOnSelect
-                nodesDraggable
-                nodesFocusable
-                nodesConnectable={false}
-                edgesFocusable
-                edgesReconnectable={false}
-                connectionLineType={ConnectionLineType.SmoothStep}
-                fitView
-                minZoom={0.1}
-                maxZoom={3}
-                className="!bg-base-100"
-            >
-                <Controls onLayout={onLayout} />
-                <Background variant={BackgroundVariant.Dots} className="text-base-content" />
-            </ReactFlow>
-        </div>
+        <>
+            <div className="relative h-screen">
+                <Controls
+                    graphRef={graphRef}
+                    layoutType={layoutType}
+                    onLayoutTypeChange={onLayoutTypeChange}
+                    labelType={labelType}
+                    onLabelTypeChange={onLabelTypeChange}
+                    nodeStrength={nodeStrength}
+                    onNodeStrengthChange={onNodeStrengthChange}
+                    linkDistance={linkDistance}
+                    onLinkDistanceChange={onLinkDistanceChange}
+                    nodes={nodes}
+                />
+                <GraphCanvas
+                    ref={graphRef}
+                    nodes={nodes}
+                    edges={edges}
+                    clusterAttribute={layoutType.startsWith("forceDirected") ? "parent" : undefined}
+                    selections={selections}
+                    actives={actives}
+                    onCanvasClick={onCanvasClick}
+                    onNodeClick={onNodeClick}
+                    layoutType={layoutType}
+                    layoutOverrides={{
+                        nodeStrength,
+                        linkDistance,
+                    }}
+                    sizingType="centrality"
+                    labelType={labelType}
+                    labelFontUrl={fontUrl}
+                    edgeLabelPosition="natural"
+                    lassoType="node"
+                    cameraMode={layoutType.endsWith("3d") ? "rotate" : "pan"}
+                    draggable
+                    animated={false}
+                    contextMenu={({ data: { data }, onCollapse, isCollapsed, canCollapse, onClose }) =>
+                        data.friendlyName ? (
+                            <ContextMenu data={data} onCollapse={onCollapse} isCollapsed={isCollapsed} canCollapse={canCollapse} onClose={onClose} />
+                        ) : null
+                    }
+                />
+            </div>
+        </>
     );
 });
 

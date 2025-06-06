@@ -7,7 +7,8 @@
     },
     "files": {
         "ignoreUnknown": false,
-        "ignore": ["package.json", "package-lock.json", "src/styles/styles.global.css"]
+        "ignore": ["package.json", "package-lock.json", "src/styles/styles.global.css"],
+        "maxSize": 5242880
     },
     "formatter": {
         "enabled": true,

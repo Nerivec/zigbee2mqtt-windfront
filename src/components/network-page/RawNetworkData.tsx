@@ -10,8 +10,7 @@ import { toHex } from "../../utils.js";
 import DeviceImage from "../device/DeviceImage.js";
 import DebouncedInput from "../form-fields/DebouncedInput.js";
 import PowerSource from "../value-decorators/PowerSource.js";
-import RawRelationGroup from "./RawRelationGroup.js";
-import { ZIGBEE_RELATIONSHIP_TMAP } from "./index.js";
+import RawRelationGroup from "./raw-data/RawRelationGroup.js";
 
 type RawNetworkMapProps = {
     map: Zigbee2MQTTNetworkMap;
@@ -53,7 +52,7 @@ const RawNetworkData = memo(({ map }: RawNetworkMapProps) => {
                             relations={relations}
                             highlight={highlight}
                             setHighlightValue={setHighlightValue}
-                            relationship={ZIGBEE_RELATIONSHIP_TMAP[key]}
+                            relationship={key}
                         />,
                     );
                 }

@@ -9,13 +9,15 @@ type NumberFieldProps = Omit<
     detail?: string;
     min?: number;
     max?: number;
+    step?: number;
     defaultValue: number | "";
+    minimal?: boolean;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     onSubmit?: (value: number | "", valid: boolean) => void;
 };
 
 const NumberField = memo((props: NumberFieldProps) => {
-    const { label, detail, onChange, onSubmit, defaultValue, ...rest } = props;
+    const { label, detail, onChange, onSubmit, defaultValue, minimal, ...rest } = props;
     const [currentValue, setCurrentValue] = useState<number | "">(defaultValue);
 
     useEffect(() => {
@@ -52,23 +54,22 @@ const NumberField = memo((props: NumberFieldProps) => {
                         value={currentValue}
                     />
                     <div className="flex justify-between px-1 mt-1 text-xs">
-                        <span>|</span>
-                        <span>|</span>
-                    </div>
-                    <div className="flex justify-between px-1 mt-1 text-xs">
                         <span>{props.min}</span>
+                        {minimal && <span>{currentValue}</span>}
                         <span>{props.max}</span>
                     </div>
                 </div>
             )}
-            <input
-                className={`input${props.pattern || props.required ? " validator" : ""}`}
-                onChange={onChangeHandler}
-                onBlur={onSubmitHandler}
-                {...rest}
-                type="number"
-                value={currentValue}
-            />
+            {!minimal && (
+                <input
+                    className={`input${props.pattern || props.required ? " validator" : ""}`}
+                    onChange={onChangeHandler}
+                    onBlur={onSubmitHandler}
+                    {...rest}
+                    type="number"
+                    value={currentValue}
+                />
+            )}
             {detail && <p className="label whitespace-normal">{detail}</p>}
         </fieldset>
     );

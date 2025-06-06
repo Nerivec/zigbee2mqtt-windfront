@@ -11,9 +11,6 @@ import Button from "../Button.js";
 import PopoverDropdown from "../PopoverDropdown.js";
 import Countdown from "../value-decorators/Countdown.js";
 
-// XXX: workaround typing
-const local = store2 as unknown as typeof store2.default;
-
 export default function PermitJoinButton() {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["navbar"]);
@@ -25,7 +22,7 @@ export default function PermitJoinButton() {
     const onPermitJoinClick = useCallback(
         async () =>
             await sendMessage("bridge/request/permit_join", {
-                time: permitJoin ? 0 : local.get(PERMIT_JOIN_TIME_KEY, 254),
+                time: permitJoin ? 0 : store2.get(PERMIT_JOIN_TIME_KEY, 254),
                 device: selectedRouter?.ieee_address,
             }),
         [sendMessage, selectedRouter, permitJoin],

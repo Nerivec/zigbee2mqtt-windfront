@@ -44,14 +44,11 @@ const ALL_THEMES = [
     "Wireframe",
 ];
 
-// XXX: workaround typing
-const local = store2 as unknown as typeof store2.default;
-
 const ThemeSwitcher = memo(() => {
-    const [currentTheme, setCurrentTheme] = useState<string>(local.get(THEME_KEY, ""));
+    const [currentTheme, setCurrentTheme] = useState<string>(store2.get(THEME_KEY, ""));
 
     useEffect(() => {
-        local.set(THEME_KEY, currentTheme);
+        store2.set(THEME_KEY, currentTheme);
         document.documentElement.setAttribute("data-theme", currentTheme);
     }, [currentTheme]);
 

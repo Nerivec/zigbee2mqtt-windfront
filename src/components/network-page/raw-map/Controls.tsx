@@ -1,144 +1,187 @@
-import { faDownload, faExpand, faLeftRight, faLock, faLockOpen, faMinus, faPlus, faQuestion, faUpDown } from "@fortawesome/free-solid-svg-icons";
+import {
+    faArrowsLeftRightToLine,
+    faArrowsUpToLine,
+    faDownload,
+    faExpand,
+    faMagnet,
+    faMinusSquare,
+    faPlusSquare,
+    faRotateRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ControlButton, Panel, type ReactFlowState, getNodesBounds, getViewportForBounds, useReactFlow, useStore, useStoreApi } from "@xyflow/react";
-import { toPng } from "html-to-image";
-import { memo, useCallback, useState } from "react";
+import saveAs from "file-saver";
+import { type ChangeEvent, type RefObject, memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { shallow } from "zustand/shallow";
-import type { DagreDirection } from "../index.js";
+import type { GraphCanvasRef, GraphNode, LabelVisibilityType, LayoutTypes } from "reagraph";
+import Button from "../../Button.js";
+import SliderField from "./SliderField.js";
 
 type ControlsProps = {
-    onLayout: (direction: DagreDirection) => void;
+    graphRef: RefObject<GraphCanvasRef | null>;
+    layoutType: LayoutTypes;
+    onLayoutTypeChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+    labelType: LabelVisibilityType;
+    onLabelTypeChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+    nodeStrength: number;
+    onNodeStrengthChange: (value: number) => void;
+    linkDistance: number;
+    onLinkDistanceChange: (value: number) => void;
+    nodes: GraphNode[];
 };
 
-function downloadImage(dataUrl: string) {
-    const a = document.createElement("a");
+const Controls = memo(
+    ({
+        graphRef,
+        layoutType,
+        onLayoutTypeChange,
+        labelType,
+        onLabelTypeChange,
+        nodeStrength,
+        onNodeStrengthChange,
+        linkDistance,
+        onLinkDistanceChange,
+        nodes,
+    }: ControlsProps) => {
+        const { t } = useTranslation("network");
 
-    a.setAttribute("download", `network-map-${Date.now()}.png`);
-    a.setAttribute("href", dataUrl);
-    a.click();
-}
+        const nodeOptions = useMemo(() => {
+            const mapping: [string, string][] = nodes.map((node) => [
+                node.id,
+                node.data.type !== "Coordinator" ? `${node.data.type[0]} - ${node.label}` : node.label!,
+            ]);
 
-const imageWidth = 1920;
-const imageHeight = 1080;
+            mapping.sort(([, a], [, b]) => a.localeCompare(b));
 
-const selector = (s: ReactFlowState) => ({
-    isInteractive: s.nodesDraggable || s.elementsSelectable,
-    minZoomReached: s.transform[2] <= s.minZoom,
-    maxZoomReached: s.transform[2] >= s.maxZoom,
-});
+            return mapping.map(([id, friendlyName]) => (
+                <option key={id} value={id}>
+                    {friendlyName}
+                </option>
+            ));
+        }, [nodes]);
 
-const Controls = memo(({ onLayout }: ControlsProps) => {
-    const { t } = useTranslation(["network", "common"]);
-    const store = useStoreApi();
-    const { isInteractive, minZoomReached, maxZoomReached } = useStore(selector, shallow);
-    const { zoomIn, zoomOut, fitView, getNodes } = useReactFlow();
-    const [showHelp, setShowHelp] = useState(false);
+        const downloadAsImage = useCallback(() => {
+            if (graphRef.current) {
+                saveAs(graphRef.current.exportCanvas(), `network-map-${Date.now()}.png`);
+            }
+        }, [graphRef]);
 
-    const onDownloadClick = useCallback(() => {
-        // we calculate a transform for the nodes so that all nodes are visible
-        // we then overwrite the transform of the `.react-flow__viewport` element
-        // with the style option of the html-to-image library
-        const nodesBounds = getNodesBounds(getNodes());
-        const viewport = getViewportForBounds(nodesBounds, imageWidth, imageHeight, 0.5, 2, 0.25);
+        const findNode = useCallback(
+            (event: ChangeEvent<HTMLSelectElement>) => {
+                if (event.target.value) {
+                    const target = [event.target.value];
 
-        toPng(document.querySelector<HTMLElement>(".react-flow__viewport")!, {
-            backgroundColor: "#1d232a",
-            width: imageWidth,
-            height: imageHeight,
-            style: {
-                width: `${imageWidth}px`,
-                height: `${imageHeight}px`,
-                transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
+                    graphRef.current?.centerGraph(target);
+                    graphRef.current?.fitNodesInView(target);
+                }
             },
-        }).then(downloadImage);
-    }, [getNodes]);
+            [graphRef],
+        );
 
-    const onHelpClick = useCallback(() => {
-        setShowHelp(!showHelp);
-    }, [showHelp]);
-
-    return (
-        <>
-            <Panel position="top-right" className="bg-accent-content">
-                <ControlButton onClick={() => onLayout("TB")} title={t("layout_top_bottom")}>
-                    <FontAwesomeIcon icon={faUpDown} className="text-accent" />
-                </ControlButton>
-                <ControlButton onClick={() => onLayout("LR")} title={t("layout_left_right")}>
-                    <FontAwesomeIcon icon={faLeftRight} className="text-accent" />
-                </ControlButton>
-                <ControlButton onClick={onDownloadClick} title={t("download_image")}>
-                    <FontAwesomeIcon icon={faDownload} className="text-accent" />
-                </ControlButton>
-            </Panel>
-            <Panel position="bottom-left" className="bg-accent-content">
-                <ControlButton onClick={() => zoomIn()} disabled={maxZoomReached} title={t("zoom_in")}>
-                    <FontAwesomeIcon icon={faPlus} className="text-accent" />
-                </ControlButton>
-                <ControlButton onClick={() => zoomOut()} disabled={minZoomReached} title={t("zoom_out")}>
-                    <FontAwesomeIcon icon={faMinus} className="text-accent" />
-                </ControlButton>
-                <ControlButton onClick={() => fitView()} title={t("fit_view")}>
-                    <FontAwesomeIcon icon={faExpand} className="text-accent" />
-                </ControlButton>
-                <ControlButton
-                    onClick={() => {
-                        store.setState({
-                            nodesDraggable: !isInteractive,
-                            elementsSelectable: !isInteractive,
-                        });
-                    }}
-                    title={t("toggle_interactivity")}
-                >
-                    <FontAwesomeIcon icon={isInteractive ? faLockOpen : faLock} className="text-accent" />
-                </ControlButton>
-            </Panel>
-            <Panel position="top-left" className="bg-accent-content">
-                <ControlButton title={t("help")} onClick={onHelpClick}>
-                    <FontAwesomeIcon icon={faQuestion} className="text-accent" />
-                </ControlButton>
-                {showHelp && (
-                    <div className="card shadow-sm max-w-prose max-h-[90vh]">
-                        <div className="card-body bg-base-200 overflow-y-auto">
-                            <p>{t("node_info")}</p>
-                            <p className="text-primary">{t("node_of_type")} Coordinator</p>
-                            <p className="text-secondary">{t("node_of_type")} Router</p>
-                            <p className="text-accent">{t("node_of_type")} EndDevice</p>
-                            <p className="text-warning">-- {t("link_of_type")} Parent</p>
-                            <p className="text-success">-- {t("link_of_type")} Sibling</p>
-                            <p className="text-info">-- {t("link_of_type")} Child</p>
-                            <div className="divider my-0.5" />
-                            <p>
-                                {t("pan_view")}: <kbd className="kbd kbd-sm">Mouse Drag</kbd>
-                            </p>
-                            <p>
-                                {t("zoom_view")}: <kbd className="kbd kbd-sm">Mouse Scroll</kbd>
-                            </p>
-                            <p>
-                                {t("select_area")}: <kbd className="kbd kbd-sm">Shift</kbd>+<kbd className="kbd kbd-sm">Mouse Drag</kbd>
-                            </p>
-                            <p>
-                                {t("change_focus")}: <kbd className="kbd kbd-sm">Tab</kbd> / <kbd className="kbd kbd-sm">Shift</kbd>+
-                                <kbd className="kbd kbd-sm">Tab</kbd>
-                            </p>
-                            <p>
-                                {t("select")}: <kbd className="kbd kbd-sm">Mouse Click</kbd> / <kbd className="kbd kbd-sm">Enter</kbd> /{" "}
-                                <kbd className="kbd kbd-sm">Space</kbd>
-                            </p>
-                            <p>
-                                {t("unselect")}: <kbd className="kbd kbd-sm">Mouse Click</kbd> (outside) / <kbd className="kbd kbd-sm">Escape</kbd>
-                            </p>
-                            <p>
-                                {t("move_selected")}: <kbd className="kbd kbd-sm">Mouse Drag</kbd> / <kbd className="kbd kbd-sm">Up</kbd> /{" "}
-                                <kbd className="kbd kbd-sm">Down</kbd> / <kbd className="kbd kbd-sm">Left</kbd> /{" "}
-                                <kbd className="kbd kbd-sm">Right</kbd>
-                            </p>
-                        </div>
-                    </div>
-                )}
-            </Panel>
-        </>
-    );
-});
+        return (
+            <>
+                <div className="absolute z-9 top-0 left-0 p-1 flex flex-row flex-wrap gap-1 items-start">
+                    <Button title={t("download_image")} className="btn btn-neutral btn-sm" onClick={downloadAsImage}>
+                        <FontAwesomeIcon icon={faDownload} />
+                    </Button>
+                    <Button
+                        title={t("reset_controls")}
+                        className="btn btn-neutral btn-sm"
+                        onClick={() => {
+                            graphRef.current?.resetControls();
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faRotateRight} />
+                    </Button>
+                    <Button
+                        title={t("fit_view")}
+                        className="btn btn-neutral btn-sm"
+                        onClick={() => {
+                            graphRef.current?.centerGraph();
+                            graphRef.current?.fitNodesInView();
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faExpand} />
+                    </Button>
+                    <Button
+                        title={t("zoom_in")}
+                        className="btn btn-neutral btn-sm"
+                        onClick={() => {
+                            graphRef.current?.zoomIn();
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faPlusSquare} />
+                    </Button>
+                    <Button
+                        title={t("zoom_out")}
+                        className="btn btn-neutral btn-sm"
+                        onClick={() => {
+                            graphRef.current?.zoomOut();
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faMinusSquare} />
+                    </Button>
+                    <select className="select select-sm w-36" title={t("find_node")} defaultValue="" onChange={findNode}>
+                        <option value="">{t("find_node")}</option>
+                        {nodeOptions}
+                    </select>
+                </div>
+                <div className="absolute z-9 top-0 right-0 p-1 flex flex-row flex-wrap gap-1 items-start justify-end">
+                    <select className="select select-sm w-36" title={t("layout_type")} value={layoutType} onChange={onLayoutTypeChange}>
+                        <option value="" disabled>
+                            {t("layout_type")}
+                        </option>
+                        <option value="forceDirected2d">forceDirected2d</option>
+                        <option value="forceDirected3d">forceDirected3d</option>
+                        <option value="radialOut2d">radialOut2d</option>
+                        <option value="radialOut3d">radialOut3d</option>
+                    </select>
+                    <select className="select select-sm w-36" title={t("label_type")} value={labelType} onChange={onLabelTypeChange}>
+                        <option value="" disabled>
+                            {t("label_type")}
+                        </option>
+                        <option value="all">all</option>
+                        <option value="auto">auto</option>
+                        <option value="none">none</option>
+                        <option value="nodes">nodes</option>
+                        <option value="edges">edges</option>
+                    </select>
+                </div>
+                <div className="absolute z-9 bottom-0 left-0 p-1 flex flex-row flex-wrap gap-1 items-end">
+                    <SliderField
+                        name="node_strength"
+                        label={t("node_strength")}
+                        icon={faMagnet}
+                        onSubmit={(value, valid) => valid && typeof value === "number" && onNodeStrengthChange(value)}
+                        min={-1000}
+                        max={-100}
+                        step={10}
+                        defaultValue={nodeStrength}
+                    />
+                    <SliderField
+                        name="link_distance"
+                        label={t("link_distance")}
+                        icon={faArrowsLeftRightToLine}
+                        onSubmit={(value, valid) => valid && typeof value === "number" && onLinkDistanceChange(value)}
+                        min={10}
+                        max={200}
+                        step={5}
+                        defaultValue={linkDistance}
+                    />
+                </div>
+                <div className="absolute z-9 bottom-0 right-0 p-1 flex flex-row flex-wrap gap-1 items-end justify-end">
+                    <Button
+                        title={t("scroll_to_top")}
+                        className="btn btn-primary btn-sm ml-auto"
+                        onClick={() => {
+                            window.scrollTo(0, 0);
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faArrowsUpToLine} />
+                    </Button>
+                </div>
+            </>
+        );
+    },
+);
 
 export default Controls;

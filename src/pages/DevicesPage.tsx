@@ -26,16 +26,13 @@ type DeviceTableData = {
     availabilityEnabledForDevice: boolean | undefined;
 };
 
-// XXX: workaround typing
-const local = store2 as unknown as typeof store2.default;
-
 export default function DevicesPage(): JSX.Element {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const devices = useAppSelector((state) => state.devices);
     const deviceStates = useAppSelector((state) => state.deviceStates);
     const bridgeConfig = useAppSelector((state) => state.bridgeInfo.config);
     const availability = useAppSelector((state) => state.availability);
-    const [hideDisabled, setHideDisabled] = useState<boolean>(local.get(DEVICES_HIDE_DISABLED_KEY, false));
+    const [hideDisabled, setHideDisabled] = useState<boolean>(store2.get(DEVICES_HIDE_DISABLED_KEY, false));
     const [batteryLowOnly, setBatteryLowOnly] = useState(false);
     const { t } = useTranslation(["zigbee", "common", "availability"]);
 
@@ -82,7 +79,7 @@ export default function DevicesPage(): JSX.Element {
     }, [devices, deviceStates, bridgeConfig.devices, availability, hideDisabled, batteryLowOnly]);
 
     const onHideDisabledChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        local.set(DEVICES_HIDE_DISABLED_KEY, e.target.checked);
+        store2.set(DEVICES_HIDE_DISABLED_KEY, e.target.checked);
         setHideDisabled(e.target.checked);
     }, []);
 

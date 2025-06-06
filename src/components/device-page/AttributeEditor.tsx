@@ -107,7 +107,6 @@ export function AttributeEditor(props: AttributeEditorProps) {
                         <div key={attribute} className="join join-horizontal">
                             {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
                             <label className="input join-item">
-                                {attribute}
                                 <AttributeValueInput
                                     value={value}
                                     attribute={attribute}
@@ -123,6 +122,7 @@ export function AttributeEditor(props: AttributeEditorProps) {
                                         setAttributes(newAttributes);
                                     }}
                                 />
+                                {attribute}
                             </label>
                             <Button<string>
                                 className="btn btn-error btn-outline join-item"

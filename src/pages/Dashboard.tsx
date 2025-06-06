@@ -151,7 +151,7 @@ export default function Dashboard() {
                     </kbd>
                 </label>
             </div>
-            <div className="flex flex-row flex-wrap justify-between items-stretch gap-3">{filteredDevices}</div>
+            <div className="flex flex-row flex-wrap justify-between items-stretch gap-3 mb-3">{filteredDevices}</div>
         </>
     );
 }

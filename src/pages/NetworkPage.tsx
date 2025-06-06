@@ -2,13 +2,18 @@ import { faCircleInfo, faDownLong, faSync } from "@fortawesome/free-solid-svg-ic
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, lazy, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import store2 from "store2";
+import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import Button from "../components/Button.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import SelectField from "../components/form-fields/SelectField.js";
-import type { DisplayType, MapType } from "../components/network-page/index.js";
+import type { NetworkRawDisplayType } from "../components/network-page/index.js";
 import { useAppDispatch, useAppSelector } from "../hooks/useApp.js";
-import { setNetworkMapIsLoading } from "../store.js";
+import { NETWORK_RAW_DISPLAY_TYPE_KEY } from "../localStoreConsts.js";
+import { setNetworkMap, setNetworkMapIsLoading } from "../store.js";
+
+type MapType = Zigbee2MQTTAPI["bridge/response/networkmap"]["type"];
 
 const RawNetworkData = lazy(async () => await import("../components/network-page/RawNetworkData.js"));
 const RawNetworkMap = lazy(async () => await import("../components/network-page/RawNetworkMap.js"));
@@ -21,7 +26,7 @@ export default function NetworkPage() {
     const networkMap = useAppSelector((state) => state.networkMap);
     const [mapType, setMapType] = useState<MapType>("raw");
     const [enableRoutes, setEnableRoutes] = useState(false);
-    const [displayType, setDisplayType] = useState<DisplayType>("data");
+    const [displayType, setDisplayType] = useState<NetworkRawDisplayType>(store2.get(NETWORK_RAW_DISPLAY_TYPE_KEY, "data"));
 
     const onMapTypeChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
         if (event.target.value) {
@@ -31,7 +36,8 @@ export default function NetworkPage() {
 
     const onDisplayTypeChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
         if (event.target.value) {
-            setDisplayType(event.target.value as DisplayType);
+            store2.set(NETWORK_RAW_DISPLAY_TYPE_KEY, event.target.value);
+            setDisplayType(event.target.value as NetworkRawDisplayType);
         }
     }, []);
 
@@ -40,6 +46,7 @@ export default function NetworkPage() {
     }, []);
 
     const onRequestClick = useCallback(async () => {
+        dispatch(setNetworkMap(undefined));
         dispatch(setNetworkMapIsLoading());
         await sendMessage("bridge/request/networkmap", { type: mapType, routes: enableRoutes });
     }, [mapType, enableRoutes, dispatch, sendMessage]);
@@ -103,7 +110,7 @@ export default function NetworkPage() {
 
     return (
         <>
-            <div className="flex flex-row justify-center gap-3 mb-3">
+            <div className="flex flex-row justify-center gap-3 mb-2">
                 <SelectField name="type" label={t("type")} value={mapType} onChange={onMapTypeChange}>
                     <option value="raw">raw</option>
                     <option value="graphviz">graphviz</option>
@@ -120,8 +127,8 @@ export default function NetworkPage() {
                 </Button>
                 {mapType === "raw" && (
                     <SelectField name="display_type" label={t("display_type")} value={displayType} onChange={onDisplayTypeChange}>
-                        <option value="data">data</option>
-                        <option value="map">map</option>
+                        <option value="data">{t("data")}</option>
+                        <option value="map">{t("map")}</option>
                     </SelectField>
                 )}
             </div>

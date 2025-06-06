@@ -1,6 +1,6 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { useCallback, useEffect, useRef } from "react";
-import useWebSocket from "react-use-websocket";
+import useWebSocket, { type Options } from "react-use-websocket";
 import store2 from "store2";
 import type { Zigbee2MQTTAPI, Zigbee2MQTTRequestEndpoints, Zigbee2MQTTResponse } from "zigbee2mqtt";
 import { AUTH_FLAG_KEY, TOKEN_KEY } from "../localStoreConsts.js";
@@ -9,8 +9,6 @@ import type { Message, RecursiveMutable, ResponseMessage } from "../types.js";
 import { isSecurePage, randomString, stringifyWithPreservingUndefinedAsNull } from "../utils.js";
 import { useAppDispatch } from "./useApp.js";
 
-// XXX: workaround typing
-const local = store2 as unknown as typeof store2.default;
 const UNAUTHORIZED_ERROR_CODE = 4401;
 
 // biome-ignore lint/suspicious/noExplicitAny: tmp
@@ -23,15 +21,15 @@ const websocketUrlProvider = async (): Promise<string> => {
 
     return await new Promise<string>((resolve) => {
         const url = new URL(`${isSecurePage() ? "wss" : "ws"}://${apiUrl}`);
-        const authRequired = !!local.get(AUTH_FLAG_KEY);
+        const authRequired = !!store2.get(AUTH_FLAG_KEY);
 
         if (authRequired) {
-            const token = new URLSearchParams(window.location.search).get("token") ?? local.get(TOKEN_KEY);
+            const token = new URLSearchParams(window.location.search).get("token") ?? store2.get(TOKEN_KEY);
 
             if (!token) {
                 NiceModal.show("auth-form", {
                     onAuth: (token: string) => {
-                        local.set(TOKEN_KEY, token);
+                        store2.set(TOKEN_KEY, token);
                         url.searchParams.append("token", token);
                         resolve(url.toString());
                     },
@@ -160,7 +158,7 @@ const processBridgeMessage = (data: Message, dispatch: ReturnType<typeof useAppD
 
 export function useApiWebSocket() {
     const dispatch = useAppDispatch();
-    const options = useRef<useWebSocket.Options>({
+    const options = useRef<Options>({
         disableJson: true,
         share: true,
         retryOnError: true,
@@ -197,14 +195,11 @@ export function useApiWebSocket() {
         },
     });
     const unmounted = useRef(false);
-    const { sendMessage: sendMessageRaw, readyState } = (useWebSocket as unknown as typeof useWebSocket.default)<Message | null>(
-        websocketUrlProvider,
-        options.current,
-    );
+    const { sendMessage: sendMessageRaw, readyState } = useWebSocket<Message | null>(websocketUrlProvider, options.current);
     const webSocketCheckUnauthorized = useCallback((event: WebSocketEventMap["close"]): void => {
         if (event.code === UNAUTHORIZED_ERROR_CODE) {
-            local.set(AUTH_FLAG_KEY, true);
-            local.remove(TOKEN_KEY);
+            store2.set(AUTH_FLAG_KEY, true);
+            store2.remove(TOKEN_KEY);
         }
     }, []);
 

@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type DetailedHTMLProps, type LiHTMLAttributes, memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
-import type { Device } from "../../types.js";
-import { toHex } from "../../utils.js";
-import DeviceImage from "../device/DeviceImage.js";
-import Lqi from "../value-decorators/Lqi.js";
+import type { Device } from "../../../types.js";
+import { toHex } from "../../../utils.js";
+import DeviceImage from "../../device/DeviceImage.js";
+import Lqi from "../../value-decorators/Lqi.js";
+import type { NetworkMapLink } from "../index.js";
 
 type RawRelationProps = DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> & {
-    relation: Zigbee2MQTTNetworkMap["links"][number];
+    relation: NetworkMapLink;
     device: Device;
     highlight: (friendlyName: string) => boolean;
     setHighlightValue: (friendlyName: string) => void;

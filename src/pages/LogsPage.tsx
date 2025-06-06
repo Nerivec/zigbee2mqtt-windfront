@@ -137,7 +137,7 @@ export default function LogsPage() {
                     </SelectField>
                 </div>
             </div>
-            <div className="mockup-code w-full mt-1">
+            <div className="mockup-code w-full mt-1 mb-3">
                 {filteredLogs.length > 0 ? (
                     filteredLogs.map((log, idx) => (
                         <pre key={`${log.timestamp}-${log.message}`} data-prefix={idx} className={colorLog(log.message, log.level)}>

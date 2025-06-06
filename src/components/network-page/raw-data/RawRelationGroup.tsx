@@ -1,7 +1,8 @@
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
-import type { Device } from "../../types.js";
+import type { Device } from "../../../types.js";
+import { ZigbeeRelationship } from "../index.js";
 import RawRelation from "./RawRelation.js";
 
 type RawRelationGroupProps = {
@@ -12,14 +13,23 @@ type RawRelationGroupProps = {
     setHighlightValue: (friendlyName: string) => void;
 };
 
+const ZIGBEE_RELATIONSHIP_TMAP = {
+    [ZigbeeRelationship.NeighborIsParent]: "parent",
+    [ZigbeeRelationship.NeighborIsAChild]: "children",
+    [ZigbeeRelationship.NeighborIsASibling]: "siblings",
+    [ZigbeeRelationship.NoneOfTheAbove]: "zigbee:none",
+    // Z2M is currently skipping > 3, so this is never present
+    [ZigbeeRelationship.NeighborIsPreviousChild]: "previous_children",
+};
+
 const RawRelationGroup = memo(({ devices, relationship, relations, highlight, setHighlightValue }: RawRelationGroupProps) => {
-    const { t } = useTranslation(["network", "common"]);
+    const { t } = useTranslation(["network", "zigbee"]);
 
     return (
         <li>
             <details>
                 <summary>
-                    {t(relationship)} ({relations.length})
+                    {t(ZIGBEE_RELATIONSHIP_TMAP[relationship])} ({relations.length})
                 </summary>
                 <ul>
                     {relations.map((relation) => {

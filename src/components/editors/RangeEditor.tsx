@@ -41,18 +41,14 @@ const RangeEditor = memo((props: RangeProps) => {
                         {...rest}
                     />
                     <div className="flex justify-between px-1 mt-1 text-xs">
-                        <span>|</span>
-                        <span>|</span>
-                    </div>
-                    <div className="flex justify-between px-1 mt-1 text-xs">
                         <span>{min}</span>
+                        {minimal && <span>{currentValue}</span>}
                         <span>{max}</span>
                     </div>
                 </div>
             ) : null}
             {(!minimal || !showRange) && (
                 <label className="input">
-                    {unit}
                     <input
                         type="number"
                         className="grow validator"
@@ -64,6 +60,7 @@ const RangeEditor = memo((props: RangeProps) => {
                         max={max}
                         {...rest}
                     />
+                    {unit}
                 </label>
             )}
         </div>
