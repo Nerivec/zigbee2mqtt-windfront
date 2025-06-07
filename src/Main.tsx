@@ -38,7 +38,7 @@ export function Main() {
                                 <ScrollToTop />
                                 <WebSocketApiRouter>
                                     <NavBar />
-                                    <main className="pt-3 px-3">
+                                    <main className="pt-3 px-2">
                                         <Suspense
                                             fallback={
                                                 <>

@@ -88,9 +88,9 @@ export default function Groups({ device }: GroupsProps) {
                     </Button>
                 </div>
             </div>
-            <div className="flex flex-row flex-wrap justify-between items-stretch gap-3 mt-3">
+            <div className="flex flex-row flex-wrap justify-center gap-3 mt-3">
                 {memberGroups.map(([group, endpoint]) => (
-                    <ul className="flex-auto basis-sm list bg-base-200 rounded-box shadow-md" key={`${group.id}-${endpoint}`}>
+                    <ul className="w-[23rem] list bg-base-200 rounded-box shadow-md" key={`${group.id}-${endpoint}`}>
                         <li className="list-row grow">
                             <div>
                                 <Link to={`/group/${group.id}/devices`} className="link link-hover">

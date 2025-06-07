@@ -47,7 +47,7 @@ const GroupMembers = memo((props: GroupMembersProps) => {
 
             if (device) {
                 members.push(
-                    <ul className="flex-auto basis-sm list bg-base-200 rounded-box shadow-md" key={`${member.ieee_address}-${member.endpoint}`}>
+                    <div className="w-[23rem] card bg-base-200 rounded-box shadow-md" key={`${member.ieee_address}-${member.endpoint}`}>
                         <GroupMember
                             removeDeviceFromGroup={removeMember}
                             device={device}
@@ -57,7 +57,7 @@ const GroupMembers = memo((props: GroupMembersProps) => {
                             setDeviceState={setDeviceState}
                             getDeviceState={getDeviceState}
                         />
-                    </ul>,
+                    </div>,
                 );
             }
         }
@@ -65,7 +65,7 @@ const GroupMembers = memo((props: GroupMembersProps) => {
         return members;
     }, [group, devices, lastSeenConfig, deviceStates, removeMember, setDeviceState, getDeviceState]);
 
-    return <div className="flex flex-row flex-wrap justify-between items-stretch gap-3">{groupMembers}</div>;
+    return <div className="flex flex-row flex-wrap justify-center gap-3">{groupMembers}</div>;
 });
 
 export default GroupMembers;

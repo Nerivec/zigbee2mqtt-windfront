@@ -1,8 +1,9 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { faMagnifyingGlass, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faTable, faTableColumns, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import store2 from "store2";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import Button from "../components/Button.js";
 import DashboardFeatureWrapper from "../components/dashboard-page/DashboardFeatureWrapper.js";
@@ -12,6 +13,7 @@ import DeviceControlEditName from "../components/device/DeviceControlEditName.js
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import { RemoveDeviceModal } from "../components/modal/components/RemoveDeviceModal.js";
 import { useAppSelector } from "../hooks/useApp.js";
+import { DASHBOARD_COLUMN_DISPLAY_KEY } from "../localStoreConsts.js";
 import type { FeatureWithAnySubFeatures } from "../types.js";
 
 export default function Dashboard() {
@@ -19,8 +21,9 @@ export default function Dashboard() {
     const bridgeConfig = useAppSelector((state) => state.bridgeInfo.config);
     const devices = useAppSelector((state) => state.devices);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const { t } = useTranslation("zigbee");
-    const [filterValue, setFilterValue] = useState<string>("");
+    const { t } = useTranslation(["zigbee", "settings"]);
+    const [filterValue, setFilterValue] = useState("");
+    const [columnDisplay, setColumnDisplay] = useState<boolean>(store2.get(DASHBOARD_COLUMN_DISPLAY_KEY, false));
 
     const renameDevice = useCallback(
         async (from: string, to: string, homeassistantRename: boolean): Promise<void> => {
@@ -40,6 +43,11 @@ export default function Dashboard() {
         },
         [sendMessage],
     );
+
+    const onDisplayClick = useCallback((value: boolean) => {
+        store2.set(DASHBOARD_COLUMN_DISPLAY_KEY, value);
+        setColumnDisplay(value);
+    }, []);
 
     const filteredDevices = useMemo(() => {
         const filteredDevices: JSX.Element[] = [];
@@ -66,7 +74,10 @@ export default function Dashboard() {
 
                 if (filteredFeatures.length > 0) {
                     filteredDevices.push(
-                        <ul className="flex-auto basis-sm list bg-base-200 rounded-box shadow-md" key={device.ieee_address}>
+                        <div
+                            className={`${columnDisplay ? "break-inside-avoid-column mb-3" : "w-[23rem]"} card bg-base-200 rounded-box shadow-md`}
+                            key={device.ieee_address}
+                        >
                             <DeviceCard
                                 features={filteredFeatures}
                                 device={device}
@@ -104,7 +115,7 @@ export default function Dashboard() {
                                     </Button>
                                 </div>
                             </DeviceCard>
-                        </ul>,
+                        </div>,
                     );
                 }
             }
@@ -121,6 +132,7 @@ export default function Dashboard() {
         renameDevice,
         t,
         filterValue,
+        columnDisplay,
     ]);
 
     return (
@@ -150,8 +162,16 @@ export default function Dashboard() {
                         x
                     </kbd>
                 </label>
+                <Button<boolean>
+                    className="btn btn-square"
+                    item={!columnDisplay}
+                    onClick={onDisplayClick}
+                    title={`${t("settings:dashboard_column_display")}: ${columnDisplay}`}
+                >
+                    <FontAwesomeIcon icon={columnDisplay ? faTableColumns : faTable} />
+                </Button>
             </div>
-            <div className="flex flex-row flex-wrap justify-between items-stretch gap-3 mb-3">{filteredDevices}</div>
+            <div className={`${columnDisplay ? "columns-md" : "flex flex-row flex-wrap justify-center"} gap-3 mb-3`}>{filteredDevices}</div>
         </>
     );
 }

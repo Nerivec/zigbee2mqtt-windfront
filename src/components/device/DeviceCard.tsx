@@ -1,4 +1,4 @@
-import { faCircleRight } from "@fortawesome/free-solid-svg-icons";
+import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type PropsWithChildren, memo } from "react";
 import { useTranslation } from "react-i18next";
@@ -24,19 +24,21 @@ const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, last
 
     return (
         <>
-            <li className="list-row grow p-3">
-                <div className="h-12 w-12" style={{ overflow: "visible" }}>
-                    {/* disabled always false because dashboard does not contain disabled devices */}
-                    <DeviceImage disabled={false} device={device} otaState={deviceState.update?.state} />
+            <div className="card-body p-2">
+                <div className="flex flex-row items-center gap-3">
+                    <div className="h-12 w-12" style={{ overflow: "visible" }}>
+                        {/* disabled always false because dashboard does not contain disabled devices */}
+                        <DeviceImage disabled={false} device={device} otaState={deviceState.update?.state} />
+                    </div>
+                    <div>
+                        <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
+                            {device.friendly_name}
+                            {endpoint ? ` (${t("endpoint")}: ${endpoint})` : ""}
+                        </Link>
+                        <div className="text-xs opacity-50">{device.description || ""}</div>
+                    </div>
                 </div>
-                <div>
-                    <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
-                        {device.friendly_name}
-                        {endpoint ? ` (${t("endpoint")}: ${endpoint})` : ""}
-                    </Link>
-                    <div className="text-xs opacity-50">{device.description || ""}</div>
-                </div>
-                <div className="list-col-wrap text-sm w-full">
+                <div className="text-sm w-full p-2">
                     {features.map(
                         (feature) =>
                             (!endpoint || !feature.endpoint || feature.endpoint === endpoint) && (
@@ -55,13 +57,13 @@ const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, last
                     )}
                     <div className="flex flex-row items-center gap-1 mt-3">
                         <div className="grow-1" />
-                        <Link to={`/device/${device.ieee_address}/exposes`} className="link link-secondary" title={t("devicePage:exposes")}>
-                            <FontAwesomeIcon icon={faCircleRight} size="xl" />
+                        <Link to={`/device/${device.ieee_address}/exposes`} className="btn btn-xs">
+                            {t("devicePage:exposes")} <FontAwesomeIcon icon={faRightLong} size="lg" />
                         </Link>
                     </div>
                 </div>
-            </li>
-            <li className="flex flex-row flex-wrap gap-1 m-2 justify-around items-center">
+            </div>
+            <div className="flex flex-row flex-wrap gap-1 mx-2 mb-2 justify-around items-center">
                 <span className="badge badge-soft badge-ghost cursor-default" title={t("last_seen")}>
                     <LastSeen lastSeen={deviceState.last_seen} config={lastSeenConfig} />
                 </span>
@@ -78,7 +80,7 @@ const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, last
                     />
                 </span>
                 {children}
-            </li>
+            </div>
         </>
     );
 });

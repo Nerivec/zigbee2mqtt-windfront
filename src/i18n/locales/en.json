@@ -217,6 +217,7 @@
         "language": "Language",
         "theme": "Theme",
         "homepage": "Homepage",
+        "dashboard_column_display": "Dashboard column display",
         "permit_join_time": "Permit join time",
         "dev_console": "Dev console",
         "max_on_screen_notifications": "Max on-screen notifications",
