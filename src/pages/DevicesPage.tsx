@@ -144,7 +144,7 @@ export default function DevicesPage(): JSX.Element {
                             </Link>
                             {device.description && <div className="text-xs opacity-50">{device.description}</div>}
                             <div className="flex flex-row gap-1 mt-2 items-center">
-                                <span className="badge badge-soft badge-ghost cursor-default" title={t("power")}>
+                                <span className="badge badge-soft badge-sm badge-ghost cursor-default" title={t("power")}>
                                     <PowerSource
                                         device={device}
                                         batteryPercent={state.battery as number}
@@ -198,7 +198,7 @@ export default function DevicesPage(): JSX.Element {
                     <>
                         <ModelLink device={device} />
                         <div className="flex flex-row gap-1">
-                            <span className="badge badge-ghost" title={t("manufacturer")}>
+                            <span className="badge badge-ghost badge-sm" title={t("manufacturer")}>
                                 <VendorLink device={device} />
                             </span>
                         </div>

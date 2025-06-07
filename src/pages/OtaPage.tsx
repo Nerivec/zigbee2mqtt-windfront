@@ -166,22 +166,18 @@ export default function OtaPage() {
                         <div className="flex flex-col">
                             <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
                                 {device.friendly_name}
+                                {device.friendly_name !== device.ieee_address ? ` (${device.ieee_address})` : ""}
                             </Link>
-                            {device.friendly_name !== device.ieee_address && (
-                                <div className="text-xs opacity-80" title={t("zigbee:ieee_address")}>
-                                    {device.ieee_address}
-                                </div>
-                            )}
                             {device.description && <div className="text-xs opacity-50">{device.description}</div>}
-                            <div className="flex flex-row gap-1 mt-2 my-1 items-center">
-                                <span className="badge badge-soft badge-ghost cursor-default" title={t("zigbee:firmware_id")}>
+                            <div className="flex flex-row gap-1 my-1 items-center">
+                                <span className="badge badge-sm badge-soft badge-ghost cursor-default" title={t("zigbee:firmware_id")}>
                                     {/** TODO: use releaseNotes from manifest instead of links (need API change in Z2M) */}
                                     <FontAwesomeIcon icon={faMicrochip} />
                                     <OtaLink device={device} />
                                     {device.date_code ? <span title={t("zigbee:firmware_build_date")}> ({device.date_code})</span> : undefined}
                                 </span>
                                 {batteryState && (
-                                    <span className="badge badge-soft badge-ghost cursor-default">
+                                    <span className="badge badge-sm badge-soft badge-ghost cursor-default">
                                         <PowerSource device={device} {...batteryState} />
                                     </span>
                                 )}
@@ -201,8 +197,7 @@ export default function OtaPage() {
                     <>
                         <ModelLink device={device} />
                         <div>
-                            <br />
-                            <span className="badge badge-ghost" title={t("zigbee:manufacturer")}>
+                            <span className="badge badge-sm badge-ghost" title={t("zigbee:manufacturer")}>
                                 <VendorLink device={device} />
                             </span>
                         </div>

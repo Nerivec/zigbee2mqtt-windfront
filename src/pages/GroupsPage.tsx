@@ -63,7 +63,7 @@ export default function GroupsPage() {
                             </Link>
                             {group.description && <div className="text-xs opacity-50">{group.description}</div>}
                             <div className="flex flex-row gap-1 mt-2">
-                                <span className="badge badge-soft badge-ghost cursor-default">
+                                <span className="badge badge-soft badge-sm badge-ghost cursor-default">
                                     {t("scenes")}
                                     {": "}
                                     {group.scenes?.length ?? 0}
