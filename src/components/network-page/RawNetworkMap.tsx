@@ -25,6 +25,9 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
     const [labelType, setLabelType] = useState<LabelVisibilityType>(store2.get(NETWORK_MAP_LABEL_TYPE_KEY, "all"));
     const [nodeStrength, setNodeStrength] = useState<number>(store2.get(NETWORK_MAP_NODE_STRENGTH_KEY, -750));
     const [linkDistance, setLinkDistance] = useState<number>(store2.get(NETWORK_MAP_LINK_DISTANCE_KEY, 50));
+    const [showParents, setShowParents] = useState(true);
+    const [showChildren, setShowChildren] = useState(true);
+    const [showSiblings, setShowSiblings] = useState(true);
     const graphRef = useRef<GraphCanvasRef | null>(null);
 
     const [nodes, edges] = useMemo(() => {
@@ -67,6 +70,14 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
         const bestSiblings = new Map<string, NetworkMapLink>();
 
         for (const link of map.links) {
+            if (
+                (!showParents && link.relationship === ZigbeeRelationship.NeighborIsParent) ||
+                (!showChildren && link.relationship === ZigbeeRelationship.NeighborIsAChild) ||
+                (!showSiblings && link.relationship === ZigbeeRelationship.NeighborIsASibling)
+            ) {
+                continue;
+            }
+
             if (link.relationship === ZigbeeRelationship.NeighborIsASibling) {
                 const bestSibling = bestSiblings.get(link.source.ieeeAddr);
 
@@ -74,6 +85,7 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
                 // not "perfect", but should represent the network mostly accurately, without crowding with pointless sibling links
                 if (
                     !bestSibling ||
+                    // XXX: add exception when depth===255 (non-value)?
                     link.depth < bestSibling.depth ||
                     link.linkquality > bestSibling.linkquality ||
                     (bestSibling.linkquality === link.linkquality && link.depth < bestSibling.depth)
@@ -135,7 +147,7 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
         }
 
         return [computedNodes, computedEdges];
-    }, [map, t]);
+    }, [map, showParents, showChildren, showSiblings, t]);
 
     const { selections, actives, onNodeClick, onCanvasClick } = useSelection({
         ref: graphRef,
@@ -189,6 +201,12 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
                     linkDistance={linkDistance}
                     onLinkDistanceChange={onLinkDistanceChange}
                     nodes={nodes}
+                    showParents={showParents}
+                    setShowParents={setShowParents}
+                    showChildren={showChildren}
+                    setShowChildren={setShowChildren}
+                    showSiblings={showSiblings}
+                    setShowSiblings={setShowSiblings}
                 />
                 <GraphCanvas
                     ref={graphRef}

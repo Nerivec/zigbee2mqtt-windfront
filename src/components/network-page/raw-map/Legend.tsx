@@ -45,6 +45,7 @@ const Legend = memo(() => {
                 <p>{t("legend_node_size")}</p>
                 <p>{t("legend_node_select")}</p>
                 <p>{t("legend_node_fold")}</p>
+                <p>{t("legend_edge_toggle")}</p>
                 {/* XXX: temporary */}
                 <p className="text-xs mt-2">Known issues:</p>
                 <ul className="list-disc list-inside text-xs">

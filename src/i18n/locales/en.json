@@ -140,7 +140,8 @@
         "legend_node_siblings": "Only highest-rated siblings are shown, which should roughly match the actual connections of the network.",
         "legend_node_size": "Nodes are sized by centrality.",
         "legend_node_select": "Selecting a node will select the depending one-hop part of the network.",
-        "legend_node_fold": "Node context menu fold/expand button will affect the depending part of the network."
+        "legend_node_fold": "Node context menu fold/expand button will affect the depending part of the network.",
+        "legend_edge_toggle": "Toggling relationship edges will change the layout. When disabling one or more, the actual layout of the network is no longer accurately represented."
     },
     "navbar": {
         "all": "All",

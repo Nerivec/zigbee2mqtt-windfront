@@ -1,4 +1,5 @@
 import {
+    faArrowRightLong,
     faArrowsLeftRightToLine,
     faArrowsUpToLine,
     faDownload,
@@ -14,6 +15,7 @@ import { type ChangeEvent, type RefObject, memo, useCallback, useMemo } from "re
 import { useTranslation } from "react-i18next";
 import type { GraphCanvasRef, GraphNode, LabelVisibilityType, LayoutTypes } from "reagraph";
 import Button from "../../Button.js";
+import { EDGE_RELATIONSHIP_FILL_COLORS, ZigbeeRelationship } from "../index.js";
 import SliderField from "./SliderField.js";
 
 type ControlsProps = {
@@ -27,6 +29,12 @@ type ControlsProps = {
     linkDistance: number;
     onLinkDistanceChange: (value: number) => void;
     nodes: GraphNode[];
+    showParents: boolean;
+    setShowParents: (value: boolean) => void;
+    showChildren: boolean;
+    setShowChildren: (value: boolean) => void;
+    showSiblings: boolean;
+    setShowSiblings: (value: boolean) => void;
 };
 
 const Controls = memo(
@@ -41,6 +49,12 @@ const Controls = memo(
         linkDistance,
         onLinkDistanceChange,
         nodes,
+        showParents,
+        setShowParents,
+        showChildren,
+        setShowChildren,
+        showSiblings,
+        setShowSiblings,
     }: ControlsProps) => {
         const { t } = useTranslation("network");
 
@@ -80,12 +94,12 @@ const Controls = memo(
         return (
             <>
                 <div className="absolute z-9 top-0 left-0 p-1 flex flex-row flex-wrap gap-1 items-start">
-                    <Button title={t("download_image")} className="btn btn-neutral btn-sm" onClick={downloadAsImage}>
+                    <Button title={t("download_image")} className="btn btn-square btn-neutral btn-sm" onClick={downloadAsImage}>
                         <FontAwesomeIcon icon={faDownload} />
                     </Button>
                     <Button
                         title={t("reset_controls")}
-                        className="btn btn-neutral btn-sm"
+                        className="btn btn-square btn-neutral btn-sm"
                         onClick={() => {
                             graphRef.current?.resetControls();
                         }}
@@ -94,7 +108,7 @@ const Controls = memo(
                     </Button>
                     <Button
                         title={t("fit_view")}
-                        className="btn btn-neutral btn-sm"
+                        className="btn btn-square btn-neutral btn-sm"
                         onClick={() => {
                             graphRef.current?.centerGraph();
                             graphRef.current?.fitNodesInView();
@@ -104,7 +118,7 @@ const Controls = memo(
                     </Button>
                     <Button
                         title={t("zoom_in")}
-                        className="btn btn-neutral btn-sm"
+                        className="btn btn-square btn-neutral btn-sm"
                         onClick={() => {
                             graphRef.current?.zoomIn();
                         }}
@@ -113,12 +127,45 @@ const Controls = memo(
                     </Button>
                     <Button
                         title={t("zoom_out")}
-                        className="btn btn-neutral btn-sm"
+                        className="btn btn-square btn-neutral btn-sm"
                         onClick={() => {
                             graphRef.current?.zoomOut();
                         }}
                     >
                         <FontAwesomeIcon icon={faMinusSquare} />
+                    </Button>
+                    <Button<boolean>
+                        className={`btn btn-square btn-neutral btn-sm ${showParents ? "" : "btn-outline"}`}
+                        item={!showParents}
+                        onClick={setShowParents}
+                        title={t("parent")}
+                    >
+                        <FontAwesomeIcon
+                            icon={faArrowRightLong}
+                            style={{ color: EDGE_RELATIONSHIP_FILL_COLORS[ZigbeeRelationship.NeighborIsParent] }}
+                        />
+                    </Button>
+                    <Button<boolean>
+                        className={`btn btn-square btn-neutral btn-sm ${showChildren ? "" : "btn-outline"}`}
+                        item={!showChildren}
+                        onClick={setShowChildren}
+                        title={t("child")}
+                    >
+                        <FontAwesomeIcon
+                            icon={faArrowRightLong}
+                            style={{ color: EDGE_RELATIONSHIP_FILL_COLORS[ZigbeeRelationship.NeighborIsAChild] }}
+                        />
+                    </Button>
+                    <Button<boolean>
+                        className={`btn btn-square btn-neutral btn-sm ${showSiblings ? "" : "btn-outline"}`}
+                        item={!showSiblings}
+                        onClick={setShowSiblings}
+                        title={t("sibling")}
+                    >
+                        <FontAwesomeIcon
+                            icon={faArrowRightLong}
+                            style={{ color: EDGE_RELATIONSHIP_FILL_COLORS[ZigbeeRelationship.NeighborIsASibling] }}
+                        />
                     </Button>
                     <select className="select select-sm w-36" title={t("find_node")} defaultValue="" onChange={findNode}>
                         <option value="">{t("find_node")}</option>
