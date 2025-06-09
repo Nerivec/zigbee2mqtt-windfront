@@ -34,10 +34,16 @@ export default function PermitJoinButton() {
         for (const device of devices) {
             if (device.type === "Coordinator" || device.type === "Router") {
                 filteredDevices.push(
-                    <li key={device.friendly_name}>
-                        <Button<Device> item={device} className="dropdown-item" onClick={(device) => setSelectedRouter(device)}>
-                            {device.friendly_name}
-                        </Button>
+                    <li
+                        key={device.friendly_name}
+                        onClick={() => setSelectedRouter(device)}
+                        onKeyUp={(e) => {
+                            if (e.key === "enter") {
+                                setSelectedRouter(device);
+                            }
+                        }}
+                    >
+                        <span className="btn btn-sm btn-block btn-ghost">{device.friendly_name}</span>
                     </li>,
                 );
             }
@@ -80,10 +86,16 @@ export default function PermitJoinButton() {
                     buttonStyle="join-item"
                     dropdownStyle="dropdown-end"
                 >
-                    <li key="all">
-                        <Button<Device> className="dropdown-item" onClick={() => setSelectedRouter(undefined)}>
-                            {t("all")}
-                        </Button>
+                    <li
+                        key="all"
+                        onClick={() => setSelectedRouter(undefined)}
+                        onKeyUp={(e) => {
+                            if (e.key === "enter") {
+                                setSelectedRouter(undefined);
+                            }
+                        }}
+                    >
+                        <span className="btn btn-sm btn-block btn-ghost">{t("all")}</span>
                     </li>
                     {routers}
                 </PopoverDropdown>

@@ -6,6 +6,8 @@
 
 A frontend UI for [Zigbee2MQTT](https://github.com/Koenkk/zigbee2mqtt) using [tailwindcss](https://tailwindcss.com/) & [daisyui](https://daisyui.com).
 
+https://github.com/Nerivec/zigbee2mqtt-windfront/wiki
+
 > Based on https://github.com/nurikk/zigbee2mqtt-frontend
 
 > [!IMPORTANT]

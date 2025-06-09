@@ -45,13 +45,15 @@ const LanguageSwitcher = memo(() => {
                         }
                     }}
                 >
-                    <span className="btn btn-block btn-ghost">{LOCALES_NAMES_MAP[language]}</span>
+                    <span className={`btn btn-sm btn-block ${language === currentLanguage ? "btn-primary" : "btn-ghost"}`}>
+                        {LOCALES_NAMES_MAP[language]}
+                    </span>
                 </li>,
             );
         }
 
         return languages;
-    }, [i18n.changeLanguage, i18n.options.resources]);
+    }, [currentLanguage, i18n.changeLanguage, i18n.options.resources]);
 
     return (
         <PopoverDropdown name="locale-picker" buttonChildren={currentLanguage} buttonStyle="mx-1" dropdownStyle="dropdown-end">

@@ -1,16 +1,14 @@
-import { useContext, useMemo } from "react";
-
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router";
-import { ReadyState } from "react-use-websocket";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import { useAppSelector } from "../../hooks/useApp.js";
 import LanguageSwitcher from "../../i18n/LanguageSwitcher.js";
-import { isIframe } from "../../utils.js";
 import ConfirmButton from "../ConfirmButton.js";
 import ThemeSwitcher from "../ThemeSwitcher.js";
+import ApiUrlSwitcher from "./ApiUrlSwitcher.js";
 import PermitJoinButton from "./PermitJoinButton.js";
 
 const URLS = [
@@ -48,19 +46,10 @@ const URLS = [
     },
 ];
 
-const CONNECTION_STATUS = {
-    [ReadyState.CONNECTING]: "status-info",
-    [ReadyState.OPEN]: "status-success",
-    [ReadyState.CLOSING]: "status-warning",
-    [ReadyState.CLOSED]: "status-error",
-    [ReadyState.UNINSTANTIATED]: "status-error",
-};
-
 const NavBar = () => {
     const { t } = useTranslation(["navbar", "common"]);
     const restartRequired = useAppSelector((state) => state.bridgeInfo.restart_required);
-    const { sendMessage, readyState } = useContext(WebSocketApiRouterContext);
-    const connectionStatus = CONNECTION_STATUS[readyState];
+    const { sendMessage } = useContext(WebSocketApiRouterContext);
 
     const links = useMemo(
         () => (
@@ -106,7 +95,11 @@ const NavBar = () => {
                     </ul>
                 </div>
             </div>
-            <Link to="/" className="link link-hover me-1" title={isIframe() ? `Zigbee2MQTT@${document.location.hostname}` : ""}>
+            <Link
+                to="/"
+                className="link link-hover me-1"
+                title={window.location !== window.parent.location ? `Zigbee2MQTT@${document.location.hostname}` : undefined}
+            >
                 Zigbee2MQTT
             </Link>
             <div className="navbar-center hidden lg:flex">
@@ -118,11 +111,8 @@ const NavBar = () => {
                     {showRestart}
                     <LanguageSwitcher />
                     <ThemeSwitcher />
+                    <ApiUrlSwitcher />
                 </ul>
-                <div className="inline-grid *:[grid-area:1/1]" title={`${t("websocket_status")}: ${ReadyState[readyState]}`}>
-                    <div className={`status ${connectionStatus} animate-ping`} />
-                    <div className={`status ${connectionStatus}`} />
-                </div>
             </div>
         </div>
     );

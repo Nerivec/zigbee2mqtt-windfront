@@ -64,7 +64,7 @@ const ThemeSwitcher = memo(() => {
                     <input
                         type="radio"
                         name="theme-dropdown"
-                        className="theme-controller w-full btn btn-block btn-ghost"
+                        className={`theme-controller w-full btn btn-sm btn-block ${currentTheme === theme.toLowerCase() ? "btn-primary" : "btn-ghost"}`}
                         aria-label={theme || "Default"}
                         value={theme.toLowerCase()}
                         onChange={() => setCurrentTheme(theme.toLowerCase())}

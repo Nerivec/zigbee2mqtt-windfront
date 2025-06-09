@@ -1,12 +1,13 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useWebSocket, { type Options } from "react-use-websocket";
 import store2 from "store2";
 import type { Zigbee2MQTTAPI, Zigbee2MQTTRequestEndpoints, Zigbee2MQTTResponse } from "zigbee2mqtt";
+import { Z2M_API_URLS } from "../envs.js";
 import { AUTH_FLAG_KEY, TOKEN_KEY } from "../localStoreConsts.js";
 import * as store from "../store.js";
 import type { Message, RecursiveMutable, ResponseMessage } from "../types.js";
-import { isSecurePage, randomString, stringifyWithPreservingUndefinedAsNull } from "../utils.js";
+import { randomString, stringifyWithPreservingUndefinedAsNull } from "../utils.js";
 import { useAppDispatch } from "./useApp.js";
 
 const UNAUTHORIZED_ERROR_CODE = 4401;
@@ -15,35 +16,6 @@ const UNAUTHORIZED_ERROR_CODE = 4401;
 const pendingRequests = new Map<string, [() => void, (reason: any) => void]>();
 let transactionNumber = 1;
 const transactionRndPrefix = randomString(5);
-
-const websocketUrlProvider = async (): Promise<string> => {
-    const apiUrl = `${window.location.host}${document.location.pathname}api`;
-
-    return await new Promise<string>((resolve) => {
-        const url = new URL(`${isSecurePage() ? "wss" : "ws"}://${apiUrl}`);
-        const authRequired = !!store2.get(AUTH_FLAG_KEY);
-
-        if (authRequired) {
-            const token = new URLSearchParams(window.location.search).get("token") ?? store2.get(TOKEN_KEY);
-
-            if (!token) {
-                NiceModal.show("auth-form", {
-                    onAuth: (token: string) => {
-                        store2.set(TOKEN_KEY, token);
-                        url.searchParams.append("token", token);
-                        resolve(url.toString());
-                    },
-                });
-
-                return;
-            }
-
-            url.searchParams.append("token", token);
-        }
-
-        resolve(url.toString());
-    });
-};
 
 // biome-ignore lint/suspicious/noExplicitAny: tmp
 const resolvePendingRequests = (message: Zigbee2MQTTResponse<any>): void => {
@@ -157,7 +129,49 @@ const processBridgeMessage = (data: Message, dispatch: ReturnType<typeof useAppD
 };
 
 export function useApiWebSocket() {
+    const unmounted = useRef(false);
     const dispatch = useAppDispatch();
+    const apiUrls =
+        import.meta.env.VITE_Z2M_API_URLS?.split(",") ??
+        (Z2M_API_URLS.startsWith("${")
+            ? [`${window.location.host}${document.location.pathname}api`] // env not replaced, use default
+            : Z2M_API_URLS.split(","));
+    const [apiUrl, setApiUrl] = useState(apiUrls[0]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
+    useEffect(() => {
+        dispatch(store.reset());
+    }, [apiUrl]);
+
+    const getSocketUrl = useCallback(
+        async () =>
+            await new Promise<string>((resolve) => {
+                const url = new URL(`${location.protocol === "https:" ? "wss" : "ws"}://${apiUrl}`);
+                const authRequired = !!store2.get(AUTH_FLAG_KEY);
+
+                if (authRequired) {
+                    const token = new URLSearchParams(window.location.search).get("token") ?? store2.get(TOKEN_KEY);
+
+                    if (!token) {
+                        NiceModal.show("auth-form", {
+                            onAuth: (token: string) => {
+                                store2.set(TOKEN_KEY, token);
+                                url.searchParams.append("token", token);
+                                resolve(url.toString());
+                            },
+                        });
+
+                        return;
+                    }
+
+                    url.searchParams.append("token", token);
+                }
+
+                resolve(url.toString());
+            }),
+        [apiUrl],
+    );
+
     const options = useRef<Options>({
         disableJson: true,
         share: true,
@@ -194,8 +208,9 @@ export function useApiWebSocket() {
             return false;
         },
     });
-    const unmounted = useRef(false);
-    const { sendMessage: sendMessageRaw, readyState } = useWebSocket<Message | null>(websocketUrlProvider, options.current);
+
+    const { sendMessage: sendMessageRaw, readyState } = useWebSocket<Message | null>(getSocketUrl, options.current);
+
     const webSocketCheckUnauthorized = useCallback((event: WebSocketEventMap["close"]): void => {
         if (event.code === UNAUTHORIZED_ERROR_CODE) {
             store2.set(AUTH_FLAG_KEY, true);
@@ -250,5 +265,5 @@ export function useApiWebSocket() {
         [sendMessageRaw, dispatch],
     );
 
-    return { sendMessage, readyState };
+    return { sendMessage, readyState, apiUrls, apiUrl, setApiUrl };
 }

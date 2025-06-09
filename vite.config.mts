@@ -15,6 +15,15 @@ export default defineConfig(async ({ command, mode }) => {
         build: {
             emptyOutDir: true,
             outDir: "../dist",
+            rollupOptions: {
+                output: {
+                    manualChunks(id: string) {
+                        if (/envs.ts/.test(id)) {
+                            return "envs";
+                        }
+                    },
+                },
+            },
         },
         test: {
             dir: "test",

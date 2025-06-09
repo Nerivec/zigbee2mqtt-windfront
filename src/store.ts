@@ -252,6 +252,13 @@ export const storeSlice = createSlice({
         addGeneratedExternalDefinition: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/response/device/generate_external_definition"]>) => {
             state.generatedExternalDefinitions[action.payload.id] = action.payload.source;
         },
+        reset: (state) => {
+            const defaultState = merge({}, initialState);
+
+            for (const key in defaultState) {
+                state[key] = defaultState[key];
+            }
+        },
     },
 });
 
@@ -281,6 +288,7 @@ export const {
     setBackup,
     setBackupPreparing,
     addGeneratedExternalDefinition,
+    reset,
 } = storeSlice.actions;
 
 export default store;

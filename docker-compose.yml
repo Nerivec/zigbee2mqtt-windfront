@@ -1,0 +1,15 @@
+services:
+  zigbee2mqtt-windfront:
+    build: .
+    container_name: zigbee2mqtt-windfront
+    image: ghcr.io/nerivec/zigbee2mqtt-windfront
+    restart: unless-stopped
+    ports:
+      - 80:80
+    networks:
+      - network
+    environment:
+      - Z2M_API_URLS=localhost:5173/api,localhost:8080/api
+      - Z2M_API_NAMES=Instance one,Instance two
+networks:
+  network:
