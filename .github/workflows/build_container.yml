@@ -4,6 +4,7 @@ on:
   workflow_run:
     workflows: [Publish package to npmjs]
     types: [completed]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,7 +14,7 @@ env:
 
 jobs:
   build:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       packages: write
