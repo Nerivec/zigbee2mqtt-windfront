@@ -25,7 +25,7 @@ export default function GroupsPage() {
     const onGroupCreateSubmit = useCallback(async (): Promise<void> => {
         const payload: Zigbee2MQTTAPI["bridge/request/group/add"] = { friendly_name: newGroupFriendlyName };
 
-        if (newGroupId !== undefined) {
+        if (newGroupId) {
             payload.id = newGroupId;
         }
 
