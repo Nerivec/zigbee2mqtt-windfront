@@ -178,7 +178,11 @@ export type XYColor = {
     Y?: number;
 };
 
-export type AnyColor = RGBColor | XYColor | HueSaturationColor | string;
+export type HexColor = {
+    hex: string;
+};
+
+export type AnyColor = RGBColor | XYColor | HueSaturationColor | HexColor;
 
 export type ColorFormat = "color_rgb" | "color_xy" | "color_hs" | "hex";
 

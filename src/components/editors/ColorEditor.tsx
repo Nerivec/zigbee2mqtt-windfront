@@ -25,7 +25,7 @@ import {
 type ColorEditorProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
     value: AnyColor;
     format: ColorFormat;
-    onChange(color: AnyColor | { hex: string }): void;
+    onChange(color: AnyColor): void;
     minimal?: boolean;
 };
 
@@ -138,13 +138,13 @@ const ColorEditor = memo((props: ColorEditorProps) => {
     const onInputBlur = useCallback(
         (e: FocusEvent<HTMLInputElement>) => {
             setInputStates((states) => ({ ...states, [e.target.name]: false }));
-            onChange(format === "hex" ? { hex: color.hex } : convertFromColor(color, format));
+            onChange(convertFromColor(color, format));
         },
         [color, format, onChange],
     );
 
     const onRangeSubmit = useCallback(() => {
-        onChange(format === "hex" ? { hex: color.hex } : convertFromColor(color, format));
+        onChange(convertFromColor(color, format));
     }, [color, format, onChange]);
 
     const hueBackgroundColor = useMemo(() => `hsl(${color.color_hs[0]}, 100%, 50%)`, [color.color_hs[0]]);

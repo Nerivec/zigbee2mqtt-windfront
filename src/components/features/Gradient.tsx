@@ -63,10 +63,10 @@ export const Gradient = memo((props: GradientProps) => {
                 // biome-ignore lint/suspicious/noArrayIndexKey: not much data
                 <div key={`${color}-${idx}`} className="flex flex-row flex-wrap gap-2 items-center">
                     <ColorEditor
-                        onChange={(color: { hex: string }) => {
-                            setColor(idx, color.hex);
+                        onChange={(newColor: { hex: string }) => {
+                            setColor(idx, newColor.hex);
                         }}
-                        value={color}
+                        value={{ hex: color }}
                         format="hex"
                     />
                     {canRemove && (

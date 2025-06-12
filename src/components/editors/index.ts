@@ -1,5 +1,5 @@
 import clamp from "lodash/clamp.js";
-import type { AnyColor, ColorFormat, HueSaturationColor, RGBColor, XYColor } from "../../types.js";
+import type { AnyColor, ColorFormat, HexColor, HueSaturationColor, RGBColor, XYColor } from "../../types.js";
 
 //-- Adapted from https://viereck.ch/hue-xy-rgb/
 
@@ -201,7 +201,7 @@ export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat): Zig
         }
 
         case "hex": {
-            const hex = source as string;
+            const hex = (source as HexColor).hex;
             const rgb = convertHexToRgb(hex);
 
             return {
@@ -240,7 +240,7 @@ export const convertFromColor = (source: ZigbeeColor, targetFormat: ColorFormat)
         }
 
         case "hex": {
-            return source.hex;
+            return { hex: source.hex };
         }
     }
 };
@@ -309,7 +309,7 @@ export const convertStringToColor = (source: string, format: ColorFormat): Zigbe
         }
 
         case "hex": {
-            return convertToColor(source, "hex");
+            return convertToColor({ hex: source }, "hex");
         }
     }
 };

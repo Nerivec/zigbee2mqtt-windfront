@@ -23,7 +23,7 @@ const Color = memo((props: ColorProps) => {
         return val;
     }, [deviceValue, features]);
 
-    const onEditorChange = useCallback((color: AnyColor | { hex: string }) => onChange({ [property ?? "color"]: color }), [property, onChange]);
+    const onEditorChange = useCallback((color: AnyColor) => onChange({ [property ?? "color"]: color }), [property, onChange]);
 
     return <ColorEditor onChange={onEditorChange} value={value} format={name} minimal={minimal} />;
 });
