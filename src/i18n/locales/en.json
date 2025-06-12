@@ -205,7 +205,7 @@
         "coordinator_ieee_address": "Coordinator IEEE Address",
         "request_z2m_backup": "Request Z2m backup",
         "add_install_code": "Add install code",
-        "enter_install_code": "Enter install code",
+        "install_code": "Install code",
         "homeassistant": "Home Assistant integration",
         "translation_prompt": "You can help with the translation at",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters version",

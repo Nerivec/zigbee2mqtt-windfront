@@ -1,3 +1,4 @@
+import NiceModal from "@ebay/nice-modal-react";
 import saveAs from "file-saver";
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,6 +8,7 @@ import store, { setBackupPreparing } from "../../../store.js";
 import { downloadAsZip, formatDate } from "../../../utils.js";
 import Button from "../../Button.js";
 import ConfirmButton from "../../ConfirmButton.js";
+import { AddInstallCodeModal } from "../../modal/components/AddInstallCodeModal.js";
 import { ImageLocaliser } from "../ImageLocaliser.js";
 
 export default function Tools() {
@@ -24,14 +26,6 @@ export default function Tools() {
 
         saveAs(`data:application/zip;base64,${backup}`, backupFileName);
     }, [backup, bridgeInfo.version]);
-
-    const addInstallCode = useCallback(async () => {
-        const code = prompt(t("enter_install_code"));
-
-        if (code) {
-            await sendMessage("bridge/request/install_code/add", { value: code });
-        }
-    }, [sendMessage, t]);
 
     return (
         <div className="join join-vertical">
@@ -69,7 +63,14 @@ export default function Tools() {
                     {t("request_z2m_backup")}
                 </Button>
             )}
-            <Button className="btn btn-primary join-item" onClick={addInstallCode}>
+            <Button
+                className="btn btn-primary join-item"
+                onClick={async () =>
+                    await NiceModal.show(AddInstallCodeModal, {
+                        addInstallCode: async (code: string) => await sendMessage("bridge/request/install_code/add", { value: code }),
+                    })
+                }
+            >
                 {t("add_install_code")}
             </Button>
             <ImageLocaliser devices={devices} />
