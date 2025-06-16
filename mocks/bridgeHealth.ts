@@ -1,0 +1,41 @@
+import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
+import type { Message } from "../src/types.js";
+
+export const BRIDGE_HEALTH: Message<Zigbee2MQTTAPI["bridge/health"]> = {
+    payload: {
+        response_time: 0,
+        os: {
+            load_average: [0.14, 0.12, 0.05],
+            memory_used_mb: 1023.57,
+            memory_percent: 5.12,
+        },
+        process: { uptime_sec: 2053460, memory_used_mb: 80.43, memory_percent: 0.004 },
+        mqtt: {
+            connected: true,
+            queued: 0,
+            published: 79,
+            received: 1256,
+        },
+        devices: {
+            "0x00158d00039fe32c": {
+                leave_count: 0,
+                messages: 456,
+                messages_per_sec: 0.354,
+                network_address_changes: 2,
+            },
+            "0x0017880104dfc05e": {
+                leave_count: 0,
+                messages: 25,
+                messages_per_sec: 1.335,
+                network_address_changes: 0,
+            },
+            "0x00158d0002c48958": {
+                leave_count: 65,
+                messages: 23685,
+                messages_per_sec: 15.654,
+                network_address_changes: 23,
+            },
+        },
+    },
+    topic: "bridge/health",
+};

@@ -6,6 +6,7 @@ import { BRIDGE_DEFINITION } from "./bridgeDefinitions.js";
 import { BRIDGE_DEVICES } from "./bridgeDevices.js";
 import { BRIDGE_EXTENSIONS } from "./bridgeExtensions.js";
 import { BRIDGE_GROUPS } from "./bridgeGroups.js";
+import { BRIDGE_HEALTH } from "./bridgeHealth.js";
 import { BRIDGE_INFO } from "./bridgeInfo.js";
 import { BRIDGE_LOGGING, BRIDGE_LOGGING_EXECUTE_COMMAND, BRIDGE_LOGGING_READ_ATTR } from "./bridgeLogging.js";
 import { BRIDGE_STATE } from "./bridgeState.js";
@@ -38,6 +39,10 @@ export function startServer() {
         ws.send(JSON.stringify(BRIDGE_GROUPS));
         ws.send(JSON.stringify(BRIDGE_DEFINITION));
         ws.send(JSON.stringify(BRIDGE_EXTENSIONS));
+
+        setTimeout(() => {
+            ws.send(JSON.stringify(merge({}, BRIDGE_HEALTH, { payload: { response_time: Date.now() - 3 } })));
+        }, 5000);
 
         for (const message of DEVICE_AVAILABILITY) {
             ws.send(JSON.stringify(message));

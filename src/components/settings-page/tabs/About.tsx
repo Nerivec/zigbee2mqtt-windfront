@@ -72,35 +72,56 @@ export default function About() {
             <div className="stats stats-vertical lg:stats-horizontal shadow">
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("zigbee2mqtt_version")}</div>
-                    <div className="stat-value text-xl">{zigbee2mqttVersion}</div>
+                    <div className="stat-value text-lg">{zigbee2mqttVersion}</div>
                     <div className="stat-desc">{zigbee2mqttCommit}</div>
                 </div>
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("frontend_version")}</div>
-                    <div className="stat-value text-xl">{frontendVersion}</div>
+                    <div className="stat-value text-lg">{frontendVersion}</div>
                 </div>
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("zigbee_herdsman_converters_version")}</div>
-                    <div className="stat-value text-xl">{zhcVersion}</div>
+                    <div className="stat-value text-lg">{zhcVersion}</div>
                 </div>
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("zigbee_herdsman_version")}</div>
-                    <div className="stat-value text-xl">{zhVersion}</div>
+                    <div className="stat-value text-lg">{zhVersion}</div>
                 </div>
             </div>
             <div className="stats stats-vertical lg:stats-horizontal shadow">
                 <div className="stat place-items-center">
+                    <div className="stat-title">{t("machine")}</div>
+                    <div className="stat-value text-lg">{bridgeInfo.os.version}</div>
+                    <div className="stat-desc">CPU: {bridgeInfo.os.cpus}</div>
+                    <div className="stat-desc">RAM: {bridgeInfo.os.memory_mb} MB</div>
+                </div>
+                <div className="stat place-items-center">
+                    <div className="stat-title">{t("mqtt")}</div>
+                    <div className="stat-value text-lg">{bridgeInfo.mqtt.server}</div>
+                    <div className="stat-desc">
+                        <a href="https://mqtt.org/mqtt-specification/" target="_blank" rel="noreferrer" className="link link-hover">
+                            {t("version")}: {bridgeInfo.mqtt.version}
+                        </a>
+                    </div>
+                </div>
+                <div className="stat place-items-center">
+                    <div className="stat-title">{t("node_version")}</div>
+                    <div className="stat-value text-lg">
+                        <a href="https://nodejs.org/en/about/previous-releases" target="_blank" rel="noreferrer" className="link link-hover">
+                            {bridgeInfo.os.node_version}
+                        </a>
+                    </div>
+                </div>
+                <div className="stat place-items-center">
                     <div className="stat-title">{t("coordinator")}</div>
-                    <div className="stat-value text-xl">{bridgeInfo.coordinator.type}</div>
-                    <div className="stat-desc flex flex-col gap-2 items-center">
-                        <span className="badge badge-primary" title={t("coordinator_ieee_address")}>
+                    <div className="stat-value text-lg">{bridgeInfo.coordinator.type}</div>
+                    <div className="stat-desc">
+                        <span className="badge badge-sm badge-primary" title={t("coordinator_ieee_address")}>
                             {bridgeInfo.coordinator.ieee_address}
                         </span>
-                        <span>
-                            {t("revision")}
-                            {": "}
-                            {bridgeInfo.coordinator.meta.revision || t("zigbee:unknown")}
-                        </span>
+                    </div>
+                    <div className="stat-desc">
+                        {t("revision")}: {bridgeInfo.coordinator.meta.revision || t("zigbee:unknown")}
                     </div>
                 </div>
             </div>

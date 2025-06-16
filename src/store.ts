@@ -11,6 +11,8 @@ interface State {
     /** Sorted by friendlyName */
     groups: Zigbee2MQTTAPI["bridge/groups"];
     bridgeState: Zigbee2MQTTAPI["bridge/state"];
+    bridgeHealth: Zigbee2MQTTAPI["bridge/health"];
+    bridgeHealthResponseTime: number;
     bridgeInfo: Zigbee2MQTTAPI["bridge/info"];
     bridgeDefinitions: Zigbee2MQTTAPI["bridge/definitions"];
     availability: Record<string, AvailabilityState>;
@@ -38,6 +40,27 @@ const initialState: State = {
     deviceStates: {},
     groups: [],
     bridgeState: { state: "offline" },
+    bridgeHealth: {
+        response_time: 0,
+        os: {
+            load_average: [0, 0, 0],
+            memory_used_mb: 0,
+            memory_percent: 0,
+        },
+        process: {
+            uptime_sec: 0,
+            memory_used_mb: 0,
+            memory_percent: 0,
+        },
+        mqtt: {
+            connected: false,
+            queued: 0,
+            received: 0,
+            published: 0,
+        },
+        devices: {},
+    },
+    bridgeHealthResponseTime: 0,
     bridgeInfo: {
         config_schema: {
             // @ts-expect-error unloaded
@@ -123,6 +146,10 @@ const initialState: State = {
                 default_maximum_data_size: undefined,
             },
             groups: {},
+            health: {
+                interval: 10,
+                reset_on_check: false,
+            },
         },
         permit_join: false,
         permit_join_end: undefined,
@@ -139,6 +166,16 @@ const initialState: State = {
             meta: {},
             type: "",
             ieee_address: "",
+        },
+        os: {
+            version: "",
+            node_version: "",
+            cpus: "",
+            memory_mb: 0,
+        },
+        mqtt: {
+            server: "",
+            version: 0,
         },
     },
     bridgeDefinitions: {
@@ -223,6 +260,10 @@ export const storeSlice = createSlice({
         setBridgeState: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/state"]>) => {
             state.bridgeState = action.payload;
         },
+        setBridgeHealth: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/health"]>) => {
+            state.bridgeHealthResponseTime = Date.now() - action.payload.response_time;
+            state.bridgeHealth = action.payload;
+        },
         setBridgeDefinitions: (state, action: PayloadAction<RecursiveMutable<Zigbee2MQTTAPI["bridge/definitions"]>>) => {
             state.bridgeDefinitions = action.payload;
         },
@@ -280,6 +321,7 @@ export const {
     updateAvailability,
     setBridgeInfo,
     setBridgeState,
+    setBridgeHealth,
     setBridgeDefinitions,
     setDevices,
     setGroups,

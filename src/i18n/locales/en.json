@@ -222,7 +222,27 @@
         "dev_console": "Dev console",
         "max_on_screen_notifications": "Max on-screen notifications",
         "network_raw": "Network data/map",
-        "network_map": "Network map"
+        "network_map": "Network map",
+        "machine": "Machine",
+        "node_version": "Node version",
+        "version": "Version",
+        "health": "Health"
+    },
+    "health": {
+        "awaiting_data": "Awaiting data",
+        "response_time": "Response time",
+        "os": "OS",
+        "process": "Process",
+        "load_average": "Load average",
+        "ram_usage": "RAM usage",
+        "uptime": "Uptime",
+        "queued": "Queued",
+        "published": "Published",
+        "received": "Received",
+        "messages": "Messages",
+        "messages_per_sec": "Messages per sec",
+        "leave_count": "Leave count",
+        "network_address_changes": "Network address changes"
     },
     "touchlink": {
         "detected_devices_message": "Detected {{count}} touchlink devices.",

@@ -55,6 +55,10 @@ const processBridgeMessage = (data: Message, dispatch: ReturnType<typeof useAppD
             dispatch(store.setBridgeState(data.payload as Zigbee2MQTTAPI[typeof data.topic]));
             break;
         }
+        case "bridge/health": {
+            dispatch(store.setBridgeHealth(data.payload as Zigbee2MQTTAPI[typeof data.topic]));
+            break;
+        }
         case "bridge/definitions": {
             dispatch(store.setBridgeDefinitions(data.payload as RecursiveMutable<Zigbee2MQTTAPI[typeof data.topic]>));
             break;

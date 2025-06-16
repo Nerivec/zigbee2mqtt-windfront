@@ -20,6 +20,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                 log_directory: "/config/zigbee2mqtt/log/%TIMESTAMP%",
                 log_file: "log.log",
                 log_level: "debug",
+                log_namespaced_levels: {},
                 log_output: ["console"],
                 log_rotation: true,
                 log_symlink_current: false,
@@ -34,6 +35,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                     protocol: "udp4",
                     type: "5424",
                 },
+                network_key: [],
                 output: "json",
                 pan_id: 2345,
                 timestamp_format: "YYYY-MM-DD HH:mm:ss",
@@ -115,6 +117,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                 },
             },
             frontend: {
+                package: "zigbee2mqtt-windfront",
                 base_url: "/",
                 enabled: true,
                 port: 8099,
@@ -1139,6 +1142,16 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
         },
         zigbee_herdsman: {
             version: "4.0.0",
+        },
+        os: {
+            version: "Linux - 6.15.2 - x64",
+            node_version: "v22.11.0",
+            cpus: "Intel(R) Core(TM) i7-6700HQ CPU @ 2.60GHz (x8)",
+            memory_mb: 24475,
+        },
+        mqtt: {
+            server: "mqtt://localhost:1883",
+            version: 5,
         },
     },
     topic: "bridge/info",

@@ -1,14 +1,15 @@
-import { faBug, faCode, faCogs, faDisplay, faInfo, faThumbsUp, faToolbox } from "@fortawesome/free-solid-svg-icons";
+import { faBug, faCode, faCogs, faDisplay, faHeartPulse, faInfo, faThumbsUp, faToolbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, lazy, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 
 type UrlParams = {
-    tab?: "about" | "frontend" | "settings" | "tools" | "bridge" | "dev-console" | "donate";
+    tab?: "about" | "health" | "frontend" | "settings" | "tools" | "bridge" | "dev-console" | "donate";
 };
 
 const AboutTab = lazy(async () => await import("../components/settings-page/tabs/About.js"));
+const HealthTab = lazy(async () => await import("../components/settings-page/tabs/Health.js"));
 const FrontendTab = lazy(async () => await import("../components/settings-page/tabs/Frontend.js"));
 const SettingsTab = lazy(async () => await import("../components/settings-page/tabs/Settings.js"));
 const ToolsTab = lazy(async () => await import("../components/settings-page/tabs/Tools.js"));
@@ -31,6 +32,8 @@ export default function SettingsPage() {
         switch (tab) {
             case "about":
                 return <AboutTab />;
+            case "health":
+                return <HealthTab />;
             case "frontend":
                 return <FrontendTab />;
             case "settings":
@@ -56,6 +59,10 @@ export default function SettingsPage() {
                 <NavLink to="/settings/about" className={isTabActive}>
                     <FontAwesomeIcon icon={faInfo} className="me-2" />
                     {t("about")}
+                </NavLink>
+                <NavLink to="/settings/health" className={isTabActive}>
+                    <FontAwesomeIcon icon={faHeartPulse} className="me-2" />
+                    {t("health")}
                 </NavLink>
                 <NavLink to="/settings/frontend" className={isTabActive}>
                     <FontAwesomeIcon icon={faDisplay} className="me-2" />

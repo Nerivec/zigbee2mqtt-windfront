@@ -1,6 +1,6 @@
 {
     "name": "zigbee2mqtt-windfront",
-    "version": "1.0.6",
+    "version": "1.1.0",
     "license": "GPL-3.0-or-later",
     "type": "module",
     "main": "index.js",
@@ -70,7 +70,7 @@
         "vite-plugin-compression2": "^2.0.1",
         "vitest": "^3.1.2",
         "ws": "^8.18.2",
-        "zigbee2mqtt": "^2.4.0"
+        "zigbee2mqtt": "github:Koenkk/zigbee2mqtt#dev-types"
     },
     "sideEffects": [
         "*.css"
