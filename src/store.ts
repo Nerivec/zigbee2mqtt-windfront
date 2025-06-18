@@ -12,7 +12,6 @@ interface State {
     groups: Zigbee2MQTTAPI["bridge/groups"];
     bridgeState: Zigbee2MQTTAPI["bridge/state"];
     bridgeHealth: Zigbee2MQTTAPI["bridge/health"];
-    bridgeHealthResponseTime: number;
     bridgeInfo: Zigbee2MQTTAPI["bridge/info"];
     bridgeDefinitions: Zigbee2MQTTAPI["bridge/definitions"];
     availability: Record<string, AvailabilityState>;
@@ -60,7 +59,6 @@ const initialState: State = {
         },
         devices: {},
     },
-    bridgeHealthResponseTime: 0,
     bridgeInfo: {
         config_schema: {
             // @ts-expect-error unloaded
@@ -261,7 +259,6 @@ export const storeSlice = createSlice({
             state.bridgeState = action.payload;
         },
         setBridgeHealth: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/health"]>) => {
-            state.bridgeHealthResponseTime = Date.now() - action.payload.response_time;
             state.bridgeHealth = action.payload;
         },
         setBridgeDefinitions: (state, action: PayloadAction<RecursiveMutable<Zigbee2MQTTAPI["bridge/definitions"]>>) => {

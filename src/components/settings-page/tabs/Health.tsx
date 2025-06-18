@@ -20,7 +20,6 @@ type HealthDeviceTableData = {
 export default function Health() {
     const { t, i18n } = useTranslation(["health", "settings", "common"]);
     const bridgeHealth = useAppSelector((state) => state.bridgeHealth);
-    const bridgeHealthResponseTime = useAppSelector((state) => state.bridgeHealthResponseTime);
     const devices = useAppSelector((state) => state.devices);
 
     const tableData = useMemo(() => {
@@ -136,11 +135,6 @@ export default function Health() {
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
                     <div className="stat place-items-center">
                         <div className="stat-value text-xl">{t("process")}</div>
-                    </div>
-                    <div className="stat place-items-center">
-                        <div className="stat-title">{t("response_time")}</div>
-                        <div className="stat-value text-lg">{bridgeHealthResponseTime} msec</div>
-                        <div className="stat-desc">Zigbee2MQTT ➜ Frontend</div>
                     </div>
                     <div className="stat place-items-center">
                         <div className="stat-title">{t("uptime")}</div>
