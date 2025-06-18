@@ -229,7 +229,7 @@
         "health": "Health"
     },
     "health": {
-        "awaiting_data": "Awaiting data",
+        "awaiting_next_check": "Awaiting next check",
         "last_check": "Last check",
         "response_time": "Response time",
         "os": "OS",
@@ -243,7 +243,9 @@
         "messages": "Messages",
         "messages_per_sec": "Messages per sec",
         "leave_count": "Leave count",
-        "network_address_changes": "Network address changes"
+        "network_address_changes": "Network address changes",
+        "very_low": "Very low",
+        "interview_info": "Device interviews can heavily influence this data."
     },
     "touchlink": {
         "detected_devices_message": "Detected {{count}} touchlink devices.",

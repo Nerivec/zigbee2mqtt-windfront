@@ -1,4 +1,4 @@
-import { faDotCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo, faDotCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
@@ -78,6 +78,25 @@ export default function Health() {
                 header: t("messages_per_sec"),
                 accessorFn: ({ health }) => health.messages_per_sec,
                 enableColumnFilter: false,
+                cell: ({
+                    row: {
+                        original: { health },
+                    },
+                }) => (
+                    <span
+                        className={
+                            health.messages_per_sec > 1
+                                ? health.messages_per_sec > 3
+                                    ? "text-error"
+                                    : "text-warning"
+                                : health.messages_per_sec < 0.2
+                                  ? "text-success"
+                                  : ""
+                        }
+                    >
+                        {health.messages_per_sec <= 0.001 ? t("very_low") : health.messages_per_sec}
+                    </span>
+                ),
             },
             {
                 header: t("leave_count"),
@@ -93,14 +112,23 @@ export default function Health() {
         [t],
     );
 
-    if (!bridgeHealth) {
-        return <>{t("awaiting_data")}</>;
+    if (bridgeHealth.response_time === 0) {
+        return (
+            <div className="alert alert-info alert-soft" role="alert">
+                <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
+                {t("awaiting_next_check")}
+            </div>
+        );
     }
 
     const processStartTime = new Date(Date.now() - bridgeHealth.process.uptime_sec * 1000);
 
     return (
         <>
+            <div className="alert alert-info alert-soft mb-3" role="alert">
+                <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
+                {t("interview_info")}
+            </div>
             <div className="flex flex-col gap-3 items-center mb-2">
                 <p className="text-sm">
                     {t("last_check")}: {formatDate(new Date(bridgeHealth.response_time))}
