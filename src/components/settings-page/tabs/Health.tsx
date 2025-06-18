@@ -103,7 +103,9 @@ export default function Health() {
     return (
         <>
             <div className="flex flex-col gap-3 items-center mb-2">
-                <p>{formatDate(new Date(bridgeHealth.response_time))}</p>
+                <p className="text-sm">
+                    {t("last_check")}: {formatDate(new Date(bridgeHealth.response_time))}
+                </p>
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
                     <div className="stat place-items-center">
                         <div className="stat-value text-xl">{t("os")}</div>
@@ -113,6 +115,16 @@ export default function Health() {
                         <div className="stat place-items-center">
                             <div className="stat-title">{t("load_average")}</div>
                             <div className="stat-value text-lg">{bridgeHealth.os.load_average.join(", ")}</div>
+                            <div className="stat-desc">
+                                <a
+                                    href="https://www.digitalocean.com/community/tutorials/load-average-in-linux"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="link link-hover"
+                                >
+                                    1min, 5min, 15min
+                                </a>
+                            </div>
                         </div>
                     )}
                     <div className="stat place-items-center">
@@ -128,6 +140,7 @@ export default function Health() {
                     <div className="stat place-items-center">
                         <div className="stat-title">{t("response_time")}</div>
                         <div className="stat-value text-lg">{bridgeHealthResponseTime} msec</div>
+                        <div className="stat-desc">Zigbee2MQTT ➜ Frontend</div>
                     </div>
                     <div className="stat place-items-center">
                         <div className="stat-title">{t("uptime")}</div>

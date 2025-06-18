@@ -230,6 +230,7 @@
     },
     "health": {
         "awaiting_data": "Awaiting data",
+        "last_check": "Last check",
         "response_time": "Response time",
         "os": "OS",
         "process": "Process",
