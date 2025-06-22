@@ -86,6 +86,11 @@ export default function Frontend() {
         store2.remove(NETWORK_MAP_LINK_DISTANCE_KEY);
         store2.remove(I18NEXTLNG_KEY);
         store2.remove(DEVICES_HIDE_DISABLED_KEY);
+        store2.remove("all-devices-column-visibility");
+        store2.remove("all-groups-column-visibility");
+        store2.remove("ota-devices-column-visibility");
+        store2.remove("touchlink-devices-column-visibility");
+        store2.remove("health-devices-column-visibility");
 
         window.location.reload();
     }, []);
