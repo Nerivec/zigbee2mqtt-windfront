@@ -150,6 +150,7 @@ export default function OtaPage() {
                 enableSorting: false,
             },
             {
+                id: "friendly_name",
                 header: t("common:friendly_name"),
                 accessorFn: ({ device }) => [device.friendly_name, device.description, device.ieee_address].join(" "),
                 cell: ({
@@ -187,6 +188,7 @@ export default function OtaPage() {
                 ),
             },
             {
+                id: "model",
                 header: t("zigbee:model"),
                 accessorFn: ({ device }) => [device.definition?.model, device.model_id, device.definition?.vendor, device.manufacturer].join(" "),
                 cell: ({
@@ -205,6 +207,7 @@ export default function OtaPage() {
                 ),
             },
             {
+                id: "firmware_version",
                 header: t("firmware_version"),
                 accessorFn: ({ state }) => state?.installed_version,
                 cell: ({
@@ -215,6 +218,7 @@ export default function OtaPage() {
                 enableColumnFilter: false,
             },
             {
+                id: "available_firmware_version",
                 header: t("available_firmware_version"),
                 accessorFn: ({ state }) => state?.latest_version,
                 cell: ({
@@ -225,6 +229,7 @@ export default function OtaPage() {
                 enableColumnFilter: false,
             },
             {
+                id: "actions",
                 header: () => (
                     <div className="join join-vertical">
                         <ConfirmButton
@@ -250,7 +255,6 @@ export default function OtaPage() {
                     </div>
                 ),
                 accessorFn: ({ state }) => state?.state,
-                id: "check_all",
                 cell: ({
                     row: {
                         original: { device, state },

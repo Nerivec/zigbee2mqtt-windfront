@@ -248,7 +248,7 @@ export default function DevicesPage(): JSX.Element {
                 enableColumnFilter: false,
             },
             {
-                id: "controls",
+                id: "actions",
                 header: () => (
                     <>
                         <CheckboxField

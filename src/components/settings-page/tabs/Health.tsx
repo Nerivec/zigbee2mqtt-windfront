@@ -47,6 +47,7 @@ export default function Health() {
     const columns = useMemo<ColumnDef<HealthDeviceTableData, any>[]>(
         () => [
             {
+                id: "friendly_name",
                 header: t("common:friendly_name"),
                 accessorFn: ({ device }) => [device.friendly_name, device.description, device.ieee_address].join(" "),
                 cell: ({
@@ -70,11 +71,13 @@ export default function Health() {
                 ),
             },
             {
+                id: "messages",
                 header: t("messages"),
                 accessorFn: ({ health }) => health.messages,
                 enableColumnFilter: false,
             },
             {
+                id: "messages_per_sec",
                 header: t("messages_per_sec"),
                 accessorFn: ({ health }) => health.messages_per_sec,
                 enableColumnFilter: false,
@@ -99,11 +102,13 @@ export default function Health() {
                 ),
             },
             {
+                id: "leave_count",
                 header: t("leave_count"),
                 accessorFn: ({ health }) => health.leave_count,
                 enableColumnFilter: false,
             },
             {
+                id: "network_address_changes",
                 header: t("network_address_changes"),
                 accessorFn: ({ health }) => health.network_address_changes,
                 enableColumnFilter: false,

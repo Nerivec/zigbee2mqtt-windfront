@@ -90,8 +90,8 @@ export default function GroupsPage() {
                 enableColumnFilter: false,
             },
             {
-                header: "",
                 id: "actions",
+                header: "",
                 cell: ({ row: { original: group } }) => (
                     <div className="join join-horizontal">
                         <Button<void>

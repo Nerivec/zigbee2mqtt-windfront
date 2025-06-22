@@ -7,7 +7,8 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import store2 from "store2";
 import TextFilter from "./TextFilter.js";
 
 interface Props<T> {
@@ -19,7 +20,8 @@ interface Props<T> {
 
 export default function Table<T>(props: Props<T>) {
     const { id, columns, data, visibleColumns } = props;
-    const [columnVisibility] = useState<Record<string, boolean>>(visibleColumns ?? {});
+    const columnVisibilityStoreKey = `${id}-column-visibility`;
+    const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>(store2.get(columnVisibilityStoreKey, visibleColumns ?? {}));
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const table = useReactTable({
         data,
@@ -33,6 +35,7 @@ export default function Table<T>(props: Props<T>) {
                 pageSize: 500, // custom default page size
             },
         },
+        onColumnVisibilityChange: setColumnVisibility,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(), // client side filtering
@@ -47,8 +50,28 @@ export default function Table<T>(props: Props<T>) {
         // debugAll: false,
     });
 
+    useEffect(() => {
+        store2.set(columnVisibilityStoreKey, columnVisibility);
+    }, [columnVisibilityStoreKey, columnVisibility]);
+
     return (
         <div className="overflow-x-auto">
+            <div className="flex flex-row flex-wrap gap-2">
+                {table.getAllColumns().map((column) =>
+                    column.id === "select" ? null : (
+                        <label key={column.id} className="label text-xs">
+                            <input
+                                checked={column.getIsVisible()}
+                                disabled={!column.getCanHide()}
+                                onChange={column.getToggleVisibilityHandler()}
+                                type="checkbox"
+                                className="checkbox checkbox-xs"
+                            />
+                            {typeof column.columnDef.header === "string" && column.columnDef.header ? column.columnDef.header : column.id}
+                        </label>
+                    ),
+                )}
+            </div>
             <table id={id} className="table table-sm mb-3">
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
