@@ -1,4 +1,4 @@
-import { type ChangeEvent, type DetailedHTMLProps, type FocusEvent, type TextareaHTMLAttributes, memo } from "react";
+import { type ChangeEvent, type DetailedHTMLProps, type FocusEvent, memo, type TextareaHTMLAttributes } from "react";
 
 type TextAreaFieldProps = DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement> & {
     name: string;

@@ -3,14 +3,14 @@ import React, { lazy, Suspense } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import { Provider } from "react-redux";
 import { HashRouter, Route, Routes } from "react-router";
-import { ErrorBoundary } from "./ErrorBoundary.js";
-import { WebSocketApiRouter } from "./WebSocketApiRouter.js";
-import ScrollToTop from "./components/ScrollToTop.js";
 import { AuthForm } from "./components/modal/components/AuthModal.js";
 import NavBar from "./components/navbar/NavBar.js";
+import ScrollToTop from "./components/ScrollToTop.js";
 import Toasts from "./components/toasts/Toasts.js";
+import { ErrorBoundary } from "./ErrorBoundary.js";
 import i18n from "./i18n/index.js";
 import store from "./store.js";
+import { WebSocketApiRouter } from "./WebSocketApiRouter.js";
 
 const HomePage = lazy(async () => await import("./pages/HomePage.js"));
 const DevicesPage = lazy(async () => await import("./pages/DevicesPage.js"));

@@ -1,4 +1,4 @@
-import { type JSX, type SelectHTMLAttributes, memo, useMemo } from "react";
+import { type JSX, memo, type SelectHTMLAttributes, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import SelectField from "../form-fields/SelectField.js";
 

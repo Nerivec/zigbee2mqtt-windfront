@@ -4,7 +4,6 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { type ChangeEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import ConfirmButton from "../components/ConfirmButton.js";
 import DeviceImage from "../components/device/DeviceImage.js";
 import OtaControlGroup from "../components/ota-page/OtaControlGroup.js";
@@ -16,6 +15,7 @@ import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useAppSelector } from "../hooks/useApp.js";
 import type { Device, DeviceState } from "../types.js";
+import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 type OtaTableData = {
     device: Device;
@@ -116,8 +116,7 @@ export default function OtaPage() {
         [sendMessage],
     );
 
-    // biome-ignore lint/suspicious/noExplicitAny: tmp
-    const columns = useMemo<ColumnDef<OtaTableData, any>[]>(
+    const columns = useMemo<ColumnDef<OtaTableData, unknown>[]>(
         () => [
             {
                 id: "select",

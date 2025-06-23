@@ -1,9 +1,8 @@
 import { useCallback, useContext } from "react";
-import type { Device } from "../../../types.js";
-
 import { useTranslation } from "react-i18next";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import { useAppSelector } from "../../../hooks/useApp.js";
+import type { Device } from "../../../types.js";
+import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Feature from "../../features/Feature.js";
 import FeatureWrapper from "../../features/FeatureWrapper.js";
 import { getFeatureKey } from "../../features/index.js";

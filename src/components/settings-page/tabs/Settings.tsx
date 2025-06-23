@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { JSONSchema7 } from "json-schema";
 import { useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import { CONFIGURATION_DOCS_URL } from "../../../consts.js";
 import { useAppSelector } from "../../../hooks/useApp.js";
+import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Button from "../../Button.js";
 import SettingsList from "../../json-schema/SettingsList.js";
 

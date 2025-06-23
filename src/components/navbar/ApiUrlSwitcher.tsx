@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { ReadyState } from "react-use-websocket";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext";
 import { Z2M_API_NAMES } from "../../envs";
+import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext";
 import PopoverDropdown from "../PopoverDropdown";
 
 const CONNECTION_STATUS = {

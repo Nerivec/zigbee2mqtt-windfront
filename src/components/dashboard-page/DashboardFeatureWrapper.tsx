@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import camelCase from "lodash/camelCase.js";
 import startCase from "lodash/startCase.js";
-import { type PropsWithChildren, memo, useMemo } from "react";
+import { memo, type PropsWithChildren, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import type { FeatureWrapperProps } from "../features/FeatureWrapper.js";
 import { getFeatureIcon } from "../features/index.js";

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noTemplateCurlyInString: expected code in strings */
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import type { Message } from "../src/types.js";
 

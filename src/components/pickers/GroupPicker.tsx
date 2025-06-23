@@ -1,4 +1,4 @@
-import { type ChangeEvent, type JSX, type SelectHTMLAttributes, memo, useCallback, useMemo } from "react";
+import { type ChangeEvent, type JSX, memo, type SelectHTMLAttributes, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import type { RootState } from "../../store.js";
 import type { Group } from "../../types.js";

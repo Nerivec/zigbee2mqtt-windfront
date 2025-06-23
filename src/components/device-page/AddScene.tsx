@@ -1,9 +1,9 @@
 import { memo, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import type { Device, DeviceState, FeatureWithAnySubFeatures, Group } from "../../types.js";
 import { isDevice } from "../../utils.js";
+import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import Button from "../Button.js";
 import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
 import Feature from "../features/Feature.js";

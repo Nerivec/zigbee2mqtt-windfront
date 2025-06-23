@@ -1,10 +1,10 @@
 import { memo, useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import { SUPPORT_NEW_DEVICES_DOCS_URL } from "../../consts.js";
 import { useAppSelector } from "../../hooks/useApp.js";
 import type { Device } from "../../types.js";
+import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import Button from "../Button.js";
 import TextareaField from "../form-fields/TextareaField.js";
 

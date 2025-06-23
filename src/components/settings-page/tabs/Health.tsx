@@ -43,8 +43,7 @@ export default function Health() {
         return healthDevices;
     }, [bridgeHealth, devices]);
 
-    // biome-ignore lint/suspicious/noExplicitAny: tmp
-    const columns = useMemo<ColumnDef<HealthDeviceTableData, any>[]>(
+    const columns = useMemo<ColumnDef<HealthDeviceTableData, unknown>[]>(
         () => [
             {
                 id: "friendly_name",

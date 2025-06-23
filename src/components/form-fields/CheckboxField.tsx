@@ -1,6 +1,6 @@
 import { type ChangeEvent, type DetailedHTMLProps, type InputHTMLAttributes, memo } from "react";
 
-type CheckboxFieldProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
+type CheckboxFieldProps = Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "type"> & {
     name: string;
     label?: string;
     detail?: string;
@@ -8,7 +8,7 @@ type CheckboxFieldProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement
 };
 
 const CheckboxField = memo((props: CheckboxFieldProps) => {
-    const { type, label, detail, onChange, ...rest } = props;
+    const { label, detail, onChange, ...rest } = props;
 
     return (
         <fieldset className="fieldset">

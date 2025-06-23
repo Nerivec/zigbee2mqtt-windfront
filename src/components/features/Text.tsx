@@ -2,8 +2,8 @@ import { memo } from "react";
 import { FeatureAccessMode, type TextFeature } from "../../types.js";
 import TextEditor from "../editors/TextEditor.js";
 import BaseViewer from "./BaseViewer.js";
-import NoAccessError from "./NoAccessError.js";
 import type { BaseFeatureProps } from "./index.js";
+import NoAccessError from "./NoAccessError.js";
 
 type TextProps = BaseFeatureProps<TextFeature>;
 

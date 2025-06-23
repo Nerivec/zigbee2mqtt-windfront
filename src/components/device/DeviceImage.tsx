@@ -1,6 +1,6 @@
 import { faBan, faExclamationTriangle, faQuestionCircle, faSpinner, faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Suspense, memo, useMemo } from "react";
+import { memo, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { InterviewState } from "../../consts.js";
 import genericDevice from "../../images/generic-zigbee-device.png";

@@ -1,4 +1,4 @@
-import { faExclamationTriangle, faMagnifyingGlass, faMarker } from "@fortawesome/free-solid-svg-icons";
+import { faEraser, faExclamationTriangle, faMagnifyingGlass, faMarker } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { groupBy } from "lodash";
 import { type JSX, memo, useCallback, useMemo, useState } from "react";
@@ -7,6 +7,7 @@ import { Link } from "react-router";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
 import { useAppSelector } from "../../hooks/useApp.js";
 import { toHex } from "../../utils.js";
+import Button from "../Button.js";
 import DeviceImage from "../device/DeviceImage.js";
 import DebouncedInput from "../form-fields/DebouncedInput.js";
 import PowerSource from "../value-decorators/PowerSource.js";
@@ -66,6 +67,7 @@ const RawNetworkData = memo(({ map }: RawNetworkMapProps) => {
                             title={`${t("zigbee:ieee_address")}: ${node.ieeeAddr} | ${t("zigbee:network_address")}: ${toHex(node.networkAddress, 4)} (${node.networkAddress})`}
                             className={highlighted ? "bg-accent text-accent-content rounded-sm" : undefined}
                         >
+                            {/** biome-ignore lint/a11y/noStaticElementInteractions: special case */}
                             <span onClick={() => (highlighted ? setHighlightValue("") : setHighlightValue(node.friendlyName))}>
                                 <span className="w-10 h-10">
                                     <DeviceImage disabled={false} device={device} noIndicator={true} />
@@ -108,55 +110,41 @@ const RawNetworkData = memo(({ map }: RawNetworkMapProps) => {
     return (
         <>
             <div className="flex flex-row justify-center items-center gap-3">
-                {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
-                <label className="input w-64">
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    <DebouncedInput
-                        className=""
-                        type="search"
-                        onChange={(value) => setFilterValue(value.toString())}
-                        placeholder={t("common:search")}
-                        value={filterValue}
-                        disabled={map.nodes.length === 0}
-                    />
-                    <kbd
-                        className="kbd kbd-sm cursor-pointer"
-                        onClick={() => setFilterValue("")}
-                        onKeyUp={(e) => {
-                            if (e.key === "enter") {
-                                setFilterValue("");
-                            }
-                        }}
-                        title={t("common:clear")}
-                    >
-                        x
-                    </kbd>
-                </label>
-                {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
-                <label className="input w-64">
-                    <FontAwesomeIcon icon={faMarker} />
-                    <DebouncedInput
-                        className=""
-                        type="search"
-                        onChange={(value) => setHighlightValue(value.toString())}
-                        placeholder={t("common:highlight")}
-                        value={highlightValue}
-                        disabled={map.nodes.length === 0}
-                        title={t("highlight_info")}
-                    />
-                    <kbd
-                        className="kbd kbd-sm cursor-pointer"
-                        onClick={() => setHighlightValue("")}
-                        onKeyUp={(e) => {
-                            if (e.key === "enter") {
-                                setHighlightValue("");
-                            }
-                        }}
-                        title={t("common:clear")}
-                    >
-                        x
-                    </kbd>
-                </label>
+                <div className="join">
+                    {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
+                    <label className="input w-64 join-item">
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        <DebouncedInput
+                            className=""
+                            type="search"
+                            onChange={(value) => setFilterValue(value.toString())}
+                            placeholder={t("common:search")}
+                            value={filterValue}
+                            disabled={map.nodes.length === 0}
+                        />
+                    </label>
+                    <Button item="" onClick={setFilterValue} className="btn btn-square join-item" title={t("common:clear")}>
+                        <FontAwesomeIcon icon={faEraser} />
+                    </Button>
+                </div>
+                <div className="join">
+                    {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
+                    <label className="input w-64 join-item">
+                        <FontAwesomeIcon icon={faMarker} />
+                        <DebouncedInput
+                            className=""
+                            type="search"
+                            onChange={(value) => setHighlightValue(value.toString())}
+                            placeholder={t("common:highlight")}
+                            value={highlightValue}
+                            disabled={map.nodes.length === 0}
+                            title={t("highlight_info")}
+                        />
+                    </label>
+                    <Button item="" onClick={setHighlightValue} className="btn btn-square join-item" title={t("common:clear")}>
+                        <FontAwesomeIcon icon={faEraser} />
+                    </Button>
+                </div>
             </div>
             <div className="flex flex-row flex-wrap justify-center gap-3 p-3">{content}</div>
         </>

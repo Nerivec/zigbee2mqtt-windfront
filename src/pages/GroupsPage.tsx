@@ -6,7 +6,6 @@ import { useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import Button from "../components/Button.js";
 import ConfirmButton from "../components/ConfirmButton.js";
 import InputField from "../components/form-fields/InputField.js";
@@ -14,6 +13,7 @@ import { RenameGroupForm } from "../components/modal/components/RenameGroupModal
 import Table from "../components/table/Table.js";
 import { useAppSelector } from "../hooks/useApp.js";
 import type { Group } from "../types.js";
+import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 export default function GroupsPage() {
     const [newGroupFriendlyName, setNewGroupFriendlyName] = useState<string>("");
@@ -47,8 +47,7 @@ export default function GroupsPage() {
         return false;
     }, [newGroupFriendlyName, newGroupId, groups]);
 
-    // biome-ignore lint/suspicious/noExplicitAny: tmp
-    const columns = useMemo<ColumnDef<Group, any>[]>(
+    const columns = useMemo<ColumnDef<Group, unknown>[]>(
         () => [
             {
                 id: "group_id",

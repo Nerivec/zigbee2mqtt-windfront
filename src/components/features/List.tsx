@@ -4,8 +4,8 @@ import { FeatureAccessMode, type FeatureWithAnySubFeatures, type ListFeature } f
 import Button from "../Button.js";
 import ListEditor from "../editors/ListEditor.js";
 import BaseViewer from "./BaseViewer.js";
-import NoAccessError from "./NoAccessError.js";
 import type { BaseFeatureProps } from "./index.js";
+import NoAccessError from "./NoAccessError.js";
 
 interface State {
     // biome-ignore lint/suspicious/noExplicitAny: tmp

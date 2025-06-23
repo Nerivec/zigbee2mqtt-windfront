@@ -1,8 +1,7 @@
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faEraser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import Button from "../components/Button.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
@@ -12,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/useApp.js";
 import { clearLogs as clearStateLogs, setLogsLimit } from "../store.js";
 import type { LogMessage } from "../types.js";
 import { formatDate } from "../utils.js";
+import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 const HIGHLIGHT_LEVEL_CMAP = {
     error: "bg-error text-error-content",
@@ -68,30 +68,22 @@ export default function LogsPage() {
                 </SelectField>
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend">{t("filter_by_text")}</legend>
-                    {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
-                    <label className="input w-64">
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        <DebouncedInput
-                            className=""
-                            type="search"
-                            onChange={(value) => setFilterValue(value.toString())}
-                            placeholder={t("common:search")}
-                            value={filterValue}
-                            disabled={filteredLogs.length === 0}
-                        />
-                        <kbd
-                            className="kbd kbd-sm cursor-pointer"
-                            onClick={() => setFilterValue("")}
-                            onKeyUp={(e) => {
-                                if (e.key === "enter") {
-                                    setFilterValue("");
-                                }
-                            }}
-                            title={t("common:clear")}
-                        >
-                            x
-                        </kbd>
-                    </label>
+                    <div className="join">
+                        {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
+                        <label className="input w-64 join-item">
+                            <FontAwesomeIcon icon={faMagnifyingGlass} />
+                            <DebouncedInput
+                                className=""
+                                type="search"
+                                onChange={(value) => setFilterValue(value.toString())}
+                                placeholder={t("common:search")}
+                                value={filterValue}
+                            />
+                        </label>
+                        <Button item="" onClick={setFilterValue} className="btn btn-square join-item" title={t("common:clear")}>
+                            <FontAwesomeIcon icon={faEraser} />
+                        </Button>
+                    </div>
                 </fieldset>
                 <CheckboxField
                     name="highlight_only"
@@ -118,7 +110,7 @@ export default function LogsPage() {
                         dispatch(clearStateLogs());
                     }}
                     className="btn btn-primary self-center"
-                    disabled={filteredLogs.length === 0}
+                    disabled={logs.length === 0}
                 >
                     {t("common:clear")}
                 </Button>

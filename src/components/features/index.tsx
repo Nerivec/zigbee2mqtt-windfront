@@ -1,5 +1,4 @@
 import {
-    type IconDefinition,
     faA,
     faArrowsLeftRightToLine,
     faAtom,
@@ -58,6 +57,7 @@ import {
     faX,
     faY,
     faZ,
+    type IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import type { FunctionComponent, HTMLAttributes, PropsWithChildren } from "react";
 import type { Zigbee2MQTTDeviceOptions } from "zigbee2mqtt";

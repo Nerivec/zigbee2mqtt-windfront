@@ -65,32 +65,30 @@ const ListEditor = memo((props: ListEditorProps) => {
             </Button>
         </div>
     ) : (
-        <>
-            {currentValue.map((itemValue, itemIndex) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: don't have a fixed value type
-                <div className="flex flex-row flex-wrap gap-2" key={itemIndex}>
-                    <Feature
-                        feature={feature as FeatureWithSubFeatures}
-                        device={{} as Device}
-                        deviceState={itemValue}
-                        onChange={(value) => onItemChange(value, itemIndex)}
-                        onRead={(_value) => {}}
-                        featureWrapperClass={FeatureWrapper}
-                        parentFeatures={parentFeatures}
-                    />
-                    <div className="join join-vertical lg:join-horizontal">
-                        <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square join-item" onClick={handleRemoveClick}>
-                            -
+        currentValue.map((itemValue, itemIndex) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: don't have a fixed value type
+            <div className="flex flex-row flex-wrap gap-2" key={itemIndex}>
+                <Feature
+                    feature={feature as FeatureWithSubFeatures}
+                    device={{} as Device}
+                    deviceState={itemValue}
+                    onChange={(value) => onItemChange(value, itemIndex)}
+                    onRead={(_value) => {}}
+                    featureWrapperClass={FeatureWrapper}
+                    parentFeatures={parentFeatures}
+                />
+                <div className="join join-vertical lg:join-horizontal">
+                    <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square join-item" onClick={handleRemoveClick}>
+                        -
+                    </Button>
+                    {currentValue.length - 1 === itemIndex && (
+                        <Button<void> className="btn btn-sm btn-success btn-square join-item" onClick={handleAddClick}>
+                            +
                         </Button>
-                        {currentValue.length - 1 === itemIndex && (
-                            <Button<void> className="btn btn-sm btn-success btn-square join-item" onClick={handleAddClick}>
-                                +
-                            </Button>
-                        )}
-                    </div>
+                    )}
                 </div>
-            ))}
-        </>
+            </div>
+        ))
     );
 });
 

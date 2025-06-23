@@ -4,10 +4,10 @@ import type { JSONSchema7 } from "json-schema";
 import merge from "lodash/merge.js";
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import { DEVICE_OPTIONS_DOCS_URL } from "../../../consts.js";
 import { useAppSelector } from "../../../hooks/useApp.js";
 import type { Device } from "../../../types.js";
+import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import SettingsList from "../../json-schema/SettingsList.js";
 
 interface DeviceSettingsProps {

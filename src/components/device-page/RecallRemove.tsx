@@ -1,11 +1,11 @@
 import { memo, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import type { Device, DeviceState, Group, Scene } from "../../types.js";
+import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import Button from "../Button.js";
 import ConfirmButton from "../ConfirmButton.js";
-import ScenePicker from "./ScenePicker.js";
 import { getScenes } from "./index.js";
+import ScenePicker from "./ScenePicker.js";
 
 interface RecallRemoveProps {
     target: Device | Group;

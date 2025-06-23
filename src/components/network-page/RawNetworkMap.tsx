@@ -10,7 +10,7 @@ import {
     NETWORK_MAP_NODE_STRENGTH_KEY,
 } from "../../localStoreConsts.js";
 import fontUrl from "./../../styles/NotoSans-Regular.ttf";
-import { EDGE_RELATIONSHIP_FILL_COLORS, NODE_TYPE_FILL_COLORS, type NetworkMapLink, ZigbeeRelationship } from "./index.js";
+import { EDGE_RELATIONSHIP_FILL_COLORS, type NetworkMapLink, NODE_TYPE_FILL_COLORS, ZigbeeRelationship } from "./index.js";
 import ContextMenu from "./raw-map/ContextMenu.js";
 import Controls from "./raw-map/Controls.js";
 import Legend from "./raw-map/Legend.js";

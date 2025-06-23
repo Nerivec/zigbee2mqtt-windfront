@@ -3,7 +3,6 @@ import { type ChangeEvent, type JSX, useCallback, useContext, useMemo, useState 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import store2 from "store2";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import DeviceControlGroup from "../components/device/DeviceControlGroup.js";
 import DeviceImage from "../components/device/DeviceImage.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
@@ -18,6 +17,7 @@ import { useAppSelector } from "../hooks/useApp.js";
 import { DEVICES_HIDE_DISABLED_KEY } from "../localStoreConsts.js";
 import type { AvailabilityState, Device, DeviceState } from "../types.js";
 import { convertLastSeenToDate, toHex } from "../utils.js";
+import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 type DeviceTableData = {
     device: Device;
@@ -120,8 +120,7 @@ export default function DevicesPage(): JSX.Element {
         [sendMessage],
     );
 
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    const columns = useMemo<ColumnDef<DeviceTableData, any>[]>(
+    const columns = useMemo<ColumnDef<DeviceTableData, unknown>[]>(
         () => [
             {
                 id: "friendly_name",

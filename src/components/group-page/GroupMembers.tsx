@@ -1,7 +1,7 @@
 import { type JSX, memo, useCallback, useContext, useMemo } from "react";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import { useAppSelector } from "../../hooks/useApp.js";
 import type { Group } from "../../types.js";
+import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import GroupMember from "./GroupMember.js";
 
 interface GroupMembersProps {

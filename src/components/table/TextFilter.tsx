@@ -7,7 +7,10 @@ import DebouncedInput from "../form-fields/DebouncedInput.js";
 export default function TextFilter<T>({
     getFilterValue,
     setFilterValue,
-}: { getFilterValue: Column<T, unknown>["getFilterValue"]; setFilterValue: Column<T, unknown>["setFilterValue"] }) {
+}: {
+    getFilterValue: Column<T, unknown>["getFilterValue"];
+    setFilterValue: Column<T, unknown>["setFilterValue"];
+}) {
     const columnFilterValue = getFilterValue();
     const { t } = useTranslation("common");
 

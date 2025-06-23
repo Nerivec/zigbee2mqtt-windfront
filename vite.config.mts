@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 import { compression, defineAlgorithm } from "vite-plugin-compression2";
 import { startServer } from "./mocks/ws.js";
 
+// biome-ignore lint/suspicious/useAwait: follows API
 export default defineConfig(async ({ command, mode }) => {
     if (command === "serve" && mode !== "test") {
         startServer();

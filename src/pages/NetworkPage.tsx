@@ -4,7 +4,6 @@ import { type ChangeEvent, lazy, useCallback, useContext, useMemo, useState } fr
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import Button from "../components/Button.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import SelectField from "../components/form-fields/SelectField.js";
@@ -12,6 +11,7 @@ import type { NetworkRawDisplayType } from "../components/network-page/index.js"
 import { useAppDispatch, useAppSelector } from "../hooks/useApp.js";
 import { NETWORK_RAW_DISPLAY_TYPE_KEY } from "../localStoreConsts.js";
 import { setNetworkMap, setNetworkMapIsLoading } from "../store.js";
+import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 type MapType = Zigbee2MQTTAPI["bridge/response/networkmap"]["type"];
 

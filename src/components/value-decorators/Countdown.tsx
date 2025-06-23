@@ -24,21 +24,11 @@ const Countdown = memo((props: CountdownProps) => {
 
     return (
         <span className="countdown">
-            {showHours && (
-                <span style={{ "--value": hours } as React.CSSProperties} aria-live="polite" aria-label={hours.toString()}>
-                    {hours}
-                </span>
-            )}
+            {showHours && <span style={{ "--value": hours } as React.CSSProperties}>{hours}</span>}
             {showHours && ":"}
-            {showMinutes && (
-                <span style={{ "--value": minutes } as React.CSSProperties} aria-live="polite" aria-label={minutes.toString()}>
-                    {minutes}
-                </span>
-            )}
+            {showMinutes && <span style={{ "--value": minutes } as React.CSSProperties}>{minutes}</span>}
             {showMinutes && ":"}
-            <span style={{ "--value": seconds } as React.CSSProperties} aria-live="polite" aria-label={seconds.toString()}>
-                {seconds}
-            </span>
+            <span style={{ "--value": seconds } as React.CSSProperties}>{seconds}</span>
         </span>
     );
 });

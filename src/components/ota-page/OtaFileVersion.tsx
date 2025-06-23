@@ -22,7 +22,7 @@ const OtaFileVersion = memo((props: OtaFileVersionProps) => {
     }, [props.version]);
 
     return versions === undefined ? (
-        <>N/A</>
+        <span>N/A</span>
     ) : (
         <div className="join join-vertical">
             <span className="badge badge-sm badge-soft badge-ghost cursor-default join-item w-full">

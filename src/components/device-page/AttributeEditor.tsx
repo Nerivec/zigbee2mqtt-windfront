@@ -192,6 +192,6 @@ export function AttributeEditor(props: AttributeEditorProps) {
             {lastLog && <LastLogResult message={lastLog} />}
         </div>
     ) : (
-        <>No endpoints</>
+        <span>No endpoints</span>
     );
 }

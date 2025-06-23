@@ -4,12 +4,12 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useCallback, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import Button from "../components/Button.js";
 import Table from "../components/table/Table.js";
 import { useAppDispatch, useAppSelector } from "../hooks/useApp.js";
 import { setTouchlinkIdentifyInProgress, setTouchlinkResetInProgress, setTouchlinkScan } from "../store.js";
 import type { TouchlinkDevice } from "../types.js";
+import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 export default function TouchlinkPage() {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
@@ -43,8 +43,7 @@ export default function TouchlinkPage() {
         [sendMessage, dispatch],
     );
 
-    // biome-ignore lint/suspicious/noExplicitAny: tmp
-    const columns = useMemo<ColumnDef<TouchlinkDevice, any>[]>(
+    const columns = useMemo<ColumnDef<TouchlinkDevice, unknown>[]>(
         () => [
             {
                 id: "ieee_address",

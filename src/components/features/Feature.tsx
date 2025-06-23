@@ -1,5 +1,5 @@
 import type React from "react";
-import { type FunctionComponent, type JSX, type PropsWithChildren, memo, useMemo } from "react";
+import { type FunctionComponent, type JSX, memo, type PropsWithChildren, useMemo } from "react";
 import type { Zigbee2MQTTDeviceOptions } from "zigbee2mqtt";
 import type { ColorFeature, Device, DeviceState, FeatureWithAnySubFeatures, GradientFeature } from "../../types.js";
 import type { ValueWithLabelOrPrimitive } from "../editors/EnumEditor.js";

@@ -37,7 +37,7 @@ const ArrayField = memo((props: ArrayFieldProps) => {
             {label && <legend className="fieldset-legend">{label}</legend>}
             <div className="flex flex-row flex-wrap gap-2">
                 {currentValues.map((value, idx) => (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    // biome-ignore lint/suspicious/noArrayIndexKey: lack of data
                     <div className="join min-w-xs" key={`${value}-${idx}`}>
                         <input
                             className="input join-item"

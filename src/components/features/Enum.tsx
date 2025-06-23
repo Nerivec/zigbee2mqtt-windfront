@@ -2,8 +2,8 @@ import { memo } from "react";
 import { type EnumFeature, FeatureAccessMode } from "../../types.js";
 import EnumEditor, { type ValueWithLabelOrPrimitive } from "../editors/EnumEditor.js";
 import BaseViewer from "./BaseViewer.js";
-import NoAccessError from "./NoAccessError.js";
 import type { BaseFeatureProps } from "./index.js";
+import NoAccessError from "./NoAccessError.js";
 
 type EnumProps = BaseFeatureProps<EnumFeature>;
 const BIG_ENUM_SIZE = 6;

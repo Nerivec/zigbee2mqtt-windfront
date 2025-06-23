@@ -11,7 +11,6 @@ import {
 } from "react";
 import type { AnyColor, ColorFormat } from "../../types.js";
 import {
-    type ZigbeeColor,
     convertColorToString,
     convertFromColor,
     convertHexToString,
@@ -20,6 +19,7 @@ import {
     convertStringToColor,
     convertToColor,
     convertXyYToString,
+    type ZigbeeColor,
 } from "./index.js";
 
 type ColorEditorProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {

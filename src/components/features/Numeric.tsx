@@ -3,8 +3,8 @@ import { FeatureAccessMode, type NumericFeature } from "../../types.js";
 import type { ValueWithLabelOrPrimitive } from "../editors/EnumEditor.js";
 import RangeEditor from "../editors/RangeEditor.js";
 import BaseViewer from "./BaseViewer.js";
-import NoAccessError from "./NoAccessError.js";
 import type { BaseFeatureProps } from "./index.js";
+import NoAccessError from "./NoAccessError.js";
 
 interface NumericProps extends BaseFeatureProps<NumericFeature> {
     steps?: ValueWithLabelOrPrimitive[];

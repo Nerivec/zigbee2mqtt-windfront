@@ -13,8 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import snakeCase from "lodash/snakeCase.js";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
-import type { Device } from "../../types.js";
-import type { PowerSource as TPowerSource } from "../../types.js";
+import type { Device, PowerSource as TPowerSource } from "../../types.js";
 
 interface PowerSourceProps {
     device?: Device;
@@ -27,7 +26,7 @@ interface PowerSourceProps {
 const PowerSource = memo((props: PowerSourceProps) => {
     const { device, batteryPercent, batteryState, batteryLow, showLevel, ...rest } = props;
     const { t } = useTranslation("zigbee");
-    let source: TPowerSource | undefined = undefined;
+    let source: TPowerSource | undefined;
 
     if (device?.power_source) {
         source = device.power_source as TPowerSource;

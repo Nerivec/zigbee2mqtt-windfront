@@ -1,10 +1,9 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { faMagnifyingGlass, faTable, faTableColumns, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEraser, faMagnifyingGlass, faTable, faTableColumns, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import Button from "../components/Button.js";
 import DashboardFeatureWrapper from "../components/dashboard-page/DashboardFeatureWrapper.js";
 import { getDashboardFeatures } from "../components/dashboard-page/index.js";
@@ -15,6 +14,7 @@ import { RemoveDeviceModal } from "../components/modal/components/RemoveDeviceMo
 import { useAppSelector } from "../hooks/useApp.js";
 import { DASHBOARD_COLUMN_DISPLAY_KEY } from "../localStoreConsts.js";
 import type { FeatureWithAnySubFeatures } from "../types.js";
+import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 export default function Dashboard() {
     const deviceStates = useAppSelector((state) => state.deviceStates);
@@ -138,30 +138,22 @@ export default function Dashboard() {
     return (
         <>
             <div className="flex flex-row justify-center items-center gap-3 mb-3">
-                {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
-                <label className="input w-64">
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    <DebouncedInput
-                        className=""
-                        type="search"
-                        onChange={(value) => setFilterValue(value.toString())}
-                        placeholder={t("common:search")}
-                        value={filterValue}
-                        disabled={filteredDevices.length === 0}
-                    />
-                    <kbd
-                        className="kbd kbd-sm cursor-pointer"
-                        onClick={() => setFilterValue("")}
-                        onKeyUp={(e) => {
-                            if (e.key === "enter") {
-                                setFilterValue("");
-                            }
-                        }}
-                        title={t("common:clear")}
-                    >
-                        x
-                    </kbd>
-                </label>
+                <div className="join">
+                    {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
+                    <label className="input w-64 join-item">
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        <DebouncedInput
+                            className=""
+                            type="search"
+                            onChange={(value) => setFilterValue(value.toString())}
+                            placeholder={t("common:search")}
+                            value={filterValue}
+                        />
+                    </label>
+                    <Button item="" onClick={setFilterValue} className="btn btn-square join-item" title={t("common:clear")}>
+                        <FontAwesomeIcon icon={faEraser} />
+                    </Button>
+                </div>
                 <Button<boolean>
                     className="btn btn-square"
                     item={!columnDisplay}

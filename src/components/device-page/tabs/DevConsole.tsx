@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useApp.js";
 import { resetDeviceState } from "../../../store.js";
 import type { Device, LogMessage } from "../../../types.js";
+import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import ConfirmButton from "../../ConfirmButton.js";
 import { AttributeEditor, type AttributeInfo } from "../AttributeEditor.js";
 import { CommandExecutor } from "../CommandExecutor.js";

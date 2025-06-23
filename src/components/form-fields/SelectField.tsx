@@ -1,4 +1,4 @@
-import { type ChangeEvent, type DetailedHTMLProps, type SelectHTMLAttributes, memo } from "react";
+import { type ChangeEvent, type DetailedHTMLProps, memo, type SelectHTMLAttributes } from "react";
 
 export type SelectFieldProps = DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> & {
     name: string;

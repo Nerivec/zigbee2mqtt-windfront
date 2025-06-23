@@ -13,7 +13,7 @@ const LastSeen = memo(({ lastSeen, config }: LastSeenProps): JSX.Element => {
     const { i18n } = useTranslation();
     const lastSeenDate = convertLastSeenToDate(lastSeen, config);
 
-    return lastSeenDate ? <span title={formatDate(lastSeenDate)}>{format(lastSeenDate, i18n.language)}</span> : <>N/A</>;
+    return lastSeenDate ? <span title={formatDate(lastSeenDate)}>{format(lastSeenDate, i18n.language)}</span> : <span>N/A</span>;
 });
 
 export default LastSeen;

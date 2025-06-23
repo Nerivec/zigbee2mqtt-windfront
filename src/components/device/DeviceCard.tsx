@@ -1,6 +1,6 @@
 import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type PropsWithChildren, memo } from "react";
+import { memo, type PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { DeviceState, FeatureWithAnySubFeatures, LastSeenConfig } from "../../types.js";

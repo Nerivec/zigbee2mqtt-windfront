@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import saveAs from "file-saver";
-import { type ChangeEvent, type RefObject, memo, useCallback, useMemo } from "react";
+import { type ChangeEvent, memo, type RefObject, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import type { GraphCanvasRef, GraphNode, LabelVisibilityType, LayoutTypes } from "reagraph";
 import Button from "../../Button.js";

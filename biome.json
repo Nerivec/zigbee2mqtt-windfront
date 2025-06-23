@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+    "$schema": "https://biomejs.dev/schemas/2.0.4/schema.json",
     "vcs": {
         "enabled": true,
         "clientKind": "git",
@@ -7,7 +7,7 @@
     },
     "files": {
         "ignoreUnknown": false,
-        "ignore": ["package.json", "package-lock.json", "src/styles/styles.global.css"],
+        "includes": ["**", "!package.json", "!package-lock.json", "!src/styles/styles.global.css"],
         "maxSize": 5242880
     },
     "formatter": {
@@ -17,8 +17,12 @@
         "lineWidth": 150,
         "lineEnding": "lf"
     },
-    "organizeImports": {
-        "enabled": true
+    "assist": {
+        "actions": {
+            "source": {
+                "organizeImports": "on"
+            }
+        }
     },
     "linter": {
         "enabled": true,
@@ -61,13 +65,23 @@
                             }
                         ]
                     }
-                }
+                },
+                "useAsConstAssertion": "error",
+                "useDefaultParameterLast": "error",
+                "useEnumInitializers": "error",
+                "useSelfClosingElements": "error",
+                "useSingleVarDeclarator": "error",
+                "noUnusedTemplateLiteral": "error",
+                "useNumberNamespace": "error",
+                "noInferrableTypes": "error",
+                "noUselessElse": "error"
             },
             "correctness": {
                 "noUnusedImports": "error",
                 "noUnusedVariables": {
                     "level": "warn",
-                    "fix": "none"
+                    "fix": "none",
+                    "options": {}
                 },
                 "useExhaustiveDependencies": {
                     "level": "error",
@@ -107,6 +121,9 @@
             },
             "a11y": {
                 "useKeyWithClickEvents": "off"
+            },
+            "nursery": {
+                "useUniqueElementIds": "off"
             }
         }
     },

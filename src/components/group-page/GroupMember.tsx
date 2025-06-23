@@ -6,8 +6,8 @@ import type { RootState } from "../../store.js";
 import type { FeatureWithAnySubFeatures, Group } from "../../types.js";
 import ConfirmButton from "../ConfirmButton.js";
 import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
-import { getScenesFeatures } from "../device-page/index.js";
 import DeviceCard from "../device/DeviceCard.js";
+import { getScenesFeatures } from "../device-page/index.js";
 
 interface GroupMemberProps {
     device: RootState["devices"][number];
