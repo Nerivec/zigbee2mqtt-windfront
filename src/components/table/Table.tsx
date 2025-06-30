@@ -8,6 +8,7 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import TextFilter from "./TextFilter.js";
 
@@ -19,6 +20,7 @@ interface Props<T> {
 }
 
 export default function Table<T>(props: Props<T>) {
+    const { t } = useTranslation("common");
     const { id, columns, data, visibleColumns } = props;
     const columnVisibilityStoreKey = `${id}-column-visibility`;
     const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>(store2.get(columnVisibilityStoreKey, visibleColumns ?? {}));
@@ -54,12 +56,15 @@ export default function Table<T>(props: Props<T>) {
         store2.set(columnVisibilityStoreKey, columnVisibility);
     }, [columnVisibilityStoreKey, columnVisibility]);
 
+    const rows = table.getRowModel().rows;
+
     return (
         <div className="overflow-x-auto">
-            <div className="flex flex-row flex-wrap gap-2">
+            <div className="flex flex-row flex-wrap gap-2 text-xs">
+                <span className="label ps-3">{t("columns")}: </span>
                 {table.getAllColumns().map((column) =>
                     column.id === "select" ? null : (
-                        <label key={column.id} className="label text-xs">
+                        <label key={column.id} className="label">
                             <input
                                 checked={column.getIsVisible()}
                                 disabled={!column.getCanHide()}
@@ -71,6 +76,9 @@ export default function Table<T>(props: Props<T>) {
                         </label>
                     ),
                 )}
+                <span className="ml-auto pe-3 label">
+                    {t("entries")}: {rows.length}
+                </span>
             </div>
             <table id={id} className="table table-sm mb-3">
                 <thead>
@@ -109,7 +117,7 @@ export default function Table<T>(props: Props<T>) {
                     ))}
                 </thead>
                 <tbody>
-                    {table.getRowModel().rows.map((row) => (
+                    {rows.map((row) => (
                         <tr key={row.id} className="hover:bg-base-300">
                             {row.getVisibleCells().map((cell) => (
                                 <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>

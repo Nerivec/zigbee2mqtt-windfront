@@ -59,7 +59,9 @@
         "command": "Command",
         "payload": "Payload",
         "execute_command": "Execute command",
-        "send": "Send"
+        "send": "Send",
+        "columns": "Columns",
+        "entries": "Entries"
     },
     "devicePage": {
         "about": "About",
