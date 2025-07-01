@@ -28,8 +28,6 @@ jobs:
 
       - run: node ./scripts/override-z2m-en.mjs
 
-      - run: node ./scripts/override-zhc-en.mjs
-
       - run: npm run check
 
       - run: npm un zigbee-herdsman-converters

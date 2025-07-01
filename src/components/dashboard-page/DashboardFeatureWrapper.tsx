@@ -11,16 +11,15 @@ const DashboardFeatureWrapper = memo((props: PropsWithChildren<FeatureWrapperPro
     // @ts-expect-error `undefined` is fine
     const unit = feature.unit as string | undefined;
     const fi = useMemo(() => getFeatureIcon(feature.name, deviceValue, unit), [unit, feature.name, deviceValue]);
-    const { t } = useTranslation(["featureNames", "zigbee"]);
+    const { t } = useTranslation("zigbee");
     const featureName = feature.name === "state" ? feature.property : feature.name;
-    const fallbackFeatureName = startCase(camelCase(featureName));
 
     return (
         <div className="flex flex-row items-center gap-1 mb-2">
             <FontAwesomeIcon icon={fi[0]} fixedWidth className={fi[1]} {...fi[2]} />
-            <div className="grow-1">
-                {t(featureName!, { defaultValue: fallbackFeatureName })}
-                <span title={t("zigbee:endpoint")}>{feature.endpoint ? ` (${feature.endpoint})` : null}</span>
+            <div className="grow-1" title={featureName}>
+                {startCase(camelCase(featureName))}
+                <span title={t("endpoint")}>{feature.endpoint ? ` (${feature.endpoint})` : null}</span>
             </div>
             <div className="shrink-1">{children}</div>
         </div>
