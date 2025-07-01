@@ -22,7 +22,7 @@ const PopoverDropdown = memo((props: PopoverDropdownProps) => {
     return (
         <>
             <ul
-                className={`dropdown menu w-52 rounded-box bg-base-100 shadow-sm${dropdownStyle ? ` ${dropdownStyle}` : ""}`}
+                className={`dropdown menu min-w-48 rounded-box bg-base-200 shadow-sm${dropdownStyle ? ` ${dropdownStyle}` : ""}`}
                 popover=""
                 id={popoverId}
                 style={{ positionAnchor: anchorName, maxHeight: "95vh" } as CSSProperties}
