@@ -137,11 +137,15 @@ export default function DevicesPage(): JSX.Element {
                                 <DeviceImage device={device} otaState={state.update?.state} disabled={device.disabled} />
                             </div>
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex-grow flex flex-col">
                             <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
                                 {device.friendly_name}
                             </Link>
-                            {device.description && <div className="text-xs opacity-50">{device.description}</div>}
+                            {device.description && (
+                                <div className="max-w-3xs text-xs opacity-50 truncate" title={device.description}>
+                                    {device.description}
+                                </div>
+                            )}
                             <div className="flex flex-row gap-1 mt-0.5 items-center">
                                 <span className="badge badge-soft badge-sm badge-ghost cursor-default" title={t("power")}>
                                     <PowerSource

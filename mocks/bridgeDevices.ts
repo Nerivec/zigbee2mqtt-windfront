@@ -1804,6 +1804,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                 supports_ota: true,
                 vendor: "Philips",
             },
+            description: "thisisaverylongdescriptionforthepurposeoftestingawkwardwrapping",
             endpoints: {
                 "11": {
                     bindings: [],

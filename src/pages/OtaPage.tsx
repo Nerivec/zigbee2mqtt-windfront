@@ -163,12 +163,16 @@ export default function OtaPage() {
                                 <DeviceImage device={device} otaState={state?.state} disabled={false} />
                             </div>
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex-grow flex flex-col">
                             <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
                                 {device.friendly_name}
                                 {device.friendly_name !== device.ieee_address ? ` (${device.ieee_address})` : ""}
                             </Link>
-                            {device.description && <div className="text-xs opacity-50">{device.description}</div>}
+                            {device.description && (
+                                <div className="max-w-3xs text-xs opacity-50 truncate" title={device.description}>
+                                    {device.description}
+                                </div>
+                            )}
                             <div className="flex flex-row gap-1 mt-0.5 items-center">
                                 <span className="badge badge-sm badge-soft badge-ghost cursor-default" title={t("zigbee:firmware_id")}>
                                     {/** TODO: use releaseNotes from manifest instead of links (need API change in Z2M) */}

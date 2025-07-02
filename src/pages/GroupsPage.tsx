@@ -56,11 +56,15 @@ export default function GroupsPage() {
                 cell: ({ row: { original: group } }) => (
                     <div className="flex items-center gap-3">
                         <div className="avatar" />
-                        <div className="flex flex-col">
+                        <div className="flex-grow flex flex-col">
                             <Link to={`/group/${group.id}/devices`} className="link link-hover">
                                 {group.id}
                             </Link>
-                            {group.description && <div className="text-xs opacity-50">{group.description}</div>}
+                            {group.description && (
+                                <div className="max-w-xs text-xs opacity-50 truncate" title={group.description}>
+                                    {group.description}
+                                </div>
+                            )}
                             <div className="flex flex-row gap-1 mt-0.5">
                                 <span className="badge badge-soft badge-sm badge-ghost cursor-default">
                                     {t("scenes")}

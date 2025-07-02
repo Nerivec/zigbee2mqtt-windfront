@@ -97,7 +97,11 @@ export default function Groups({ device }: GroupsProps) {
                                     #{group.id} - {group.friendly_name}
                                     {endpoint ? ` (${t("endpoint")}: ${endpoint})` : ""}
                                 </Link>
-                                <div className="text-xs opacity-50">{group.description || ""}</div>
+                                {device.description && (
+                                    <div className="text-xs opacity-50 truncate" title={device.description}>
+                                        {device.description}
+                                    </div>
+                                )}
                             </div>
                             <div className="list-col-wrap text-sm w-full gap-2">
                                 <div className="badge badge-soft badge-ghost cursor-default me-2">

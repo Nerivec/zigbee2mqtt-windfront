@@ -25,17 +25,21 @@ const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, last
     return (
         <>
             <div className="card-body p-2">
-                <div className="flex flex-row items-center gap-3">
-                    <div className="h-11 w-11" style={{ overflow: "visible" }}>
+                <div className="flex flex-row items-center gap-3 w-full">
+                    <div className="flex-none h-11 w-11 overflow-visible">
                         {/* disabled always false because dashboard does not contain disabled devices */}
                         <DeviceImage disabled={false} device={device} otaState={deviceState.update?.state} />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                         <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
                             {device.friendly_name}
                             {endpoint ? ` (${t("endpoint")}: ${endpoint})` : ""}
                         </Link>
-                        <div className="text-xs opacity-50">{device.description || ""}</div>
+                        {device.description && (
+                            <div className="text-xs opacity-50 truncate" title={device.description}>
+                                {device.description}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="text-sm w-full p-2">
