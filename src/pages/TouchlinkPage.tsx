@@ -80,7 +80,7 @@ export default function TouchlinkPage() {
                                 disabled={touchlinkInProgress}
                                 item={touchlinkDevice}
                                 title={t("identify")}
-                                className="btn btn-primary join-item"
+                                className="btn btn-square btn-outline btn-primary join-item"
                                 onClick={onIdentifyClick}
                             >
                                 <FontAwesomeIcon
@@ -92,7 +92,7 @@ export default function TouchlinkPage() {
                                 disabled={touchlinkInProgress}
                                 item={touchlinkDevice}
                                 title={t("factory_reset")}
-                                className="btn btn-error join-item"
+                                className="btn btn-square btn-outline btn-error join-item"
                                 onClick={onResetClick}
                             >
                                 <FontAwesomeIcon icon={touchlinkResetInProgress ? faCircleNotch : faBroom} spin={touchlinkResetInProgress} />

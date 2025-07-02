@@ -94,7 +94,7 @@ export default function GroupsPage() {
                 cell: ({ row: { original: group } }) => (
                     <div className="join join-horizontal">
                         <Button<void>
-                            className="btn btn-primary btn-sm join-item"
+                            className="btn btn-square btn-outline btn-primary join-item"
                             onClick={async () =>
                                 await NiceModal.show(RenameGroupForm, {
                                     name: group.friendly_name,
@@ -110,7 +110,7 @@ export default function GroupsPage() {
                             title={t("remove_group")}
                             item={group.id.toString()}
                             onClick={onRemoveClick}
-                            className="btn btn-error btn-sm join-item"
+                            className="btn btn-square btn-outline btn-error join-item"
                             modalDescription={t("common:dialog_confirmation_prompt")}
                             modalCancelLabel={t("common:cancel")}
                         >

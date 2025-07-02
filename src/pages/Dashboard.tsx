@@ -104,11 +104,11 @@ export default function Dashboard() {
                                         name={device.friendly_name}
                                         renameDevice={renameDevice}
                                         homeassistantEnabled={bridgeConfig.homeassistant.enabled}
-                                        style="btn-primary btn-square btn-sm join-item"
+                                        style="btn-outline btn-primary btn-square btn-sm join-item"
                                     />
                                     <Button<void>
                                         onClick={async () => await NiceModal.show(RemoveDeviceModal, { device, removeDevice })}
-                                        className="btn btn-error btn-square btn-sm join-item"
+                                        className="btn btn-outline btn-error btn-square btn-sm join-item"
                                         title={t("remove_device")}
                                     >
                                         <FontAwesomeIcon icon={faTrash} />

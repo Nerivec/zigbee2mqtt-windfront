@@ -34,10 +34,10 @@ export default function DeviceControlGroup(props: DeviceControlGroupProps): JSX.
                 name={device.friendly_name}
                 renameDevice={renameDevice}
                 homeassistantEnabled={props.homeassistantEnabled}
-                style="btn-primary join-item btn-square"
+                style="btn-outline btn-primary join-item btn-square"
             />
             <ConfirmButton<string>
-                className="btn btn-warning join-item btn-square"
+                className="btn btn-outline btn-warning join-item btn-square"
                 onClick={configureDevice}
                 item={device.ieee_address}
                 title={t("reconfigure")}
@@ -48,7 +48,7 @@ export default function DeviceControlGroup(props: DeviceControlGroupProps): JSX.
                 <FontAwesomeIcon icon={faRetweet} />
             </ConfirmButton>
             <ConfirmButton<string>
-                className="btn btn-info join-item btn-square"
+                className="btn btn-outline btn-info join-item btn-square"
                 onClick={interviewDevice}
                 item={device.ieee_address}
                 title={t("interview")}
@@ -60,7 +60,7 @@ export default function DeviceControlGroup(props: DeviceControlGroupProps): JSX.
             </ConfirmButton>
             <Button<void>
                 onClick={async () => await NiceModal.show(RemoveDeviceModal, { device, removeDevice })}
-                className="btn btn-error join-item btn-square"
+                className="btn btn-outline btn-error join-item btn-square"
                 title={t("remove_device")}
             >
                 <FontAwesomeIcon icon={faTrash} />

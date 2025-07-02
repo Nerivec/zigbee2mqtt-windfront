@@ -1,4 +1,4 @@
-import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faClockRotateLeft, faCloudArrowDown, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
@@ -49,11 +49,16 @@ const OtaControlGroup = memo((props: OtaControlGroup) => {
     if (state == null || state.state === "idle") {
         return (
             <div className="join join-horizontal">
-                <Button<string> className="btn btn-primary btn-sm join-item" onClick={onCheckClick} item={device.ieee_address}>
-                    {t("check")}
+                <Button<string>
+                    className="btn btn-square btn-outline btn-primary join-item"
+                    onClick={onCheckClick}
+                    item={device.ieee_address}
+                    title={t("check")}
+                >
+                    <FontAwesomeIcon icon={faCloudArrowDown} />
                 </Button>
                 <ConfirmButton<string>
-                    className="btn btn-info btn-sm join-item"
+                    className="btn btn-square btn-outline btn-info join-item"
                     onClick={onScheduleClick}
                     item={device.ieee_address}
                     title={t("schedule")}
@@ -75,17 +80,17 @@ const OtaControlGroup = memo((props: OtaControlGroup) => {
             {state.state === "available" ? (
                 <>
                     <ConfirmButton<string>
-                        className="btn btn-error btn-sm join-item"
+                        className="btn btn-square btn-outline btn-error join-item"
                         onClick={onUpdateClick}
                         item={device.ieee_address}
                         title={t("update")}
                         modalDescription={t("common:dialog_confirmation_prompt")}
                         modalCancelLabel={t("common:cancel")}
                     >
-                        {t("update")}
+                        <FontAwesomeIcon icon={faUpload} />
                     </ConfirmButton>
                     <ConfirmButton<string>
-                        className="btn btn-info btn-sm join-item"
+                        className="btn btn-square btn-outline btn-info join-item"
                         onClick={onScheduleClick}
                         item={device.ieee_address}
                         title={t("schedule")}
@@ -97,22 +102,27 @@ const OtaControlGroup = memo((props: OtaControlGroup) => {
                 </>
             ) : state.state === "scheduled" ? (
                 <ConfirmButton<string>
-                    className="btn btn-sm btn-error join-item"
+                    className="btn btn-square btn-outline btn-error join-item"
                     onClick={onUnscheduleClick}
                     item={device.ieee_address}
                     title={t("unschedule")}
                     modalDescription={t("common:dialog_confirmation_prompt")}
                     modalCancelLabel={t("common:cancel")}
                 >
-                    {t("unschedule")}
+                    <FontAwesomeIcon icon={faClockRotateLeft} />
                 </ConfirmButton>
             ) : (
                 <>
-                    <Button<string> className="btn btn-primary btn-sm join-item" onClick={onCheckClick} item={device.ieee_address}>
-                        {t("check")}
+                    <Button<string>
+                        className="btn btn-square btn-outline btn-primary join-item"
+                        onClick={onCheckClick}
+                        item={device.ieee_address}
+                        title={t("check")}
+                    >
+                        <FontAwesomeIcon icon={faCloudArrowDown} />
                     </Button>
                     <ConfirmButton<string>
-                        className="btn btn-info btn-sm join-item"
+                        className="btn btn-square btn-outline btn-info join-item"
                         onClick={onScheduleClick}
                         item={device.ieee_address}
                         title={t("schedule")}
