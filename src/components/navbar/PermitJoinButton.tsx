@@ -77,7 +77,7 @@ export default function PermitJoinButton() {
     }, [permitJoin, permitJoinTimer, selectedRouter, t, onPermitJoinClick]);
 
     return (
-        <div className="join join-horizontal mx-1">
+        <div className="join join-horizontal">
             {pjButton}
             {!permitJoin && (
                 <PopoverDropdown

@@ -3,6 +3,7 @@ import Button from "./Button.js";
 
 interface PopoverDropdownProps extends HTMLAttributes<HTMLUListElement> {
     name: string;
+    /** If `ReactElement`, expected to be `<FontAwesomeIcon />`. */
     buttonChildren: ReactElement | string;
     buttonStyle?: string;
     dropdownStyle?: string;
@@ -31,7 +32,7 @@ const PopoverDropdown = memo((props: PopoverDropdownProps) => {
                 {children}
             </ul>
             <Button
-                className={`btn${typeof buttonChildren !== "string" && (buttonChildren.type === "i" || buttonChildren.type === "img") ? " btn-square" : ""}${buttonStyle ? ` ${buttonStyle}` : ""}`}
+                className={`btn ${typeof buttonChildren === "string" ? "" : "btn-square"}${buttonStyle ? ` ${buttonStyle}` : ""}`}
                 popoverTarget={popoverId}
                 style={{ anchorName: anchorName } as CSSProperties}
             >

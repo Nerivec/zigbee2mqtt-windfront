@@ -56,7 +56,7 @@ const LanguageSwitcher = memo(() => {
     }, [currentLanguage, i18n.changeLanguage, i18n.options.resources]);
 
     return (
-        <PopoverDropdown name="locale-picker" buttonChildren={currentLanguage} buttonStyle="mx-1" dropdownStyle="dropdown-end">
+        <PopoverDropdown name="locale-picker" buttonChildren={currentLanguage} dropdownStyle="dropdown-end">
             {children}
         </PopoverDropdown>
     );

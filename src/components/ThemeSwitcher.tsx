@@ -53,12 +53,7 @@ const ThemeSwitcher = memo(() => {
     }, [currentTheme]);
 
     return (
-        <PopoverDropdown
-            name="theme-switcher"
-            buttonChildren={<FontAwesomeIcon icon={faPaintBrush} />}
-            buttonStyle="mx-1"
-            dropdownStyle="dropdown-end"
-        >
+        <PopoverDropdown name="theme-switcher" buttonChildren={<FontAwesomeIcon icon={faPaintBrush} />} dropdownStyle="dropdown-end">
             {ALL_THEMES.map((theme) => (
                 <li key={theme || "default"}>
                     <input

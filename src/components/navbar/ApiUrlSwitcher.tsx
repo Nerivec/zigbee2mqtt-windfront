@@ -30,7 +30,6 @@ const ApiUrlSwitcher = memo(() => {
                     title={`${t("websocket_status")}: ${ReadyState[readyState]}`}
                 />
             }
-            buttonStyle="mx-1"
             dropdownStyle="dropdown-end"
         >
             {apiUrls.map((url, i) => (
