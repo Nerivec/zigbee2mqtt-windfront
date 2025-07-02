@@ -106,7 +106,7 @@ const NavBar = () => {
                 <ul className="menu menu-horizontal px-1">{links}</ul>
             </div>
             <div className="navbar-end">
-                <ul className="menu menu-horizontal px-1">
+                <ul className="menu menu-horizontal px-1 gap-0.5 md:gap-1 justify-end">
                     <PermitJoinButton />
                     {showRestart}
                     <LanguageSwitcher />

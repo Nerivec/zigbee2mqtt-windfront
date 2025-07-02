@@ -60,8 +60,8 @@ export default function Table<T>(props: Props<T>) {
 
     return (
         <div className="overflow-x-auto">
-            <div className="flex flex-row flex-wrap gap-2 text-xs">
-                <span className="label ps-3">{t("columns")}: </span>
+            <div className="flex flex-row flex-wrap gap-2 text-xs px-3">
+                <span className="label">{t("columns")}: </span>
                 {table.getAllColumns().map((column) =>
                     column.id === "select" ? null : (
                         <label key={column.id} className="label">
@@ -76,7 +76,7 @@ export default function Table<T>(props: Props<T>) {
                         </label>
                     ),
                 )}
-                <span className="ml-auto pe-3 label">
+                <span className="ml-auto label">
                     {t("entries")}: {rows.length}
                 </span>
             </div>
