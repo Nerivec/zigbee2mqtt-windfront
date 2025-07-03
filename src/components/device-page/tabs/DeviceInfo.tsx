@@ -175,7 +175,9 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                                 batteryLow={deviceState.battery_low as boolean}
                             />
                         </div>
-                        <div className="stat-desc">{t(snakeCase(device.power_source) || "unknown")}</div>
+                        <div className="stat-desc">
+                            {device.type === "GreenPower" ? "GreenPower" : t(snakeCase(device.power_source) || "unknown")}
+                        </div>
                     </div>
                     {
                         <div className="stat">
