@@ -1,10 +1,10 @@
-import capitalize from "lodash/capitalize.js";
-import lowerCase from "lodash/lowerCase.js";
+import { faCheckCircle, faExclamationTriangle, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import snakeCase from "lodash/snakeCase.js";
 import { useCallback, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { SUPPORT_NEW_DEVICES_DOCS_URL } from "../../../consts.js";
+import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL } from "../../../consts.js";
 import { useAppSelector } from "../../../hooks/useApp.js";
 import type { Device } from "../../../types.js";
 import { toHex } from "../../../utils.js";
@@ -89,6 +89,23 @@ export default function DeviceInfo(props: DeviceInfoProps) {
         return <>{device.definition?.description}</>;
     }, [device.definition]);
 
+    const deviceInterviewState = useMemo(() => {
+        switch (device.interview_state) {
+            case InterviewState.Pending: {
+                return <FontAwesomeIcon icon={faSpinner} className="text-info" />;
+            }
+            case InterviewState.InProgress: {
+                return <FontAwesomeIcon icon={faSpinner} spin className="text-info" />;
+            }
+            case InterviewState.Successful: {
+                return <FontAwesomeIcon icon={faCheckCircle} className="text-success" />;
+            }
+            default: {
+                return <FontAwesomeIcon icon={faExclamationTriangle} beat className="text-error" />;
+            }
+        }
+    }, [device.interview_state]);
+
     return (
         <div className="card lg:card-side bg-base-100">
             <figure className="w-64 h-64" style={{ overflow: "visible" }}>
@@ -115,8 +132,8 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                             </Link>
                         </span>
                     )}
-                    <span className="badge opacity-70">
-                        <DisplayValue name="interview_state" value={`${t("interview_state")}: ${capitalize(lowerCase(device.interview_state))}`} />
+                    <span className="badge opacity-70" title={device.interview_state}>
+                        {t("interview_state")}: {deviceInterviewState}
                     </span>
                 </div>
                 <div>

@@ -619,7 +619,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
             },
             friendly_name: "hue1",
             ieee_address: "0x0017880104292f0a",
-            interview_state: "SUCCESSFUL",
+            interview_state: "PENDING",
             manufacturer: "Philips",
             model_id: "LCT016",
             network_address: 8043,
