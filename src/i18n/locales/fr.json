@@ -48,7 +48,7 @@
         "undefined": "Indéfini",
         "type_to_filter": "Tapez pour filtrer...",
         "name": "Nom",
-        "friendly_name": "Nom convivial",
+        "friendly_name": "Nom d'affichage",
         "unknown_device": "Appareil inconnu",
         "unknown_group": "Groupe inconnu",
         "failed": "Échoué",
@@ -74,7 +74,7 @@
         "state": "État",
         "groups": "Groupes",
         "scene": "Scène",
-        "exposes": "Expose",
+        "exposes": "Exposé",
         "select_a_device": "Sélectionner un appareil"
     },
     "exposes": {
