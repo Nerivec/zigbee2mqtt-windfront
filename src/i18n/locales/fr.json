@@ -74,11 +74,11 @@
         "state": "État",
         "groups": "Groupes",
         "scene": "Scène",
-        "exposes": "Exposé",
+        "exposes": "Exposés",
         "select_a_device": "Sélectionner un appareil"
     },
     "exposes": {
-        "empty_exposes_definition": "Définition d'exposition vide"
+        "empty_exposes_definition": "Définition d'exposés vide"
     },
     "groups": {
         "settings": "Paramètres",
@@ -295,7 +295,7 @@
         "force_remove_notice": "À n'utiliser qu'en dernier recours (ne sera pas propagé au réseau)",
         "ieee_address": "Adresse IEEE",
         "interview": "Interrogation",
-        "interview_failed": "Interrogation échoué",
+        "interview_failed": "Interrogation échouée",
         "interviewing": "En cours d'interrogation",
         "interview_state": "État de l'interrogation",
         "last_seen": "Dernière vue",
