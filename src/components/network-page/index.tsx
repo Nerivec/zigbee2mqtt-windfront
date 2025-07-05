@@ -24,3 +24,17 @@ export const EDGE_RELATIONSHIP_FILL_COLORS = {
     [ZigbeeRelationship.NeighborIsASibling]: "#8888ff",
     // others ignored by Z2M
 };
+
+/**
+ * Convert a CSS color using `OffscreenCanvas` to RGBA.
+ * @param ctx Rendering context to convert color with.
+ * @param color expect in CSS format (e.g. `oklch(25.33% 0.016 252.42);`)
+ * @return rgb in CSS format (e.g. `rgba(29, 35, 42, 255);`)
+ */
+export function cssColorToRgba(ctx: OffscreenCanvasRenderingContext2D, color: string): string {
+    ctx.fillStyle = color;
+
+    ctx.fillRect(0, 0, 1, 1);
+
+    return `rgba(${ctx.getImageData(0, 0, 1, 1).data.join(", ")});`;
+}

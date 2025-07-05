@@ -4,12 +4,12 @@ import { useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router";
 import { useAppSelector } from "../../hooks/useApp.js";
-import LanguageSwitcher from "../../i18n/LanguageSwitcher.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import ConfirmButton from "../ConfirmButton.js";
-import ThemeSwitcher from "../ThemeSwitcher.js";
 import ApiUrlSwitcher from "./ApiUrlSwitcher.js";
+import LanguageSwitcher from "./LanguageSwitcher.js";
 import PermitJoinButton from "./PermitJoinButton.js";
+import ThemeSwitcher from "./ThemeSwitcher.js";
 
 const URLS = [
     {

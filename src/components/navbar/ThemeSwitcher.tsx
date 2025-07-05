@@ -1,9 +1,10 @@
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import store2 from "store2";
-import { THEME_KEY } from "../localStoreConsts.js";
-import PopoverDropdown from "./PopoverDropdown.js";
+import { THEME_KEY } from "../../localStoreConsts.js";
+import PopoverDropdown from "../PopoverDropdown.js";
 
 const ALL_THEMES = [
     "", // "Default"
@@ -45,6 +46,7 @@ const ALL_THEMES = [
 ];
 
 const ThemeSwitcher = memo(() => {
+    const location = useLocation();
     const [currentTheme, setCurrentTheme] = useState<string>(store2.get(THEME_KEY, ""));
 
     useEffect(() => {
@@ -53,7 +55,13 @@ const ThemeSwitcher = memo(() => {
     }, [currentTheme]);
 
     return (
-        <PopoverDropdown name="theme-switcher" buttonChildren={<FontAwesomeIcon icon={faPaintBrush} />} dropdownStyle="dropdown-end">
+        <PopoverDropdown
+            name="theme-switcher"
+            buttonChildren={<FontAwesomeIcon icon={faPaintBrush} />}
+            dropdownStyle="dropdown-end"
+            // do not allow theme-switching while on network page due to rendering of reagraph
+            buttonDisabled={location.pathname === "/network"}
+        >
             {ALL_THEMES.map((theme) => (
                 <li key={theme || "default"}>
                     <input
