@@ -6,11 +6,12 @@ interface PopoverDropdownProps extends HTMLAttributes<HTMLUListElement> {
     /** If `ReactElement`, expected to be `<FontAwesomeIcon />`. */
     buttonChildren: ReactElement | string;
     buttonStyle?: string;
+    buttonDisabled?: boolean;
     dropdownStyle?: string;
 }
 
 const PopoverDropdown = memo((props: PopoverDropdownProps) => {
-    const { buttonChildren, children, name, buttonStyle, dropdownStyle } = props;
+    const { name, buttonChildren, buttonStyle, buttonDisabled, dropdownStyle, children } = props;
     const popoverId = `popover-${name}`;
     const anchorName = `--anchor-${name}`;
 
@@ -35,6 +36,7 @@ const PopoverDropdown = memo((props: PopoverDropdownProps) => {
                 className={`btn ${typeof buttonChildren === "string" ? "" : "btn-square"}${buttonStyle ? ` ${buttonStyle}` : ""}`}
                 popoverTarget={popoverId}
                 style={{ anchorName: anchorName } as CSSProperties}
+                disabled={buttonDisabled}
             >
                 {buttonChildren}
             </Button>

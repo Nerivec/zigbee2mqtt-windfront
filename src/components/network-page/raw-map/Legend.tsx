@@ -8,7 +8,7 @@ const Legend = memo(() => {
     const { t } = useTranslation("network");
 
     return (
-        <details className="collapse collapse-arrow bg-white text-black rounded-b-none">
+        <details className="collapse collapse-arrow rounded-b-none">
             <summary className="collapse-title font-semibold">{t("legend")}</summary>
             <div className="collapse-content text-sm">
                 <div className="flex flex-row flex-wrap gap-3 mb-2">
@@ -54,6 +54,7 @@ const Legend = memo(() => {
                         value to something else, then back to the one you want
                     </li>
                     <li>Edge colors are currently not working</li>
+                    <li>An undesired vertical offset is applied when starting to drag a node</li>
                 </ul>
             </div>
         </details>

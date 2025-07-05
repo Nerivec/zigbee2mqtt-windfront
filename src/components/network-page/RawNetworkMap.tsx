@@ -1,6 +1,17 @@
+import merge from "lodash/merge.js";
 import { type ChangeEvent, memo, useCallback, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { GraphCanvas, type GraphCanvasRef, type GraphEdge, type GraphNode, type LabelVisibilityType, type LayoutTypes, useSelection } from "reagraph";
+import {
+    GraphCanvas,
+    type GraphCanvasRef,
+    type GraphEdge,
+    type GraphNode,
+    type LabelVisibilityType,
+    type LayoutTypes,
+    lightTheme,
+    type Theme,
+    useSelection,
+} from "reagraph";
 import store2 from "store2";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
 import {
@@ -10,7 +21,7 @@ import {
     NETWORK_MAP_NODE_STRENGTH_KEY,
 } from "../../localStoreConsts.js";
 import fontUrl from "./../../styles/NotoSans-Regular.ttf";
-import { EDGE_RELATIONSHIP_FILL_COLORS, type NetworkMapLink, NODE_TYPE_FILL_COLORS, ZigbeeRelationship } from "./index.js";
+import { cssColorToRgba, EDGE_RELATIONSHIP_FILL_COLORS, type NetworkMapLink, NODE_TYPE_FILL_COLORS, ZigbeeRelationship } from "./index.js";
 import ContextMenu from "./raw-map/ContextMenu.js";
 import Controls from "./raw-map/Controls.js";
 import Legend from "./raw-map/Legend.js";
@@ -29,6 +40,46 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
     const [showChildren, setShowChildren] = useState(true);
     const [showSiblings, setShowSiblings] = useState(true);
     const graphRef = useRef<GraphCanvasRef | null>(null);
+    const theme: Theme = useMemo(() => {
+        // re-used for perf
+        const ctx = new OffscreenCanvas(1, 1).getContext("2d")!;
+        const style = getComputedStyle(document.documentElement);
+        const colorBase100 = cssColorToRgba(ctx, style.getPropertyValue("--color-base-100"));
+        const colorBase200 = cssColorToRgba(ctx, style.getPropertyValue("--color-base-200"));
+        const colorBaseContent = cssColorToRgba(ctx, style.getPropertyValue("--color-base-content"));
+        const colorPrimary = cssColorToRgba(ctx, style.getPropertyValue("--color-primary"));
+        const colorAccent = cssColorToRgba(ctx, style.getPropertyValue("--color-accent"));
+
+        return merge({}, lightTheme, {
+            canvas: { background: colorBase100 },
+            node: {
+                activeFill: colorAccent,
+                label: { color: colorBaseContent, stroke: colorBase200, activeColor: colorAccent },
+                subLabel: { color: colorBaseContent, stroke: "transparent", activeColor: colorAccent },
+            },
+            lasso: { border: `1px solid ${colorPrimary}`, background: "rgba(75, 160, 255, 0.1)" },
+            ring: { fill: colorBaseContent, activeFill: colorAccent },
+            edge: {
+                fill: colorBaseContent,
+                activeFill: colorAccent,
+                label: {
+                    stroke: colorBase200,
+                    color: colorBaseContent,
+                    activeColor: colorAccent,
+                },
+                subLabel: {
+                    color: colorBaseContent,
+                    stroke: "transparent",
+                    activeColor: colorAccent,
+                },
+            },
+            arrow: { fill: colorBaseContent, activeFill: colorAccent },
+            cluster: {
+                stroke: colorBaseContent,
+                label: { stroke: colorBase200, color: colorBaseContent },
+            },
+        });
+    }, []);
 
     const [nodes, edges] = useMemo(() => {
         const computedNodes: GraphNode[] = [];
@@ -210,6 +261,7 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
                 />
                 <GraphCanvas
                     ref={graphRef}
+                    theme={theme}
                     nodes={nodes}
                     edges={edges}
                     clusterAttribute={layoutType.startsWith("forceDirected") ? "parent" : undefined}

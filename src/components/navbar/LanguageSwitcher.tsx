@@ -1,6 +1,6 @@
 import { type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import PopoverDropdown from "../components/PopoverDropdown.js";
+import PopoverDropdown from "../PopoverDropdown.js";
 
 const LOCALES_NAMES_MAP = {
     bg: "Български",
