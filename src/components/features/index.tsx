@@ -20,10 +20,12 @@ import {
     faDoorOpen,
     faExclamationCircle,
     faExclamationTriangle,
+    faFaucetDrip,
     faFeather,
     faFillDrip,
     faGear,
     faIndustry,
+    faInfinity,
     faPalette,
     faPercent,
     faPersonRays,
@@ -136,6 +138,7 @@ export const TYPE_TO_CLASS_MAP: Record<string, IconDefinition> = {
     gradient: faRainbow,
     sensitivity: faFeather,
     test: faCheck,
+    flow: faFaucetDrip,
 };
 
 const getBatteryIcon = (level: number | undefined, outClasses: string[]) => {
@@ -299,6 +302,13 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
             if (value) {
                 classes.push("text-primary");
                 spec.shake = true;
+            }
+
+            break;
+        }
+        default: {
+            if (name.includes("cyclic")) {
+                icon = faInfinity;
             }
 
             break;

@@ -196,4 +196,20 @@ export const DEVICE_STATES: Message<DeviceState>[] = [
         },
         topic: "some/lamp",
     },
+    {
+        payload: {
+            auto_close_when_water_shortage: "ENABLE",
+            battery: 100,
+            current_device_status: "normal_state",
+            flow: 0,
+            linkquality: 132,
+            state: "OFF",
+            update: {
+                installed_version: 4100,
+                latest_version: 4100,
+                state: "idle",
+            },
+        },
+        topic: "Irrigation-back-3",
+    },
 ];

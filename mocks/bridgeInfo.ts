@@ -116,6 +116,9 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                 "0xbc33acfffe17628a": {
                     friendly_name: "0xbc33acfffe17628a",
                 },
+                "0x44e2f8fffe0c0ea6": {
+                    friendly_name: "Irrigation-back-3",
+                },
             },
             frontend: {
                 package: "zigbee2mqtt-windfront",

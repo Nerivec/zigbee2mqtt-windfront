@@ -5631,7 +5631,104 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 },
             },
         },
-        custom_clusters: {},
+        custom_clusters: {
+            "0x44e2f8fffe0c0ea6": {
+                customClusterEwelink: {
+                    ID: 64529,
+                    attributes: {
+                        acCurrentCurrentValue: {
+                            ID: 28676,
+                            type: 35,
+                        },
+                        acCurrentPowerValue: {
+                            ID: 28678,
+                            type: 35,
+                        },
+                        acCurrentVoltageValue: {
+                            ID: 28677,
+                            type: 35,
+                        },
+                        backLight: {
+                            ID: 2,
+                            type: 16,
+                        },
+                        delayedPowerOnState: {
+                            ID: 20,
+                            type: 16,
+                        },
+                        delayedPowerOnTime: {
+                            ID: 21,
+                            type: 33,
+                        },
+                        detachRelayMode: {
+                            ID: 23,
+                            type: 16,
+                        },
+                        detachRelayMode2: {
+                            ID: 25,
+                            type: 24,
+                        },
+                        deviceWorkMode: {
+                            ID: 24,
+                            type: 32,
+                        },
+                        energyMonth: {
+                            ID: 28682,
+                            type: 35,
+                        },
+                        energyToday: {
+                            ID: 28681,
+                            type: 35,
+                        },
+                        energyYesterday: {
+                            ID: 28683,
+                            type: 35,
+                        },
+                        externalTriggerMode: {
+                            ID: 22,
+                            type: 32,
+                        },
+                        faultCode: {
+                            ID: 16,
+                            type: 43,
+                        },
+                        lackWaterCloseValveTimeout: {
+                            ID: 20497,
+                            type: 33,
+                        },
+                        networkLed: {
+                            ID: 1,
+                            type: 16,
+                        },
+                        outlet_control_protect: {
+                            ID: 28679,
+                            type: 32,
+                        },
+                        radioPower: {
+                            ID: 18,
+                            type: 41,
+                        },
+                        radioPowerWithManuCode: {
+                            ID: 18,
+                            manufacturerCode: 4742,
+                            type: 41,
+                        },
+                    },
+                    commands: {
+                        protocolData: {
+                            ID: 1,
+                            parameters: [
+                                {
+                                    name: "data",
+                                    type: 1001,
+                                },
+                            ],
+                        },
+                    },
+                    commandsResponse: {},
+                },
+            },
+        },
     },
     topic: "bridge/definitions",
 };

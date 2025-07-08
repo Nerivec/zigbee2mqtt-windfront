@@ -28,15 +28,15 @@ const FeatureSubFeatures = memo((props: FeatureSubFeaturesProps) => {
     const features = ("features" in feature && feature.features) || [];
     const isRoot = useMemo(() => {
         if (type === "composite" && parentFeatures !== undefined) {
-            if (parentFeatures.length === 1) {
+            if (parentFeatures.length === 0) {
                 return true;
             }
 
-            if (parentFeatures.length === 2) {
+            if (parentFeatures.length === 1) {
                 // When parent is e.g. climate
-                const type = parentFeatures[1].type;
+                const parentType = parentFeatures[0].type;
 
-                return type != null && type !== "composite" && type !== "list";
+                return parentType != null && parentType !== "composite" && parentType !== "list";
             }
         }
 
@@ -99,7 +99,7 @@ const FeatureSubFeatures = memo((props: FeatureSubFeaturesProps) => {
                 />
             ))}
             {isRoot && (
-                <div>
+                <div className="self-end float-right">
                     <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply}>
                         {t("common:apply")}
                     </Button>

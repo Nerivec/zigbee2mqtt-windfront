@@ -131,9 +131,9 @@ const Feature = memo((props: FeatureProps): JSX.Element => {
             const specificDeviceState: DeviceState = parentFeatures ? (feature.property ? deviceState[feature.property] : deviceState) : deviceState;
 
             return (
-                // <FeatureWrapper key={key} {...wrapperParams}>
-                <FeatureSubFeatures feature={feature} key={key} {...genericParams} deviceState={specificDeviceState} />
-                // </FeatureWrapper>
+                <FeatureWrapper key={key} {...wrapperParams}>
+                    <FeatureSubFeatures feature={feature} key={key} {...genericParams} deviceState={specificDeviceState} />
+                </FeatureWrapper>
             );
         }
         default: {

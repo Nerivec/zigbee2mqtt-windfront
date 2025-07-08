@@ -1,6 +1,6 @@
 import type { AnySubFeature, BasicFeature, DeviceState, FeatureAccessMode, FeatureWithAnySubFeatures, FeatureWithSubFeatures } from "../../types.js";
 
-const BLACKLISTED_PARTIAL_FEATURE_NAMES = ["schedule_", "_mode", "_options", "_startup", "_type", "inching_"];
+const BLACKLISTED_PARTIAL_FEATURE_NAMES = ["schedule_", "_mode", "_options", "_startup", "_type", "inching_", "cyclic_"];
 
 const BLACKLISTED_FEATURE_NAMES = [
     "battery",
@@ -44,6 +44,10 @@ export const getDashboardFeatures = (
 ): FeatureWithAnySubFeatures | undefined => {
     const { property, name, access } = feature;
 
+    if (!isValid(name, access)) {
+        return undefined;
+    }
+
     if ("features" in feature && feature.features && feature.features.length > 0) {
         const features: AnySubFeature[] = [];
         const state = property ? (deviceState[property] as DeviceState) : deviceState;
@@ -56,8 +60,8 @@ export const getDashboardFeatures = (
             }
         }
 
-        return features.length > 0 || isValid(name, access) ? { ...feature, features } : undefined;
+        return { ...feature, features };
     }
 
-    return isValid(name, access) ? { ...feature } : undefined;
+    return { ...feature };
 };

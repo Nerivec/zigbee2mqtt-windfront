@@ -30,7 +30,7 @@ export function getScenes(target: Group | Device): Scene[] {
     return target.scenes;
 }
 
-const BLACKLISTED_PARTIAL_FEATURE_NAMES = ["schedule_", "_mode", "_options", "_startup", "_type", "inching_"];
+const BLACKLISTED_PARTIAL_FEATURE_NAMES = ["schedule_", "_mode", "_options", "_startup", "_type", "inching_", "cyclic_"];
 
 const BLACKLISTED_FEATURE_NAMES = ["effect"];
 
@@ -53,11 +53,7 @@ const isValid = (name: string | undefined, access: FeatureAccessMode): boolean =
         }
     }
 
-    if (access === FeatureAccessMode.ALL || access === FeatureAccessMode.SET || access === FeatureAccessMode.STATE_SET) {
-        return true;
-    }
-
-    return false;
+    return access === FeatureAccessMode.ALL || access === FeatureAccessMode.SET || access === FeatureAccessMode.STATE_SET;
 };
 
 export function getScenesFeatures(
@@ -65,6 +61,10 @@ export function getScenesFeatures(
     deviceState: DeviceState = {} as DeviceState,
 ): FeatureWithAnySubFeatures | undefined {
     const { property, name, access } = feature;
+
+    if (!isValid(name, access)) {
+        return undefined;
+    }
 
     if ("features" in feature && feature.features && feature.features.length > 0) {
         const features: AnySubFeature[] = [];
@@ -78,8 +78,8 @@ export function getScenesFeatures(
             }
         }
 
-        return features.length > 0 || isValid(name, access) ? { ...feature, features } : undefined;
+        return { ...feature, features };
     }
 
-    return isValid(name, access) ? { ...feature } : undefined;
+    return { ...feature };
 }
