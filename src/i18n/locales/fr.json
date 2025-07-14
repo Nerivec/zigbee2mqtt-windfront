@@ -55,6 +55,7 @@
         "disabled": "Désactivé",
         "hide_disabled": "Masquer les désactivés",
         "battery_low_only": "Batterie faible uniquement",
+        "available_only": "Disponible uniquement",
         "execute": "Exécuter",
         "command": "Commande",
         "payload": "Charge utile",

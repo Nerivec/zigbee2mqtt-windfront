@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import ConfirmButton from "../components/ConfirmButton.js";
 import DeviceImage from "../components/device/DeviceImage.js";
+import CheckboxField from "../components/form-fields/CheckboxField.js";
 import OtaControlGroup from "../components/ota-page/OtaControlGroup.js";
 import OtaFileVersion from "../components/ota-page/OtaFileVersion.js";
 import Table from "../components/table/Table.js";
@@ -34,6 +35,7 @@ export default function OtaPage() {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["ota", "zigbee", "common"]);
     const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
+    const [availableOnly, setAvailableOnly] = useState(false);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
@@ -47,24 +49,26 @@ export default function OtaPage() {
             if (device.definition?.supports_ota && !device.disabled) {
                 const state = deviceStates[device.friendly_name] ?? {};
 
-                filteredDevices.push({
-                    device,
-                    state: state.update,
-                    batteryState:
-                        device.power_source === "Battery"
-                            ? {
-                                  batteryPercent: state.battery as number,
-                                  batteryState: state.battery_state as string,
-                                  batteryLow: state.battery_low as boolean,
-                              }
-                            : undefined,
-                    selected: selectedDevices.includes(device.ieee_address),
-                });
+                if (!availableOnly || state.update?.state === "available") {
+                    filteredDevices.push({
+                        device,
+                        state: state.update,
+                        batteryState:
+                            device.power_source === "Battery"
+                                ? {
+                                      batteryPercent: state.battery as number,
+                                      batteryState: state.battery_state as string,
+                                      batteryLow: state.battery_low as boolean,
+                                  }
+                                : undefined,
+                        selected: selectedDevices.includes(device.ieee_address),
+                    });
+                }
             }
         }
 
         return filteredDevices;
-    }, [deviceStates, devices, selectedDevices]);
+    }, [deviceStates, devices, selectedDevices, availableOnly]);
 
     const onSelectAllChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -115,6 +119,10 @@ export default function OtaPage() {
         async (ieee: string) => await sendMessage("bridge/request/device/ota_update/unschedule", { id: ieee }),
         [sendMessage],
     );
+
+    const onAvailableOnlyChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setAvailableOnly(e.target.checked);
+    }, []);
 
     const columns = useMemo<ColumnDef<OtaTableData, unknown>[]>(
         () => [
@@ -234,28 +242,37 @@ export default function OtaPage() {
             {
                 id: "actions",
                 header: () => (
-                    <div className="join join-vertical">
-                        <ConfirmButton
-                            className="btn btn-error btn-xs join-item"
-                            onClick={checkSelected}
-                            title={t("check_selected")}
-                            modalDescription={t("common:dialog_confirmation_prompt")}
-                            modalCancelLabel={t("common:cancel")}
-                            disabled={selectedDevices.length === 0}
-                        >
-                            {t("check_selected")}
-                        </ConfirmButton>
-                        <ConfirmButton
-                            className="btn btn-error btn-xs join-item"
-                            onClick={updateSelected}
-                            title={t("update_selected")}
-                            modalDescription={t("update_selected_info")}
-                            modalCancelLabel={t("common:cancel")}
-                            disabled={selectedDevices.length === 0}
-                        >
-                            {t("update_selected")}
-                        </ConfirmButton>
-                    </div>
+                    <>
+                        <CheckboxField
+                            name="available_only"
+                            detail={t("common:available_only")}
+                            onChange={onAvailableOnlyChange}
+                            checked={availableOnly}
+                            className="checkbox checkbox-sm"
+                        />
+                        <div className="join join-horizontal">
+                            <ConfirmButton
+                                className="btn btn-outline btn-error btn-xs join-item"
+                                onClick={checkSelected}
+                                title={t("check_selected")}
+                                modalDescription={t("common:dialog_confirmation_prompt")}
+                                modalCancelLabel={t("common:cancel")}
+                                disabled={selectedDevices.length === 0}
+                            >
+                                {t("check_selected")}
+                            </ConfirmButton>
+                            <ConfirmButton
+                                className="btn btn-outline btn-error btn-xs join-item"
+                                onClick={updateSelected}
+                                title={t("update_selected")}
+                                modalDescription={t("update_selected_info")}
+                                modalCancelLabel={t("common:cancel")}
+                                disabled={selectedDevices.length === 0}
+                            >
+                                {t("update_selected")}
+                            </ConfirmButton>
+                        </div>
+                    </>
                 ),
                 accessorFn: ({ state }) => state?.state,
                 cell: ({
@@ -279,6 +296,7 @@ export default function OtaPage() {
         [
             selectedDevices.length,
             otaDevices.length,
+            availableOnly,
             onSelectAllChange,
             onSelectChange,
             checkSelected,
@@ -287,6 +305,7 @@ export default function OtaPage() {
             onUpdateClick,
             onScheduleClick,
             onUnscheduleClick,
+            onAvailableOnlyChange,
             t,
         ],
     );
