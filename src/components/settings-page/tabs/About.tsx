@@ -41,7 +41,7 @@ export default function About() {
             className="link link-hover"
             target="_blank"
             rel="noopener noreferrer"
-            href={`https://github.com/Nerivec/zigbee2mqtt-windfront/releases/tag/${frontendPackageJson.version}`}
+            href={`https://github.com/Nerivec/zigbee2mqtt-windfront/releases/tag/v${frontendPackageJson.version}`}
         >
             {frontendPackageJson.version}
         </a>
