@@ -2,7 +2,6 @@ import {
     type AnySubFeature,
     type BasicFeature,
     type Device,
-    type DeviceState,
     FeatureAccessMode,
     type FeatureWithAnySubFeatures,
     type FeatureWithSubFeatures,
@@ -53,14 +52,11 @@ const isValid = (name: string | undefined, access: FeatureAccessMode): boolean =
         }
     }
 
-    return access === FeatureAccessMode.ALL || access === FeatureAccessMode.SET || access === FeatureAccessMode.STATE_SET;
+    return !access || access === FeatureAccessMode.ALL || access === FeatureAccessMode.SET || access === FeatureAccessMode.STATE_SET;
 };
 
-export function getScenesFeatures(
-    feature: BasicFeature | FeatureWithSubFeatures,
-    deviceState: DeviceState = {} as DeviceState,
-): FeatureWithAnySubFeatures | undefined {
-    const { property, name, access } = feature;
+export function getScenesFeatures(feature: BasicFeature | FeatureWithSubFeatures): FeatureWithAnySubFeatures | undefined {
+    const { name, access } = feature;
 
     if (!isValid(name, access)) {
         return undefined;
@@ -68,10 +64,9 @@ export function getScenesFeatures(
 
     if ("features" in feature && feature.features && feature.features.length > 0) {
         const features: AnySubFeature[] = [];
-        const state = property ? (deviceState[property] as DeviceState) : deviceState;
 
         for (const subFeature of feature.features) {
-            const validFeature = getScenesFeatures(subFeature, state);
+            const validFeature = getScenesFeatures(subFeature);
 
             if (validFeature && !features.some((f) => f.property === validFeature.property)) {
                 features.push(validFeature);

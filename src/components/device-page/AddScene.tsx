@@ -28,7 +28,7 @@ const AddScene = memo((props: AddSceneProps) => {
 
         if (isDevice(target)) {
             for (const feature of target.definition?.exposes ?? []) {
-                const validFeature = getScenesFeatures(feature, deviceState);
+                const validFeature = getScenesFeatures(feature);
 
                 if (validFeature) {
                     filtered.push(validFeature);
@@ -37,7 +37,7 @@ const AddScene = memo((props: AddSceneProps) => {
         }
 
         return filtered;
-    }, [target, deviceState]);
+    }, [target]);
 
     const onCompositeChange = useCallback(
         async (value: Record<string, unknown> | unknown) => {

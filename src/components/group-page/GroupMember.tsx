@@ -28,7 +28,7 @@ const GroupMember = memo((props: GroupMemberProps) => {
         const features: FeatureWithAnySubFeatures[] = [];
 
         for (const feature of device.definition?.exposes ?? []) {
-            const validFeature = getScenesFeatures(feature, deviceState);
+            const validFeature = getScenesFeatures(feature);
 
             if (validFeature) {
                 features.push(validFeature);
@@ -41,7 +41,7 @@ const GroupMember = memo((props: GroupMemberProps) => {
         }
 
         return features;
-    }, [device, deviceState]);
+    }, [device]);
 
     const onCardChange = useCallback(
         async (value: Record<string, unknown>) => await setDeviceState(device.ieee_address, value),
