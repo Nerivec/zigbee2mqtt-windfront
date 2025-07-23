@@ -2421,6 +2421,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
             disabled: false,
             endpoints: {
                 "1": {
+                    name: "switch",
                     bindings: [
                         {
                             cluster: "genOnOff",
@@ -2447,6 +2448,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                     scenes: [],
                 },
                 "11": {
+                    name: "back",
                     bindings: [
                         {
                             cluster: "manuSpecificPhilips2",
@@ -2477,6 +2479,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                     scenes: [],
                 },
                 "12": {
+                    name: "front",
                     bindings: [
                         {
                             cluster: "manuSpecificPhilips2",

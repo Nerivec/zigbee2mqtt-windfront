@@ -13,6 +13,7 @@ interface FeatureSubFeaturesProps extends Omit<BaseFeatureProps<FeatureWithAnySu
     steps?: Record<string, ValueWithLabelOrPrimitive[]>;
     parentFeatures?: FeatureWithAnySubFeatures[];
     deviceState: DeviceState | Zigbee2MQTTDeviceOptions;
+    endpointSpecific?: boolean;
 }
 
 interface CompositeState {
@@ -20,7 +21,7 @@ interface CompositeState {
 }
 
 const FeatureSubFeatures = memo((props: FeatureSubFeaturesProps) => {
-    const { feature, onChange, parentFeatures, onRead, device, deviceState, featureWrapperClass, minimal, steps } = props;
+    const { feature, onChange, parentFeatures, onRead, device, deviceState, featureWrapperClass, minimal, endpointSpecific, steps } = props;
     const { type, property } = feature;
     const [state, setState] = useState<CompositeState>({});
     const { t } = useTranslation(["composite", "common"]);
@@ -95,6 +96,7 @@ const FeatureSubFeatures = memo((props: FeatureSubFeaturesProps) => {
                     onRead={onFeatureRead}
                     featureWrapperClass={featureWrapperClass}
                     minimal={minimal}
+                    endpointSpecific={endpointSpecific}
                     steps={steps?.[feature.name]}
                 />
             ))}

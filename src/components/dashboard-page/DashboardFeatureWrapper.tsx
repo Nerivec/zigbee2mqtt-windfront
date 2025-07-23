@@ -7,7 +7,7 @@ import type { FeatureWrapperProps } from "../features/FeatureWrapper.js";
 import { getFeatureIcon } from "../features/index.js";
 
 const DashboardFeatureWrapper = memo((props: PropsWithChildren<FeatureWrapperProps>) => {
-    const { children, feature, deviceValue } = props;
+    const { children, feature, deviceValue, endpointSpecific } = props;
     // @ts-expect-error `undefined` is fine
     const unit = feature.unit as string | undefined;
     const fi = useMemo(() => getFeatureIcon(feature.name, deviceValue, unit), [unit, feature.name, deviceValue]);
@@ -19,7 +19,7 @@ const DashboardFeatureWrapper = memo((props: PropsWithChildren<FeatureWrapperPro
             <FontAwesomeIcon icon={fi[0]} fixedWidth className={fi[1]} {...fi[2]} />
             <div className="grow-1" title={featureName}>
                 {startCase(camelCase(featureName))}
-                <span title={t("endpoint")}>{feature.endpoint ? ` (${feature.endpoint})` : null}</span>
+                {!endpointSpecific && <span title={t("endpoint")}>{feature.endpoint ? ` (${feature.endpoint})` : null}</span>}
             </div>
             <div className="shrink-1">{children}</div>
         </div>

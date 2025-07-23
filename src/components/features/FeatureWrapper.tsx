@@ -13,6 +13,7 @@ export type FeatureWrapperProps = {
     parentFeatures: FeatureWithAnySubFeatures[];
     deviceValue?: unknown;
     onRead?(property: Record<string, unknown>): void;
+    endpointSpecific?: boolean;
 };
 
 function isColorFeature(feature: FeatureWithAnySubFeatures): feature is ColorFeature {
@@ -21,7 +22,7 @@ function isColorFeature(feature: FeatureWithAnySubFeatures): feature is ColorFea
 
 const FeatureWrapper = memo((props: PropsWithChildren<FeatureWrapperProps>) => {
     const { t } = useTranslation("zigbee");
-    const { children, feature, deviceValue, onRead } = props;
+    const { children, feature, deviceValue, onRead, endpointSpecific } = props;
     // @ts-expect-error `undefined` is fine
     const unit = feature.unit as string | undefined;
     const fi = useMemo(() => getFeatureIcon(feature.name, deviceValue, unit), [unit, feature.name, deviceValue]);
@@ -51,7 +52,7 @@ const FeatureWrapper = memo((props: PropsWithChildren<FeatureWrapperProps>) => {
             <div>
                 <div title={featureName}>
                     {label}
-                    {feature.endpoint ? ` (${t("endpoint")}: ${feature.endpoint})` : ""}
+                    {!endpointSpecific && feature.endpoint ? ` (${t("endpoint")}: ${feature.endpoint})` : ""}
                 </div>
                 <div className="text-xs font-semibold opacity-60">{feature.description}</div>
             </div>

@@ -40,6 +40,18 @@ export const BRIDGE_GROUPS: Message<Group[]> = {
             ],
         },
         {
+            description: "Test multi-endpoint",
+            friendly_name: "Multi-endpoint",
+            id: 2,
+            members: [
+                {
+                    endpoint: 11,
+                    ieee_address: "0x00abcdef12345678",
+                },
+            ],
+            scenes: [],
+        },
+        {
             friendly_name: "default_bind_group",
             id: 901,
             members: [],

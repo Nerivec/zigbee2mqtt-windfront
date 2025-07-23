@@ -1,6 +1,6 @@
 import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, type PropsWithChildren } from "react";
+import { JSX, memo, type PropsWithChildren, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { DeviceState, FeatureWithAnySubFeatures, LastSeenConfig } from "../../types.js";
@@ -16,11 +16,39 @@ type Props = Omit<BaseWithSubFeaturesProps<FeatureWithAnySubFeatures>, "feature"
         deviceState: DeviceState;
         features: FeatureWithAnySubFeatures[];
         lastSeenConfig: LastSeenConfig;
-        endpoint?: string | number;
+        endpoint?: number;
     }>;
 
 const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, lastSeenConfig, features, featureWrapperClass, children }: Props) => {
     const { t } = useTranslation(["zigbee", "devicePage"]);
+    const endpointName = endpoint != null ? device.endpoints[endpoint].name : undefined;
+    const displayedFeatures = useMemo(() => {
+        const elements: JSX.Element[] = [];
+
+        for (const feature of features) {
+            // XXX: show if feature has no endpoint?
+            const endpointSpecific = endpoint != null && Boolean(feature.endpoint);
+
+            if (!endpointSpecific || Number(feature.endpoint) === endpoint /* XXX: needed? */ || feature.endpoint === endpointName) {
+                elements.push(
+                    <Feature
+                        key={getFeatureKey(feature)}
+                        feature={feature}
+                        device={device}
+                        deviceState={deviceState}
+                        onChange={onChange}
+                        onRead={onRead}
+                        featureWrapperClass={featureWrapperClass}
+                        minimal={true}
+                        parentFeatures={[]}
+                        endpointSpecific={endpointSpecific}
+                    />,
+                );
+            }
+        }
+
+        return elements;
+    }, [endpointName, device, endpoint, deviceState, features, featureWrapperClass, onChange, onRead]);
 
     return (
         <>
@@ -33,7 +61,7 @@ const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, last
                     <div className="min-w-0">
                         <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
                             {device.friendly_name}
-                            {endpoint ? ` (${t("endpoint")}: ${endpoint})` : ""}
+                            {endpoint != null ? ` (${t("endpoint")}: ${endpointName ? `${endpointName} / ` : ""}${endpoint})` : ""}
                         </Link>
                         {device.description && (
                             <div className="text-xs opacity-50 truncate" title={device.description}>
@@ -43,22 +71,7 @@ const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, last
                     </div>
                 </div>
                 <div className="text-sm w-full p-2">
-                    {features.map(
-                        (feature) =>
-                            (!endpoint || !feature.endpoint || feature.endpoint === endpoint) && (
-                                <Feature
-                                    key={getFeatureKey(feature)}
-                                    feature={feature}
-                                    device={device}
-                                    deviceState={deviceState}
-                                    onChange={onChange}
-                                    onRead={onRead}
-                                    featureWrapperClass={featureWrapperClass}
-                                    minimal={true}
-                                    parentFeatures={[]}
-                                />
-                            ),
-                    )}
+                    {displayedFeatures}
                     <div className="flex flex-row items-center gap-1 mt-3">
                         <div className="grow-1" />
                         <Link to={`/device/${device.ieee_address}/exposes`} className="btn btn-xs">
