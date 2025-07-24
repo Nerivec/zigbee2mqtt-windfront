@@ -49,10 +49,6 @@ const Legend = memo(() => {
                 {/* XXX: temporary */}
                 <p className="text-xs mt-2">Known issues:</p>
                 <ul className="list-disc list-inside text-xs">
-                    <li>
-                        If you cannot see labels (names/LQIs) after the map has finished loading, zoom-in sufficiently, switch the "{t("label_type")}"
-                        value to something else, then back to the one you want
-                    </li>
                     <li>Edge colors are currently not working</li>
                     <li>An undesired vertical offset is applied when starting to drag a node</li>
                 </ul>

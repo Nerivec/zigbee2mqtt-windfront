@@ -191,6 +191,7 @@ export default function Frontend() {
                     <option value="forceDirected3d">forceDirected3d</option>
                     <option value="radialOut2d">radialOut2d</option>
                     <option value="radialOut3d">radialOut3d</option>
+                    <option value="concentric2d">concentric2d</option>
                 </SelectField>
                 <SelectField
                     name="network:label_type"

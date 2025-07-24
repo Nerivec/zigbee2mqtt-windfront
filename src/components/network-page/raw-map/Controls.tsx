@@ -181,6 +181,7 @@ const Controls = memo(
                         <option value="forceDirected3d">forceDirected3d</option>
                         <option value="radialOut2d">radialOut2d</option>
                         <option value="radialOut3d">radialOut3d</option>
+                        <option value="concentric2d">concentric2d</option>
                     </select>
                     <select className="select select-sm w-36" title={t("label_type")} value={labelType} onChange={onLabelTypeChange}>
                         <option value="" disabled>
