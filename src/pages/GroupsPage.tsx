@@ -75,6 +75,7 @@ export default function GroupsPage() {
                         </div>
                     </div>
                 ),
+                filterFn: "includesString",
             },
             {
                 id: "friendly_name",
@@ -85,6 +86,7 @@ export default function GroupsPage() {
                         {group.friendly_name}
                     </Link>
                 ),
+                filterFn: "includesString",
             },
             {
                 id: "members",

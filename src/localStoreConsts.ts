@@ -19,3 +19,6 @@ export const NETWORK_MAP_LINK_DISTANCE_KEY = "network-map-link-distance";
 export const I18NEXTLNG_KEY = "i18nextLng";
 
 export const DEVICES_HIDE_DISABLED_KEY = "devices_hide_disabled";
+
+export const TABLE_COLUMN_FILTER = "table_column_filter";
+export const DASHBOARD_FILTER = "dashboard_filter";

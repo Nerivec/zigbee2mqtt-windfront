@@ -197,6 +197,7 @@ export default function OtaPage() {
                         </div>
                     </div>
                 ),
+                filterFn: "includesString",
             },
             {
                 id: "model",
@@ -216,6 +217,7 @@ export default function OtaPage() {
                         </div>
                     </>
                 ),
+                filterFn: "includesString",
             },
             {
                 id: "firmware_version",

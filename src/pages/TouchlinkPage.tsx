@@ -57,6 +57,7 @@ export default function TouchlinkPage() {
                     ) : (
                         touchlinkDevice.ieee_address
                     ),
+                filterFn: "includesString",
                 // XXX: for some reason, the default sorting algorithm does not sort properly
                 sortingFn: (rowA, rowB) => rowA.original.ieee_address.localeCompare(rowB.original.ieee_address),
             },
@@ -64,11 +65,13 @@ export default function TouchlinkPage() {
                 id: "friendly_name",
                 header: t("common:friendly_name"),
                 accessorFn: (touchlinkDevice) => devices.find((device) => device.ieee_address === touchlinkDevice.ieee_address)?.friendly_name,
+                filterFn: "includesString",
             },
             {
                 id: "channel",
                 header: t("zigbee:channel"),
                 accessorFn: (touchlinkDevice) => touchlinkDevice.channel,
+                filterFn: "includesString",
             },
             {
                 id: "actions",
