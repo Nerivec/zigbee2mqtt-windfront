@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Column } from "@tanstack/react-table";
 import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import store from "store2";
+import store2 from "store2";
 import Button from "../Button.js";
 import DebouncedInput from "../form-fields/DebouncedInput.js";
 
@@ -20,7 +20,7 @@ export default function TextFilter<T>({ getFilterValue, setFilterValue, storeKey
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
         if (!columnFilterValue) {
-            const storeValue = store.get(storeKey, "");
+            const storeValue = store2.get(storeKey, "");
 
             if (storeValue) {
                 setFilterValue(storeValue);
@@ -30,7 +30,7 @@ export default function TextFilter<T>({ getFilterValue, setFilterValue, storeKey
 
     const onChange = useCallback(
         (value: string) => {
-            store.set(storeKey, value);
+            store2.set(storeKey, value);
             setFilterValue(value);
         },
         [storeKey, setFilterValue],

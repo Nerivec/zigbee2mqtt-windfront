@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
-import store from "store2";
 import Button from "../components/Button.js";
 import DashboardFeatureWrapper from "../components/dashboard-page/DashboardFeatureWrapper.js";
 import { getDashboardFeatures } from "../components/dashboard-page/index.js";
@@ -23,11 +22,11 @@ export default function Dashboard() {
     const devices = useAppSelector((state) => state.devices);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["zigbee", "settings"]);
-    const [filterValue, setFilterValue] = useState(store.get(DASHBOARD_FILTER, ""));
+    const [filterValue, setFilterValue] = useState(store2.get(DASHBOARD_FILTER, ""));
     const [columnDisplay, setColumnDisplay] = useState<boolean>(store2.get(DASHBOARD_COLUMN_DISPLAY_KEY, false));
 
     useEffect(() => {
-        store.set(DASHBOARD_FILTER, filterValue);
+        store2.set(DASHBOARD_FILTER, filterValue);
     }, [filterValue]);
 
     const renameDevice = useCallback(
