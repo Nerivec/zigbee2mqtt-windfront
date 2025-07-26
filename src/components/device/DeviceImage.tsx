@@ -1,4 +1,4 @@
-import { faBan, faExclamationTriangle, faQuestionCircle, faSpinner, faSync } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faExclamationTriangle, faQuestionCircle, faSpinner, faSquareArrowUpRight, faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -36,15 +36,21 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
                     title={t("interview_failed")}
                     className="indicator-item indicator-bottom indicator-end text-error"
                 />
-            ) : device.supported ? null : (
+            ) : device.definition?.source === "generated" ? (
                 <FontAwesomeIcon
                     icon={faQuestionCircle}
                     beat
                     title={t("unsupported")}
                     className="indicator-item indicator-bottom indicator-end text-warning"
                 />
-            ),
-        [device.interview_state, device.supported, t],
+            ) : device.definition?.source === "external" ? (
+                <FontAwesomeIcon
+                    icon={faSquareArrowUpRight}
+                    title={t("unsupported")}
+                    className="indicator-item indicator-bottom indicator-end text-info"
+                />
+            ) : null,
+        [device.interview_state, device.definition, t],
     );
 
     return (

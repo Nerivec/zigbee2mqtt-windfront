@@ -1,10 +1,10 @@
 import { faCheckCircle, faExclamationTriangle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import snakeCase from "lodash/snakeCase.js";
-import { useCallback, useContext, useMemo } from "react";
+import { memo, useCallback, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL } from "../../../consts.js";
+import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL, ZHC_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
 import { useAppSelector } from "../../../hooks/useApp.js";
 import type { Device } from "../../../types.js";
 import { toHex } from "../../../utils.js";
@@ -25,6 +25,113 @@ type DeviceInfoProps = {
 };
 
 const MARKDOWN_LINK_REGEX = /\[(.*?)]\((.*?)\)/;
+
+const SOURCE_BADGE_COLOR = {
+    native: "badge-success",
+    external: "badge-info",
+    generated: "badge-warning",
+};
+
+const endpointsReplacer = (key: string, value: unknown) => {
+    if (key === "bindings" || key === "configured_reportings" || key === "scenes") {
+        return undefined;
+    }
+
+    return value;
+};
+
+const SubmitConverterLink = memo(({ device }: { device: Device }) => {
+    const { t } = useTranslation("zigbee");
+    const githubUrlParams = {
+        labels: "enhancement",
+        title: `[External Converter] ${device.model_id} from ${device.manufacturer}`,
+        body: `<!-- MAKE SURE THIS IS NOT ALREADY POSTED ${ZHC_NEW_GITHUB_ISSUE_URL.slice(0, -4)} -->
+
+This is my external converter for \`${device.model_id}\` from \`${device.manufacturer}\`
+software_build_id: \`${device.software_build_id}\`
+date_code: \`${device.date_code}\`
+endpoints:
+\`\`\`json
+${JSON.stringify(device.endpoints, endpointsReplacer)}
+\`\`\`
+
+### What works / what doesn't?
+
+### Converter
+
+\`\`\`js
+<!-- REPLACE THIS LINE WITH YOUR EXTERNAL CONVERTER'S CODE -->
+\`\`\`
+`,
+    };
+
+    return (
+        <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to={`${ZHC_NEW_GITHUB_ISSUE_URL}?${new URLSearchParams(githubUrlParams).toString()}`}
+            className="link link-hover"
+        >
+            {t("submit_converter")}
+        </Link>
+    );
+});
+
+const ReportProblemLink = memo(({ device }: { device: Device }) => {
+    const { t } = useTranslation("zigbee");
+    const bridgeInfo = useAppSelector((state) => state.bridgeInfo);
+    const bridgeHealth = useAppSelector((state) => state.bridgeHealth);
+    const githubUrlParams = {
+        labels: "problem",
+        title: `[${device.model_id} / ${device.manufacturer}] ???`,
+        body: `<!-- MAKE SURE THIS IS NOT ALREADY POSTED ${Z2M_NEW_GITHUB_ISSUE_URL.slice(0, -4)} -->
+
+### What happened?
+
+### What did you expect to happen?
+
+### How to reproduce it (minimal and precise)
+
+### Debug logs
+
+### Details
+os: \`${bridgeInfo.os.version}\`
+node: \`${bridgeInfo.os.node_version}\`
+zigbee2mqtt: \`${bridgeInfo.version}\` (\`${bridgeInfo.commit}\`)
+zigbee-herdsman: \`${bridgeInfo.zigbee_herdsman.version}\`
+zigbee-herdsman-converters: \`${bridgeInfo.zigbee_herdsman_converters.version}\`
+adapter: \`${bridgeInfo.coordinator.type}\` \`${JSON.stringify(bridgeInfo.coordinator.meta)}\`
+#### Device
+software_build_id: \`${device.software_build_id}\`
+date_code: \`${device.date_code}\`
+endpoints:
+\`\`\`json
+${JSON.stringify(device.endpoints)}
+\`\`\``,
+    };
+
+    if (bridgeHealth.response_time > 0) {
+        githubUrlParams.body += `
+##### Health
+time: \`${new Date(bridgeHealth.response_time)}\`
+process.uptime_sec: \`${bridgeHealth.process.uptime_sec}\`
+\`\`\`json
+${JSON.stringify(bridgeHealth.devices[device.ieee_address] ?? {})}
+\`\`\`
+`;
+    }
+
+    return (
+        <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to={`${Z2M_NEW_GITHUB_ISSUE_URL}?${new URLSearchParams(githubUrlParams).toString()}`}
+            className="btn btn-ghost"
+        >
+            {t("report_problem")}
+        </Link>
+    );
+});
 
 export default function DeviceInfo(props: DeviceInfoProps) {
     const { device } = props;
@@ -122,14 +229,20 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                     />
                 </h2>
                 <div className="flex flex-row flex-wrap gap-2">
-                    <span className={`badge ${device.supported ? " badge-success" : " badge-warning"}`}>
+                    <span className={`badge ${device.definition ? SOURCE_BADGE_COLOR[device.definition.source] : ""}`}>
                         <DisplayValue name="supported" value={device.supported} />
+                        {device.definition ? `: ${device.definition.source}` : ""}
                     </span>
                     {!device.supported && (
                         <span className="badge animate-bounce">
                             <Link target="_blank" rel="noopener noreferrer" to={SUPPORT_NEW_DEVICES_DOCS_URL} className="link link-hover">
                                 {t("how_to_add_support")}
                             </Link>
+                        </span>
+                    )}
+                    {device.definition?.source === "external" && (
+                        <span className="badge animate-bounce">
+                            <SubmitConverterLink device={device} />
                         </span>
                     )}
                     <span className="badge opacity-70" title={device.interview_state}>
@@ -206,6 +319,7 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                     </div>
                 </div>
                 <div className="card-actions justify-end mt-2">
+                    <ReportProblemLink device={device} />
                     <DeviceControlGroup
                         device={device}
                         state={deviceState}

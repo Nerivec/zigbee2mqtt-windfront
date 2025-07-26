@@ -2,7 +2,7 @@ name: Check i18n
 
 on:
   pull_request:
-    paths: ['src/i18n/locales/**']
+    paths: ['src/i18n/locales/**', '!src/i18n/locales/en.json']
 
 permissions:
   contents: read

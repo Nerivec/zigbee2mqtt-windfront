@@ -1,7 +1,69 @@
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import frontendPackageJson from "../../../../package.json" with { type: "json" };
+import {
+    MQTT_SPEC_URL,
+    NODEJS_RELEASE_URL,
+    RELEASE_TAG_URL,
+    Z2M_COMMIT_URL,
+    Z2M_NEW_GITHUB_ISSUE_URL,
+    Z2M_RELEASE_TAG_URL,
+    ZH_RELEASE_TAG_URL,
+    ZHC_RELEASE_TAG_URL,
+} from "../../../consts";
 import { useAppSelector } from "../../../hooks/useApp.js";
 import Stats from "../Stats.js";
+
+const ReportProblemLink = memo(() => {
+    const { t } = useTranslation("zigbee");
+    const bridgeInfo = useAppSelector((state) => state.bridgeInfo);
+    const bridgeHealth = useAppSelector((state) => state.bridgeHealth);
+    const githubUrlParams = {
+        labels: "problem",
+        title: "???",
+        body: `<!-- MAKE SURE THIS IS NOT ALREADY POSTED ${Z2M_NEW_GITHUB_ISSUE_URL.slice(0, -4)} -->
+
+### What happened?
+
+### What did you expect to happen?
+
+### How to reproduce it (minimal and precise)
+
+### Debug logs
+
+### Details
+os: \`${bridgeInfo.os.version}\`
+node: \`${bridgeInfo.os.node_version}\`
+homeassistant: \`${bridgeInfo.config.homeassistant.enabled}\`
+zigbee2mqtt: \`${bridgeInfo.version}\` (\`${bridgeInfo.commit}\`)
+zigbee-herdsman: \`${bridgeInfo.zigbee_herdsman.version}\`
+zigbee-herdsman-converters: \`${bridgeInfo.zigbee_herdsman_converters.version}\`
+adapter: \`${bridgeInfo.coordinator.type}\` \`${JSON.stringify(bridgeInfo.coordinator.meta)}\``,
+    };
+
+    if (bridgeHealth.response_time > 0) {
+        githubUrlParams.body += `
+#### Last health check
+time: \`${new Date(bridgeHealth.response_time)}\`
+os.load_average: \`${bridgeHealth.os.load_average.join(", ")}\`
+os.memory_percent: \`${bridgeHealth.os.memory_percent}\`
+process.memory_percent: \`${bridgeHealth.process.memory_percent}\`
+process.uptime_sec: \`${Math.round(bridgeHealth.process.uptime_sec)}\`
+`;
+    }
+
+    return (
+        <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to={`${Z2M_NEW_GITHUB_ISSUE_URL}?${new URLSearchParams(githubUrlParams).toString()}`}
+            className="btn btn-ghost"
+        >
+            {t("report_problem")}
+        </Link>
+    );
+});
 
 export default function About() {
     const { t } = useTranslation("settings");
@@ -10,39 +72,24 @@ export default function About() {
 
     const isZigbee2mqttDevVersion = bridgeInfo.version.match(/^\d+\.\d+\.\d+$/) === null;
     const zigbee2mqttVersion = isZigbee2mqttDevVersion ? (
-        <a
-            className="link link-hover text-secondary"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={"https://github.com/Koenkk/zigbee2mqtt/commits/dev/"}
-        >
+        <a className="link link-hover text-secondary" target="_blank" rel="noopener noreferrer" href={`${Z2M_COMMIT_URL}dev/`}>
             {bridgeInfo.version}
         </a>
     ) : (
-        <a
-            className="link link-hover"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={`https://github.com/Koenkk/zigbee2mqtt/releases/tag/${bridgeInfo.version}`}
-        >
+        <a className="link link-hover" target="_blank" rel="noopener noreferrer" href={`${Z2M_RELEASE_TAG_URL}${bridgeInfo.version}`}>
             {bridgeInfo.version}
         </a>
     );
     const zigbee2mqttCommit = bridgeInfo.commit ? (
         <>
             commit:{" "}
-            <a className="link" target="_blank" rel="noopener noreferrer" href={`https://github.com/Koenkk/zigbee2mqtt/commit/${bridgeInfo.commit}`}>
+            <a className="link" target="_blank" rel="noopener noreferrer" href={`${Z2M_COMMIT_URL}${bridgeInfo.commit}`}>
                 {bridgeInfo.commit}
             </a>
         </>
     ) : null;
     const frontendVersion = (
-        <a
-            className="link link-hover"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={`https://github.com/Nerivec/zigbee2mqtt-windfront/releases/tag/v${frontendPackageJson.version}`}
-        >
+        <a className="link link-hover" target="_blank" rel="noopener noreferrer" href={`${RELEASE_TAG_URL}${frontendPackageJson.version}`}>
             {frontendPackageJson.version}
         </a>
     );
@@ -51,24 +98,20 @@ export default function About() {
             className="link link-hover"
             target="_blank"
             rel="noopener noreferrer"
-            href={`https://github.com/Koenkk/zigbee-herdsman-converters/releases/tag/v${bridgeInfo.zigbee_herdsman_converters.version}`}
+            href={`${ZHC_RELEASE_TAG_URL}${bridgeInfo.zigbee_herdsman_converters.version}`}
         >
             {bridgeInfo.zigbee_herdsman_converters.version}
         </a>
     );
     const zhVersion = (
-        <a
-            className="link link-hover"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={`https://github.com/Koenkk/zigbee-herdsman/releases/tag/v${bridgeInfo.zigbee_herdsman.version}`}
-        >
+        <a className="link link-hover" target="_blank" rel="noopener noreferrer" href={`${ZH_RELEASE_TAG_URL}${bridgeInfo.zigbee_herdsman.version}`}>
             {bridgeInfo.zigbee_herdsman.version}
         </a>
     );
 
     return (
         <div className="flex flex-col gap-3 items-center">
+            <ReportProblemLink />
             <div className="stats stats-vertical lg:stats-horizontal shadow">
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("zigbee2mqtt_version")}</div>
@@ -99,7 +142,7 @@ export default function About() {
                     <div className="stat-title">{t("mqtt")}</div>
                     <div className="stat-value text-lg">{bridgeInfo.mqtt.server}</div>
                     <div className="stat-desc">
-                        <a href="https://mqtt.org/mqtt-specification/" target="_blank" rel="noreferrer" className="link link-hover">
+                        <a href={MQTT_SPEC_URL} target="_blank" rel="noreferrer" className="link link-hover">
                             {t("version")}: {bridgeInfo.mqtt.version}
                         </a>
                     </div>
@@ -107,7 +150,7 @@ export default function About() {
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("node_version")}</div>
                     <div className="stat-value text-lg">
-                        <a href="https://nodejs.org/en/about/previous-releases" target="_blank" rel="noreferrer" className="link link-hover">
+                        <a href={NODEJS_RELEASE_URL} target="_blank" rel="noreferrer" className="link link-hover">
                             {bridgeInfo.os.node_version}
                         </a>
                     </div>

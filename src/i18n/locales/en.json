@@ -337,6 +337,9 @@
         "custom_clusters": "Custom clusters",
         "other_zcl_clusters": "Other ZCL clusters",
         "how_to_add_support": "How to add support?",
+        "submit_converter": "Submit converter",
+        "request_support": "Request support",
+        "report_problem": "Report problem",
         "group": "Group"
     },
     "scene": {
@@ -386,7 +389,9 @@
         "add_update_external_converter": "Add or update external converter",
         "create_new_converter": "Create new converter",
         "select_converter_to_edit": "Select converter to edit",
-        "codespace_info": "A Github Codespace is available to help in development"
+        "codespace_info": "A Github Codespace is available to help in development",
+        "show_definition": "Show definition",
+        "hide_definition": "Hide definition"
     },
     "settingsSchemaDescriptions": {
         "Home Assistant integration (MQTT discovery)": "Home Assistant integration (MQTT discovery)",

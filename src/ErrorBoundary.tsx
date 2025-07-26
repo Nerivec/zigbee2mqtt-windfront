@@ -55,7 +55,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                     "\n\n",
                     error?.stack,
                 ].join("\n"),
-            } as Record<string, string>;
+            };
 
             return (
                 <div>

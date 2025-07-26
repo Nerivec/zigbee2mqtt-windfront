@@ -25,7 +25,30 @@ export const CONVERTERS_CODESPACE_URL = "https://github.com/Nerivec/z2m-external
 
 export const EXTENSIONS_DOCS_URL = "https://www.zigbee2mqtt.io/advanced/more/external_extensions.html";
 
+export const DEVICE_AVAILABILITY_DOCS_URL =
+    "https://www.zigbee2mqtt.io/guide/configuration/device-availability.html#availability-advanced-configuration";
+
+export const LOAD_AVERAGE_DOCS_URL = "https://www.digitalocean.com/community/tutorials/load-average-in-linux";
+
+export const MQTT_SPEC_URL = "https://mqtt.org/mqtt-specification/";
+
+export const NODEJS_RELEASE_URL = "https://nodejs.org/en/about/previous-releases";
+
 export const NEW_GITHUB_ISSUE_URL = "https://github.com/Nerivec/zigbee2mqtt-windfront/issues/new";
+
+export const Z2M_NEW_GITHUB_ISSUE_URL = "https://github.com/Koenkk/zigbee2mqtt/issues/new";
+
+export const ZHC_NEW_GITHUB_ISSUE_URL = "https://github.com/Koenkk/zigbee-herdsman-converters/issues/new";
+
+export const Z2M_COMMIT_URL = "https://github.com/Koenkk/zigbee2mqtt/commit/";
+
+export const RELEASE_TAG_URL = "https://github.com/Nerivec/zigbee2mqtt-windfront/releases/tag/v";
+
+export const Z2M_RELEASE_TAG_URL = "https://github.com/Koenkk/zigbee2mqtt/releases/tag/";
+
+export const ZHC_RELEASE_TAG_URL = "https://github.com/Koenkk/zigbee-herdsman-converters/releases/tag/v";
+
+export const ZH_RELEASE_TAG_URL = "https://github.com/Koenkk/zigbee-herdsman/releases/tag/v";
 
 export enum InterviewState {
     Pending = "PENDING",

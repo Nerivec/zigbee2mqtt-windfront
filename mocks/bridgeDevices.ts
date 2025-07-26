@@ -143,6 +143,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
             /** bogus definition to trigger less common exposes */
             date_code: "20190723",
             definition: {
+                source: "native",
                 description: "TRADFRI ON/OFF switch",
                 exposes: [
                     {
@@ -312,6 +313,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         {
             date_code: "20190722",
             definition: {
+                source: "generated",
                 description: "Automatically generated definition",
                 exposes: [],
                 model: "E1743",
@@ -367,6 +369,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         {
             date_code: "20191218",
             definition: {
+                source: "native",
                 description: "Hue white and color ambiance E26/E27/E14",
                 exposes: [
                     {
@@ -631,6 +634,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         {
             date_code: "20191218",
             definition: {
+                source: "external",
                 description: "Hue white and color ambiance E26/E27/E14",
                 exposes: [
                     {
@@ -863,6 +867,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         },
         {
             definition: {
+                source: "native",
                 description: "MiJia wireless switch",
                 exposes: [
                     {
@@ -958,6 +963,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         {
             date_code: "20190907-V102",
             definition: {
+                source: "native",
                 description: "Zigbee smart switch",
                 exposes: [
                     {
@@ -1015,6 +1021,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         },
         {
             definition: {
+                source: "native",
                 description: "Aqara vibration sensor",
                 exposes: [
                     {
@@ -1158,6 +1165,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         },
         {
             definition: {
+                source: "native",
                 description: "MiJia temperature & humidity sensor",
                 exposes: [
                     {
@@ -1266,6 +1274,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         },
         {
             definition: {
+                source: "native",
                 description: "MiJia door & window contact sensor",
                 exposes: [
                     {
@@ -1335,6 +1344,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         },
         {
             definition: {
+                source: "native",
                 description: "MiJia door & window contact sensor",
                 exposes: [
                     {
@@ -1404,6 +1414,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         {
             date_code: "20191205",
             definition: {
+                source: "native",
                 description: "Aqara temperature, humidity and pressure sensor",
                 exposes: [
                     {
@@ -1545,6 +1556,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         },
         {
             definition: {
+                source: "native",
                 description: "MiJia door & window contact sensor",
                 exposes: [
                     {
@@ -1615,6 +1627,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         {
             date_code: "20191218",
             definition: {
+                source: "native",
                 description: "Hue white and color ambiance E26/E27/E14",
                 exposes: [
                     {
@@ -1849,6 +1862,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         {
             date_code: "20240902",
             definition: {
+                source: "native",
                 description: "Hue Twilight sleep and wake-up light white",
                 exposes: [
                     {
@@ -2533,6 +2547,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
         {
             date_code: "20240820",
             definition: {
+                source: "native",
                 description: "Zigbee smart water valve",
                 exposes: [
                     {

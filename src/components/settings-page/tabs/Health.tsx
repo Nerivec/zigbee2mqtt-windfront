@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { format } from "timeago.js";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
+import { LOAD_AVERAGE_DOCS_URL } from "../../../consts";
 import { useAppSelector } from "../../../hooks/useApp";
 import type { Device } from "../../../types";
 import { formatDate } from "../../../utils.js";
@@ -147,12 +148,7 @@ export default function Health() {
                             <div className="stat-title">{t("load_average")}</div>
                             <div className="stat-value text-lg">{bridgeHealth.os.load_average.join(", ")}</div>
                             <div className="stat-desc">
-                                <a
-                                    href="https://www.digitalocean.com/community/tutorials/load-average-in-linux"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="link link-hover"
-                                >
+                                <a href={LOAD_AVERAGE_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
                                     1min, 5min, 15min
                                 </a>
                             </div>

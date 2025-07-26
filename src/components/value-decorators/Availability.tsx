@@ -1,5 +1,6 @@
 import { type JSX, memo } from "react";
 import { useTranslation } from "react-i18next";
+import { DEVICE_AVAILABILITY_DOCS_URL } from "../../consts.js";
 import type { AvailabilityState } from "../../types.js";
 
 export type AvailabilityStateProps = {
@@ -20,12 +21,7 @@ const Availability = memo((props: AvailabilityStateProps): JSX.Element => {
     return (availabilityEnabledForDevice ?? availabilityFeatureEnabled) ? (
         <span className={availability.state === "online" ? "text-success" : "text-error animate-pulse"}>{t(availability.state)}</span>
     ) : (
-        <a
-            className="link link-hover"
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.zigbee2mqtt.io/guide/configuration/device-availability.html#availability-advanced-configuration"
-        >
+        <a className="link link-hover" target="_blank" rel="noopener noreferrer" href={DEVICE_AVAILABILITY_DOCS_URL}>
             {t("disabled")}
         </a>
     );
