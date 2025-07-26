@@ -217,6 +217,7 @@
         "frontend_notice": "These settings are stored locally in your browser. Using private windows or clearing the cache will reset them to defaults.",
         "reset_settings": "Reset settings",
         "reset_auth": "Reset auth",
+        "reset_all": "Reset all",
         "language": "Language",
         "theme": "Theme",
         "homepage": "Homepage",
@@ -340,7 +341,13 @@
         "submit_converter": "Submit converter",
         "request_support": "Request support",
         "report_problem": "Report problem",
-        "group": "Group"
+        "group": "Group",
+        "type": "Type",
+        "EndDevice": "End device",
+        "Router": "Router",
+        "GreenPower": "GreenPower",
+        "Unknown": "Unknown",
+        "Coordinator": "Coordinator"
     },
     "scene": {
         "manage_scenes_header": "Manage scenes",
@@ -359,9 +366,7 @@
         "byPowerSource": "By power source",
         "byVendor": "By vendor",
         "byModel": "By model",
-        "total": "Total",
-        "EndDevice": "End devices",
-        "Router": "Router"
+        "total": "Total"
     },
     "availability": {
         "availability": "Availability",

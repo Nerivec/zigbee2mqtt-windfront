@@ -217,6 +217,7 @@
         "frontend_notice": "Ces paramètres sont stockés localement dans votre navigateur. L'utilisation d'une fenêtre privée ou la suppression du cache les réinitialisera.",
         "reset_settings": "Réinitialiser les paramètres",
         "reset_auth": "Réinitialiser l'authentification",
+        "reset_all": "Réinitialiser tout",
         "language": "Langue",
         "theme": "Thème",
         "homepage": "Page d'accueil",
@@ -337,7 +338,13 @@
         "custom_clusters": "Clusters personnalisés",
         "other_zcl_clusters": "Autres clusters ZCL",
         "how_to_add_support": "Comment ajouter la prise en charge ?",
-        "group": "Groupe"
+        "group": "Groupe",
+        "type": "Type",
+        "EndDevice": "Appareil terminal",
+        "Router": "Routeur",
+        "GreenPower": "GreenPower",
+        "Unknown": "Inconnu",
+        "Coordinator": "Coordinateur"
     },
     "scene": {
         "manage_scenes_header": "Gérer les scènes",
@@ -356,9 +363,7 @@
         "byPowerSource": "Par source d'alimentation",
         "byVendor": "Par fournisseur",
         "byModel": "Par modèle",
-        "total": "Total",
-        "EndDevice": "Appareils terminaux",
-        "Router": "Routeur"
+        "total": "Total"
     },
     "availability": {
         "availability": "Disponibilité",

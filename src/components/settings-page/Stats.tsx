@@ -51,11 +51,12 @@ const Stats = memo((props: StatsProps) => {
                 continue;
             }
 
+            const typeStr = t(`zigbee:${device.type}`);
             const modelId = device.model_id || t("zigbee:unknown");
             const manufacturer = device.manufacturer || t("zigbee:unknown");
             const powerSource = t(`zigbee:${snakeCase(device.power_source || "unknown")}`);
 
-            byType[t(device.type)] = (byType[t(device.type)] || 0) + 1;
+            byType[typeStr] = (byType[typeStr] || 0) + 1;
             byPowerSource[powerSource] = (byPowerSource[powerSource] || 0) + 1;
             byModel[modelId] = (byModel[modelId] || 0) + 1;
             byVendor[manufacturer] = (byVendor[manufacturer] || 0) + 1;

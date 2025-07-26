@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
-import { TABLE_COLUMN_FILTER } from "../../localStoreConsts.js";
+import { TABLE_COLUMN_FILTER_KEY, TABLE_COLUMN_VISIBILITY_KEY } from "../../localStoreConsts.js";
 import TextFilter from "./TextFilter.js";
 
 interface Props<T> {
@@ -23,7 +23,7 @@ interface Props<T> {
 export default function Table<T>(props: Props<T>) {
     const { t } = useTranslation("common");
     const { id, columns, data, visibleColumns } = props;
-    const columnVisibilityStoreKey = `${id}-column-visibility`;
+    const columnVisibilityStoreKey = `${TABLE_COLUMN_VISIBILITY_KEY}_${id}`;
     const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>(store2.get(columnVisibilityStoreKey, visibleColumns ?? {}));
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const table = useReactTable({
@@ -106,7 +106,7 @@ export default function Table<T>(props: Props<T>) {
                                                         <TextFilter
                                                             getFilterValue={header.column.getFilterValue}
                                                             setFilterValue={header.column.setFilterValue}
-                                                            storeKey={`${TABLE_COLUMN_FILTER}_${id}_${header.column.id}`}
+                                                            storeKey={`${TABLE_COLUMN_FILTER_KEY}_${id}_${header.column.id}`}
                                                         />
                                                     </div>
                                                 ) : null}

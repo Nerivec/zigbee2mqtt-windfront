@@ -11,7 +11,7 @@ export type AvailabilityStateProps = {
 };
 
 const Availability = memo((props: AvailabilityStateProps): JSX.Element => {
-    const { t } = useTranslation(["availability"]);
+    const { t } = useTranslation("availability");
     const { availability, availabilityFeatureEnabled, availabilityEnabledForDevice, disabled } = props;
 
     if (disabled) {

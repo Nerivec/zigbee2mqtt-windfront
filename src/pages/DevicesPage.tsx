@@ -211,6 +211,17 @@ export default function DevicesPage(): JSX.Element {
                 filterFn: "includesString",
             },
             {
+                id: "type",
+                header: t("type"),
+                accessorFn: ({ device }) => t(device.type),
+                cell: ({
+                    row: {
+                        original: { device },
+                    },
+                }) => t(device.type),
+                enableColumnFilter: false,
+            },
+            {
                 id: "lqi",
                 header: t("lqi"),
                 accessorFn: ({ state }) => state.linkquality,
@@ -319,9 +330,11 @@ export default function DevicesPage(): JSX.Element {
             friendly_name: true,
             ieee_address: true,
             model: true,
+            type: false,
+            lqi: true,
             last_seen: bridgeConfig.advanced.last_seen !== "disable",
             availability: bridgeConfig.availability.enabled || data.some((device) => device.availabilityEnabledForDevice),
-            controls: true,
+            actions: true,
         }),
         [bridgeConfig.advanced.last_seen, bridgeConfig.availability.enabled, data],
     );

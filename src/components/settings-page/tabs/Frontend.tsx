@@ -5,6 +5,7 @@ import store2 from "store2";
 import {
     AUTH_FLAG_KEY,
     DASHBOARD_COLUMN_DISPLAY_KEY,
+    DASHBOARD_FILTER_KEY,
     DEVICES_HIDE_DISABLED_KEY,
     HOMEPAGE_KEY,
     I18NEXTLNG_KEY,
@@ -15,6 +16,8 @@ import {
     NETWORK_MAP_NODE_STRENGTH_KEY,
     NETWORK_RAW_DISPLAY_TYPE_KEY,
     PERMIT_JOIN_TIME_KEY,
+    TABLE_COLUMN_FILTER_KEY,
+    TABLE_COLUMN_VISIBILITY_KEY,
     THEME_KEY,
     TOKEN_KEY,
 } from "../../../localStoreConsts.js";
@@ -74,6 +77,8 @@ export default function Frontend() {
     }, [networkMapLinkDistance]);
 
     const resetSettings = useCallback(() => {
+        const keys = store2.keys();
+
         store2.remove(THEME_KEY);
         store2.remove(HOMEPAGE_KEY);
         store2.remove(DASHBOARD_COLUMN_DISPLAY_KEY);
@@ -86,11 +91,13 @@ export default function Frontend() {
         store2.remove(NETWORK_MAP_LINK_DISTANCE_KEY);
         store2.remove(I18NEXTLNG_KEY);
         store2.remove(DEVICES_HIDE_DISABLED_KEY);
-        store2.remove("all-devices-column-visibility");
-        store2.remove("all-groups-column-visibility");
-        store2.remove("ota-devices-column-visibility");
-        store2.remove("touchlink-devices-column-visibility");
-        store2.remove("health-devices-column-visibility");
+        store2.remove(DASHBOARD_FILTER_KEY);
+
+        for (const key of keys) {
+            if (key.startsWith(TABLE_COLUMN_VISIBILITY_KEY) || key.startsWith(TABLE_COLUMN_FILTER_KEY)) {
+                store2.remove(key);
+            }
+        }
 
         window.location.reload();
     }, []);
@@ -98,6 +105,12 @@ export default function Frontend() {
     const resetAuth = useCallback(() => {
         store2.remove(TOKEN_KEY);
         store2.remove(AUTH_FLAG_KEY);
+
+        window.location.reload();
+    }, []);
+
+    const resetAll = useCallback(() => {
+        store2.clearAll();
 
         window.location.reload();
     }, []);
@@ -124,6 +137,15 @@ export default function Frontend() {
                         modalCancelLabel={t("common:cancel")}
                     >
                         {t("reset_auth")}
+                    </ConfirmButton>
+                    <ConfirmButton<void>
+                        className="btn btn-sm btn-error"
+                        onClick={resetAll}
+                        title={t("reset_all")}
+                        modalDescription={t("common:dialog_confirmation_prompt")}
+                        modalCancelLabel={t("common:cancel")}
+                    >
+                        {t("reset_all")}
                     </ConfirmButton>
                 </div>
             </div>

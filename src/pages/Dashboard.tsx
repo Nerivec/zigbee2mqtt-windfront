@@ -12,7 +12,7 @@ import DeviceControlEditName from "../components/device/DeviceControlEditName.js
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import { RemoveDeviceModal } from "../components/modal/components/RemoveDeviceModal.js";
 import { useAppSelector } from "../hooks/useApp.js";
-import { DASHBOARD_COLUMN_DISPLAY_KEY, DASHBOARD_FILTER } from "../localStoreConsts.js";
+import { DASHBOARD_COLUMN_DISPLAY_KEY, DASHBOARD_FILTER_KEY } from "../localStoreConsts.js";
 import type { FeatureWithAnySubFeatures } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
@@ -22,11 +22,11 @@ export default function Dashboard() {
     const devices = useAppSelector((state) => state.devices);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["zigbee", "settings"]);
-    const [filterValue, setFilterValue] = useState(store2.get(DASHBOARD_FILTER, ""));
+    const [filterValue, setFilterValue] = useState(store2.get(DASHBOARD_FILTER_KEY, ""));
     const [columnDisplay, setColumnDisplay] = useState<boolean>(store2.get(DASHBOARD_COLUMN_DISPLAY_KEY, false));
 
     useEffect(() => {
-        store2.set(DASHBOARD_FILTER, filterValue);
+        store2.set(DASHBOARD_FILTER_KEY, filterValue);
     }, [filterValue]);
 
     const renameDevice = useCallback(
