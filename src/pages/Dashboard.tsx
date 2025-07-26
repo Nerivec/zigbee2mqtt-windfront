@@ -1,7 +1,7 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { faEraser, faMagnifyingGlass, faTable, faTableColumns, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, useCallback, useContext, useMemo, useState } from "react";
+import { type JSX, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import Button from "../components/Button.js";
@@ -12,7 +12,7 @@ import DeviceControlEditName from "../components/device/DeviceControlEditName.js
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import { RemoveDeviceModal } from "../components/modal/components/RemoveDeviceModal.js";
 import { useAppSelector } from "../hooks/useApp.js";
-import { DASHBOARD_COLUMN_DISPLAY_KEY } from "../localStoreConsts.js";
+import { DASHBOARD_COLUMN_DISPLAY_KEY, DASHBOARD_FILTER } from "../localStoreConsts.js";
 import type { FeatureWithAnySubFeatures } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
@@ -22,8 +22,12 @@ export default function Dashboard() {
     const devices = useAppSelector((state) => state.devices);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["zigbee", "settings"]);
-    const [filterValue, setFilterValue] = useState("");
+    const [filterValue, setFilterValue] = useState(store2.get(DASHBOARD_FILTER, ""));
     const [columnDisplay, setColumnDisplay] = useState<boolean>(store2.get(DASHBOARD_COLUMN_DISPLAY_KEY, false));
+
+    useEffect(() => {
+        store2.set(DASHBOARD_FILTER, filterValue);
+    }, [filterValue]);
 
     const renameDevice = useCallback(
         async (from: string, to: string, homeassistantRename: boolean): Promise<void> => {

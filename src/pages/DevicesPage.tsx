@@ -160,6 +160,7 @@ export default function DevicesPage(): JSX.Element {
                         </div>
                     </div>
                 ),
+                filterFn: "includesString",
             },
             {
                 id: "ieee_address",
@@ -186,7 +187,7 @@ export default function DevicesPage(): JSX.Element {
                         </div>
                     </>
                 ),
-                // XXX: for some reason, the default sorting algorithm does not sort properly
+                filterFn: "includesString",
                 sortingFn: (rowA, rowB) => rowA.original.device.ieee_address.localeCompare(rowB.original.device.ieee_address),
             },
             {
@@ -207,6 +208,7 @@ export default function DevicesPage(): JSX.Element {
                         </div>
                     </>
                 ),
+                filterFn: "includesString",
             },
             {
                 id: "lqi",
@@ -249,6 +251,12 @@ export default function DevicesPage(): JSX.Element {
                     );
                 },
                 enableColumnFilter: false,
+                sortingFn: (rowA, rowB) =>
+                    rowA.original.device.disabled || rowA.original.availabilityEnabledForDevice === false
+                        ? 1
+                        : rowB.original.device.disabled || rowB.original.availabilityEnabledForDevice === false
+                          ? -1
+                          : rowA.original.availabilityState.state.localeCompare(rowB.original.availabilityState.state),
             },
             {
                 id: "actions",

@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
+import { TABLE_COLUMN_FILTER } from "../../localStoreConsts.js";
 import TextFilter from "./TextFilter.js";
 
 interface Props<T> {
@@ -105,6 +106,7 @@ export default function Table<T>(props: Props<T>) {
                                                         <TextFilter
                                                             getFilterValue={header.column.getFilterValue}
                                                             setFilterValue={header.column.setFilterValue}
+                                                            storeKey={`${TABLE_COLUMN_FILTER}_${id}_${header.column.id}`}
                                                         />
                                                     </div>
                                                 ) : null}
