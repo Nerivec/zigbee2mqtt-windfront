@@ -33,7 +33,9 @@ const Updating = memo(({ label, remaining, progress }: UpdatingProps) => {
             <>
                 <progress className="progress w-48" value={progress} max="100" />
                 <div>
-                    {label} {`${showHours ? `${hours}:` : ""}${showMinutes ? `${minutes}:` : ""}${seconds}`}
+                    {label} {showHours ? `${hours}:` : ""}
+                    {showMinutes ? `${minutes.toString().padStart(2, "0")}:` : ""}
+                    {seconds.toString().padStart(2, "0")}
                 </div>
             </>
         );
