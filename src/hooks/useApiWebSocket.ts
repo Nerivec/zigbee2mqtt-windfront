@@ -248,7 +248,7 @@ export function useApiWebSocket() {
                         payload: payload === "" ? { transaction } : { ...payload, transaction },
                     });
 
-                    console.debug("Calling Request API:", topic, payload, finalPayload);
+                    console.debug("Calling Request API:", finalPayload);
                     dispatch(store.addLog({ level: "debug", message: `frontend:api: Sending ${finalPayload}`, namespace: "frontend:api" }));
                     sendMessageRaw(finalPayload);
 

@@ -232,7 +232,7 @@ export default function Frontend() {
                     <NumberField
                         name="network:node_strength"
                         label={t("network:node_strength")}
-                        onSubmit={(value, valid) => valid && typeof value === "number" && setNetworkMapNodeStrength(value)}
+                        onSubmit={(value, valid) => valid && value !== "" && setNetworkMapNodeStrength(value)}
                         min={-1000}
                         max={-100}
                         step={10}
@@ -243,7 +243,7 @@ export default function Frontend() {
                     <NumberField
                         name="network:link_distance"
                         label={t("network:link_distance")}
-                        onSubmit={(value, valid) => valid && typeof value === "number" && setNetworkMapLinkDistance(value)}
+                        onSubmit={(value, valid) => valid && value !== "" && setNetworkMapLinkDistance(value)}
                         min={10}
                         max={200}
                         step={5}
