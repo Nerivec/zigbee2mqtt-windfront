@@ -261,7 +261,7 @@ export function useApiWebSocket() {
             } else {
                 const finalPayload = stringifyWithPreservingUndefinedAsNull({ topic, payload });
 
-                console.debug("Calling API:", topic, payload, finalPayload);
+                console.debug("Calling API:", finalPayload);
                 dispatch(store.addLog({ level: "debug", message: `frontend:api: Sending ${finalPayload}`, namespace: "frontend:api" }));
                 sendMessageRaw(finalPayload);
             }

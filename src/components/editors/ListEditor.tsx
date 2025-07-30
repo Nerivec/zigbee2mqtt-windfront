@@ -41,6 +41,7 @@ const ListEditor = memo((props: ListEditorProps) => {
             }
 
             newListValue[itemIndex] = itemValue;
+
             replaceList(newListValue);
         },
         [currentValue, replaceList],
@@ -73,7 +74,6 @@ const ListEditor = memo((props: ListEditorProps) => {
                     device={{} as Device}
                     deviceState={itemValue}
                     onChange={(value) => onItemChange(value, itemIndex)}
-                    onRead={(_value) => {}}
                     featureWrapperClass={FeatureWrapper}
                     parentFeatures={parentFeatures}
                 />

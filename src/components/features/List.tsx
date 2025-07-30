@@ -7,31 +7,26 @@ import BaseViewer from "./BaseViewer.js";
 import type { BaseFeatureProps } from "./index.js";
 import NoAccessError from "./NoAccessError.js";
 
-interface State {
-    // biome-ignore lint/suspicious/noExplicitAny: tmp
-    value: any[];
-}
-
 type Props = BaseFeatureProps<ListFeature> & {
     parentFeatures: FeatureWithAnySubFeatures[];
 };
 
 const List = memo((props: Props) => {
+    const { t } = useTranslation(["list", "common"]);
     const { feature, minimal, parentFeatures, onChange, deviceValue } = props;
     // biome-ignore lint/suspicious/noExplicitAny: tmp
-    const [state, setState] = useState<State>({ value: feature.property ? ((deviceValue?.[feature.property] as any[]) ?? []) : [] });
-    const { t } = useTranslation(["list", "common"]);
+    const [currentValue, setCurrentValue] = useState(feature.property ? ((deviceValue?.[feature.property] as any[]) ?? []) : []);
     const isRoot = useMemo(() => {
         if (parentFeatures !== undefined) {
-            if (parentFeatures.length === 1) {
+            if (parentFeatures.length === 0) {
                 return true;
             }
 
-            if (parentFeatures.length === 2) {
+            if (parentFeatures.length === 1) {
                 // When parent is e.g. climate
-                const type = parentFeatures[1].type;
+                const parentType = parentFeatures[0].type;
 
-                return type != null && type !== "composite" && type !== "list";
+                return parentType != null && parentType !== "composite" && parentType !== "list";
             }
         }
 
@@ -41,7 +36,7 @@ const List = memo((props: Props) => {
     const onEditorChange = useCallback(
         // biome-ignore lint/suspicious/noExplicitAny: tmp
         (value: any[]): void => {
-            setState({ value });
+            setCurrentValue(value);
 
             if (!isRoot) {
                 onChange(feature.property ? { [feature.property]: value } : value);
@@ -51,18 +46,18 @@ const List = memo((props: Props) => {
     );
 
     const onRootApply = useCallback(() => {
-        onChange(feature.property ? { [feature.property]: state.value } : state.value);
-    }, [feature.property, onChange, state.value]);
+        onChange(feature.property ? { [feature.property]: currentValue } : currentValue);
+    }, [feature.property, onChange, currentValue]);
 
     const { access = FeatureAccessMode.SET, item_type: itemType } = feature;
 
     if (access & FeatureAccessMode.SET) {
         return (
             <>
-                <ListEditor feature={itemType} parentFeatures={[...parentFeatures, feature]} onChange={onEditorChange} value={state.value} />
+                <ListEditor feature={itemType} parentFeatures={[...parentFeatures, feature]} onChange={onEditorChange} value={currentValue} />
                 {isRoot && (
                     <div>
-                        <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply} disabled={state.value.length === 0}>
+                        <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply} disabled={currentValue.length === 0}>
                             {t("common:apply")}
                         </Button>
                     </div>
