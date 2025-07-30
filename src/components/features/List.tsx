@@ -39,15 +39,35 @@ const List = memo((props: Props) => {
             setCurrentValue(value);
 
             if (!isRoot) {
-                onChange(feature.property ? { [feature.property]: value } : value);
+                let payloadValue = value;
+
+                if (feature.item_type.type !== "composite" && feature.item_type.name) {
+                    payloadValue = [];
+
+                    for (const val of value) {
+                        payloadValue.push(val[feature.item_type.name]);
+                    }
+                }
+
+                onChange(feature.property ? { [feature.property]: payloadValue } : payloadValue);
             }
         },
-        [feature.property, onChange, isRoot],
+        [feature.property, feature.item_type, onChange, isRoot],
     );
 
     const onRootApply = useCallback(() => {
-        onChange(feature.property ? { [feature.property]: currentValue } : currentValue);
-    }, [feature.property, onChange, currentValue]);
+        let payloadValue = currentValue;
+
+        if (feature.item_type.type !== "composite" && feature.item_type.name) {
+            payloadValue = [];
+
+            for (const val of currentValue) {
+                payloadValue.push(val[feature.item_type.name]);
+            }
+        }
+
+        onChange(feature.property ? { [feature.property]: payloadValue } : payloadValue);
+    }, [feature.property, feature.item_type, onChange, currentValue]);
 
     const { access = FeatureAccessMode.SET, item_type: itemType } = feature;
 
