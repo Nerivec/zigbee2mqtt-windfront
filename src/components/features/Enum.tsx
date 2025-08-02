@@ -19,7 +19,7 @@ const Enum = memo((props: EnumProps) => {
     if (access & FeatureAccessMode.SET) {
         return (
             <EnumEditor
-                onChange={(value) => onChange({ [property]: value })}
+                onChange={(value) => onChange(property ? { [property]: value } : value)}
                 values={values}
                 value={(deviceValue as ValueWithLabelOrPrimitive) || ""}
                 minimal={minimal || values.length > BIG_ENUM_SIZE}
