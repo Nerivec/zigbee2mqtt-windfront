@@ -5728,6 +5728,15 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     commandsResponse: {},
                 },
             },
+            "0x94a081fffe57bbf6": {
+                manuSpecificIkeaUnknown: {
+                    ID: 64636,
+                    attributes: {},
+                    commands: {},
+                    commandsResponse: {},
+                    manufacturerCode: 4476,
+                },
+            },
         },
     },
     topic: "bridge/definitions",

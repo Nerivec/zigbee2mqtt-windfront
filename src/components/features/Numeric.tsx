@@ -22,7 +22,7 @@ const Numeric = memo((props: NumericProps) => {
     if (access & FeatureAccessMode.SET) {
         return (
             <RangeEditor
-                onChange={(value) => onChange({ [property]: value })}
+                onChange={(value) => onChange(property ? { [property]: value } : value)}
                 value={(deviceValue as number) ?? ""}
                 min={valueMin}
                 max={valueMax}

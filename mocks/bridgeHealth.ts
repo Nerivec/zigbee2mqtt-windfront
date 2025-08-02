@@ -41,6 +41,12 @@ export const BRIDGE_HEALTH: Message<Zigbee2MQTTAPI["bridge/health"]> = {
                 messages_per_sec: 1.6554,
                 network_address_changes: 0,
             },
+            "0x94a081fffe57bbf6": {
+                leave_count: 0,
+                messages: 50,
+                messages_per_sec: 0.0172,
+                network_address_changes: 0,
+            },
         },
     },
     topic: "bridge/health",

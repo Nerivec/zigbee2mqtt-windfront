@@ -15,7 +15,7 @@ const Text = memo((props: TextProps) => {
     } = props;
 
     if (access & FeatureAccessMode.SET) {
-        return <TextEditor onChange={(value) => onChange({ [property]: value })} value={(deviceValue as string) ?? ""} />;
+        return <TextEditor onChange={(value) => onChange(property ? { [property]: value } : value)} value={(deviceValue as string) ?? ""} />;
     }
 
     if (access & FeatureAccessMode.STATE) {

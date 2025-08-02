@@ -212,4 +212,21 @@ export const DEVICE_STATES: Message<DeviceState>[] = [
         },
         topic: "Irrigation-back-3",
     },
+    {
+        payload: {
+            battery: 86,
+            illuminance: 15,
+            illuminance_raw: 6989,
+            last_seen: "2025-08-02T00:58:58+02:00",
+            linkquality: 192,
+            occupancy: false,
+            update: {
+                installed_version: 16777316,
+                latest_version: 16777316,
+                state: "idle",
+            },
+            voltage: 2600,
+        },
+        topic: "Détecteur_Mouvement_Bureau",
+    },
 ];

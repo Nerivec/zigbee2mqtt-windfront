@@ -119,6 +119,12 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                 "0x44e2f8fffe0c0ea6": {
                     friendly_name: "Irrigation-back-3",
                 },
+                "0x94a081fffe57bbf6": {
+                    friendly_name: "Détecteur_Mouvement_Bureau",
+                    illuminance_calibration: 200,
+                    illuminance_raw: true,
+                    no_occupancy_since: [10, 60],
+                },
             },
             frontend: {
                 package: "zigbee2mqtt-windfront",

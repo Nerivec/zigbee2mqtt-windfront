@@ -47,7 +47,7 @@ const Feature = memo((props: FeatureProps): JSX.Element => {
         parentFeatures,
     } = props;
     const deviceValue = useMemo(
-        () => (feature.property ? deviceState[feature.property] : undefined),
+        () => (feature.property ? deviceState[feature.property] : deviceState),
         [feature.property, deviceState[feature.property!]],
     );
     const key = useMemo(() => getFeatureKey(feature), [feature]);

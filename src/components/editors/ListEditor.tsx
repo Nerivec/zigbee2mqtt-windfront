@@ -36,11 +36,11 @@ const ListEditor = memo((props: ListEditorProps) => {
         (itemValue: any, itemIndex: number) => {
             const newListValue = Array.from(currentValue);
 
-            if (typeof itemValue === "object") {
+            if (typeof itemValue === "object" && itemValue != null) {
                 itemValue = { ...currentValue[itemIndex], ...itemValue };
             }
 
-            newListValue[itemIndex] = itemValue;
+            newListValue[itemIndex] = itemValue ?? "";
 
             replaceList(newListValue);
         },
@@ -57,7 +57,10 @@ const ListEditor = memo((props: ListEditorProps) => {
         [currentValue, replaceList],
     );
 
-    const handleAddClick = useCallback(() => setCurrentValue([...currentValue, {}]), [currentValue]);
+    const handleAddClick = useCallback(
+        () => setCurrentValue([...currentValue, feature.type === "composite" ? {} : ""]),
+        [currentValue, feature.type],
+    );
 
     return currentValue.length === 0 ? (
         <div className="flex flex-row flex-wrap gap-2">
