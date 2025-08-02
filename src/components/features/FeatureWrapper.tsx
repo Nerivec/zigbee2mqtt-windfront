@@ -26,7 +26,10 @@ const FeatureWrapper = memo((props: PropsWithChildren<FeatureWrapperProps>) => {
     // @ts-expect-error `undefined` is fine
     const unit = feature.unit as string | undefined;
     const fi = useMemo(() => getFeatureIcon(feature.name, deviceValue, unit), [unit, feature.name, deviceValue]);
-    const isReadable = useMemo(() => (feature.property && feature.access & FeatureAccessMode.GET) || isColorFeature(feature), [feature]);
+    const isReadable = useMemo(
+        () => onRead !== undefined && (Boolean(feature.property && feature.access & FeatureAccessMode.GET) || isColorFeature(feature)),
+        [feature, onRead],
+    );
     const parentFeature = props.parentFeatures?.[props.parentFeatures.length - 1];
     const featureName = feature.name === "state" ? feature.property : feature.name;
     let label = feature.label || startCase(camelCase(featureName));
