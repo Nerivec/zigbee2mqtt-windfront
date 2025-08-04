@@ -18,13 +18,6 @@ const meta = {
         className: "",
         noIndicator: undefined,
     },
-    // decorators: [
-    //     (Story) => (
-    //         <div className="w-40">
-    //             <Story />
-    //         </div>
-    //     ),
-    // ],
 } satisfies Meta<typeof DeviceImage>;
 
 export default meta;
@@ -39,6 +32,7 @@ export const Generic: Story = {
     args: {
         device: {
             ...baseRouter,
+            // @ts-expect-error minimal mock
             definition: {
                 model: "unknown",
             },
@@ -50,7 +44,10 @@ export const BadDefinitionIcon: Story = {
     args: {
         device: {
             ...baseRouter,
-            definition: { icon: "unknown.png" },
+            // @ts-expect-error minimal mock
+            definition: {
+                icon: "unknown.png",
+            },
         },
     },
 };
@@ -93,6 +90,7 @@ export const GeneratedDefinition: Story = {
     args: {
         device: {
             ...baseRouter,
+            // @ts-expect-error minimal mock
             definition: {
                 model: "unknown",
                 source: "generated",
@@ -106,6 +104,7 @@ export const ExternalDefinition: Story = {
     args: {
         device: {
             ...baseRouter,
+            // @ts-expect-error minimal mock
             definition: {
                 model: "unknown",
                 source: "external",
