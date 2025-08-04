@@ -1,19 +1,19 @@
-# Workflow name
 name: Build and Publish Storybook to GitHub Pages
 
 on:
   push:
     branches:
-      - 'main'
+      - main
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,7 +23,7 @@ jobs:
         with:
           node-version-file: 'package.json'
 
-      - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+      - uses: bitovi/github-actions-storybook-to-github-pages@v1
         with:
           install_command: npm ci
           build_command: npm run build-storybook
