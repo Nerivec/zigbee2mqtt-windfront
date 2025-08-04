@@ -4,13 +4,13 @@ import { memo, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { InterviewState } from "../../consts.js";
 import genericDevice from "../../images/generic-zigbee-device.png";
-import type { Device } from "../../types.js";
+import type { Device, DeviceState } from "../../types.js";
 import ErrorBoundary from "./ErrorBoundary.js";
 import LazyImage from "./LazyImage.js";
 
 type DeviceImageProps = {
     device?: Device;
-    otaState?: string;
+    otaState?: NonNullable<DeviceState["update"]>["state"];
     disabled: boolean;
     className?: string;
     noIndicator?: boolean;

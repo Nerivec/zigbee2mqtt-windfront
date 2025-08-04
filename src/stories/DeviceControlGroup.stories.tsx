@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "storybook/test";
+import { expect, fn } from "storybook/test";
 import DeviceControlGroup from "../components/device/DeviceControlGroup";
 import { InterviewState } from "../consts";
 import { baseRouter } from "./devices";
@@ -8,11 +8,12 @@ const meta = {
     title: "Components/Device/DeviceControlGroup",
     tags: ["autodocs"],
     component: DeviceControlGroup,
-    argTypes: {},
-    // onChange, onRead, device, endpoint, deviceState, lastSeenConfig, features, featureWrapperClass, children
+    argTypes: {
+        otaState: { control: "text" },
+    },
     args: {
         device: { ...baseRouter },
-        state: undefined,
+        otaState: undefined,
         homeassistantEnabled: false,
         renameDevice: fn(),
         configureDevice: fn(),
@@ -36,6 +37,12 @@ export const InterviewPending: Story = {
             interview_state: InterviewState.Pending,
         },
     },
+    play: ({ canvas }) => {
+        const btns = canvas.getAllByRole<HTMLButtonElement>("button");
+
+        expect(btns[1].disabled).toStrictEqual(true);
+        expect(btns[2].disabled).toStrictEqual(true);
+    },
 };
 
 export const InterviewInProgress: Story = {
@@ -45,6 +52,7 @@ export const InterviewInProgress: Story = {
             interview_state: InterviewState.InProgress,
         },
     },
+    play: InterviewPending.play,
 };
 
 export const OtaUpdating: Story = {
@@ -52,12 +60,7 @@ export const OtaUpdating: Story = {
         device: {
             ...baseRouter,
         },
-        state: {
-            update: {
-                state: "updating",
-                installed_version: 1,
-                latest_version: 2,
-            },
-        },
+        otaState: "updating",
     },
+    play: InterviewPending.play,
 };

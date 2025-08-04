@@ -322,7 +322,7 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                     <ReportProblemLink device={device} />
                     <DeviceControlGroup
                         device={device}
-                        state={deviceState}
+                        otaState={deviceState.update?.state}
                         homeassistantEnabled={homeassistantEnabled}
                         configureDevice={configureDevice}
                         renameDevice={renameDevice}

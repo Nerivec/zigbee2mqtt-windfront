@@ -297,7 +297,7 @@ export default function DevicesPage(): JSX.Element {
                     return (
                         <DeviceControlGroup
                             device={device}
-                            state={state}
+                            otaState={state.update?.state}
                             homeassistantEnabled={bridgeConfig.homeassistant.enabled}
                             renameDevice={renameDevice}
                             removeDevice={removeDevice}

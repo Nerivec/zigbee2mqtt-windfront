@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect } from "storybook/internal/test";
+import { expect } from "storybook/test";
 import DeviceImage from "../components/device/DeviceImage";
 import { InterviewState } from "../consts";
 import { baseRouter } from "./devices";
@@ -54,6 +54,7 @@ export const BadDefinitionIcon: Story = {
     },
     play: async ({ canvas }) => {
         await new Promise((resolve) => setTimeout(resolve, 500));
+
         const img = canvas.getByRole<HTMLImageElement>("img");
 
         expect(img.src).toContain(baseRouter.definition?.model);

@@ -12,7 +12,7 @@ import DeviceControlEditName from "./DeviceControlEditName.js";
 
 interface DeviceControlGroupProps {
     device: Device;
-    state?: DeviceState;
+    otaState?: NonNullable<DeviceState["update"]>["state"];
     homeassistantEnabled: boolean;
     renameDevice: (from: string, to: string, homeassistantRename: boolean) => Promise<void>;
     configureDevice: (id: string) => Promise<void>;
@@ -21,12 +21,10 @@ interface DeviceControlGroupProps {
 }
 
 export default function DeviceControlGroup(props: DeviceControlGroupProps): JSX.Element {
-    const { device, state, renameDevice, configureDevice, interviewDevice, removeDevice } = props;
+    const { device, otaState, renameDevice, configureDevice, interviewDevice, removeDevice } = props;
     const { t } = useTranslation(["zigbee", "common"]);
     const disableInterview =
-        device.interview_state === InterviewState.InProgress ||
-        device.interview_state === InterviewState.Pending ||
-        (state && state.update?.state === "updating");
+        device.interview_state === InterviewState.InProgress || device.interview_state === InterviewState.Pending || otaState === "updating";
 
     return (
         <div className="join join-horizontal">

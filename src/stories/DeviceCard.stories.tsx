@@ -15,7 +15,6 @@ const meta = {
         featureWrapperClass: { table: { disable: true } },
         endpoint: { control: "number" },
     },
-    // onChange, onRead, device, endpoint, deviceState, lastSeenConfig, features, featureWrapperClass, children
     args: {
         device: { ...baseRouter },
         endpoint: undefined,
@@ -23,7 +22,6 @@ const meta = {
         lastSeenConfig: "ISO_8601_local",
         features: [],
         featureWrapperClass: DashboardFeatureWrapper,
-        // children: [],
         onChange: fn(),
     },
     decorators: [
