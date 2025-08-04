@@ -85,4 +85,10 @@ export const DEVICE_AVAILABILITY: Message<AvailabilityState>[] = [
         },
         topic: "901/availability",
     },
+    {
+        payload: {
+            state: "online",
+        },
+        topic: "Détecteur_Mouvement_Bureau/availability",
+    },
 ];

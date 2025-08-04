@@ -19,9 +19,13 @@ const Binary = memo((props: BinaryProps) => {
         minimal,
     } = props;
     const { t } = useTranslation("zigbee");
-    const onButtonClick = useCallback((value: string | boolean) => onChange({ [property]: value }), [property, onChange]);
+    const onButtonClick = useCallback((value: string | boolean) => onChange(property ? { [property]: value } : value), [property, onChange]);
     const onCheckboxChange = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => onChange({ [property]: e.target.checked ? valueOn : valueOff }),
+        (e: ChangeEvent<HTMLInputElement>) => {
+            const checkedValue = e.target.checked ? valueOn : valueOff;
+
+            onChange(property ? { [property]: checkedValue } : checkedValue);
+        },
         [valueOn, valueOff, property, onChange],
     );
 

@@ -15,10 +15,11 @@ const Color = memo((props: ColorProps) => {
 
     const value = useMemo(() => {
         const val = {} as AnyColor;
+        const sanitizedDeviceValue = deviceValue != null && typeof deviceValue === "object" ? deviceValue : {};
 
         for (const innerFeature of features) {
             // just in case the number comes in as string
-            const propValue = Number.parseFloat(deviceValue?.[innerFeature.name]);
+            const propValue = Number.parseFloat(sanitizedDeviceValue[innerFeature.name]);
 
             val[innerFeature.name] = Number.isNaN(propValue) ? 0 : propValue;
         }

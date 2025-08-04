@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FeatureAccessMode, type FeatureWithAnySubFeatures, type ListFeature } from "../../types.js";
 import Button from "../Button.js";
@@ -14,8 +14,7 @@ type Props = BaseFeatureProps<ListFeature> & {
 const List = memo((props: Props) => {
     const { t } = useTranslation(["list", "common"]);
     const { feature, minimal, parentFeatures, onChange, deviceValue } = props;
-    // biome-ignore lint/suspicious/noExplicitAny: tmp
-    const [currentValue, setCurrentValue] = useState(feature.property ? ((deviceValue?.[feature.property] as any[]) ?? []) : []);
+    const [currentValue, setCurrentValue] = useState<unknown[]>([]);
     const isRoot = useMemo(() => {
         if (parentFeatures !== undefined) {
             if (parentFeatures.length === 0) {
@@ -33,41 +32,35 @@ const List = memo((props: Props) => {
         return false;
     }, [parentFeatures]);
 
+    useEffect(() => {
+        if (deviceValue) {
+            if (Array.isArray(deviceValue)) {
+                setCurrentValue(deviceValue);
+            } else if (feature.property && typeof deviceValue === "object") {
+                setCurrentValue(deviceValue[feature.property] ?? []);
+            } else {
+                setCurrentValue([]);
+            }
+        } else {
+            setCurrentValue([]);
+        }
+    }, [feature.property, deviceValue]);
+
     const onEditorChange = useCallback(
         // biome-ignore lint/suspicious/noExplicitAny: tmp
         (value: any[]): void => {
             setCurrentValue(value);
 
             if (!isRoot) {
-                let payloadValue = value;
-
-                if (feature.item_type.type !== "composite" && feature.item_type.name) {
-                    payloadValue = [];
-
-                    for (const val of value) {
-                        payloadValue.push(val[feature.item_type.name]);
-                    }
-                }
-
-                onChange(feature.property ? { [feature.property]: payloadValue } : payloadValue);
+                onChange(feature.property ? { [feature.property]: value } : value);
             }
         },
-        [feature.property, feature.item_type, onChange, isRoot],
+        [feature.property, onChange, isRoot],
     );
 
     const onRootApply = useCallback(() => {
-        let payloadValue = currentValue;
-
-        if (feature.item_type.type !== "composite" && feature.item_type.name) {
-            payloadValue = [];
-
-            for (const val of currentValue) {
-                payloadValue.push(val[feature.item_type.name]);
-            }
-        }
-
-        onChange(feature.property ? { [feature.property]: payloadValue } : payloadValue);
-    }, [feature.property, feature.item_type, onChange, currentValue]);
+        onChange(feature.property ? { [feature.property]: currentValue } : currentValue);
+    }, [feature.property, onChange, currentValue]);
 
     const { access = FeatureAccessMode.SET, item_type: itemType } = feature;
 
