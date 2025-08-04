@@ -1,3 +1,4 @@
+import NiceModal from "@ebay/nice-modal-react";
 import type { Preview } from "@storybook/react-vite";
 import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router";
@@ -24,9 +25,11 @@ const preview: Preview = {
     decorators: [
         (Story) => (
             <I18nextProvider i18n={i18n}>
-                <MemoryRouter initialEntries={["/"]}>
-                    <Story />
-                </MemoryRouter>
+                <NiceModal.Provider>
+                    <MemoryRouter initialEntries={["/"]}>
+                        <Story />
+                    </MemoryRouter>
+                </NiceModal.Provider>
             </I18nextProvider>
         ),
     ],
