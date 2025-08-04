@@ -1,13 +1,4 @@
-import {
-    type AnySubFeature,
-    type BasicFeature,
-    type Device,
-    FeatureAccessMode,
-    type FeatureWithAnySubFeatures,
-    type FeatureWithSubFeatures,
-    type Group,
-    type Scene,
-} from "../../types.js";
+import { type Device, FeatureAccessMode, type Group, type Scene } from "../../types.js";
 
 import { isDevice } from "../../utils.js";
 
@@ -35,7 +26,7 @@ const BLACKLISTED_FEATURE_NAMES = ["effect", "power_on_behavior", "gradient"];
 
 const WHITELIST_FEATURE_NAMES = ["state", "color_temp", "color", "transition", "brightness"];
 
-const isValid = (name: string | undefined, access: FeatureAccessMode): boolean => {
+export const isValidForScenes = (name: string | undefined, access: FeatureAccessMode): boolean => {
     if (name) {
         if (WHITELIST_FEATURE_NAMES.includes(name)) {
             return true;
@@ -54,27 +45,3 @@ const isValid = (name: string | undefined, access: FeatureAccessMode): boolean =
 
     return !access || access === FeatureAccessMode.ALL || access === FeatureAccessMode.SET || access === FeatureAccessMode.STATE_SET;
 };
-
-export function getScenesFeatures(feature: BasicFeature | FeatureWithSubFeatures): FeatureWithAnySubFeatures | undefined {
-    const { name, access } = feature;
-
-    if (!isValid(name, access)) {
-        return undefined;
-    }
-
-    if ("features" in feature && feature.features && feature.features.length > 0) {
-        const features: AnySubFeature[] = [];
-
-        for (const subFeature of feature.features) {
-            const validFeature = getScenesFeatures(subFeature);
-
-            if (validFeature && !features.some((f) => f.property === validFeature.property)) {
-                features.push(validFeature);
-            }
-        }
-
-        return { ...feature, features };
-    }
-
-    return { ...feature };
-}

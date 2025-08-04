@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import Button from "../components/Button.js";
 import DashboardFeatureWrapper from "../components/dashboard-page/DashboardFeatureWrapper.js";
-import { getDashboardFeatures } from "../components/dashboard-page/index.js";
+import { isValidForDashboard } from "../components/dashboard-page/index.js";
 import DeviceCard from "../components/device/DeviceCard.js";
 import DeviceControlEditName from "../components/device/DeviceControlEditName.js";
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
@@ -14,6 +14,7 @@ import { RemoveDeviceModal } from "../components/modal/components/RemoveDeviceMo
 import { useAppSelector } from "../hooks/useApp.js";
 import { DASHBOARD_COLUMN_DISPLAY_KEY, DASHBOARD_FILTER_KEY } from "../localStoreConsts.js";
 import type { FeatureWithAnySubFeatures } from "../types.js";
+import { filterExposes } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 export default function Dashboard() {
@@ -59,22 +60,9 @@ export default function Dashboard() {
         for (const device of devices) {
             if (!device.disabled && device.supported && (!filterValue || device.friendly_name.toLowerCase().includes(filterValue.toLowerCase()))) {
                 const deviceState = deviceStates[device.friendly_name] ?? {};
-                const filteredFeatures: FeatureWithAnySubFeatures[] = [];
-
-                if (device.definition?.exposes) {
-                    for (const feature of device.definition.exposes) {
-                        const validFeature = getDashboardFeatures(feature);
-
-                        if (validFeature) {
-                            filteredFeatures.push(validFeature);
-
-                            // limit size of cards
-                            if (filteredFeatures.length === 10) {
-                                break;
-                            }
-                        }
-                    }
-                }
+                const filteredFeatures: FeatureWithAnySubFeatures[] = device.definition
+                    ? filterExposes(device.definition.exposes, isValidForDashboard)
+                    : [];
 
                 if (filteredFeatures.length > 0) {
                     filteredDevices.push(

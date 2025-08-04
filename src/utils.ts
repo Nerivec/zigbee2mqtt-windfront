@@ -1,5 +1,14 @@
 import { saveAs } from "file-saver";
-import type { Device, Group, LastSeenConfig } from "./types.js";
+import type {
+    AnySubFeature,
+    BasicFeature,
+    Device,
+    FeatureAccessMode,
+    FeatureWithAnySubFeatures,
+    FeatureWithSubFeatures,
+    Group,
+    LastSeenConfig,
+} from "./types.js";
 
 // #region Compute
 
@@ -104,6 +113,54 @@ export const getEndpoints = (entity?: Device | Group): Set<string | number> => {
     }
 
     return endpoints;
+};
+
+type ExposeValidateFn = (name: string | undefined, access: FeatureAccessMode) => boolean;
+
+const parseExpose = (expose: BasicFeature | FeatureWithSubFeatures, validateFn: ExposeValidateFn): FeatureWithAnySubFeatures | undefined => {
+    const { name, access } = expose;
+
+    if (!validateFn(name, access)) {
+        return undefined;
+    }
+
+    if ("features" in expose && expose.features && expose.features.length > 0) {
+        const features: AnySubFeature[] = [];
+
+        for (const subFeature of expose.features) {
+            const validFeature = parseExpose(subFeature, validateFn);
+
+            if (validFeature && !features.some((f) => f.property === validFeature.property)) {
+                features.push(validFeature);
+            }
+        }
+
+        return { ...expose, features };
+    }
+
+    return { ...expose };
+};
+
+export const filterExposes = (
+    exposes: NonNullable<Device["definition"]>["exposes"],
+    validateFn: ExposeValidateFn,
+    limit = 10,
+): FeatureWithAnySubFeatures[] => {
+    const filteredExposes: FeatureWithAnySubFeatures[] = [];
+
+    for (const expose of exposes) {
+        const validExpose = parseExpose(expose, validateFn);
+
+        if (validExpose) {
+            filteredExposes.push(validExpose);
+
+            if (filteredExposes.length === limit) {
+                break;
+            }
+        }
+    }
+
+    return filteredExposes;
 };
 
 // #endregion

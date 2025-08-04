@@ -3,11 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import type { RootState } from "../../store.js";
-import type { FeatureWithAnySubFeatures, Group } from "../../types.js";
+import type { Group } from "../../types.js";
+import { filterExposes } from "../../utils.js";
 import ConfirmButton from "../ConfirmButton.js";
 import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
 import DeviceCard from "../device/DeviceCard.js";
-import { getScenesFeatures } from "../device-page/index.js";
+import { isValidForScenes } from "../device-page/index.js";
 
 interface GroupMemberProps {
     device: RootState["devices"][number];
@@ -23,25 +24,7 @@ const GroupMember = memo((props: GroupMemberProps) => {
     const { removeDeviceFromGroup, groupMember, device, deviceState, lastSeenConfig, setDeviceState, getDeviceState } = props;
     const { endpoint } = groupMember;
     const { t } = useTranslation(["groups", "common"]);
-
-    const filteredFeatures = useMemo(() => {
-        const features: FeatureWithAnySubFeatures[] = [];
-
-        for (const feature of device.definition?.exposes ?? []) {
-            const validFeature = getScenesFeatures(feature);
-
-            if (validFeature) {
-                features.push(validFeature);
-
-                // limit size of cards
-                if (features.length === 10) {
-                    break;
-                }
-            }
-        }
-
-        return features;
-    }, [device]);
+    const filteredFeatures = useMemo(() => (device.definition ? filterExposes(device.definition.exposes, isValidForScenes) : []), [device]);
 
     const onCardChange = useCallback(
         async (value: Record<string, unknown>) => await setDeviceState(device.ieee_address, value),

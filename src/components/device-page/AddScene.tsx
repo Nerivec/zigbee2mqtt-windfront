@@ -1,15 +1,15 @@
 import { memo, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
-import type { Device, DeviceState, FeatureWithAnySubFeatures, Group } from "../../types.js";
-import { isDevice } from "../../utils.js";
+import type { Device, DeviceState, Group } from "../../types.js";
+import { filterExposes, isDevice } from "../../utils.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import Button from "../Button.js";
 import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
 import Feature from "../features/Feature.js";
 import { getFeatureKey } from "../features/index.js";
 import InputField from "../form-fields/InputField.js";
-import { getScenes, getScenesFeatures } from "./index.js";
+import { getScenes, isValidForScenes } from "./index.js";
 
 type AddSceneProps = {
     target: Device | Group;
@@ -23,21 +23,10 @@ const AddScene = memo((props: AddSceneProps) => {
     const [sceneId, setSceneId] = useState<number>(0);
     const [sceneName, setSceneName] = useState<string>("");
     const scenes = useMemo(() => getScenes(target), [target]);
-    const filteredFeatures = useMemo(() => {
-        const filtered: FeatureWithAnySubFeatures[] = [];
-
-        if (isDevice(target)) {
-            for (const feature of target.definition?.exposes ?? []) {
-                const validFeature = getScenesFeatures(feature);
-
-                if (validFeature) {
-                    filtered.push(validFeature);
-                }
-            }
-        }
-
-        return filtered;
-    }, [target]);
+    const filteredFeatures = useMemo(
+        () => (isDevice(target) && target.definition ? filterExposes(target.definition.exposes, isValidForScenes) : []),
+        [target],
+    );
 
     const onCompositeChange = useCallback(
         async (value: Record<string, unknown> | unknown) => {
