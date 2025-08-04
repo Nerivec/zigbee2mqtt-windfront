@@ -63,7 +63,7 @@ export default function Dashboard() {
 
                 if (device.definition?.exposes) {
                     for (const feature of device.definition.exposes) {
-                        const validFeature = getDashboardFeatures(feature, deviceState);
+                        const validFeature = getDashboardFeatures(feature);
 
                         if (validFeature) {
                             filteredFeatures.push(validFeature);

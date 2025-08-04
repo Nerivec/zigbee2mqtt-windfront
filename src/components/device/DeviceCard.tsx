@@ -21,7 +21,7 @@ type Props = Omit<BaseWithSubFeaturesProps<FeatureWithAnySubFeatures>, "feature"
 
 const DeviceCard = memo(({ onChange, onRead, device, endpoint, deviceState, lastSeenConfig, features, featureWrapperClass, children }: Props) => {
     const { t } = useTranslation(["zigbee", "devicePage"]);
-    const endpointName = endpoint != null ? device.endpoints[endpoint].name : undefined;
+    const endpointName = endpoint != null ? device.endpoints[endpoint]?.name : undefined;
     const displayedFeatures = useMemo(() => {
         const elements: JSX.Element[] = [];
 

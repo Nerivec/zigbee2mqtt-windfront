@@ -29,9 +29,9 @@ export function getScenes(target: Group | Device): Scene[] {
     return target.scenes;
 }
 
-const BLACKLISTED_PARTIAL_FEATURE_NAMES = ["schedule_", "_mode", "_options", "_startup", "_type", "inching_", "cyclic_"];
+const BLACKLISTED_PARTIAL_FEATURE_NAMES = ["schedule_", "_mode", "_options", "_startup", "_type", "inching_", "cyclic_", "_scene"];
 
-const BLACKLISTED_FEATURE_NAMES = ["effect"];
+const BLACKLISTED_FEATURE_NAMES = ["effect", "power_on_behavior", "gradient"];
 
 const WHITELIST_FEATURE_NAMES = ["state", "color_temp", "color", "transition", "brightness"];
 
