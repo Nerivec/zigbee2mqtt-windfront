@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect } from "storybook/internal/test";
 import DeviceImage from "../components/device/DeviceImage";
 import { InterviewState } from "../consts";
 import { baseRouter } from "./devices";
@@ -32,8 +33,8 @@ export const Generic: Story = {
     args: {
         device: {
             ...baseRouter,
-            // @ts-expect-error minimal mock
             definition: {
+                ...baseRouter.definition!,
                 model: "unknown",
             },
         },
@@ -44,11 +45,18 @@ export const BadDefinitionIcon: Story = {
     args: {
         device: {
             ...baseRouter,
-            // @ts-expect-error minimal mock
             definition: {
+                ...baseRouter.definition!,
+                // should get a 404 in console, but falls back to definition.model
                 icon: "unknown.png",
             },
         },
+    },
+    play: async ({ canvas }) => {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        const img = canvas.getByRole<HTMLImageElement>("img");
+
+        expect(img.src).toContain(baseRouter.definition?.model);
     },
 };
 
@@ -90,8 +98,8 @@ export const GeneratedDefinition: Story = {
     args: {
         device: {
             ...baseRouter,
-            // @ts-expect-error minimal mock
             definition: {
+                ...baseRouter.definition!,
                 model: "unknown",
                 source: "generated",
             },
@@ -104,8 +112,8 @@ export const ExternalDefinition: Story = {
     args: {
         device: {
             ...baseRouter,
-            // @ts-expect-error minimal mock
             definition: {
+                ...baseRouter.definition!,
                 model: "unknown",
                 source: "external",
             },
