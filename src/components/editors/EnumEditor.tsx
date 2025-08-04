@@ -25,6 +25,7 @@ function isPrimitive(step?: ValueWithLabelOrPrimitive | null): step is number | 
 const EnumEditor = memo((props: EnumProps) => {
     const { onChange, values, value, minimal } = props;
     const { t } = useTranslation("common");
+    const primitiveValue = isPrimitive(value);
 
     const onSelectChange = useCallback(
         (e: ChangeEvent<HTMLSelectElement>) => {
@@ -36,29 +37,38 @@ const EnumEditor = memo((props: EnumProps) => {
     );
 
     return minimal ? (
-        <select className="select" onChange={onSelectChange} value={isPrimitive(value) ? value : value?.value}>
+        <select className="select" onChange={onSelectChange} value={primitiveValue ? value : value?.value}>
             <option value="" disabled>
                 {t("select_value")}
             </option>
-            {values.map((v) => (
-                <option key={isPrimitive(v) ? v : v.name} value={isPrimitive(v) ? v : v.value}>
-                    {isPrimitive(v) ? v : v.name}
-                </option>
-            ))}
+            {values.map((v) => {
+                const primitive = isPrimitive(v);
+
+                return (
+                    <option key={primitive ? v : v.name} value={primitive ? v : v.value}>
+                        {primitive ? v : v.name}
+                    </option>
+                );
+            })}
         </select>
     ) : (
         <div className="join join-vertical lg:join-horizontal">
-            {values.map((v) => (
-                <Button<ValueWithLabelOrPrimitive>
-                    key={isPrimitive(v) ? v : v.name}
-                    className={`btn btn-soft btn-sm join-item${(isPrimitive(v) ? v === value : v.value === (isPrimitive(value) ? value : value?.value)) ? " btn-active" : ""}`}
-                    onClick={(item) => onChange(item)}
-                    item={isPrimitive(v) ? v : v.value}
-                    title={isPrimitive(v) ? `${v}` : v.description}
-                >
-                    {isPrimitive(v) ? <DisplayValue value={v} name="" /> : v.name}
-                </Button>
-            ))}
+            {values.map((v) => {
+                const primitive = isPrimitive(v);
+                const current = primitive ? v === value : v.value === (primitiveValue ? value : value?.value);
+
+                return (
+                    <Button<ValueWithLabelOrPrimitive>
+                        key={primitive ? v : v.name}
+                        className={`btn btn-soft btn-sm join-item${current ? " btn-active" : ""}`}
+                        onClick={(item) => onChange(item)}
+                        item={primitive ? v : v.value}
+                        title={primitive ? `${v}` : v.description}
+                    >
+                        {primitive ? <DisplayValue value={v} name="" /> : v.name}
+                    </Button>
+                );
+            })}
         </div>
     );
 });
