@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect } from "storybook/test";
-import DeviceImage from "../components/device/DeviceImage";
-import { InterviewState } from "../consts";
-import { BASIC_ROUTER } from "./devices";
+import DeviceImage from "../../components/device/DeviceImage";
+import { InterviewState } from "../../consts";
+import { BASIC_ROUTER } from "../devices";
 
 const meta = {
     title: "Components/Device/DeviceImage",

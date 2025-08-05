@@ -18,6 +18,5 @@
         "skipLibCheck": true
     },
     "suppressImplicitAnyIndexErrors": true,
-    "lib": ["dom", "esnext"],
     "include": ["./src/**/*", "./test/**/*"]
 }

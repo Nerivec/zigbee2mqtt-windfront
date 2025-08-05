@@ -14,8 +14,7 @@ interface HeaderGroupSelectorProps {
     tab?: TabName;
 }
 
-const HeaderGroupSelector = memo((props: HeaderGroupSelectorProps) => {
-    const { groups, currentGroup, tab = "devices" } = props;
+const HeaderGroupSelector = memo(({ groups, currentGroup, tab = "devices" }: HeaderGroupSelectorProps) => {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const { t } = useTranslation("common");
     const items = useMemo(

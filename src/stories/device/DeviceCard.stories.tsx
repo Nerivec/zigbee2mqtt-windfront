@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
-import { isValidForDashboard } from "../components/dashboard-page";
-import DashboardFeatureWrapper from "../components/dashboard-page/DashboardFeatureWrapper";
-import DeviceCard from "../components/device/DeviceCard";
-import { isValidForScenes } from "../components/device-page";
-import { filterExposes } from "../utils";
+import { isValidForDashboard } from "../../components/dashboard-page";
+import DashboardFeatureWrapper from "../../components/dashboard-page/DashboardFeatureWrapper";
+import DeviceCard from "../../components/device/DeviceCard";
+import { isValidForScenes } from "../../components/device-page";
+import { filterExposes } from "../../utils";
 import {
     BASIC_ENDDEVICE,
     BASIC_ENDDEVICE_STATE,
@@ -16,7 +16,7 @@ import {
     MULTI_ENDPOINT_ROUTER_STATE,
     OTHER_ROUTER,
     OTHER_ROUTER_STATE,
-} from "./devices";
+} from "../devices";
 
 const meta = {
     title: "Components/Device/DeviceCard",

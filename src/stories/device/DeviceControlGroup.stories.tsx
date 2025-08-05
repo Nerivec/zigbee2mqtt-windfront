@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn } from "storybook/test";
-import DeviceControlGroup from "../components/device/DeviceControlGroup";
-import { InterviewState } from "../consts";
-import { BASIC_ROUTER } from "./devices";
+import DeviceControlGroup from "../../components/device/DeviceControlGroup";
+import { InterviewState } from "../../consts";
+import { BASIC_ROUTER } from "../devices";
 
 const meta = {
     title: "Components/Device/DeviceControlGroup",

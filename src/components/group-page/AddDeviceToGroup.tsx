@@ -27,19 +27,25 @@ const AddDeviceToGroup = memo(({ devices, group }: AddDeviceToGroupProps) => {
         setEndpoint(deviceEndpoints.values().next().value);
     }, []);
 
+    const onAddClick = useCallback(
+        async () => await sendMessage("bridge/request/group/members/add", { group: group.id.toString(), endpoint, device: deviceIeee }),
+        [sendMessage, group, endpoint, deviceIeee],
+    );
+
     return (
         <>
             <h2 className="text-lg font-semibold">{t("add_to_group_header")}</h2>
             <div className="mb-3">
                 <DevicePicker label={t("zigbee:device")} value={deviceIeee} devices={devices} onChange={onDeviceChange} />
-                <EndpointPicker label={t("zigbee:endpoint")} values={endpoints} value={endpoint} onChange={(e) => setEndpoint(e)} />
+                <EndpointPicker
+                    label={t("zigbee:endpoint")}
+                    values={endpoints}
+                    value={endpoint}
+                    onChange={(e) => setEndpoint(e)}
+                    disabled={!deviceIeee}
+                />
             </div>
-            <Button<void>
-                onClick={async () =>
-                    await sendMessage("bridge/request/group/members/add", { group: group.id.toString(), endpoint, device: deviceIeee })
-                }
-                className="btn btn-primary"
-            >
+            <Button<void> onClick={onAddClick} className="btn btn-primary" disabled={endpoint == null || endpoint === "" || !deviceIeee}>
                 {t("add_to_group")}
             </Button>
         </>
