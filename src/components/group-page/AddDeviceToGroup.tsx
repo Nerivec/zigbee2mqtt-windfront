@@ -29,7 +29,7 @@ const AddDeviceToGroup = memo(({ devices, group }: AddDeviceToGroupProps) => {
 
     const onAddClick = useCallback(
         async () => await sendMessage("bridge/request/group/members/add", { group: group.id.toString(), endpoint, device: deviceIeee }),
-        [sendMessage, group, endpoint, deviceIeee],
+        [sendMessage, group.id, endpoint, deviceIeee],
     );
 
     return (
