@@ -1,6 +1,6 @@
 import { faAngleDown, faTowerBroadcast } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, useCallback, useContext, useMemo, useState } from "react";
+import { type JSX, memo, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import { useAppSelector } from "../../hooks/useApp.js";
@@ -11,23 +11,13 @@ import Button from "../Button.js";
 import PopoverDropdown from "../PopoverDropdown.js";
 import Countdown from "../value-decorators/Countdown.js";
 
-export default function PermitJoinButton() {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const { t } = useTranslation(["navbar"]);
-    const [selectedRouter, setSelectedRouter] = useState<Device>();
+type PermitJoinDropdownProps = {
+    setSelectedRouter: ReturnType<typeof useState<Device>>[1];
+};
+
+const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps) => {
+    const { t } = useTranslation("navbar");
     const devices = useAppSelector((state) => state.devices);
-    const permitJoin = useAppSelector((state) => state.bridgeInfo.permit_join);
-    const permitJoinEnd = useAppSelector((state) => state.bridgeInfo.permit_join_end);
-
-    const onPermitJoinClick = useCallback(
-        async () =>
-            await sendMessage("bridge/request/permit_join", {
-                time: permitJoin ? 0 : store2.get(PERMIT_JOIN_TIME_KEY, 254),
-                device: selectedRouter?.ieee_address,
-            }),
-        [sendMessage, selectedRouter, permitJoin],
-    );
-
     const routers = useMemo(() => {
         const filteredDevices: JSX.Element[] = [];
 
@@ -52,7 +42,46 @@ export default function PermitJoinButton() {
         filteredDevices.sort((a, b) => (a.key === "Coordinator" ? -1 : a.key!.localeCompare(b.key!)));
 
         return filteredDevices;
-    }, [devices]);
+    }, [devices, setSelectedRouter]);
+
+    return (
+        <PopoverDropdown
+            name="permit-join"
+            buttonChildren={<FontAwesomeIcon icon={faAngleDown} title={t("toggle_dropdown")} />}
+            buttonStyle="join-item"
+            dropdownStyle="dropdown-end"
+        >
+            <li
+                key="all"
+                onClick={() => setSelectedRouter(undefined)}
+                onKeyUp={(e) => {
+                    if (e.key === "enter") {
+                        setSelectedRouter(undefined);
+                    }
+                }}
+            >
+                <span className="btn btn-sm btn-block btn-ghost">{t("all")}</span>
+            </li>
+            {routers}
+        </PopoverDropdown>
+    );
+});
+
+const PermitJoinButton = memo(() => {
+    const { sendMessage } = useContext(WebSocketApiRouterContext);
+    const { t } = useTranslation("navbar");
+    const [selectedRouter, setSelectedRouter] = useState<Device>();
+    const permitJoin = useAppSelector((state) => state.bridgeInfo.permit_join);
+    const permitJoinEnd = useAppSelector((state) => state.bridgeInfo.permit_join_end);
+
+    const onPermitJoinClick = useCallback(
+        async () =>
+            await sendMessage("bridge/request/permit_join", {
+                time: permitJoin ? 0 : store2.get(PERMIT_JOIN_TIME_KEY, 254),
+                device: selectedRouter?.ieee_address,
+            }),
+        [sendMessage, selectedRouter, permitJoin],
+    );
 
     const permitJoinTimer = useMemo(
         () => (permitJoin ? <Countdown seconds={(permitJoinEnd! - Date.now()) / 1000} hideZeroes /> : null),
@@ -79,27 +108,9 @@ export default function PermitJoinButton() {
     return (
         <div className="join join-horizontal">
             {pjButton}
-            {!permitJoin && (
-                <PopoverDropdown
-                    name="permit-join"
-                    buttonChildren={<FontAwesomeIcon icon={faAngleDown} title={t("toggle_dropdown")} />}
-                    buttonStyle="join-item"
-                    dropdownStyle="dropdown-end"
-                >
-                    <li
-                        key="all"
-                        onClick={() => setSelectedRouter(undefined)}
-                        onKeyUp={(e) => {
-                            if (e.key === "enter") {
-                                setSelectedRouter(undefined);
-                            }
-                        }}
-                    >
-                        <span className="btn btn-sm btn-block btn-ghost">{t("all")}</span>
-                    </li>
-                    {routers}
-                </PopoverDropdown>
-            )}
+            {!permitJoin && <PermitJoinDropdown setSelectedRouter={setSelectedRouter} />}
         </div>
     );
-}
+});
+
+export default PermitJoinButton;
