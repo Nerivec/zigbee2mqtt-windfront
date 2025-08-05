@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn } from "storybook/test";
 import DeviceControlGroup from "../components/device/DeviceControlGroup";
 import { InterviewState } from "../consts";
-import { baseRouter } from "./devices";
+import { BASIC_ROUTER } from "./devices";
 
 const meta = {
     title: "Components/Device/DeviceControlGroup",
@@ -12,7 +12,7 @@ const meta = {
         otaState: { control: "text" },
     },
     args: {
-        device: { ...baseRouter },
+        device: { ...BASIC_ROUTER },
         otaState: undefined,
         homeassistantEnabled: false,
         renameDevice: fn(),
@@ -33,7 +33,7 @@ export const Base: Story = {
 export const InterviewPending: Story = {
     args: {
         device: {
-            ...baseRouter,
+            ...BASIC_ROUTER,
             interview_state: InterviewState.Pending,
         },
     },
@@ -48,7 +48,7 @@ export const InterviewPending: Story = {
 export const InterviewInProgress: Story = {
     args: {
         device: {
-            ...baseRouter,
+            ...BASIC_ROUTER,
             interview_state: InterviewState.InProgress,
         },
     },
@@ -58,7 +58,7 @@ export const InterviewInProgress: Story = {
 export const OtaUpdating: Story = {
     args: {
         device: {
-            ...baseRouter,
+            ...BASIC_ROUTER,
         },
         otaState: "updating",
     },

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect } from "storybook/test";
 import DeviceImage from "../components/device/DeviceImage";
 import { InterviewState } from "../consts";
-import { baseRouter } from "./devices";
+import { BASIC_ROUTER } from "./devices";
 
 const meta = {
     title: "Components/Device/DeviceImage",
@@ -13,7 +13,7 @@ const meta = {
         noIndicator: { control: "boolean" },
     },
     args: {
-        device: { ...baseRouter },
+        device: { ...BASIC_ROUTER },
         otaState: undefined,
         disabled: false,
         className: "",
@@ -32,9 +32,9 @@ export const Base: Story = {
 export const Generic: Story = {
     args: {
         device: {
-            ...baseRouter,
+            ...BASIC_ROUTER,
             definition: {
-                ...baseRouter.definition!,
+                ...BASIC_ROUTER.definition!,
                 model: "unknown",
             },
         },
@@ -44,9 +44,9 @@ export const Generic: Story = {
 export const BadDefinitionIcon: Story = {
     args: {
         device: {
-            ...baseRouter,
+            ...BASIC_ROUTER,
             definition: {
-                ...baseRouter.definition!,
+                ...BASIC_ROUTER.definition!,
                 // should get a 404 in console, but falls back to definition.model
                 icon: "unknown.png",
             },
@@ -57,7 +57,7 @@ export const BadDefinitionIcon: Story = {
 
         const img = canvas.getByRole<HTMLImageElement>("img");
 
-        expect(img.src).toContain(baseRouter.definition?.model);
+        expect(img.src).toContain(BASIC_ROUTER.definition?.model);
     },
 };
 
@@ -70,7 +70,7 @@ export const Disabled: Story = {
 export const InterviewInProgress: Story = {
     args: {
         device: {
-            ...baseRouter,
+            ...BASIC_ROUTER,
             interview_state: InterviewState.InProgress,
         },
     },
@@ -79,7 +79,7 @@ export const InterviewInProgress: Story = {
 export const InterviewFailed: Story = {
     args: {
         device: {
-            ...baseRouter,
+            ...BASIC_ROUTER,
             interview_state: InterviewState.Failed,
         },
     },
@@ -88,7 +88,7 @@ export const InterviewFailed: Story = {
 export const NoIndicator: Story = {
     args: {
         device: {
-            ...baseRouter,
+            ...BASIC_ROUTER,
             interview_state: InterviewState.Failed,
         },
         noIndicator: true,
@@ -98,9 +98,9 @@ export const NoIndicator: Story = {
 export const GeneratedDefinition: Story = {
     args: {
         device: {
-            ...baseRouter,
+            ...BASIC_ROUTER,
             definition: {
-                ...baseRouter.definition!,
+                ...BASIC_ROUTER.definition!,
                 model: "unknown",
                 source: "generated",
             },
@@ -112,9 +112,9 @@ export const GeneratedDefinition: Story = {
 export const ExternalDefinition: Story = {
     args: {
         device: {
-            ...baseRouter,
+            ...BASIC_ROUTER,
             definition: {
-                ...baseRouter.definition!,
+                ...BASIC_ROUTER.definition!,
                 model: "unknown",
                 source: "external",
             },

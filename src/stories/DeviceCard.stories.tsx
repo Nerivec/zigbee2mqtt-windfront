@@ -5,7 +5,18 @@ import DashboardFeatureWrapper from "../components/dashboard-page/DashboardFeatu
 import DeviceCard from "../components/device/DeviceCard";
 import { isValidForScenes } from "../components/device-page";
 import { filterExposes } from "../utils";
-import { baseEndDevice, baseRouter, multiEndpointDevice } from "./devices";
+import {
+    BASIC_ENDDEVICE,
+    BASIC_ENDDEVICE_STATE,
+    BASIC_ROUTER,
+    BASIC_ROUTER_STATE,
+    COMPLEX_EXPOSES_ENDDEVICE,
+    COMPLEX_EXPOSES_ENDDEVICE_STATE,
+    MULTI_ENDPOINT_ROUTER,
+    MULTI_ENDPOINT_ROUTER_STATE,
+    OTHER_ROUTER,
+    OTHER_ROUTER_STATE,
+} from "./devices";
 
 const meta = {
     title: "Components/Device/DeviceCard",
@@ -16,7 +27,7 @@ const meta = {
         endpoint: { control: "number" },
     },
     args: {
-        device: { ...baseRouter },
+        device: { ...BASIC_ROUTER },
         endpoint: undefined,
         deviceState: {},
         lastSeenConfig: "ISO_8601_local",
@@ -43,15 +54,24 @@ export const Blank: Story = {
 
 export const Basic: Story = {
     args: {
-        deviceState: { linkquality: 245, last_seen: new Date(Date.now() - 1000 * 3700).toLocaleString() },
-        features: filterExposes(baseRouter.definition?.exposes ?? [], isValidForDashboard),
+        deviceState: {
+            ...BASIC_ROUTER_STATE,
+            linkquality: 245,
+            last_seen: new Date(Date.now() - 1000 * 3700).toLocaleString(),
+        },
+        features: filterExposes(BASIC_ROUTER.definition?.exposes ?? [], isValidForDashboard),
     },
 };
 
 export const WithChildren: Story = {
     args: {
-        deviceState: { linkquality: 245, last_seen: new Date(Date.now() - 1000 * 3700).toLocaleString() },
-        features: filterExposes(baseEndDevice.definition?.exposes ?? [], isValidForDashboard),
+        device: { ...BASIC_ENDDEVICE },
+        deviceState: {
+            ...BASIC_ENDDEVICE_STATE,
+            linkquality: 175,
+            last_seen: new Date(Date.now() - 1000 * 40).toLocaleString(),
+        },
+        features: filterExposes(BASIC_ENDDEVICE.definition?.exposes ?? [], isValidForDashboard),
         children: [
             <span key="1" className="badge badge-xs badge-secondary">
                 1
@@ -65,34 +85,72 @@ export const WithChildren: Story = {
 
 export const DashboardFeatures: Story = {
     args: {
-        deviceState: { linkquality: 150, last_seen: new Date(Date.now() - 1000 * 600000).toLocaleString() },
-        device: { ...multiEndpointDevice },
-        features: filterExposes(multiEndpointDevice.definition?.exposes ?? [], isValidForDashboard),
+        deviceState: {
+            ...OTHER_ROUTER_STATE,
+            linkquality: 150,
+            last_seen: new Date(Date.now() - 1000 * 600000).toLocaleString(),
+        },
+        device: { ...OTHER_ROUTER },
+        features: filterExposes(OTHER_ROUTER.definition?.exposes ?? [], isValidForDashboard),
     },
 };
 
 export const SceneFeatures: Story = {
     args: {
-        deviceState: { linkquality: 78, last_seen: new Date(Date.now() - 1000 * 600).toLocaleString() },
-        device: { ...multiEndpointDevice },
-        features: filterExposes(multiEndpointDevice.definition?.exposes ?? [], isValidForScenes),
+        deviceState: {
+            ...OTHER_ROUTER_STATE,
+            linkquality: 125,
+            last_seen: new Date(Date.now() - 1000 * 600).toLocaleString(),
+        },
+        device: { ...OTHER_ROUTER },
+        features: filterExposes(OTHER_ROUTER.definition?.exposes ?? [], isValidForScenes),
+    },
+};
+
+export const ComplexDashboardFeatures: Story = {
+    args: {
+        deviceState: {
+            ...COMPLEX_EXPOSES_ENDDEVICE_STATE,
+            linkquality: 100,
+            last_seen: new Date(Date.now() - 1000 * 600000).toLocaleString(),
+        },
+        device: { ...COMPLEX_EXPOSES_ENDDEVICE },
+        features: filterExposes(COMPLEX_EXPOSES_ENDDEVICE.definition?.exposes ?? [], isValidForDashboard),
+    },
+};
+
+export const ComplexSceneFeatures: Story = {
+    args: {
+        deviceState: {
+            ...COMPLEX_EXPOSES_ENDDEVICE_STATE,
+            linkquality: 75,
+            last_seen: new Date(Date.now() - 1000 * 600).toLocaleString(),
+        },
+        device: { ...COMPLEX_EXPOSES_ENDDEVICE },
+        features: filterExposes(COMPLEX_EXPOSES_ENDDEVICE.definition?.exposes ?? [], isValidForScenes),
     },
 };
 
 export const EndpointDashboardFeatures: Story = {
     args: {
-        deviceState: { linkquality: 125, last_seen: new Date(Date.now() - 1000 * 40).toLocaleString() },
-        device: { ...multiEndpointDevice },
-        features: filterExposes(multiEndpointDevice.definition?.exposes ?? [], isValidForDashboard),
+        deviceState: {
+            ...MULTI_ENDPOINT_ROUTER_STATE,
+            linkquality: 50,
+        },
+        device: { ...MULTI_ENDPOINT_ROUTER },
+        features: filterExposes(MULTI_ENDPOINT_ROUTER.definition?.exposes ?? [], isValidForDashboard),
         endpoint: 11,
     },
 };
 
 export const EndpointSceneFeatures: Story = {
     args: {
-        deviceState: { linkquality: 187, last_seen: new Date(Date.now() - 1000 * 3450).toLocaleString() },
-        device: { ...multiEndpointDevice },
-        features: filterExposes(multiEndpointDevice.definition?.exposes ?? [], isValidForScenes),
+        deviceState: {
+            ...MULTI_ENDPOINT_ROUTER_STATE,
+            linkquality: 25,
+        },
+        device: { ...MULTI_ENDPOINT_ROUTER },
+        features: filterExposes(MULTI_ENDPOINT_ROUTER.definition?.exposes ?? [], isValidForScenes),
         endpoint: 11,
     },
 };
