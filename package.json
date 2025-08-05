@@ -71,7 +71,7 @@
         "storybook": "^9.1.1",
         "tailwindcss": "^4.1.4",
         "timeago.js": "^4.0.2",
-        "typescript": "^5.8.3",
+        "typescript": "^5.9.2",
         "vite": "^7.0.6",
         "vite-plugin-compression2": "^2.2.0",
         "vitest": "^3.1.2",
