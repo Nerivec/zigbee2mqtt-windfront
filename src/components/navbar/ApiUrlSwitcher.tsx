@@ -18,6 +18,7 @@ const CONNECTION_STATUS = {
 const ApiUrlSwitcher = memo(() => {
     const { t } = useTranslation("navbar");
     const { readyState, apiUrls, apiUrl, setApiUrl } = useContext(WebSocketApiRouterContext);
+    // VITE_ first (stripped accordingly during build)
     const apiNames = import.meta.env.VITE_Z2M_API_NAMES?.split(",") ?? (Z2M_API_NAMES.startsWith("${") ? apiUrls : Z2M_API_NAMES.split(","));
 
     return (

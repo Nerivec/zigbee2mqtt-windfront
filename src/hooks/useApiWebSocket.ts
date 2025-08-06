@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useWebSocket, { type Options } from "react-use-websocket";
 import store2 from "store2";
 import type { Zigbee2MQTTAPI, Zigbee2MQTTRequestEndpoints, Zigbee2MQTTResponse } from "zigbee2mqtt";
-import { Z2M_API_URLS } from "../envs.js";
+import { USE_PROXY, Z2M_API_URLS } from "../envs.js";
 import { AUTH_FLAG_KEY, TOKEN_KEY } from "../localStoreConsts.js";
 import * as store from "../store.js";
 import type { Message, RecursiveMutable, ResponseMessage } from "../types.js";
@@ -11,6 +11,8 @@ import { randomString, stringifyWithPreservingUndefinedAsNull } from "../utils.j
 import { useAppDispatch } from "./useApp.js";
 
 const UNAUTHORIZED_ERROR_CODE = 4401;
+// prevent stripping
+const USE_PROXY_BOOL = /(yes|true|1)/.test(USE_PROXY);
 
 // biome-ignore lint/suspicious/noExplicitAny: tmp
 const pendingRequests = new Map<string, [() => void, (reason: any) => void]>();
@@ -135,11 +137,12 @@ const processBridgeMessage = (data: Message, dispatch: ReturnType<typeof useAppD
 export function useApiWebSocket() {
     const unmounted = useRef(false);
     const dispatch = useAppDispatch();
+    // VITE_ first (stripped accordingly during build)
     const apiUrls =
-        import.meta.env.VITE_Z2M_API_URLS?.split(",") ??
+        import.meta.env.VITE_Z2M_API_URLS?.split(",").map((u) => u.trim()) ??
         (Z2M_API_URLS.startsWith("${")
             ? [`${window.location.host}${window.location.pathname}api`] // env not replaced, use default
-            : Z2M_API_URLS.split(","));
+            : Z2M_API_URLS.split(",").map((u) => u.trim()));
     const [apiUrl, setApiUrl] = useState(apiUrls[0]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
@@ -150,7 +153,15 @@ export function useApiWebSocket() {
     const getSocketUrl = useCallback(
         async () =>
             await new Promise<string>((resolve) => {
-                const url = new URL(`${window.location.protocol === "https:" ? "wss" : "ws"}://${apiUrl}`);
+                const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+                let url = new URL(`${protocol}://${apiUrl}`);
+
+                // VITE_ first (stripped accordingly during build)
+                if (url.hostname !== "localhost" && (import.meta.env.VITE_USE_PROXY === "true" || USE_PROXY_BOOL)) {
+                    const hostPath = url.host + (url.pathname !== "/" ? url.pathname : "");
+                    url = new URL(`${protocol}://${window.location.host}/ws-proxy/${hostPath}`);
+                }
+
                 const authRequired = !!store2.get(AUTH_FLAG_KEY);
 
                 if (authRequired) {

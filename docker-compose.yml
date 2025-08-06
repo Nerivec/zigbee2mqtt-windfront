@@ -11,5 +11,6 @@ services:
     environment:
       - Z2M_API_URLS=localhost:5173/api,localhost:8080/api
       - Z2M_API_NAMES=Instance one,Instance two
+      # - USE_PROXY=true
 networks:
   network:
