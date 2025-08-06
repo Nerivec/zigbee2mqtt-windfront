@@ -42,9 +42,10 @@ const ApiUrlSwitcher = memo(() => {
                             setApiUrl(url);
                         }
                     }}
+                    title={url}
                 >
                     <span className={`btn btn-sm btn-block ${apiUrl === url ? "btn-primary" : "btn-ghost"}`}>
-                        {apiNames[i] && apiNames[i] !== url ? `${apiNames[i]} (${url})` : url}
+                        {apiNames[i] && apiNames[i] !== url ? apiNames[i] : url}
                     </span>
                 </li>
             ))}
