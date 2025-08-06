@@ -141,7 +141,7 @@ export function useApiWebSocket() {
     const apiUrls =
         import.meta.env.VITE_Z2M_API_URLS?.split(",").map((u) => u.trim()) ??
         (Z2M_API_URLS.startsWith("${")
-            ? [`${window.location.host}${window.location.pathname}api`] // env not replaced, use default
+            ? [`${window.location.host}${window.location.pathname}${window.location.pathname.endsWith("/") ? "" : "/"}api`] // env not replaced, use default
             : Z2M_API_URLS.split(",").map((u) => u.trim()));
     const [apiUrl, setApiUrl] = useState(apiUrls[0]);
 
@@ -159,7 +159,9 @@ export function useApiWebSocket() {
                 // VITE_ first (stripped accordingly during build)
                 if (url.hostname !== "localhost" && (import.meta.env.VITE_USE_PROXY === "true" || USE_PROXY_BOOL)) {
                     const hostPath = url.host + (url.pathname !== "/" ? url.pathname : "");
-                    url = new URL(`${protocol}://${window.location.host}${window.location.pathname}/ws-proxy/${hostPath}`);
+                    url = new URL(
+                        `${protocol}://${window.location.host}${window.location.pathname}${window.location.pathname.endsWith("/") ? "" : "/"}ws-proxy/${hostPath}`,
+                    );
                 }
 
                 const authRequired = !!store2.get(AUTH_FLAG_KEY);
