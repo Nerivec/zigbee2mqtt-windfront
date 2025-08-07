@@ -1,6 +1,7 @@
 //-- WebSocket
 export const TOKEN_KEY = "z2m-token-v2";
 export const AUTH_FLAG_KEY = "z2m-auth-v2";
+export const LAST_API_URL_KEY = "last-api-url";
 
 //-- Theme
 export const THEME_KEY = "theme";

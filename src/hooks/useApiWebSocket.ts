@@ -4,7 +4,7 @@ import useWebSocket, { type Options } from "react-use-websocket";
 import store2 from "store2";
 import type { Zigbee2MQTTAPI, Zigbee2MQTTRequestEndpoints, Zigbee2MQTTResponse } from "zigbee2mqtt";
 import { USE_PROXY, Z2M_API_URLS } from "../envs.js";
-import { AUTH_FLAG_KEY, TOKEN_KEY } from "../localStoreConsts.js";
+import { AUTH_FLAG_KEY, LAST_API_URL_KEY, TOKEN_KEY } from "../localStoreConsts.js";
 import * as store from "../store.js";
 import type { Message, RecursiveMutable, ResponseMessage } from "../types.js";
 import { randomString, stringifyWithPreservingUndefinedAsNull } from "../utils.js";
@@ -143,10 +143,12 @@ export function useApiWebSocket() {
         (Z2M_API_URLS.startsWith("${")
             ? [`${window.location.host}${window.location.pathname}${window.location.pathname.endsWith("/") ? "" : "/"}api`] // env not replaced, use default
             : Z2M_API_URLS.split(",").map((u) => u.trim()));
-    const [apiUrl, setApiUrl] = useState(apiUrls[0]);
+    const lastApiUrl = store2.get(LAST_API_URL_KEY);
+    const [apiUrl, setApiUrl] = useState(lastApiUrl && apiUrls.includes(lastApiUrl) ? lastApiUrl : apiUrls[0]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
+        store2.set(LAST_API_URL_KEY, apiUrl);
         dispatch(store.reset());
     }, [apiUrl]);
 
