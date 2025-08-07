@@ -1,0 +1,1 @@
+import{r,j as t,F as i,a$ as a}from"./index-DojwNtOp.js";import{D as n}from"./DisplayValue-Bu9bCcMH.js";const x=r.memo(({value:s})=>{let e="";return s&&(s<75?e="text-error":s<125?e="text-warning":s>200&&(e="text-success")),t.jsxs(t.Fragment,{children:[t.jsx(i,{icon:a,className:e})," ",t.jsx("span",{className:e,children:t.jsx(n,{value:s,name:"linkquality"})})]})});export{x as L};

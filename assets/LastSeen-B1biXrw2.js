@@ -1,0 +1,1 @@
+import{r,b as o,c as m,j as t,aa as c}from"./index-DojwNtOp.js";import{f as i}from"./format-C46-otnl.js";const x=r.memo(({lastSeen:s,config:e})=>{const{i18n:n}=o(),a=m(s,e);return a?t.jsx("span",{title:c(a),children:i(a,n.language)}):t.jsx("span",{children:"N/A"})});export{x as L};

@@ -1,0 +1,1 @@
+import{r as t,j as c}from"./index-DojwNtOp.js";const p=t.memo(({value:e,onChange:u,debounce:o=500,...a})=>{const[s,m]=t.useState(e);return t.useEffect(()=>{m(e)},[e]),t.useEffect(()=>{const r=setTimeout(()=>{u(s)},o);return()=>clearTimeout(r)},[s,o,u]),c.jsx("input",{...a,value:s,onChange:r=>m(r.target.value)})});export{p as D};

@@ -1,0 +1,1 @@
+import{a as r,j as a}from"./index-DojwNtOp.js";import{J as i}from"./Json-DCzRwgfL.js";import"./envs-CRUy-_iG.js";function p(e){const{device:t}=e,o=r(s=>s.deviceStates[t.friendly_name]??{});return a.jsx(i,{obj:o})}export{p as default};
