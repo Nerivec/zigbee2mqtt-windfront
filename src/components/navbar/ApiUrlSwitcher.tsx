@@ -25,11 +25,9 @@ const ApiUrlSwitcher = memo(() => {
         <PopoverDropdown
             name="api-url-switcher"
             buttonChildren={
-                <FontAwesomeIcon
-                    icon={faServer}
-                    className={CONNECTION_STATUS[readyState]}
-                    title={`${t("websocket_status")}: ${ReadyState[readyState]}`}
-                />
+                <span title={`[${apiNames[apiUrls.indexOf(apiUrl)] ?? apiUrl}] ${t("websocket_status")}: ${ReadyState[readyState]}`}>
+                    <FontAwesomeIcon icon={faServer} className={CONNECTION_STATUS[readyState]} />
+                </span>
             }
             dropdownStyle="dropdown-end"
         >
@@ -44,9 +42,7 @@ const ApiUrlSwitcher = memo(() => {
                     }}
                     title={url}
                 >
-                    <span className={`btn btn-sm btn-block ${apiUrl === url ? "btn-primary" : "btn-ghost"}`}>
-                        {apiNames[i] && apiNames[i] !== url ? apiNames[i] : url}
-                    </span>
+                    <span className={`btn btn-sm btn-block ${apiUrl === url ? "btn-primary" : "btn-ghost"}`}>{apiNames[i] ?? url}</span>
                 </li>
             ))}
         </PopoverDropdown>

@@ -23,32 +23,21 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
     const interviewState = useMemo(
         () =>
             device.interview_state === InterviewState.InProgress ? (
-                <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    title={t("interviewing")}
-                    className="indicator-item indicator-bottom indicator-end text-info"
-                />
+                <span title={t("interviewing")}>
+                    <FontAwesomeIcon icon={faSpinner} spin className="indicator-item indicator-bottom indicator-end text-info" />
+                </span>
             ) : device.interview_state === InterviewState.Failed ? (
-                <FontAwesomeIcon
-                    icon={faExclamationTriangle}
-                    beat
-                    title={t("interview_failed")}
-                    className="indicator-item indicator-bottom indicator-end text-error"
-                />
+                <span title={t("interview_failed")}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} beat className="indicator-item indicator-bottom indicator-end text-error" />
+                </span>
             ) : device.definition?.source === "generated" ? (
-                <FontAwesomeIcon
-                    icon={faQuestionCircle}
-                    beat
-                    title={t("unsupported")}
-                    className="indicator-item indicator-bottom indicator-end text-warning"
-                />
+                <span title={t("unsupported")}>
+                    <FontAwesomeIcon icon={faQuestionCircle} beat className="indicator-item indicator-bottom indicator-end text-warning" />
+                </span>
             ) : device.definition?.source === "external" ? (
-                <FontAwesomeIcon
-                    icon={faSquareArrowUpRight}
-                    title={t("unsupported")}
-                    className="indicator-item indicator-bottom indicator-end text-info"
-                />
+                <span title={t("unsupported")}>
+                    <FontAwesomeIcon icon={faSquareArrowUpRight} className="indicator-item indicator-bottom indicator-end text-info" />
+                </span>
             ) : null,
         [device.interview_state, device.definition, t],
     );
@@ -61,21 +50,15 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
                 ) : (
                     <div className="indicator w-full">
                         {otaState === "updating" && (
-                            <FontAwesomeIcon
-                                icon={faSync}
-                                spin
-                                title={t("updating_firmware")}
-                                className="indicator-item indicator-top indicator-end text-info"
-                            />
+                            <span title={t("updating_firmware")}>
+                                <FontAwesomeIcon icon={faSync} spin className="indicator-item indicator-top indicator-end text-info" />
+                            </span>
                         )}
                         {interviewState}
                         {disabled && (
-                            <FontAwesomeIcon
-                                icon={faBan}
-                                title={t("common:disabled")}
-                                className="indicator-item indicator-middle indicator-center text-error"
-                                size="2xl"
-                            />
+                            <span title={t("common:disabled")}>
+                                <FontAwesomeIcon icon={faBan} className="indicator-item indicator-middle indicator-center text-error" size="2xl" />
+                            </span>
                         )}
                         <LazyImage device={device} className={`grid place-items-center${className ? ` ${className}` : ""}`} />
                     </div>

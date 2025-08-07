@@ -43,7 +43,9 @@ const Binary = memo((props: BinaryProps) => {
                 {valueExists ? (
                     <input className="toggle" type="checkbox" checked={deviceValue === valueOn} onChange={onCheckboxChange} />
                 ) : (
-                    <FontAwesomeIcon icon={faQuestion} title={t("unknown")} />
+                    <span title={t("unknown")}>
+                        <FontAwesomeIcon icon={faQuestion} />
+                    </span>
                 )}
                 {showOnOffButtons && (
                     <Button<string | boolean> className="btn btn-link" item={valueOn} onClick={onButtonClick}>

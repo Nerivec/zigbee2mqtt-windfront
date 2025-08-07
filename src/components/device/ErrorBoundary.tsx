@@ -8,5 +8,5 @@ type ErrorBoundaryProps = {
 };
 
 export default function ErrorBoundary({ error, children }: ErrorBoundaryProps) {
-    return error ? <FontAwesomeIcon icon={faExclamationTriangle} size="3x" className="text-error" title="Missing image" /> : children;
+    return error ? <FontAwesomeIcon icon={faExclamationTriangle} size="3x" className="text-error" /> : children;
 }

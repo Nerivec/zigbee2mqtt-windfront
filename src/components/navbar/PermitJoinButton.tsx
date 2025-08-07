@@ -47,7 +47,11 @@ const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps)
     return (
         <PopoverDropdown
             name="permit-join"
-            buttonChildren={<FontAwesomeIcon icon={faAngleDown} title={t("toggle_dropdown")} />}
+            buttonChildren={
+                <span title={t("toggle_dropdown")}>
+                    <FontAwesomeIcon icon={faAngleDown} />
+                </span>
+            }
             buttonStyle="join-item"
             dropdownStyle="dropdown-end"
         >

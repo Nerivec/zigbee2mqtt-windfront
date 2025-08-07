@@ -22,6 +22,7 @@
         "build": "vite build",
         "preview": "vite preview",
         "start": "vite dev",
+        "start:envs": "VITE_Z2M_API_URLS=localhost:5173/api,bogus.local:8080/api VITE_Z2M_API_NAMES=one,two npm start",
         "test": "vitest run",
         "test:cov": "vitest run --coverage",
         "typecheck": "tsc --noEmit",
