@@ -4,6 +4,7 @@ import {
     faArrowsUpToLine,
     faDownload,
     faExpand,
+    faIcons,
     faMagnet,
     faMinusSquare,
     faPlusSquare,
@@ -35,6 +36,8 @@ type ControlsProps = {
     setShowChildren: (value: boolean) => void;
     showSiblings: boolean;
     setShowSiblings: (value: boolean) => void;
+    showIcons: boolean;
+    setShowIcons: (value: boolean) => void;
 };
 
 const Controls = memo(
@@ -55,6 +58,8 @@ const Controls = memo(
         setShowChildren,
         showSiblings,
         setShowSiblings,
+        showIcons,
+        setShowIcons,
     }: ControlsProps) => {
         const { t } = useTranslation("network");
 
@@ -166,6 +171,14 @@ const Controls = memo(
                             icon={faArrowRightLong}
                             style={{ color: EDGE_RELATIONSHIP_FILL_COLORS[ZigbeeRelationship.NeighborIsASibling] }}
                         />
+                    </Button>
+                    <Button<boolean>
+                        className={`btn btn-square btn-neutral btn-sm ${showIcons ? "" : "btn-outline"}`}
+                        item={!showIcons}
+                        onClick={setShowIcons}
+                        title={t("icons")}
+                    >
+                        <FontAwesomeIcon icon={faIcons} />
                     </Button>
                     <select className="select select-sm w-36" title={t("find_node")} defaultValue="" onChange={findNode}>
                         <option value="">{t("find_node")}</option>

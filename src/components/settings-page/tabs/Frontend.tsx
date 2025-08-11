@@ -14,6 +14,7 @@ import {
     NETWORK_MAP_LAYOUT_TYPE_KEY,
     NETWORK_MAP_LINK_DISTANCE_KEY,
     NETWORK_MAP_NODE_STRENGTH_KEY,
+    NETWORK_MAP_SHOW_ICONS_KEY,
     NETWORK_RAW_DISPLAY_TYPE_KEY,
     PERMIT_JOIN_TIME_KEY,
     TABLE_COLUMN_FILTER_KEY,
@@ -39,6 +40,7 @@ export default function Frontend() {
     const [networkMapLabelType, setNetworkMapLabelType] = useState<LabelVisibilityType>(store2.get(NETWORK_MAP_LABEL_TYPE_KEY, "all"));
     const [networkMapNodeStrength, setNetworkMapNodeStrength] = useState<number>(store2.get(NETWORK_MAP_NODE_STRENGTH_KEY, -750));
     const [networkMapLinkDistance, setNetworkMapLinkDistance] = useState<number>(store2.get(NETWORK_MAP_LINK_DISTANCE_KEY, 50));
+    const [networkMapShowIcons, setNetworkMapShowIcons] = useState<boolean>(store2.get(NETWORK_MAP_SHOW_ICONS_KEY, false));
 
     useEffect(() => {
         store2.set(HOMEPAGE_KEY, homepage);
@@ -76,6 +78,10 @@ export default function Frontend() {
         store2.set(NETWORK_MAP_LINK_DISTANCE_KEY, networkMapLinkDistance);
     }, [networkMapLinkDistance]);
 
+    useEffect(() => {
+        store2.set(NETWORK_MAP_SHOW_ICONS_KEY, networkMapShowIcons);
+    }, [networkMapShowIcons]);
+
     const resetSettings = useCallback(() => {
         const keys = store2.keys();
 
@@ -89,6 +95,7 @@ export default function Frontend() {
         store2.remove(NETWORK_MAP_LABEL_TYPE_KEY);
         store2.remove(NETWORK_MAP_NODE_STRENGTH_KEY);
         store2.remove(NETWORK_MAP_LINK_DISTANCE_KEY);
+        store2.remove(NETWORK_MAP_SHOW_ICONS_KEY);
         store2.remove(I18NEXTLNG_KEY);
         store2.remove(DEVICES_HIDE_DISABLED_KEY);
         store2.remove(DASHBOARD_FILTER_KEY);
@@ -250,6 +257,12 @@ export default function Frontend() {
                         defaultValue={networkMapLinkDistance}
                     />
                 </div>
+                <CheckboxField
+                    name="network:show_icons"
+                    label={t("network:show_icons")}
+                    onChange={(event) => setNetworkMapShowIcons(event.target.checked)}
+                    defaultChecked={networkMapShowIcons}
+                />
             </div>
         </>
     );

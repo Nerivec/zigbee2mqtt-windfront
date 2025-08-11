@@ -138,6 +138,8 @@
         "scroll_to_top": "Scroll to top",
         "node_strength": "Node strength",
         "link_distance": "Link distance",
+        "icons": "Icons",
+        "show_icons": "Show icons",
         "copy_paste_on": "Copy and paste the following data in one of the available online viewers/editors.",
         "highlight_info": "Click on a device's image to highlight it automatically.",
         "legend_node_siblings": "Only highest-rated siblings are shown, which should roughly match the actual connections of the network.",

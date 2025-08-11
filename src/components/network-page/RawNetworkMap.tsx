@@ -14,13 +14,17 @@ import {
 } from "reagraph";
 import store2 from "store2";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
+import { useAppSelector } from "../../hooks/useApp.js";
+import genericDevice from "../../images/generic-zigbee-device.png";
 import {
     NETWORK_MAP_LABEL_TYPE_KEY,
     NETWORK_MAP_LAYOUT_TYPE_KEY,
     NETWORK_MAP_LINK_DISTANCE_KEY,
     NETWORK_MAP_NODE_STRENGTH_KEY,
+    NETWORK_MAP_SHOW_ICONS_KEY,
 } from "../../localStoreConsts.js";
 import fontUrl from "./../../styles/NotoSans-Regular.ttf";
+import { getZ2MDeviceImage } from "../device/index.js";
 import { cssColorToRgba, EDGE_RELATIONSHIP_FILL_COLORS, type NetworkMapLink, NODE_TYPE_FILL_COLORS, ZigbeeRelationship } from "./index.js";
 import ContextMenu from "./raw-map/ContextMenu.js";
 import Controls from "./raw-map/Controls.js";
@@ -32,6 +36,7 @@ type RawNetworkMapProps = {
 
 const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
     const { t } = useTranslation("network");
+    const devices = useAppSelector((state) => state.devices);
     const [layoutType, setLayoutType] = useState<LayoutTypes>(store2.get(NETWORK_MAP_LAYOUT_TYPE_KEY, "forceDirected2d"));
     const [labelType, setLabelType] = useState<LabelVisibilityType>(store2.get(NETWORK_MAP_LABEL_TYPE_KEY, "all"));
     const [nodeStrength, setNodeStrength] = useState<number>(store2.get(NETWORK_MAP_NODE_STRENGTH_KEY, -750));
@@ -39,6 +44,7 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
     const [showParents, setShowParents] = useState(true);
     const [showChildren, setShowChildren] = useState(true);
     const [showSiblings, setShowSiblings] = useState(true);
+    const [showIcons, setShowIcons] = useState<boolean>(store2.get(NETWORK_MAP_SHOW_ICONS_KEY, false));
     const graphRef = useRef<GraphCanvasRef | null>(null);
     const theme: Theme = useMemo(() => {
         // re-used for perf
@@ -87,6 +93,7 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
         const processedLinks: [NetworkMapLink, NetworkMapLink | undefined][] = [];
 
         for (const node of map.nodes) {
+            const device = devices.find((device) => device.ieee_address === node.ieeeAddr);
             // determine the parent friendly name for clustering from either the target (parent is source) or the source (parent is target)
             const parent = map.links.find(
                 (link) => link.relationship === ZigbeeRelationship.NeighborIsParent && link.target.ieeeAddr === node.ieeeAddr,
@@ -104,6 +111,16 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
                 }
             }
 
+            let icon: string | undefined;
+
+            if (showIcons && device) {
+                icon = device.definition?.icon ?? getZ2MDeviceImage(device);
+
+                if (icon === genericDevice) {
+                    icon = undefined;
+                }
+            }
+
             computedNodes.push({
                 id: node.ieeeAddr,
                 data: {
@@ -111,10 +128,9 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
                     parent: parentFriendlyName,
                 },
                 label: node.friendlyName,
-                // subLabel: node.ieeeAddr,
                 labelVisible: true,
-                // icon: device.definition.icon
                 fill: NODE_TYPE_FILL_COLORS[node.type],
+                icon,
             });
         }
 
@@ -198,7 +214,7 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
         }
 
         return [computedNodes, computedEdges];
-    }, [map, showParents, showChildren, showSiblings, t]);
+    }, [map, showParents, showChildren, showSiblings, t, devices, showIcons]);
 
     const { selections, actives, onNodeClick, onCanvasClick } = useSelection({
         ref: graphRef,
@@ -237,6 +253,11 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
         setLinkDistance(value);
     }, []);
 
+    const onShowIconsChange = useCallback((value: boolean) => {
+        store2.set(NETWORK_MAP_SHOW_ICONS_KEY, value);
+        setShowIcons(value);
+    }, []);
+
     return (
         <>
             <Legend />
@@ -258,6 +279,8 @@ const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
                     setShowChildren={setShowChildren}
                     showSiblings={showSiblings}
                     setShowSiblings={setShowSiblings}
+                    showIcons={showIcons}
+                    setShowIcons={onShowIconsChange}
                 />
                 <GraphCanvas
                     ref={graphRef}
