@@ -1,6 +1,6 @@
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useMemo } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router";
 import { useAppSelector } from "../../hooks/useApp.js";
@@ -51,6 +51,12 @@ const NavBar = () => {
     const restartRequired = useAppSelector((state) => state.bridgeInfo.restart_required);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
 
+    const onDropdownMenuClick = useCallback(() => {
+        if (document.activeElement instanceof HTMLElement && document.activeElement !== document.body) {
+            document.activeElement.blur();
+        }
+    }, []);
+
     const links = useMemo(
         () => (
             <>
@@ -89,8 +95,12 @@ const NavBar = () => {
                     <div className="btn btn-ghost lg:hidden" tabIndex={0}>
                         <FontAwesomeIcon icon={faBars} />
                     </div>
-                    {/* biome-ignore lint/a11y/noNoninteractiveTabindex: daisyui dropdown */}
-                    <ul tabIndex={0} className="menu dropdown-content bg-base-200 rounded-box z-1 mt-3 w-max p-2 shadow">
+                    <ul
+                        // biome-ignore lint/a11y/noNoninteractiveTabindex: daisyui dropdown
+                        tabIndex={0}
+                        className="menu dropdown-content bg-base-200 rounded-box z-1 mt-3 w-max p-2 shadow"
+                        onClick={onDropdownMenuClick}
+                    >
                         {links}
                     </ul>
                 </div>
