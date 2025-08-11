@@ -37,7 +37,7 @@ export default function Toasts() {
     );
 
     return (
-        <div className="toast max-w-prose">
+        <div className="toast z-99">
             {logs.slice(0, store2.get(MAX_ON_SCREEN_NOTIFICATIONS_KEY, 1)).map((log, idx) => (
                 <Toast key={`${log.timestamp}-${log.message}`} idx={idx} log={log} expiry={TOAST_EXPIRY_TIME} remove={removeLog} />
             ))}

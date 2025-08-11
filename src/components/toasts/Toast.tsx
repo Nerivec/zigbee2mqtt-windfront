@@ -24,7 +24,7 @@ export default function Toast({ idx, log, expiry, remove }: ToastProps) {
 
     return (
         // biome-ignore lint/a11y/noStaticElementInteractions: special case
-        <div className={`alert ${LOG_LEVELS_CMAP[log!.level]} break-all cursor-pointer select-none`} onClick={() => remove(idx)}>
+        <div className={`alert ${LOG_LEVELS_CMAP[log!.level]} break-all cursor-pointer select-none max-w-prose`} onClick={() => remove(idx)}>
             {log!.message}
         </div>
     );
