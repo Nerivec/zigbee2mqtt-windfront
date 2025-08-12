@@ -98,7 +98,8 @@ const Controls = memo(
 
         return (
             <>
-                <div className="absolute z-9 top-0 left-0 p-1 flex flex-row flex-wrap gap-1 items-start">
+                {/** 19rem matches for 2x w-36 select currently in right side */}
+                <div className="absolute z-9 top-0 left-0 p-1 flex flex-row flex-wrap gap-1 items-start max-w-[calc(100vw-19rem)] md:max-w-none">
                     <Button title={t("download_image")} className="btn btn-square btn-neutral btn-sm" onClick={downloadAsImage}>
                         <FontAwesomeIcon icon={faDownload} />
                     </Button>
@@ -232,7 +233,7 @@ const Controls = memo(
                 <div className="absolute z-9 bottom-0 right-0 p-1 flex flex-row flex-wrap gap-1 items-end justify-end">
                     <Button
                         title={t("scroll_to_top")}
-                        className="btn btn-primary btn-sm ml-auto"
+                        className="btn btn-primary btn-square ml-auto"
                         onClick={() => {
                             window.scrollTo(0, 0);
                         }}
