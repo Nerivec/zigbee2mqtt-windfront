@@ -13,6 +13,16 @@ export type NiceReportingRule = {
     endpoint: string;
 } & Device["endpoints"][number]["configured_reportings"][number];
 
+const makeDefaultReportingRule = (ieeeAddress: string): NiceReportingRule => ({
+    isNew: ieeeAddress,
+    reportable_change: 0,
+    minimum_report_interval: 60,
+    maximum_report_interval: 3600,
+    endpoint: "",
+    cluster: "",
+    attribute: "",
+});
+
 const convertBindingsIntoNiceStructure = (device: Device): NiceReportingRule[] => {
     const niceReportingRules: NiceReportingRule[] = [];
 
@@ -35,28 +45,12 @@ const getRuleKey = (rule: NiceReportingRule): string => `${rule.isNew}-${rule.en
 export default function Reporting(props: ReportingProps): JSX.Element {
     const { device } = props;
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const [newReportingRule, setNewReportingRule] = useState<NiceReportingRule>({
-        isNew: device.ieee_address,
-        reportable_change: 0,
-        minimum_report_interval: 60,
-        maximum_report_interval: 3600,
-        endpoint: "",
-        cluster: "",
-        attribute: "",
-    });
+    const [newReportingRule, setNewReportingRule] = useState(makeDefaultReportingRule(device.ieee_address));
     const reportingRules = useMemo(() => convertBindingsIntoNiceStructure(device), [device]);
 
     useEffect(() => {
         // force reset of new rule when swapping device, otherwise might end up applying with wrong params
-        setNewReportingRule({
-            isNew: device.ieee_address,
-            reportable_change: 0,
-            minimum_report_interval: 60,
-            maximum_report_interval: 3600,
-            endpoint: "",
-            cluster: "",
-            attribute: "",
-        });
+        setNewReportingRule(makeDefaultReportingRule(device.ieee_address));
     }, [device.ieee_address]);
 
     const onApply = useCallback(

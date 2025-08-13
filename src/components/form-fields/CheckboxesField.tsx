@@ -19,20 +19,9 @@ const CheckboxesField = memo((props: CheckboxFieldProps) => {
         setCurrentValues(defaultsChecked || []);
     }, [defaultsChecked]);
 
-    const onChange = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            let newValues = Array.from(currentValues);
-
-            if (e.target.checked) {
-                newValues.push(e.target.name);
-            } else {
-                newValues = newValues.filter((v) => v !== e.target.name);
-            }
-
-            setCurrentValues(newValues);
-        },
-        [currentValues],
-    );
+    const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setCurrentValues((prev) => (e.target.checked ? [...prev, e.target.name] : prev.filter((v) => v !== e.target.name)));
+    }, []);
 
     const onApply = useCallback(() => onSubmit(currentValues), [currentValues, onSubmit]);
 

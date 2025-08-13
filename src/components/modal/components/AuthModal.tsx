@@ -1,5 +1,5 @@
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { type JSX, useState } from "react";
+import { type JSX, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../../Button.js";
 import Modal from "../Modal.js";
@@ -15,12 +15,12 @@ export const AuthForm = NiceModal.create((props: AuthFormProps): JSX.Element => 
     const { t } = useTranslation("common");
     const [token, setToken] = useState("");
 
-    const onLoginClick = async (): Promise<void> => {
+    const onLoginClick = useCallback(async (): Promise<void> => {
         if (token) {
             modal.remove();
             await onAuth(token);
         }
-    };
+    }, [token, modal.remove, onAuth]);
 
     return (
         <Modal

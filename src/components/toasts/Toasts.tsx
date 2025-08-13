@@ -26,15 +26,14 @@ export default function Toasts() {
         }
     }, [lastLog]);
 
-    const removeLog = useCallback(
-        (idx: number) => {
-            const newLogs = Array.from(logs);
-
+    const removeLog = useCallback((idx: number) => {
+        setLogs((prev) => {
+            const newLogs = Array.from(prev);
             newLogs.splice(idx, 1);
-            setLogs(newLogs);
-        },
-        [logs],
-    );
+
+            return newLogs;
+        });
+    }, []);
 
     return (
         <div className="toast z-99">

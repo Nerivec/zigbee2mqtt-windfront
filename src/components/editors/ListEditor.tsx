@@ -22,15 +22,6 @@ const ListEditor = memo((props: ListEditorProps) => {
         setCurrentValue(value);
     }, [value]);
 
-    const replaceList = useCallback(
-        // biome-ignore lint/suspicious/noExplicitAny: tmp
-        (newListValue: any[]) => {
-            setCurrentValue(newListValue);
-            onChange(newListValue);
-        },
-        [onChange],
-    );
-
     const onItemChange = useCallback(
         // biome-ignore lint/suspicious/noExplicitAny: tmp
         (itemValue: any, itemIndex: number) => {
@@ -42,9 +33,10 @@ const ListEditor = memo((props: ListEditorProps) => {
 
             newListValue[itemIndex] = itemValue ?? "";
 
-            replaceList(newListValue);
+            setCurrentValue(newListValue);
+            onChange(newListValue);
         },
-        [currentValue, replaceList],
+        [currentValue, onChange],
     );
 
     const handleRemoveClick = useCallback(
@@ -52,15 +44,13 @@ const ListEditor = memo((props: ListEditorProps) => {
             const newListValue = Array.from(currentValue);
 
             newListValue.splice(itemIndex, 1);
-            replaceList(newListValue);
+            setCurrentValue(newListValue);
+            onChange(newListValue);
         },
-        [currentValue, replaceList],
+        [currentValue, onChange],
     );
 
-    const handleAddClick = useCallback(
-        () => setCurrentValue([...currentValue, feature.type === "composite" ? {} : ""]),
-        [currentValue, feature.type],
-    );
+    const handleAddClick = useCallback(() => setCurrentValue((prev) => [...prev, feature.type === "composite" ? {} : ""]), [feature.type]);
 
     return currentValue.length === 0 ? (
         <div className="flex flex-row flex-wrap gap-2">

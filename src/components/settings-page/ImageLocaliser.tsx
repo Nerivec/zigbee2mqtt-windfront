@@ -1,5 +1,4 @@
 import { type JSX, useCallback, useContext, useEffect, useState } from "react";
-
 import { useTranslation } from "react-i18next";
 import type { AppState } from "../../store.js";
 import type { Device } from "../../types.js";
@@ -44,15 +43,15 @@ export function ImageLocaliser(props: Props): JSX.Element {
 
     const localiseImage = useCallback(
         async (device: Device) => {
-            setLocalisationStatus((curr) => {
-                return { ...curr, [device.ieee_address]: "init" };
+            setLocalisationStatus((prev) => {
+                return { ...prev, [device.ieee_address]: "init" };
             });
 
             const imageUrl = getZ2MDeviceImage(device);
             const imageContent = await downloadImage(imageUrl);
 
             await sendMessage("bridge/request/device/options", { id: device.ieee_address, options: { icon: imageContent } });
-            setLocalisationStatus((curr) => ({ ...curr, [device.ieee_address]: "done" }));
+            setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "done" }));
 
             return true;
         },
@@ -66,7 +65,7 @@ export function ImageLocaliser(props: Props): JSX.Element {
                     localiseImage(device)
                         .catch((err) => {
                             console.error("Error localising image", err);
-                            setLocalisationStatus((curr) => ({ ...curr, [device.ieee_address]: "error" }));
+                            setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "error" }));
                         })
                         .then();
                 }

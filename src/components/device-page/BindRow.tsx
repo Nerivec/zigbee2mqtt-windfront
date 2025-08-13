@@ -18,10 +18,6 @@ interface BindRowProps extends Pick<AppState, "devices"> {
     device: Device;
 }
 
-interface BindRowState {
-    rule: NiceBindingRule;
-}
-
 const getTarget = (rule: NiceBindingRule, devices: AppState["devices"], groups: Group[]): Device | Group | undefined => {
     const { target } = rule;
 
@@ -31,68 +27,48 @@ const getTarget = (rule: NiceBindingRule, devices: AppState["devices"], groups: 
 type Action = "Bind" | "Unbind";
 
 const BindRow = memo(({ devices, groups, device, rule }: BindRowProps) => {
-    const [state, setState] = useState<BindRowState>({ rule });
+    const [stateRule, setStateRule] = useState(rule);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["common", "zigbee"]);
 
     useEffect(() => {
-        setState({ rule });
+        setStateRule(rule);
     }, [rule]);
 
-    const onSourceEndpointChange = useCallback(
-        (sourceEp: string | number): void => {
-            state.rule.source.endpoint = sourceEp;
+    const onSourceEndpointChange = useCallback((endpoint: string | number): void => {
+        setStateRule((prev) => ({ ...prev, source: { ...prev.source, endpoint } }));
+    }, []);
 
-            setState({ rule: state.rule });
-        },
-        [state.rule],
-    );
+    const onDestinationChange = useCallback((destination?: Device | Group): void => {
+        if (!destination) {
+            return;
+        }
 
-    const onDestinationChange = useCallback(
-        (destination?: Device | Group): void => {
-            if (!destination) {
-                return;
-            }
+        const target = isDevice(destination)
+            ? { type: "endpoint" as const, ieee_address: destination.ieee_address, endpoint: "" }
+            : { type: "group" as const, id: destination.id };
 
-            if (isDevice(destination)) {
-                state.rule.target = { type: "endpoint", ieee_address: destination.ieee_address, endpoint: "" };
-            } else {
-                state.rule.target = { type: "group", id: destination.id };
-            }
-
-            state.rule.clusters = [];
-
-            setState({ rule: state.rule });
-        },
-        [state.rule],
-    );
+        setStateRule((prev) => ({ ...prev, target, clusters: [] }));
+    }, []);
 
     const onDestinationEndpointChange = useCallback(
-        (destinationEp: string): void => {
-            if (state.rule.target.type === "endpoint") {
-                state.rule.target.endpoint = destinationEp;
-                state.rule.clusters = [];
-
-                setState({ rule: state.rule });
+        (endpoint: string): void => {
+            if (stateRule.target.type === "endpoint") {
+                setStateRule((prev) => ({ ...prev, target: { ...prev.target, endpoint }, clusters: [] }));
             }
         },
-        [state.rule],
+        [stateRule.target.type],
     );
 
-    const onClustersChange = useCallback(
-        (clusters: string[]): void => {
-            state.rule.clusters = clusters;
-
-            setState({ rule: state.rule });
-        },
-        [state.rule],
-    );
+    const onClustersChange = useCallback((clusters: string[]): void => {
+        setStateRule((prev) => ({ ...prev, clusters }));
+    }, []);
 
     const onBindOrUnBindClick = useCallback(
         async (action: Action): Promise<void> => {
             let to: string | number = "";
             let toEndpoint: string | number | undefined;
-            const { target } = state.rule;
+            const { target } = stateRule;
 
             if (target.type === "group") {
                 const targetGroup = groups.find((group) => group.id === target.id);
@@ -120,10 +96,10 @@ const BindRow = memo(({ devices, groups, device, rule }: BindRowProps) => {
 
             const bindParams = {
                 from: device.ieee_address,
-                from_endpoint: state.rule.source.endpoint,
+                from_endpoint: stateRule.source.endpoint,
                 to,
                 to_endpoint: toEndpoint,
-                clusters: state.rule.clusters,
+                clusters: stateRule.clusters,
             };
 
             if (action === "Bind") {
@@ -132,21 +108,21 @@ const BindRow = memo(({ devices, groups, device, rule }: BindRowProps) => {
                 await sendMessage("bridge/request/device/unbind", bindParams);
             }
         },
-        [device, state.rule, sendMessage, devices, groups],
+        [device, stateRule, sendMessage, devices, groups],
     );
 
     const sourceEndpoints = useMemo(() => getEndpoints(device), [device]);
-    const target = getTarget(state.rule, devices, groups);
+    const target = getTarget(stateRule, devices, groups);
     const destinationEndpoints = useMemo(() => getEndpoints(target), [target]);
 
     const possibleClusters = useMemo(() => {
-        const clusters: Set<string> = new Set(state.rule.clusters);
-        const srcEndpoint = device.endpoints[state.rule.source.endpoint];
+        const clusters: Set<string> = new Set(stateRule.clusters);
+        const srcEndpoint = device.endpoints[stateRule.source.endpoint];
         const dstEndpoint =
-            state.rule.target.type === "endpoint" && state.rule.target.endpoint != null
-                ? (target as Device | undefined)?.endpoints[state.rule.target.endpoint]
+            stateRule.target.type === "endpoint" && stateRule.target.endpoint != null
+                ? (target as Device | undefined)?.endpoints[stateRule.target.endpoint]
                 : undefined;
-        const allClustersValid = state.rule.target.type === "group" || (target as Device | undefined)?.type === "Coordinator";
+        const allClustersValid = stateRule.target.type === "group" || (target as Device | undefined)?.type === "Coordinator";
 
         if (srcEndpoint && (dstEndpoint || allClustersValid)) {
             for (const cluster of [...srcEndpoint.clusters.input, ...srcEndpoint.clusters.output]) {
@@ -164,49 +140,49 @@ const BindRow = memo(({ devices, groups, device, rule }: BindRowProps) => {
         }
 
         return clusters;
-    }, [device.endpoints, state, target]);
+    }, [device.endpoints, stateRule, target]);
 
     const isValidRule = useMemo(() => {
         let valid = false;
 
-        if (state.rule.target.type === "endpoint") {
-            valid = !!(state.rule.source.endpoint && state.rule.target.ieee_address && state.rule.target.endpoint && state.rule.clusters.length > 0);
-        } else if (state.rule.target.type === "group") {
-            valid = !!(state.rule.source.endpoint && state.rule.target.id && state.rule.clusters.length > 0);
+        if (stateRule.target.type === "endpoint") {
+            valid = !!(stateRule.source.endpoint && stateRule.target.ieee_address && stateRule.target.endpoint && stateRule.clusters.length > 0);
+        } else if (stateRule.target.type === "group") {
+            valid = !!(stateRule.source.endpoint && stateRule.target.id && stateRule.clusters.length > 0);
         }
 
         return valid;
-    }, [state]);
+    }, [stateRule]);
 
     return (
         <>
             <div className="flex flex-row flex-wrap gap-2">
                 <EndpointPicker
                     label={t("source_endpoint")}
-                    disabled={!state.rule.isNew}
+                    disabled={!stateRule.isNew}
                     values={sourceEndpoints}
-                    value={state.rule.source.endpoint}
+                    value={stateRule.source.endpoint}
                     onChange={onSourceEndpointChange}
                 />
                 <DevicePicker
                     label={t("destination")}
-                    disabled={!state.rule.isNew}
-                    value={"ieee_address" in state.rule.target ? state.rule.target.ieee_address : state.rule.target.id}
+                    disabled={!stateRule.isNew}
+                    value={"ieee_address" in stateRule.target ? stateRule.target.ieee_address : stateRule.target.id}
                     devices={devices}
                     groups={groups}
                     onChange={onDestinationChange}
                 />
-                {state.rule.target.type === "endpoint" ? (
+                {stateRule.target.type === "endpoint" ? (
                     <EndpointPicker
                         label={t("destination_endpoint")}
-                        disabled={!state.rule.isNew}
+                        disabled={!stateRule.isNew}
                         values={destinationEndpoints}
-                        value={state.rule.target.endpoint}
+                        value={stateRule.target.endpoint}
                         onChange={onDestinationEndpointChange}
                     />
                 ) : null}
                 <div className="grow w-128">
-                    <ClusterMultiPicker label={t("clusters")} clusters={possibleClusters} value={state.rule.clusters} onChange={onClustersChange} />
+                    <ClusterMultiPicker label={t("clusters")} clusters={possibleClusters} value={stateRule.clusters} onChange={onClustersChange} />
                 </div>
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend">{t("actions")}</legend>
@@ -223,7 +199,7 @@ const BindRow = memo(({ devices, groups, device, rule }: BindRowProps) => {
                         </Button>
                         <Button<Action>
                             item={"Unbind"}
-                            disabled={state.rule.isNew || !isValidRule}
+                            disabled={stateRule.isNew || !isValidRule}
                             title={t("unbind")}
                             className="btn btn-error join-item"
                             onClick={onBindOrUnBindClick}

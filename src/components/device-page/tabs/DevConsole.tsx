@@ -1,6 +1,7 @@
 import { memo, useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import { useShallow } from "zustand/react/shallow";
 import { SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
 import type { Device, LogMessage } from "../../../types.js";
@@ -72,7 +73,7 @@ export default function DevConsole({ device }: DevConsoleProps) {
     const [lastCommandLog, setLastCommandLog] = useState<LogMessage>();
     const [extDefLoading, setExtDefLoading] = useState(false);
     const [showDefinition, setShowDefinition] = useState(false);
-    const externalDefinition = useAppStore((state) => state.generatedExternalDefinitions[device.ieee_address]);
+    const externalDefinition = useAppStore(useShallow((state) => state.generatedExternalDefinitions[device.ieee_address]));
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {

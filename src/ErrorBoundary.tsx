@@ -59,11 +59,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             const githubUrlParams = {
                 template: "bug_report.yaml",
                 stacktrace: [
-                    `**Current url**: ${window.location.toString()}`,
-                    `**Previous url**: ${document.referrer}`,
+                    `Current url: ${window.location.toString()}`,
+                    `Previous url: ${document.referrer}`,
                     "\n",
-                    `**Error type**: ${error?.name}`,
-                    `**Error message**: ${error?.message}`,
+                    `Error type: ${error?.name}`,
+                    `Error message: ${error?.message}`,
                     "\n\n",
                     error?.stack,
                 ].join("\n"),

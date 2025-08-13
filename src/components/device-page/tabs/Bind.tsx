@@ -27,8 +27,12 @@ export interface NiceBindingRule {
     clusters: string[];
 }
 
-const getRuleKey = (rule: NiceBindingRule): string =>
-    `${rule.isNew}-${rule.source.endpoint}-${rule.source.ieee_address}-${"ieee_address" in rule.target ? rule.target.ieee_address : rule.target.id}-${rule.clusters.join("-")}`;
+const makeDefaultBindingRule = (ieeeAddress: string): NiceBindingRule => ({
+    isNew: true,
+    target: { type: "endpoint", ieee_address: "", endpoint: "" },
+    source: { ieee_address: ieeeAddress, endpoint: "" },
+    clusters: [],
+});
 
 const convertBindingsIntoNiceStructure = (device: Device): NiceBindingRule[] => {
     const bindings: Record<string, NiceBindingRule> = {};
@@ -49,7 +53,7 @@ const convertBindingsIntoNiceStructure = (device: Device): NiceBindingRule[] => 
                         ieee_address: device.ieee_address,
                         endpoint,
                     },
-                    target: binding.target,
+                    target: { ...binding.target },
                     clusters: [binding.cluster],
                 };
             }
@@ -59,26 +63,19 @@ const convertBindingsIntoNiceStructure = (device: Device): NiceBindingRule[] => 
     return Object.values(bindings);
 };
 
+const getRuleKey = (rule: NiceBindingRule): string =>
+    `${rule.isNew}-${rule.source.endpoint}-${rule.source.ieee_address}-${"ieee_address" in rule.target ? rule.target.ieee_address : rule.target.id}-${rule.clusters.join("-")}`;
+
 export default function Bind(props: BindProps): JSX.Element {
     const { device } = props;
     const devices = useAppStore((state) => state.devices);
     const groups = useAppStore((state) => state.groups);
-    const [newBindingRule, setNewBindingRule] = useState<NiceBindingRule>({
-        isNew: true,
-        target: { type: "endpoint", ieee_address: "", endpoint: "" },
-        source: { ieee_address: device.ieee_address, endpoint: "" },
-        clusters: [],
-    });
+    const [newBindingRule, setNewBindingRule] = useState(makeDefaultBindingRule(device.ieee_address));
     const bindingRules = useMemo(() => convertBindingsIntoNiceStructure(device), [device]);
 
     useEffect(() => {
         // force reset of new rule when swapping device, otherwise might end up applying with wrong params
-        setNewBindingRule({
-            isNew: true,
-            target: { type: "endpoint", ieee_address: "", endpoint: "" },
-            source: { ieee_address: device.ieee_address, endpoint: "" },
-            clusters: [],
-        });
+        setNewBindingRule(makeDefaultBindingRule(device.ieee_address));
     }, [device.ieee_address]);
 
     return (

@@ -72,25 +72,14 @@ export default function OtaPage() {
 
     const onSelectAllChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
-            if (e.target.checked) {
-                setSelectedDevices(otaDevices.map(({ device }) => device.ieee_address));
-            } else {
-                setSelectedDevices([]);
-            }
+            setSelectedDevices(e.target.checked ? otaDevices.map(({ device }) => device.ieee_address) : []);
         },
         [otaDevices],
     );
 
-    const onSelectChange = useCallback(
-        (device: Device, select: boolean) => {
-            if (select) {
-                setSelectedDevices([...selectedDevices, device.ieee_address]);
-            } else {
-                setSelectedDevices(selectedDevices.filter((ieee) => ieee !== device.ieee_address));
-            }
-        },
-        [selectedDevices],
-    );
+    const onSelectChange = useCallback((device: Device, select: boolean) => {
+        setSelectedDevices((prev) => (select ? [...prev, device.ieee_address] : prev.filter((ieee) => ieee !== device.ieee_address)));
+    }, []);
 
     const checkSelected = useCallback(async () => {
         await Promise.allSettled(selectedDevices.map((ieee) => sendMessage("bridge/request/device/ota_update/check", { id: ieee })));

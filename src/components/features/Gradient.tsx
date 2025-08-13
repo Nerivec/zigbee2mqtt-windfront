@@ -15,7 +15,9 @@ export const Gradient = memo((props: GradientProps) => {
         deviceValue,
     } = props;
     const { t } = useTranslation(["gradient", "common"]);
-    const [colors, setColors] = useState<Array<string>>(length_min > 0 ? Array(length_min).fill("#ffffff") : []);
+    const [colors, setColors] = useState<string[]>(length_min > 0 ? Array(length_min).fill("#ffffff") : []);
+    const [canAdd, setCanAdd] = useState(false);
+    const [canRemove, setCanRemove] = useState(false);
 
     useEffect(() => {
         if (deviceValue && Array.isArray(deviceValue) && deviceValue.length > 0) {
@@ -23,39 +25,34 @@ export const Gradient = memo((props: GradientProps) => {
         }
     }, [deviceValue]);
 
-    const setColor = useCallback(
-        (idx: number, hex: string) => {
-            const c = Array.from(colors);
-            c[idx] = hex;
-            setColors(c);
-        },
-        [colors],
-    );
-
-    const addColor = useCallback(() => {
-        const c = Array.from(colors);
-        c.push("#ffffff");
-        setColors(c);
-    }, [colors]);
-
-    const removeColor = useCallback(
-        (idx: number) => {
-            const c = Array.from(colors);
-            c.splice(idx, 1);
-            setColors(c);
-        },
-        [colors],
-    );
-
-    const onGradientApply = useCallback(() => onChange({ [property ?? "gradient"]: colors }), [colors, property, onChange]);
-
-    const [canAdd, setCanAdd] = useState(false);
-    const [canRemove, setCanRemove] = useState(false);
-
     useEffect(() => {
         setCanAdd(colors.length < length_max);
         setCanRemove(colors.length > length_min);
     }, [colors, length_min, length_max]);
+
+    const setColor = useCallback((idx: number, hex: string) => {
+        setColors((prev) => {
+            const c = Array.from(prev);
+            c[idx] = hex;
+
+            return c;
+        });
+    }, []);
+
+    const addColor = useCallback(() => {
+        setColors((prev) => [...prev, "#ffffff"]);
+    }, []);
+
+    const removeColor = useCallback((idx: number) => {
+        setColors((prev) => {
+            const c = Array.from(prev);
+            c.splice(idx, 1);
+
+            return c;
+        });
+    }, []);
+
+    const onGradientApply = useCallback(() => onChange({ [property ?? "gradient"]: colors }), [colors, property, onChange]);
 
     return (
         <div className="flex flex-col gap-2">

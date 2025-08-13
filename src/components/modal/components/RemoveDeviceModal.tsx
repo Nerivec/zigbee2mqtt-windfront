@@ -1,5 +1,5 @@
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { type ChangeEvent, type JSX, useState } from "react";
+import { type ChangeEvent, type JSX, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Device } from "../../../types.js";
 import Button from "../../Button.js";
@@ -17,10 +17,16 @@ export const RemoveDeviceModal = NiceModal.create((props: DeviceRemovalButtonPro
     const { t } = useTranslation(["zigbee", "common"]);
     const [removeParams, setRemoveParams] = useState({ block: false, force: false });
 
-    const onDeviceRemovalParamChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const onDeviceRemovalParamChange = useCallback((e: ChangeEvent<HTMLInputElement>): void => {
         const { checked, name } = e.target;
-        setRemoveParams({ ...removeParams, ...{ [name]: checked } });
-    };
+
+        setRemoveParams((prev) => ({ ...prev, ...{ [name]: checked } }));
+    }, []);
+
+    const onRemoveClick = useCallback(async () => {
+        modal.remove();
+        await removeDevice(device.ieee_address, removeParams.force, removeParams.block);
+    }, [modal.remove, removeDevice, device.ieee_address, removeParams]);
 
     return (
         <Modal
@@ -31,13 +37,7 @@ export const RemoveDeviceModal = NiceModal.create((props: DeviceRemovalButtonPro
                     <Button className="btn btn-neutral" onClick={modal.remove}>
                         {t("common:cancel")}
                     </Button>
-                    <Button
-                        className="btn btn-error ms-1"
-                        onClick={async () => {
-                            modal.remove();
-                            await removeDevice(device.ieee_address, removeParams.force, removeParams.block);
-                        }}
-                    >
+                    <Button className="btn btn-error ms-1" onClick={onRemoveClick}>
                         {t("common:delete")}
                     </Button>
                 </>

@@ -19,13 +19,30 @@ const ArrayField = memo((props: ArrayFieldProps) => {
         setCurrentValues(defaultValues || []);
     }, [defaultValues]);
 
+    const setValue = useCallback(
+        (idx: number, e: FocusEvent<HTMLInputElement>) => {
+            setCurrentValues((prev) => {
+                const newValues = Array.from(prev);
+                newValues[idx] = type === "number" ? (e.target.value ? e.target.valueAsNumber : "") : e.target.value;
+
+                return newValues;
+            });
+        },
+        [type],
+    );
+
     const onAddClick = useCallback(() => {
-        if (currentValues.length > 0) {
-            setCurrentValues([...currentValues, ""]);
-        } else {
-            setCurrentValues([""]);
-        }
-    }, [currentValues]);
+        setCurrentValues((prev) => [...prev, ""]);
+    }, []);
+
+    const onRemoveClick = useCallback((idx) => {
+        setCurrentValues((prev) => {
+            const newValues = Array.from(prev);
+            newValues.splice(idx, 1);
+
+            return newValues;
+        });
+    }, []);
 
     const onApply = useCallback(
         () => onSubmit(type === "number" ? currentValues.filter((v) => typeof v === "number") : currentValues.filter((v) => !!v)),
@@ -42,23 +59,12 @@ const ArrayField = memo((props: ArrayFieldProps) => {
                         <input
                             className="input join-item"
                             onBlur={(e: FocusEvent<HTMLInputElement>) => {
-                                const newValues = Array.from(currentValues);
-                                newValues[idx] = type === "number" ? (e.target.value ? e.target.valueAsNumber : "") : e.target.value;
-
-                                setCurrentValues(newValues);
+                                setValue(idx, e);
                             }}
                             type={type}
                             defaultValue={Number.isNaN(value) ? "" : value}
                         />
-                        <Button<void>
-                            className="btn btn-error btn-outline join-item"
-                            onClick={() => {
-                                const newValues = Array.from(currentValues);
-                                newValues.splice(idx, 1);
-
-                                setCurrentValues(newValues);
-                            }}
-                        >
+                        <Button<void> className="btn btn-error btn-outline join-item" onClick={() => onRemoveClick(idx)}>
                             <FontAwesomeIcon icon={faTrash} />
                         </Button>
                     </div>

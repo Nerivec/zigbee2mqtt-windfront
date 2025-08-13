@@ -120,19 +120,13 @@ const ExternalConverterTab = () => {
         [converters],
     );
 
-    const onNameChange = useCallback(
-        (event: ChangeEvent<HTMLInputElement>) => {
-            setConverter({ name: event.target.value, code: converter.code });
-        },
-        [converter.code],
-    );
+    const onNameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        setConverter((prev) => ({ name: event.target.value, code: prev.code }));
+    }, []);
 
-    const onCodeChange = useCallback(
-        (event: ChangeEvent<HTMLTextAreaElement>) => {
-            setConverter({ name: converter.name, code: event.target.value });
-        },
-        [converter.name],
-    );
+    const onCodeChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
+        setConverter((prev) => ({ name: prev.name, code: event.target.value }));
+    }, []);
 
     const onSave = useCallback(async () => {
         await sendMessage("bridge/request/converter/save", converter);
@@ -236,19 +230,13 @@ const ExternalExtensionTab = () => {
         [extensions],
     );
 
-    const onNameChange = useCallback(
-        (event: ChangeEvent<HTMLInputElement>) => {
-            setExtension({ name: event.target.value, code: extension.code });
-        },
-        [extension.code],
-    );
+    const onNameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        setExtension((prev) => ({ name: event.target.value, code: prev.code }));
+    }, []);
 
-    const onCodeChange = useCallback(
-        (event: ChangeEvent<HTMLTextAreaElement>) => {
-            setExtension({ name: extension.name, code: event.target.value });
-        },
-        [extension.name],
-    );
+    const onCodeChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
+        setExtension((prev) => ({ name: prev.name, code: event.target.value }));
+    }, []);
 
     const onSave = useCallback(async () => {
         await sendMessage("bridge/request/extension/save", extension);
