@@ -223,7 +223,7 @@ const initialState: AppState = {
     backup: "",
 };
 
-export const useAppStore = create<AppState & AppActions>((set, get, store) => ({
+export const useAppStore = create<AppState & AppActions>((set, _get, store) => ({
     ...initialState,
 
     setExtensions: (payload) => set(() => ({ extensions: payload })),
@@ -237,12 +237,7 @@ export const useAppStore = create<AppState & AppActions>((set, get, store) => ({
     setLogsLimit: (payload) => set((state) => ({ logsLimit: payload, logs: state.logs.slice(-payload) })),
     addLog: (payload) =>
         set((state) => {
-            const logs = Array.from(state.logs);
-
-            if (state.logs.length > state.logsLimit) {
-                logs.shift();
-            }
-
+            const logs = state.logs.slice(state.logs.length >= state.logsLimit ? 1 : 0);
             const log = { ...payload, timestamp: formatDate(new Date()) };
 
             logs.push(log);
@@ -261,6 +256,7 @@ export const useAppStore = create<AppState & AppActions>((set, get, store) => ({
     resetDeviceState: (payload) => set((state) => ({ deviceStates: { ...state.deviceStates, [payload]: {} } })),
     updateAvailability: ({ topic, payload }) =>
         set((state) => {
+            // NOTE: indexOf is always valid since that's what triggers this call
             const friendlyName = topic.slice(0, topic.indexOf(AVAILABILITY_FEATURE_TOPIC_ENDING));
 
             return { availability: { ...state.availability, [friendlyName]: payload } };
