@@ -2,8 +2,7 @@ import NiceModal from "@ebay/nice-modal-react";
 import saveAs from "file-saver";
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useApp.js";
-import store, { setBackupPreparing } from "../../../store.js";
+import { useAppStore } from "../../../store.js";
 import { downloadAsZip, formatDate } from "../../../utils.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Button from "../../Button.js";
@@ -12,12 +11,14 @@ import { AddInstallCodeModal } from "../../modal/components/AddInstallCodeModal.
 import { ImageLocaliser } from "../ImageLocaliser.js";
 
 export default function Tools() {
-    const dispatch = useAppDispatch();
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const bridgeInfo = useAppSelector((state) => state.bridgeInfo);
-    const backup = useAppSelector((state) => state.backup);
-    const preparingBackup = useAppSelector((state) => state.preparingBackup);
-    const devices = useAppSelector((state) => state.devices);
+    const setBackupPreparing = useAppStore((state) => state.setBackupPreparing);
+    // TODO double check best way for this
+    const wholeState = useAppStore((state) => state.getWholeState());
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
+    const backup = useAppStore((state) => state.backup);
+    const preparingBackup = useAppStore((state) => state.preparingBackup);
+    const devices = useAppStore((state) => state.devices);
     const { t } = useTranslation(["settings", "common"]);
 
     const downloadBackup = useCallback((): void => {
@@ -40,7 +41,7 @@ export default function Tools() {
             </ConfirmButton>
             <Button
                 className="btn btn-primary join-item"
-                onClick={async () => await downloadAsZip(store.getState() as unknown as Record<string, unknown>, "state.json")}
+                onClick={async () => await downloadAsZip(wholeState as unknown as Record<string, unknown>, "state.json")}
             >
                 {t("download_state")}
             </Button>
@@ -56,7 +57,7 @@ export default function Tools() {
                 <Button
                     className="btn btn-primary join-item"
                     onClick={async () => {
-                        dispatch(setBackupPreparing());
+                        setBackupPreparing();
                         await sendMessage("bridge/request/backup", "");
                     }}
                 >

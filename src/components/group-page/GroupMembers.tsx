@@ -1,5 +1,5 @@
 import { type JSX, memo, useCallback, useContext, useMemo } from "react";
-import { useAppSelector } from "../../hooks/useApp.js";
+import { useAppStore } from "../../store.js";
 import type { Device, Group } from "../../types.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import GroupMember from "./GroupMember.js";
@@ -10,8 +10,8 @@ interface GroupMembersProps {
 }
 
 const GroupMembers = memo(({ devices, group }: GroupMembersProps) => {
-    const deviceStates = useAppSelector((state) => state.deviceStates);
-    const lastSeenConfig = useAppSelector((state) => state.bridgeInfo.config.advanced.last_seen);
+    const deviceStates = useAppStore((state) => state.deviceStates);
+    const lastSeenConfig = useAppStore((state) => state.bridgeInfo.config.advanced.last_seen);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const removeMember = useCallback(
         async (deviceIeee: string, endpoint: number): Promise<void> =>

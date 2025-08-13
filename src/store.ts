@@ -1,10 +1,11 @@
-import { configureStore, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import merge from "lodash/merge.js";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
+import { create } from "zustand";
+import { AVAILABILITY_FEATURE_TOPIC_ENDING } from "./consts.js";
 import type { AvailabilityState, Device, LogMessage, Message, RecursiveMutable, TouchlinkDevice } from "./types.js";
 import { formatDate } from "./utils.js";
 
-interface State {
+export interface AppState {
     /** Sorted by friendlyName */
     devices: Device[];
     deviceStates: Record<string, Zigbee2MQTTAPI["{friendlyName}"]>;
@@ -32,9 +33,34 @@ interface State {
     backup: string;
 }
 
-export const AVAILABILITY_FEATURE_TOPIC_ENDING = "/availability";
+interface AppActions {
+    setExtensions: (payload: Zigbee2MQTTAPI["bridge/extensions"]) => void;
+    setConverters: (payload: Zigbee2MQTTAPI["bridge/converters"]) => void;
+    setTouchlinkScan: (payload: { inProgress: boolean; devices: Zigbee2MQTTAPI["bridge/response/touchlink/scan"]["found"] }) => void;
+    setTouchlinkIdentifyInProgress: (payload: boolean) => void;
+    setTouchlinkResetInProgress: (payload: boolean) => void;
+    clearLogs: () => void;
+    setLogsLimit: (payload: number) => void;
+    addLog: (payload: Zigbee2MQTTAPI["bridge/logging"]) => void;
+    updateDeviceStateMessage: (payload: Message<Zigbee2MQTTAPI["{friendlyName}"]>) => void;
+    resetDeviceState: (payload: string) => void;
+    updateAvailability: (payload: Message<Zigbee2MQTTAPI["{friendlyName}/availability"]>) => void;
+    setBridgeInfo: (payload: Zigbee2MQTTAPI["bridge/info"]) => void;
+    setBridgeState: (payload: Zigbee2MQTTAPI["bridge/state"]) => void;
+    setBridgeHealth: (payload: Zigbee2MQTTAPI["bridge/health"]) => void;
+    setBridgeDefinitions: (payload: RecursiveMutable<Zigbee2MQTTAPI["bridge/definitions"]>) => void;
+    setDevices: (payload: Zigbee2MQTTAPI["bridge/devices"]) => void;
+    setGroups: (payload: Zigbee2MQTTAPI["bridge/groups"]) => void;
+    setNetworkMap: (payload: Zigbee2MQTTAPI["bridge/response/networkmap"] | undefined) => void;
+    setNetworkMapIsLoading: () => void;
+    setBackup: (payload: Zigbee2MQTTAPI["bridge/response/backup"]["zip"]) => void;
+    setBackupPreparing: () => void;
+    addGeneratedExternalDefinition: (payload: Zigbee2MQTTAPI["bridge/response/device/generate_external_definition"]) => void;
+    getWholeState: () => AppState;
+    reset: () => void;
+}
 
-const initialState: State = {
+const initialState: AppState = {
     devices: [],
     deviceStates: {},
     groups: [],
@@ -198,141 +224,71 @@ const initialState: State = {
     backup: "",
 };
 
-export const storeSlice = createSlice({
-    name: "store",
-    initialState,
-    reducers: {
-        setExtensions: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/extensions"]>) => {
-            state.extensions = action.payload;
-        },
-        setConverters: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/converters"]>) => {
-            state.converters = action.payload;
-        },
-        setTouchlinkScan: (
-            state,
-            action: PayloadAction<{ inProgress: boolean; devices: Zigbee2MQTTAPI["bridge/response/touchlink/scan"]["found"] }>,
-        ) => {
-            state.touchlinkScanInProgress = action.payload.inProgress;
-            state.touchlinkDevices = action.payload.devices;
-        },
-        setTouchlinkIdentifyInProgress: (state, action: PayloadAction<boolean>) => {
-            state.touchlinkIdentifyInProgress = action.payload;
-        },
-        setTouchlinkResetInProgress: (state, action: PayloadAction<boolean>) => {
-            state.touchlinkResetInProgress = action.payload;
-        },
-        clearLogs: (state) => {
-            state.logs = [];
-            state.lastNonDebugLog = undefined;
-        },
-        setLogsLimit: (state, action: PayloadAction<number>) => {
-            state.logsLimit = action.payload;
-            state.logs = state.logs.slice(-action.payload);
-        },
-        addLog: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/logging"]>) => {
+export const useAppStore = create<AppState & AppActions>((set, get, store) => ({
+    ...initialState,
+
+    setExtensions: (payload) => set(() => ({ extensions: payload })),
+    setConverters: (payload) => set(() => ({ converters: payload })),
+
+    setTouchlinkScan: ({ inProgress, devices }) => set(() => ({ touchlinkScanInProgress: inProgress, touchlinkDevices: devices })),
+    setTouchlinkIdentifyInProgress: (payload) => set(() => ({ touchlinkIdentifyInProgress: payload })),
+    setTouchlinkResetInProgress: (payload) => set(() => ({ touchlinkResetInProgress: payload })),
+
+    clearLogs: () => set(() => ({ logs: [], lastNonDebugLog: undefined })),
+    setLogsLimit: (payload) => set((state) => ({ logsLimit: payload, logs: state.logs.slice(-payload) })),
+    addLog: (payload) =>
+        set((state) => {
+            const logs = Array.from(state.logs);
+
             if (state.logs.length > state.logsLimit) {
-                state.logs.pop();
+                logs.shift();
             }
 
-            const log = { ...action.payload, timestamp: formatDate(new Date()) };
+            const log = { ...payload, timestamp: formatDate(new Date()) };
 
-            state.logs.push(log);
+            logs.push(log);
 
             if (log.level !== "debug") {
-                state.lastNonDebugLog = log;
+                return { logs, lastNonDebugLog: log };
             }
-        },
-        updateDeviceStateMessage: (state, action: PayloadAction<Message<Zigbee2MQTTAPI["{friendlyName}"]>>) => {
-            state.deviceStates[action.payload.topic] = merge(state.deviceStates[action.payload.topic] ?? {}, action.payload.payload);
-        },
-        resetDeviceState: (state, action: PayloadAction<string>) => {
-            state.deviceStates[action.payload] = {};
-        },
-        updateAvailability: (state, action: PayloadAction<Message<Zigbee2MQTTAPI["{friendlyName}/availability"]>>) => {
-            const friendlyName = action.payload.topic.split(AVAILABILITY_FEATURE_TOPIC_ENDING, 1)[0];
-            state.availability[friendlyName] = action.payload.payload;
-        },
-        setBridgeInfo: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/info"]>) => {
-            state.bridgeInfo = action.payload;
-        },
-        setBridgeState: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/state"]>) => {
-            state.bridgeState = action.payload;
-        },
-        setBridgeHealth: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/health"]>) => {
-            state.bridgeHealth = action.payload;
-        },
-        setBridgeDefinitions: (state, action: PayloadAction<RecursiveMutable<Zigbee2MQTTAPI["bridge/definitions"]>>) => {
-            state.bridgeDefinitions = action.payload;
-        },
-        setDevices: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/devices"]>) => {
-            // avoid sorting on-sites
-            state.devices = action.payload.sort((a, b) => a.friendly_name.localeCompare(b.friendly_name));
-        },
-        setGroups: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/groups"]>) => {
-            // avoid sorting on-sites
-            state.groups = action.payload.sort((a, b) => a.friendly_name.localeCompare(b.friendly_name));
-        },
-        setNetworkMap: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/response/networkmap"] | undefined>) => {
-            state.networkMapIsLoading = false;
-            state.networkMap = action.payload;
-        },
-        setNetworkMapIsLoading: (state) => {
-            state.networkMapIsLoading = true;
-            state.networkMap = undefined;
-        },
-        setBackup: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/response/backup"]["zip"]>) => {
-            state.preparingBackup = false;
-            state.backup = action.payload;
-        },
-        setBackupPreparing: (state) => {
-            state.preparingBackup = true;
-        },
-        addGeneratedExternalDefinition: (state, action: PayloadAction<Zigbee2MQTTAPI["bridge/response/device/generate_external_definition"]>) => {
-            state.generatedExternalDefinitions[action.payload.id] = action.payload.source;
-        },
-        reset: (state) => {
-            const defaultState = merge({}, initialState);
 
-            for (const key in defaultState) {
-                state[key] = defaultState[key];
-            }
-        },
+            return { logs };
+        }),
+
+    updateDeviceStateMessage: ({ topic, payload }) =>
+        set((state) => ({
+            deviceStates: { ...state.deviceStates, [topic]: merge(state.deviceStates[topic] ?? {}, payload) },
+        })),
+    resetDeviceState: (payload) => set((state) => ({ deviceStates: { ...state.deviceStates, [payload]: {} } })),
+    updateAvailability: ({ topic, payload }) =>
+        set((state) => {
+            const friendlyName = topic.slice(0, topic.indexOf(AVAILABILITY_FEATURE_TOPIC_ENDING));
+
+            return { availability: { ...state.availability, [friendlyName]: payload } };
+        }),
+
+    setBridgeInfo: (payload) => set(() => ({ bridgeInfo: payload })),
+    setBridgeState: (payload) => set(() => ({ bridgeState: payload })),
+    setBridgeHealth: (payload) => set(() => ({ bridgeHealth: payload })),
+    setBridgeDefinitions: (payload) => set(() => ({ bridgeDefinitions: payload })),
+
+    // sort here, avoids sorting on-sites
+    setDevices: (payload) => set(() => ({ devices: payload.sort((a, b) => a.friendly_name.localeCompare(b.friendly_name)) })),
+    // sort here, avoids sorting on-sites
+    setGroups: (payload) => set(() => ({ groups: payload.sort((a, b) => a.friendly_name.localeCompare(b.friendly_name)) })),
+
+    setNetworkMap: (payload) => set(() => ({ networkMapIsLoading: false, networkMap: payload })),
+    setNetworkMapIsLoading: () => set(() => ({ networkMapIsLoading: true, networkMap: undefined })),
+
+    setBackup: (payload) => set(() => ({ preparingBackup: false, backup: payload })),
+    setBackupPreparing: () => set(() => ({ preparingBackup: true })),
+
+    addGeneratedExternalDefinition: ({ id, source }) =>
+        set((state) => ({ generatedExternalDefinitions: { ...state.generatedExternalDefinitions, [id]: source } })),
+
+    getWholeState: () => get(),
+
+    reset: () => {
+        set(store.getInitialState());
     },
-});
-
-const store = configureStore<State>({
-    reducer: storeSlice.reducer,
-});
-
-export const {
-    setExtensions,
-    setConverters,
-    setTouchlinkScan,
-    setTouchlinkIdentifyInProgress,
-    setTouchlinkResetInProgress,
-    clearLogs,
-    setLogsLimit,
-    addLog,
-    updateDeviceStateMessage,
-    resetDeviceState,
-    updateAvailability,
-    setBridgeInfo,
-    setBridgeState,
-    setBridgeHealth,
-    setBridgeDefinitions,
-    setDevices,
-    setGroups,
-    setNetworkMap,
-    setNetworkMapIsLoading,
-    setBackup,
-    setBackupPreparing,
-    addGeneratedExternalDefinition,
-    reset,
-} = storeSlice.actions;
-
-export default store;
-
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-export type AppStore = typeof store;
+}));

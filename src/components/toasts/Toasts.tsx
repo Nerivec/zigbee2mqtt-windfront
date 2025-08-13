@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import store2 from "store2";
-import { useAppSelector } from "../../hooks/useApp.js";
 import { MAX_ON_SCREEN_NOTIFICATIONS_KEY } from "../../localStoreConsts.js";
+import { useAppStore } from "../../store.js";
 import type { LogMessage } from "../../types.js";
 import Toast from "./Toast.js";
 
@@ -10,8 +10,8 @@ const TOAST_EXPIRY_TIME = 5000;
 const BLACKLISTED_MESSAGES: string[] = ["MQTT publish"];
 
 export default function Toasts() {
-    const notificationFilter = useAppSelector((state) => state.bridgeInfo.config.frontend.notification_filter);
-    const lastLog = useAppSelector((state) => state.lastNonDebugLog);
+    const notificationFilter = useAppStore((state) => state.bridgeInfo.config.frontend.notification_filter);
+    const lastLog = useAppStore((state) => state.lastNonDebugLog);
     const [logs, setLogs] = useState<LogMessage[]>([]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger

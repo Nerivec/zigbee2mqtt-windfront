@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, memo, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
-import { useAppSelector } from "../../hooks/useApp.js";
 import { PERMIT_JOIN_TIME_KEY } from "../../localStoreConsts.js";
+import { useAppStore } from "../../store.js";
 import type { Device } from "../../types.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import Button from "../Button.js";
@@ -17,7 +17,7 @@ type PermitJoinDropdownProps = {
 
 const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps) => {
     const { t } = useTranslation("navbar");
-    const devices = useAppSelector((state) => state.devices);
+    const devices = useAppStore((state) => state.devices);
     const routers = useMemo(() => {
         const filteredDevices: JSX.Element[] = [];
 
@@ -75,8 +75,8 @@ const PermitJoinButton = memo(() => {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation("navbar");
     const [selectedRouter, setSelectedRouter] = useState<Device>();
-    const permitJoin = useAppSelector((state) => state.bridgeInfo.permit_join);
-    const permitJoinEnd = useAppSelector((state) => state.bridgeInfo.permit_join_end);
+    const permitJoin = useAppStore((state) => state.bridgeInfo.permit_join);
+    const permitJoinEnd = useAppStore((state) => state.bridgeInfo.permit_join_end);
 
     const onPermitJoinClick = useCallback(
         async () =>

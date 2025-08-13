@@ -1,6 +1,6 @@
 {
     "name": "zigbee2mqtt-windfront",
-    "version": "1.7.0",
+    "version": "1.8.0",
     "license": "GPL-3.0-or-later",
     "type": "module",
     "main": "index.js",
@@ -22,7 +22,7 @@
         "build": "vite build",
         "preview": "vite preview",
         "start": "vite dev",
-        "start:envs": "VITE_Z2M_API_URLS=localhost:5173/api,bogus.local:8080/api VITE_Z2M_API_NAMES=one,two npm start",
+        "start:envs": "VITE_Z2M_API_URLS=localhost:5173/api,localhost:8080/api,bogus.local:8080/api VITE_Z2M_API_NAMES=dev,main,bogus npm start",
         "test": "vitest run",
         "test:cov": "vitest run --coverage",
         "typecheck": "tsc --noEmit",
@@ -38,7 +38,6 @@
         "@fortawesome/fontawesome-svg-core": "^7.0.0",
         "@fortawesome/free-solid-svg-icons": "^7.0.0",
         "@fortawesome/react-fontawesome": "^0.2.3",
-        "@reduxjs/toolkit": "^2.8.2",
         "@storybook/addon-a11y": "^9.1.2",
         "@storybook/addon-docs": "^9.1.2",
         "@storybook/react-vite": "^9.1.2",
@@ -64,7 +63,6 @@
         "react-dom": "^19.1.1",
         "react-i18next": "^15.6.1",
         "react-image": "^4.1.0",
-        "react-redux": "^9.2.0",
         "react-router": "^7.8.0",
         "react-use-websocket": "^4.13.0",
         "reagraph": "^4.29.0",
@@ -77,7 +75,8 @@
         "vite-plugin-compression2": "^2.2.0",
         "vitest": "^3.1.2",
         "ws": "^8.18.3",
-        "zigbee2mqtt": "github:Koenkk/zigbee2mqtt#dev-types"
+        "zigbee2mqtt": "github:Koenkk/zigbee2mqtt#dev-types",
+        "zustand": "^5.0.7"
     },
     "sideEffects": [
         "*.css"

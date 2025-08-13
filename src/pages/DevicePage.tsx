@@ -16,7 +16,7 @@ import { type JSX, lazy, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import HeaderDeviceSelector from "../components/device-page/HeaderDeviceSelector.js";
-import { useAppSelector } from "../hooks/useApp.js";
+import { useAppStore } from "../store.js";
 
 export type TabName =
     | "info"
@@ -50,7 +50,7 @@ const StateTab = lazy(async () => await import("../components/device-page/tabs/S
 
 export default function DevicePage(): JSX.Element {
     const { t } = useTranslation(["devicePage", "common"]);
-    const devices = useAppSelector((state) => state.devices);
+    const devices = useAppStore((state) => state.devices);
     const { deviceId, tab } = useParams<DevicePageUrlParams>();
     const navigate = useNavigate();
     const device = deviceId ? devices.find((device) => device.ieee_address === deviceId) : undefined;

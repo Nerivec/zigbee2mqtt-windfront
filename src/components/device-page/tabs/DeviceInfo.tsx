@@ -5,7 +5,7 @@ import { memo, useCallback, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL, ZHC_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
-import { useAppSelector } from "../../../hooks/useApp.js";
+import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { toHex } from "../../../utils.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
@@ -79,8 +79,8 @@ ${JSON.stringify(device.endpoints, endpointsReplacer)}
 
 const ReportProblemLink = memo(({ device }: { device: Device }) => {
     const { t } = useTranslation("zigbee");
-    const bridgeInfo = useAppSelector((state) => state.bridgeInfo);
-    const bridgeHealth = useAppSelector((state) => state.bridgeHealth);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
+    const bridgeHealth = useAppStore((state) => state.bridgeHealth);
     const githubUrlParams = {
         labels: "problem",
         title: `[${device.model_id} / ${device.manufacturer}] ???`,
@@ -136,9 +136,9 @@ ${JSON.stringify(bridgeHealth.devices[device.ieee_address] ?? {})}
 export default function DeviceInfo(props: DeviceInfoProps) {
     const { device } = props;
     const { t } = useTranslation(["zigbee", "availability"]);
-    const deviceStates = useAppSelector((state) => state.deviceStates);
-    const bridgeConfig = useAppSelector((state) => state.bridgeInfo.config);
-    const availability = useAppSelector((state) => state.availability);
+    const deviceStates = useAppStore((state) => state.deviceStates);
+    const bridgeConfig = useAppStore((state) => state.bridgeInfo.config);
+    const availability = useAppStore((state) => state.availability);
     const homeassistantEnabled = bridgeConfig.homeassistant.enabled;
     const deviceState = useMemo(() => deviceStates[device.friendly_name] ?? {}, [device.friendly_name, deviceStates]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);

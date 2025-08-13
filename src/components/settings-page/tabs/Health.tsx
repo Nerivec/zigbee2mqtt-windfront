@@ -6,12 +6,12 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { format } from "timeago.js";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
-import { LOAD_AVERAGE_DOCS_URL } from "../../../consts";
-import { useAppSelector } from "../../../hooks/useApp";
-import type { Device } from "../../../types";
+import { LOAD_AVERAGE_DOCS_URL } from "../../../consts.js";
+import { useAppStore } from "../../../store.js";
+import type { Device } from "../../../types.js";
 import { formatDate } from "../../../utils.js";
-import DeviceImage from "../../device/DeviceImage";
-import Table from "../../table/Table";
+import DeviceImage from "../../device/DeviceImage.js";
+import Table from "../../table/Table.js";
 
 type HealthDeviceTableData = {
     device: Device;
@@ -20,8 +20,8 @@ type HealthDeviceTableData = {
 
 export default function Health() {
     const { t, i18n } = useTranslation(["health", "settings", "common"]);
-    const bridgeHealth = useAppSelector((state) => state.bridgeHealth);
-    const devices = useAppSelector((state) => state.devices);
+    const bridgeHealth = useAppStore((state) => state.bridgeHealth);
+    const devices = useAppStore((state) => state.devices);
 
     const tableData = useMemo(() => {
         const healthDevices: HealthDeviceTableData[] = [];

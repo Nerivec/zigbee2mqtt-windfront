@@ -5,7 +5,7 @@ import { type JSX, memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
-import { useAppSelector } from "../../hooks/useApp.js";
+import { useAppStore } from "../../store.js";
 import { toHex } from "../../utils.js";
 import Button from "../Button.js";
 import DeviceImage from "../device/DeviceImage.js";
@@ -19,7 +19,7 @@ type RawNetworkMapProps = {
 
 const RawNetworkData = memo(({ map }: RawNetworkMapProps) => {
     const { t } = useTranslation(["network", "common"]);
-    const devices = useAppSelector((state) => state.devices);
+    const devices = useAppStore((state) => state.devices);
     const [filterValue, setFilterValue] = useState<string>("");
     const [highlightValue, setHighlightValue] = useState<string>("");
 

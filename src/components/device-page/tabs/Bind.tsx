@@ -1,5 +1,5 @@
 import { type JSX, useEffect, useMemo, useState } from "react";
-import { useAppSelector } from "../../../hooks/useApp.js";
+import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import BindRow from "../BindRow.js";
 
@@ -61,8 +61,8 @@ const convertBindingsIntoNiceStructure = (device: Device): NiceBindingRule[] => 
 
 export default function Bind(props: BindProps): JSX.Element {
     const { device } = props;
-    const devices = useAppSelector((state) => state.devices);
-    const groups = useAppSelector((state) => state.groups);
+    const devices = useAppStore((state) => state.devices);
+    const groups = useAppStore((state) => state.groups);
     const [newBindingRule, setNewBindingRule] = useState<NiceBindingRule>({
         isNew: true,
         target: { type: "endpoint", ieee_address: "", endpoint: "" },

@@ -1,6 +1,6 @@
 import { type JSX, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useAppSelector } from "../../hooks/useApp.js";
+import { useAppStore } from "../../store.js";
 import type { Device, LogMessage } from "../../types.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import Button from "../Button.js";
@@ -22,7 +22,7 @@ export const CommandExecutor = ({ device, lastLog }: CommandExecutorProps): JSX.
     const [command, setCommand] = useState<string>("");
     const [payload, setPayload] = useState("{}");
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const bridgeDefinitions = useAppSelector((state) => state.bridgeDefinitions);
+    const bridgeDefinitions = useAppStore((state) => state.bridgeDefinitions);
 
     const canExecute = useMemo(() => {
         if (!cluster || !command) {

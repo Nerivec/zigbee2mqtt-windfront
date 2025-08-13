@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { useAppSelector } from "../../../hooks/useApp.js";
+import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Feature from "../../features/Feature.js";
@@ -13,7 +13,7 @@ type DeviceSpecificSettingsProps = {
 
 export default function DeviceSpecificSettings({ device }: DeviceSpecificSettingsProps) {
     const { t } = useTranslation(["exposes"]);
-    const bridgeInfo = useAppSelector((state) => state.bridgeInfo);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const setDeviceOptions = useCallback(
         async (options: Record<string, unknown>) => {

@@ -6,41 +6,42 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import Button from "../components/Button.js";
 import Table from "../components/table/Table.js";
-import { useAppDispatch, useAppSelector } from "../hooks/useApp.js";
-import { setTouchlinkIdentifyInProgress, setTouchlinkResetInProgress, setTouchlinkScan } from "../store.js";
+import { useAppStore } from "../store.js";
 import type { TouchlinkDevice } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 export default function TouchlinkPage() {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const dispatch = useAppDispatch();
-    const touchlinkDevices = useAppSelector((state) => state.touchlinkDevices);
-    const devices = useAppSelector((state) => state.devices);
-    const touchlinkIdentifyInProgress = useAppSelector((state) => state.touchlinkIdentifyInProgress);
-    const touchlinkResetInProgress = useAppSelector((state) => state.touchlinkResetInProgress);
-    const touchlinkScanInProgress = useAppSelector((state) => state.touchlinkScanInProgress);
+    const setTouchlinkIdentifyInProgress = useAppStore((state) => state.setTouchlinkIdentifyInProgress);
+    const setTouchlinkResetInProgress = useAppStore((state) => state.setTouchlinkResetInProgress);
+    const setTouchlinkScan = useAppStore((state) => state.setTouchlinkScan);
+    const touchlinkDevices = useAppStore((state) => state.touchlinkDevices);
+    const devices = useAppStore((state) => state.devices);
+    const touchlinkIdentifyInProgress = useAppStore((state) => state.touchlinkIdentifyInProgress);
+    const touchlinkResetInProgress = useAppStore((state) => state.touchlinkResetInProgress);
+    const touchlinkScanInProgress = useAppStore((state) => state.touchlinkScanInProgress);
     const touchlinkInProgress = touchlinkIdentifyInProgress || touchlinkResetInProgress;
     const { t } = useTranslation(["touchlink", "common", "zigbee"]);
 
     const onScanClick = useCallback(async () => {
-        dispatch(setTouchlinkScan({ inProgress: true, devices: [] }));
+        setTouchlinkScan({ inProgress: true, devices: [] });
         await sendMessage("bridge/request/touchlink/scan", "");
-    }, [sendMessage, dispatch]);
+    }, [sendMessage, setTouchlinkScan]);
 
     const onIdentifyClick = useCallback(
         async (device: TouchlinkDevice): Promise<void> => {
-            dispatch(setTouchlinkIdentifyInProgress(true));
+            setTouchlinkIdentifyInProgress(true);
             await sendMessage("bridge/request/touchlink/identify", device);
         },
-        [sendMessage, dispatch],
+        [sendMessage, setTouchlinkIdentifyInProgress],
     );
 
     const onResetClick = useCallback(
         async (device: TouchlinkDevice): Promise<void> => {
-            dispatch(setTouchlinkResetInProgress(true));
+            setTouchlinkResetInProgress(true);
             await sendMessage("bridge/request/touchlink/factory_reset", device);
         },
-        [sendMessage, dispatch],
+        [sendMessage, setTouchlinkResetInProgress],
     );
 
     const columns = useMemo<ColumnDef<TouchlinkDevice, unknown>[]>(

@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CONVERTERS_CODESPACE_URL, CONVERTERS_DOCS_URL, EXTENSIONS_DOCS_URL, MQTT_TOPICS_DOCS_URL } from "../../../consts.js";
-import { useAppSelector } from "../../../hooks/useApp.js";
-import type { RootState } from "../../../store.js";
+
+import { type AppState, useAppStore } from "../../../store.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Button from "../../Button.js";
 import ConfirmButton from "../../ConfirmButton.js";
@@ -91,8 +91,8 @@ const MqttTab = () => {
 const ExternalConverterTab = () => {
     const { t } = useTranslation(["devConsole", "common"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const converters = useAppSelector((state) => state.converters);
-    const [selectedConverter, setSelectedConverter] = useState<RootState["converters"][number]>();
+    const converters = useAppStore((state) => state.converters);
+    const [selectedConverter, setSelectedConverter] = useState<AppState["converters"][number]>();
     const [converter, setConverter] = useState({ name: "", code: "" });
 
     const canSave = useMemo(() => {
@@ -207,8 +207,8 @@ const ExternalConverterTab = () => {
 const ExternalExtensionTab = () => {
     const { t } = useTranslation(["devConsole", "common"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const extensions = useAppSelector((state) => state.extensions);
-    const [selectedExtension, setSelectedExtension] = useState<RootState["extensions"][number]>();
+    const extensions = useAppStore((state) => state.extensions);
+    const [selectedExtension, setSelectedExtension] = useState<AppState["extensions"][number]>();
     const [extension, setExtension] = useState({ name: "", code: "" });
 
     const canSave = useMemo(() => {

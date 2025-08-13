@@ -2,7 +2,7 @@ import { faLink, faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { RootState } from "../../store.js";
+import type { AppState } from "../../store.js";
 import type { Device, Group } from "../../types.js";
 import { getEndpoints, isDevice } from "../../utils.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
@@ -12,7 +12,7 @@ import DevicePicker from "../pickers/DevicePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
 import type { NiceBindingRule } from "./tabs/Bind.js";
 
-interface BindRowProps extends Pick<RootState, "devices"> {
+interface BindRowProps extends Pick<AppState, "devices"> {
     rule: NiceBindingRule;
     groups: Group[];
     device: Device;
@@ -22,7 +22,7 @@ interface BindRowState {
     rule: NiceBindingRule;
 }
 
-const getTarget = (rule: NiceBindingRule, devices: RootState["devices"], groups: Group[]): Device | Group | undefined => {
+const getTarget = (rule: NiceBindingRule, devices: AppState["devices"], groups: Group[]): Device | Group | undefined => {
     const { target } = rule;
 
     return target.type === "group" ? groups.find((g) => g.id === target.id) : devices.find((device) => device.ieee_address === target.ieee_address);

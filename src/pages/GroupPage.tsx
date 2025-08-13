@@ -4,7 +4,7 @@ import { lazy, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import HeaderGroupSelector from "../components/group-page/HeaderGroupSelector.js";
-import { useAppSelector } from "../hooks/useApp.js";
+import { useAppStore } from "../store.js";
 
 export type TabName = "devices" | "settings";
 
@@ -20,7 +20,7 @@ export default function GroupPage() {
     const navigate = useNavigate();
     const { t } = useTranslation(["groups", "common"]);
     const { groupId, tab } = useParams<GroupPageUrlParams>();
-    const groups = useAppSelector((state) => state.groups);
+    const groups = useAppStore((state) => state.groups);
     const groupIdNum = Number.parseInt(groupId!, 10);
     const group = groupId ? groups.find((group) => group.id === groupIdNum) : undefined;
 

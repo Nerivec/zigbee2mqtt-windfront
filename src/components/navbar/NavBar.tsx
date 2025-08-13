@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router";
-import { useAppSelector } from "../../hooks/useApp.js";
+import { useAppStore } from "../../store.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import ConfirmButton from "../ConfirmButton.js";
 import ApiUrlSwitcher from "./ApiUrlSwitcher.js";
@@ -48,7 +48,7 @@ const URLS = [
 
 const NavBar = () => {
     const { t } = useTranslation(["navbar", "common"]);
-    const restartRequired = useAppSelector((state) => state.bridgeInfo.restart_required);
+    const restartRequired = useAppStore((state) => state.bridgeInfo.restart_required);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
 
     const onDropdownMenuClick = useCallback(() => {

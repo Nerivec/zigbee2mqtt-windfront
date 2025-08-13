@@ -12,13 +12,13 @@ import {
     ZH_RELEASE_TAG_URL,
     ZHC_RELEASE_TAG_URL,
 } from "../../../consts";
-import { useAppSelector } from "../../../hooks/useApp.js";
+import { useAppStore } from "../../../store";
 import Stats from "../Stats.js";
 
 const ReportProblemLink = memo(() => {
     const { t } = useTranslation("zigbee");
-    const bridgeInfo = useAppSelector((state) => state.bridgeInfo);
-    const bridgeHealth = useAppSelector((state) => state.bridgeHealth);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
+    const bridgeHealth = useAppStore((state) => state.bridgeHealth);
     const githubUrlParams = {
         labels: "problem",
         title: "???",
@@ -67,8 +67,8 @@ process.uptime_sec: \`${Math.round(bridgeHealth.process.uptime_sec)}\`
 
 export default function About() {
     const { t } = useTranslation("settings");
-    const bridgeInfo = useAppSelector((state) => state.bridgeInfo);
-    const devices = useAppSelector((state) => state.devices);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
+    const devices = useAppStore((state) => state.devices);
 
     const isZigbee2mqttDevVersion = bridgeInfo.version.match(/^\d+\.\d+\.\d+$/) === null;
     const zigbee2mqttVersion = isZigbee2mqttDevVersion ? (

@@ -1,7 +1,7 @@
 import { type JSX, useCallback, useContext, useEffect, useState } from "react";
 
 import { useTranslation } from "react-i18next";
-import type { RootState } from "../../store.js";
+import type { AppState } from "../../store.js";
 import type { Device } from "../../types.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import Button from "../Button.js";
@@ -9,7 +9,7 @@ import { getZ2MDeviceImage } from "../device/index.js";
 
 type LocaliserState = "none" | "start" | "inprogress" | "done";
 
-type Props = Pick<RootState, "devices">;
+type Props = Pick<AppState, "devices">;
 
 type LStatus = "init" | "error" | "done";
 

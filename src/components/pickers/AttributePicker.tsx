@@ -1,7 +1,7 @@
 import { type ChangeEvent, type InputHTMLAttributes, type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
-import { useAppSelector } from "../../hooks/useApp.js";
+import { useAppStore } from "../../store.js";
 import type { AttributeDefinition, Device } from "../../types.js";
 import SelectField from "../form-fields/SelectField.js";
 
@@ -14,7 +14,7 @@ interface AttributePickerProps extends Omit<InputHTMLAttributes<HTMLSelectElemen
 
 const AttributePicker = memo((props: AttributePickerProps) => {
     const { cluster, device, onChange, label, ...rest } = props;
-    const bridgeDefinitions = useAppSelector((state) => state.bridgeDefinitions);
+    const bridgeDefinitions = useAppStore((state) => state.bridgeDefinitions);
     const { t } = useTranslation("zigbee");
 
     // retrieve cluster attributes, priority to ZH, then device custom if any

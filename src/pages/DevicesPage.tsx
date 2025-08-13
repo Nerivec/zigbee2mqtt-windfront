@@ -13,8 +13,8 @@ import Lqi from "../components/value-decorators/Lqi.js";
 import ModelLink from "../components/value-decorators/ModelLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
-import { useAppSelector } from "../hooks/useApp.js";
 import { DEVICES_HIDE_DISABLED_KEY } from "../localStoreConsts.js";
+import { useAppStore } from "../store.js";
 import type { AvailabilityState, Device, DeviceState } from "../types.js";
 import { convertLastSeenToDate, toHex } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
@@ -28,10 +28,10 @@ type DeviceTableData = {
 
 export default function DevicesPage(): JSX.Element {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const devices = useAppSelector((state) => state.devices);
-    const deviceStates = useAppSelector((state) => state.deviceStates);
-    const bridgeConfig = useAppSelector((state) => state.bridgeInfo.config);
-    const availability = useAppSelector((state) => state.availability);
+    const devices = useAppStore((state) => state.devices);
+    const deviceStates = useAppStore((state) => state.deviceStates);
+    const bridgeConfig = useAppStore((state) => state.bridgeInfo.config);
+    const availability = useAppStore((state) => state.availability);
     const [hideDisabled, setHideDisabled] = useState<boolean>(store2.get(DEVICES_HIDE_DISABLED_KEY, false));
     const [batteryLowOnly, setBatteryLowOnly] = useState(false);
     const { t } = useTranslation(["zigbee", "common", "availability"]);

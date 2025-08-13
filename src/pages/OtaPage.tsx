@@ -14,7 +14,7 @@ import ModelLink from "../components/value-decorators/ModelLink.js";
 import OtaLink from "../components/value-decorators/OtaLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
-import { useAppSelector } from "../hooks/useApp.js";
+import { useAppStore } from "../store.js";
 import type { Device, DeviceState } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
@@ -30,8 +30,8 @@ type OtaTableData = {
 };
 
 export default function OtaPage() {
-    const devices = useAppSelector((state) => state.devices);
-    const deviceStates = useAppSelector((state) => state.deviceStates);
+    const devices = useAppStore((state) => state.devices);
+    const deviceStates = useAppStore((state) => state.deviceStates);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["ota", "zigbee", "common"]);
     const [selectedDevices, setSelectedDevices] = useState<string[]>([]);

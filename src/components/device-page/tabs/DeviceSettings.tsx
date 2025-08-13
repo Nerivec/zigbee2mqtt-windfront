@@ -5,7 +5,7 @@ import merge from "lodash/merge.js";
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { DEVICE_OPTIONS_DOCS_URL } from "../../../consts.js";
-import { useAppSelector } from "../../../hooks/useApp.js";
+import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import SettingsList from "../../json-schema/SettingsList.js";
@@ -16,7 +16,7 @@ interface DeviceSettingsProps {
 
 export default function DeviceSettings({ device }: DeviceSettingsProps) {
     const { t } = useTranslation(["settings", "common"]);
-    const bridgeInfo = useAppSelector((state) => state.bridgeInfo);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
 
     const setDeviceOptions = useCallback(

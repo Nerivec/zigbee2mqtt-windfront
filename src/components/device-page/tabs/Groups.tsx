@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { useAppSelector } from "../../../hooks/useApp.js";
+import { useAppStore } from "../../../store.js";
 import type { Device, Group } from "../../../types.js";
 import { getEndpoints } from "../../../utils.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
@@ -18,7 +18,7 @@ type GroupsProps = {
 
 export default function Groups({ device }: GroupsProps) {
     const { t } = useTranslation(["groups", "zigbee", "common"]);
-    const groups = useAppSelector((state) => state.groups);
+    const groups = useAppStore((state) => state.groups);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const [endpoint, setEndpoint] = useState<string | number>("");
     const [groupId, setGroupId] = useState<string | number>("");

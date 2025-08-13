@@ -1,6 +1,6 @@
-import { Component, type PropsWithChildren } from "react";
+import { Component, memo, type PropsWithChildren } from "react";
 import { NEW_GITHUB_ISSUE_URL } from "./consts.js";
-import store from "./store.js";
+import { useAppStore } from "./store.js";
 import { downloadAsZip } from "./utils.js";
 
 type ErrorBoundaryState =
@@ -20,6 +20,22 @@ const INITIAL_STATE: ErrorBoundaryState = {
 };
 
 type ErrorBoundaryProps = PropsWithChildren;
+
+const DownloadStateButton = memo(() => {
+    const wholeState = useAppStore((state) => state.getWholeState());
+
+    return (
+        <button
+            type="button"
+            className="btn btn-primary btn-square animate-pulse text-3xl"
+            onClick={async () => {
+                await downloadAsZip(wholeState as unknown as Record<string, unknown>, "state.json");
+            }}
+        >
+            ➘
+        </button>
+    );
+});
 
 /** Based on https://github.com/bvaughn/react-error-boundary */
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
@@ -70,15 +86,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                                             <div>Save this file</div>
                                             <div className="text-xs font-semibold opacity-60">For use in next step</div>
                                         </div>
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary btn-square animate-pulse text-3xl"
-                                            onClick={async () => {
-                                                await downloadAsZip(store.getState() as unknown as Record<string, unknown>, "state.json");
-                                            }}
-                                        >
-                                            ➘
-                                        </button>
+                                        <DownloadStateButton />
                                     </li>
                                     <li className="list-row">
                                         <div />

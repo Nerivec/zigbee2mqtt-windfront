@@ -2,7 +2,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import type { RootState } from "../../store.js";
+import type { AppState } from "../../store.js";
 import type { Group } from "../../types.js";
 import { filterExposes } from "../../utils.js";
 import ConfirmButton from "../ConfirmButton.js";
@@ -11,10 +11,10 @@ import DeviceCard from "../device/DeviceCard.js";
 import { isValidForScenes } from "../device-page/index.js";
 
 interface GroupMemberProps {
-    device: RootState["devices"][number];
-    deviceState: RootState["deviceStates"][string];
+    device: AppState["devices"][number];
+    deviceState: AppState["deviceStates"][string];
     groupMember: Group["members"][number];
-    lastSeenConfig: RootState["bridgeInfo"]["config"]["advanced"]["last_seen"];
+    lastSeenConfig: AppState["bridgeInfo"]["config"]["advanced"]["last_seen"];
     removeDeviceFromGroup(deviceIeee: string, endpoint: number): Promise<void>;
     setDeviceState(ieee: string, value: Record<string, unknown>): Promise<void>;
 }

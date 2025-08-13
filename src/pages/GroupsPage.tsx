@@ -11,14 +11,14 @@ import ConfirmButton from "../components/ConfirmButton.js";
 import InputField from "../components/form-fields/InputField.js";
 import { RenameGroupForm } from "../components/modal/components/RenameGroupModal.js";
 import Table from "../components/table/Table.js";
-import { useAppSelector } from "../hooks/useApp.js";
+import { useAppStore } from "../store.js";
 import type { Group } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 export default function GroupsPage() {
     const [newGroupFriendlyName, setNewGroupFriendlyName] = useState<string>("");
     const [newGroupId, setNewGroupId] = useState<string>("");
-    const groups = useAppSelector((state) => state.groups);
+    const groups = useAppStore((state) => state.groups);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["groups", "common"]);
 

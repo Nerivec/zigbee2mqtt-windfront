@@ -2,8 +2,7 @@ import { memo, useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useApp.js";
-import { resetDeviceState } from "../../../store.js";
+import { useAppStore } from "../../../store.js";
 import type { Device, LogMessage } from "../../../types.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Button from "../../Button.js";
@@ -26,7 +25,7 @@ const ATTRIBUTE_LOG_REGEX = /^(zhc:tz: Read result of |z2m: Publish 'set' 'read'
 
 const RequestSupportLink = memo(({ device, externalDefinition }: RequestSupportLinkProps) => {
     const { t } = useTranslation("zigbee");
-    const zhcVersion = useAppSelector((state) => state.bridgeInfo.zigbee_herdsman_converters.version);
+    const zhcVersion = useAppStore((state) => state.bridgeInfo.zigbee_herdsman_converters.version);
     const githubUrlParams = {
         labels: "new device support",
         title: `[New device support] ${device.model_id} from ${device.manufacturer}`,
@@ -65,15 +64,15 @@ ${externalDefinition}
 });
 
 export default function DevConsole({ device }: DevConsoleProps) {
-    const dispatch = useAppDispatch();
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["devConsole", "common"]);
-    const lastLog = useAppSelector((state) => state.lastNonDebugLog);
+    const resetDeviceState = useAppStore((state) => state.resetDeviceState);
+    const lastLog = useAppStore((state) => state.lastNonDebugLog);
     const [lastAttributeLog, setLastAttributeLog] = useState<LogMessage>();
     const [lastCommandLog, setLastCommandLog] = useState<LogMessage>();
     const [extDefLoading, setExtDefLoading] = useState(false);
     const [showDefinition, setShowDefinition] = useState(false);
-    const externalDefinition = useAppSelector((state) => state.generatedExternalDefinitions[device.ieee_address]);
+    const externalDefinition = useAppStore((state) => state.generatedExternalDefinitions[device.ieee_address]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
@@ -130,8 +129,8 @@ export default function DevConsole({ device }: DevConsoleProps) {
     }, [sendMessage, device.ieee_address]);
 
     const resetState = useCallback(() => {
-        dispatch(resetDeviceState(device.friendly_name));
-    }, [dispatch, device.friendly_name]);
+        resetDeviceState(device.friendly_name);
+    }, [resetDeviceState, device.friendly_name]);
 
     return (
         <div className="flex flex-col gap-3">

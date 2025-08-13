@@ -4,12 +4,12 @@ import { memo, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { TabName } from "../../pages/GroupPage.js";
-import type { RootState } from "../../store.js";
+import type { AppState } from "../../store.js";
 import type { Group } from "../../types.js";
 import PopoverDropdown from "../PopoverDropdown.js";
 
 interface HeaderGroupSelectorProps {
-    groups: RootState["groups"];
+    groups: AppState["groups"];
     currentGroup: Group | undefined;
     tab?: TabName;
 }

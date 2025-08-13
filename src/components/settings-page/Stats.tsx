@@ -2,13 +2,13 @@ import snakeCase from "lodash/snakeCase.js";
 import { type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import type { RootState } from "../../store.js";
+import type { AppState } from "../../store.js";
 
 type StatRowProps = {
     name: string;
     data: Record<string, number>;
 };
-type StatsProps = Pick<RootState, "devices">;
+type StatsProps = Pick<AppState, "devices">;
 
 function StatRow({ name, data }: StatRowProps) {
     const children: JSX.Element[] = [];

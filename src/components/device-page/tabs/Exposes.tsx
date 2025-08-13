@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { useAppSelector } from "../../../hooks/useApp.js";
+import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Feature from "../../features/Feature.js";
@@ -15,7 +15,7 @@ export default function Exposes(props: ExposesProps) {
     const { device } = props;
     const { t } = useTranslation(["exposes"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const deviceState = useAppSelector((state) => state.deviceStates[device.friendly_name] ?? {});
+    const deviceState = useAppStore((state) => state.deviceStates[device.friendly_name] ?? {});
 
     const onChange = useCallback(
         async (value: Record<string, unknown>) => {

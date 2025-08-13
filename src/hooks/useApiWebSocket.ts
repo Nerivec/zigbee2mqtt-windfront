@@ -3,12 +3,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useWebSocket, { type Options } from "react-use-websocket";
 import store2 from "store2";
 import type { Zigbee2MQTTAPI, Zigbee2MQTTRequestEndpoints, Zigbee2MQTTResponse } from "zigbee2mqtt";
+import { AVAILABILITY_FEATURE_TOPIC_ENDING } from "../consts.js";
 import { USE_PROXY, Z2M_API_URLS } from "../envs.js";
 import { AUTH_FLAG_KEY, LAST_API_URL_KEY, TOKEN_KEY } from "../localStoreConsts.js";
-import * as store from "../store.js";
+import { useAppStore } from "../store.js";
 import type { Message, RecursiveMutable, ResponseMessage } from "../types.js";
 import { randomString, stringifyWithPreservingUndefinedAsNull } from "../utils.js";
-import { useAppDispatch } from "./useApp.js";
 
 const UNAUTHORIZED_ERROR_CODE = 4401;
 // prevent stripping
@@ -36,107 +36,28 @@ const resolvePendingRequests = (message: Zigbee2MQTTResponse<any>): void => {
     }
 };
 
-const processDeviceStateMessage = (message: Message<Zigbee2MQTTAPI["{friendlyName}"]>, dispatch: ReturnType<typeof useAppDispatch>): void => {
-    dispatch(store.updateDeviceStateMessage(message));
-};
-
-const processDeviceAvailabilityMessage = (
-    message: Message<Zigbee2MQTTAPI["{friendlyName}/availability"]>,
-    dispatch: ReturnType<typeof useAppDispatch>,
-): void => {
-    dispatch(store.updateAvailability(message));
-};
-
-const processBridgeMessage = (data: Message, dispatch: ReturnType<typeof useAppDispatch>): void => {
-    switch (data.topic) {
-        case "bridge/info": {
-            dispatch(store.setBridgeInfo(data.payload as Zigbee2MQTTAPI[typeof data.topic]));
-            break;
-        }
-        case "bridge/state": {
-            dispatch(store.setBridgeState(data.payload as Zigbee2MQTTAPI[typeof data.topic]));
-            break;
-        }
-        case "bridge/health": {
-            dispatch(store.setBridgeHealth(data.payload as Zigbee2MQTTAPI[typeof data.topic]));
-            break;
-        }
-        case "bridge/definitions": {
-            dispatch(store.setBridgeDefinitions(data.payload as RecursiveMutable<Zigbee2MQTTAPI[typeof data.topic]>));
-            break;
-        }
-        case "bridge/devices": {
-            dispatch(store.setDevices(data.payload as unknown as Zigbee2MQTTAPI[typeof data.topic]));
-            break;
-        }
-        case "bridge/groups": {
-            dispatch(store.setGroups(data.payload as unknown as Zigbee2MQTTAPI[typeof data.topic]));
-            break;
-        }
-        case "bridge/converters": {
-            dispatch(store.setConverters(data.payload as Zigbee2MQTTAPI[typeof data.topic]));
-            break;
-        }
-        case "bridge/extensions": {
-            dispatch(store.setExtensions(data.payload as Zigbee2MQTTAPI[typeof data.topic]));
-            break;
-        }
-        case "bridge/logging": {
-            const log = data.payload as Zigbee2MQTTAPI[typeof data.topic];
-
-            dispatch(store.addLog(log));
-
-            break;
-        }
-        case "bridge/response/networkmap": {
-            const response = data.payload as Zigbee2MQTTResponse<typeof data.topic>;
-
-            dispatch(store.setNetworkMap(response.status === "ok" ? response.data : undefined));
-
-            break;
-        }
-        case "bridge/response/touchlink/scan": {
-            const { status, data: payloadData } = data.payload as Zigbee2MQTTResponse<typeof data.topic>;
-
-            dispatch(
-                store.setTouchlinkScan(status === "ok" ? { inProgress: false, devices: payloadData.found } : { inProgress: false, devices: [] }),
-            );
-
-            break;
-        }
-        case "bridge/response/touchlink/identify": {
-            dispatch(store.setTouchlinkIdentifyInProgress(false));
-            break;
-        }
-        case "bridge/response/touchlink/factory_reset": {
-            dispatch(store.setTouchlinkResetInProgress(false));
-            break;
-        }
-        case "bridge/response/backup": {
-            const backupData = data.payload as Zigbee2MQTTResponse<typeof data.topic>;
-
-            dispatch(store.setBackup(backupData.data.zip));
-            break;
-        }
-        case "bridge/response/device/generate_external_definition": {
-            const extDef = data.payload as Zigbee2MQTTResponse<typeof data.topic>;
-
-            if (extDef.status === "ok") {
-                dispatch(store.addGeneratedExternalDefinition(extDef.data));
-            }
-            break;
-        }
-    }
-
-    if (data.topic.startsWith("bridge/response/")) {
-        // biome-ignore lint/suspicious/noExplicitAny: tmp
-        resolvePendingRequests((data as unknown as ResponseMessage<any>).payload);
-    }
-};
-
 export function useApiWebSocket() {
     const unmounted = useRef(false);
-    const dispatch = useAppDispatch();
+
+    const storeReset = useAppStore((state) => state.reset);
+    const addLog = useAppStore((state) => state.addLog);
+    const updateAvailability = useAppStore((state) => state.updateAvailability);
+    const updateDeviceStateMessage = useAppStore((state) => state.updateDeviceStateMessage);
+    const setBridgeInfo = useAppStore((state) => state.setBridgeInfo);
+    const setBridgeState = useAppStore((state) => state.setBridgeState);
+    const setBridgeHealth = useAppStore((state) => state.setBridgeHealth);
+    const setBridgeDefinitions = useAppStore((state) => state.setBridgeDefinitions);
+    const setDevices = useAppStore((state) => state.setDevices);
+    const setGroups = useAppStore((state) => state.setGroups);
+    const setConverters = useAppStore((state) => state.setConverters);
+    const setExtensions = useAppStore((state) => state.setExtensions);
+    const setNetworkMap = useAppStore((state) => state.setNetworkMap);
+    const setTouchlinkScan = useAppStore((state) => state.setTouchlinkScan);
+    const setTouchlinkIdentifyInProgress = useAppStore((state) => state.setTouchlinkIdentifyInProgress);
+    const setTouchlinkResetInProgress = useAppStore((state) => state.setTouchlinkResetInProgress);
+    const setBackup = useAppStore((state) => state.setBackup);
+    const addGeneratedExternalDefinition = useAppStore((state) => state.addGeneratedExternalDefinition);
+
     // VITE_ first (stripped accordingly during build)
     const apiUrls =
         import.meta.env.VITE_Z2M_API_URLS?.split(",").map((u) => u.trim()) ??
@@ -149,7 +70,7 @@ export function useApiWebSocket() {
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
         store2.set(LAST_API_URL_KEY, apiUrl);
-        dispatch(store.reset());
+        storeReset();
     }, [apiUrl]);
 
     const getSocketUrl = useCallback(
@@ -210,15 +131,95 @@ export function useApiWebSocket() {
                 try {
                     const jsonMessage = JSON.parse(message.data) as Message;
 
-                    if (jsonMessage.topic.endsWith(store.AVAILABILITY_FEATURE_TOPIC_ENDING)) {
-                        processDeviceAvailabilityMessage(jsonMessage as Message<Zigbee2MQTTAPI["{friendlyName}/availability"]>, dispatch);
+                    if (jsonMessage.topic.endsWith(AVAILABILITY_FEATURE_TOPIC_ENDING)) {
+                        updateAvailability(jsonMessage as Message<Zigbee2MQTTAPI["{friendlyName}/availability"]>);
                     } else if (jsonMessage.topic.startsWith("bridge/")) {
-                        processBridgeMessage(jsonMessage, dispatch);
+                        switch (jsonMessage.topic) {
+                            case "bridge/info": {
+                                setBridgeInfo(jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                break;
+                            }
+                            case "bridge/state": {
+                                setBridgeState(jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                break;
+                            }
+                            case "bridge/health": {
+                                setBridgeHealth(jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                break;
+                            }
+                            case "bridge/definitions": {
+                                setBridgeDefinitions(jsonMessage.payload as RecursiveMutable<Zigbee2MQTTAPI[typeof jsonMessage.topic]>);
+                                break;
+                            }
+                            case "bridge/devices": {
+                                setDevices(jsonMessage.payload as unknown as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                break;
+                            }
+                            case "bridge/groups": {
+                                setGroups(jsonMessage.payload as unknown as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                break;
+                            }
+                            case "bridge/converters": {
+                                setConverters(jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                break;
+                            }
+                            case "bridge/extensions": {
+                                setExtensions(jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                break;
+                            }
+                            case "bridge/logging": {
+                                const log = jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic];
+
+                                addLog(log);
+                                break;
+                            }
+                            case "bridge/response/networkmap": {
+                                const response = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
+
+                                setNetworkMap(response.status === "ok" ? response.data : undefined);
+                                break;
+                            }
+                            case "bridge/response/touchlink/scan": {
+                                const { status, data: payloadData } = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
+
+                                setTouchlinkScan(
+                                    status === "ok" ? { inProgress: false, devices: payloadData.found } : { inProgress: false, devices: [] },
+                                );
+                                break;
+                            }
+                            case "bridge/response/touchlink/identify": {
+                                setTouchlinkIdentifyInProgress(false);
+                                break;
+                            }
+                            case "bridge/response/touchlink/factory_reset": {
+                                setTouchlinkResetInProgress(false);
+                                break;
+                            }
+                            case "bridge/response/backup": {
+                                const backupData = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
+
+                                setBackup(backupData.data.zip);
+                                break;
+                            }
+                            case "bridge/response/device/generate_external_definition": {
+                                const extDef = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
+
+                                if (extDef.status === "ok") {
+                                    addGeneratedExternalDefinition(extDef.data);
+                                }
+                                break;
+                            }
+                        }
+
+                        if (jsonMessage.topic.startsWith("bridge/response/")) {
+                            // biome-ignore lint/suspicious/noExplicitAny: tmp
+                            resolvePendingRequests((jsonMessage as unknown as ResponseMessage<any>).payload);
+                        }
                     } else {
-                        processDeviceStateMessage(jsonMessage as Message<Zigbee2MQTTAPI["{friendlyName}"]>, dispatch);
+                        updateDeviceStateMessage(jsonMessage as Message<Zigbee2MQTTAPI["{friendlyName}"]>);
                     }
                 } catch (error) {
-                    dispatch(store.addLog({ level: "error", message: `frontend: ${error.message}`, namespace: "frontend" }));
+                    addLog({ level: "error", message: `frontend: ${error.message}`, namespace: "frontend" });
                     // console.error(error);
                 }
             }
@@ -264,24 +265,22 @@ export function useApiWebSocket() {
                     });
 
                     console.debug("Calling Request API:", finalPayload);
-                    dispatch(store.addLog({ level: "debug", message: `frontend:api: Sending ${finalPayload}`, namespace: "frontend:api" }));
+                    addLog({ level: "debug", message: `frontend:api: Sending ${finalPayload}`, namespace: "frontend:api" });
                     sendMessageRaw(finalPayload);
 
                     await promise;
                 } catch (error) {
-                    dispatch(
-                        store.addLog({ level: "error", message: `frontend:api: ${error} (transaction: ${error.cause})`, namespace: "frontend:api" }),
-                    );
+                    addLog({ level: "error", message: `frontend:api: ${error} (transaction: ${error.cause})`, namespace: "frontend:api" });
                 }
             } else {
                 const finalPayload = stringifyWithPreservingUndefinedAsNull({ topic, payload });
 
                 console.debug("Calling API:", finalPayload);
-                dispatch(store.addLog({ level: "debug", message: `frontend:api: Sending ${finalPayload}`, namespace: "frontend:api" }));
+                addLog({ level: "debug", message: `frontend:api: Sending ${finalPayload}`, namespace: "frontend:api" });
                 sendMessageRaw(finalPayload);
             }
         },
-        [sendMessageRaw, dispatch],
+        [sendMessageRaw, addLog],
     );
 
     return { sendMessage, readyState, apiUrls, apiUrl, setApiUrl };

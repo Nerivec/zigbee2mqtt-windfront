@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../hooks/useApp.js";
+import { useAppStore } from "../../../store.js";
 import type { Group } from "../../../types.js";
 import AddScene from "../../device-page/AddScene.js";
 import RecallRemove from "../../device-page/RecallRemove.js";
@@ -10,7 +10,7 @@ type DevicesProps = {
 };
 
 export default function Devices({ group }: DevicesProps) {
-    const devices = useAppSelector((state) => state.devices);
+    const devices = useAppStore((state) => state.devices);
 
     return (
         <>

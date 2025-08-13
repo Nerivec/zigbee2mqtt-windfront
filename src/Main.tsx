@@ -1,7 +1,6 @@
 import NiceModal from "@ebay/nice-modal-react";
 import React, { lazy, Suspense } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
-import { Provider } from "react-redux";
 import { HashRouter, Route, Routes } from "react-router";
 import { AuthForm } from "./components/modal/components/AuthModal.js";
 import NavBar from "./components/navbar/NavBar.js";
@@ -9,7 +8,6 @@ import ScrollToTop from "./components/ScrollToTop.js";
 import Toasts from "./components/toasts/Toasts.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
 import i18n from "./i18n/index.js";
-import store from "./store.js";
 import { WebSocketApiRouter } from "./WebSocketApiRouter.js";
 
 const HomePage = lazy(async () => await import("./pages/HomePage.js"));
@@ -32,44 +30,42 @@ export function Main() {
             <I18nextProvider i18n={i18n}>
                 <NiceModal.Provider>
                     <AuthForm id="auth-form" onAuth={async () => {}} />
-                    <Provider store={store}>
-                        <ErrorBoundary>
-                            <HashRouter>
-                                <ScrollToTop />
-                                <WebSocketApiRouter>
-                                    <NavBar />
-                                    <main className="pt-3 px-2">
-                                        <Suspense
-                                            fallback={
-                                                <>
-                                                    <div className="flex flex-row justify-center items-center gap-2">
-                                                        <span className="loading loading-infinity loading-xl" />
-                                                    </div>
-                                                    <div className="flex flex-row justify-center items-center gap-2">{t("loading")}</div>
-                                                </>
-                                            }
-                                        >
-                                            <Routes>
-                                                <Route path="/ota" element={<OtaPage />} />
-                                                <Route path="/network" element={<NetworkPage />} />
-                                                <Route path="/device/:deviceId/:tab?" element={<DevicePage />} />
-                                                <Route path="/settings/:tab?" element={<SettingsPage />} />
-                                                <Route path="/groups" element={<GroupsPage />} />
-                                                <Route path="/group/:groupId/:tab?" element={<GroupPage />} />
+                    <ErrorBoundary>
+                        <HashRouter>
+                            <ScrollToTop />
+                            <WebSocketApiRouter>
+                                <NavBar />
+                                <main className="pt-3 px-2">
+                                    <Suspense
+                                        fallback={
+                                            <>
+                                                <div className="flex flex-row justify-center items-center gap-2">
+                                                    <span className="loading loading-infinity loading-xl" />
+                                                </div>
+                                                <div className="flex flex-row justify-center items-center gap-2">{t("loading")}</div>
+                                            </>
+                                        }
+                                    >
+                                        <Routes>
+                                            <Route path="/ota" element={<OtaPage />} />
+                                            <Route path="/network" element={<NetworkPage />} />
+                                            <Route path="/device/:deviceId/:tab?" element={<DevicePage />} />
+                                            <Route path="/settings/:tab?" element={<SettingsPage />} />
+                                            <Route path="/groups" element={<GroupsPage />} />
+                                            <Route path="/group/:groupId/:tab?" element={<GroupPage />} />
 
-                                                <Route path="/logs" element={<LogsPage />} />
-                                                <Route path="/touchlink" element={<TouchlinkPage />} />
-                                                <Route path="/dashboard" element={<DashboardPage />} />
-                                                <Route path="/devices" element={<DevicesPage />} />
-                                                <Route path="/" element={<HomePage />} />
-                                            </Routes>
-                                        </Suspense>
-                                    </main>
-                                    <Toasts />
-                                </WebSocketApiRouter>
-                            </HashRouter>
-                        </ErrorBoundary>
-                    </Provider>
+                                            <Route path="/logs" element={<LogsPage />} />
+                                            <Route path="/touchlink" element={<TouchlinkPage />} />
+                                            <Route path="/dashboard" element={<DashboardPage />} />
+                                            <Route path="/devices" element={<DevicesPage />} />
+                                            <Route path="/" element={<HomePage />} />
+                                        </Routes>
+                                    </Suspense>
+                                </main>
+                                <Toasts />
+                            </WebSocketApiRouter>
+                        </HashRouter>
+                    </ErrorBoundary>
                 </NiceModal.Provider>
             </I18nextProvider>
         </React.StrictMode>

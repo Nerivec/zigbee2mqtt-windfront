@@ -4,12 +4,12 @@ import { memo, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { TabName } from "../../pages/DevicePage.js";
-import type { RootState } from "../../store.js";
+import type { AppState } from "../../store.js";
 import type { Device } from "../../types.js";
 import PopoverDropdown from "../PopoverDropdown.js";
 
 interface HeaderDeviceSelectorProps {
-    devices: RootState["devices"];
+    devices: AppState["devices"];
     currentDevice: Device | undefined;
     tab?: TabName;
 }

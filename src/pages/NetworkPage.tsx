@@ -8,9 +8,8 @@ import Button from "../components/Button.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import type { NetworkRawDisplayType } from "../components/network-page/index.js";
-import { useAppDispatch, useAppSelector } from "../hooks/useApp.js";
 import { NETWORK_RAW_DISPLAY_TYPE_KEY } from "../localStoreConsts.js";
-import { setNetworkMap, setNetworkMapIsLoading } from "../store.js";
+import { useAppStore } from "../store.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 type MapType = Zigbee2MQTTAPI["bridge/response/networkmap"]["type"];
@@ -19,11 +18,12 @@ const RawNetworkData = lazy(async () => await import("../components/network-page
 const RawNetworkMap = lazy(async () => await import("../components/network-page/RawNetworkMap.js"));
 
 export default function NetworkPage() {
-    const dispatch = useAppDispatch();
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["network", "common"]);
-    const networkMapIsLoading = useAppSelector((state) => state.networkMapIsLoading);
-    const networkMap = useAppSelector((state) => state.networkMap);
+    const networkMapIsLoading = useAppStore((state) => state.networkMapIsLoading);
+    const networkMap = useAppStore((state) => state.networkMap);
+    const setNetworkMap = useAppStore((state) => state.setNetworkMap);
+    const setNetworkMapIsLoading = useAppStore((state) => state.setNetworkMapIsLoading);
     const [mapType, setMapType] = useState<MapType>("raw");
     const [enableRoutes, setEnableRoutes] = useState(false);
     const [displayType, setDisplayType] = useState<NetworkRawDisplayType>(store2.get(NETWORK_RAW_DISPLAY_TYPE_KEY, "data"));
@@ -46,10 +46,10 @@ export default function NetworkPage() {
     }, []);
 
     const onRequestClick = useCallback(async () => {
-        dispatch(setNetworkMap(undefined));
-        dispatch(setNetworkMapIsLoading());
+        setNetworkMap(undefined);
+        setNetworkMapIsLoading();
         await sendMessage("bridge/request/networkmap", { type: mapType, routes: enableRoutes });
-    }, [mapType, enableRoutes, dispatch, sendMessage]);
+    }, [mapType, enableRoutes, setNetworkMap, setNetworkMapIsLoading, sendMessage]);
 
     const content = useMemo(() => {
         if (networkMapIsLoading) {

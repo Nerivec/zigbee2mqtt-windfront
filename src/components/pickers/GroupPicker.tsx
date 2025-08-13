@@ -1,10 +1,10 @@
 import { type ChangeEvent, type JSX, memo, type SelectHTMLAttributes, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import type { RootState } from "../../store.js";
+import type { AppState } from "../../store.js";
 import type { Group } from "../../types.js";
 import SelectField from "../form-fields/SelectField.js";
 
-interface GroupPickerProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange">, Pick<RootState, "groups"> {
+interface GroupPickerProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange">, Pick<AppState, "groups"> {
     value: string | number;
     label?: string;
     onChange(group?: Group): void;

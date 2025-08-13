@@ -1,3 +1,5 @@
+export const AVAILABILITY_FEATURE_TOPIC_ENDING = "/availability";
+
 export const LOG_LEVELS = ["debug", "info", "warning", "error"];
 
 export const LOG_LIMITS = [100, 200, 500, 1000];

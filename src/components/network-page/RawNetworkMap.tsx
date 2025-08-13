@@ -14,7 +14,6 @@ import {
 } from "reagraph";
 import store2 from "store2";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
-import { useAppSelector } from "../../hooks/useApp.js";
 import genericDevice from "../../images/generic-zigbee-device.png";
 import {
     NETWORK_MAP_LABEL_TYPE_KEY,
@@ -23,6 +22,7 @@ import {
     NETWORK_MAP_NODE_STRENGTH_KEY,
     NETWORK_MAP_SHOW_ICONS_KEY,
 } from "../../localStoreConsts.js";
+import { useAppStore } from "../../store";
 import fontUrl from "./../../styles/NotoSans-Regular.ttf";
 import { getZ2MDeviceImage } from "../device/index.js";
 import { cssColorToRgba, EDGE_RELATIONSHIP_FILL_COLORS, type NetworkMapLink, NODE_TYPE_FILL_COLORS, ZigbeeRelationship } from "./index.js";
@@ -36,7 +36,7 @@ type RawNetworkMapProps = {
 
 const RawNetworkMap = memo(({ map }: RawNetworkMapProps) => {
     const { t } = useTranslation("network");
-    const devices = useAppSelector((state) => state.devices);
+    const devices = useAppStore((state) => state.devices);
     const [layoutType, setLayoutType] = useState<LayoutTypes>(store2.get(NETWORK_MAP_LAYOUT_TYPE_KEY, "forceDirected2d"));
     const [labelType, setLabelType] = useState<LabelVisibilityType>(store2.get(NETWORK_MAP_LABEL_TYPE_KEY, "all"));
     const [nodeStrength, setNodeStrength] = useState<number>(store2.get(NETWORK_MAP_NODE_STRENGTH_KEY, -750));

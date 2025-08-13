@@ -4,7 +4,7 @@ import type { JSONSchema7 } from "json-schema";
 import { useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CONFIGURATION_DOCS_URL } from "../../../consts.js";
-import { useAppSelector } from "../../../hooks/useApp.js";
+import { useAppStore } from "../../../store.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Button from "../../Button.js";
 import SettingsList from "../../json-schema/SettingsList.js";
@@ -14,7 +14,7 @@ const TABS = [ROOT_TAB, "frontend", "mqtt", "serial", "availability", "ota", "ad
 
 export default function Settings() {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const bridgeInfo = useAppSelector((state) => state.bridgeInfo);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const [currentTab, setCurrentTab] = useState<string>(ROOT_TAB);
     const { t } = useTranslation("settings");
 

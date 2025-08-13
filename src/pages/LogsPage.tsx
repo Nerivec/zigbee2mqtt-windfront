@@ -7,8 +7,7 @@ import CheckboxField from "../components/form-fields/CheckboxField.js";
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import { LOG_LEVELS, LOG_LEVELS_CMAP, LOG_LIMITS } from "../consts.js";
-import { useAppDispatch, useAppSelector } from "../hooks/useApp.js";
-import { clearLogs as clearStateLogs, setLogsLimit } from "../store.js";
+import { useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
 import { formatDate } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
@@ -25,11 +24,12 @@ export default function LogsPage() {
     const [filterValue, setFilterValue] = useState<string>("");
     const [logLevel, setLogLevel] = useState<string>("all");
     const [highlightOnly, setHighlightOnly] = useState<boolean>(false);
-    const dispatch = useAppDispatch();
-    const logsLimit = useAppSelector((state) => state.logsLimit);
-    const logLevelConfig = useAppSelector((state) => state.bridgeInfo.config.advanced.log_level);
+    const logsLimit = useAppStore((state) => state.logsLimit);
+    const logLevelConfig = useAppStore((state) => state.bridgeInfo.config.advanced.log_level);
     const { t } = useTranslation("logs");
-    const logs = useAppSelector((state) => state.logs);
+    const logs = useAppStore((state) => state.logs);
+    const setLogsLimit = useAppStore((state) => state.setLogsLimit);
+    const clearStateLogs = useAppStore((state) => state.clearLogs);
     const filteredLogs = useMemo(
         () =>
             logs.filter(
@@ -95,7 +95,7 @@ export default function LogsPage() {
                     name="log_limit"
                     label={t("logs_limit")}
                     onChange={(e) => {
-                        dispatch(setLogsLimit(Number.parseInt(e.target.value)));
+                        setLogsLimit(Number.parseInt(e.target.value));
                     }}
                     value={logsLimit}
                 >
@@ -105,13 +105,7 @@ export default function LogsPage() {
                         </option>
                     ))}
                 </SelectField>
-                <Button<void>
-                    onClick={() => {
-                        dispatch(clearStateLogs());
-                    }}
-                    className="btn btn-primary self-center"
-                    disabled={logs.length === 0}
-                >
+                <Button<void> onClick={clearStateLogs} className="btn btn-primary self-center" disabled={logs.length === 0}>
                     {t("common:clear")}
                 </Button>
                 <div className="ml-auto">

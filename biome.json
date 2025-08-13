@@ -83,33 +83,7 @@
                     "fix": "none",
                     "options": {}
                 },
-                "useExhaustiveDependencies": {
-                    "level": "error",
-                    "options": {
-                        "hooks": [
-                            {
-                                "name": "useApiWebSocket",
-                                "closureIndex": 0,
-                                "dependenciesIndex": 1
-                            },
-                            {
-                                "name": "useAppDispatch",
-                                "closureIndex": 0,
-                                "dependenciesIndex": 1
-                            },
-                            {
-                                "name": "useAppSelector",
-                                "closureIndex": 0,
-                                "dependenciesIndex": 1
-                            },
-                            {
-                                "name": "useAppStore",
-                                "closureIndex": 0,
-                                "dependenciesIndex": 1
-                            }
-                        ]
-                    }
-                }
+                "useExhaustiveDependencies": "error"
             },
             "performance": {
                 "noBarrelFile": "error",
