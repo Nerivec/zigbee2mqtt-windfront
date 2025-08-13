@@ -21,21 +21,17 @@ const INITIAL_STATE: ErrorBoundaryState = {
 
 type ErrorBoundaryProps = PropsWithChildren;
 
-const DownloadStateButton = memo(() => {
-    const wholeState = useAppStore((state) => state.getWholeState());
-
-    return (
-        <button
-            type="button"
-            className="btn btn-primary btn-square animate-pulse text-3xl"
-            onClick={async () => {
-                await downloadAsZip(wholeState as unknown as Record<string, unknown>, "state.json");
-            }}
-        >
-            ➘
-        </button>
-    );
-});
+const DownloadStateButton = memo(() => (
+    <button
+        type="button"
+        className="btn btn-primary btn-square animate-pulse text-3xl"
+        onClick={async () => {
+            await downloadAsZip(useAppStore.getState() as unknown as Record<string, unknown>, "state.json");
+        }}
+    >
+        ➘
+    </button>
+));
 
 /** Based on https://github.com/bvaughn/react-error-boundary */
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {

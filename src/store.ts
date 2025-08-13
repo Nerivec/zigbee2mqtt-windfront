@@ -56,7 +56,6 @@ interface AppActions {
     setBackup: (payload: Zigbee2MQTTAPI["bridge/response/backup"]["zip"]) => void;
     setBackupPreparing: () => void;
     addGeneratedExternalDefinition: (payload: Zigbee2MQTTAPI["bridge/response/device/generate_external_definition"]) => void;
-    getWholeState: () => AppState;
     reset: () => void;
 }
 
@@ -285,8 +284,6 @@ export const useAppStore = create<AppState & AppActions>((set, get, store) => ({
 
     addGeneratedExternalDefinition: ({ id, source }) =>
         set((state) => ({ generatedExternalDefinitions: { ...state.generatedExternalDefinitions, [id]: source } })),
-
-    getWholeState: () => get(),
 
     reset: () => {
         set(store.getInitialState());

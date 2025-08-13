@@ -13,8 +13,6 @@ import { ImageLocaliser } from "../ImageLocaliser.js";
 export default function Tools() {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const setBackupPreparing = useAppStore((state) => state.setBackupPreparing);
-    // TODO double check best way for this
-    const wholeState = useAppStore((state) => state.getWholeState());
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const backup = useAppStore((state) => state.backup);
     const preparingBackup = useAppStore((state) => state.preparingBackup);
@@ -41,7 +39,7 @@ export default function Tools() {
             </ConfirmButton>
             <Button
                 className="btn btn-primary join-item"
-                onClick={async () => await downloadAsZip(wholeState as unknown as Record<string, unknown>, "state.json")}
+                onClick={async () => await downloadAsZip(useAppStore.getState() as unknown as Record<string, unknown>, "state.json")}
             >
                 {t("download_state")}
             </Button>
