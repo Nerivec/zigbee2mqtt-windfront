@@ -57,13 +57,13 @@ export default function Settings() {
                             set={setSettings}
                             rootOnly
                         />
-                    ) : (
+                    ) : bridgeInfo.config_schema.properties[currentTab] ? (
                         <SettingsList
                             schema={bridgeInfo.config_schema.properties[currentTab]}
                             data={bridgeInfo.config[currentTab]}
                             set={setSettings}
                         />
-                    )}
+                    ) : null}
                 </div>
             </div>
         </>
