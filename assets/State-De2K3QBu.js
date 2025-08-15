@@ -1,0 +1,1 @@
+import{a as r,j as a}from"./index-pzWGL0cK.js";import{u as i}from"./shallow-BvOtxUf5.js";import{J as m}from"./Json-CIlquCLk.js";import"./envs-CRUy-_iG.js";function f(t){const{device:e}=t,o=r(i(s=>s.deviceStates[e.friendly_name]??{}));return a.jsx(m,{obj:o})}export{f as default};

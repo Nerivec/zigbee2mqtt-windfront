@@ -1,0 +1,1 @@
+import{u as a,r as s,s as t,H as r,j as o}from"./index-pzWGL0cK.js";import"./envs-CRUy-_iG.js";function d(){const e=a();return s.useEffect(()=>{e(t.get(r)==="dashboard"?"/dashboard":"/devices",{replace:!0})},[e]),o.jsx("div",{})}export{d as default};
