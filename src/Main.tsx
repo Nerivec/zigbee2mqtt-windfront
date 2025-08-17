@@ -52,19 +52,19 @@ export function Main() {
                                                 }
                                             >
                                                 <Routes>
-                                                    <Route path="/ota" element={<OtaPage />} />
-                                                    <Route path="/network/:sourceIdx?" element={<NetworkPage />} />
-                                                    <Route path="/device/:sourceIdx/:deviceId/:tab?" element={<DevicePage />} />
-                                                    <Route path="/settings/:sourceIdx?/:tab?" element={<SettingsPage />} />
-                                                    <Route path="/groups" element={<GroupsPage />} />
-                                                    <Route path="/group/:sourceIdx/:groupId/:tab?" element={<GroupPage />} />
-
-                                                    <Route path="/logs/:sourceIdx?" element={<LogsPage />} />
-                                                    <Route path="/touchlink" element={<TouchlinkPage />} />
                                                     <Route path="/dashboard" element={<DashboardPage />} />
                                                     <Route path="/devices" element={<DevicesPage />} />
+                                                    <Route path="/device/:sourceIdx/:deviceId/:tab?" element={<DevicePage />} />
+                                                    <Route path="/groups" element={<GroupsPage />} />
+                                                    <Route path="/group/:sourceIdx/:groupId/:tab?" element={<GroupPage />} />
+                                                    <Route path="/touchlink" element={<TouchlinkPage />} />
+                                                    <Route path="/ota" element={<OtaPage />} />
+                                                    <Route path="/network/:sourceIdx?" element={<NetworkPage />} />
+                                                    <Route path="/logs/:sourceIdx?" element={<LogsPage />} />
+                                                    <Route path="/settings/:sourceIdx?/:tab?" element={<SettingsPage />} />
                                                     <Route path="/frontend-settings" element={<FrontendSettingsPage />} />
                                                     <Route path="/" element={<HomePage />} />
+                                                    <Route path="*" element={<HomePage />} />
                                                 </Routes>
                                             </Suspense>
                                         </main>

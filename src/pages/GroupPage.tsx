@@ -6,6 +6,7 @@ import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-
 import { useShallow } from "zustand/react/shallow";
 import HeaderGroupSelector from "../components/group-page/HeaderGroupSelector.js";
 import { useAppStore } from "../store.js";
+import { getValidSourceIdx } from "../utils.js";
 
 export type TabName = "devices" | "settings";
 
@@ -22,15 +23,19 @@ export default function GroupPage() {
     const navigate = useNavigate();
     const { t } = useTranslation(["groups", "common"]);
     const { sourceIdx, groupId, tab } = useParams<GroupPageUrlParams>();
-    const numSourceIdx = Number.isNaN(Number(sourceIdx)) ? 0 : Number(sourceIdx);
+    const [numSourceIdx, validSourceIdx] = getValidSourceIdx(sourceIdx);
     const groupIdNum = Number.parseInt(groupId!, 10);
     const group = useAppStore(useShallow((state) => (groupId ? state.groups[numSourceIdx].find((group) => group.id === groupIdNum) : undefined)));
 
     useEffect(() => {
-        if (!tab && group) {
-            navigate(`/group/${numSourceIdx}/${group.id}/devices`, { replace: true });
+        if (sourceIdx && validSourceIdx && group) {
+            if (!tab) {
+                navigate(`/group/${sourceIdx}/${group.id}/devices`, { replace: true });
+            }
+        } else {
+            navigate("/groups", { replace: true });
         }
-    }, [tab, numSourceIdx, group, navigate]);
+    }, [sourceIdx, validSourceIdx, tab, group, navigate]);
 
     const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
 

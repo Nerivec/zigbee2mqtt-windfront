@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import SourceDot from "../components/SourceDot.js";
 import { API_NAMES, API_URLS } from "../store.js";
+import { getValidSourceIdx } from "../utils.js";
 
 type UrlParams = {
     sourceIdx: `${number}`;
@@ -99,15 +100,15 @@ const SettingsPageTab = memo(({ sourceIdx, tab }: SettingsPageTabProps) => {
 export default function SettingsPage() {
     const navigate = useNavigate();
     const { sourceIdx, tab } = useParams<UrlParams>();
-    const numSourceIdx = Number.isNaN(Number(sourceIdx)) ? 0 : Number(sourceIdx);
+    const [numSourceIdx, validSourceIdx] = getValidSourceIdx(sourceIdx);
 
     useEffect(() => {
-        if (!sourceIdx) {
-            navigate(`/settings/0/${tab ?? "about"}`, { replace: true });
+        if (!sourceIdx || !validSourceIdx) {
+            navigate(`/settings/0/${tab || "about"}`, { replace: true });
         } else if (!tab) {
-            navigate(`/settings/${numSourceIdx}/about`, { replace: true });
+            navigate(`/settings/${sourceIdx}/about`, { replace: true });
         }
-    }, [tab, sourceIdx, numSourceIdx, navigate]);
+    }, [sourceIdx, validSourceIdx, tab, navigate]);
 
     const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
 

@@ -13,7 +13,7 @@ import SourceDot from "../components/SourceDot.js";
 import { LOG_LEVELS, LOG_LEVELS_CMAP, LOG_LIMITS } from "../consts.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
-import { formatDate } from "../utils.js";
+import { formatDate, getValidSourceIdx } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 const HIGHLIGHT_LEVEL_CMAP = {
@@ -144,17 +144,17 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
 export default function LogsPage() {
     const navigate = useNavigate();
     const { sourceIdx } = useParams<UrlParams>();
-    const numSourceIdx = Number.isNaN(Number(sourceIdx)) ? 0 : Number(sourceIdx);
+    const [numSourceIdx, validSourceIdx] = getValidSourceIdx(sourceIdx);
     const logsLimit = useAppStore((state) => state.logsLimit);
     const { t } = useTranslation(["logs", "common"]);
     const setLogsLimit = useAppStore((state) => state.setLogsLimit);
     const clearAllLogs = useAppStore((state) => state.clearAllLogs);
 
     useEffect(() => {
-        if (!sourceIdx) {
+        if (!sourceIdx || !validSourceIdx) {
             navigate("/logs/0", { replace: true });
         }
-    }, [sourceIdx, navigate]);
+    }, [sourceIdx, validSourceIdx, navigate]);
 
     const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
 

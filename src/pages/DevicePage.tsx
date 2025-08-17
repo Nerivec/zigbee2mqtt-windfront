@@ -18,6 +18,7 @@ import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-
 import { useShallow } from "zustand/react/shallow";
 import HeaderDeviceSelector from "../components/device-page/HeaderDeviceSelector.js";
 import { useAppStore } from "../store.js";
+import { getValidSourceIdx } from "../utils.js";
 
 export type TabName =
     | "info"
@@ -51,25 +52,25 @@ const SceneTab = lazy(async () => await import("../components/device-page/tabs/S
 const StateTab = lazy(async () => await import("../components/device-page/tabs/State.js"));
 
 export default function DevicePage(): JSX.Element {
+    const navigate = useNavigate();
     const { t } = useTranslation(["devicePage", "common"]);
     const { sourceIdx, deviceId, tab } = useParams<DevicePageUrlParams>();
-    const numSourceIdx = Number.isNaN(Number(sourceIdx)) ? 0 : Number(sourceIdx);
+    const [numSourceIdx, validSourceIdx] = getValidSourceIdx(sourceIdx);
     const device = useAppStore(
         useShallow((state) => (deviceId ? state.devices[numSourceIdx].find((device) => device.ieee_address === deviceId) : undefined)),
     );
-    const navigate = useNavigate();
 
     useEffect(() => {
-        if (device) {
-            if (!tab) {
-                navigate(device.type === "Coordinator" ? "/settings/about" : `/device/${numSourceIdx}/${device.ieee_address}/info`, {
-                    replace: true,
-                });
-            } else if (device.type === "Coordinator") {
-                navigate("/settings/about", { replace: true });
+        if (sourceIdx && validSourceIdx && device) {
+            if (device.type === "Coordinator") {
+                navigate(`/settings/${sourceIdx}/about`, { replace: true });
+            } else if (!tab) {
+                navigate(`/device/${sourceIdx}/${device.ieee_address}/info`, { replace: true });
             }
+        } else {
+            navigate("/devices", { replace: true });
         }
-    }, [tab, numSourceIdx, device, navigate]);
+    }, [sourceIdx, validSourceIdx, tab, device, navigate]);
 
     const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
 

@@ -13,6 +13,7 @@ import type { NetworkRawDisplayType } from "../components/network-page/index.js"
 import SourceDot from "../components/SourceDot.js";
 import { NETWORK_RAW_DISPLAY_TYPE_KEY } from "../localStoreConsts.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
+import { getValidSourceIdx } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 type UrlParams = {
@@ -156,13 +157,13 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
 export default function NetworkPage() {
     const navigate = useNavigate();
     const { sourceIdx } = useParams<UrlParams>();
-    const numSourceIdx = Number.isNaN(Number(sourceIdx)) ? 0 : Number(sourceIdx);
+    const [numSourceIdx, validSourceIdx] = getValidSourceIdx(sourceIdx);
 
     useEffect(() => {
-        if (!sourceIdx) {
+        if (!sourceIdx || !validSourceIdx) {
             navigate("/network/0", { replace: true });
         }
-    }, [sourceIdx, navigate]);
+    }, [sourceIdx, validSourceIdx, navigate]);
 
     const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
 

@@ -1,4 +1,5 @@
 import { saveAs } from "file-saver";
+import { API_URLS } from "./store.js";
 import type {
     AnySubFeature,
     BasicFeature,
@@ -29,6 +30,22 @@ export const getObjectFirstKey = <T>(object: T): string | undefined => {
     for (const key in object) {
         return key;
     }
+};
+
+/**
+ * For use with URL params.
+ * Always return a valid numeric source index to prevent issues with shallow `useAppStore`.
+ * Should `navigate` if the source index isn't actually valid
+ */
+export const getValidSourceIdx = (sourceIdx: string | undefined): [numSourceIdx: number, valid: boolean] => {
+    if (!sourceIdx) {
+        // valid here, since just falling back to default
+        return [0, true];
+    }
+
+    const numSourceIdx = Number(sourceIdx);
+
+    return Number.isNaN(numSourceIdx) || !API_URLS[numSourceIdx] ? [0, false] : [numSourceIdx, true];
 };
 
 // #endregion
