@@ -54,5 +54,5 @@ export default function Toasts() {
         return elements;
     }, [toasts, removeToast]);
 
-    return <div className="toast z-99">{renderToasts}</div>;
+    return <div className="toast z-98">{renderToasts}</div>;
 }

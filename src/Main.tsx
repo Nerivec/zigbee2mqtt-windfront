@@ -69,7 +69,7 @@ export function Main() {
                                             </Suspense>
                                         </main>
                                     </div>
-                                    <div className="drawer-side">
+                                    <div className="drawer-side z-99">
                                         <label htmlFor="notifications-drawer" aria-label={t("close_notifications")} className="drawer-overlay" />
                                         <Notifications />
                                     </div>
