@@ -265,7 +265,13 @@ export function useApiWebSocket() {
                                 const { topic, payload } = jsonMessage as unknown as ResponseMessage<any>;
 
                                 resolvePendingRequests(apiUrlIdx, payload);
-                                addToast({ sourceIdx: apiUrlIdx, topic, ...payload });
+                                addToast({
+                                    sourceIdx: apiUrlIdx,
+                                    topic: topic.replace("bridge/response/", ""),
+                                    status: payload.status,
+                                    error: "error" in payload ? payload.error : undefined,
+                                    transaction: payload.transaction,
+                                });
                             }
                         } else {
                             deviceStatesPatchesRef.current[apiUrlIdx].push(jsonMessage as Message<Zigbee2MQTTAPI["{friendlyName}"]>);
@@ -325,7 +331,6 @@ export function useApiWebSocket() {
                     sourceIdx,
                     topic,
                     status: "error",
-                    data: {},
                     error: `Cannot send to ${API_NAMES[sourceIdx]} (${sourceIdx}), WebSocket not open`,
                 });
 

@@ -1,7 +1,7 @@
 import merge from "lodash/merge.js";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import { create } from "zustand";
-import { AVAILABILITY_FEATURE_TOPIC_ENDING, BLACKLISTED_NOTIFICATIONS, NOTIFICATIONS_LIMIT_PER_SOURCE } from "./consts.js";
+import { AVAILABILITY_FEATURE_TOPIC_ENDING, BLACKLISTED_NOTIFICATIONS, NOTIFICATIONS_LIMIT_PER_SOURCE, PUBLISH_GET_SET_REGEX } from "./consts.js";
 import { Z2M_API_NAMES, Z2M_API_URLS } from "./envs.js";
 import type { AvailabilityState, Device, LogMessage, Message, RecursiveMutable, Toast, TouchlinkDevice } from "./types.js";
 import { formatDate } from "./utils.js";
@@ -359,7 +359,9 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
             const total = prev.length + newEntries.length;
             const limitDrop = total > state.logsLimit ? total - state.logsLimit : 0;
             const newLogs = prev.slice(limitDrop > 0 ? limitDrop : 0);
-            const newNotifications = prevNotifications.slice();
+            const newNotifications = Array.from(prevNotifications);
+            const newToasts = Array.from(state.toasts);
+            let addedToasts = false;
 
             for (const newEntry of newEntries) {
                 const log: LogMessage = { ...newEntry, timestamp: formatDate(new Date()) };
@@ -381,10 +383,28 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
 
                     newNotifications.push(log);
                 }
+
+                if (log.level === "error") {
+                    const match = log.message.match(PUBLISH_GET_SET_REGEX);
+
+                    if (match) {
+                        addedToasts = true;
+                        const [, type, key, name, error] = match;
+
+                        newToasts.push({
+                            sourceIdx,
+                            topic: `${name}/${type}(${key})`,
+                            status: "error",
+                            error,
+                        });
+                    }
+                }
             }
 
             if (newNotifications.length === 0) {
-                return { logs: { ...state.logs, [sourceIdx]: newLogs } };
+                return addedToasts
+                    ? { logs: { ...state.logs, [sourceIdx]: newLogs }, toasts: newToasts }
+                    : { logs: { ...state.logs, [sourceIdx]: newLogs } };
             }
 
             let notifAlert = newNotifications.some((n) => n.level === "error");
@@ -404,15 +424,28 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
             }
 
             return state.notificationsAlert[1] !== notifAlert
-                ? {
-                      logs: { ...state.logs, [sourceIdx]: newLogs },
-                      notifications: { ...state.notifications, [sourceIdx]: newNotifications },
-                      notificationsAlert: [state.notificationsAlert[0], notifAlert],
-                  }
-                : {
-                      logs: { ...state.logs, [sourceIdx]: newLogs },
-                      notifications: { ...state.notifications, [sourceIdx]: newNotifications },
-                  };
+                ? addedToasts
+                    ? {
+                          logs: { ...state.logs, [sourceIdx]: newLogs },
+                          notifications: { ...state.notifications, [sourceIdx]: newNotifications },
+                          notificationsAlert: [state.notificationsAlert[0], notifAlert],
+                          toasts: newToasts,
+                      }
+                    : {
+                          logs: { ...state.logs, [sourceIdx]: newLogs },
+                          notifications: { ...state.notifications, [sourceIdx]: newNotifications },
+                          notificationsAlert: [state.notificationsAlert[0], notifAlert],
+                      }
+                : addedToasts
+                  ? {
+                        logs: { ...state.logs, [sourceIdx]: newLogs },
+                        notifications: { ...state.notifications, [sourceIdx]: newNotifications },
+                        toasts: newToasts,
+                    }
+                  : {
+                        logs: { ...state.logs, [sourceIdx]: newLogs },
+                        notifications: { ...state.notifications, [sourceIdx]: newNotifications },
+                    };
         }),
 
     clearNotifications: (sourceIdx) =>

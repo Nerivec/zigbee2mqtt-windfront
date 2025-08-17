@@ -28,7 +28,7 @@ const Toast = memo(({ idx, toast, remove }: ToastProps) => {
     return (
         // biome-ignore lint/a11y/noStaticElementInteractions: special case
         <div className={`alert ${TOAST_STATUSES_CMAP[toast.status]} break-all cursor-pointer select-none max-w-prose`} onClick={() => remove(idx)}>
-            {toast.topic}: {"error" in toast ? toast.error : "OK"}
+            {toast.topic}: {toast.error ?? "OK"}
             {toast.transaction ? ` (${toast.transaction})` : ""}
         </div>
     );

@@ -13,12 +13,14 @@ export const LOG_LEVELS_CMAP = {
 
 export const NOTIFICATIONS_LIMIT_PER_SOURCE = 20;
 
+export const BLACKLISTED_NOTIFICATIONS = ["MQTT publish", " COUNTERS]"];
+
 export const TOAST_STATUSES_CMAP = {
     error: "text-error",
     ok: "text-success",
 };
 
-export const BLACKLISTED_NOTIFICATIONS = ["MQTT publish", " COUNTERS]"];
+export const PUBLISH_GET_SET_REGEX = /^z2m: Publish '(set|get)' '(.+)' to '(.+)' failed.*\((.*)\)'$/;
 
 export const SUPPORT_NEW_DEVICES_DOCS_URL = "https://www.zigbee2mqtt.io/advanced/support-new-devices/01_support_new_devices.html";
 
