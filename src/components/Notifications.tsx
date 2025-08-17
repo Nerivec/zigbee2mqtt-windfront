@@ -124,15 +124,17 @@ const Notifications = memo(() => {
         <aside className="bg-base-100 min-h-screen w-80">
             <ul className="menu w-full px-1 py-0">
                 {sourceNotifications}
-                <ConfirmButton
-                    className="btn btn-sm btn-error btn-outline mt-5"
-                    onClick={clearAllNotifications}
-                    title={t("clear_all")}
-                    modalDescription={t("dialog_confirmation_prompt")}
-                    modalCancelLabel={t("cancel")}
-                >
-                    {t("clear_all")}
-                </ConfirmButton>
+                {API_URLS.length > 1 && (
+                    <ConfirmButton
+                        className="btn btn-sm btn-error btn-outline mt-5"
+                        onClick={clearAllNotifications}
+                        title={t("clear_all")}
+                        modalDescription={t("dialog_confirmation_prompt")}
+                        modalCancelLabel={t("cancel")}
+                    >
+                        {t("clear_all")}
+                    </ConfirmButton>
+                )}
             </ul>
         </aside>
     );

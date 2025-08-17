@@ -1,12 +1,43 @@
 import { faBars, faDisplay, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback, useMemo } from "react";
+import { type MouseEvent, memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, type NavLinkRenderProps } from "react-router";
-import { useAppStore } from "../../store.js";
+import { API_NAMES, useAppStore } from "../../store.js";
 import LanguageSwitcher from "./LanguageSwitcher.js";
 import PermitJoinButton from "./PermitJoinButton.js";
 import ThemeSwitcher from "./ThemeSwitcher.js";
+
+type NavBarSubMenuProps = {
+    name: string;
+    navPath: string;
+    isNavActive: (props: NavLinkRenderProps) => string;
+};
+
+const NavBarSubMenu = memo(({ name, navPath, isNavActive }: NavBarSubMenuProps) => {
+    const onSubMenuClick = useCallback((event: MouseEvent<HTMLUListElement>) => {
+        (event.currentTarget.parentElement as HTMLDetailsElement).open = false;
+    }, []);
+
+    return (
+        <details>
+            <summary>
+                <NavLink to={navPath} className={isNavActive}>
+                    {name}
+                </NavLink>
+            </summary>
+            <ul className="z-98 p-2" onClick={onSubMenuClick}>
+                {API_NAMES.map((apiName, idx) => (
+                    <li key={`${idx}-${apiName}`}>
+                        <NavLink to={`${navPath}/${idx}`} className={isNavActive}>
+                            {apiName}
+                        </NavLink>
+                    </li>
+                ))}
+            </ul>
+        </details>
+    );
+});
 
 const NavBar = () => {
     const { t } = useTranslation(["navbar", "common"]);
@@ -23,47 +54,59 @@ const NavBar = () => {
     const links = useMemo(
         () => (
             <>
-                <li key="/devices">
+                <li>
                     <NavLink to="/devices" className={isNavActive}>
                         {t("devices")}
                     </NavLink>
                 </li>
-                <li key="/dashboard">
+                <li>
                     <NavLink to="/dashboard" className={isNavActive}>
                         {t("dashboard")}
                     </NavLink>
                 </li>
-                <li key="/groups">
+                <li>
                     <NavLink to="/groups" className={isNavActive}>
                         {t("groups")}
                     </NavLink>
                 </li>
-                <li key="/ota">
+                <li>
                     <NavLink to="/ota" className={isNavActive}>
                         {t("ota")}
                     </NavLink>
                 </li>
-                <li key="/touchlink">
+                <li>
                     <NavLink to="/touchlink" className={isNavActive}>
                         {t("touchlink")}
                     </NavLink>
                 </li>
-                <li key="/network">
-                    <NavLink to="/network" className={isNavActive}>
-                        {t("network")}
-                    </NavLink>
+                <li>
+                    {API_NAMES.length > 1 ? (
+                        <NavBarSubMenu name={t("network")} navPath="/network" isNavActive={isNavActive} />
+                    ) : (
+                        <NavLink to="/network" className={isNavActive}>
+                            {t("network")}
+                        </NavLink>
+                    )}
                 </li>
-                <li key="/logs">
-                    <NavLink to="/logs" className={isNavActive}>
-                        {t("logs")}
-                    </NavLink>
+                <li>
+                    {API_NAMES.length > 1 ? (
+                        <NavBarSubMenu name={t("logs")} navPath="/logs" isNavActive={isNavActive} />
+                    ) : (
+                        <NavLink to="/logs" className={isNavActive}>
+                            {t("logs")}
+                        </NavLink>
+                    )}
                 </li>
-                <li key="/settings">
-                    <NavLink to="/settings" className={isNavActive}>
-                        {t("settings")}
-                    </NavLink>
+                <li>
+                    {API_NAMES.length > 1 ? (
+                        <NavBarSubMenu name={t("settings")} navPath="/settings" isNavActive={isNavActive} />
+                    ) : (
+                        <NavLink to="/settings" className={isNavActive}>
+                            {t("settings")}
+                        </NavLink>
+                    )}
                 </li>
-                <li key="/frontend-settings">
+                <li>
                     <NavLink to="/frontend-settings" className={isNavActive}>
                         <FontAwesomeIcon icon={faDisplay} size={"xl"} />
                     </NavLink>
