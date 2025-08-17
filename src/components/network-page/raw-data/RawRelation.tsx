@@ -10,13 +10,14 @@ import Lqi from "../../value-decorators/Lqi.js";
 import type { NetworkMapLink } from "../index.js";
 
 type RawRelationProps = DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> & {
+    sourceIdx: number;
     relation: NetworkMapLink;
     device: Device;
     highlight: (friendlyName: string) => boolean;
     setHighlightValue: (friendlyName: string) => void;
 };
 
-const RawRelation = memo(({ relation, device, highlight, setHighlightValue, ...rest }: RawRelationProps) => {
+const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlightValue, ...rest }: RawRelationProps) => {
     const { t } = useTranslation(["network", "common"]);
 
     const highlighted = useMemo(() => highlight(device.friendly_name), [device.friendly_name, highlight]);
@@ -50,12 +51,12 @@ const RawRelation = memo(({ relation, device, highlight, setHighlightValue, ...r
                 </summary>
                 <ul>
                     <li>
-                        <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
+                        <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
                             {t("zigbee:ieee_address")}: {device.ieee_address}
                         </Link>
                     </li>
                     <li>
-                        <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
+                        <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
                             {t("zigbee:network_address")}: {toHex(device.network_address, 4)} ({device.network_address})
                         </Link>
                     </li>

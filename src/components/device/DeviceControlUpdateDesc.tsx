@@ -12,8 +12,7 @@ interface DeviceControlUpdateDescProps {
     setDeviceDescription(old: string, newDesc: string): Promise<void>;
 }
 
-const DeviceControlUpdateDesc = memo((props: DeviceControlUpdateDescProps) => {
-    const { device, setDeviceDescription } = props;
+const DeviceControlUpdateDesc = memo(({ device, setDeviceDescription }: DeviceControlUpdateDescProps) => {
     const { t } = useTranslation("zigbee");
 
     return (

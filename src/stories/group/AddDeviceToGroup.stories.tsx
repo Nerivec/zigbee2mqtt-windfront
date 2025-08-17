@@ -9,6 +9,7 @@ const meta = {
     component: AddDeviceToGroup,
     argTypes: {},
     args: {
+        sourceIdx: 0,
         devices: [],
         group: { ...EMPTY_GROUP },
     },

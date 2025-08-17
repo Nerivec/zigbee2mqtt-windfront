@@ -12,11 +12,12 @@ import InputField from "../form-fields/InputField.js";
 import { getScenes, isValidForScenes } from "./index.js";
 
 type AddSceneProps = {
+    sourceIdx: number;
     target: Device | Group;
     deviceState: DeviceState;
 };
 
-const AddScene = memo(({ target, deviceState }: AddSceneProps) => {
+const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
     const { t } = useTranslation("scene");
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const [sceneId, setSceneId] = useState<number>(0);
@@ -30,23 +31,25 @@ const AddScene = memo(({ target, deviceState }: AddSceneProps) => {
     const onCompositeChange = useCallback(
         async (value: Record<string, unknown> | unknown) => {
             await sendMessage<"{friendlyNameOrId}/set">(
+                sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${target.friendly_name}/set`, // TODO: swap to ID/ieee_address
                 value,
             );
         },
-        [sendMessage, target],
+        [sourceIdx, target, sendMessage],
     );
 
     const onStoreClick = useCallback(async () => {
         const payload: Zigbee2MQTTAPI["{friendlyNameOrId}/set"][string] = { ID: sceneId, name: sceneName || `Scene ${sceneId}` };
 
         await sendMessage<"{friendlyNameOrId}/set">(
+            sourceIdx,
             // @ts-expect-error templated API endpoint
             `${target.friendly_name}/set`, // TODO: swap to ID/ieee_address
             { scene_store: payload },
         );
-    }, [sendMessage, target, sceneId, sceneName]);
+    }, [sourceIdx, target, sceneId, sceneName, sendMessage]);
 
     const isValidSceneId = useMemo(() => {
         return sceneId >= 0 && sceneId <= 255 && !scenes.find((s) => s.id === sceneId);
@@ -64,6 +67,7 @@ const AddScene = memo(({ target, deviceState }: AddSceneProps) => {
                     onChange={(e) => !!e.target.value && setSceneId(e.target.valueAsNumber)}
                     min={0}
                     max={255}
+                    required
                 />
                 <InputField
                     name="scene_name"
@@ -72,6 +76,7 @@ const AddScene = memo(({ target, deviceState }: AddSceneProps) => {
                     value={sceneName}
                     placeholder={`Scene ${sceneId}`}
                     onChange={(e) => setSceneName(e.target.value)}
+                    required
                 />
                 {filteredFeatures.length > 0 && (
                     <div className="card card-border bg-base-200 shadow my-2">

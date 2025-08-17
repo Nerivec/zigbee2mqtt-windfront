@@ -1,48 +1,33 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import useWebSocket, { type Options } from "react-use-websocket";
+import { useCallback, useEffect, useRef } from "react";
+import useWebSocket, { type Options, ReadyState } from "react-use-websocket";
 import store2 from "store2";
 import type { Zigbee2MQTTAPI, Zigbee2MQTTRequestEndpoints, Zigbee2MQTTResponse } from "zigbee2mqtt";
 import { AVAILABILITY_FEATURE_TOPIC_ENDING } from "../consts.js";
-import { USE_PROXY, Z2M_API_URLS } from "../envs.js";
-import { AUTH_FLAG_KEY, LAST_API_URL_KEY, TOKEN_KEY } from "../localStoreConsts.js";
-import { useAppStore } from "../store.js";
+import { USE_PROXY } from "../envs.js";
+import { AUTH_FLAG_KEY, TOKEN_KEY } from "../localStoreConsts.js";
+import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { Message, RecursiveMutable, ResponseMessage } from "../types.js";
-import { randomString, stringifyWithPreservingUndefinedAsNull } from "../utils.js";
+import { randomString, stringifyWithUndefinedAsNull } from "../utils.js";
 
 const UNAUTHORIZED_ERROR_CODE = 4401;
 // prevent stripping
 const USE_PROXY_BOOL = /(yes|true|1)/.test(USE_PROXY);
 
-// biome-ignore lint/suspicious/noExplicitAny: tmp
-const pendingRequests = new Map<string, [() => void, (reason: any) => void]>();
-let transactionNumber = 1;
-const transactionRndPrefix = randomString(5);
-
-// biome-ignore lint/suspicious/noExplicitAny: tmp
-const resolvePendingRequests = (message: Zigbee2MQTTResponse<any>): void => {
-    if (message.transaction != null) {
-        const pendingRequest = pendingRequests.get(message.transaction);
-
-        if (pendingRequest) {
-            if (message.status === "ok" || message.status == null) {
-                pendingRequest[0]();
-            } else {
-                pendingRequest[1](new Error(message.error ?? "Unknown error", { cause: message.transaction }));
-            }
-
-            pendingRequests.delete(message.transaction);
-        }
-    }
+type ApiWebSocket = {
+    sendMessage: (payload: string) => void;
+    readyState: ReadyState;
 };
 
 export function useApiWebSocket() {
     const unmounted = useRef(false);
+    const webSockets = useRef<ApiWebSocket[]>([]);
+    // biome-ignore lint/suspicious/noExplicitAny: Promise API
+    const pendingRequestsRef = useRef(API_URLS.map(() => new Map<string, [() => void, (reason: any) => void]>()));
+    const transactionNumberRef = useRef(API_URLS.map(() => 1));
+    const transactionPrefixRef = useRef(API_URLS.map(() => randomString(5)));
 
-    const storeReset = useAppStore((state) => state.reset);
-    const addLog = useAppStore((state) => state.addLog);
     const updateAvailability = useAppStore((state) => state.updateAvailability);
-    const updateDeviceStateMessage = useAppStore((state) => state.updateDeviceStateMessage);
     const setBridgeInfo = useAppStore((state) => state.setBridgeInfo);
     const setBridgeState = useAppStore((state) => state.setBridgeState);
     const setBridgeHealth = useAppStore((state) => state.setBridgeHealth);
@@ -57,186 +42,265 @@ export function useApiWebSocket() {
     const setTouchlinkResetInProgress = useAppStore((state) => state.setTouchlinkResetInProgress);
     const setBackup = useAppStore((state) => state.setBackup);
     const addGeneratedExternalDefinition = useAppStore((state) => state.addGeneratedExternalDefinition);
+    const addLogs = useAppStore((state) => state.addLogs);
+    const addToast = useAppStore((state) => state.addToast);
+    const updateDeviceStates = useAppStore((state) => state.updateDeviceStates);
 
-    // VITE_ first (stripped accordingly during build)
-    const apiUrls =
-        import.meta.env.VITE_Z2M_API_URLS?.split(",").map((u) => u.trim()) ??
-        (Z2M_API_URLS.startsWith("${")
-            ? [`${window.location.host}${window.location.pathname}${window.location.pathname.endsWith("/") ? "" : "/"}api`] // env not replaced, use default
-            : Z2M_API_URLS.split(",").map((u) => u.trim()));
-    const lastApiUrl = store2.get(LAST_API_URL_KEY);
-    const [apiUrl, setApiUrl] = useState(lastApiUrl && apiUrls.includes(lastApiUrl) ? lastApiUrl : apiUrls[0]);
+    const deviceStatesPatchesRef = useRef<Message<Zigbee2MQTTAPI["{friendlyName}"]>[][]>(API_URLS.map(() => []));
+    const logsPatchesRef = useRef<Zigbee2MQTTAPI["bridge/logging"][][]>(API_URLS.map(() => []));
+    const rafHandleRef = useRef<number | null>(null);
+    const flushScheduledRef = useRef(false);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
-    useEffect(() => {
-        store2.set(LAST_API_URL_KEY, apiUrl);
-        storeReset();
-    }, [apiUrl]);
+    const scheduleFlush = useCallback(() => {
+        if (flushScheduledRef.current) {
+            return;
+        }
 
-    const getSocketUrl = useCallback(
-        async () =>
-            await new Promise<string>((resolve) => {
-                const protocol = window.location.protocol === "https:" ? "wss" : "ws";
-                let url = new URL(`${protocol}://${apiUrl}`);
+        flushScheduledRef.current = true;
 
-                // VITE_ first (stripped accordingly during build)
-                if (url.hostname !== "localhost" && (import.meta.env.VITE_USE_PROXY === "true" || USE_PROXY_BOOL)) {
-                    const hostPath = url.host + (url.pathname !== "/" ? url.pathname : "");
-                    url = new URL(
-                        `${protocol}://${window.location.host}${window.location.pathname}${window.location.pathname.endsWith("/") ? "" : "/"}ws-proxy/${hostPath}`,
-                    );
+        rafHandleRef.current = requestAnimationFrame(() => {
+            flushScheduledRef.current = false;
+            rafHandleRef.current = null;
+
+            // flush all sources in one store commit per batch type per source
+            for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
+                const statePatches = deviceStatesPatchesRef.current[sourceIdx];
+
+                if (statePatches.length) {
+                    updateDeviceStates(sourceIdx, statePatches.splice(0, statePatches.length));
                 }
 
-                const authRequired = !!store2.get(AUTH_FLAG_KEY);
+                const logs = logsPatchesRef.current[sourceIdx];
 
-                if (authRequired) {
-                    const token = new URLSearchParams(window.location.search).get("token") ?? store2.get(TOKEN_KEY);
-
-                    if (!token) {
-                        NiceModal.show("auth-form", {
-                            onAuth: (token: string) => {
-                                store2.set(TOKEN_KEY, token);
-                                url.searchParams.append("token", token);
-                                resolve(url.toString());
-                            },
-                        });
-
-                        return;
-                    }
-
-                    url.searchParams.append("token", token);
-                }
-
-                resolve(url.toString());
-            }),
-        [apiUrl],
-    );
-
-    const options = useRef<Options>({
-        disableJson: true,
-        share: true,
-        retryOnError: true,
-        shouldReconnect: (event: WebSocketEventMap["close"]): boolean => {
-            webSocketCheckUnauthorized(event);
-
-            return unmounted.current === false;
-        },
-        reconnectInterval: 3000,
-        reconnectAttempts: 10,
-        onOpen: (e) => console.log("WebSocket opened", e),
-        onClose: (e) => console.log("WebSocket closed", e),
-        onError: (e) => console.log("WebSocket error", e),
-        filter: (message) => {
-            if (message) {
-                try {
-                    const jsonMessage = JSON.parse(message.data) as Message;
-
-                    if (jsonMessage.topic.endsWith(AVAILABILITY_FEATURE_TOPIC_ENDING)) {
-                        updateAvailability(jsonMessage as Message<Zigbee2MQTTAPI["{friendlyName}/availability"]>);
-                    } else if (jsonMessage.topic.startsWith("bridge/")) {
-                        switch (jsonMessage.topic) {
-                            case "bridge/info": {
-                                setBridgeInfo(jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
-                                break;
-                            }
-                            case "bridge/state": {
-                                setBridgeState(jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
-                                break;
-                            }
-                            case "bridge/health": {
-                                setBridgeHealth(jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
-                                break;
-                            }
-                            case "bridge/definitions": {
-                                setBridgeDefinitions(jsonMessage.payload as RecursiveMutable<Zigbee2MQTTAPI[typeof jsonMessage.topic]>);
-                                break;
-                            }
-                            case "bridge/devices": {
-                                setDevices(jsonMessage.payload as unknown as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
-                                break;
-                            }
-                            case "bridge/groups": {
-                                setGroups(jsonMessage.payload as unknown as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
-                                break;
-                            }
-                            case "bridge/converters": {
-                                setConverters(jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
-                                break;
-                            }
-                            case "bridge/extensions": {
-                                setExtensions(jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
-                                break;
-                            }
-                            case "bridge/logging": {
-                                const log = jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic];
-
-                                addLog(log);
-                                break;
-                            }
-                            case "bridge/response/networkmap": {
-                                const response = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
-
-                                setNetworkMap(response.status === "ok" ? response.data : undefined);
-                                break;
-                            }
-                            case "bridge/response/touchlink/scan": {
-                                const { status, data: payloadData } = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
-
-                                setTouchlinkScan(
-                                    status === "ok" ? { inProgress: false, devices: payloadData.found } : { inProgress: false, devices: [] },
-                                );
-                                break;
-                            }
-                            case "bridge/response/touchlink/identify": {
-                                setTouchlinkIdentifyInProgress(false);
-                                break;
-                            }
-                            case "bridge/response/touchlink/factory_reset": {
-                                setTouchlinkResetInProgress(false);
-                                break;
-                            }
-                            case "bridge/response/backup": {
-                                const backupData = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
-
-                                setBackup(backupData.data.zip);
-                                break;
-                            }
-                            case "bridge/response/device/generate_external_definition": {
-                                const extDef = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
-
-                                if (extDef.status === "ok") {
-                                    addGeneratedExternalDefinition(extDef.data);
-                                }
-                                break;
-                            }
-                        }
-
-                        if (jsonMessage.topic.startsWith("bridge/response/")) {
-                            // biome-ignore lint/suspicious/noExplicitAny: tmp
-                            resolvePendingRequests((jsonMessage as unknown as ResponseMessage<any>).payload);
-                        }
-                    } else {
-                        updateDeviceStateMessage(jsonMessage as Message<Zigbee2MQTTAPI["{friendlyName}"]>);
-                    }
-                } catch (error) {
-                    addLog({ level: "error", message: `frontend: ${error.message}`, namespace: "frontend" });
-                    // console.error(error);
+                if (logs.length) {
+                    addLogs(sourceIdx, logs.splice(0, logs.length));
                 }
             }
+        });
+    }, [updateDeviceStates, addLogs]);
 
-            // never rerender from websocket message
-            return false;
-        },
-    });
+    useEffect(() => {
+        return () => {
+            if (rafHandleRef.current != null) cancelAnimationFrame(rafHandleRef.current);
+        };
+    }, []);
 
-    const { sendMessage: sendMessageRaw, readyState } = useWebSocket<Message | null>(getSocketUrl, options.current);
+    // biome-ignore lint/suspicious/noExplicitAny: generic
+    const resolvePendingRequests = useCallback((idx: number, message: Zigbee2MQTTResponse<any>): void => {
+        if (message.transaction != null) {
+            const pendingRequest = pendingRequestsRef.current[idx].get(message.transaction);
 
-    const webSocketCheckUnauthorized = useCallback((event: WebSocketEventMap["close"]): void => {
-        if (event.code === UNAUTHORIZED_ERROR_CODE) {
-            store2.set(AUTH_FLAG_KEY, true);
-            store2.remove(TOKEN_KEY);
+            if (pendingRequest) {
+                if (message.status === "ok" || message.status == null) {
+                    pendingRequest[0]();
+                } else {
+                    pendingRequest[1](new Error(message.error ?? "Unknown error", { cause: message.transaction }));
+                }
+
+                pendingRequestsRef.current[idx].delete(message.transaction);
+            }
         }
     }, []);
+
+    let i = 0;
+
+    for (const apiUrl of API_URLS) {
+        const apiUrlIdx = i;
+        // biome-ignore lint/correctness/useHookAtTopLevel: static `API_URLS`
+        const getSocketUrl = useCallback(
+            async () =>
+                await new Promise<string>((resolve) => {
+                    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+                    let url = new URL(`${protocol}://${apiUrl}`);
+
+                    // VITE_ first (stripped accordingly during build)
+                    if (url.hostname !== "localhost" && (import.meta.env.VITE_USE_PROXY === "true" || USE_PROXY_BOOL)) {
+                        const hostPath = url.host + (url.pathname !== "/" ? url.pathname : "");
+                        url = new URL(
+                            `${protocol}://${window.location.host}${window.location.pathname}${window.location.pathname.endsWith("/") ? "" : "/"}ws-proxy/${hostPath}`,
+                        );
+                    }
+
+                    const authRequired = !!store2.get(AUTH_FLAG_KEY);
+
+                    if (authRequired) {
+                        const token = new URLSearchParams(window.location.search).get("token") ?? store2.get(TOKEN_KEY);
+
+                        if (!token) {
+                            NiceModal.show("auth-form", {
+                                onAuth: (token: string) => {
+                                    store2.set(TOKEN_KEY, token);
+                                    url.searchParams.append("token", token);
+                                    resolve(url.toString());
+                                },
+                            });
+
+                            return;
+                        }
+
+                        url.searchParams.append("token", token);
+                    }
+
+                    resolve(url.toString());
+                }),
+            [],
+        );
+
+        // biome-ignore lint/correctness/useHookAtTopLevel: static `API_URLS`
+        const options = useRef<Options>({
+            disableJson: true,
+            share: true,
+            retryOnError: true,
+            shouldReconnect: (event: WebSocketEventMap["close"]): boolean => {
+                webSocketCheckUnauthorized(event);
+
+                return unmounted.current === false;
+            },
+            reconnectInterval: 3000,
+            reconnectAttempts: 10,
+            onOpen: (e) => console.log("WebSocket opened", e),
+            onClose: (e) => console.log("WebSocket closed", e),
+            onError: (e) => {
+                console.error("WebSocket error", e);
+
+                logsPatchesRef.current[apiUrlIdx].push({
+                    level: "error",
+                    message: `frontend:ws: Could not connect to WebSocket ${apiUrl}`,
+                    namespace: "frontend:ws",
+                });
+                scheduleFlush();
+            },
+            filter: (message) => {
+                if (message) {
+                    try {
+                        const jsonMessage = JSON.parse(message.data) as Message;
+
+                        if (jsonMessage.topic.endsWith(AVAILABILITY_FEATURE_TOPIC_ENDING)) {
+                            updateAvailability(apiUrlIdx, jsonMessage as Message<Zigbee2MQTTAPI["{friendlyName}/availability"]>);
+                        } else if (jsonMessage.topic.startsWith("bridge/")) {
+                            switch (jsonMessage.topic) {
+                                case "bridge/info": {
+                                    setBridgeInfo(apiUrlIdx, jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                    break;
+                                }
+                                case "bridge/state": {
+                                    setBridgeState(apiUrlIdx, jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                    break;
+                                }
+                                case "bridge/health": {
+                                    setBridgeHealth(apiUrlIdx, jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                    break;
+                                }
+                                case "bridge/definitions": {
+                                    setBridgeDefinitions(
+                                        apiUrlIdx,
+                                        jsonMessage.payload as RecursiveMutable<Zigbee2MQTTAPI[typeof jsonMessage.topic]>,
+                                    );
+                                    break;
+                                }
+                                case "bridge/devices": {
+                                    setDevices(apiUrlIdx, jsonMessage.payload as unknown as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                    break;
+                                }
+                                case "bridge/groups": {
+                                    setGroups(apiUrlIdx, jsonMessage.payload as unknown as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                    break;
+                                }
+                                case "bridge/converters": {
+                                    setConverters(apiUrlIdx, jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                    break;
+                                }
+                                case "bridge/extensions": {
+                                    setExtensions(apiUrlIdx, jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic]);
+                                    break;
+                                }
+                                case "bridge/logging": {
+                                    const log = jsonMessage.payload as Zigbee2MQTTAPI[typeof jsonMessage.topic];
+
+                                    logsPatchesRef.current[apiUrlIdx].push(log);
+                                    scheduleFlush();
+                                    break;
+                                }
+                                case "bridge/response/networkmap": {
+                                    const response = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
+
+                                    setNetworkMap(apiUrlIdx, response.status === "ok" ? response.data : undefined);
+                                    break;
+                                }
+                                case "bridge/response/touchlink/scan": {
+                                    const { status, data: payloadData } = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
+
+                                    setTouchlinkScan(
+                                        apiUrlIdx,
+                                        status === "ok" ? { inProgress: false, devices: payloadData.found } : { inProgress: false, devices: [] },
+                                    );
+                                    break;
+                                }
+                                case "bridge/response/touchlink/identify": {
+                                    setTouchlinkIdentifyInProgress(apiUrlIdx, false);
+                                    break;
+                                }
+                                case "bridge/response/touchlink/factory_reset": {
+                                    setTouchlinkResetInProgress(apiUrlIdx, false);
+                                    break;
+                                }
+                                case "bridge/response/backup": {
+                                    const backupData = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
+
+                                    setBackup(apiUrlIdx, backupData.data.zip);
+                                    break;
+                                }
+                                case "bridge/response/device/generate_external_definition": {
+                                    const extDef = jsonMessage.payload as Zigbee2MQTTResponse<typeof jsonMessage.topic>;
+
+                                    if (extDef.status === "ok") {
+                                        addGeneratedExternalDefinition(apiUrlIdx, extDef.data);
+                                    }
+                                    break;
+                                }
+                            }
+
+                            if (jsonMessage.topic.startsWith("bridge/response/")) {
+                                // biome-ignore lint/suspicious/noExplicitAny: generic
+                                const { topic, payload } = jsonMessage as unknown as ResponseMessage<any>;
+
+                                resolvePendingRequests(apiUrlIdx, payload);
+                                addToast({ sourceIdx: apiUrlIdx, topic, ...payload });
+                            }
+                        } else {
+                            deviceStatesPatchesRef.current[apiUrlIdx].push(jsonMessage as Message<Zigbee2MQTTAPI["{friendlyName}"]>);
+                            scheduleFlush();
+                        }
+                    } catch (error) {
+                        logsPatchesRef.current[apiUrlIdx].push({ level: "error", message: `frontend: ${error.message}`, namespace: "frontend" });
+                        scheduleFlush();
+                        // console.error(error);
+                    }
+                }
+
+                // never rerender from websocket message
+                return false;
+            },
+        });
+
+        // biome-ignore lint/correctness/useHookAtTopLevel: static `API_URLS`
+        const { sendMessage, readyState } = useWebSocket<Message | null>(getSocketUrl, options.current);
+
+        // biome-ignore lint/correctness/useHookAtTopLevel: static `API_URLS`
+        const webSocketCheckUnauthorized = useCallback((event: WebSocketEventMap["close"]): void => {
+            if (event.code === UNAUTHORIZED_ERROR_CODE) {
+                store2.set(AUTH_FLAG_KEY, true);
+                store2.remove(TOKEN_KEY);
+            }
+        }, []);
+
+        webSockets.current[apiUrlIdx] = {
+            sendMessage,
+            readyState,
+        };
+
+        i++;
+    }
 
     useEffect(() => {
         return () => {
@@ -246,42 +310,73 @@ export function useApiWebSocket() {
 
     // wrap raw sendMessage
     const sendMessage = useCallback(
-        async <T extends Zigbee2MQTTRequestEndpoints>(topic: T, payload: Zigbee2MQTTAPI[T]): Promise<void> => {
+        async <T extends Zigbee2MQTTRequestEndpoints>(sourceIdx: number, topic: T, payload: Zigbee2MQTTAPI[T]): Promise<void> => {
+            const webSocket = webSockets.current[sourceIdx];
+
+            if (!webSocket) {
+                console.error(`Unknown source index ${sourceIdx}`);
+
+                return;
+            }
+
+            if (webSocket.readyState !== ReadyState.OPEN) {
+                console.error(`Cannot send to ${API_NAMES[sourceIdx]} (${sourceIdx}), WebSocket not open`);
+                addToast({
+                    sourceIdx,
+                    topic,
+                    status: "error",
+                    data: {},
+                    error: `Cannot send to ${API_NAMES[sourceIdx]} (${sourceIdx}), WebSocket not open`,
+                });
+
+                return;
+            }
+
             if (topic.startsWith("bridge/request/")) {
                 if (payload !== "" && typeof payload === "string") {
                     console.error("Only `Record<string, unknown>` or empty string payloads allowed");
                     return;
                 }
 
-                const transaction = `${transactionRndPrefix}-${transactionNumber++}`;
+                const transaction = `${transactionPrefixRef.current[sourceIdx]}-${transactionNumberRef.current[sourceIdx]++}`;
 
                 try {
                     const promise = new Promise<void>((resolve, reject) => {
-                        pendingRequests.set(transaction, [resolve, reject]);
+                        pendingRequestsRef.current[sourceIdx].set(transaction, [resolve, reject]);
                     });
-                    const finalPayload = stringifyWithPreservingUndefinedAsNull({
+                    const finalPayload = stringifyWithUndefinedAsNull({
                         topic,
                         payload: payload === "" ? { transaction } : { ...payload, transaction },
                     });
 
-                    console.debug("Calling Request API:", finalPayload);
-                    addLog({ level: "debug", message: `frontend:api: Sending ${finalPayload}`, namespace: "frontend:api" });
-                    sendMessageRaw(finalPayload);
+                    console.log(`Calling Request API (${API_NAMES[sourceIdx]} | ${sourceIdx}):`, finalPayload);
+                    logsPatchesRef.current[sourceIdx].push({
+                        level: "debug",
+                        message: `frontend:api: Sending ${finalPayload}`,
+                        namespace: "frontend:api",
+                    });
+                    scheduleFlush();
+                    webSocket.sendMessage(finalPayload);
 
                     await promise;
                 } catch (error) {
-                    addLog({ level: "error", message: `frontend:api: ${error} (transaction: ${error.cause})`, namespace: "frontend:api" });
+                    console.error(`Failed request API call (${API_NAMES[sourceIdx]} | ${sourceIdx})`, error.message, error.cause);
                 }
             } else {
-                const finalPayload = stringifyWithPreservingUndefinedAsNull({ topic, payload });
+                const finalPayload = stringifyWithUndefinedAsNull({ topic, payload });
 
-                console.debug("Calling API:", finalPayload);
-                addLog({ level: "debug", message: `frontend:api: Sending ${finalPayload}`, namespace: "frontend:api" });
-                sendMessageRaw(finalPayload);
+                console.log(`Calling API (${API_NAMES[sourceIdx]} | ${sourceIdx}):`, finalPayload);
+                logsPatchesRef.current[sourceIdx].push({
+                    level: "debug",
+                    message: `frontend:api: Sending ${finalPayload}`,
+                    namespace: "frontend:api",
+                });
+                scheduleFlush();
+                webSocket.sendMessage(finalPayload);
             }
         },
-        [sendMessageRaw, addLog],
+        [scheduleFlush, addToast],
     );
 
-    return { sendMessage, readyState, apiUrls, apiUrl, setApiUrl };
+    return { sendMessage, transactionPrefixes: transactionPrefixRef.current, readyStates: webSockets.current.map((u) => u.readyState) };
 }

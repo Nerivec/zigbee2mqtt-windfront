@@ -2,8 +2,8 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useShallow } from "zustand/react/shallow";
 import { CONVERTERS_CODESPACE_URL, CONVERTERS_DOCS_URL, EXTENSIONS_DOCS_URL, MQTT_TOPICS_DOCS_URL } from "../../../consts.js";
-
 import { type AppState, useAppStore } from "../../../store.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Button from "../../Button.js";
@@ -14,9 +14,11 @@ import TextareaField from "../../form-fields/TextareaField.js";
 
 type TabName = "mqtt" | "external_converters" | "external_extensions";
 
+type DevConsoleProps = { sourceIdx: number };
+
 const TABS: TabName[] = ["mqtt", "external_converters", "external_extensions"];
 
-const MqttTab = () => {
+const MqttTab = ({ sourceIdx }: DevConsoleProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const [topic, setTopic] = useState("");
@@ -45,11 +47,12 @@ const MqttTab = () => {
 
     const onSend = useCallback(async () => {
         await sendMessage(
+            sourceIdx,
             // @ts-expect-error dev
             topic,
             mqttPayload === "" ? mqttPayload : JSON.parse(mqttPayload),
         );
-    }, [topic, mqttPayload, sendMessage]);
+    }, [sourceIdx, topic, mqttPayload, sendMessage]);
 
     return (
         <>
@@ -88,11 +91,11 @@ const MqttTab = () => {
     );
 };
 
-const ExternalConverterTab = () => {
+const ExternalConverterTab = ({ sourceIdx }: DevConsoleProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const converters = useAppStore((state) => state.converters);
-    const [selectedConverter, setSelectedConverter] = useState<AppState["converters"][number]>();
+    const converters = useAppStore(useShallow((state) => state.converters[sourceIdx]));
+    const [selectedConverter, setSelectedConverter] = useState<AppState["converters"][number][number]>();
     const [converter, setConverter] = useState({ name: "", code: "" });
 
     const canSave = useMemo(() => {
@@ -129,12 +132,12 @@ const ExternalConverterTab = () => {
     }, []);
 
     const onSave = useCallback(async () => {
-        await sendMessage("bridge/request/converter/save", converter);
-    }, [sendMessage, converter]);
+        await sendMessage(sourceIdx, "bridge/request/converter/save", converter);
+    }, [sourceIdx, converter, sendMessage]);
 
     const onRemove = useCallback(async () => {
-        await sendMessage("bridge/request/converter/remove", { name: converter.name });
-    }, [sendMessage, converter.name]);
+        await sendMessage(sourceIdx, "bridge/request/converter/remove", { name: converter.name });
+    }, [sourceIdx, converter.name, sendMessage]);
 
     return (
         <>
@@ -198,11 +201,11 @@ const ExternalConverterTab = () => {
     );
 };
 
-const ExternalExtensionTab = () => {
+const ExternalExtensionTab = ({ sourceIdx }: DevConsoleProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const extensions = useAppStore((state) => state.extensions);
-    const [selectedExtension, setSelectedExtension] = useState<AppState["extensions"][number]>();
+    const extensions = useAppStore(useShallow((state) => state.extensions[sourceIdx]));
+    const [selectedExtension, setSelectedExtension] = useState<AppState["extensions"][number][number]>();
     const [extension, setExtension] = useState({ name: "", code: "" });
 
     const canSave = useMemo(() => {
@@ -239,12 +242,12 @@ const ExternalExtensionTab = () => {
     }, []);
 
     const onSave = useCallback(async () => {
-        await sendMessage("bridge/request/extension/save", extension);
-    }, [sendMessage, extension]);
+        await sendMessage(sourceIdx, "bridge/request/extension/save", extension);
+    }, [sourceIdx, extension, sendMessage]);
 
     const onRemove = useCallback(async () => {
-        await sendMessage("bridge/request/extension/remove", { name: extension.name });
-    }, [sendMessage, extension.name]);
+        await sendMessage(sourceIdx, "bridge/request/extension/remove", { name: extension.name });
+    }, [sourceIdx, extension.name, sendMessage]);
 
     return (
         <>
@@ -305,22 +308,22 @@ const ExternalExtensionTab = () => {
     );
 };
 
-export default function DevConsole() {
+export default function DevConsole({ sourceIdx }: DevConsoleProps) {
     const [currentTab, setCurrentTab] = useState<TabName>(TABS[0]);
     const { t } = useTranslation("devConsole");
 
     const content = useMemo(() => {
         switch (currentTab) {
             case "mqtt":
-                return <MqttTab />;
+                return <MqttTab sourceIdx={sourceIdx} />;
             case "external_converters":
-                return <ExternalConverterTab />;
+                return <ExternalConverterTab sourceIdx={sourceIdx} />;
             case "external_extensions":
-                return <ExternalExtensionTab />;
+                return <ExternalExtensionTab sourceIdx={sourceIdx} />;
         }
 
         return "";
-    }, [currentTab]);
+    }, [currentTab, sourceIdx]);
 
     return (
         <div className="tabs tabs-border">

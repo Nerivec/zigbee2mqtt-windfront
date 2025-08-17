@@ -12,13 +12,15 @@ import DevicePicker from "../pickers/DevicePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
 import type { NiceBindingRule } from "./tabs/Bind.js";
 
-interface BindRowProps extends Pick<AppState, "devices"> {
+interface BindRowProps {
+    sourceIdx: number;
+    devices: AppState["devices"][number];
     rule: NiceBindingRule;
     groups: Group[];
     device: Device;
 }
 
-const getTarget = (rule: NiceBindingRule, devices: AppState["devices"], groups: Group[]): Device | Group | undefined => {
+const getTarget = (rule: NiceBindingRule, devices: AppState["devices"][number], groups: Group[]): Device | Group | undefined => {
     const { target } = rule;
 
     return target.type === "group" ? groups.find((g) => g.id === target.id) : devices.find((device) => device.ieee_address === target.ieee_address);
@@ -26,7 +28,7 @@ const getTarget = (rule: NiceBindingRule, devices: AppState["devices"], groups: 
 
 type Action = "Bind" | "Unbind";
 
-const BindRow = memo(({ devices, groups, device, rule }: BindRowProps) => {
+const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps) => {
     const [stateRule, setStateRule] = useState(rule);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["common", "zigbee"]);
@@ -103,12 +105,12 @@ const BindRow = memo(({ devices, groups, device, rule }: BindRowProps) => {
             };
 
             if (action === "Bind") {
-                await sendMessage("bridge/request/device/bind", bindParams);
+                await sendMessage(sourceIdx, "bridge/request/device/bind", bindParams);
             } else {
-                await sendMessage("bridge/request/device/unbind", bindParams);
+                await sendMessage(sourceIdx, "bridge/request/device/unbind", bindParams);
             }
         },
-        [device, stateRule, sendMessage, devices, groups],
+        [sourceIdx, device, stateRule, sendMessage, devices, groups],
     );
 
     const sourceEndpoints = useMemo(() => getEndpoints(device), [device]);

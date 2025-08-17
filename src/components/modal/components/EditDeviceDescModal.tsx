@@ -8,14 +8,10 @@ import Modal from "../Modal.js";
 
 export type RenameActionProps = {
     device: Device;
-    homeassistantEnabled: boolean;
-
-    renameDevice(old: string, newName: string, homeassistantRename: boolean): Promise<void>;
     setDeviceDescription(friendlyName: string, description: string): Promise<void>;
 };
 
-export const UpdateDeviceDescModal = NiceModal.create((props: RenameActionProps): JSX.Element => {
-    const { device, setDeviceDescription } = props;
+export const UpdateDeviceDescModal = NiceModal.create(({ device, setDeviceDescription }: RenameActionProps): JSX.Element => {
     const modal = useModal();
     const { t } = useTranslation(["zigbee", "common"]);
     const [description, setDescription] = useState(device.description || "");

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../../store.js";
 import type { Device, Group } from "../../../types.js";
 import { getEndpoints } from "../../../utils.js";
@@ -13,15 +14,17 @@ import EndpointPicker from "../../pickers/EndpointPicker.js";
 import GroupPicker from "../../pickers/GroupPicker.js";
 
 type GroupsProps = {
+    sourceIdx: number;
     device: Device;
 };
 
-export default function Groups({ device }: GroupsProps) {
+export default function Groups({ sourceIdx, device }: GroupsProps) {
     const { t } = useTranslation(["groups", "zigbee", "common"]);
-    const groups = useAppStore((state) => state.groups);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
+    const groups = useAppStore(useShallow((state) => state.groups[sourceIdx]));
     const [endpoint, setEndpoint] = useState<string | number>("");
     const [groupId, setGroupId] = useState<string | number>("");
+
     const endpoints = useMemo(() => getEndpoints(device), [device]);
     const [memberGroups, nonMemberGroups] = useMemo(() => {
         const inGroups: [Group, number][] = [];
@@ -52,22 +55,22 @@ export default function Groups({ device }: GroupsProps) {
 
     const addToGroup = useCallback(
         async () =>
-            await sendMessage("bridge/request/group/members/add", {
+            await sendMessage(sourceIdx, "bridge/request/group/members/add", {
                 group: groupId.toString(),
                 endpoint,
                 device: device.ieee_address,
             }),
-        [sendMessage, groupId, device.ieee_address, endpoint],
+        [sourceIdx, groupId, device.ieee_address, endpoint, sendMessage],
     );
 
     const removeFromGroup = useCallback(
         async ([group, endpoint]: [Group, number]): Promise<void> =>
-            await sendMessage("bridge/request/group/members/remove", {
+            await sendMessage(sourceIdx, "bridge/request/group/members/remove", {
                 device: device.ieee_address,
                 endpoint: endpoint,
                 group: group.id.toString(),
             }),
-        [sendMessage, device.ieee_address],
+        [sourceIdx, device.ieee_address, sendMessage],
     );
 
     return (
@@ -90,10 +93,13 @@ export default function Groups({ device }: GroupsProps) {
             </div>
             <div className="flex flex-row flex-wrap justify-center gap-3 mt-3">
                 {memberGroups.map(([group, endpoint]) => (
-                    <ul className="w-[23rem] list bg-base-200 rounded-box shadow-md" key={`${group.id}-${endpoint}`}>
+                    <ul
+                        className="w-[23rem] list bg-base-200 rounded-box shadow-md"
+                        key={`${sourceIdx}-${group.id}-${group.friendly_name}-${endpoint}`}
+                    >
                         <li className="list-row grow">
                             <div>
-                                <Link to={`/group/${group.id}/devices`} className="link link-hover">
+                                <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover">
                                     #{group.id} - {group.friendly_name}
                                     {endpoint ? ` (${t("endpoint")}: ${endpoint})` : ""}
                                 </Link>

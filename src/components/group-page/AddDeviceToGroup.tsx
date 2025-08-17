@@ -8,11 +8,12 @@ import DevicePicker from "../pickers/DevicePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
 
 interface AddDeviceToGroupProps {
+    sourceIdx: number;
     devices: Device[];
     group: Group;
 }
 
-const AddDeviceToGroup = memo(({ devices, group }: AddDeviceToGroupProps) => {
+const AddDeviceToGroup = memo(({ sourceIdx, devices, group }: AddDeviceToGroupProps) => {
     const [endpoint, setEndpoint] = useState<string | number>("");
     const [deviceIeee, setDeviceIeee] = useState<string>("");
     const endpoints = useMemo(() => getEndpoints(devices.find((device) => device.ieee_address === deviceIeee)), [deviceIeee, devices]);
@@ -28,8 +29,8 @@ const AddDeviceToGroup = memo(({ devices, group }: AddDeviceToGroupProps) => {
     }, []);
 
     const onAddClick = useCallback(
-        async () => await sendMessage("bridge/request/group/members/add", { group: group.id.toString(), endpoint, device: deviceIeee }),
-        [sendMessage, group.id, endpoint, deviceIeee],
+        async () => await sendMessage(sourceIdx, "bridge/request/group/members/add", { group: group.id.toString(), endpoint, device: deviceIeee }),
+        [sourceIdx, group.id, endpoint, deviceIeee, sendMessage],
     );
 
     return (

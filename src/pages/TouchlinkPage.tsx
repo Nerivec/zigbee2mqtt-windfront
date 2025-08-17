@@ -1,58 +1,111 @@
-import { faBroom, faCircleNotch, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { faBroom, faCircleNotch, faExclamationTriangle, faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
-import { useCallback, useContext, useMemo } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import Button from "../components/Button.js";
+import SelectField from "../components/form-fields/SelectField.js";
+import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
-import { useAppStore } from "../store.js";
+import { useTable } from "../hooks/useTable.js";
+import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { TouchlinkDevice } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
+type TouchlinkTableData = {
+    sourceIdx: number;
+    touchlinkDevice: TouchlinkDevice;
+    friendlyName: string | undefined;
+    identifyInProgress: boolean;
+    resetInProgress: boolean;
+};
+
 export default function TouchlinkPage() {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const setTouchlinkIdentifyInProgress = useAppStore((state) => state.setTouchlinkIdentifyInProgress);
-    const setTouchlinkResetInProgress = useAppStore((state) => state.setTouchlinkResetInProgress);
-    const setTouchlinkScan = useAppStore((state) => state.setTouchlinkScan);
+    const { t } = useTranslation(["touchlink", "common", "zigbee"]);
     const touchlinkDevices = useAppStore((state) => state.touchlinkDevices);
     const devices = useAppStore((state) => state.devices);
     const touchlinkIdentifyInProgress = useAppStore((state) => state.touchlinkIdentifyInProgress);
     const touchlinkResetInProgress = useAppStore((state) => state.touchlinkResetInProgress);
-    const touchlinkScanInProgress = useAppStore((state) => state.touchlinkScanInProgress);
-    const touchlinkInProgress = touchlinkIdentifyInProgress || touchlinkResetInProgress;
-    const { t } = useTranslation(["touchlink", "common", "zigbee"]);
+    const touchlinkScanInProgress = useAppStore((state) => Object.values(state.touchlinkScanInProgress).some((v) => v));
+    const setTouchlinkIdentifyInProgress = useAppStore((state) => state.setTouchlinkIdentifyInProgress);
+    const setTouchlinkResetInProgress = useAppStore((state) => state.setTouchlinkResetInProgress);
+    const setTouchlinkScan = useAppStore((state) => state.setTouchlinkScan);
+    const [scanIdx, setScanIdx] = useState(0);
 
-    const onScanClick = useCallback(async () => {
-        setTouchlinkScan({ inProgress: true, devices: [] });
-        await sendMessage("bridge/request/touchlink/scan", "");
-    }, [sendMessage, setTouchlinkScan]);
+    const data = useMemo((): TouchlinkTableData[] => {
+        const renderDevices: TouchlinkTableData[] = [];
+
+        for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
+            const sourceDevices = devices[sourceIdx];
+
+            for (const touchlinkDevice of touchlinkDevices[sourceIdx]) {
+                renderDevices.push({
+                    sourceIdx,
+                    touchlinkDevice,
+                    friendlyName: sourceDevices.find((d) => d.ieee_address === touchlinkDevice.ieee_address)?.friendly_name,
+                    identifyInProgress: touchlinkIdentifyInProgress[sourceIdx],
+                    resetInProgress: touchlinkResetInProgress[sourceIdx],
+                });
+            }
+        }
+
+        return renderDevices;
+    }, [devices, touchlinkDevices, touchlinkIdentifyInProgress, touchlinkResetInProgress]);
+
+    const onScanClick = useCallback(
+        async (sourceIdx: number) => {
+            setTouchlinkScan(sourceIdx, { inProgress: true, devices: [] });
+            await sendMessage(sourceIdx, "bridge/request/touchlink/scan", "");
+        },
+        [sendMessage, setTouchlinkScan],
+    );
 
     const onIdentifyClick = useCallback(
-        async (device: TouchlinkDevice): Promise<void> => {
-            setTouchlinkIdentifyInProgress(true);
-            await sendMessage("bridge/request/touchlink/identify", device);
+        async ([sourceIdx, device]: [number, TouchlinkDevice]): Promise<void> => {
+            setTouchlinkIdentifyInProgress(sourceIdx, true);
+            await sendMessage(sourceIdx, "bridge/request/touchlink/identify", device);
         },
         [sendMessage, setTouchlinkIdentifyInProgress],
     );
 
     const onResetClick = useCallback(
-        async (device: TouchlinkDevice): Promise<void> => {
-            setTouchlinkResetInProgress(true);
-            await sendMessage("bridge/request/touchlink/factory_reset", device);
+        async ([sourceIdx, device]: [number, TouchlinkDevice]): Promise<void> => {
+            setTouchlinkResetInProgress(sourceIdx, true);
+            await sendMessage(sourceIdx, "bridge/request/touchlink/factory_reset", device);
         },
         [sendMessage, setTouchlinkResetInProgress],
     );
 
-    const columns = useMemo<ColumnDef<TouchlinkDevice, unknown>[]>(
+    const columns = useMemo<ColumnDef<TouchlinkTableData, unknown>[]>(
         () => [
+            {
+                id: "source",
+                header: () => (
+                    <span title={t("common:source")}>
+                        <FontAwesomeIcon icon={faServer} />
+                    </span>
+                ),
+                accessorFn: ({ sourceIdx }) => sourceIdx,
+                cell: ({
+                    row: {
+                        original: { sourceIdx },
+                    },
+                }) => <SourceDot idx={sourceIdx} />,
+                enableColumnFilter: false,
+            },
             {
                 id: "ieee_address",
                 header: t("zigbee:ieee_address"),
-                accessorFn: (touchlinkDevice) => touchlinkDevice.ieee_address,
-                cell: ({ row: { original: touchlinkDevice } }) =>
-                    devices.find((device) => device.ieee_address === touchlinkDevice.ieee_address) ? (
-                        <Link to={`/device/${touchlinkDevice.ieee_address}/info`} className="link link-hover">
+                accessorFn: ({ touchlinkDevice }) => touchlinkDevice.ieee_address,
+                cell: ({
+                    row: {
+                        original: { sourceIdx, touchlinkDevice, friendlyName },
+                    },
+                }) =>
+                    friendlyName ? (
+                        <Link to={`/device/${sourceIdx}/${touchlinkDevice.ieee_address}/info`} className="link link-hover">
                             {touchlinkDevice.ieee_address}
                         </Link>
                     ) : (
@@ -60,46 +113,47 @@ export default function TouchlinkPage() {
                     ),
                 filterFn: "includesString",
                 // XXX: for some reason, the default sorting algorithm does not sort properly
-                sortingFn: (rowA, rowB) => rowA.original.ieee_address.localeCompare(rowB.original.ieee_address),
+                sortingFn: (rowA, rowB) => rowA.original.touchlinkDevice.ieee_address.localeCompare(rowB.original.touchlinkDevice.ieee_address),
             },
             {
                 id: "friendly_name",
                 header: t("common:friendly_name"),
-                accessorFn: (touchlinkDevice) => devices.find((device) => device.ieee_address === touchlinkDevice.ieee_address)?.friendly_name,
+                accessorFn: ({ friendlyName }) => friendlyName,
                 filterFn: "includesString",
             },
             {
                 id: "channel",
                 header: t("zigbee:channel"),
-                accessorFn: (touchlinkDevice) => touchlinkDevice.channel,
+                accessorFn: ({ touchlinkDevice }) => touchlinkDevice.channel,
                 filterFn: "includesString",
             },
             {
                 id: "actions",
                 header: "",
-                cell: ({ row: { original: touchlinkDevice } }) => {
+                cell: ({
+                    row: {
+                        original: { sourceIdx, touchlinkDevice, resetInProgress, identifyInProgress },
+                    },
+                }) => {
                     return (
                         <div className="join join-horizontal">
-                            <Button<TouchlinkDevice>
-                                disabled={touchlinkInProgress}
-                                item={touchlinkDevice}
+                            <Button<[number, TouchlinkDevice]>
+                                disabled={resetInProgress || identifyInProgress}
+                                item={[sourceIdx, touchlinkDevice]}
                                 title={t("identify")}
                                 className="btn btn-square btn-outline btn-primary join-item"
                                 onClick={onIdentifyClick}
                             >
-                                <FontAwesomeIcon
-                                    icon={touchlinkIdentifyInProgress ? faCircleNotch : faExclamationTriangle}
-                                    spin={touchlinkIdentifyInProgress}
-                                />
+                                <FontAwesomeIcon icon={identifyInProgress ? faCircleNotch : faExclamationTriangle} spin={identifyInProgress} />
                             </Button>
-                            <Button<TouchlinkDevice>
-                                disabled={touchlinkInProgress}
-                                item={touchlinkDevice}
+                            <Button<[number, TouchlinkDevice]>
+                                disabled={resetInProgress || identifyInProgress}
+                                item={[sourceIdx, touchlinkDevice]}
                                 title={t("factory_reset")}
                                 className="btn btn-square btn-outline btn-error join-item"
                                 onClick={onResetClick}
                             >
-                                <FontAwesomeIcon icon={touchlinkResetInProgress ? faCircleNotch : faBroom} spin={touchlinkResetInProgress} />
+                                <FontAwesomeIcon icon={resetInProgress ? faCircleNotch : faBroom} spin={resetInProgress} />
                             </Button>
                         </div>
                     );
@@ -108,8 +162,10 @@ export default function TouchlinkPage() {
                 enableColumnFilter: false,
             },
         ],
-        [touchlinkIdentifyInProgress, touchlinkResetInProgress, touchlinkInProgress, devices, t, onIdentifyClick, onResetClick],
+        [t, onIdentifyClick, onResetClick],
     );
+
+    const { table } = useTable({ id: "touchlink-devices", columns, data, visibleColumns: { source: API_URLS.length > 1 } });
 
     return touchlinkScanInProgress ? (
         <div className="flex flex-row justify-center items-center gap-2">
@@ -118,12 +174,29 @@ export default function TouchlinkPage() {
     ) : (
         <>
             <div className="flex flex-row flex-wrap justify-center items-center gap-2 mb-3">
-                <Button className="btn btn-primary" onClick={onScanClick} disabled={touchlinkScanInProgress}>
+                {API_NAMES.length > 1 && (
+                    <SelectField
+                        name="scan_idx_picker"
+                        label={t("scan_source_index")}
+                        value={scanIdx}
+                        onChange={(e) => !e.target.validationMessage && !!e.target.value && setScanIdx(Number.parseInt(e.target.value, 10))}
+                    >
+                        <option value="" disabled>
+                            {t("select_scan_source_index")}
+                        </option>
+                        {API_NAMES.map((name, idx) => (
+                            <option key={name} value={idx}>
+                                {name}
+                            </option>
+                        ))}
+                    </SelectField>
+                )}
+                <Button<number> className="btn btn-primary" item={scanIdx} onClick={onScanClick} disabled={touchlinkScanInProgress}>
                     {t("scan")}
                 </Button>
             </div>
 
-            <Table id="touchlink-devices" columns={columns} data={touchlinkDevices} />
+            <Table id="touchlink-devices" table={table} />
         </>
     );
 }

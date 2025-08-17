@@ -7,12 +7,13 @@ import Button from "../Button.js";
 import ConfirmButton from "../ConfirmButton.js";
 
 type OtaControlGroup = {
+    sourceIdx: number;
     device: Device;
     state: DeviceState["update"];
-    onCheckClick: (ieee: string) => Promise<void>;
-    onUpdateClick: (ieee: string) => Promise<void>;
-    onScheduleClick: (ieee: string) => Promise<void>;
-    onUnscheduleClick: (ieee: string) => Promise<void>;
+    onCheckClick: ([sourceIdx, ieee]: [number, string]) => Promise<void>;
+    onUpdateClick: ([sourceIdx, ieee]: [number, string]) => Promise<void>;
+    onScheduleClick: ([sourceIdx, ieee]: [number, string]) => Promise<void>;
+    onUnscheduleClick: ([sourceIdx, ieee]: [number, string]) => Promise<void>;
 };
 
 type UpdatingProps = {
@@ -44,25 +45,24 @@ const Updating = memo(({ label, remaining, progress }: UpdatingProps) => {
     return <progress className="progress w-48" value={progress} max="100" />;
 });
 
-const OtaControlGroup = memo((props: OtaControlGroup) => {
+const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdateClick, onScheduleClick, onUnscheduleClick }: OtaControlGroup) => {
     const { t } = useTranslation(["ota", "common"]);
-    const { device, state, onCheckClick, onUpdateClick, onScheduleClick, onUnscheduleClick } = props;
 
     if (state == null || state.state === "idle") {
         return (
             <div className="join join-horizontal">
-                <Button<string>
+                <Button<[number, string]>
                     className="btn btn-square btn-outline btn-primary join-item"
                     onClick={onCheckClick}
-                    item={device.ieee_address}
+                    item={[sourceIdx, device.ieee_address]}
                     title={t("check")}
                 >
                     <FontAwesomeIcon icon={faCloudArrowDown} />
                 </Button>
-                <ConfirmButton<string>
+                <ConfirmButton<[number, string]>
                     className="btn btn-square btn-outline btn-info join-item"
                     onClick={onScheduleClick}
-                    item={device.ieee_address}
+                    item={[sourceIdx, device.ieee_address]}
                     title={t("schedule")}
                     modalDescription={t("schedule_info")}
                     modalCancelLabel={t("common:cancel")}
@@ -81,20 +81,20 @@ const OtaControlGroup = memo((props: OtaControlGroup) => {
         <div className="join join-horizontal">
             {state.state === "available" ? (
                 <>
-                    <ConfirmButton<string>
+                    <ConfirmButton<[number, string]>
                         className="btn btn-square btn-outline btn-error join-item"
                         onClick={onUpdateClick}
-                        item={device.ieee_address}
+                        item={[sourceIdx, device.ieee_address]}
                         title={t("update")}
                         modalDescription={t("common:dialog_confirmation_prompt")}
                         modalCancelLabel={t("common:cancel")}
                     >
                         <FontAwesomeIcon icon={faUpload} />
                     </ConfirmButton>
-                    <ConfirmButton<string>
+                    <ConfirmButton<[number, string]>
                         className="btn btn-square btn-outline btn-info join-item"
                         onClick={onScheduleClick}
-                        item={device.ieee_address}
+                        item={[sourceIdx, device.ieee_address]}
                         title={t("schedule")}
                         modalDescription={t("schedule_info")}
                         modalCancelLabel={t("common:cancel")}
@@ -103,10 +103,10 @@ const OtaControlGroup = memo((props: OtaControlGroup) => {
                     </ConfirmButton>
                 </>
             ) : state.state === "scheduled" ? (
-                <ConfirmButton<string>
+                <ConfirmButton<[number, string]>
                     className="btn btn-square btn-outline btn-error join-item"
                     onClick={onUnscheduleClick}
-                    item={device.ieee_address}
+                    item={[sourceIdx, device.ieee_address]}
                     title={t("unschedule")}
                     modalDescription={t("common:dialog_confirmation_prompt")}
                     modalCancelLabel={t("common:cancel")}
@@ -115,18 +115,18 @@ const OtaControlGroup = memo((props: OtaControlGroup) => {
                 </ConfirmButton>
             ) : (
                 <>
-                    <Button<string>
+                    <Button<[number, string]>
                         className="btn btn-square btn-outline btn-primary join-item"
                         onClick={onCheckClick}
-                        item={device.ieee_address}
+                        item={[sourceIdx, device.ieee_address]}
                         title={t("check")}
                     >
                         <FontAwesomeIcon icon={faCloudArrowDown} />
                     </Button>
-                    <ConfirmButton<string>
+                    <ConfirmButton<[number, string]>
                         className="btn btn-square btn-outline btn-info join-item"
                         onClick={onScheduleClick}
-                        item={device.ieee_address}
+                        item={[sourceIdx, device.ieee_address]}
                         title={t("schedule")}
                         modalDescription={t("schedule_info")}
                         modalCancelLabel={t("common:cancel")}

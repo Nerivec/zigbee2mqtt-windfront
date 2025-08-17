@@ -8,7 +8,10 @@ import { getZ2MDeviceImage } from "../device/index.js";
 
 type LocaliserState = "none" | "start" | "inprogress" | "done";
 
-type Props = Pick<AppState, "devices">;
+type Props = {
+    sourceIdx: number;
+    devices: AppState["devices"][number];
+};
 
 type LStatus = "init" | "error" | "done";
 
@@ -34,9 +37,8 @@ async function downloadImage(imageSrc: string): Promise<string> {
     return Promise.reject(image.status);
 }
 
-export function ImageLocaliser(props: Props): JSX.Element {
+export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
     const [currentState, setCurrentState] = useState<LocaliserState>("none");
-    const { devices } = props;
     const [localisationStatus, setLocalisationStatus] = useState<Record<string, LStatus>>({});
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation("settings");
@@ -50,12 +52,12 @@ export function ImageLocaliser(props: Props): JSX.Element {
             const imageUrl = getZ2MDeviceImage(device);
             const imageContent = await downloadImage(imageUrl);
 
-            await sendMessage("bridge/request/device/options", { id: device.ieee_address, options: { icon: imageContent } });
+            await sendMessage(sourceIdx, "bridge/request/device/options", { id: device.ieee_address, options: { icon: imageContent } });
             setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "done" }));
 
             return true;
         },
-        [sendMessage],
+        [sourceIdx, sendMessage],
     );
 
     useEffect(() => {
@@ -87,7 +89,10 @@ export function ImageLocaliser(props: Props): JSX.Element {
                 <ul className="menu menu-xs bg-base-200 max-w-xs w-full join-item">
                     {devices.map((device) => {
                         return (
-                            <li key={device.ieee_address} className="flex-row justify-between items-center border-b py-0.5">
+                            <li
+                                key={`${sourceIdx}-${device.ieee_address}-${device.friendly_name}`}
+                                className="flex-row justify-between items-center border-b py-0.5"
+                            >
                                 {device.friendly_name}
                                 <span className="badge badge-xs">{t(`common:${localisationStatus[device.ieee_address]}`)}</span>
                             </li>

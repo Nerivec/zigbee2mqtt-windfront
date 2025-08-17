@@ -1,19 +1,18 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type ChangeEvent, type JSX, useCallback, useMemo, useState } from "react";
+import { type ChangeEvent, type JSX, memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { AttributeDefinition, Device, LogMessage } from "../../types.js";
+import type { AttributeDefinition, Device } from "../../types.js";
 import { getEndpoints, getObjectFirstKey } from "../../utils.js";
 import Button from "../Button.js";
 import InputField from "../form-fields/InputField.js";
 import AttributePicker from "../pickers/AttributePicker.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
-import LastLogResult from "./LastLogResult.js";
 
 export interface AttributeEditorProps {
+    sourceIdx: number;
     device: Device;
-    lastLog?: LogMessage;
     readDeviceAttributes(id: string, endpoint: string, cluster: string, attributes: string[], stateProperty?: string): Promise<void>;
     writeDeviceAttributes(id: string, endpoint: string, cluster: string, attributes: AttributeInfo[]): Promise<void>;
 }
@@ -50,7 +49,7 @@ function AttributeValueInput({ value, onChange, attribute, definition, ...rest }
     );
 }
 
-export function AttributeEditor({ device, readDeviceAttributes, writeDeviceAttributes, lastLog }: AttributeEditorProps) {
+const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDeviceAttributes }: AttributeEditorProps) => {
     const [endpoint, setEndpoint] = useState(getObjectFirstKey(device.endpoints) ?? "");
     const [cluster, setCluster] = useState("");
     const [attributes, setAttributes] = useState<AttributeInfo[]>([]);
@@ -164,7 +163,14 @@ export function AttributeEditor({ device, readDeviceAttributes, writeDeviceAttri
             <div className="flex flex-row flex-wrap gap-2">
                 <EndpointPicker label={t("zigbee:endpoint")} values={endpoints} value={endpoint} onChange={onEndpointChange} required />
                 <ClusterSinglePicker label={t("cluster")} clusters={availableClusters} value={cluster} onChange={onClusterChange} required />
-                <AttributePicker label={t("attribute")} value={""} cluster={cluster} device={device} onChange={onAttributeChange} />
+                <AttributePicker
+                    sourceIdx={sourceIdx}
+                    label={t("attribute")}
+                    value={""}
+                    cluster={cluster}
+                    device={device}
+                    onChange={onAttributeChange}
+                />
                 <InputField
                     type="text"
                     name="state_property"
@@ -187,9 +193,10 @@ export function AttributeEditor({ device, readDeviceAttributes, writeDeviceAttri
                     {t("write")}
                 </Button>
             </div>
-            {lastLog && <LastLogResult message={lastLog} />}
         </div>
     ) : (
         <span>No endpoints</span>
     );
-}
+});
+
+export default AttributeEditor;

@@ -58,6 +58,7 @@ const ThemeSwitcher = memo(() => {
         <PopoverDropdown
             name="theme-switcher"
             buttonChildren={<FontAwesomeIcon icon={faPaintBrush} />}
+            buttonStyle="btn-square"
             dropdownStyle="dropdown-end"
             // do not allow theme-switching while on network page due to rendering of reagraph
             buttonDisabled={routerLocation.pathname === "/network"}

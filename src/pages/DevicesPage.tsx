@@ -1,3 +1,5 @@
+import { faServer } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
 import { type ChangeEvent, type JSX, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -6,6 +8,7 @@ import store2 from "store2";
 import DeviceControlGroup from "../components/device/DeviceControlGroup.js";
 import DeviceImage from "../components/device/DeviceImage.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
+import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import Availability from "../components/value-decorators/Availability.js";
 import LastSeen from "../components/value-decorators/LastSeen.js";
@@ -13,13 +16,15 @@ import Lqi from "../components/value-decorators/Lqi.js";
 import ModelLink from "../components/value-decorators/ModelLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
+import { useTable } from "../hooks/useTable.js";
 import { DEVICES_HIDE_DISABLED_KEY } from "../localStoreConsts.js";
-import { useAppStore } from "../store.js";
+import { API_URLS, useAppStore } from "../store.js";
 import type { AvailabilityState, Device, DeviceState } from "../types.js";
 import { convertLastSeenToDate, toHex } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 type DeviceTableData = {
+    sourceIdx: number;
     device: Device;
     state: DeviceState;
     availabilityState: AvailabilityState;
@@ -30,7 +35,7 @@ export default function DevicesPage(): JSX.Element {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const devices = useAppStore((state) => state.devices);
     const deviceStates = useAppStore((state) => state.deviceStates);
-    const bridgeConfig = useAppStore((state) => state.bridgeInfo.config);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const availability = useAppStore((state) => state.availability);
     const [hideDisabled, setHideDisabled] = useState<boolean>(store2.get(DEVICES_HIDE_DISABLED_KEY, false));
     const [batteryLowOnly, setBatteryLowOnly] = useState(false);
@@ -39,44 +44,47 @@ export default function DevicesPage(): JSX.Element {
     const data = useMemo((): DeviceTableData[] => {
         const renderDevices: DeviceTableData[] = [];
 
-        for (const device of devices) {
-            if (device.type !== "Coordinator" && (!hideDisabled || !device.disabled)) {
-                const state = deviceStates[device.friendly_name] ?? {};
-                const deviceAvailability = bridgeConfig.devices[device.ieee_address]?.availability;
+        for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
+            for (const device of devices[sourceIdx]) {
+                if (device.type !== "Coordinator" && (!hideDisabled || !device.disabled)) {
+                    const state = deviceStates[sourceIdx][device.friendly_name] ?? {};
+                    const deviceAvailability = bridgeInfo[sourceIdx].config.devices[device.ieee_address]?.availability;
 
-                if (batteryLowOnly) {
-                    if (device.power_source !== "Battery") {
-                        continue;
+                    if (batteryLowOnly) {
+                        if (device.power_source !== "Battery") {
+                            continue;
+                        }
+
+                        if ("battery" in state) {
+                            if ((state.battery as number) >= 20) {
+                                continue;
+                            }
+                        } else if ("battery_state" in state) {
+                            if (state.battery_state !== "low") {
+                                continue;
+                            }
+                        } else if ("battery_low" in state) {
+                            if (!state.battery_low) {
+                                continue;
+                            }
+                        } else {
+                            continue;
+                        }
                     }
 
-                    if ("battery" in state) {
-                        if ((state.battery as number) >= 20) {
-                            continue;
-                        }
-                    } else if ("battery_state" in state) {
-                        if (state.battery_state !== "low") {
-                            continue;
-                        }
-                    } else if ("battery_low" in state) {
-                        if (!state.battery_low) {
-                            continue;
-                        }
-                    } else {
-                        continue;
-                    }
+                    renderDevices.push({
+                        sourceIdx,
+                        device,
+                        state,
+                        availabilityState: availability[sourceIdx][device.friendly_name] ?? { state: "offline" },
+                        availabilityEnabledForDevice: deviceAvailability != null ? !!deviceAvailability : undefined,
+                    });
                 }
-
-                renderDevices.push({
-                    device,
-                    state,
-                    availabilityState: availability[device.friendly_name] ?? { state: "offline" },
-                    availabilityEnabledForDevice: deviceAvailability != null ? !!deviceAvailability : undefined,
-                });
             }
         }
 
         return renderDevices;
-    }, [devices, deviceStates, bridgeConfig.devices, availability, hideDisabled, batteryLowOnly]);
+    }, [devices, deviceStates, bridgeInfo, availability, hideDisabled, batteryLowOnly]);
 
     const onHideDisabledChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         store2.set(DEVICES_HIDE_DISABLED_KEY, e.target.checked);
@@ -88,8 +96,8 @@ export default function DevicesPage(): JSX.Element {
     }, []);
 
     const renameDevice = useCallback(
-        async (from: string, to: string, homeassistantRename: boolean): Promise<void> => {
-            await sendMessage("bridge/request/device/rename", {
+        async (sourceIdx: number, from: string, to: string, homeassistantRename: boolean): Promise<void> => {
+            await sendMessage(sourceIdx, "bridge/request/device/rename", {
                 from,
                 to,
                 homeassistant_rename: homeassistantRename,
@@ -100,22 +108,22 @@ export default function DevicesPage(): JSX.Element {
     );
 
     const configureDevice = useCallback(
-        async (id: string): Promise<void> => {
-            await sendMessage("bridge/request/device/configure", { id });
-        },
-        [sendMessage],
-    );
-
-    const removeDevice = useCallback(
-        async (id: string, force: boolean, block: boolean): Promise<void> => {
-            await sendMessage("bridge/request/device/remove", { id, force, block });
+        async ([sourceIdx, id]: [number, string]): Promise<void> => {
+            await sendMessage(sourceIdx, "bridge/request/device/configure", { id });
         },
         [sendMessage],
     );
 
     const interviewDevice = useCallback(
-        async (id: string): Promise<void> => {
-            await sendMessage("bridge/request/device/interview", { id });
+        async ([sourceIdx, id]: [number, string]): Promise<void> => {
+            await sendMessage(sourceIdx, "bridge/request/device/interview", { id });
+        },
+        [sendMessage],
+    );
+
+    const removeDevice = useCallback(
+        async (sourceIdx: number, id: string, force: boolean, block: boolean): Promise<void> => {
+            await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block });
         },
         [sendMessage],
     );
@@ -123,12 +131,27 @@ export default function DevicesPage(): JSX.Element {
     const columns = useMemo<ColumnDef<DeviceTableData, unknown>[]>(
         () => [
             {
+                id: "source",
+                header: () => (
+                    <span title={t("common:source")}>
+                        <FontAwesomeIcon icon={faServer} />
+                    </span>
+                ),
+                accessorFn: ({ sourceIdx }) => sourceIdx,
+                cell: ({
+                    row: {
+                        original: { sourceIdx },
+                    },
+                }) => <SourceDot idx={sourceIdx} />,
+                enableColumnFilter: false,
+            },
+            {
                 id: "friendly_name",
                 header: t("common:friendly_name"),
                 accessorFn: ({ device }) => [device.friendly_name, device.description].join(" "),
                 cell: ({
                     row: {
-                        original: { device, state },
+                        original: { sourceIdx, device, state },
                     },
                 }) => (
                     <div className="flex items-center gap-3">
@@ -138,7 +161,7 @@ export default function DevicesPage(): JSX.Element {
                             </div>
                         </div>
                         <div className="flex-grow flex flex-col">
-                            <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
                                 {device.friendly_name}
                             </Link>
                             {device.description && (
@@ -168,12 +191,12 @@ export default function DevicesPage(): JSX.Element {
                 accessorFn: ({ device }) => [device.ieee_address, toHex(device.network_address, 4), device.network_address].join(" "),
                 cell: ({
                     row: {
-                        original: { device },
+                        original: { sourceIdx, device },
                     },
                 }) => (
                     <>
                         <div>
-                            <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
                                 {device.ieee_address}
                             </Link>
                         </div>
@@ -235,12 +258,13 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "last_seen",
                 header: t("last_seen"),
-                accessorFn: ({ state }) => convertLastSeenToDate(state.last_seen, bridgeConfig.advanced.last_seen)?.getTime(),
+                accessorFn: ({ sourceIdx, state }) =>
+                    convertLastSeenToDate(state.last_seen, bridgeInfo[sourceIdx].config.advanced.last_seen)?.getTime(),
                 cell: ({
                     row: {
-                        original: { state },
+                        original: { sourceIdx, state },
                     },
-                }) => <LastSeen lastSeen={state.last_seen} config={bridgeConfig.advanced.last_seen} />,
+                }) => <LastSeen lastSeen={state.last_seen} config={bridgeInfo[sourceIdx].config.advanced.last_seen} />,
                 enableColumnFilter: false,
             },
             {
@@ -249,7 +273,7 @@ export default function DevicesPage(): JSX.Element {
                 accessorFn: ({ availabilityState }) => availabilityState.state,
                 cell: ({
                     row: {
-                        original: { device, availabilityState, availabilityEnabledForDevice },
+                        original: { sourceIdx, device, availabilityState, availabilityEnabledForDevice },
                     },
                 }) => {
                     return (
@@ -257,7 +281,7 @@ export default function DevicesPage(): JSX.Element {
                             disabled={device.disabled}
                             availability={availabilityState}
                             availabilityEnabledForDevice={availabilityEnabledForDevice}
-                            availabilityFeatureEnabled={bridgeConfig.availability.enabled}
+                            availabilityFeatureEnabled={bridgeInfo[sourceIdx].config.availability.enabled}
                         />
                     );
                 },
@@ -291,14 +315,15 @@ export default function DevicesPage(): JSX.Element {
                 ),
                 cell: ({
                     row: {
-                        original: { device, state },
+                        original: { sourceIdx, device, state },
                     },
                 }) => {
                     return (
                         <DeviceControlGroup
+                            sourceIdx={sourceIdx}
                             device={device}
                             otaState={state.update?.state}
-                            homeassistantEnabled={bridgeConfig.homeassistant.enabled}
+                            homeassistantEnabled={bridgeInfo[sourceIdx].config.homeassistant.enabled}
                             renameDevice={renameDevice}
                             removeDevice={removeDevice}
                             configureDevice={configureDevice}
@@ -313,9 +338,7 @@ export default function DevicesPage(): JSX.Element {
         [
             hideDisabled,
             batteryLowOnly,
-            bridgeConfig.advanced.last_seen,
-            bridgeConfig.availability.enabled,
-            bridgeConfig.homeassistant.enabled,
+            bridgeInfo,
             onHideDisabledChange,
             onBatteryLowOnlyChange,
             renameDevice,
@@ -325,19 +348,8 @@ export default function DevicesPage(): JSX.Element {
             t,
         ],
     );
-    const visibleColumns = useMemo(
-        () => ({
-            friendly_name: true,
-            ieee_address: true,
-            model: true,
-            type: false,
-            lqi: true,
-            last_seen: bridgeConfig.advanced.last_seen !== "disable",
-            availability: bridgeConfig.availability.enabled || data.some((device) => device.availabilityEnabledForDevice),
-            actions: true,
-        }),
-        [bridgeConfig.advanced.last_seen, bridgeConfig.availability.enabled, data],
-    );
 
-    return <Table id="all-devices" columns={columns} data={data} visibleColumns={visibleColumns} />;
+    const { table } = useTable({ id: "all-devices", columns, data, visibleColumns: { source: API_URLS.length > 1, type: false } });
+
+    return <Table id="all-devices" table={table} />;
 }

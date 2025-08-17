@@ -161,6 +161,9 @@ export type AnySubFeature = BasicFeature | WithAnySubFeatures<FeatureWithSubFeat
 
 // #region Utils
 
+// biome-ignore lint/suspicious/noExplicitAny: generic
+export type Toast = Zigbee2MQTTResponse<any> & { topic: string; sourceIdx: number };
+
 export type RGBColor = {
     r: number;
     g: number;

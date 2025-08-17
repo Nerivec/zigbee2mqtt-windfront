@@ -4,29 +4,29 @@ import { Link } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import { SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
-import type { Device, LogMessage } from "../../../types.js";
+import type { Device } from "../../../types.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Button from "../../Button.js";
 import ConfirmButton from "../../ConfirmButton.js";
 import TextareaField from "../../form-fields/TextareaField.js";
 import Json from "../../value-decorators/Json.js";
-import { AttributeEditor, type AttributeInfo } from "../AttributeEditor.js";
-import { CommandExecutor } from "../CommandExecutor.js";
+import AttributeEditor, { type AttributeInfo } from "../AttributeEditor.js";
+import CommandExecutor from "../CommandExecutor.js";
 
 interface RequestSupportLinkProps {
+    sourceIdx: number;
     device: Device;
     externalDefinition: string;
 }
 
 interface DevConsoleProps {
+    sourceIdx: number;
     device: Device;
 }
 
-const ATTRIBUTE_LOG_REGEX = /^(zhc:tz: Read result of |z2m: Publish 'set' 'read' to |z2m: Publish 'set' 'write' to |zhc:tz: Wrote )/;
-
-const RequestSupportLink = memo(({ device, externalDefinition }: RequestSupportLinkProps) => {
+const RequestSupportLink = memo(({ sourceIdx, device, externalDefinition }: RequestSupportLinkProps) => {
     const { t } = useTranslation("zigbee");
-    const zhcVersion = useAppStore((state) => state.bridgeInfo.zigbee_herdsman_converters.version);
+    const zhcVersion = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].zigbee_herdsman_converters.version));
     const githubUrlParams = {
         labels: "new device support",
         title: `[New device support] ${device.model_id} from ${device.manufacturer}`,
@@ -64,31 +64,18 @@ ${externalDefinition}
     );
 });
 
-export default function DevConsole({ device }: DevConsoleProps) {
+export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["devConsole", "common"]);
+    const externalDefinition = useAppStore(useShallow((state) => state.generatedExternalDefinitions[sourceIdx][device.ieee_address]));
     const resetDeviceState = useAppStore((state) => state.resetDeviceState);
-    const lastLog = useAppStore((state) => state.lastNonDebugLog);
-    const [lastAttributeLog, setLastAttributeLog] = useState<LogMessage>();
-    const [lastCommandLog, setLastCommandLog] = useState<LogMessage>();
     const [extDefLoading, setExtDefLoading] = useState(false);
     const [showDefinition, setShowDefinition] = useState(false);
-    const externalDefinition = useAppStore(useShallow((state) => state.generatedExternalDefinitions[device.ieee_address]));
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
         setExtDefLoading(false);
     }, [device]);
-
-    useEffect(() => {
-        if (lastLog) {
-            if (lastLog.message.startsWith("zhc:tz: Invoked ")) {
-                setLastCommandLog(lastLog);
-            } else if (ATTRIBUTE_LOG_REGEX.test(lastLog.message)) {
-                setLastAttributeLog(lastLog);
-            }
-        }
-    }, [lastLog]);
 
     const readDeviceAttributes = useCallback(
         async (ieee: string, endpoint: string, cluster: string, attributes: string[], stateProperty?: string) => {
@@ -99,12 +86,13 @@ export default function DevConsole({ device }: DevConsoleProps) {
             }
 
             await sendMessage<"{friendlyNameOrId}/{endpoint}/set">(
+                sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${ieee}/${endpoint}/set`,
                 payload,
             );
         },
-        [sendMessage],
+        [sourceIdx, sendMessage],
     );
 
     const writeDeviceAttributes = useCallback(
@@ -116,22 +104,23 @@ export default function DevConsole({ device }: DevConsoleProps) {
             }
 
             await sendMessage<"{friendlyNameOrId}/{endpoint}/set">(
+                sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${ieee}/${endpoint}/set`,
                 payload,
             );
         },
-        [sendMessage],
+        [sourceIdx, sendMessage],
     );
 
     const onGenerateExternalDefinitionClick = useCallback(async (): Promise<void> => {
         setExtDefLoading(true);
-        await sendMessage("bridge/request/device/generate_external_definition", { id: device.ieee_address });
-    }, [sendMessage, device.ieee_address]);
+        await sendMessage(sourceIdx, "bridge/request/device/generate_external_definition", { id: device.ieee_address });
+    }, [sourceIdx, device.ieee_address, sendMessage]);
 
     const resetState = useCallback(() => {
-        resetDeviceState(device.friendly_name);
-    }, [resetDeviceState, device.friendly_name]);
+        resetDeviceState(sourceIdx, device.friendly_name);
+    }, [sourceIdx, device.friendly_name, resetDeviceState]);
 
     return (
         <div className="flex flex-col gap-3">
@@ -145,7 +134,7 @@ export default function DevConsole({ device }: DevConsoleProps) {
                         </Button>
                     )
                 ) : device.supported ? null : (
-                    <RequestSupportLink device={device} externalDefinition={externalDefinition} />
+                    <RequestSupportLink sourceIdx={sourceIdx} device={device} externalDefinition={externalDefinition} />
                 )}
                 <Button item={!showDefinition} onClick={setShowDefinition} className="btn btn-primary">
                     {t(showDefinition ? "hide_definition" : "show_definition")}
@@ -185,12 +174,12 @@ export default function DevConsole({ device }: DevConsoleProps) {
             <div className="divider" />
             <div className="flex flex-row flex-wrap justify-evenly gap-4">
                 <AttributeEditor
+                    sourceIdx={sourceIdx}
                     device={device}
-                    lastLog={lastAttributeLog}
                     readDeviceAttributes={readDeviceAttributes}
                     writeDeviceAttributes={writeDeviceAttributes}
                 />
-                <CommandExecutor device={device} lastLog={lastCommandLog} />
+                <CommandExecutor sourceIdx={sourceIdx} device={device} />
             </div>
         </div>
     );

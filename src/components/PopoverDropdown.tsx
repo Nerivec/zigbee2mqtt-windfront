@@ -33,7 +33,7 @@ const PopoverDropdown = memo((props: PopoverDropdownProps) => {
                 {children}
             </ul>
             <Button
-                className={`btn ${typeof buttonChildren === "string" ? "" : "btn-square"}${buttonStyle ? ` ${buttonStyle}` : ""}`}
+                className={`btn${buttonStyle ? ` ${buttonStyle}` : ""}`}
                 popoverTarget={popoverId}
                 style={{ anchorName: anchorName } as CSSProperties}
                 disabled={buttonDisabled}

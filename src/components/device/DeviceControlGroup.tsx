@@ -11,17 +11,26 @@ import { RemoveDeviceModal } from "../modal/components/RemoveDeviceModal.js";
 import DeviceControlEditName from "./DeviceControlEditName.js";
 
 interface DeviceControlGroupProps {
+    sourceIdx: number;
     device: Device;
     otaState?: NonNullable<DeviceState["update"]>["state"];
     homeassistantEnabled: boolean;
-    renameDevice: (from: string, to: string, homeassistantRename: boolean) => Promise<void>;
-    configureDevice: (id: string) => Promise<void>;
-    interviewDevice: (id: string) => Promise<void>;
-    removeDevice: (id: string, force: boolean, block: boolean) => Promise<void>;
+    renameDevice: (sourceIdx: number, from: string, to: string, homeassistantRename: boolean) => Promise<void>;
+    configureDevice: ([sourceIdx, id]: [number, string]) => Promise<void>;
+    interviewDevice: ([sourceIdx, id]: [number, string]) => Promise<void>;
+    removeDevice: (sourceIdx: number, id: string, force: boolean, block: boolean) => Promise<void>;
 }
 
-export default function DeviceControlGroup(props: DeviceControlGroupProps): JSX.Element {
-    const { device, otaState, renameDevice, configureDevice, interviewDevice, removeDevice } = props;
+export default function DeviceControlGroup({
+    sourceIdx,
+    device,
+    otaState,
+    homeassistantEnabled,
+    renameDevice,
+    configureDevice,
+    interviewDevice,
+    removeDevice,
+}: DeviceControlGroupProps): JSX.Element {
     const { t } = useTranslation(["zigbee", "common"]);
     const disableInterview =
         device.interview_state === InterviewState.InProgress || device.interview_state === InterviewState.Pending || otaState === "updating";
@@ -29,15 +38,16 @@ export default function DeviceControlGroup(props: DeviceControlGroupProps): JSX.
     return (
         <div className="join join-horizontal">
             <DeviceControlEditName
+                sourceIdx={sourceIdx}
                 name={device.friendly_name}
                 renameDevice={renameDevice}
-                homeassistantEnabled={props.homeassistantEnabled}
+                homeassistantEnabled={homeassistantEnabled}
                 style="btn-outline btn-primary join-item btn-square"
             />
-            <ConfirmButton<string>
+            <ConfirmButton<[number, string]>
                 className="btn btn-outline btn-warning join-item btn-square"
                 onClick={configureDevice}
-                item={device.ieee_address}
+                item={[sourceIdx, device.ieee_address]}
                 title={t("reconfigure")}
                 modalDescription={t("common:dialog_confirmation_prompt")}
                 modalCancelLabel={t("common:cancel")}
@@ -45,10 +55,10 @@ export default function DeviceControlGroup(props: DeviceControlGroupProps): JSX.
             >
                 <FontAwesomeIcon icon={faRetweet} />
             </ConfirmButton>
-            <ConfirmButton<string>
+            <ConfirmButton<[number, string]>
                 className="btn btn-outline btn-info join-item btn-square"
                 onClick={interviewDevice}
-                item={device.ieee_address}
+                item={[sourceIdx, device.ieee_address]}
                 title={t("interview")}
                 modalDescription={t("common:dialog_confirmation_prompt")}
                 modalCancelLabel={t("common:cancel")}
@@ -57,7 +67,7 @@ export default function DeviceControlGroup(props: DeviceControlGroupProps): JSX.
                 <FontAwesomeIcon icon={faInfo} />
             </ConfirmButton>
             <Button<void>
-                onClick={async () => await NiceModal.show(RemoveDeviceModal, { device, removeDevice })}
+                onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
                 className="btn btn-outline btn-error join-item btn-square"
                 title={t("remove_device")}
             >

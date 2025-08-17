@@ -1,27 +1,38 @@
 import { faCircleInfo, faDownLong, faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type ChangeEvent, lazy, useCallback, useContext, useMemo, useState } from "react";
+import { type ChangeEvent, type JSX, lazy, memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import store2 from "store2";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
+import { useShallow } from "zustand/react/shallow";
 import Button from "../components/Button.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import type { NetworkRawDisplayType } from "../components/network-page/index.js";
+import SourceDot from "../components/SourceDot.js";
 import { NETWORK_RAW_DISPLAY_TYPE_KEY } from "../localStoreConsts.js";
-import { useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+
+type UrlParams = {
+    sourceIdx: `${number}`;
+};
+
+type NetworkTabProps = {
+    sourceIdx: number;
+};
 
 type MapType = Zigbee2MQTTAPI["bridge/response/networkmap"]["type"];
 
 const RawNetworkData = lazy(async () => await import("../components/network-page/RawNetworkData.js"));
 const RawNetworkMap = lazy(async () => await import("../components/network-page/RawNetworkMap.js"));
 
-export default function NetworkPage() {
+const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["network", "common"]);
-    const networkMapIsLoading = useAppStore((state) => state.networkMapIsLoading);
-    const networkMap = useAppStore((state) => state.networkMap);
+    const networkMapIsLoading = useAppStore(useShallow((state) => state.networkMapIsLoading[sourceIdx]));
+    const networkMap = useAppStore(useShallow((state) => state.networkMap[sourceIdx]));
     const setNetworkMap = useAppStore((state) => state.setNetworkMap);
     const setNetworkMapIsLoading = useAppStore((state) => state.setNetworkMapIsLoading);
     const [mapType, setMapType] = useState<MapType>("raw");
@@ -46,10 +57,10 @@ export default function NetworkPage() {
     }, []);
 
     const onRequestClick = useCallback(async () => {
-        setNetworkMap(undefined);
-        setNetworkMapIsLoading();
-        await sendMessage("bridge/request/networkmap", { type: mapType, routes: enableRoutes });
-    }, [mapType, enableRoutes, setNetworkMap, setNetworkMapIsLoading, sendMessage]);
+        setNetworkMap(sourceIdx, undefined);
+        setNetworkMapIsLoading(sourceIdx);
+        await sendMessage(sourceIdx, "bridge/request/networkmap", { type: mapType, routes: enableRoutes });
+    }, [sourceIdx, mapType, enableRoutes, setNetworkMap, setNetworkMapIsLoading, sendMessage]);
 
     const content = useMemo(() => {
         if (networkMapIsLoading) {
@@ -66,7 +77,11 @@ export default function NetworkPage() {
         if (networkMap) {
             switch (networkMap.type) {
                 case "raw": {
-                    return displayType === "data" ? <RawNetworkData map={networkMap.value} /> : <RawNetworkMap map={networkMap.value} />;
+                    return displayType === "data" ? (
+                        <RawNetworkData sourceIdx={sourceIdx} map={networkMap.value} />
+                    ) : (
+                        <RawNetworkMap sourceIdx={sourceIdx} map={networkMap.value} />
+                    );
                 }
                 case "graphviz": {
                     return (
@@ -106,7 +121,7 @@ export default function NetworkPage() {
         }
 
         return null;
-    }, [networkMap, networkMapIsLoading, displayType, t]);
+    }, [sourceIdx, networkMap, networkMapIsLoading, displayType, t]);
 
     return (
         <>
@@ -135,5 +150,45 @@ export default function NetworkPage() {
 
             {content}
         </>
+    );
+});
+
+export default function NetworkPage() {
+    const navigate = useNavigate();
+    const { sourceIdx } = useParams<UrlParams>();
+    const numSourceIdx = Number.isNaN(Number(sourceIdx)) ? 0 : Number(sourceIdx);
+
+    useEffect(() => {
+        if (!sourceIdx) {
+            navigate("/network/0", { replace: true });
+        }
+    }, [sourceIdx, navigate]);
+
+    const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
+
+    const tabs = useMemo(() => {
+        const elements: JSX.Element[] = [];
+
+        for (let idx = 0; idx < API_URLS.length; idx++) {
+            elements.push(
+                <NavLink key={`/network/${idx}`} to={`/network/${idx}`} className={isTabActive}>
+                    <SourceDot idx={idx} className="me-2" />
+                    {API_NAMES[idx]}
+                </NavLink>,
+            );
+        }
+
+        return elements;
+    }, [isTabActive]);
+
+    return API_URLS.length > 1 ? (
+        <div className="tabs tabs-border">
+            {tabs}
+            <div className="tab-content block h-full bg-base-100 pb-3 px-3">
+                <NetworkTab sourceIdx={numSourceIdx} />
+            </div>
+        </div>
+    ) : (
+        <NetworkTab sourceIdx={numSourceIdx} />
     );
 }

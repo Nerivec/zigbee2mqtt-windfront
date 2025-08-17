@@ -6,22 +6,26 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { format } from "timeago.js";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
+import { useShallow } from "zustand/react/shallow";
 import { LOAD_AVERAGE_DOCS_URL } from "../../../consts.js";
+import { useTable } from "../../../hooks/useTable.js";
 import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { formatDate } from "../../../utils.js";
 import DeviceImage from "../../device/DeviceImage.js";
 import Table from "../../table/Table.js";
 
+type HealthProps = { sourceIdx: number };
+
 type HealthDeviceTableData = {
     device: Device;
     health: Zigbee2MQTTAPI["bridge/health"]["devices"][string];
 };
 
-export default function Health() {
+export default function Health({ sourceIdx }: HealthProps) {
     const { t, i18n } = useTranslation(["health", "settings", "common"]);
-    const bridgeHealth = useAppStore((state) => state.bridgeHealth);
-    const devices = useAppStore((state) => state.devices);
+    const bridgeHealth = useAppStore(useShallow((state) => state.bridgeHealth[sourceIdx]));
+    const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
 
     const tableData = useMemo(() => {
         const healthDevices: HealthDeviceTableData[] = [];
@@ -62,7 +66,7 @@ export default function Health() {
                             </div>
                         </div>
                         <div className="flex flex-col">
-                            <Link to={`/device/${device.ieee_address}/info`} className="link link-hover">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
                                 {device.friendly_name}
                                 {device.friendly_name !== device.ieee_address ? ` (${device.ieee_address})` : ""}
                             </Link>
@@ -114,8 +118,10 @@ export default function Health() {
                 enableColumnFilter: false,
             },
         ],
-        [t],
+        [sourceIdx, t],
     );
+
+    const { table } = useTable({ id: "health-devices", columns, data: tableData });
 
     if (bridgeHealth.response_time === 0) {
         return (
@@ -197,7 +203,7 @@ export default function Health() {
                     </div>
                 </div>
             </div>
-            <Table id="health-devices" columns={columns} data={tableData} />
+            <Table id="health-devices" table={table} />
         </>
     );
 }

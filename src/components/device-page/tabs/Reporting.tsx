@@ -5,6 +5,7 @@ import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js
 import ReportingRow from "../ReportingRow.js";
 
 interface ReportingProps {
+    sourceIdx: number;
     device: Device;
 }
 
@@ -42,8 +43,7 @@ const convertBindingsIntoNiceStructure = (device: Device): NiceReportingRule[] =
 
 const getRuleKey = (rule: NiceReportingRule): string => `${rule.isNew}-${rule.endpoint}-${rule.cluster}-${rule.attribute}`;
 
-export default function Reporting(props: ReportingProps): JSX.Element {
-    const { device } = props;
+export default function Reporting({ sourceIdx, device }: ReportingProps): JSX.Element {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const [newReportingRule, setNewReportingRule] = useState(makeDefaultReportingRule(device.ieee_address));
     const reportingRules = useMemo(() => convertBindingsIntoNiceStructure(device), [device]);
@@ -57,7 +57,7 @@ export default function Reporting(props: ReportingProps): JSX.Element {
         async (rule: NiceReportingRule): Promise<void> => {
             const { cluster, endpoint, attribute, minimum_report_interval, maximum_report_interval, reportable_change } = rule;
 
-            await sendMessage("bridge/request/device/configure_reporting", {
+            await sendMessage(sourceIdx, "bridge/request/device/configure_reporting", {
                 id: device.ieee_address,
                 endpoint,
                 cluster,
@@ -68,13 +68,13 @@ export default function Reporting(props: ReportingProps): JSX.Element {
                 option: {}, // TODO: check this
             });
         },
-        [sendMessage, device.ieee_address],
+        [sourceIdx, device.ieee_address, sendMessage],
     );
 
     return (
         <div className="flex flex-col">
             {[...reportingRules, newReportingRule].map((rule) => (
-                <ReportingRow key={getRuleKey(rule)} rule={rule} device={device} onApply={onApply} />
+                <ReportingRow key={getRuleKey(rule)} sourceIdx={sourceIdx} rule={rule} device={device} onApply={onApply} />
             ))}
         </div>
     );

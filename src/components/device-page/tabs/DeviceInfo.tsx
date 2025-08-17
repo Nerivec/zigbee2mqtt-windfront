@@ -4,6 +4,7 @@ import snakeCase from "lodash/snakeCase.js";
 import { memo, useCallback, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import { useShallow } from "zustand/react/shallow";
 import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL, ZHC_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
@@ -20,7 +21,13 @@ import ModelLink from "../../value-decorators/ModelLink.js";
 import PowerSource from "../../value-decorators/PowerSource.js";
 import VendorLink from "../../value-decorators/VendorLink.js";
 
+type ReportProblemLinkProps = {
+    sourceIdx: number;
+    device: Device;
+};
+
 type DeviceInfoProps = {
+    sourceIdx: number;
     device: Device;
 };
 
@@ -77,10 +84,10 @@ ${JSON.stringify(device.endpoints, endpointsReplacer)}
     );
 });
 
-const ReportProblemLink = memo(({ device }: { device: Device }) => {
+const ReportProblemLink = memo(({ sourceIdx, device }: ReportProblemLinkProps) => {
     const { t } = useTranslation("zigbee");
-    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
-    const bridgeHealth = useAppStore((state) => state.bridgeHealth);
+    const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
+    const bridgeHealth = useAppStore(useShallow((state) => state.bridgeHealth[sourceIdx]));
     const githubUrlParams = {
         labels: "problem",
         title: `[${device.model_id} / ${device.manufacturer}] ???`,
@@ -133,19 +140,24 @@ ${JSON.stringify(bridgeHealth.devices[device.ieee_address] ?? {})}
     );
 });
 
-export default function DeviceInfo(props: DeviceInfoProps) {
-    const { device } = props;
+export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     const { t } = useTranslation(["zigbee", "availability"]);
-    const deviceStates = useAppStore((state) => state.deviceStates);
-    const bridgeConfig = useAppStore((state) => state.bridgeInfo.config);
-    const availability = useAppStore((state) => state.availability);
+    const deviceStates = useAppStore(useShallow((state) => state.deviceStates[sourceIdx]));
+    const bridgeConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config));
+    const availability = useAppStore(useShallow((state) => state.availability[sourceIdx]));
     const homeassistantEnabled = bridgeConfig.homeassistant.enabled;
     const deviceState = useMemo(() => deviceStates[device.friendly_name] ?? {}, [device.friendly_name, deviceStates]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
 
+    const setDeviceDescription = useCallback(
+        async (id: string, description: string): Promise<void> => {
+            await sendMessage(sourceIdx, "bridge/request/device/options", { id, options: { description } });
+        },
+        [sourceIdx, sendMessage],
+    );
     const renameDevice = useCallback(
-        async (from: string, to: string, homeassistantRename: boolean): Promise<void> => {
-            await sendMessage("bridge/request/device/rename", {
+        async (source: number, from: string, to: string, homeassistantRename: boolean): Promise<void> => {
+            await sendMessage(source, "bridge/request/device/rename", {
                 from,
                 to,
                 homeassistant_rename: homeassistantRename,
@@ -154,27 +166,21 @@ export default function DeviceInfo(props: DeviceInfoProps) {
         },
         [sendMessage],
     );
-    const setDeviceDescription = useCallback(
-        async (id: string, description: string): Promise<void> => {
-            await sendMessage("bridge/request/device/options", { id, options: { description } });
-        },
-        [sendMessage],
-    );
     const configureDevice = useCallback(
-        async (id: string): Promise<void> => {
-            await sendMessage("bridge/request/device/configure", { id });
-        },
-        [sendMessage],
-    );
-    const removeDevice = useCallback(
-        async (id: string, force: boolean, block: boolean): Promise<void> => {
-            await sendMessage("bridge/request/device/remove", { id, force, block });
+        async ([source, id]: [number, string]): Promise<void> => {
+            await sendMessage(source, "bridge/request/device/configure", { id });
         },
         [sendMessage],
     );
     const interviewDevice = useCallback(
-        async (id: string): Promise<void> => {
-            await sendMessage("bridge/request/device/interview", { id });
+        async ([source, id]: [number, string]): Promise<void> => {
+            await sendMessage(source, "bridge/request/device/interview", { id });
+        },
+        [sendMessage],
+    );
+    const removeDevice = useCallback(
+        async (source: number, id: string, force: boolean, block: boolean): Promise<void> => {
+            await sendMessage(source, "bridge/request/device/remove", { id, force, block });
         },
         [sendMessage],
     );
@@ -222,6 +228,7 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                 <h2 className="card-title">
                     {device.friendly_name} ({device.ieee_address})
                     <DeviceControlEditName
+                        sourceIdx={sourceIdx}
                         name={device.friendly_name}
                         renameDevice={renameDevice}
                         homeassistantEnabled={homeassistantEnabled}
@@ -319,15 +326,16 @@ export default function DeviceInfo(props: DeviceInfoProps) {
                     </div>
                 </div>
                 <div className="card-actions justify-end mt-2">
-                    <ReportProblemLink device={device} />
+                    <ReportProblemLink sourceIdx={sourceIdx} device={device} />
                     <DeviceControlGroup
+                        sourceIdx={sourceIdx}
                         device={device}
                         otaState={deviceState.update?.state}
                         homeassistantEnabled={homeassistantEnabled}
-                        configureDevice={configureDevice}
                         renameDevice={renameDevice}
-                        removeDevice={removeDevice}
+                        configureDevice={configureDevice}
                         interviewDevice={interviewDevice}
+                        removeDevice={removeDevice}
                     />
                 </div>
             </div>

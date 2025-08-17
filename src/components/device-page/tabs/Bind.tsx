@@ -1,9 +1,11 @@
 import { type JSX, useEffect, useMemo, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import BindRow from "../BindRow.js";
 
 interface BindProps {
+    sourceIdx: number;
     device: Device;
 }
 
@@ -66,10 +68,9 @@ const convertBindingsIntoNiceStructure = (device: Device): NiceBindingRule[] => 
 const getRuleKey = (rule: NiceBindingRule): string =>
     `${rule.isNew}-${rule.source.endpoint}-${rule.source.ieee_address}-${"ieee_address" in rule.target ? rule.target.ieee_address : rule.target.id}-${rule.clusters.join("-")}`;
 
-export default function Bind(props: BindProps): JSX.Element {
-    const { device } = props;
-    const devices = useAppStore((state) => state.devices);
-    const groups = useAppStore((state) => state.groups);
+export default function Bind({ sourceIdx, device }: BindProps): JSX.Element {
+    const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
+    const groups = useAppStore(useShallow((state) => state.groups[sourceIdx]));
     const [newBindingRule, setNewBindingRule] = useState(makeDefaultBindingRule(device.ieee_address));
     const bindingRules = useMemo(() => convertBindingsIntoNiceStructure(device), [device]);
 
@@ -81,7 +82,7 @@ export default function Bind(props: BindProps): JSX.Element {
     return (
         <div className="flex flex-col">
             {[...bindingRules, newBindingRule].map((rule) => (
-                <BindRow key={getRuleKey(rule)} rule={rule} groups={groups} device={device} devices={devices} />
+                <BindRow key={getRuleKey(rule)} rule={rule} sourceIdx={sourceIdx} groups={groups} device={device} devices={devices} />
             ))}
         </div>
     );

@@ -12,6 +12,7 @@ const meta = {
         otaState: { control: "text" },
     },
     args: {
+        sourceIdx: 0,
         device: { ...BASIC_ROUTER },
         otaState: undefined,
         homeassistantEnabled: false,

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { JSONSchema7 } from "json-schema";
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { useShallow } from "zustand/react/shallow";
 import { GROUP_OPTIONS_DOCS_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
 import type { Group } from "../../../types.js";
@@ -10,19 +11,20 @@ import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js
 import SettingsList from "../../json-schema/SettingsList.js";
 
 type DevicesProps = {
+    sourceIdx: number;
     group: Group;
 };
 
-export default function GroupSettings({ group }: DevicesProps) {
+export default function GroupSettings({ sourceIdx, group }: DevicesProps) {
     const { t } = useTranslation(["settings", "common"]);
-    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
+    const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const { sendMessage } = useContext(WebSocketApiRouterContext);
 
     const setDeviceOptions = useCallback(
         async (options: Record<string, unknown>) => {
-            await sendMessage("bridge/request/group/options", { id: group.id.toString(), options });
+            await sendMessage(sourceIdx, "bridge/request/group/options", { id: group.id.toString(), options });
         },
-        [sendMessage, group.id],
+        [sourceIdx, group.id, sendMessage],
     );
 
     return (

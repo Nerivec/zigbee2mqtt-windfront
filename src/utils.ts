@@ -35,8 +35,7 @@ export const getObjectFirstKey = <T>(object: T): string | undefined => {
 
 // #region Format/Convert
 
-export const stringifyWithPreservingUndefinedAsNull = (data: Record<string, unknown>): string =>
-    JSON.stringify(data, (_k, v) => (v === undefined ? null : v));
+export const stringifyWithUndefinedAsNull = (data: Record<string, unknown>): string => JSON.stringify(data, (_k, v) => (v === undefined ? null : v));
 
 export const convertLastSeenToDate = (lastSeen: unknown, lastSeenConfig: LastSeenConfig): Date | undefined => {
     if (!lastSeen) {
@@ -55,7 +54,7 @@ export const convertLastSeenToDate = (lastSeen: unknown, lastSeenConfig: LastSee
             return undefined;
 
         default:
-            console.warn(`Unknown last_seen type ${lastSeenConfig}`);
+            console.error(`Unknown last_seen type ${lastSeenConfig}`);
             return undefined;
     }
 };

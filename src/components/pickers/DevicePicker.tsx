@@ -4,16 +4,16 @@ import type { AppState } from "../../store.js";
 import type { Device, Group } from "../../types.js";
 import SelectField from "../form-fields/SelectField.js";
 
-interface DevicePickerProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange">, Pick<AppState, "devices"> {
+interface DevicePickerProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange"> {
+    devices: AppState["devices"][number];
     value: string | number;
     label?: string;
     groups?: Group[];
     onChange(device?: Device | Group): void;
 }
 
-const DevicePicker = memo((props: DevicePickerProps) => {
+const DevicePicker = memo(({ devices, value, label, onChange, groups = [], ...rest }: DevicePickerProps) => {
     const { t } = useTranslation("common");
-    const { devices, value, label, onChange, groups = [], ...rest } = props;
 
     const onSelectHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
         const { value: selectedValue } = e.target;

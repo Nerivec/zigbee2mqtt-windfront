@@ -1,55 +1,16 @@
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faDisplay, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback, useContext, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, type NavLinkRenderProps } from "react-router";
 import { useAppStore } from "../../store.js";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
-import ConfirmButton from "../ConfirmButton.js";
-import ApiUrlSwitcher from "./ApiUrlSwitcher.js";
 import LanguageSwitcher from "./LanguageSwitcher.js";
 import PermitJoinButton from "./PermitJoinButton.js";
 import ThemeSwitcher from "./ThemeSwitcher.js";
 
-const URLS = [
-    {
-        href: "/devices",
-        key: "devices",
-    },
-    {
-        href: "/dashboard",
-        key: "dashboard",
-    },
-    {
-        href: "/groups",
-        key: "groups",
-    },
-    {
-        href: "/ota",
-        key: "ota",
-    },
-    {
-        href: "/touchlink",
-        key: "touchlink",
-    },
-    {
-        href: "/network",
-        key: "network",
-    },
-    {
-        href: "/logs",
-        key: "logs",
-    },
-    {
-        href: "/settings",
-        key: "settings",
-    },
-];
-
 const NavBar = () => {
     const { t } = useTranslation(["navbar", "common"]);
-    const restartRequired = useAppStore((state) => state.bridgeInfo.restart_required);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
+    const notificationsAlert = useAppStore((state) => state.notificationsAlert);
 
     const onDropdownMenuClick = useCallback(() => {
         if (document.activeElement instanceof HTMLElement && document.activeElement !== document.body) {
@@ -57,34 +18,59 @@ const NavBar = () => {
         }
     }, []);
 
+    const isNavActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "menu-active" : ""), []);
+
     const links = useMemo(
         () => (
             <>
-                {URLS.map((url) => (
-                    <li key={url.href}>
-                        <NavLink to={url.href} className={({ isActive }) => (isActive ? "menu-active" : "")}>
-                            {t(url.key)}
-                        </NavLink>
-                    </li>
-                ))}
+                <li key="/devices">
+                    <NavLink to="/devices" className={isNavActive}>
+                        {t("devices")}
+                    </NavLink>
+                </li>
+                <li key="/dashboard">
+                    <NavLink to="/dashboard" className={isNavActive}>
+                        {t("dashboard")}
+                    </NavLink>
+                </li>
+                <li key="/groups">
+                    <NavLink to="/groups" className={isNavActive}>
+                        {t("groups")}
+                    </NavLink>
+                </li>
+                <li key="/ota">
+                    <NavLink to="/ota" className={isNavActive}>
+                        {t("ota")}
+                    </NavLink>
+                </li>
+                <li key="/touchlink">
+                    <NavLink to="/touchlink" className={isNavActive}>
+                        {t("touchlink")}
+                    </NavLink>
+                </li>
+                <li key="/network">
+                    <NavLink to="/network" className={isNavActive}>
+                        {t("network")}
+                    </NavLink>
+                </li>
+                <li key="/logs">
+                    <NavLink to="/logs" className={isNavActive}>
+                        {t("logs")}
+                    </NavLink>
+                </li>
+                <li key="/settings">
+                    <NavLink to="/settings" className={isNavActive}>
+                        {t("settings")}
+                    </NavLink>
+                </li>
+                <li key="/frontend-settings">
+                    <NavLink to="/frontend-settings" className={isNavActive}>
+                        <FontAwesomeIcon icon={faDisplay} size={"xl"} />
+                    </NavLink>
+                </li>
             </>
         ),
-        [t],
-    );
-    const showRestart = useMemo(
-        () =>
-            restartRequired ? (
-                <ConfirmButton
-                    className="btn btn-error me-1 animate-pulse"
-                    onClick={async () => await sendMessage("bridge/request/restart", "")}
-                    title={t("restart")}
-                    modalDescription={t("common:dialog_confirmation_prompt")}
-                    modalCancelLabel={t("common:cancel")}
-                >
-                    {t("restart")}
-                </ConfirmButton>
-            ) : null,
-        [restartRequired, sendMessage, t],
+        [isNavActive, t],
     );
 
     return (
@@ -118,10 +104,16 @@ const NavBar = () => {
             <div className="navbar-end">
                 <ul className="menu menu-horizontal px-1 gap-0.5 md:gap-1 justify-end">
                     <PermitJoinButton />
-                    {showRestart}
                     <LanguageSwitcher />
                     <ThemeSwitcher />
-                    <ApiUrlSwitcher />
+                    <label htmlFor="notifications-drawer" className="drawer-button btn">
+                        <FontAwesomeIcon icon={faInbox} />
+                        {notificationsAlert[0] ? (
+                            <span className="status status-primary animate-bounce" />
+                        ) : notificationsAlert[1] ? (
+                            <span className="status status-error animate-bounce" />
+                        ) : null}
+                    </label>
                 </ul>
             </div>
         </div>

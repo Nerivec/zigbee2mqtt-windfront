@@ -9,35 +9,37 @@ import FeatureWrapper from "../../features/FeatureWrapper.js";
 import { getFeatureKey } from "../../features/index.js";
 
 type ExposesProps = {
+    sourceIdx: number;
     device: Device;
 };
 
-export default function Exposes(props: ExposesProps) {
-    const { device } = props;
+export default function Exposes({ sourceIdx, device }: ExposesProps) {
     const { t } = useTranslation(["exposes"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const deviceState = useAppStore(useShallow((state) => state.deviceStates[device.friendly_name] ?? {}));
+    const deviceState = useAppStore(useShallow((state) => state.deviceStates[sourceIdx][device.friendly_name] ?? {}));
 
     const onChange = useCallback(
         async (value: Record<string, unknown>) => {
             await sendMessage<"{friendlyNameOrId}/set">(
+                sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${device.ieee_address}/set`,
                 value,
             );
         },
-        [sendMessage, device.ieee_address],
+        [sourceIdx, device.ieee_address, sendMessage],
     );
 
     const onRead = useCallback(
         async (value: Record<string, unknown>) => {
             await sendMessage<"{friendlyNameOrId}/get">(
+                sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${device.ieee_address}/get`,
                 value,
             );
         },
-        [sendMessage, device.ieee_address],
+        [sourceIdx, device.ieee_address, sendMessage],
     );
 
     return device.definition?.exposes?.length ? (

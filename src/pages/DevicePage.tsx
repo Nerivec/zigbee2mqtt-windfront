@@ -12,9 +12,10 @@ import {
     faWandSparkles,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, lazy, useEffect, useMemo } from "react";
+import { type JSX, lazy, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
+import { useShallow } from "zustand/react/shallow";
 import HeaderDeviceSelector from "../components/device-page/HeaderDeviceSelector.js";
 import { useAppStore } from "../store.js";
 
@@ -32,6 +33,7 @@ export type TabName =
     | "scene";
 
 type DevicePageUrlParams = {
+    sourceIdx: `${number}`;
     deviceId: string;
     tab?: TabName;
 };
@@ -50,22 +52,26 @@ const StateTab = lazy(async () => await import("../components/device-page/tabs/S
 
 export default function DevicePage(): JSX.Element {
     const { t } = useTranslation(["devicePage", "common"]);
-    const devices = useAppStore((state) => state.devices);
-    const { deviceId, tab } = useParams<DevicePageUrlParams>();
+    const { sourceIdx, deviceId, tab } = useParams<DevicePageUrlParams>();
+    const numSourceIdx = Number.isNaN(Number(sourceIdx)) ? 0 : Number(sourceIdx);
+    const device = useAppStore(
+        useShallow((state) => (deviceId ? state.devices[numSourceIdx].find((device) => device.ieee_address === deviceId) : undefined)),
+    );
     const navigate = useNavigate();
-    const device = deviceId ? devices.find((device) => device.ieee_address === deviceId) : undefined;
 
     useEffect(() => {
         if (device) {
             if (!tab) {
-                navigate(device.type === "Coordinator" ? "/settings/about" : `/device/${device.ieee_address}/info`, { replace: true });
+                navigate(device.type === "Coordinator" ? "/settings/about" : `/device/${numSourceIdx}/${device.ieee_address}/info`, {
+                    replace: true,
+                });
             } else if (device.type === "Coordinator") {
                 navigate("/settings/about", { replace: true });
             }
         }
-    }, [tab, device, navigate]);
+    }, [tab, numSourceIdx, device, navigate]);
 
-    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
+    const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
 
     const content = useMemo(() => {
         if (!device) {
@@ -74,75 +80,75 @@ export default function DevicePage(): JSX.Element {
 
         switch (tab) {
             case "info":
-                return <DeviceInfoTab device={device} />;
+                return <DeviceInfoTab sourceIdx={numSourceIdx} device={device} />;
             case "exposes":
-                return <ExposesTab device={device} />;
+                return <ExposesTab sourceIdx={numSourceIdx} device={device} />;
             case "bind":
-                return <BindTab device={device} />;
+                return <BindTab sourceIdx={numSourceIdx} device={device} />;
             case "reporting":
-                return <ReportingTab device={device} />;
+                return <ReportingTab sourceIdx={numSourceIdx} device={device} />;
             case "settings":
-                return <DeviceSettingsTab device={device} />;
+                return <DeviceSettingsTab sourceIdx={numSourceIdx} device={device} />;
             case "settings-specific":
-                return <DeviceSpecificSettingsTab device={device} />;
+                return <DeviceSpecificSettingsTab sourceIdx={numSourceIdx} device={device} />;
             case "state":
-                return <StateTab device={device} />;
+                return <StateTab sourceIdx={numSourceIdx} device={device} />;
             case "clusters":
                 return <ClustersTab device={device} />;
             case "groups":
-                return <GroupsTab device={device} />;
+                return <GroupsTab sourceIdx={numSourceIdx} device={device} />;
             case "scene":
-                return <SceneTab device={device} />;
+                return <SceneTab sourceIdx={numSourceIdx} device={device} />;
             case "dev-console":
-                return <DevConsoleTab device={device} />;
+                return <DevConsoleTab sourceIdx={numSourceIdx} device={device} />;
         }
-    }, [device, tab, t]);
+    }, [numSourceIdx, device, tab, t]);
 
     return (
         <>
-            <HeaderDeviceSelector devices={devices} currentDevice={device} tab={tab} />
+            <HeaderDeviceSelector currentSourceIdx={numSourceIdx} currentDevice={device} tab={tab} />
             <div className="tabs tabs-border mt-2">
-                <NavLink to={`/device/${deviceId!}/info`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/info`} className={isTabActive}>
                     <FontAwesomeIcon icon={faInfo} className="me-2" />
                     {t("about")}
                 </NavLink>
-                <NavLink to={`/device/${deviceId!}/exposes`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/exposes`} className={isTabActive}>
                     <FontAwesomeIcon icon={faWandMagic} className="me-2" />
                     {t("exposes")}
                 </NavLink>
-                <NavLink to={`/device/${deviceId!}/bind`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/bind`} className={isTabActive}>
                     <FontAwesomeIcon icon={faLink} className="me-2" />
                     {t("bind")}
                 </NavLink>
-                <NavLink to={`/device/${deviceId!}/reporting`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/reporting`} className={isTabActive}>
                     <FontAwesomeIcon icon={faDownLong} className="me-2" />
                     {t("reporting")}
                 </NavLink>
-                <NavLink to={`/device/${deviceId!}/settings`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/settings`} className={isTabActive}>
                     <FontAwesomeIcon icon={faCogs} className="me-2" />
                     {t("settings")}
                 </NavLink>
-                <NavLink to={`/device/${deviceId!}/settings-specific`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/settings-specific`} className={isTabActive}>
                     <FontAwesomeIcon icon={faCog} className="me-2" />
                     {t("settings_specific")}
                 </NavLink>
-                <NavLink to={`/device/${deviceId!}/state`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/state`} className={isTabActive}>
                     <FontAwesomeIcon icon={faArrowsSpin} className="me-2" />
                     {t("state")}
                 </NavLink>
-                <NavLink to={`/device/${deviceId!}/clusters`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/clusters`} className={isTabActive}>
                     <FontAwesomeIcon icon={faReceipt} className="me-2" />
                     {t("clusters")}
                 </NavLink>
-                <NavLink to={`/device/${deviceId!}/groups`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/groups`} className={isTabActive}>
                     <FontAwesomeIcon icon={faObjectGroup} className="me-2" />
                     {t("groups")}
                 </NavLink>
-                <NavLink to={`/device/${deviceId!}/scene`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/scene`} className={isTabActive}>
                     <FontAwesomeIcon icon={faWandSparkles} className="me-2" />
                     {t("scene")}
                 </NavLink>
-                <NavLink to={`/device/${deviceId!}/dev-console`} className={isTabActive}>
+                <NavLink to={`/device/${numSourceIdx}/${deviceId}/dev-console`} className={isTabActive}>
                     <FontAwesomeIcon icon={faBug} className="me-2" />
                     {t("dev_console")}
                 </NavLink>

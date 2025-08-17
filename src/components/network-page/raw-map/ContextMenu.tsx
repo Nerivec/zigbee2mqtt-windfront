@@ -27,11 +27,7 @@ const ContextMenu = memo(({ data, onCollapse, isCollapsed, canCollapse, onClose 
     return (
         <div className="card bg-base-100 shadow-sm">
             <div className="card-body">
-                <h2 className="card-title">
-                    {/* <Link to={`/device/${data.ieeeAddr}/about`} className="link link-hover"> */}
-                    {data.friendlyName}
-                    {/* </Link> */}
-                </h2>
+                <h2 className="card-title">{data.friendlyName}</h2>
                 <span>{data.type}</span>
                 <span title={t("zigbee:ieee_address")}>{data.ieeeAddr}</span>
                 <span title={t("zigbee:network_address_hex")} className="justify-self-end">

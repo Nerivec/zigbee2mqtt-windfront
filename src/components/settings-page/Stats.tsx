@@ -8,7 +8,9 @@ type StatRowProps = {
     name: string;
     data: Record<string, number>;
 };
-type StatsProps = Pick<AppState, "devices">;
+type StatsProps = {
+    devices: AppState["devices"][number];
+};
 
 function StatRow({ name, data }: StatRowProps) {
     const children: JSX.Element[] = [];

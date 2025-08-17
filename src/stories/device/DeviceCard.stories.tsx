@@ -27,6 +27,7 @@ const meta = {
         endpoint: { control: "number" },
     },
     args: {
+        sourceIdx: 0,
         device: { ...BASIC_ROUTER },
         endpoint: undefined,
         deviceState: {},

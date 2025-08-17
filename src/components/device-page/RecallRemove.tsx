@@ -8,10 +8,11 @@ import { getScenes } from "./index.js";
 import ScenePicker from "./ScenePicker.js";
 
 interface RecallRemoveProps {
+    sourceIdx: number;
     target: Device | Group;
 }
 
-const RecallRemove = memo(({ target }: RecallRemoveProps) => {
+const RecallRemove = memo(({ sourceIdx, target }: RecallRemoveProps) => {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["scene", "common"]);
     const [scene, setScene] = useState<Scene>({ id: 0, name: "Scene 0" });
@@ -36,31 +37,34 @@ const RecallRemove = memo(({ target }: RecallRemoveProps) => {
     const onRecallClick = useCallback(
         async () =>
             await sendMessage<"{friendlyNameOrId}/set">(
+                sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${target.friendly_name}/set`, // TODO: swap to ID/ieee_address
                 { scene_recall: scene.id },
             ),
-        [sendMessage, target.friendly_name, scene.id],
+        [sourceIdx, target.friendly_name, scene.id, sendMessage],
     );
 
     const onRemoveClick = useCallback(
         async () =>
             await sendMessage<"{friendlyNameOrId}/set">(
+                sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${target.friendly_name}/set`, // TODO: swap to ID/ieee_address
                 { scene_remove: scene.id },
             ),
-        [sendMessage, target.friendly_name, scene.id],
+        [sourceIdx, target.friendly_name, scene.id, sendMessage],
     );
 
     const onRemoveAllClick = useCallback(
         async () =>
             await sendMessage<"{friendlyNameOrId}/set">(
+                sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${target.friendly_name}/set`, // TODO: swap to ID/ieee_address
                 { scene_remove_all: "" },
             ),
-        [sendMessage, target.friendly_name],
+        [sourceIdx, target.friendly_name, sendMessage],
     );
 
     return (

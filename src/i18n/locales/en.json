@@ -6,6 +6,7 @@
         "attribute": "Attribute",
         "bind": "Bind",
         "clear": "Clear",
+        "clear_all": "Clear all",
         "close": "Close",
         "cancel": "Cancel",
         "cluster": "Cluster",
@@ -62,7 +63,10 @@
         "execute_command": "Execute command",
         "send": "Send",
         "columns": "Columns",
-        "entries": "Entries"
+        "entries": "Entries",
+        "source": "Source",
+        "close_notifications": "Close notifications",
+        "more": "More"
     },
     "devicePage": {
         "about": "About",
@@ -90,6 +94,7 @@
         "remove_group": "Remove group",
         "group_id": "Group ID",
         "group_members": "Group members",
+        "group_scenes": "Group scenes",
         "scenes": "Scenes",
         "rename_group": "Rename group",
         "remove_from_group": "Remove from group"
@@ -163,7 +168,8 @@
         "settings": "Settings",
         "toggle_dropdown": "Toggle dropdown",
         "touchlink": "Touchlink",
-        "websocket_status": "WebSocket status"
+        "websocket_status": "WebSocket status",
+        "transaction_prefix": "Transaction prefix"
     },
     "ota": {
         "check": "Check for new updates",
@@ -258,7 +264,9 @@
         "rescan": "Scan again",
         "scan": "Scan",
         "identify": "Identify",
-        "factory_reset": "Factory reset"
+        "factory_reset": "Factory reset",
+        "scan_source_index": "Scan source index",
+        "select_scan_source_index": "Select scan source index"
     },
     "values": {
         "clear": "Clear",

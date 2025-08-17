@@ -1,6 +1,6 @@
 {
     "name": "zigbee2mqtt-windfront",
-    "version": "1.8.1",
+    "version": "2.0.0",
     "license": "GPL-3.0-or-later",
     "type": "module",
     "main": "index.js",

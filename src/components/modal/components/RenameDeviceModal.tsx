@@ -7,12 +7,12 @@ import InputField from "../../form-fields/InputField.js";
 import Modal from "../Modal.js";
 
 export type RenameActionProps = {
+    sourceIdx: number;
     name: string;
     homeassistantEnabled: boolean;
-    renameDevice(old: string, newName: string, homeassistantRename: boolean): Promise<void>;
+    renameDevice(sourceIdx: number, old: string, newName: string, homeassistantRename: boolean): Promise<void>;
 };
-export const RenameDeviceModal = NiceModal.create((props: RenameActionProps): JSX.Element => {
-    const { homeassistantEnabled, name, renameDevice } = props;
+export const RenameDeviceModal = NiceModal.create(({ sourceIdx, homeassistantEnabled, name, renameDevice }: RenameActionProps): JSX.Element => {
     const modal = useModal();
     const { t } = useTranslation(["zigbee", "common"]);
     const [isHASSRename, setIsHASSRename] = useState(false);
@@ -35,7 +35,7 @@ export const RenameDeviceModal = NiceModal.create((props: RenameActionProps): JS
                         className="btn btn-primary ms-1"
                         onClick={async () => {
                             modal.remove();
-                            await renameDevice(name, friendlyName, isHASSRename);
+                            await renameDevice(sourceIdx, name, friendlyName, isHASSRename);
                         }}
                     >
                         {t("rename_device")}

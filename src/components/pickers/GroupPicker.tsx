@@ -4,15 +4,15 @@ import type { AppState } from "../../store.js";
 import type { Group } from "../../types.js";
 import SelectField from "../form-fields/SelectField.js";
 
-interface GroupPickerProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange">, Pick<AppState, "groups"> {
+interface GroupPickerProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange"> {
+    groups: AppState["groups"][number];
     value: string | number;
     label?: string;
     onChange(group?: Group): void;
 }
 
-const GroupPicker = memo((props: GroupPickerProps) => {
+const GroupPicker = memo(({ groups, value, label, onChange, ...rest }: GroupPickerProps) => {
     const { t } = useTranslation("common");
-    const { groups, value, label, onChange, ...rest } = props;
 
     const onSelectHandler = useCallback(
         (e: ChangeEvent<HTMLSelectElement>): void => {

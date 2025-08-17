@@ -6,12 +6,12 @@ import InputField from "../../form-fields/InputField.js";
 import Modal from "../Modal.js";
 
 type RenameGroupFormProps = {
+    sourceIdx: number;
     name: string;
-    onRename(oldName: string, newName: string): Promise<void>;
+    onRename(sourceIdx: number, oldName: string, newName: string): Promise<void>;
 };
 
-export const RenameGroupForm = NiceModal.create((props: RenameGroupFormProps): JSX.Element => {
-    const { name, onRename } = props;
+export const RenameGroupForm = NiceModal.create(({ sourceIdx, name, onRename }: RenameGroupFormProps): JSX.Element => {
     const modal = useModal();
     const { t } = useTranslation(["groups", "common"]);
     const [friendlyName, setFriendlyName] = useState(name);
@@ -34,7 +34,7 @@ export const RenameGroupForm = NiceModal.create((props: RenameGroupFormProps): J
                         onClick={async (): Promise<void> => {
                             if (friendlyName) {
                                 modal.remove();
-                                await onRename(name, friendlyName);
+                                await onRename(sourceIdx, name, friendlyName);
                             }
                         }}
                     >

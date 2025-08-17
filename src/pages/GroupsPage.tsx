@@ -1,5 +1,5 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faServer, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useCallback, useContext, useMemo, useState } from "react";
@@ -10,17 +10,40 @@ import Button from "../components/Button.js";
 import ConfirmButton from "../components/ConfirmButton.js";
 import InputField from "../components/form-fields/InputField.js";
 import { RenameGroupForm } from "../components/modal/components/RenameGroupModal.js";
+import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
-import { useAppStore } from "../store.js";
+import { useTable } from "../hooks/useTable.js";
+import { API_URLS, useAppStore } from "../store.js";
 import type { Group } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+
+type GroupTableData = {
+    sourceIdx: number;
+    group: Group;
+};
 
 export default function GroupsPage() {
     const [newGroupFriendlyName, setNewGroupFriendlyName] = useState<string>("");
     const [newGroupId, setNewGroupId] = useState<string>("");
+    const [newGroupSourceIdx, setNewGroupSourceIdx] = useState(0);
     const groups = useAppStore((state) => state.groups);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["groups", "common"]);
+
+    const data = useMemo(() => {
+        const renderGroups: GroupTableData[] = [];
+
+        for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
+            for (const group of groups[sourceIdx]) {
+                renderGroups.push({
+                    sourceIdx,
+                    group,
+                });
+            }
+        }
+
+        return renderGroups;
+    }, [groups]);
 
     const onGroupCreateSubmit = useCallback(async (): Promise<void> => {
         const payload: Zigbee2MQTTAPI["bridge/request/group/add"] = { friendly_name: newGroupFriendlyName };
@@ -29,35 +52,57 @@ export default function GroupsPage() {
             payload.id = newGroupId;
         }
 
-        await sendMessage("bridge/request/group/add", payload);
-    }, [newGroupFriendlyName, newGroupId, sendMessage]);
+        await sendMessage(newGroupSourceIdx, "bridge/request/group/add", payload);
+    }, [newGroupFriendlyName, newGroupId, newGroupSourceIdx, sendMessage]);
 
     const onRenameClick = useCallback(
-        async (from: string, to: string) => await sendMessage("bridge/request/group/rename", { from, to }),
+        async (sourceIdx: number, from: string, to: string) => await sendMessage(sourceIdx, "bridge/request/group/rename", { from, to }),
         [sendMessage],
     );
 
-    const onRemoveClick = useCallback(async (id: string) => await sendMessage("bridge/request/group/remove", { id }), [sendMessage]);
+    const onRemoveClick = useCallback(
+        async ([sourceIdx, id]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/group/remove", { id }),
+        [sendMessage],
+    );
 
     const isValidNewGroup = useMemo(() => {
         if (newGroupFriendlyName) {
-            return !newGroupId || !groups.find((group) => group.id.toString() === newGroupId);
+            return !newGroupId || !groups[newGroupSourceIdx].find((group) => group.id.toString() === newGroupId);
         }
 
         return false;
-    }, [newGroupFriendlyName, newGroupId, groups]);
+    }, [newGroupFriendlyName, newGroupId, newGroupSourceIdx, groups]);
 
-    const columns = useMemo<ColumnDef<Group, unknown>[]>(
+    const columns = useMemo<ColumnDef<GroupTableData, unknown>[]>(
         () => [
+            {
+                id: "source",
+                header: () => (
+                    <span title={t("common:source")}>
+                        <FontAwesomeIcon icon={faServer} />
+                    </span>
+                ),
+                accessorFn: ({ sourceIdx }) => sourceIdx,
+                cell: ({
+                    row: {
+                        original: { sourceIdx },
+                    },
+                }) => <SourceDot idx={sourceIdx} />,
+                enableColumnFilter: false,
+            },
             {
                 id: "group_id",
                 header: t("group_id"),
-                accessorFn: (group) => group.id,
-                cell: ({ row: { original: group } }) => (
+                accessorFn: ({ group }) => group.id,
+                cell: ({
+                    row: {
+                        original: { sourceIdx, group },
+                    },
+                }) => (
                     <div className="flex items-center gap-3">
                         <div className="avatar" />
                         <div className="flex-grow flex flex-col">
-                            <Link to={`/group/${group.id}/devices`} className="link link-hover">
+                            <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover">
                                 {group.id}
                             </Link>
                             {group.description && (
@@ -80,9 +125,13 @@ export default function GroupsPage() {
             {
                 id: "friendly_name",
                 header: t("common:friendly_name"),
-                accessorFn: (group) => group.friendly_name,
-                cell: ({ row: { original: group } }) => (
-                    <Link to={`/group/${group.id}/devices`} className="link link-hover">
+                accessorFn: ({ group }) => group.friendly_name,
+                cell: ({
+                    row: {
+                        original: { sourceIdx, group },
+                    },
+                }) => (
+                    <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover">
                         {group.friendly_name}
                     </Link>
                 ),
@@ -91,18 +140,23 @@ export default function GroupsPage() {
             {
                 id: "members",
                 header: t("group_members"),
-                accessorFn: (group) => group.members.length ?? 0,
+                accessorFn: ({ group }) => group.members.length ?? 0,
                 enableColumnFilter: false,
             },
             {
                 id: "actions",
                 header: "",
-                cell: ({ row: { original: group } }) => (
+                cell: ({
+                    row: {
+                        original: { sourceIdx, group },
+                    },
+                }) => (
                     <div className="join join-horizontal">
                         <Button<void>
                             className="btn btn-square btn-outline btn-primary join-item"
                             onClick={async () =>
                                 await NiceModal.show(RenameGroupForm, {
+                                    sourceIdx,
                                     name: group.friendly_name,
                                     onRename: onRenameClick,
                                 })
@@ -112,9 +166,9 @@ export default function GroupsPage() {
                         >
                             <FontAwesomeIcon icon={faEdit} />
                         </Button>
-                        <ConfirmButton<string>
+                        <ConfirmButton<[number, string]>
                             title={t("remove_group")}
-                            item={group.id.toString()}
+                            item={[sourceIdx, group.id.toString()]}
                             onClick={onRemoveClick}
                             className="btn btn-square btn-outline btn-error join-item"
                             modalDescription={t("common:dialog_confirmation_prompt")}
@@ -131,6 +185,8 @@ export default function GroupsPage() {
         [onRenameClick, onRemoveClick, t],
     );
 
+    const { table } = useTable({ id: "all-groups", columns, data, visibleColumns: { source: API_URLS.length > 1 } });
+
     return (
         <>
             <div className="collapse collapse-arrow bg-base-100 shadow mb-3">
@@ -138,6 +194,19 @@ export default function GroupsPage() {
                 <div className="collapse-title text-lg font-semibold text-center">{t("create_group")}</div>
                 <div className="collapse-content">
                     <div className="flex flex-row flex-wrap justify-center gap-2">
+                        {API_URLS.length > 1 && (
+                            <InputField
+                                type="number"
+                                name="source"
+                                label={t("common:source")}
+                                defaultValue={newGroupSourceIdx}
+                                min={0}
+                                max={API_URLS.length - 1}
+                                readOnly={API_URLS.length === 1}
+                                required
+                                onChange={(e) => !!e.target.validationMessage && e.target.value && setNewGroupSourceIdx(e.target.valueAsNumber)}
+                            />
+                        )}
                         <InputField
                             type="text"
                             name="friendly_name"
@@ -146,6 +215,7 @@ export default function GroupsPage() {
                             placeholder={t("friendly_name_placeholder")}
                             onChange={(e) => setNewGroupFriendlyName(e.target.value)}
                             required
+                            minLength={1}
                         />
                         <InputField
                             type="number"
@@ -163,7 +233,7 @@ export default function GroupsPage() {
                     </div>
                 </div>
             </div>
-            <Table id="all-groups" columns={columns} data={groups} />
+            <Table id="all-groups" table={table} />
         </>
     );
 }

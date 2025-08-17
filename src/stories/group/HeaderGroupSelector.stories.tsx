@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import HeaderGroupSelector from "../../components/group-page/HeaderGroupSelector.js";
+import { useAppStore } from "../../store.js";
 import { EMPTY_GROUP, GROUP_WITH_MEMBERS, GROUP_WITH_MEMBERS_AND_SCENES } from "../groups.js";
 
 const meta = {
@@ -7,10 +8,11 @@ const meta = {
     tags: ["autodocs"],
     component: HeaderGroupSelector,
     argTypes: {
+        currentSourceIdx: { control: "number" },
         tab: { control: "select", options: ["devices", "settings"] },
     },
     args: {
-        groups: [],
+        currentSourceIdx: 0,
         currentGroup: undefined,
     },
     decorators: [(Story) => <Story />],
@@ -25,14 +27,25 @@ export const Blank: Story = {
 };
 
 export const Basic: Story = {
-    args: {
-        groups: [{ ...EMPTY_GROUP }, { ...GROUP_WITH_MEMBERS }, { ...GROUP_WITH_MEMBERS_AND_SCENES }],
+    args: {},
+    beforeEach: () => {
+        useAppStore.setState({ groups: { 0: [{ ...EMPTY_GROUP }, { ...GROUP_WITH_MEMBERS }, { ...GROUP_WITH_MEMBERS_AND_SCENES }] } });
+
+        return () => {
+            useAppStore.getState().reset();
+        };
     },
 };
 
 export const WithCurrent: Story = {
     args: {
         currentGroup: { ...GROUP_WITH_MEMBERS },
-        groups: [{ ...EMPTY_GROUP }, { ...GROUP_WITH_MEMBERS }, { ...GROUP_WITH_MEMBERS_AND_SCENES }],
+    },
+    beforeEach: () => {
+        useAppStore.setState({ groups: { 0: [{ ...EMPTY_GROUP }, { ...GROUP_WITH_MEMBERS }, { ...GROUP_WITH_MEMBERS_AND_SCENES }] } });
+
+        return () => {
+            useAppStore.getState().reset();
+        };
     },
 };

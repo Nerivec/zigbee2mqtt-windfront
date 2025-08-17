@@ -2,6 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { LabelVisibilityType, LayoutTypes } from "reagraph";
 import store2 from "store2";
+import ConfirmButton from "../components/ConfirmButton.js";
+import CheckboxField from "../components/form-fields/CheckboxField.js";
+import InputField from "../components/form-fields/InputField.js";
+import NumberField from "../components/form-fields/NumberField.js";
+import SelectField from "../components/form-fields/SelectField.js";
+import type { NetworkRawDisplayType } from "../components/network-page/index.js";
 import {
     AUTH_FLAG_KEY,
     DASHBOARD_COLUMN_DISPLAY_KEY,
@@ -21,20 +27,14 @@ import {
     TABLE_COLUMN_VISIBILITY_KEY,
     THEME_KEY,
     TOKEN_KEY,
-} from "../../../localStoreConsts.js";
-import ConfirmButton from "../../ConfirmButton.js";
-import CheckboxField from "../../form-fields/CheckboxField.js";
-import InputField from "../../form-fields/InputField.js";
-import NumberField from "../../form-fields/NumberField.js";
-import SelectField from "../../form-fields/SelectField.js";
-import type { NetworkRawDisplayType } from "../../network-page/index.js";
+} from "../localStoreConsts.js";
 
-export default function Frontend() {
+export default function FrontendSettingsPage() {
     const { t } = useTranslation(["settings", "navbar", "network", "common"]);
     const [homepage, setHomepage] = useState<string>(store2.get(HOMEPAGE_KEY, "devices"));
     const [dashboardColumnDisplay, setDashboardColumnDisplay] = useState<boolean>(store2.get(DASHBOARD_COLUMN_DISPLAY_KEY, false));
     const [permitJoinTime, setPermitJoinTime] = useState<number>(store2.get(PERMIT_JOIN_TIME_KEY, 254));
-    const [maxOnScreenNotifications, setMaxOnScreenNotifications] = useState<number>(store2.get(MAX_ON_SCREEN_NOTIFICATIONS_KEY, 4));
+    const [maxOnScreenNotifications, setMaxOnScreenNotifications] = useState<number>(store2.get(MAX_ON_SCREEN_NOTIFICATIONS_KEY, 3));
     const [networkRawDisplayType, setNetworkRawDisplayType] = useState<NetworkRawDisplayType>(store2.get(NETWORK_RAW_DISPLAY_TYPE_KEY, "data"));
     const [networkMapLayoutType, setNetworkMapLayoutType] = useState<LayoutTypes>(store2.get(NETWORK_MAP_LAYOUT_TYPE_KEY, "forceDirected2d"));
     const [networkMapLabelType, setNetworkMapLabelType] = useState<LabelVisibilityType>(store2.get(NETWORK_MAP_LABEL_TYPE_KEY, "all"));

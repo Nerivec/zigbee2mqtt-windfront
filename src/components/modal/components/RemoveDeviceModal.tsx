@@ -7,12 +7,12 @@ import CheckboxField from "../../form-fields/CheckboxField.js";
 import Modal from "../Modal.js";
 
 type DeviceRemovalButtonProps = {
+    sourceIdx: number;
     device: Device;
-    removeDevice(ieee: string, force: boolean, block: boolean): Promise<void>;
+    removeDevice(sourceIdx: number, ieee: string, force: boolean, block: boolean): Promise<void>;
 };
 
-export const RemoveDeviceModal = NiceModal.create((props: DeviceRemovalButtonProps): JSX.Element => {
-    const { device, removeDevice } = props;
+export const RemoveDeviceModal = NiceModal.create(({ sourceIdx, device, removeDevice }: DeviceRemovalButtonProps): JSX.Element => {
     const modal = useModal();
     const { t } = useTranslation(["zigbee", "common"]);
     const [removeParams, setRemoveParams] = useState({ block: false, force: false });
@@ -25,8 +25,8 @@ export const RemoveDeviceModal = NiceModal.create((props: DeviceRemovalButtonPro
 
     const onRemoveClick = useCallback(async () => {
         modal.remove();
-        await removeDevice(device.ieee_address, removeParams.force, removeParams.block);
-    }, [modal.remove, removeDevice, device.ieee_address, removeParams]);
+        await removeDevice(sourceIdx, device.ieee_address, removeParams.force, removeParams.block);
+    }, [sourceIdx, modal.remove, removeDevice, device.ieee_address, removeParams]);
 
     return (
         <Modal

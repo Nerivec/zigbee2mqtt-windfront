@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import { useShallow } from "zustand/react/shallow";
 import frontendPackageJson from "../../../../package.json" with { type: "json" };
 import {
     MQTT_SPEC_URL,
@@ -15,10 +16,14 @@ import {
 import { useAppStore } from "../../../store.js";
 import Stats from "../Stats.js";
 
-const ReportProblemLink = memo(() => {
+type ReportProblemLinkProps = { sourceIdx: number };
+
+type AboutProps = { sourceIdx: number };
+
+const ReportProblemLink = memo(({ sourceIdx }: ReportProblemLinkProps) => {
     const { t } = useTranslation("zigbee");
-    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
-    const bridgeHealth = useAppStore((state) => state.bridgeHealth);
+    const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
+    const bridgeHealth = useAppStore(useShallow((state) => state.bridgeHealth[sourceIdx]));
     const githubUrlParams = {
         labels: "problem",
         title: "???",
@@ -65,10 +70,10 @@ process.uptime_sec: \`${Math.round(bridgeHealth.process.uptime_sec)}\`
     );
 });
 
-export default function About() {
+export default function About({ sourceIdx }: AboutProps) {
     const { t } = useTranslation("settings");
-    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
-    const devices = useAppStore((state) => state.devices);
+    const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
+    const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
 
     const isZigbee2mqttDevVersion = bridgeInfo.version.match(/^\d+\.\d+\.\d+$/) === null;
     const zigbee2mqttVersion = isZigbee2mqttDevVersion ? (
@@ -111,7 +116,7 @@ export default function About() {
 
     return (
         <div className="flex flex-col gap-3 items-center">
-            <ReportProblemLink />
+            <ReportProblemLink sourceIdx={sourceIdx} />
             <div className="stats stats-vertical lg:stats-horizontal shadow">
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("zigbee2mqtt_version")}</div>

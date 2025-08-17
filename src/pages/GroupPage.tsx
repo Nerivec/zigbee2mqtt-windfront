@@ -1,14 +1,16 @@
 import { faCogs, faObjectGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { lazy, useEffect, useMemo } from "react";
+import { lazy, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
+import { useShallow } from "zustand/react/shallow";
 import HeaderGroupSelector from "../components/group-page/HeaderGroupSelector.js";
 import { useAppStore } from "../store.js";
 
 export type TabName = "devices" | "settings";
 
 type GroupPageUrlParams = {
+    sourceIdx: `${number}`;
     groupId: string;
     tab?: TabName;
 };
@@ -19,18 +21,18 @@ const GroupSettingsTab = lazy(async () => await import("../components/group-page
 export default function GroupPage() {
     const navigate = useNavigate();
     const { t } = useTranslation(["groups", "common"]);
-    const { groupId, tab } = useParams<GroupPageUrlParams>();
-    const groups = useAppStore((state) => state.groups);
+    const { sourceIdx, groupId, tab } = useParams<GroupPageUrlParams>();
+    const numSourceIdx = Number.isNaN(Number(sourceIdx)) ? 0 : Number(sourceIdx);
     const groupIdNum = Number.parseInt(groupId!, 10);
-    const group = groupId ? groups.find((group) => group.id === groupIdNum) : undefined;
+    const group = useAppStore(useShallow((state) => (groupId ? state.groups[numSourceIdx].find((group) => group.id === groupIdNum) : undefined)));
 
     useEffect(() => {
         if (!tab && group) {
-            navigate(`/group/${group.id}/devices`, { replace: true });
+            navigate(`/group/${numSourceIdx}/${group.id}/devices`, { replace: true });
         }
-    }, [tab, group, navigate]);
+    }, [tab, numSourceIdx, group, navigate]);
 
-    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
+    const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
 
     const content = useMemo(() => {
         if (!group) {
@@ -39,21 +41,21 @@ export default function GroupPage() {
 
         switch (tab) {
             case "devices":
-                return <DevicesTab group={group} />;
+                return <DevicesTab sourceIdx={numSourceIdx} group={group} />;
             case "settings":
-                return <GroupSettingsTab group={group} />;
+                return <GroupSettingsTab sourceIdx={numSourceIdx} group={group} />;
         }
-    }, [tab, group, t]);
+    }, [tab, numSourceIdx, group, t]);
 
     return (
         <>
-            <HeaderGroupSelector groups={groups} currentGroup={group} tab={tab} />
+            <HeaderGroupSelector currentSourceIdx={numSourceIdx} currentGroup={group} tab={tab} />
             <div className="tabs tabs-border mt-2">
-                <NavLink to={`/group/${groupId!}/devices`} className={isTabActive}>
+                <NavLink to={`/group/${numSourceIdx}/${groupId}/devices`} className={isTabActive}>
                     <FontAwesomeIcon icon={faObjectGroup} className="me-2" />
                     {t("common:devices")}
                 </NavLink>
-                <NavLink to={`/group/${groupId!}/settings`} className={isTabActive}>
+                <NavLink to={`/group/${numSourceIdx}/${groupId}/settings`} className={isTabActive}>
                     <FontAwesomeIcon icon={faCogs} className="me-2" />
                     {t("settings")}
                 </NavLink>

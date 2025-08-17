@@ -3,30 +3,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { JSONSchema7 } from "json-schema";
 import { useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useShallow } from "zustand/react/shallow";
 import { CONFIGURATION_DOCS_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import Button from "../../Button.js";
 import SettingsList from "../../json-schema/SettingsList.js";
 
+type SettingsProps = { sourceIdx: number };
+
 const ROOT_TAB = "main";
 const TABS = [ROOT_TAB, "frontend", "mqtt", "serial", "availability", "ota", "advanced", "homeassistant"];
 
-export default function Settings() {
+export default function Settings({ sourceIdx }: SettingsProps) {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
+    const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const [currentTab, setCurrentTab] = useState<string>(ROOT_TAB);
     const { t } = useTranslation("settings");
 
     const setSettings = useCallback(
         async (options: Record<string, unknown>) => {
             if (currentTab === ROOT_TAB) {
-                await sendMessage("bridge/request/options", { options });
+                await sendMessage(sourceIdx, "bridge/request/options", { options });
             } else {
-                await sendMessage("bridge/request/options", { options: { [currentTab]: options } });
+                await sendMessage(sourceIdx, "bridge/request/options", { options: { [currentTab]: options } });
             }
         },
-        [sendMessage, currentTab],
+        [sourceIdx, currentTab, sendMessage],
     );
 
     return (

@@ -1,13 +1,17 @@
 import { faEraser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback, useContext, useMemo, useState } from "react";
+import { type JSX, memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
+import { useShallow } from "zustand/react/shallow";
 import Button from "../components/Button.js";
+import ConfirmButton from "../components/ConfirmButton.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import SelectField from "../components/form-fields/SelectField.js";
+import SourceDot from "../components/SourceDot.js";
 import { LOG_LEVELS, LOG_LEVELS_CMAP, LOG_LIMITS } from "../consts.js";
-import { useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
 import { formatDate } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
@@ -19,17 +23,24 @@ const HIGHLIGHT_LEVEL_CMAP = {
     debug: "bg-accent text-accent-content opacity-50",
 };
 
-export default function LogsPage() {
+type UrlParams = {
+    sourceIdx: `${number}`;
+};
+
+type LogsTabProps = {
+    sourceIdx: number;
+};
+
+const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
+    const { t } = useTranslation("logs");
     const { sendMessage } = useContext(WebSocketApiRouterContext);
+    const logLevelConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.log_level));
+    const logs = useAppStore(useShallow((state) => state.logs[sourceIdx]));
+    const clearLogs = useAppStore((state) => state.clearLogs);
     const [filterValue, setFilterValue] = useState<string>("");
     const [logLevel, setLogLevel] = useState<string>("all");
     const [highlightOnly, setHighlightOnly] = useState<boolean>(false);
-    const logsLimit = useAppStore((state) => state.logsLimit);
-    const logLevelConfig = useAppStore((state) => state.bridgeInfo.config.advanced.log_level);
-    const { t } = useTranslation("logs");
-    const logs = useAppStore((state) => state.logs);
-    const setLogsLimit = useAppStore((state) => state.setLogsLimit);
-    const clearStateLogs = useAppStore((state) => state.clearLogs);
+
     const filteredLogs = useMemo(
         () =>
             logs.filter(
@@ -48,9 +59,9 @@ export default function LogsPage() {
 
     const setLogLevelConfig = useCallback(
         async (level: string) => {
-            await sendMessage("bridge/request/options", { options: { advanced: { log_level: level } } });
+            await sendMessage(sourceIdx, "bridge/request/options", { options: { advanced: { log_level: level } } });
         },
-        [sendMessage],
+        [sourceIdx, sendMessage],
     );
 
     return (
@@ -91,21 +102,7 @@ export default function LogsPage() {
                     checked={highlightOnly}
                     onChange={(e) => setHighlightOnly(e.target.checked)}
                 />
-                <SelectField
-                    name="log_limit"
-                    label={t("logs_limit")}
-                    onChange={(e) => {
-                        setLogsLimit(Number.parseInt(e.target.value));
-                    }}
-                    value={logsLimit}
-                >
-                    {LOG_LIMITS.map((limit) => (
-                        <option key={limit} value={limit}>
-                            {limit}
-                        </option>
-                    ))}
-                </SelectField>
-                <Button<void> onClick={clearStateLogs} className="btn btn-primary self-center" disabled={logs.length === 0}>
+                <Button<number> item={sourceIdx} onClick={clearLogs} className="btn btn-primary self-center" disabled={logs.length === 0}>
                     {t("common:clear")}
                 </Button>
                 <div className="ml-auto">
@@ -141,5 +138,74 @@ export default function LogsPage() {
                 )}
             </div>
         </>
+    );
+});
+
+export default function LogsPage() {
+    const navigate = useNavigate();
+    const { sourceIdx } = useParams<UrlParams>();
+    const numSourceIdx = Number.isNaN(Number(sourceIdx)) ? 0 : Number(sourceIdx);
+    const logsLimit = useAppStore((state) => state.logsLimit);
+    const { t } = useTranslation(["logs", "common"]);
+    const setLogsLimit = useAppStore((state) => state.setLogsLimit);
+    const clearAllLogs = useAppStore((state) => state.clearAllLogs);
+
+    useEffect(() => {
+        if (!sourceIdx) {
+            navigate("/logs/0", { replace: true });
+        }
+    }, [sourceIdx, navigate]);
+
+    const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
+
+    const tabs = useMemo(() => {
+        const elements: JSX.Element[] = [];
+
+        for (let idx = 0; idx < API_URLS.length; idx++) {
+            elements.push(
+                <NavLink key={`/logs/${idx}`} to={`/logs/${idx}`} className={isTabActive}>
+                    <SourceDot idx={idx} className="me-2" />
+                    {API_NAMES[idx]}
+                </NavLink>,
+            );
+        }
+
+        return elements;
+    }, [isTabActive]);
+
+    return API_URLS.length > 1 ? (
+        <div className="tabs tabs-border">
+            {tabs}
+            <div className="ml-auto flex flex-row flex-wrap gap-3 items-top">
+                <SelectField
+                    name="log_limit"
+                    label={t("logs_limit")}
+                    onChange={(e) => {
+                        setLogsLimit(Number.parseInt(e.target.value));
+                    }}
+                    value={logsLimit}
+                >
+                    {LOG_LIMITS.map((limit) => (
+                        <option key={limit} value={limit}>
+                            {limit}
+                        </option>
+                    ))}
+                </SelectField>
+                <ConfirmButton<void>
+                    onClick={clearAllLogs}
+                    className="btn btn-primary self-center"
+                    title={t("common:clear_all")}
+                    modalDescription={t("common:dialog_confirmation_prompt")}
+                    modalCancelLabel={t("common:cancel")}
+                >
+                    {t("common:clear_all")}
+                </ConfirmButton>
+            </div>
+            <div className="tab-content block h-full bg-base-100 pb-3 px-3">
+                <LogsTab sourceIdx={numSourceIdx} />
+            </div>
+        </div>
+    ) : (
+        <LogsTab sourceIdx={numSourceIdx} />
     );
 }

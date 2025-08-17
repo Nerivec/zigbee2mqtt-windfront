@@ -1,28 +1,28 @@
-import { type JSX, useCallback, useContext, useMemo, useState } from "react";
+import { memo, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../store.js";
-import type { Device, LogMessage } from "../../types.js";
+import type { Device } from "../../types.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import Button from "../Button.js";
 import InputField from "../form-fields/InputField.js";
 import TextareaField from "../form-fields/TextareaField.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
 import type { ClusterGroup } from "../pickers/index.js";
-import LastLogResult from "./LastLogResult.js";
 
 interface CommandExecutorProps {
-    lastLog?: LogMessage;
+    sourceIdx: number;
     device: Device;
 }
 
-export const CommandExecutor = ({ device, lastLog }: CommandExecutorProps): JSX.Element => {
+const CommandExecutor = memo(({ sourceIdx, device }: CommandExecutorProps) => {
     const { t } = useTranslation(["common", "zigbee"]);
     const [endpoint, setEndpoint] = useState<number>(1);
     const [cluster, setCluster] = useState<string>("");
     const [command, setCommand] = useState<string>("");
     const [payload, setPayload] = useState("{}");
     const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const bridgeDefinitions = useAppStore((state) => state.bridgeDefinitions);
+    const bridgeDefinitions = useAppStore(useShallow((state) => state.bridgeDefinitions[sourceIdx]));
 
     const canExecute = useMemo(() => {
         if (!cluster || !command) {
@@ -111,13 +111,14 @@ export const CommandExecutor = ({ device, lastLog }: CommandExecutorProps): JSX.
         }
 
         await sendMessage(
+            sourceIdx,
             // @ts-expect-error templated API endpoint
             `${device.ieee_address}/${endpoint}/set`,
             {
                 command: { cluster, command: commandKey, payload: JSON.parse(payload) },
             },
         );
-    }, [cluster, device.ieee_address, command, payload, endpoint, sendMessage]);
+    }, [sourceIdx, cluster, device.ieee_address, command, payload, endpoint, sendMessage]);
 
     return (
         <div className="flex-1 flex flex-col gap-3">
@@ -167,7 +168,8 @@ export const CommandExecutor = ({ device, lastLog }: CommandExecutorProps): JSX.
                     {t("execute")}
                 </Button>
             </div>
-            {lastLog && <LastLogResult message={lastLog} />}
         </div>
     );
-};
+});
+
+export default CommandExecutor;

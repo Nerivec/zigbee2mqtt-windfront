@@ -6,6 +6,7 @@ import { ZigbeeRelationship } from "../index.js";
 import RawRelation from "./RawRelation.js";
 
 type RawRelationGroupProps = {
+    sourceIdx: number;
     devices: Device[];
     relationship: string;
     relations: Zigbee2MQTTNetworkMap["links"];
@@ -22,7 +23,7 @@ const ZIGBEE_RELATIONSHIP_TMAP = {
     [ZigbeeRelationship.NeighborIsPreviousChild]: "previous_children",
 };
 
-const RawRelationGroup = memo(({ devices, relationship, relations, highlight, setHighlightValue }: RawRelationGroupProps) => {
+const RawRelationGroup = memo(({ sourceIdx, devices, relationship, relations, highlight, setHighlightValue }: RawRelationGroupProps) => {
     const { t } = useTranslation(["network", "zigbee"]);
 
     return (
@@ -38,6 +39,7 @@ const RawRelationGroup = memo(({ devices, relationship, relations, highlight, se
                         return device ? (
                             <RawRelation
                                 key={`${relation.source.ieeeAddr}-${relation.target.ieeeAddr}`}
+                                sourceIdx={sourceIdx}
                                 relation={relation}
                                 device={device}
                                 highlight={highlight}

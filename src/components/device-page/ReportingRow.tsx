@@ -12,6 +12,7 @@ import type { ClusterGroup } from "../pickers/index.js";
 import type { NiceReportingRule } from "./tabs/Reporting.js";
 
 interface ReportingRowProps {
+    sourceIdx: number;
     rule: NiceReportingRule;
     device: Device;
     onApply(rule: NiceReportingRule): void;
@@ -19,7 +20,7 @@ interface ReportingRowProps {
 
 const REQUIRED_RULE_FIELDS = ["maximum_report_interval", "minimum_report_interval", "reportable_change", "endpoint", "cluster", "attribute"] as const;
 
-const ReportingRow = memo(({ rule, device, onApply }: ReportingRowProps) => {
+const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowProps) => {
     const [stateRule, setStateRule] = useState(rule);
     const { t } = useTranslation(["zigbee", "common"]);
 
@@ -112,6 +113,7 @@ const ReportingRow = memo(({ rule, device, onApply }: ReportingRowProps) => {
                     required
                 />
                 <AttributePicker
+                    sourceIdx={sourceIdx}
                     label={t("attribute")}
                     disabled={!stateRule.cluster}
                     value={stateRule.attribute}

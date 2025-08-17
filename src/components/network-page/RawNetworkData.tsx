@@ -5,6 +5,7 @@ import { type JSX, memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
+import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../store.js";
 import { toHex } from "../../utils.js";
 import Button from "../Button.js";
@@ -14,12 +15,13 @@ import PowerSource from "../value-decorators/PowerSource.js";
 import RawRelationGroup from "./raw-data/RawRelationGroup.js";
 
 type RawNetworkMapProps = {
+    sourceIdx: number;
     map: Zigbee2MQTTNetworkMap;
 };
 
-const RawNetworkData = memo(({ map }: RawNetworkMapProps) => {
+const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     const { t } = useTranslation(["network", "common"]);
-    const devices = useAppStore((state) => state.devices);
+    const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
     const [filterValue, setFilterValue] = useState<string>("");
     const [highlightValue, setHighlightValue] = useState<string>("");
 
@@ -49,6 +51,7 @@ const RawNetworkData = memo(({ map }: RawNetworkMapProps) => {
                     groupedRelations.push(
                         <RawRelationGroup
                             key={key}
+                            sourceIdx={sourceIdx}
                             devices={devices}
                             relations={relations}
                             highlight={highlight}
@@ -59,7 +62,7 @@ const RawNetworkData = memo(({ map }: RawNetworkMapProps) => {
                 }
 
                 const highlighted = highlight(node.friendlyName);
-                const nodeLink = node.type === "Coordinator" ? "/settings/about" : `/device/${node.ieeeAddr}/info`;
+                const nodeLink = node.type === "Coordinator" ? "/settings/about" : `/device/${sourceIdx}/${node.ieeeAddr}/info`;
 
                 sortedNodes.push(
                     <ul className="w-md menu bg-base-200 rounded-box shadow" key={node.friendlyName}>
@@ -105,7 +108,7 @@ const RawNetworkData = memo(({ map }: RawNetworkMapProps) => {
         sortedNodes.sort((a, b) => (a.key === "Coordinator" ? -1 : a.key!.localeCompare(b.key!)));
 
         return sortedNodes;
-    }, [devices, filterValue, map, highlight, t]);
+    }, [sourceIdx, devices, filterValue, map, highlight, t]);
 
     return (
         <>

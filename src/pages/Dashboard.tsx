@@ -12,16 +12,16 @@ import DeviceControlEditName from "../components/device/DeviceControlEditName.js
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import { RemoveDeviceModal } from "../components/modal/components/RemoveDeviceModal.js";
 import { DASHBOARD_COLUMN_DISPLAY_KEY, DASHBOARD_FILTER_KEY } from "../localStoreConsts.js";
-import { useAppStore } from "../store.js";
+import { API_URLS, useAppStore } from "../store.js";
 import type { FeatureWithAnySubFeatures } from "../types.js";
 import { filterExposes } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 export default function Dashboard() {
-    const deviceStates = useAppStore((state) => state.deviceStates);
-    const bridgeConfig = useAppStore((state) => state.bridgeInfo.config);
-    const devices = useAppStore((state) => state.devices);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
+    const deviceStates = useAppStore((state) => state.deviceStates);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
+    const devices = useAppStore((state) => state.devices);
     const { t } = useTranslation(["zigbee", "settings"]);
     const [filterValue, setFilterValue] = useState(store2.get(DASHBOARD_FILTER_KEY, ""));
     const [columnDisplay, setColumnDisplay] = useState<boolean>(store2.get(DASHBOARD_COLUMN_DISPLAY_KEY, false));
@@ -31,8 +31,8 @@ export default function Dashboard() {
     }, [filterValue]);
 
     const renameDevice = useCallback(
-        async (from: string, to: string, homeassistantRename: boolean): Promise<void> => {
-            await sendMessage("bridge/request/device/rename", {
+        async (sourceIdx: number, from: string, to: string, homeassistantRename: boolean): Promise<void> => {
+            await sendMessage(sourceIdx, "bridge/request/device/rename", {
                 from,
                 to,
                 homeassistant_rename: homeassistantRename,
@@ -43,8 +43,8 @@ export default function Dashboard() {
     );
 
     const removeDevice = useCallback(
-        async (id: string, force: boolean, block: boolean): Promise<void> => {
-            await sendMessage("bridge/request/device/remove", { id, force, block });
+        async (sourceIdx: number, id: string, force: boolean, block: boolean): Promise<void> => {
+            await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block });
         },
         [sendMessage],
     );
@@ -57,68 +57,66 @@ export default function Dashboard() {
     const filteredDevices = useMemo(() => {
         const filteredDevices: JSX.Element[] = [];
 
-        for (const device of devices) {
-            if (!device.disabled && device.supported && (!filterValue || device.friendly_name.toLowerCase().includes(filterValue.toLowerCase()))) {
-                const deviceState = deviceStates[device.friendly_name] ?? {};
-                const filteredFeatures: FeatureWithAnySubFeatures[] = device.definition
-                    ? filterExposes(device.definition.exposes, isValidForDashboard)
-                    : [];
+        for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
+            for (const device of devices[sourceIdx]) {
+                if (
+                    !device.disabled &&
+                    device.supported &&
+                    (!filterValue || device.friendly_name.toLowerCase().includes(filterValue.toLowerCase()))
+                ) {
+                    const deviceState = deviceStates[sourceIdx][device.friendly_name] ?? {};
+                    const filteredFeatures: FeatureWithAnySubFeatures[] = device.definition
+                        ? filterExposes(device.definition.exposes, isValidForDashboard)
+                        : [];
 
-                if (filteredFeatures.length > 0) {
-                    filteredDevices.push(
-                        <div
-                            className={`${columnDisplay ? "break-inside-avoid-column mb-3" : "w-[23rem]"} card bg-base-200 rounded-box shadow-md`}
-                            key={device.ieee_address}
-                        >
-                            <DeviceCard
-                                features={filteredFeatures}
-                                device={device}
-                                deviceState={deviceState}
-                                onChange={async (value) =>
-                                    await sendMessage<"{friendlyNameOrId}/set">(
-                                        // @ts-expect-error templated API endpoint
-                                        `${device.ieee_address}/set`,
-                                        value,
-                                    )
-                                }
-                                featureWrapperClass={DashboardFeatureWrapper}
-                                lastSeenConfig={bridgeConfig.advanced.last_seen}
+                    if (filteredFeatures.length > 0) {
+                        filteredDevices.push(
+                            <div
+                                className={`${columnDisplay ? "break-inside-avoid-column mb-3" : "w-[23rem]"} card bg-base-200 rounded-box shadow-md`}
+                                key={`${sourceIdx}-${device.ieee_address}-${device.friendly_name}`}
                             >
-                                <div className="join join-horizontal">
-                                    <DeviceControlEditName
-                                        name={device.friendly_name}
-                                        renameDevice={renameDevice}
-                                        homeassistantEnabled={bridgeConfig.homeassistant.enabled}
-                                        style="btn-outline btn-primary btn-square btn-sm join-item"
-                                    />
-                                    <Button<void>
-                                        onClick={async () => await NiceModal.show(RemoveDeviceModal, { device, removeDevice })}
-                                        className="btn btn-outline btn-error btn-square btn-sm join-item"
-                                        title={t("remove_device")}
-                                    >
-                                        <FontAwesomeIcon icon={faTrash} />
-                                    </Button>
-                                </div>
-                            </DeviceCard>
-                        </div>,
-                    );
+                                <DeviceCard
+                                    features={filteredFeatures}
+                                    sourceIdx={sourceIdx}
+                                    device={device}
+                                    deviceState={deviceState}
+                                    onChange={async (value) =>
+                                        await sendMessage<"{friendlyNameOrId}/set">(
+                                            sourceIdx,
+                                            // @ts-expect-error templated API endpoint
+                                            `${device.ieee_address}/set`,
+                                            value,
+                                        )
+                                    }
+                                    featureWrapperClass={DashboardFeatureWrapper}
+                                    lastSeenConfig={bridgeInfo[sourceIdx].config.advanced.last_seen}
+                                >
+                                    <div className="join join-horizontal">
+                                        <DeviceControlEditName
+                                            sourceIdx={sourceIdx}
+                                            name={device.friendly_name}
+                                            renameDevice={renameDevice}
+                                            homeassistantEnabled={bridgeInfo[sourceIdx].config.homeassistant.enabled}
+                                            style="btn-outline btn-primary btn-square btn-sm join-item"
+                                        />
+                                        <Button<void>
+                                            onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
+                                            className="btn btn-outline btn-error btn-square btn-sm join-item"
+                                            title={t("remove_device")}
+                                        >
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </Button>
+                                    </div>
+                                </DeviceCard>
+                            </div>,
+                        );
+                    }
                 }
             }
         }
 
         return filteredDevices;
-    }, [
-        devices,
-        deviceStates,
-        bridgeConfig.advanced.last_seen,
-        bridgeConfig.homeassistant.enabled,
-        sendMessage,
-        removeDevice,
-        renameDevice,
-        t,
-        filterValue,
-        columnDisplay,
-    ]);
+    }, [devices, deviceStates, bridgeInfo, sendMessage, removeDevice, renameDevice, t, filterValue, columnDisplay]);
 
     return (
         <>

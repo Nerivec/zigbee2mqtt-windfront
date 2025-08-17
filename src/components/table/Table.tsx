@@ -1,62 +1,15 @@
-import {
-    type ColumnDef,
-    type ColumnFiltersState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { flexRender } from "@tanstack/react-table";
 import { useTranslation } from "react-i18next";
-import store2 from "store2";
-import { TABLE_COLUMN_FILTER_KEY, TABLE_COLUMN_VISIBILITY_KEY } from "../../localStoreConsts.js";
+import type { UseTableProps, useTable } from "../../hooks/useTable.js";
+import { TABLE_COLUMN_FILTER_KEY } from "../../localStoreConsts.js";
 import TextFilter from "./TextFilter.js";
 
-interface Props<T> {
-    id: string;
-    columns: ColumnDef<T, unknown>[];
-    data: T[];
-    visibleColumns?: Record<string, boolean>;
+interface Props<T> extends Pick<UseTableProps<T>, "id"> {
+    table: ReturnType<typeof useTable<T>>["table"];
 }
 
-export default function Table<T>(props: Props<T>) {
+export default function Table<T>({ id, table }: Props<T>) {
     const { t } = useTranslation("common");
-    const { id, columns, data, visibleColumns } = props;
-    const columnVisibilityStoreKey = `${TABLE_COLUMN_VISIBILITY_KEY}_${id}`;
-    const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>(store2.get(columnVisibilityStoreKey, visibleColumns ?? {}));
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const table = useReactTable({
-        data,
-        columns,
-        filterFns: {},
-        state: {
-            columnFilters,
-            columnVisibility,
-            pagination: {
-                pageIndex: 0, // custom initial page index
-                pageSize: 500, // custom default page size
-            },
-        },
-        onColumnVisibilityChange: setColumnVisibility,
-        onColumnFiltersChange: setColumnFilters,
-        getCoreRowModel: getCoreRowModel(),
-        getFilteredRowModel: getFilteredRowModel(), // client side filtering
-        getSortedRowModel: getSortedRowModel(),
-        // getPaginationRowModel: getPaginationRowModel(),
-        manualPagination: true,
-        // debugTable: false,
-        // debugHeaders: false,
-        // debugColumns: false,
-        // debugCells: false,
-        // debugRows: false,
-        // debugAll: false,
-    });
-
-    useEffect(() => {
-        store2.set(columnVisibilityStoreKey, columnVisibility);
-    }, [columnVisibilityStoreKey, columnVisibility]);
-
     const rows = table.getRowModel().rows;
 
     return (
@@ -73,7 +26,7 @@ export default function Table<T>(props: Props<T>) {
                                 type="checkbox"
                                 className="checkbox checkbox-xs"
                             />
-                            {typeof column.columnDef.header === "string" && column.columnDef.header ? column.columnDef.header : column.id}
+                            {typeof column.columnDef.header === "string" && column.columnDef.header ? column.columnDef.header : t(column.id)}
                         </label>
                     ),
                 )}
