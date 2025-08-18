@@ -1,25 +1,14 @@
 import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { formatOtaFileVersion } from "./index.js";
 
 type OtaFileVersionProps = {
     version?: number | null;
 };
 
-const OtaFileVersion = memo((props: OtaFileVersionProps) => {
+const OtaFileVersion = memo(({ version }: OtaFileVersionProps) => {
     const { t } = useTranslation("ota");
-    const versions = useMemo(() => {
-        if (props.version == null || props.version < 0) {
-            return undefined;
-        }
-
-        const versionString = props.version.toString(16).padStart(8, "0");
-        const appRelease = `${versionString[0]}.${versionString[1]}`;
-        const appBuild = versionString.slice(2, 4);
-        const stackRelease = `${versionString[4]}.${versionString[5]}`;
-        const stackBuild = versionString.slice(6);
-
-        return [appRelease, appBuild, stackRelease, stackBuild];
-    }, [props.version]);
+    const versions = useMemo(() => formatOtaFileVersion(version), [version]);
 
     return versions === undefined ? (
         <span>N/A</span>

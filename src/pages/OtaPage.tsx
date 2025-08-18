@@ -1,4 +1,4 @@
-import { faMicrochip, faServer } from "@fortawesome/free-solid-svg-icons";
+import { faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
 import { type ChangeEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
@@ -7,6 +7,7 @@ import { Link } from "react-router";
 import ConfirmButton from "../components/ConfirmButton.js";
 import DeviceImage from "../components/device/DeviceImage.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
+import { formatOtaFileVersion } from "../components/ota-page/index.js";
 import OtaControlGroup from "../components/ota-page/OtaControlGroup.js";
 import OtaFileVersion from "../components/ota-page/OtaFileVersion.js";
 import SourceDot from "../components/SourceDot.js";
@@ -76,36 +77,43 @@ export default function OtaPage() {
         return filteredDevices;
     }, [deviceStates, devices, selectedDevices, availableOnly]);
 
-    const onSelectAllChange = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            setSelectedDevices(e.target.checked ? otaDevices.map(({ sourceIdx, device }) => [sourceIdx, device.ieee_address]) : []);
-        },
-        [otaDevices],
-    );
-
-    const onSelectChange = useCallback((sourceIdx: number, device: Device, select: boolean) => {
-        setSelectedDevices((prev) =>
-            select ? [...prev, [sourceIdx, device.ieee_address]] : prev.filter(([idx, ieee]) => idx !== sourceIdx && ieee !== device.ieee_address),
-        );
+    // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
+    const onSelectAllChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setSelectedDevices(e.target.checked ? getFilteredData().map(({ sourceIdx, device }) => [sourceIdx, device.ieee_address]) : []);
     }, []);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: does not change
+    // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
+    const onSelectChange = useCallback((sourceIdx: number, device: Device, select: boolean) => {
+        if (select) {
+            if (getFilteredData().find((data) => data.sourceIdx === sourceIdx && data.device.ieee_address === device.ieee_address)) {
+                setSelectedDevices((prev) => [...prev, [sourceIdx, device.ieee_address]]);
+            }
+        } else {
+            setSelectedDevices((prev) => prev.filter(([idx, ieee]) => idx !== sourceIdx || ieee !== device.ieee_address));
+        }
+    }, []);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
     const checkSelected = useCallback(async () => {
         await Promise.allSettled(
-            getFilteredData().map(({ sourceIdx, device }) =>
-                sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: device.ieee_address }),
-            ),
+            selectedDevices.map(([sourceIdx, ieee]) => {
+                return getFilteredData().find((data) => data.sourceIdx === sourceIdx && data.device.ieee_address === ieee)
+                    ? sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee })
+                    : Promise.resolve();
+            }),
         );
-    }, [sendMessage]);
+    }, [selectedDevices, sendMessage]);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: does not change
+    // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
     const updateSelected = useCallback(async () => {
         await Promise.allSettled(
-            getFilteredData().map(({ sourceIdx, device }) =>
-                sendMessage(sourceIdx, "bridge/request/device/ota_update/update", { id: device.ieee_address }),
-            ),
+            selectedDevices.map(([sourceIdx, ieee]) => {
+                return getFilteredData().find((data) => data.sourceIdx === sourceIdx && data.device.ieee_address === ieee)
+                    ? sendMessage(sourceIdx, "bridge/request/device/ota_update/update", { id: ieee })
+                    : Promise.resolve();
+            }),
         );
-    }, [sendMessage]);
+    }, [selectedDevices, sendMessage]);
 
     const onCheckClick = useCallback(
         async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee }),
@@ -131,6 +139,7 @@ export default function OtaPage() {
         setAvailableOnly(e.target.checked);
     }, []);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
     const columns = useMemo<ColumnDef<OtaTableData, unknown>[]>(
         () => [
             {
@@ -141,7 +150,7 @@ export default function OtaPage() {
                             type="checkbox"
                             className="checkbox"
                             onChange={onSelectAllChange}
-                            defaultChecked={selectedDevices.length === otaDevices.length}
+                            defaultChecked={selectedDevices.length === getFilteredData().length}
                         />
                     </label>
                 ),
@@ -204,15 +213,9 @@ export default function OtaPage() {
                                 </div>
                             )}
                             <div className="flex flex-row gap-1 mt-0.5 items-center">
-                                <span className="badge badge-sm badge-soft badge-ghost cursor-default" title={t("zigbee:firmware_id")}>
-                                    {/** TODO: use releaseNotes from manifest instead of links (need API change in Z2M) */}
-                                    <FontAwesomeIcon icon={faMicrochip} />
-                                    <OtaLink device={device} />
-                                    {device.date_code ? <span title={t("zigbee:firmware_build_date")}> ({device.date_code})</span> : undefined}
-                                </span>
                                 {batteryState && (
                                     <span className="badge badge-sm badge-soft badge-ghost cursor-default">
-                                        <PowerSource device={device} {...batteryState} />
+                                        <PowerSource device={device} {...batteryState} showLevel />
                                     </span>
                                 )}
                             </div>
@@ -242,26 +245,45 @@ export default function OtaPage() {
                 filterFn: "includesString",
             },
             {
+                id: "firmware_id",
+                header: t("zigbee:firmware_id"),
+                accessorFn: ({ device }) => [device.software_build_id, device.date_code].join(" "),
+                cell: ({
+                    row: {
+                        original: { device },
+                    },
+                }) => (
+                    <>
+                        <OtaLink device={device} />
+                        {device.date_code && (
+                            <div>
+                                <span className="badge badge-sm badge-ghost cursor-default" title={t("zigbee:firmware_build_date")}>
+                                    {device.date_code}
+                                </span>
+                            </div>
+                        )}
+                    </>
+                ),
+            },
+            {
                 id: "firmware_version",
                 header: t("firmware_version"),
-                accessorFn: ({ state }) => state?.installed_version,
+                accessorFn: ({ state }) => formatOtaFileVersion(state?.installed_version)?.join(" "),
                 cell: ({
                     row: {
                         original: { state },
                     },
                 }) => <OtaFileVersion version={state?.installed_version} />,
-                enableColumnFilter: false,
             },
             {
                 id: "available_firmware_version",
                 header: t("available_firmware_version"),
-                accessorFn: ({ state }) => state?.latest_version,
+                accessorFn: ({ state }) => formatOtaFileVersion(state?.latest_version)?.join(" "),
                 cell: ({
                     row: {
                         original: { state },
                     },
                 }) => <OtaFileVersion version={state?.latest_version} />,
-                enableColumnFilter: false,
             },
             {
                 id: "actions",
@@ -320,7 +342,6 @@ export default function OtaPage() {
         ],
         [
             selectedDevices.length,
-            otaDevices.length,
             availableOnly,
             onSelectAllChange,
             onSelectChange,
