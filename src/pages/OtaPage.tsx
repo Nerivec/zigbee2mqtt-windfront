@@ -95,24 +95,26 @@ export default function OtaPage() {
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
     const checkSelected = useCallback(async () => {
-        await Promise.allSettled(
-            selectedDevices.map(([sourceIdx, ieee]) => {
-                return getFilteredData().find((data) => data.sourceIdx === sourceIdx && data.device.ieee_address === ieee)
-                    ? sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee })
-                    : Promise.resolve();
-            }),
-        );
+        const promises = selectedDevices.map(([sourceIdx, ieee]) => {
+            return getFilteredData().find((data) => data.sourceIdx === sourceIdx && data.device.ieee_address === ieee)
+                ? sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee })
+                : Promise.resolve();
+        });
+
+        setSelectedDevices([]);
+        await Promise.allSettled(promises);
     }, [selectedDevices, sendMessage]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
     const updateSelected = useCallback(async () => {
-        await Promise.allSettled(
-            selectedDevices.map(([sourceIdx, ieee]) => {
-                return getFilteredData().find((data) => data.sourceIdx === sourceIdx && data.device.ieee_address === ieee)
-                    ? sendMessage(sourceIdx, "bridge/request/device/ota_update/update", { id: ieee })
-                    : Promise.resolve();
-            }),
-        );
+        const promises = selectedDevices.map(([sourceIdx, ieee]) => {
+            return getFilteredData().find((data) => data.sourceIdx === sourceIdx && data.device.ieee_address === ieee)
+                ? sendMessage(sourceIdx, "bridge/request/device/ota_update/update", { id: ieee })
+                : Promise.resolve();
+        });
+
+        setSelectedDevices([]);
+        await Promise.allSettled(promises);
     }, [selectedDevices, sendMessage]);
 
     const onCheckClick = useCallback(
