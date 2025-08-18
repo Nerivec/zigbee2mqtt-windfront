@@ -32,7 +32,7 @@ const EndpointPicker = memo((props: EndpointPickerProps) => {
         <SelectField
             name="endpoint_picker"
             label={label}
-            value={value}
+            value={value ?? ""}
             onChange={(e) => onChange(e.target.value)}
             title={hasOnlyOneEP ? t("the_only_endpoint") : ""}
             disabled={(value && hasOnlyOneEP) || disabled}
