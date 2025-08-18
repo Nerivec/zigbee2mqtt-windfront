@@ -1,4 +1,4 @@
-import { faClose, faPowerOff, faServer } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faEllipsisH, faPowerOff, faServer, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, type RefObject, useCallback, useContext, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -94,9 +94,11 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: NotificationsProps)
                 {notifications.length > 0 && (
                     <div className="flex flex-row justify-between mt-3 mb-1">
                         <Link to={`/logs/${sourceIdx}`} className="btn btn-sm btn-primary btn-outline" title={t("common:more")}>
+                            <FontAwesomeIcon icon={faEllipsisH} />
                             {t("common:more")}
                         </Link>
                         <Button className="btn btn-sm btn-error btn-outline" onClick={onClearClick} title={t("common:clear")}>
+                            <FontAwesomeIcon icon={faTrashCan} />
                             {t("common:clear")}
                         </Button>
                     </div>
@@ -132,6 +134,7 @@ const Notifications = memo(() => {
                         modalDescription={t("dialog_confirmation_prompt")}
                         modalCancelLabel={t("cancel")}
                     >
+                        <FontAwesomeIcon icon={faTrashCan} />
                         {t("clear_all")}
                     </ConfirmButton>
                 )}

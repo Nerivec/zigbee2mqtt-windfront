@@ -151,7 +151,10 @@
         "legend_node_size": "Nodes are sized by centrality.",
         "legend_node_select": "Selecting a node will select the depending one-hop part of the network.",
         "legend_node_fold": "Node context menu fold/expand button will affect the depending part of the network.",
-        "legend_edge_toggle": "Toggling relationship edges will change the layout. When disabling one or more, the actual layout of the network is no longer accurately represented."
+        "legend_edge_toggle": "Toggling relationship edges will change the layout. When disabling one or more, the actual layout of the network is no longer accurately represented.",
+        "begin_info_type": "The type is used to retrieve a different network map format. External ones are meant to be copied for use outside of the frontend (some example websites are given once generated).",
+        "begin_info_routes": "Enabling routes will retrieve the routes table from devices (not all coordinators/devices support this, but failures should not prevent the rest of the data from loading). This is currently only used in the 'data' display.",
+        "begin_info_display": "The display type allows to switch between a data-oriented view and a map view."
     },
     "navbar": {
         "all": "All",
@@ -265,8 +268,8 @@
         "scan": "Scan",
         "identify": "Identify",
         "factory_reset": "Factory reset",
-        "scan_source_index": "Scan source index",
-        "select_scan_source_index": "Select scan source index"
+        "scan_source": "Scan source",
+        "select_scan_source": "Select scan source"
     },
     "values": {
         "clear": "Clear",

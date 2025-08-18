@@ -32,7 +32,7 @@ export default function Tools({ sourceIdx }: ToolsProps) {
     return (
         <div className="join join-vertical">
             <ConfirmButton
-                className="btn btn-error join-item mb-2"
+                className="btn btn-outline btn-error join-item mb-2"
                 onClick={async () => await sendMessage(sourceIdx, "bridge/request/restart", "")}
                 title={t("restart_zigbee2mqtt")}
                 modalDescription={t("common:dialog_confirmation_prompt")}
@@ -41,7 +41,7 @@ export default function Tools({ sourceIdx }: ToolsProps) {
                 {t("restart_zigbee2mqtt")}
             </ConfirmButton>
             <Button
-                className="btn btn-primary join-item"
+                className="btn btn-outline btn-primary join-item"
                 onClick={async () => await downloadAsZip(useAppStore.getState() as unknown as Record<string, unknown>, "state.json")}
             >
                 {t("download_state")}
@@ -51,12 +51,12 @@ export default function Tools({ sourceIdx }: ToolsProps) {
                     <span className="loading loading-dots loading-xl" />
                 </Button>
             ) : backup ? (
-                <Button className="btn btn-primary join-item" onClick={downloadBackup}>
+                <Button className="btn btn-outline btn-primary join-item" onClick={downloadBackup}>
                     {t("download_z2m_backup")}
                 </Button>
             ) : (
                 <Button
-                    className="btn btn-primary join-item"
+                    className="btn btn-outline btn-primary join-item"
                     onClick={async () => {
                         setBackupPreparing(sourceIdx);
                         await sendMessage(sourceIdx, "bridge/request/backup", "");
@@ -66,7 +66,7 @@ export default function Tools({ sourceIdx }: ToolsProps) {
                 </Button>
             )}
             <Button
-                className="btn btn-primary join-item"
+                className="btn btn-outline btn-primary join-item"
                 onClick={async () =>
                     await NiceModal.show(AddInstallCodeModal, {
                         addInstallCode: async (code: string) => await sendMessage(sourceIdx, "bridge/request/install_code/add", { value: code }),

@@ -1,5 +1,5 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { faEdit, faServer, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlus, faServer, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useCallback, useContext, useMemo, useState } from "react";
@@ -9,11 +9,12 @@ import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import Button from "../components/Button.js";
 import ConfirmButton from "../components/ConfirmButton.js";
 import InputField from "../components/form-fields/InputField.js";
+import SelectField from "../components/form-fields/SelectField.js";
 import { RenameGroupForm } from "../components/modal/components/RenameGroupModal.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import { useTable } from "../hooks/useTable.js";
-import { API_URLS, useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { Group } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
@@ -202,17 +203,19 @@ export default function GroupsPage() {
                 <div className="collapse-content">
                     <div className="flex flex-row flex-wrap justify-center gap-2">
                         {API_URLS.length > 1 && (
-                            <InputField
-                                type="number"
+                            <SelectField
                                 name="source"
                                 label={t("common:source")}
                                 defaultValue={newGroupSourceIdx}
-                                min={0}
-                                max={API_URLS.length - 1}
-                                readOnly={API_URLS.length === 1}
                                 required
-                                onChange={(e) => !!e.target.validationMessage && e.target.value && setNewGroupSourceIdx(e.target.valueAsNumber)}
-                            />
+                                onChange={(e) => !e.target.validationMessage && setNewGroupSourceIdx(Number.parseInt(e.target.value, 10))}
+                            >
+                                {API_NAMES.map((name, idx) => (
+                                    <option key={`${idx}-${name}`} value={idx}>
+                                        {name}
+                                    </option>
+                                ))}
+                            </SelectField>
                         )}
                         <InputField
                             type="text"
@@ -234,9 +237,13 @@ export default function GroupsPage() {
                             max={255}
                             onChange={(e) => setNewGroupId(e.target.value)}
                         />
-                        <Button<void> onClick={onGroupCreateSubmit} className="btn btn-primary self-center" disabled={!isValidNewGroup}>
-                            {t("create_group")}
-                        </Button>
+                        <fieldset className="fieldset">
+                            <legend className="fieldset-legend">&nbsp;</legend>
+                            <Button<void> onClick={onGroupCreateSubmit} className="btn btn-outline btn-primary" disabled={!isValidNewGroup}>
+                                <FontAwesomeIcon icon={faPlus} />
+                                {t("create_group")}
+                            </Button>
+                        </fieldset>
                     </div>
                 </div>
             </div>

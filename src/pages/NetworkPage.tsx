@@ -121,7 +121,13 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
             }
         }
 
-        return null;
+        return (
+            <div className="flex flex-col justify-center items-center gap-2">
+                <p className="max-w-prose">{t("begin_info_type")}</p>
+                <p className="max-w-prose">{t("begin_info_routes")}</p>
+                <p className="max-w-prose">{t("begin_info_display")}</p>
+            </div>
+        );
     }, [sourceIdx, networkMap, networkMapIsLoading, displayType, t]);
 
     return (
@@ -133,14 +139,18 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
                     <option value="plantuml">{t("plantuml")}</option>
                 </SelectField>
                 <CheckboxField name="enable_routes" label={t("enable_routes")} checked={enableRoutes} onChange={onEnableRoutesChange} />
-                <Button
-                    className="btn btn-primary btn-square self-center ms-3 me-6"
-                    onClick={onRequestClick}
-                    title={networkMap ? t("reload") : t("load")}
-                    disabled={networkMapIsLoading}
-                >
-                    {networkMap ? <FontAwesomeIcon icon={faSync} /> : <FontAwesomeIcon icon={faDownLong} />}
-                </Button>
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend">&nbsp;</legend>
+                    <Button
+                        className="btn btn-outline btn-primary ms-3 me-6"
+                        onClick={onRequestClick}
+                        title={networkMap ? t("reload") : t("load")}
+                        disabled={networkMapIsLoading}
+                    >
+                        {networkMap ? <FontAwesomeIcon icon={faSync} /> : <FontAwesomeIcon icon={faDownLong} />}
+                        {networkMap ? t("reload") : t("load")}
+                    </Button>
+                </fieldset>
                 {mapType === "raw" && (
                     <SelectField name="display_type" label={t("display_type")} value={displayType} onChange={onDisplayTypeChange}>
                         <option value="data">{t("data")}</option>

@@ -1,4 +1,4 @@
-import { faEraser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faEraser, faMagnifyingGlass, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -102,9 +102,13 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                     checked={highlightOnly}
                     onChange={(e) => setHighlightOnly(e.target.checked)}
                 />
-                <Button<number> item={sourceIdx} onClick={clearLogs} className="btn btn-primary self-center" disabled={logs.length === 0}>
-                    {t("common:clear")}
-                </Button>
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend">&nbsp;</legend>
+                    <Button<number> item={sourceIdx} onClick={clearLogs} className="btn btn-outline btn-primary" disabled={logs.length === 0}>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        {t("common:clear")}
+                    </Button>
+                </fieldset>
                 <div className="ml-auto">
                     <SelectField
                         name="log_level_config"
@@ -191,15 +195,19 @@ export default function LogsPage() {
                         </option>
                     ))}
                 </SelectField>
-                <ConfirmButton<void>
-                    onClick={clearAllLogs}
-                    className="btn btn-primary self-center"
-                    title={t("common:clear_all")}
-                    modalDescription={t("common:dialog_confirmation_prompt")}
-                    modalCancelLabel={t("common:cancel")}
-                >
-                    {t("common:clear_all")}
-                </ConfirmButton>
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend">&nbsp;</legend>
+                    <ConfirmButton<void>
+                        onClick={clearAllLogs}
+                        className="btn btn-outline btn-primary"
+                        title={t("common:clear_all")}
+                        modalDescription={t("common:dialog_confirmation_prompt")}
+                        modalCancelLabel={t("common:cancel")}
+                    >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        {t("common:clear_all")}
+                    </ConfirmButton>
+                </fieldset>
             </div>
             <div className="tab-content block h-full bg-base-100 pb-3 px-3">
                 <LogsTab sourceIdx={numSourceIdx} />

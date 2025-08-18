@@ -80,7 +80,7 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
     switch (currentState) {
         case "none":
             return (
-                <Button className="btn btn-primary join-item" onClick={() => setCurrentState("start")}>
+                <Button className="btn btn-outline btn-primary join-item" onClick={() => setCurrentState("start")}>
                     {t("localise_images")}
                 </Button>
             );

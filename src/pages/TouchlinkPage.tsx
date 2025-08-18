@@ -1,4 +1,4 @@
-import { faBroom, faCircleNotch, faExclamationTriangle, faServer } from "@fortawesome/free-solid-svg-icons";
+import { faBroom, faCircleNotch, faExclamationTriangle, faMagnifyingGlassPlus, faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useCallback, useContext, useMemo, useState } from "react";
@@ -187,12 +187,12 @@ export default function TouchlinkPage() {
                 {API_NAMES.length > 1 && (
                     <SelectField
                         name="scan_idx_picker"
-                        label={t("scan_source_index")}
+                        label={t("scan_source")}
                         value={scanIdx}
                         onChange={(e) => !e.target.validationMessage && !!e.target.value && setScanIdx(Number.parseInt(e.target.value, 10))}
                     >
                         <option value="" disabled>
-                            {t("select_scan_source_index")}
+                            {t("select_scan_source")}
                         </option>
                         {API_NAMES.map((name, idx) => (
                             <option key={name} value={idx}>
@@ -201,9 +201,13 @@ export default function TouchlinkPage() {
                         ))}
                     </SelectField>
                 )}
-                <Button<number> className="btn btn-primary" item={scanIdx} onClick={onScanClick} disabled={touchlinkScanInProgress}>
-                    {t("scan")}
-                </Button>
+                <fieldset className="fieldset">
+                    <legend className="fieldset-legend">&nbsp;</legend>
+                    <Button<number> className="btn btn-outline btn-primary" item={scanIdx} onClick={onScanClick} disabled={touchlinkScanInProgress}>
+                        <FontAwesomeIcon icon={faMagnifyingGlassPlus} />
+                        {t("scan")}
+                    </Button>
+                </fieldset>
             </div>
 
             <Table id="touchlink-devices" table={table} />
