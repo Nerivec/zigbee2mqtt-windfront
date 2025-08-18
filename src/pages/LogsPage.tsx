@@ -185,7 +185,7 @@ export default function LogsPage() {
                     name="log_limit"
                     label={t("logs_limit")}
                     onChange={(e) => {
-                        setLogsLimit(Number.parseInt(e.target.value));
+                        setLogsLimit(Number.parseInt(e.target.value, 10));
                     }}
                     value={logsLimit}
                 >

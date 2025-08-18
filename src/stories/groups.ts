@@ -3,7 +3,7 @@ import { BASIC_ENDDEVICE, BASIC_ROUTER, OTHER_ROUTER } from "./devices.js";
 
 const getFirstEndpoint = (device: Device): number => {
     for (const endpointKey in device.endpoints) {
-        return Number.parseInt(endpointKey);
+        return Number.parseInt(endpointKey, 10);
     }
 
     return 1;
