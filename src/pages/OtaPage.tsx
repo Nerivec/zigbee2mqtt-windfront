@@ -150,7 +150,7 @@ export default function OtaPage() {
                             type="checkbox"
                             className="checkbox"
                             onChange={onSelectAllChange}
-                            defaultChecked={selectedDevices.length === getFilteredData().length}
+                            checked={selectedDevices.length !== 0 && selectedDevices.length === getFilteredData().length}
                         />
                     </label>
                 ),
@@ -165,7 +165,7 @@ export default function OtaPage() {
                             type="checkbox"
                             className="checkbox"
                             onChange={(e) => onSelectChange(sourceIdx, device, e.target.checked)}
-                            defaultChecked={selected}
+                            checked={selected}
                         />
                     </label>
                 ),
@@ -306,7 +306,7 @@ export default function OtaPage() {
                                 modalCancelLabel={t("common:cancel")}
                                 disabled={selectedDevices.length === 0}
                             >
-                                {t("check_selected")}
+                                {`${t("check_selected")} (${selectedDevices.length})`}
                             </ConfirmButton>
                             <ConfirmButton
                                 className="btn btn-outline btn-error btn-xs join-item"
@@ -316,7 +316,7 @@ export default function OtaPage() {
                                 modalCancelLabel={t("common:cancel")}
                                 disabled={selectedDevices.length === 0}
                             >
-                                {t("update_selected")}
+                                {`${t("update_selected")} (${selectedDevices.length})`}
                             </ConfirmButton>
                         </div>
                     </>
