@@ -86,7 +86,7 @@ const propertyToField = (
                     min={property.minimum}
                     max={property.maximum}
                     required={required}
-                    defaultValue={(value as number) ?? ""}
+                    initialValue={(value as number) ?? ""}
                 />
             );
         }

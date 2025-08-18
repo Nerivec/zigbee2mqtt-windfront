@@ -2,7 +2,7 @@ import { type ChangeEvent, type DetailedHTMLProps, type InputHTMLAttributes, mem
 
 type NumberFieldProps = Omit<
     DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-    "onSubmit" | "defaultValue" | "value" | "min" | "max"
+    "onChange" | "onSubmit" | "defaultValue" | "value" | "min" | "max"
 > & {
     name: string;
     label?: string;
@@ -10,31 +10,26 @@ type NumberFieldProps = Omit<
     min?: number;
     max?: number;
     step?: number;
-    defaultValue: number | "";
+    initialValue: number | "";
     minimal?: boolean;
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-    onSubmit?: (value: number | "", valid: boolean) => void;
+    onSubmit: (value: number | "", valid: boolean) => void;
 };
 
 const NumberField = memo((props: NumberFieldProps) => {
-    const { label, detail, onChange, onSubmit, defaultValue, minimal, ...rest } = props;
-    const [currentValue, setCurrentValue] = useState<number | "">(defaultValue);
+    const { label, detail, onSubmit, initialValue, minimal, ...rest } = props;
+    const [currentValue, setCurrentValue] = useState<number | "">(initialValue);
 
     useEffect(() => {
-        setCurrentValue(defaultValue);
-    }, [defaultValue]);
+        setCurrentValue(initialValue);
+    }, [initialValue]);
 
-    const onChangeHandler = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            setCurrentValue(e.target.value ? e.target.valueAsNumber : "");
-            onChange?.(e);
-        },
-        [onChange],
-    );
+    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setCurrentValue(e.target.value ? e.target.valueAsNumber : "");
+    }, []);
 
     const onSubmitHandler = useCallback(
         (e) => {
-            onSubmit?.(currentValue, !e.target.validationMessage);
+            onSubmit(currentValue, !e.target.validationMessage);
         },
         [onSubmit, currentValue],
     );

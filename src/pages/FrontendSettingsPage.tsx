@@ -4,7 +4,6 @@ import type { LabelVisibilityType, LayoutTypes } from "reagraph";
 import store2 from "store2";
 import ConfirmButton from "../components/ConfirmButton.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
-import InputField from "../components/form-fields/InputField.js";
 import NumberField from "../components/form-fields/NumberField.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import type { NetworkRawDisplayType } from "../components/network-page/index.js";
@@ -173,25 +172,27 @@ export default function FrontendSettingsPage() {
                     checked={dashboardColumnDisplay}
                     onChange={(e) => setDashboardColumnDisplay(e.target.checked)}
                 />
-                <InputField
+                <NumberField
                     type="number"
                     name="permit_join_time"
                     label={t("permit_join_time")}
                     min={10}
                     max={254}
                     required
-                    value={permitJoinTime}
-                    onChange={(e) => !e.target.validationMessage && !!e.target.value && setPermitJoinTime(e.target.valueAsNumber)}
+                    minimal
+                    initialValue={permitJoinTime}
+                    onSubmit={(value, valid) => valid && value !== "" && setPermitJoinTime(value)}
                 />
-                <InputField
+                <NumberField
                     type="number"
                     name="max_on_screen_notifications"
                     label={t("max_on_screen_notifications")}
                     min={1}
                     max={5}
                     required
-                    value={maxOnScreenNotifications}
-                    onChange={(e) => !e.target.validationMessage && !!e.target.value && setMaxOnScreenNotifications(e.target.valueAsNumber)}
+                    minimal
+                    initialValue={maxOnScreenNotifications}
+                    onSubmit={(value, valid) => valid && value !== "" && setMaxOnScreenNotifications(value)}
                 />
             </div>
             <h2 className="text-lg mt-2">{t("network_raw")}</h2>
@@ -243,7 +244,7 @@ export default function FrontendSettingsPage() {
                         min={-1000}
                         max={-100}
                         step={10}
-                        defaultValue={networkMapNodeStrength}
+                        initialValue={networkMapNodeStrength}
                     />
                 </div>
                 <div className="min-w-xs">
@@ -254,7 +255,7 @@ export default function FrontendSettingsPage() {
                         min={10}
                         max={200}
                         step={5}
-                        defaultValue={networkMapLinkDistance}
+                        initialValue={networkMapLinkDistance}
                     />
                 </div>
                 <CheckboxField
