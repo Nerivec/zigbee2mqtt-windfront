@@ -222,11 +222,15 @@ const groupProperties = (
                 const feature = propertyToField(
                     key,
                     property,
-                    data[key],
+                    data[key] ?? property.default,
                     set,
                     depth,
                     required.includes(key),
-                    property.description ? t(property.description, { defaultValue: property.description }) : undefined,
+                    property.description
+                        ? `${t(property.description)}${property.default != null ? ` (${t("common:default")}: ${property.default})` : ""}`
+                        : property.default != null
+                          ? `${t("common:default")}: ${property.default}}`
+                          : undefined,
                 );
 
                 if (feature) {
@@ -245,7 +249,7 @@ const groupProperties = (
 };
 
 export default function SettingsList({ schema, data, set, rootOnly }: SettingsListProps) {
-    const { t } = useTranslation("settingsSchemaDescriptions");
+    const { t } = useTranslation(["settingsSchemaDescriptions", "common"]);
 
     return (
         <div className="list bg-base-100">{schema.properties && groupProperties(t, schema.properties, data, set, 0, schema.required, rootOnly)}</div>
