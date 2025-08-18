@@ -4,6 +4,7 @@ import {
     getCoreRowModel,
     getFilteredRowModel,
     getSortedRowModel,
+    type SortingState,
     useReactTable,
 } from "@tanstack/react-table";
 import { useCallback, useEffect, useState } from "react";
@@ -15,9 +16,10 @@ export interface UseTableProps<T> {
     columns: ColumnDef<T, unknown>[];
     data: T[];
     visibleColumns?: Record<string, boolean>;
+    sorting?: SortingState;
 }
 
-export function useTable<T>({ id, columns, data, visibleColumns }: UseTableProps<T>) {
+export function useTable<T>({ id, columns, data, visibleColumns, sorting }: UseTableProps<T>) {
     const columnVisibilityStoreKey = `${TABLE_COLUMN_VISIBILITY_KEY}_${id}`;
     const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>(store2.get(columnVisibilityStoreKey, visibleColumns ?? {}));
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -28,10 +30,9 @@ export function useTable<T>({ id, columns, data, visibleColumns }: UseTableProps
         state: {
             columnFilters,
             columnVisibility,
-            pagination: {
-                pageIndex: 0, // custom initial page index
-                pageSize: 500, // custom default page size
-            },
+        },
+        initialState: {
+            sorting,
         },
         onColumnVisibilityChange: setColumnVisibility,
         onColumnFiltersChange: setColumnFilters,

@@ -73,7 +73,7 @@ export default function Dashboard() {
                         filteredDevices.push(
                             <div
                                 className={`${columnDisplay ? "break-inside-avoid-column mb-3" : "w-[23rem]"} card bg-base-200 rounded-box shadow-md`}
-                                key={`${sourceIdx}-${device.ieee_address}-${device.friendly_name}`}
+                                key={`${device.friendly_name}-${device.ieee_address}-${sourceIdx}`}
                             >
                                 <DeviceCard
                                     features={filteredFeatures}
@@ -114,6 +114,8 @@ export default function Dashboard() {
                 }
             }
         }
+
+        filteredDevices.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
 
         return filteredDevices;
     }, [devices, deviceStates, bridgeInfo, sendMessage, removeDevice, renameDevice, t, filterValue, columnDisplay]);

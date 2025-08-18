@@ -136,6 +136,7 @@ export default function GroupsPage() {
                     </Link>
                 ),
                 filterFn: "includesString",
+                sortingFn: (rowA, rowB) => rowA.original.group.friendly_name.localeCompare(rowB.original.group.friendly_name),
             },
             {
                 id: "members",
@@ -185,7 +186,13 @@ export default function GroupsPage() {
         [onRenameClick, onRemoveClick, t],
     );
 
-    const { table } = useTable({ id: "all-groups", columns, data, visibleColumns: { source: API_URLS.length > 1 } });
+    const { table } = useTable({
+        id: "all-groups",
+        columns,
+        data,
+        visibleColumns: { source: API_URLS.length > 1 },
+        sorting: [{ id: "friendly_name", desc: false }],
+    });
 
     return (
         <>

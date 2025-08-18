@@ -223,6 +223,7 @@ export default function OtaPage() {
                     </div>
                 ),
                 filterFn: "includesString",
+                sortingFn: (rowA, rowB) => rowA.original.device.friendly_name.localeCompare(rowB.original.device.friendly_name),
             },
             {
                 id: "model",
@@ -356,7 +357,13 @@ export default function OtaPage() {
         ],
     );
 
-    const { table, getFilteredData } = useTable({ id: "ota-devices", columns, data: otaDevices, visibleColumns: { source: API_URLS.length > 1 } });
+    const { table, getFilteredData } = useTable({
+        id: "ota-devices",
+        columns,
+        data: otaDevices,
+        visibleColumns: { source: API_URLS.length > 1 },
+        sorting: [{ id: "friendly_name", desc: false }],
+    });
 
     return <Table id="ota-devices" table={table} />;
 }

@@ -120,6 +120,10 @@ export default function TouchlinkPage() {
                 header: t("common:friendly_name"),
                 accessorFn: ({ friendlyName }) => friendlyName,
                 filterFn: "includesString",
+                sortingFn: (rowA, rowB) =>
+                    (rowA.original.friendlyName ?? rowA.original.touchlinkDevice.ieee_address).localeCompare(
+                        rowB.original.friendlyName ?? rowB.original.touchlinkDevice.ieee_address,
+                    ),
             },
             {
                 id: "channel",
@@ -165,7 +169,13 @@ export default function TouchlinkPage() {
         [t, onIdentifyClick, onResetClick],
     );
 
-    const { table } = useTable({ id: "touchlink-devices", columns, data, visibleColumns: { source: API_URLS.length > 1 } });
+    const { table } = useTable({
+        id: "touchlink-devices",
+        columns,
+        data,
+        visibleColumns: { source: API_URLS.length > 1 },
+        sorting: [{ id: "friendly_name", desc: false }],
+    });
 
     return touchlinkScanInProgress ? (
         <div className="flex flex-row justify-center items-center gap-2">

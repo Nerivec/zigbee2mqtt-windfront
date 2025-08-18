@@ -184,6 +184,7 @@ export default function DevicesPage(): JSX.Element {
                     </div>
                 ),
                 filterFn: "includesString",
+                sortingFn: (rowA, rowB) => rowA.original.device.friendly_name.localeCompare(rowB.original.device.friendly_name),
             },
             {
                 id: "ieee_address",
@@ -349,7 +350,13 @@ export default function DevicesPage(): JSX.Element {
         ],
     );
 
-    const { table } = useTable({ id: "all-devices", columns, data, visibleColumns: { source: API_URLS.length > 1, type: false } });
+    const { table } = useTable({
+        id: "all-devices",
+        columns,
+        data,
+        visibleColumns: { source: API_URLS.length > 1, type: false },
+        sorting: [{ id: "friendly_name", desc: false }],
+    });
 
     return <Table id="all-devices" table={table} />;
 }

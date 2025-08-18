@@ -31,7 +31,7 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
                     (sourceIdx !== currentSourceIdx || device.ieee_address !== currentDevice?.ieee_address)
                 ) {
                     elements.push(
-                        <li key={`${sourceIdx}-${device.ieee_address}-${device.friendly_name}`}>
+                        <li key={`${device.friendly_name}-${device.ieee_address}-${sourceIdx}`}>
                             <Link
                                 to={`/device/${sourceIdx}/${device.ieee_address}/${tab}`}
                                 onClick={() => setSearchTerm("")}
@@ -44,6 +44,9 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
                 }
             }
         }
+
+        elements.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
+
         return elements;
     }, [devices, searchTerm, currentSourceIdx, currentDevice, tab]);
 

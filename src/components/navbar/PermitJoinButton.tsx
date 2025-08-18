@@ -25,28 +25,11 @@ const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps)
         const filteredDevices: JSX.Element[] = [];
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
-            filteredDevices.push(
-                <li
-                    key={`${sourceIdx}-all`}
-                    onClick={() => setSelectedRouter([sourceIdx, undefined])}
-                    onKeyUp={(e) => {
-                        if (e.key === "enter") {
-                            setSelectedRouter([sourceIdx, undefined]);
-                        }
-                    }}
-                >
-                    <span className="btn btn-sm btn-block btn-ghost">
-                        <SourceDot idx={sourceIdx} autoHide />
-                        {t("all")}
-                    </span>
-                </li>,
-            );
-
             for (const device of devices[sourceIdx]) {
                 if (device.type === "Coordinator" || device.type === "Router") {
                     filteredDevices.push(
                         <li
-                            key={`${sourceIdx}-${device.ieee_address}-${device.friendly_name}`}
+                            key={`${device.friendly_name}-${device.ieee_address}-${sourceIdx}`}
                             onClick={() => setSelectedRouter([sourceIdx, device])}
                             onKeyUp={(e) => {
                                 if (e.key === "enter") {
@@ -62,6 +45,27 @@ const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps)
                     );
                 }
             }
+        }
+
+        filteredDevices.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
+
+        for (let sourceIdx = API_URLS.length - 1; sourceIdx >= 0; sourceIdx--) {
+            filteredDevices.unshift(
+                <li
+                    key={`${sourceIdx}-all`}
+                    onClick={() => setSelectedRouter([sourceIdx, undefined])}
+                    onKeyUp={(e) => {
+                        if (e.key === "enter") {
+                            setSelectedRouter([sourceIdx, undefined]);
+                        }
+                    }}
+                >
+                    <span className="btn btn-sm btn-block btn-ghost">
+                        <SourceDot idx={sourceIdx} autoHide />
+                        {t("all")}
+                    </span>
+                </li>,
+            );
         }
 
         return filteredDevices;

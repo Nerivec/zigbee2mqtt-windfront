@@ -73,6 +73,8 @@ export default function Health({ sourceIdx }: HealthProps) {
                         </div>
                     </div>
                 ),
+                filterFn: "includesString",
+                sortingFn: (rowA, rowB) => rowA.original.device.friendly_name.localeCompare(rowB.original.device.friendly_name),
             },
             {
                 id: "messages",
@@ -121,7 +123,7 @@ export default function Health({ sourceIdx }: HealthProps) {
         [sourceIdx, t],
     );
 
-    const { table } = useTable({ id: "health-devices", columns, data: tableData });
+    const { table } = useTable({ id: "health-devices", columns, data: tableData, sorting: [{ id: "friendly_name", desc: false }] });
 
     if (bridgeHealth.response_time === 0) {
         return (

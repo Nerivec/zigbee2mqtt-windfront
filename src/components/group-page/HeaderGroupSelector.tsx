@@ -30,7 +30,7 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
                     (sourceIdx !== currentSourceIdx || group.id !== currentGroup?.id)
                 ) {
                     elements.push(
-                        <li key={`${sourceIdx}-${group.id}-${group.friendly_name}`}>
+                        <li key={`${group.friendly_name}-${group.id}-${sourceIdx}`}>
                             <Link to={`/group/${sourceIdx}/${group.id}/${tab}`} onClick={() => setSearchTerm("")} className="dropdown-item">
                                 {<SourceDot idx={sourceIdx} autoHide />} {group.friendly_name}
                             </Link>
@@ -39,6 +39,8 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
                 }
             }
         }
+
+        elements.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
 
         return elements;
     }, [groups, searchTerm, currentSourceIdx, currentGroup, tab]);
