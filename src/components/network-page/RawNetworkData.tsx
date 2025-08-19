@@ -1,4 +1,4 @@
-import { faEraser, faExclamationTriangle, faMagnifyingGlass, faMarker } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faExclamationTriangle, faMagnifyingGlass, faMarker } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { groupBy } from "lodash";
 import { type JSX, memo, useCallback, useMemo, useState } from "react";
@@ -126,8 +126,14 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                             disabled={map.nodes.length === 0}
                         />
                     </label>
-                    <Button item="" onClick={setFilterValue} className="btn btn-square join-item" title={t("common:clear")}>
-                        <FontAwesomeIcon icon={faEraser} />
+                    <Button
+                        item=""
+                        onClick={setFilterValue}
+                        className="btn btn-square join-item"
+                        title={t("common:clear")}
+                        disabled={filterValue === ""}
+                    >
+                        <FontAwesomeIcon icon={faClose} />
                     </Button>
                 </div>
                 <div className="join">
@@ -144,8 +150,14 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                             title={t("highlight_info")}
                         />
                     </label>
-                    <Button item="" onClick={setHighlightValue} className="btn btn-square join-item" title={t("common:clear")}>
-                        <FontAwesomeIcon icon={faEraser} />
+                    <Button
+                        item=""
+                        onClick={setHighlightValue}
+                        className="btn btn-square join-item"
+                        title={t("common:clear")}
+                        disabled={highlightValue === ""}
+                    >
+                        <FontAwesomeIcon icon={faClose} />
                     </Button>
                 </div>
             </div>

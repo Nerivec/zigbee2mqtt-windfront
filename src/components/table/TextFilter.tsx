@@ -1,4 +1,4 @@
-import { faEraser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Column } from "@tanstack/react-table";
 import { useCallback, useEffect } from "react";
@@ -39,7 +39,7 @@ export default function TextFilter<T>({ getFilterValue, setFilterValue, storeKey
     return (
         <div className="join">
             {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
-            <label className="input input-xs w-32 join-item">
+            <label className="input input-xs outline-none! w-32 join-item">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <DebouncedInput
                     className=""
@@ -49,8 +49,14 @@ export default function TextFilter<T>({ getFilterValue, setFilterValue, storeKey
                     value={(columnFilterValue as string) ?? ""}
                 />
             </label>
-            <Button item="" onClick={onChange} className="btn btn-xs btn-square join-item" title={t("clear")}>
-                <FontAwesomeIcon icon={faEraser} />
+            <Button
+                item=""
+                onClick={onChange}
+                className="btn btn-xs btn-square join-item"
+                title={t("clear")}
+                disabled={columnFilterValue == null || columnFilterValue === ""}
+            >
+                <FontAwesomeIcon icon={faClose} />
             </Button>
         </div>
     );

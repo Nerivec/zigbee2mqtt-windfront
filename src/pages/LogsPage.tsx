@@ -1,4 +1,4 @@
-import { faEraser, faMagnifyingGlass, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faMagnifyingGlass, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -91,8 +91,14 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                                 value={filterValue}
                             />
                         </label>
-                        <Button item="" onClick={setFilterValue} className="btn btn-square join-item" title={t("common:clear")}>
-                            <FontAwesomeIcon icon={faEraser} />
+                        <Button
+                            item=""
+                            onClick={setFilterValue}
+                            className="btn btn-square join-item"
+                            title={t("common:clear")}
+                            disabled={filterValue === ""}
+                        >
+                            <FontAwesomeIcon icon={faClose} />
                         </Button>
                     </div>
                 </fieldset>

@@ -1,5 +1,5 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { faEraser, faMagnifyingGlass, faTable, faTableColumns, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faMagnifyingGlass, faTable, faTableColumns, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -139,7 +139,7 @@ export default function Dashboard() {
                         />
                     </label>
                     <Button item="" onClick={setFilterValue} className="btn btn-square join-item" title={t("common:clear")}>
-                        <FontAwesomeIcon icon={faEraser} />
+                        <FontAwesomeIcon icon={faClose} />
                     </Button>
                 </div>
                 <Button<boolean>
