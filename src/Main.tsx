@@ -3,8 +3,7 @@ import React, { lazy, Suspense } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import { HashRouter, Route, Routes } from "react-router";
 import { AuthForm } from "./components/modal/components/AuthModal.js";
-import Notifications from "./components/Notifications.js";
-import NavBar from "./components/navbar/NavBar.js";
+import NavBarWithNotifications from "./components/navbar/NavBar.js";
 import ScrollToTop from "./components/ScrollToTop.js";
 import Toasts from "./components/Toasts.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
@@ -36,44 +35,35 @@ export function Main() {
                         <HashRouter>
                             <ScrollToTop />
                             <WebSocketApiRouter>
-                                <div className="drawer drawer-end">
-                                    <input id="notifications-drawer" type="checkbox" className="drawer-toggle" />
-                                    <div className="drawer-content">
-                                        <NavBar />
-                                        <main className="pt-3 px-2">
-                                            <Suspense
-                                                fallback={
-                                                    <>
-                                                        <div className="flex flex-row justify-center items-center gap-2">
-                                                            <span className="loading loading-infinity loading-xl" />
-                                                        </div>
-                                                        <div className="flex flex-row justify-center items-center gap-2">{t("loading")}</div>
-                                                    </>
-                                                }
-                                            >
-                                                <Routes>
-                                                    <Route path="/dashboard" element={<DashboardPage />} />
-                                                    <Route path="/devices" element={<DevicesPage />} />
-                                                    <Route path="/device/:sourceIdx/:deviceId/:tab?" element={<DevicePage />} />
-                                                    <Route path="/groups" element={<GroupsPage />} />
-                                                    <Route path="/group/:sourceIdx/:groupId/:tab?" element={<GroupPage />} />
-                                                    <Route path="/touchlink" element={<TouchlinkPage />} />
-                                                    <Route path="/ota" element={<OtaPage />} />
-                                                    <Route path="/network/:sourceIdx?" element={<NetworkPage />} />
-                                                    <Route path="/logs/:sourceIdx?" element={<LogsPage />} />
-                                                    <Route path="/settings/:sourceIdx?/:tab?" element={<SettingsPage />} />
-                                                    <Route path="/frontend-settings" element={<FrontendSettingsPage />} />
-                                                    <Route path="/" element={<HomePage />} />
-                                                    <Route path="*" element={<HomePage />} />
-                                                </Routes>
-                                            </Suspense>
-                                        </main>
-                                    </div>
-                                    <div className="drawer-side z-99">
-                                        <label htmlFor="notifications-drawer" aria-label={t("close_notifications")} className="drawer-overlay" />
-                                        <Notifications />
-                                    </div>
-                                </div>
+                                <NavBarWithNotifications />
+                                <main className="pt-3 px-2">
+                                    <Suspense
+                                        fallback={
+                                            <>
+                                                <div className="flex flex-row justify-center items-center gap-2">
+                                                    <span className="loading loading-infinity loading-xl" />
+                                                </div>
+                                                <div className="flex flex-row justify-center items-center gap-2">{t("loading")}</div>
+                                            </>
+                                        }
+                                    >
+                                        <Routes>
+                                            <Route path="/dashboard" element={<DashboardPage />} />
+                                            <Route path="/devices" element={<DevicesPage />} />
+                                            <Route path="/device/:sourceIdx/:deviceId/:tab?" element={<DevicePage />} />
+                                            <Route path="/groups" element={<GroupsPage />} />
+                                            <Route path="/group/:sourceIdx/:groupId/:tab?" element={<GroupPage />} />
+                                            <Route path="/touchlink" element={<TouchlinkPage />} />
+                                            <Route path="/ota" element={<OtaPage />} />
+                                            <Route path="/network/:sourceIdx?" element={<NetworkPage />} />
+                                            <Route path="/logs/:sourceIdx?" element={<LogsPage />} />
+                                            <Route path="/settings/:sourceIdx?/:tab?" element={<SettingsPage />} />
+                                            <Route path="/frontend-settings" element={<FrontendSettingsPage />} />
+                                            <Route path="/" element={<HomePage />} />
+                                            <Route path="*" element={<HomePage />} />
+                                        </Routes>
+                                    </Suspense>
+                                </main>
                                 <Toasts />
                             </WebSocketApiRouter>
                         </HashRouter>

@@ -1,12 +1,19 @@
 import { faBars, faDisplay, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type MouseEvent, memo, useCallback, useMemo } from "react";
+import { type MouseEvent, memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, type NavLinkRenderProps } from "react-router";
 import { API_NAMES, useAppStore } from "../../store.js";
+import Button from "../Button.js";
+import Notifications from "../Notifications.js";
 import LanguageSwitcher from "./LanguageSwitcher.js";
 import PermitJoinButton from "./PermitJoinButton.js";
 import ThemeSwitcher from "./ThemeSwitcher.js";
+
+type NavBarProps = {
+    showNotifications: boolean;
+    setShowNotifications: ReturnType<typeof useState<boolean>>[1];
+};
 
 type NavBarSubMenuProps = {
     name: string;
@@ -39,7 +46,7 @@ const NavBarSubMenu = memo(({ name, navPath, isNavActive }: NavBarSubMenuProps) 
     );
 });
 
-const NavBar = () => {
+const NavBar = memo(({ showNotifications, setShowNotifications }: NavBarProps) => {
     const { t } = useTranslation(["navbar", "common"]);
     const notificationsAlert = useAppStore((state) => state.notificationsAlert);
 
@@ -149,18 +156,29 @@ const NavBar = () => {
                     <PermitJoinButton />
                     <LanguageSwitcher />
                     <ThemeSwitcher />
-                    <label htmlFor="notifications-drawer" className="drawer-button btn">
+                    <Button<boolean> className="drawer-button btn" item={!showNotifications} onClick={setShowNotifications}>
                         <FontAwesomeIcon icon={faInbox} />
                         {notificationsAlert[0] ? (
                             <span className="status status-primary animate-bounce" />
                         ) : notificationsAlert[1] ? (
                             <span className="status status-error animate-bounce" />
                         ) : null}
-                    </label>
+                    </Button>
                 </ul>
             </div>
         </div>
     );
-};
+});
 
-export default NavBar;
+const NavBarWithNotifications = memo(() => {
+    const [showNotifications, setShowNotifications] = useState(false);
+
+    return (
+        <>
+            <NavBar showNotifications={showNotifications} setShowNotifications={setShowNotifications} />
+            {showNotifications && <Notifications setShowNotifications={setShowNotifications} />}
+        </>
+    );
+});
+
+export default NavBarWithNotifications;

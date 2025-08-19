@@ -1,6 +1,6 @@
 import { faClose, faEllipsisH, faPowerOff, faServer, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, type RefObject, useCallback, useContext, useMemo, useRef } from "react";
+import { memo, type RefObject, useCallback, useContext, useMemo, useRef, type useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { ReadyState } from "react-use-websocket";
@@ -13,12 +13,16 @@ import Button from "./Button.js";
 import ConfirmButton from "./ConfirmButton.js";
 import SourceDot from "./SourceDot.js";
 
+type NotificationsProps = {
+    setShowNotifications: ReturnType<typeof useState<boolean>>[1];
+};
+
+type SourceNotificationsProps = { sourceIdx: number; readyState: ReadyState };
+
 type NotificationProps = {
     log: LogMessage;
     onClick: (ref: RefObject<HTMLDivElement | null>) => void;
 };
-
-type NotificationsProps = { sourceIdx: number; readyState: ReadyState };
 
 const CONNECTION_STATUS = {
     [ReadyState.CONNECTING]: "text-info",
@@ -43,7 +47,7 @@ const Notification = memo(({ log, onClick }: NotificationProps) => {
     );
 });
 
-const SourceNotifications = memo(({ sourceIdx, readyState }: NotificationsProps) => {
+const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotificationsProps) => {
     const { t } = useTranslation(["navbar", "common"]);
     const { sendMessage, transactionPrefixes } = useContext(WebSocketApiRouterContext);
     const notifications = useAppStore(useShallow((state) => state.notifications[sourceIdx]));
@@ -108,7 +112,7 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: NotificationsProps)
     );
 });
 
-const Notifications = memo(() => {
+const Notifications = memo(({ setShowNotifications }: NotificationsProps) => {
     const { t } = useTranslation("common");
     const { readyStates } = useContext(WebSocketApiRouterContext);
     const clearAllNotifications = useAppStore((state) => state.clearAllNotifications);
@@ -123,23 +127,30 @@ const Notifications = memo(() => {
     );
 
     return (
-        <aside className="bg-base-100 min-h-screen w-80">
-            <ul className="menu w-full px-1 py-0">
-                {sourceNotifications}
-                {API_URLS.length > 1 && (
-                    <ConfirmButton
-                        className="btn btn-sm btn-error btn-outline mt-5"
-                        onClick={clearAllNotifications}
-                        title={t("clear_all")}
-                        modalDescription={t("dialog_confirmation_prompt")}
-                        modalCancelLabel={t("cancel")}
-                    >
-                        <FontAwesomeIcon icon={faTrashCan} />
-                        {t("clear_all")}
-                    </ConfirmButton>
-                )}
-            </ul>
-        </aside>
+        <div
+            className="drawer-side justify-items-end z-99"
+            style={{ pointerEvents: "auto", visibility: "visible", overflowY: "auto", opacity: "100%" }}
+        >
+            {/** biome-ignore lint/a11y/noStaticElementInteractions: special case */}
+            <span className="drawer-overlay" onClick={() => setShowNotifications(false)} />
+            <aside className="bg-base-100 min-h-screen w-80" style={{ translate: "0%" }}>
+                <ul className="menu w-full px-1 py-0">
+                    {sourceNotifications}
+                    {API_URLS.length > 1 && (
+                        <ConfirmButton
+                            className="btn btn-sm btn-error btn-outline mt-5"
+                            onClick={clearAllNotifications}
+                            title={t("clear_all")}
+                            modalDescription={t("dialog_confirmation_prompt")}
+                            modalCancelLabel={t("cancel")}
+                        >
+                            <FontAwesomeIcon icon={faTrashCan} />
+                            {t("clear_all")}
+                        </ConfirmButton>
+                    )}
+                </ul>
+            </aside>
+        </div>
     );
 });
 

@@ -16,7 +16,7 @@ import ModelLink from "../components/value-decorators/ModelLink.js";
 import OtaLink from "../components/value-decorators/OtaLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
-import { useTable } from "../hooks/useTable.js";
+import { useTableWithFilteredData } from "../hooks/useTable.js";
 import { API_URLS, useAppStore } from "../store.js";
 import type { Device, DeviceState } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
@@ -79,13 +79,13 @@ export default function OtaPage() {
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
     const onSelectAllChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setSelectedDevices(e.target.checked ? getFilteredData().map(({ sourceIdx, device }) => [sourceIdx, device.ieee_address]) : []);
+        setSelectedDevices(e.target.checked ? getFilteredData().map(({ original: { sourceIdx, device } }) => [sourceIdx, device.ieee_address]) : []);
     }, []);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
     const onSelectChange = useCallback((sourceIdx: number, device: Device, select: boolean) => {
         if (select) {
-            if (getFilteredData().find((data) => data.sourceIdx === sourceIdx && data.device.ieee_address === device.ieee_address)) {
+            if (getFilteredData().find(({ original }) => original.sourceIdx === sourceIdx && original.device.ieee_address === device.ieee_address)) {
                 setSelectedDevices((prev) => [...prev, [sourceIdx, device.ieee_address]]);
             }
         } else {
@@ -96,7 +96,7 @@ export default function OtaPage() {
     // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
     const checkSelected = useCallback(async () => {
         const promises = selectedDevices.map(([sourceIdx, ieee]) => {
-            return getFilteredData().find((data) => data.sourceIdx === sourceIdx && data.device.ieee_address === ieee)
+            return getFilteredData().find(({ original }) => original.sourceIdx === sourceIdx && original.device.ieee_address === ieee)
                 ? sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee })
                 : Promise.resolve();
         });
@@ -108,7 +108,7 @@ export default function OtaPage() {
     // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
     const updateSelected = useCallback(async () => {
         const promises = selectedDevices.map(([sourceIdx, ieee]) => {
-            return getFilteredData().find((data) => data.sourceIdx === sourceIdx && data.device.ieee_address === ieee)
+            return getFilteredData().find(({ original }) => original.sourceIdx === sourceIdx && original.device.ieee_address === ieee)
                 ? sendMessage(sourceIdx, "bridge/request/device/ota_update/update", { id: ieee })
                 : Promise.resolve();
         });
@@ -359,7 +359,7 @@ export default function OtaPage() {
         ],
     );
 
-    const { table, getFilteredData } = useTable({
+    const { table, getFilteredData } = useTableWithFilteredData({
         id: "ota-devices",
         columns,
         data: otaDevices,

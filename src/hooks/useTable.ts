@@ -53,8 +53,13 @@ export function useTable<T>({ id, columns, data, visibleColumns, sorting }: UseT
         store2.set(columnVisibilityStoreKey, columnVisibility);
     }, [columnVisibilityStoreKey, columnVisibility]);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: does not change
-    const getFilteredData = useCallback(() => table.getFilteredRowModel().rows.map((row) => row.original), []);
+    return { table };
+}
+
+export function useTableWithFilteredData<T>(props: UseTableProps<T>) {
+    const { table } = useTable(props);
+
+    const getFilteredData = useCallback(() => table.getFilteredRowModel().rows, [table.getFilteredRowModel]);
 
     return { table, getFilteredData };
 }
