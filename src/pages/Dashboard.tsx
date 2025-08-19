@@ -11,6 +11,7 @@ import DeviceCard from "../components/device/DeviceCard.js";
 import DeviceControlEditName from "../components/device/DeviceControlEditName.js";
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import { RemoveDeviceModal } from "../components/modal/components/RemoveDeviceModal.js";
+import { useInfiniteScroll } from "../hooks/useInfiniteScroll.js";
 import { DASHBOARD_COLUMN_DISPLAY_KEY, DASHBOARD_FILTER_KEY } from "../localStoreConsts.js";
 import { API_URLS, useAppStore } from "../store.js";
 import type { FeatureWithAnySubFeatures } from "../types.js";
@@ -55,7 +56,7 @@ export default function Dashboard() {
     }, []);
 
     const filteredDevices = useMemo(() => {
-        const filteredDevices: JSX.Element[] = [];
+        const elements: JSX.Element[] = [];
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             for (const device of devices[sourceIdx]) {
@@ -70,7 +71,7 @@ export default function Dashboard() {
                         : [];
 
                     if (filteredFeatures.length > 0) {
-                        filteredDevices.push(
+                        elements.push(
                             <div
                                 className={`${columnDisplay ? "break-inside-avoid-column mb-3" : "w-[23rem]"} card bg-base-200 rounded-box shadow-md`}
                                 key={`${device.friendly_name}-${device.ieee_address}-${sourceIdx}`}
@@ -115,10 +116,12 @@ export default function Dashboard() {
             }
         }
 
-        filteredDevices.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
+        elements.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
 
-        return filteredDevices;
+        return elements;
     }, [devices, deviceStates, bridgeInfo, sendMessage, removeDevice, renameDevice, t, filterValue, columnDisplay]);
+
+    const { sentinelRef, renderItems } = useInfiniteScroll(filteredDevices, 24);
 
     return (
         <>
@@ -148,7 +151,8 @@ export default function Dashboard() {
                     <FontAwesomeIcon icon={columnDisplay ? faTableColumns : faTable} />
                 </Button>
             </div>
-            <div className={`${columnDisplay ? "columns-md" : "flex flex-row flex-wrap justify-center"} gap-3 mb-3`}>{filteredDevices}</div>
+            <div className={`${columnDisplay ? "columns-md" : "flex flex-row flex-wrap justify-center"} gap-3 mb-3`}>{renderItems}</div>
+            <div ref={sentinelRef} aria-hidden="true" style={{ height: 1, width: "100%" }} />
         </>
     );
 }

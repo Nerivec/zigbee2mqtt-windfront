@@ -70,7 +70,7 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
                     <div className="flex flex-row justify-center items-center gap-2">
                         <span className="loading loading-infinity loading-xl" />
                     </div>
-                    <div className="flex flex-row justify-center items-center gap-2">{t("loading")}</div>
+                    <div className="flex flex-row justify-center items-center gap-2">{t("common:loading")}</div>
                 </>
             );
         }

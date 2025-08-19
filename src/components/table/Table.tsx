@@ -1,5 +1,6 @@
 import { flexRender } from "@tanstack/react-table";
 import { useTranslation } from "react-i18next";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll.js";
 import type { UseTableProps, useTable } from "../../hooks/useTable.js";
 import { TABLE_COLUMN_FILTER_KEY } from "../../localStoreConsts.js";
 import TextFilter from "./TextFilter.js";
@@ -11,6 +12,7 @@ interface Props<T> extends Pick<UseTableProps<T>, "id"> {
 export default function Table<T>({ id, table }: Props<T>) {
     const { t } = useTranslation("common");
     const rows = table.getRowModel().rows;
+    const { sentinelRef, renderItems } = useInfiniteScroll(rows, 16);
 
     return (
         <div className="overflow-x-auto">
@@ -72,7 +74,7 @@ export default function Table<T>({ id, table }: Props<T>) {
                     ))}
                 </thead>
                 <tbody>
-                    {rows.map((row) => (
+                    {renderItems.map((row) => (
                         <tr key={row.id} className="hover:bg-base-300">
                             {row.getVisibleCells().map((cell) => (
                                 <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
@@ -81,6 +83,7 @@ export default function Table<T>({ id, table }: Props<T>) {
                     ))}
                 </tbody>
             </table>
+            <div ref={sentinelRef} aria-hidden="true" style={{ height: 1, width: "100%" }} />
         </div>
     );
 }
