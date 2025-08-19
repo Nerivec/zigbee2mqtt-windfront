@@ -117,14 +117,14 @@ export default function SettingsPage() {
 
         for (let idx = 0; idx < API_URLS.length; idx++) {
             elements.push(
-                <NavLink key={`/settings/${idx}`} to={`/settings/${idx}`} className={isTabActive}>
+                <NavLink key={idx} to={`/settings/${idx}/${tab || "about"}`} className={isTabActive}>
                     <SourceDot idx={idx} alwaysShowName />
                 </NavLink>,
             );
         }
 
         return elements;
-    }, [isTabActive]);
+    }, [isTabActive, tab]);
 
     return API_URLS.length > 1 ? (
         <div className="tabs tabs-border">

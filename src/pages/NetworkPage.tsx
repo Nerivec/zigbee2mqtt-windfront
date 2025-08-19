@@ -182,7 +182,7 @@ export default function NetworkPage() {
 
         for (let idx = 0; idx < API_URLS.length; idx++) {
             elements.push(
-                <NavLink key={`/network/${idx}`} to={`/network/${idx}`} className={isTabActive}>
+                <NavLink key={idx} to={`/network/${idx}`} className={isTabActive}>
                     <SourceDot idx={idx} alwaysShowName />
                 </NavLink>,
             );

@@ -167,7 +167,7 @@ export default function LogsPage() {
 
         for (let idx = 0; idx < API_URLS.length; idx++) {
             elements.push(
-                <NavLink key={`/logs/${idx}`} to={`/logs/${idx}`} className={isTabActive}>
+                <NavLink key={idx} to={`/logs/${idx}`} className={isTabActive}>
                     <SourceDot idx={idx} alwaysShowName />
                 </NavLink>,
             );
