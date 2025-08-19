@@ -73,8 +73,9 @@ export default function Dashboard() {
                     if (filteredFeatures.length > 0) {
                         elements.push(
                             <div
-                                className={`${columnDisplay ? "break-inside-avoid-column mb-3" : "w-[23rem]"} card bg-base-200 rounded-box shadow-md`}
                                 key={`${device.friendly_name}-${device.ieee_address}-${sourceIdx}`}
+                                className={`${columnDisplay ? "break-inside-avoid-column mb-3" : "w-[23rem]"} card bg-base-200 rounded-box shadow-md`}
+                                style={{ contentVisibility: "auto", scrollbarGutter: "stable both-edges" }}
                             >
                                 <DeviceCard
                                     features={filteredFeatures}
@@ -151,8 +152,13 @@ export default function Dashboard() {
                     <FontAwesomeIcon icon={columnDisplay ? faTableColumns : faTable} />
                 </Button>
             </div>
-            <div className={`${columnDisplay ? "columns-md" : "flex flex-row flex-wrap justify-center"} gap-3 mb-3`}>{renderItems}</div>
-            <div ref={sentinelRef} aria-hidden="true" style={{ height: 1, width: "100%" }} />
+            <div
+                className={`${columnDisplay ? "columns-md" : "flex flex-row flex-wrap justify-center"} gap-3 mb-3`}
+                style={{ overflowAnchor: "auto" }}
+            >
+                {renderItems}
+                <div ref={sentinelRef} aria-hidden="true" style={{ height: 1, width: "100%", overflowAnchor: "none" }} />
+            </div>
         </>
     );
 }

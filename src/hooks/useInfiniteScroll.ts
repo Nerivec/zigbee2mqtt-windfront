@@ -56,7 +56,7 @@ export function useInfiniteScroll<T>(allItems: readonly T[], batchSize: number) 
                     loadMore();
                 }
             },
-            { root: null, rootMargin: "0px 0px 200px 0px", threshold: 0 },
+            { root: null, rootMargin: "0px 0px 1000px 0px", threshold: 0 },
         );
 
         observerRef.current = observer;
@@ -67,13 +67,28 @@ export function useInfiniteScroll<T>(allItems: readonly T[], batchSize: number) 
 
         return () => {
             observer.disconnect();
+
             observerRef.current = null;
         };
     }, [loadMore]);
 
+    // re-observe when the items length changes to ensure initial trigger
+    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
+    useEffect(() => {
+        const observer = observerRef.current;
+        const node = sentinelNodeRef.current;
+
+        if (observer && node) {
+            observer.unobserve(node);
+            observer.observe(node);
+        }
+    }, [allItems.length]);
+
     // manage observing new sentinel nodes
     const sentinelRef = useCallback<RefCallback<Element>>((node) => {
-        if (sentinelNodeRef.current === node) return;
+        if (sentinelNodeRef.current === node) {
+            return;
+        }
 
         if (observerRef.current && sentinelNodeRef.current) {
             observerRef.current.unobserve(sentinelNodeRef.current);

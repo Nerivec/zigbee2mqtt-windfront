@@ -15,7 +15,7 @@ export default function Table<T>({ id, table }: Props<T>) {
     const { sentinelRef, renderItems } = useInfiniteScroll(rows, 16);
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" style={{ overflowAnchor: "auto", scrollbarGutter: "stable both-edges" }}>
             <div className="flex flex-row flex-wrap gap-2 text-xs px-3">
                 <span className="label">{t("columns")}: </span>
                 {table.getAllColumns().map((column) =>
@@ -83,7 +83,7 @@ export default function Table<T>({ id, table }: Props<T>) {
                     ))}
                 </tbody>
             </table>
-            <div ref={sentinelRef} aria-hidden="true" style={{ height: 1, width: "100%" }} />
+            <div ref={sentinelRef} aria-hidden="true" style={{ height: 1, width: "100%", overflowAnchor: "none" }} />
         </div>
     );
 }
