@@ -37,7 +37,7 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
                                 onClick={() => setSearchTerm("")}
                                 className="dropdown-item"
                             >
-                                {API_URLS.length > 1 && <SourceDot idx={sourceIdx} />} {device.friendly_name}
+                                {<SourceDot idx={sourceIdx} autoHide namePostfix=" - " />} {device.friendly_name}
                             </Link>
                         </li>,
                     );
@@ -55,7 +55,7 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
             name="header-device-selector"
             buttonChildren={
                 <>
-                    {API_URLS.length > 1 && currentSourceIdx !== undefined && <SourceDot idx={currentSourceIdx} />}
+                    {currentSourceIdx !== undefined && <SourceDot idx={currentSourceIdx} autoHide />}
                     {currentDevice ? `${currentDevice.friendly_name} (${currentDevice.ieee_address})` : t("unknown_device")}
                 </>
             }

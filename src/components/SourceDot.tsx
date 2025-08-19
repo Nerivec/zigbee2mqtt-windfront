@@ -2,6 +2,8 @@ import { faDotCircle, faExclamationCircle, faQuestionCircle, faXmarkCircle } fro
 import { FontAwesomeIcon, type FontAwesomeIconProps } from "@fortawesome/react-fontawesome";
 import { memo, useContext } from "react";
 import { ReadyState } from "react-use-websocket";
+import store2 from "store2";
+import { MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY } from "../localStoreConsts.js";
 import { API_NAMES } from "../store.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
@@ -9,6 +11,11 @@ type SourceDotProps = Omit<FontAwesomeIconProps, "icon" | "style" | "title"> & {
     idx: number;
     /** automatically skip rendering when only 1 source present */
     autoHide?: boolean;
+    /** alwaysHideName takes precedence */
+    alwaysShowName?: boolean;
+    alwaysHideName?: boolean;
+    nameClassName?: string;
+    namePostfix?: string;
 };
 
 const CONNECTION_STATUS = {
@@ -37,8 +44,9 @@ const DOT_COLORS = [
     "#BE0032",
 ];
 
-const SourceDot = memo(({ idx, autoHide, ...rest }: SourceDotProps) => {
+const SourceDot = memo(({ idx, autoHide, alwaysShowName, alwaysHideName, nameClassName, namePostfix, ...rest }: SourceDotProps) => {
     const { readyStates } = useContext(WebSocketApiRouterContext);
+    const showName = !alwaysHideName && (alwaysShowName || store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
 
     if (autoHide && readyStates.length < 2) {
         return null;
@@ -47,6 +55,8 @@ const SourceDot = memo(({ idx, autoHide, ...rest }: SourceDotProps) => {
     return (
         <span title={`${idx} | ${API_NAMES[idx]}`}>
             <FontAwesomeIcon icon={CONNECTION_STATUS[readyStates[idx]]} style={{ color: DOT_COLORS[idx] }} {...rest} />
+            {showName && <span className={`ms-1 ${nameClassName ?? ""}`}>{API_NAMES[idx]}</span>}
+            {showName && namePostfix}
         </span>
     );
 });

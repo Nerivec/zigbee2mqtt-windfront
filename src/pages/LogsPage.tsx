@@ -11,7 +11,7 @@ import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import SourceDot from "../components/SourceDot.js";
 import { LOG_LEVELS, LOG_LEVELS_CMAP, LOG_LIMITS } from "../consts.js";
-import { API_NAMES, API_URLS, useAppStore } from "../store.js";
+import { API_URLS, useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
 import { formatDate, getValidSourceIdx } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
@@ -168,8 +168,7 @@ export default function LogsPage() {
         for (let idx = 0; idx < API_URLS.length; idx++) {
             elements.push(
                 <NavLink key={`/logs/${idx}`} to={`/logs/${idx}`} className={isTabActive}>
-                    <SourceDot idx={idx} className="me-2" />
-                    {API_NAMES[idx]}
+                    <SourceDot idx={idx} alwaysShowName />
                 </NavLink>,
             );
         }

@@ -38,7 +38,7 @@ const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps)
                             }}
                         >
                             <span className="btn btn-sm btn-block btn-ghost">
-                                <SourceDot idx={sourceIdx} autoHide />
+                                <SourceDot idx={sourceIdx} autoHide namePostfix=" - " />
                                 {device.friendly_name}
                             </span>
                         </li>,
@@ -61,7 +61,7 @@ const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps)
                     }}
                 >
                     <span className="btn btn-sm btn-block btn-ghost">
-                        <SourceDot idx={sourceIdx} autoHide />
+                        <SourceDot idx={sourceIdx} autoHide namePostfix=" - " />
                         {t("all")}
                     </span>
                 </li>,
@@ -116,7 +116,8 @@ const PermitJoinButton = memo(() => {
         if (permitJoin) {
             return (
                 <Button<void> onClick={onPermitJoinClick} className="btn btn-outline-secondary join-item" title={t("disable_join")}>
-                    <FontAwesomeIcon icon={faTowerBroadcast} className="text-success" beatFade /> <SourceDot idx={sourceIdx} autoHide />{" "}
+                    <FontAwesomeIcon icon={faTowerBroadcast} className="text-success" beatFade />
+                    <SourceDot idx={sourceIdx} autoHide alwaysHideName />
                     {device?.friendly_name ?? t("all")}
                     {permitJoinTimer}
                 </Button>
@@ -125,7 +126,8 @@ const PermitJoinButton = memo(() => {
 
         return (
             <Button<void> onClick={onPermitJoinClick} className="btn btn-outline-secondary join-item" title={t("permit_join")}>
-                <FontAwesomeIcon icon={faTowerBroadcast} className="text-error" /> <SourceDot idx={sourceIdx} autoHide />{" "}
+                <FontAwesomeIcon icon={faTowerBroadcast} className="text-error" />
+                <SourceDot idx={sourceIdx} autoHide alwaysHideName />
                 {device?.friendly_name ?? t("all")}
             </Button>
         );

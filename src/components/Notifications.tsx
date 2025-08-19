@@ -6,7 +6,7 @@ import { Link } from "react-router";
 import { ReadyState } from "react-use-websocket";
 import { useShallow } from "zustand/react/shallow";
 import { LOG_LEVELS_CMAP } from "../consts.js";
-import { API_NAMES, API_URLS, useAppStore } from "../store.js";
+import { API_URLS, useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 import Button from "./Button.js";
@@ -67,13 +67,7 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotifications
             <details open={sourceIdx === 0}>
                 <summary>
                     <span title={`${sourceIdx} | ${t("transaction_prefix")}: ${transactionPrefixes[sourceIdx]}`}>
-                        {API_URLS.length > 1 ? (
-                            <>
-                                <SourceDot idx={sourceIdx} /> {API_NAMES[sourceIdx]}
-                            </>
-                        ) : (
-                            "Zigbee2MQTT"
-                        )}
+                        {API_URLS.length > 1 ? <SourceDot idx={sourceIdx} alwaysShowName /> : "Zigbee2MQTT"}
                     </span>
                     <span className="ml-auto">
                         {restartRequired && (

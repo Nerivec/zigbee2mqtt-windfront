@@ -4,7 +4,7 @@ import { type JSX, lazy, memo, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import SourceDot from "../components/SourceDot.js";
-import { API_NAMES, API_URLS } from "../store.js";
+import { API_URLS } from "../store.js";
 import { getValidSourceIdx } from "../utils.js";
 
 type UrlParams = {
@@ -118,8 +118,7 @@ export default function SettingsPage() {
         for (let idx = 0; idx < API_URLS.length; idx++) {
             elements.push(
                 <NavLink key={`/settings/${idx}`} to={`/settings/${idx}`} className={isTabActive}>
-                    <SourceDot idx={idx} className="me-2" />
-                    {API_NAMES[idx]}
+                    <SourceDot idx={idx} alwaysShowName />
                 </NavLink>,
             );
         }

@@ -32,7 +32,7 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
                     elements.push(
                         <li key={`${group.friendly_name}-${group.id}-${sourceIdx}`}>
                             <Link to={`/group/${sourceIdx}/${group.id}/${tab}`} onClick={() => setSearchTerm("")} className="dropdown-item">
-                                {<SourceDot idx={sourceIdx} autoHide />} {group.friendly_name}
+                                {<SourceDot idx={sourceIdx} autoHide namePostfix=" - " />} {group.friendly_name}
                             </Link>
                         </li>,
                     );

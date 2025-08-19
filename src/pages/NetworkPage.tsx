@@ -12,7 +12,7 @@ import SelectField from "../components/form-fields/SelectField.js";
 import type { NetworkRawDisplayType } from "../components/network-page/index.js";
 import SourceDot from "../components/SourceDot.js";
 import { NETWORK_RAW_DISPLAY_TYPE_KEY } from "../localStoreConsts.js";
-import { API_NAMES, API_URLS, useAppStore } from "../store.js";
+import { API_URLS, useAppStore } from "../store.js";
 import { getValidSourceIdx } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
@@ -183,8 +183,7 @@ export default function NetworkPage() {
         for (let idx = 0; idx < API_URLS.length; idx++) {
             elements.push(
                 <NavLink key={`/network/${idx}`} to={`/network/${idx}`} className={isTabActive}>
-                    <SourceDot idx={idx} className="me-2" />
-                    {API_NAMES[idx]}
+                    <SourceDot idx={idx} alwaysShowName />
                 </NavLink>,
             );
         }

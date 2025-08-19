@@ -18,6 +18,8 @@ export const NETWORK_MAP_NODE_STRENGTH_KEY = "network-map-node-strength";
 export const NETWORK_MAP_LINK_DISTANCE_KEY = "network-map-link-distance";
 export const NETWORK_MAP_SHOW_ICONS_KEY = "network-map-show-icons";
 
+export const MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY = "multi-instance-show-source-name";
+
 export const I18NEXTLNG_KEY = "i18nextLng";
 
 export const DEVICES_HIDE_DISABLED_KEY = "devices-hide-disabled";

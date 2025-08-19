@@ -186,7 +186,7 @@ export default function OtaPage() {
                     row: {
                         original: { sourceIdx },
                     },
-                }) => <SourceDot idx={sourceIdx} />,
+                }) => <SourceDot idx={sourceIdx} nameClassName="hidden md:inline-block" />,
                 enableColumnFilter: false,
             },
             {

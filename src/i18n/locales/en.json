@@ -67,7 +67,9 @@
         "source": "Source",
         "close_notifications": "Close notifications",
         "more": "More",
-        "default": "Default"
+        "default": "Default",
+        "multi_instance": "Multi-Instance",
+        "show_source_name": "Show source name"
     },
     "devicePage": {
         "about": "About",

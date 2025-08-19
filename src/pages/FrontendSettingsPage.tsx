@@ -15,6 +15,7 @@ import {
     HOMEPAGE_KEY,
     I18NEXTLNG_KEY,
     MAX_ON_SCREEN_NOTIFICATIONS_KEY,
+    MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY,
     NETWORK_MAP_LABEL_TYPE_KEY,
     NETWORK_MAP_LAYOUT_TYPE_KEY,
     NETWORK_MAP_LINK_DISTANCE_KEY,
@@ -40,6 +41,7 @@ export default function FrontendSettingsPage() {
     const [networkMapNodeStrength, setNetworkMapNodeStrength] = useState<number>(store2.get(NETWORK_MAP_NODE_STRENGTH_KEY, -750));
     const [networkMapLinkDistance, setNetworkMapLinkDistance] = useState<number>(store2.get(NETWORK_MAP_LINK_DISTANCE_KEY, 50));
     const [networkMapShowIcons, setNetworkMapShowIcons] = useState<boolean>(store2.get(NETWORK_MAP_SHOW_ICONS_KEY, false));
+    const [miShowSourceName, setMiShowSourceName] = useState<boolean>(store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
 
     useEffect(() => {
         store2.set(HOMEPAGE_KEY, homepage);
@@ -80,6 +82,10 @@ export default function FrontendSettingsPage() {
     useEffect(() => {
         store2.set(NETWORK_MAP_SHOW_ICONS_KEY, networkMapShowIcons);
     }, [networkMapShowIcons]);
+
+    useEffect(() => {
+        store2.set(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, miShowSourceName);
+    }, [miShowSourceName]);
 
     const resetSettings = useCallback(() => {
         const keys = store2.keys();
@@ -263,6 +269,15 @@ export default function FrontendSettingsPage() {
                     label={t("network:show_icons")}
                     onChange={(event) => setNetworkMapShowIcons(event.target.checked)}
                     defaultChecked={networkMapShowIcons}
+                />
+            </div>
+            <h2 className="text-lg mt-2">{t("common:multi_instance")}</h2>
+            <div className="flex flex-row flex-wrap gap-4">
+                <CheckboxField
+                    name="common:show_source_name"
+                    label={t("common:show_source_name")}
+                    onChange={(event) => setMiShowSourceName(event.target.checked)}
+                    defaultChecked={miShowSourceName}
                 />
             </div>
         </>
