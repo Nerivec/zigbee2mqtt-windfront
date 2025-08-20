@@ -1,20 +1,16 @@
-import NiceModal from "@ebay/nice-modal-react";
-import { faClose, faMagnifyingGlass, faTable, faTableColumns, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import Button from "../components/Button.js";
-import DashboardFeatureWrapper from "../components/dashboard-page/DashboardFeatureWrapper.js";
+import DashboardItem, { type DashboardItemProps } from "../components/dashboard-page/DashboardItem.js";
 import { isValidForDashboard } from "../components/dashboard-page/index.js";
-import DeviceCard from "../components/device/DeviceCard.js";
-import DeviceControlEditName from "../components/device/DeviceControlEditName.js";
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
-import { RemoveDeviceModal } from "../components/modal/components/RemoveDeviceModal.js";
-import { useInfiniteScroll } from "../hooks/useInfiniteScroll.js";
-import { DASHBOARD_COLUMN_DISPLAY_KEY, DASHBOARD_FILTER_KEY } from "../localStoreConsts.js";
+import { useColumnCount } from "../hooks/useColumnCount.js";
+import { DASHBOARD_FILTER_KEY } from "../localStoreConsts.js";
 import { API_URLS, useAppStore } from "../store.js";
-import type { FeatureWithAnySubFeatures } from "../types.js";
 import { filterExposes } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
@@ -25,7 +21,7 @@ export default function Dashboard() {
     const devices = useAppStore((state) => state.devices);
     const { t } = useTranslation(["zigbee", "settings"]);
     const [filterValue, setFilterValue] = useState(store2.get(DASHBOARD_FILTER_KEY, ""));
-    const [columnDisplay, setColumnDisplay] = useState<boolean>(store2.get(DASHBOARD_COLUMN_DISPLAY_KEY, false));
+    const columnCount = useColumnCount();
 
     useEffect(() => {
         store2.set(DASHBOARD_FILTER_KEY, filterValue);
@@ -50,79 +46,42 @@ export default function Dashboard() {
         [sendMessage],
     );
 
-    const onDisplayClick = useCallback((value: boolean) => {
-        store2.set(DASHBOARD_COLUMN_DISPLAY_KEY, value);
-        setColumnDisplay(value);
-    }, []);
-
-    const filteredDevices = useMemo(() => {
-        const elements: JSX.Element[] = [];
+    const filteredData = useMemo(() => {
+        const elements: DashboardItemProps["data"][] = [];
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
+            const lastSeenConfig = bridgeInfo[sourceIdx].config.advanced.last_seen;
+            const homeassistantEnabled = bridgeInfo[sourceIdx].config.homeassistant.enabled;
+
             for (const device of devices[sourceIdx]) {
                 if (
                     !device.disabled &&
                     device.supported &&
-                    (!filterValue || device.friendly_name.toLowerCase().includes(filterValue.toLowerCase()))
+                    (!filterValue || device.friendly_name.toLowerCase().includes(filterValue.toLowerCase())) &&
+                    device.definition
                 ) {
-                    const deviceState = deviceStates[sourceIdx][device.friendly_name] ?? {};
-                    const filteredFeatures: FeatureWithAnySubFeatures[] = device.definition
-                        ? filterExposes(device.definition.exposes, isValidForDashboard)
-                        : [];
+                    const filteredFeatures = filterExposes(device.definition.exposes, isValidForDashboard);
 
                     if (filteredFeatures.length > 0) {
-                        elements.push(
-                            <div
-                                key={`${device.friendly_name}-${device.ieee_address}-${sourceIdx}`}
-                                className={`${columnDisplay ? "break-inside-avoid-column mb-3" : "w-[23rem]"} card bg-base-200 rounded-box shadow-md`}
-                                style={{ contentVisibility: "auto", scrollbarGutter: "stable both-edges" }}
-                            >
-                                <DeviceCard
-                                    features={filteredFeatures}
-                                    sourceIdx={sourceIdx}
-                                    device={device}
-                                    deviceState={deviceState}
-                                    onChange={async (value) =>
-                                        await sendMessage<"{friendlyNameOrId}/set">(
-                                            sourceIdx,
-                                            // @ts-expect-error templated API endpoint
-                                            `${device.ieee_address}/set`,
-                                            value,
-                                        )
-                                    }
-                                    featureWrapperClass={DashboardFeatureWrapper}
-                                    lastSeenConfig={bridgeInfo[sourceIdx].config.advanced.last_seen}
-                                >
-                                    <div className="join join-horizontal">
-                                        <DeviceControlEditName
-                                            sourceIdx={sourceIdx}
-                                            name={device.friendly_name}
-                                            renameDevice={renameDevice}
-                                            homeassistantEnabled={bridgeInfo[sourceIdx].config.homeassistant.enabled}
-                                            style="btn-outline btn-primary btn-square btn-sm join-item"
-                                        />
-                                        <Button<void>
-                                            onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
-                                            className="btn btn-outline btn-error btn-square btn-sm join-item"
-                                            title={t("remove_device")}
-                                        >
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </Button>
-                                    </div>
-                                </DeviceCard>
-                            </div>,
-                        );
+                        elements.push({
+                            sourceIdx,
+                            device,
+                            deviceState: deviceStates[sourceIdx][device.friendly_name] ?? {},
+                            features: filteredFeatures,
+                            lastSeenConfig,
+                            homeassistantEnabled,
+                            renameDevice,
+                            removeDevice,
+                        });
                     }
                 }
             }
         }
 
-        elements.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
+        elements.sort((elA, elB) => elA.device.ieee_address!.localeCompare(elB.device.ieee_address!));
 
         return elements;
-    }, [devices, deviceStates, bridgeInfo, sendMessage, removeDevice, renameDevice, t, filterValue, columnDisplay]);
-
-    const { sentinelRef, renderItems } = useInfiniteScroll(filteredDevices, 24);
+    }, [devices, deviceStates, bridgeInfo, filterValue, renameDevice, removeDevice]);
 
     return (
         <>
@@ -143,21 +102,9 @@ export default function Dashboard() {
                         <FontAwesomeIcon icon={faClose} />
                     </Button>
                 </div>
-                <Button<boolean>
-                    className="btn btn-square"
-                    item={!columnDisplay}
-                    onClick={onDisplayClick}
-                    title={`${t("settings:dashboard_column_display")}: ${columnDisplay}`}
-                >
-                    <FontAwesomeIcon icon={columnDisplay ? faTableColumns : faTable} />
-                </Button>
             </div>
-            <div
-                className={`${columnDisplay ? "columns-md" : "flex flex-row flex-wrap justify-center"} gap-3 mb-3`}
-                style={{ overflowAnchor: "auto" }}
-            >
-                {renderItems}
-                <div ref={sentinelRef} aria-hidden="true" style={{ height: 1, width: "100%", overflowAnchor: "none" }} />
+            <div>
+                <VirtuosoMasonry useWindowScroll={true} columnCount={columnCount} data={filteredData} ItemContent={DashboardItem} className="gap-3" />
             </div>
         </>
     );

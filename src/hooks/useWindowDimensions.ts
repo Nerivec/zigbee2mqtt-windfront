@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 
 export default function useWindowDimensions() {
-    const [windowDimensions, setWindowDimensions] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight,
-    });
+    const [windowDimensions, setWindowDimensions] = useState([window.innerWidth, window.innerHeight]);
 
     useEffect(() => {
         const onResize = () => {
-            setWindowDimensions({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
+            setWindowDimensions([window.innerWidth, window.innerHeight]);
         };
 
         window.addEventListener("resize", onResize);

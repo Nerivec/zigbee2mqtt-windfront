@@ -9,7 +9,6 @@ import SelectField from "../components/form-fields/SelectField.js";
 import type { NetworkRawDisplayType } from "../components/network-page/index.js";
 import {
     AUTH_FLAG_KEY,
-    DASHBOARD_COLUMN_DISPLAY_KEY,
     DASHBOARD_FILTER_KEY,
     DEVICES_HIDE_DISABLED_KEY,
     HOMEPAGE_KEY,
@@ -32,7 +31,6 @@ import {
 export default function FrontendSettingsPage() {
     const { t } = useTranslation(["settings", "navbar", "network", "common"]);
     const [homepage, setHomepage] = useState<string>(store2.get(HOMEPAGE_KEY, "devices"));
-    const [dashboardColumnDisplay, setDashboardColumnDisplay] = useState<boolean>(store2.get(DASHBOARD_COLUMN_DISPLAY_KEY, false));
     const [permitJoinTime, setPermitJoinTime] = useState<number>(store2.get(PERMIT_JOIN_TIME_KEY, 254));
     const [maxOnScreenNotifications, setMaxOnScreenNotifications] = useState<number>(store2.get(MAX_ON_SCREEN_NOTIFICATIONS_KEY, 3));
     const [networkRawDisplayType, setNetworkRawDisplayType] = useState<NetworkRawDisplayType>(store2.get(NETWORK_RAW_DISPLAY_TYPE_KEY, "data"));
@@ -46,10 +44,6 @@ export default function FrontendSettingsPage() {
     useEffect(() => {
         store2.set(HOMEPAGE_KEY, homepage);
     }, [homepage]);
-
-    useEffect(() => {
-        store2.set(DASHBOARD_COLUMN_DISPLAY_KEY, dashboardColumnDisplay);
-    }, [dashboardColumnDisplay]);
 
     useEffect(() => {
         store2.set(PERMIT_JOIN_TIME_KEY, permitJoinTime);
@@ -92,7 +86,6 @@ export default function FrontendSettingsPage() {
 
         store2.remove(THEME_KEY);
         store2.remove(HOMEPAGE_KEY);
-        store2.remove(DASHBOARD_COLUMN_DISPLAY_KEY);
         store2.remove(PERMIT_JOIN_TIME_KEY);
         store2.remove(MAX_ON_SCREEN_NOTIFICATIONS_KEY);
         store2.remove(NETWORK_RAW_DISPLAY_TYPE_KEY);
@@ -172,12 +165,6 @@ export default function FrontendSettingsPage() {
                     <option value="devices">{t("navbar:devices")}</option>
                     <option value="dashboard">{t("navbar:dashboard")}</option>
                 </SelectField>
-                <CheckboxField
-                    name="dashboard_column_display"
-                    label={t("dashboard_column_display")}
-                    checked={dashboardColumnDisplay}
-                    onChange={(e) => setDashboardColumnDisplay(e.target.checked)}
-                />
                 <NumberField
                     type="number"
                     name="permit_join_time"

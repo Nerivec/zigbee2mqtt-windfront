@@ -8,7 +8,6 @@ export const THEME_KEY = "theme";
 
 //-- Other
 export const HOMEPAGE_KEY = "homepage";
-export const DASHBOARD_COLUMN_DISPLAY_KEY = "dashboard-column-display-key";
 export const PERMIT_JOIN_TIME_KEY = "permit-join-time";
 export const MAX_ON_SCREEN_NOTIFICATIONS_KEY = "max-on-screen-notifications";
 export const NETWORK_RAW_DISPLAY_TYPE_KEY = "network-raw-display-type";

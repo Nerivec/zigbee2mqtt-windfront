@@ -1,9 +1,11 @@
-import { type JSX, memo, useCallback, useContext, useMemo } from "react";
+import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
+import { memo, useCallback, useContext, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { useColumnCount } from "../../hooks/useColumnCount.js";
 import { useAppStore } from "../../store.js";
 import type { Device, Group } from "../../types.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
-import GroupMember from "./GroupMember.js";
+import GroupMember, { type GroupMemberProps } from "./GroupMember.js";
 
 interface GroupMembersProps {
     sourceIdx: number;
@@ -12,14 +14,17 @@ interface GroupMembersProps {
 }
 
 const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => {
+    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const deviceStates = useAppStore(useShallow((state) => state.deviceStates[sourceIdx]));
     const lastSeenConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.last_seen));
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
-    const removeMember = useCallback(
+    const columnCount = useColumnCount();
+
+    const removeDeviceFromGroup = useCallback(
         async (deviceIeee: string, endpoint: number): Promise<void> =>
             await sendMessage(sourceIdx, "bridge/request/group/members/remove", { device: deviceIeee, endpoint, group: group.id.toString() }),
         [sourceIdx, group.id, sendMessage],
     );
+
     const setDeviceState = useCallback(
         async (ieee: string, value: Record<string, unknown>): Promise<void> => {
             await sendMessage<"{friendlyNameOrId}/set">(
@@ -31,33 +36,36 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
         },
         [sourceIdx, sendMessage],
     );
-    const groupMembers = useMemo(() => {
-        const members: JSX.Element[] = [];
 
-        for (const member of group.members) {
-            const device = devices.find((device) => device.ieee_address === member.ieee_address);
+    const filteredData = useMemo(() => {
+        const elements: GroupMemberProps["data"][] = [];
+
+        for (const groupMember of group.members) {
+            const device = devices.find((device) => device.ieee_address === groupMember.ieee_address);
 
             if (device) {
-                members.push(
-                    <div className="w-[23rem] card bg-base-200 rounded-box shadow-md" key={`${member.ieee_address}-${member.endpoint}`}>
-                        <GroupMember
-                            sourceIdx={sourceIdx}
-                            removeDeviceFromGroup={removeMember}
-                            device={device}
-                            groupMember={member}
-                            deviceState={deviceStates[device.friendly_name] ?? {}}
-                            lastSeenConfig={lastSeenConfig}
-                            setDeviceState={setDeviceState}
-                        />
-                    </div>,
-                );
+                elements.push({
+                    sourceIdx,
+                    groupMember,
+                    device,
+                    deviceState: deviceStates[device.friendly_name] ?? {},
+                    lastSeenConfig,
+                    removeDeviceFromGroup,
+                    setDeviceState,
+                });
             }
         }
 
-        return members;
-    }, [sourceIdx, group, devices, lastSeenConfig, deviceStates, removeMember, setDeviceState]);
+        elements.sort((elA, elB) => elA.device.ieee_address!.localeCompare(elB.device.ieee_address!));
 
-    return <div className="flex flex-row flex-wrap justify-center gap-3">{groupMembers}</div>;
+        return elements;
+    }, [sourceIdx, group, devices, lastSeenConfig, deviceStates, removeDeviceFromGroup, setDeviceState]);
+
+    return (
+        <div>
+            <VirtuosoMasonry useWindowScroll={true} columnCount={columnCount} data={filteredData} ItemContent={GroupMember} className="gap-3" />
+        </div>
+    );
 });
 
 export default GroupMembers;
