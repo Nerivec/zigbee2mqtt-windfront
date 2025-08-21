@@ -132,6 +132,7 @@ export default function DevicesPage(): JSX.Element {
         () => [
             {
                 id: "source",
+                size: 60,
                 header: () => (
                     <span title={t("common:source")}>
                         <FontAwesomeIcon icon={faServer} />
@@ -147,6 +148,8 @@ export default function DevicesPage(): JSX.Element {
             },
             {
                 id: "friendly_name",
+                size: 250,
+                minSize: 175,
                 header: t("common:friendly_name"),
                 accessorFn: ({ device }) => [device.friendly_name, device.description].join(" "),
                 cell: ({
@@ -160,8 +163,9 @@ export default function DevicesPage(): JSX.Element {
                                 <DeviceImage device={device} otaState={state.update?.state} disabled={device.disabled} />
                             </div>
                         </div>
-                        <div className="flex-grow flex flex-col">
-                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
+                        {/* min-w-0 serves to properly truncate content */}
+                        <div className="flex-grow flex flex-col min-w-0">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover truncate">
                                 {device.friendly_name}
                             </Link>
                             {device.description && (
@@ -188,6 +192,7 @@ export default function DevicesPage(): JSX.Element {
             },
             {
                 id: "ieee_address",
+                minSize: 175,
                 header: t("ieee_address"),
                 accessorFn: ({ device }) => [device.ieee_address, toHex(device.network_address, 4), device.network_address].join(" "),
                 cell: ({
@@ -216,6 +221,7 @@ export default function DevicesPage(): JSX.Element {
             },
             {
                 id: "model",
+                minSize: 175,
                 header: t("model"),
                 accessorFn: ({ device }) => [device.definition?.model, device.model_id, device.definition?.vendor, device.manufacturer].join(" "),
                 cell: ({
@@ -236,6 +242,7 @@ export default function DevicesPage(): JSX.Element {
             },
             {
                 id: "type",
+                size: 100,
                 header: t("type"),
                 accessorFn: ({ device }) => t(device.type),
                 cell: ({
@@ -247,6 +254,7 @@ export default function DevicesPage(): JSX.Element {
             },
             {
                 id: "lqi",
+                size: 70,
                 header: t("lqi"),
                 accessorFn: ({ state }) => state.linkquality,
                 cell: ({
@@ -270,6 +278,7 @@ export default function DevicesPage(): JSX.Element {
             },
             {
                 id: "availability",
+                size: 125,
                 header: t("availability:availability"),
                 accessorFn: ({ availabilityState }) => availabilityState.state,
                 cell: ({
@@ -296,8 +305,10 @@ export default function DevicesPage(): JSX.Element {
             },
             {
                 id: "actions",
+                size: 175,
+                minSize: 175,
                 header: () => (
-                    <>
+                    <div className="flex flex-col">
                         <CheckboxField
                             name="battery_low_only"
                             detail={t("common:battery_low_only")}
@@ -312,7 +323,7 @@ export default function DevicesPage(): JSX.Element {
                             checked={hideDisabled}
                             className="checkbox checkbox-sm"
                         />
-                    </>
+                    </div>
                 ),
                 cell: ({
                     row: {

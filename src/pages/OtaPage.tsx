@@ -10,6 +10,7 @@ import CheckboxField from "../components/form-fields/CheckboxField.js";
 import { formatOtaFileVersion } from "../components/ota-page/index.js";
 import OtaControlGroup from "../components/ota-page/OtaControlGroup.js";
 import OtaFileVersion from "../components/ota-page/OtaFileVersion.js";
+import OtaUpdating from "../components/ota-page/OtaUpdating.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import ModelLink from "../components/value-decorators/ModelLink.js";
@@ -146,6 +147,7 @@ export default function OtaPage() {
         () => [
             {
                 id: "select",
+                size: 45,
                 header: () => (
                     <label>
                         <input
@@ -176,6 +178,7 @@ export default function OtaPage() {
             },
             {
                 id: "source",
+                size: 60,
                 header: () => (
                     <span title={t("common:source")}>
                         <FontAwesomeIcon icon={faServer} />
@@ -191,6 +194,8 @@ export default function OtaPage() {
             },
             {
                 id: "friendly_name",
+                size: 250,
+                minSize: 175,
                 header: t("common:friendly_name"),
                 accessorFn: ({ device }) => [device.friendly_name, device.description, device.ieee_address].join(" "),
                 cell: ({
@@ -204,10 +209,10 @@ export default function OtaPage() {
                                 <DeviceImage device={device} otaState={state?.state} disabled={false} />
                             </div>
                         </div>
-                        <div className="flex-grow flex flex-col">
-                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
+                        {/* min-w-0 serves to properly truncate content */}
+                        <div className="flex-grow flex flex-col min-w-0">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover truncate">
                                 {device.friendly_name}
-                                {device.friendly_name !== device.ieee_address ? ` (${device.ieee_address})` : ""}
                             </Link>
                             {device.description && (
                                 <div className="max-w-3xs text-xs opacity-50 truncate" title={device.description}>
@@ -229,6 +234,7 @@ export default function OtaPage() {
             },
             {
                 id: "model",
+                minSize: 175,
                 header: t("zigbee:model"),
                 accessorFn: ({ device }) => [device.definition?.model, device.model_id, device.definition?.vendor, device.manufacturer].join(" "),
                 cell: ({
@@ -249,6 +255,7 @@ export default function OtaPage() {
             },
             {
                 id: "firmware_id",
+                minSize: 175,
                 header: t("zigbee:firmware_id"),
                 accessorFn: ({ device }) => [device.software_build_id, device.date_code].join(" "),
                 cell: ({
@@ -270,6 +277,7 @@ export default function OtaPage() {
             },
             {
                 id: "firmware_version",
+                minSize: 175,
                 header: t("firmware_version"),
                 accessorFn: ({ state }) => formatOtaFileVersion(state?.installed_version)?.join(" "),
                 cell: ({
@@ -280,6 +288,7 @@ export default function OtaPage() {
             },
             {
                 id: "available_firmware_version",
+                minSize: 175,
                 header: t("available_firmware_version"),
                 accessorFn: ({ state }) => formatOtaFileVersion(state?.latest_version)?.join(" "),
                 cell: ({
@@ -290,8 +299,9 @@ export default function OtaPage() {
             },
             {
                 id: "actions",
+                minSize: 130,
                 header: () => (
-                    <>
+                    <div className="flex flex-col">
                         <CheckboxField
                             name="available_only"
                             detail={t("common:available_only")}
@@ -299,7 +309,7 @@ export default function OtaPage() {
                             checked={availableOnly}
                             className="checkbox checkbox-sm"
                         />
-                        <div className="join join-horizontal">
+                        <div className="join join-vertical">
                             <ConfirmButton
                                 className="btn btn-outline btn-error btn-xs join-item"
                                 onClick={checkSelected}
@@ -321,24 +331,27 @@ export default function OtaPage() {
                                 {`${t("update_selected")} (${selectedDevices.length})`}
                             </ConfirmButton>
                         </div>
-                    </>
+                    </div>
                 ),
                 accessorFn: ({ state }) => state?.state,
                 cell: ({
                     row: {
                         original: { sourceIdx, device, state },
                     },
-                }) => (
-                    <OtaControlGroup
-                        sourceIdx={sourceIdx}
-                        device={device}
-                        state={state}
-                        onCheckClick={onCheckClick}
-                        onUpdateClick={onUpdateClick}
-                        onScheduleClick={onScheduleClick}
-                        onUnscheduleClick={onUnscheduleClick}
-                    />
-                ),
+                }) =>
+                    state?.state === "updating" ? (
+                        <OtaUpdating label={t("remaining_time")} remaining={state.remaining} progress={state.progress} />
+                    ) : (
+                        <OtaControlGroup
+                            sourceIdx={sourceIdx}
+                            device={device}
+                            state={state}
+                            onCheckClick={onCheckClick}
+                            onUpdateClick={onUpdateClick}
+                            onScheduleClick={onScheduleClick}
+                            onUnscheduleClick={onUnscheduleClick}
+                        />
+                    ),
                 enableSorting: false,
                 enableColumnFilter: false,
             },

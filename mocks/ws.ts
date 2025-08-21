@@ -1,7 +1,7 @@
 import merge from "lodash/merge.js";
 import { WebSocketServer } from "ws";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
-import type { Message, ResponseMessage } from "../src/types.js";
+import type { DeviceState, Message, ResponseMessage } from "../src/types.js";
 import { BRIDGE_DEFINITION } from "./bridgeDefinitions.js";
 import { BRIDGE_DEVICES } from "./bridgeDevices.js";
 import { BRIDGE_EXTENSIONS } from "./bridgeExtensions.js";
@@ -50,6 +50,23 @@ export function startServer() {
 
         for (const message of DEVICE_STATES) {
             ws.send(JSON.stringify(message));
+        }
+
+        for (const ds of DEVICE_STATES) {
+            setInterval(
+                () => {
+                    const message: Message<DeviceState> = {
+                        payload: {
+                            last_seen: new Date().toISOString(),
+                            linkquality: Math.floor(Math.random() * (254 - 1 + 1) + 1),
+                        },
+                        topic: ds.topic,
+                    };
+
+                    ws.send(JSON.stringify(message));
+                },
+                Math.floor(Math.random() * (180 - 2 + 2) + 2) * 1000,
+            );
         }
 
         let i = 1;

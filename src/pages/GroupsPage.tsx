@@ -78,6 +78,7 @@ export default function GroupsPage() {
         () => [
             {
                 id: "source",
+                size: 60,
                 header: () => (
                     <span title={t("common:source")}>
                         <FontAwesomeIcon icon={faServer} />
@@ -93,6 +94,7 @@ export default function GroupsPage() {
             },
             {
                 id: "group_id",
+                minSize: 175,
                 header: t("group_id"),
                 accessorFn: ({ group }) => group.id,
                 cell: ({
@@ -125,6 +127,8 @@ export default function GroupsPage() {
             },
             {
                 id: "friendly_name",
+                size: 250,
+                minSize: 175,
                 header: t("common:friendly_name"),
                 accessorFn: ({ group }) => group.friendly_name,
                 cell: ({
@@ -132,7 +136,7 @@ export default function GroupsPage() {
                         original: { sourceIdx, group },
                     },
                 }) => (
-                    <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover">
+                    <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover truncate">
                         {group.friendly_name}
                     </Link>
                 ),
@@ -141,6 +145,7 @@ export default function GroupsPage() {
             },
             {
                 id: "members",
+                size: 125,
                 header: t("group_members"),
                 accessorFn: ({ group }) => group.members.length ?? 0,
                 enableColumnFilter: false,

@@ -104,7 +104,7 @@ export default function Dashboard() {
                 </div>
             </div>
             <div>
-                <VirtuosoMasonry useWindowScroll={true} columnCount={columnCount} data={filteredData} ItemContent={DashboardItem} className="gap-3" />
+                <VirtuosoMasonry useWindowScroll columnCount={columnCount} data={filteredData} ItemContent={DashboardItem} className="gap-3" />
             </div>
         </>
     );

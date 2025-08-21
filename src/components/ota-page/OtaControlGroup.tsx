@@ -16,35 +16,6 @@ type OtaControlGroup = {
     onUnscheduleClick: ([sourceIdx, ieee]: [number, string]) => Promise<void>;
 };
 
-type UpdatingProps = {
-    label: string;
-    remaining: NonNullable<DeviceState["update"]>["remaining"];
-    progress: NonNullable<DeviceState["update"]>["progress"];
-};
-
-const Updating = memo(({ label, remaining, progress }: UpdatingProps) => {
-    if (remaining && remaining > 0) {
-        const hours = Math.floor(remaining / 3600);
-        const minutes = Math.floor(remaining / 60) % 60;
-        const seconds = Math.floor(remaining % 60);
-        const showHours = hours > 0;
-        const showMinutes = minutes > 0;
-
-        return (
-            <>
-                <progress className="progress w-48" value={progress} max="100" />
-                <div>
-                    {label} {showHours ? `${hours}:` : ""}
-                    {showMinutes ? `${minutes.toString().padStart(2, "0")}:` : ""}
-                    {seconds.toString().padStart(2, "0")}
-                </div>
-            </>
-        );
-    }
-
-    return <progress className="progress w-48" value={progress} max="100" />;
-});
-
 const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdateClick, onScheduleClick, onUnscheduleClick }: OtaControlGroup) => {
     const { t } = useTranslation(["ota", "common"]);
 
@@ -71,10 +42,6 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                 </ConfirmButton>
             </div>
         );
-    }
-
-    if (state.state === "updating") {
-        return <Updating label={t("remaining_time")} remaining={state.remaining} progress={state.progress} />;
     }
 
     return (

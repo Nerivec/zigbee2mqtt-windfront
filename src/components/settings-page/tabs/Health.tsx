@@ -52,6 +52,7 @@ export default function Health({ sourceIdx }: HealthProps) {
         () => [
             {
                 id: "friendly_name",
+                minSize: 175,
                 header: t("common:friendly_name"),
                 accessorFn: ({ device }) => [device.friendly_name, device.description, device.ieee_address].join(" "),
                 cell: ({
@@ -59,17 +60,18 @@ export default function Health({ sourceIdx }: HealthProps) {
                         original: { device },
                     },
                 }) => (
-                    <div className="flex items-center gap-3">
+                    // min-w-0 serves to properly truncate content
+                    <div className="flex items-center gap-3 min-w-0">
                         <div className="avatar">
                             <div className="h-11 w-11" style={{ overflow: "visible" }}>
                                 <DeviceImage device={device} disabled={false} />
                             </div>
                         </div>
                         <div className="flex flex-col">
-                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover truncate">
                                 {device.friendly_name}
-                                {device.friendly_name !== device.ieee_address ? ` (${device.ieee_address})` : ""}
                             </Link>
+                            {device.friendly_name !== device.ieee_address ? device.ieee_address : null}
                         </div>
                     </div>
                 ),

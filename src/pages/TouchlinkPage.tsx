@@ -82,6 +82,7 @@ export default function TouchlinkPage() {
         () => [
             {
                 id: "source",
+                size: 60,
                 header: () => (
                     <span title={t("common:source")}>
                         <FontAwesomeIcon icon={faServer} />
@@ -97,6 +98,7 @@ export default function TouchlinkPage() {
             },
             {
                 id: "ieee_address",
+                minSize: 175,
                 header: t("zigbee:ieee_address"),
                 accessorFn: ({ touchlinkDevice }) => touchlinkDevice.ieee_address,
                 cell: ({
@@ -105,7 +107,7 @@ export default function TouchlinkPage() {
                     },
                 }) =>
                     friendlyName ? (
-                        <Link to={`/device/${sourceIdx}/${touchlinkDevice.ieee_address}/info`} className="link link-hover">
+                        <Link to={`/device/${sourceIdx}/${touchlinkDevice.ieee_address}/info`} className="link link-hover truncate">
                             {touchlinkDevice.ieee_address}
                         </Link>
                     ) : (
@@ -117,6 +119,7 @@ export default function TouchlinkPage() {
             },
             {
                 id: "friendly_name",
+                minSize: 175,
                 header: t("common:friendly_name"),
                 accessorFn: ({ friendlyName }) => friendlyName,
                 filterFn: "includesString",
@@ -127,6 +130,7 @@ export default function TouchlinkPage() {
             },
             {
                 id: "channel",
+                minSize: 175,
                 header: t("zigbee:channel"),
                 accessorFn: ({ touchlinkDevice }) => touchlinkDevice.channel,
                 filterFn: "includesString",
