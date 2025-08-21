@@ -62,7 +62,8 @@
         "execute_command": "Exécuter la commande",
         "send": "Envoyer",
         "columns": "Colonnes",
-        "entries": "Entrées"
+        "entries": "Entrées",
+        "show_only": "Afficher uniquement"
     },
     "devicePage": {
         "about": "À propos",
@@ -98,7 +99,6 @@
         "log_level_config": "Configuration du niveau de journal",
         "empty_logs_message": "Rien à afficher",
         "filter_by_text": "Filtrer par texte",
-        "show_only": "Afficher uniquement",
         "logs_limit": "Limite des journaux",
         "highlight_only": "Mettre en évidence uniquement"
     },

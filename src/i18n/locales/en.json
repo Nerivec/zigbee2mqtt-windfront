@@ -69,7 +69,8 @@
         "more": "More",
         "default": "Default",
         "multi_instance": "Multi-Instance",
-        "show_source_name": "Show source name"
+        "show_source_name": "Show source name",
+        "show_only": "Show only"
     },
     "devicePage": {
         "about": "About",
@@ -106,7 +107,6 @@
         "log_level_config": "Log level config",
         "empty_logs_message": "Nothing to display",
         "filter_by_text": "Filter by text",
-        "show_only": "Show only",
         "logs_limit": "Logs limit",
         "highlight_only": "Highlight only"
     },

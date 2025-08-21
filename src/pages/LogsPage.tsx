@@ -32,7 +32,7 @@ type LogsTabProps = {
 };
 
 const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
-    const { t } = useTranslation("logs");
+    const { t } = useTranslation(["logs", "common"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const logLevelConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.log_level));
     const logs = useAppStore(useShallow((state) => state.logs[sourceIdx]));
@@ -67,7 +67,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
     return (
         <>
             <div className="flex flex-row flex-wrap gap-3 items-top">
-                <SelectField name="log_level" label={t("show_only")} value={logLevel} onChange={(e) => setLogLevel(e.target.value)}>
+                <SelectField name="log_level" label={t("common:show_only")} value={logLevel} onChange={(e) => setLogLevel(e.target.value)}>
                     <option key="all" value="all">
                         all
                     </option>

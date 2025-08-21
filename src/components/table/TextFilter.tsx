@@ -8,8 +8,8 @@ import Button from "../Button.js";
 import DebouncedInput from "../form-fields/DebouncedInput.js";
 
 type TextFilterProps<T> = {
-    getFilterValue: Column<T, unknown>["getFilterValue"];
-    setFilterValue: Column<T, unknown>["setFilterValue"];
+    getFilterValue: Column<T>["getFilterValue"];
+    setFilterValue: Column<T>["setFilterValue"];
     storeKey: string;
 };
 

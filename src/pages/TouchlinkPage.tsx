@@ -88,7 +88,7 @@ export default function TouchlinkPage() {
                         <FontAwesomeIcon icon={faServer} />
                     </span>
                 ),
-                accessorFn: ({ sourceIdx }) => sourceIdx,
+                accessorFn: ({ sourceIdx }) => `${sourceIdx} ${API_NAMES[sourceIdx]}`,
                 cell: ({
                     row: {
                         original: { sourceIdx },

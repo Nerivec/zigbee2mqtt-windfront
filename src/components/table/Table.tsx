@@ -3,15 +3,23 @@ import { useTranslation } from "react-i18next";
 import { type TableComponents, TableVirtuoso } from "react-virtuoso";
 import type { UseTableProps, useTable } from "../../hooks/useTable.js";
 import { TABLE_COLUMN_FILTER_KEY } from "../../localStoreConsts.js";
+import { API_NAMES } from "../../store.js";
+import SourceExternalFilter from "./SourceExternalFilter.js";
 import TextFilter from "./TextFilter.js";
 
 interface TableHeaderProps<T> {
+    tableId: string;
     columns: Column<T>[];
     entries: number;
 }
 
-function TableHeader<T>({ columns, entries }: TableHeaderProps<T>) {
+function TableHeader<T>({ tableId, columns, entries }: TableHeaderProps<T>) {
     const { t } = useTranslation("common");
+    let sourceColumn: Column<T> | undefined;
+
+    if (API_NAMES.length > 1) {
+        sourceColumn = columns.find((c) => c.id === "source");
+    }
 
     return (
         <div className="flex flex-row flex-wrap gap-2 text-xs px-3">
@@ -30,9 +38,12 @@ function TableHeader<T>({ columns, entries }: TableHeaderProps<T>) {
                     </label>
                 ),
             )}
-            <span className="ml-auto label">
-                {t("entries")}: {entries}
-            </span>
+            <div className="ml-auto flex flex-row flex-wrap gap-2">
+                {sourceColumn && <SourceExternalFilter column={sourceColumn} tableId={tableId} />}
+                <span className="label">
+                    {t("entries")}: {entries}
+                </span>
+            </div>
         </div>
     );
 }
@@ -69,7 +80,7 @@ export default function Table<T>({ id, table }: TableProps<T>) {
 
     return (
         <>
-            <TableHeader columns={table.getAllLeafColumns()} entries={rows.length} />
+            <TableHeader tableId={id} columns={table.getAllLeafColumns()} entries={rows.length} />
 
             <TableVirtuoso<Row<T>>
                 useWindowScroll

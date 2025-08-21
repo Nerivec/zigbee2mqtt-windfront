@@ -18,7 +18,7 @@ import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
 import { DEVICES_HIDE_DISABLED_KEY } from "../localStoreConsts.js";
-import { API_URLS, useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { AvailabilityState, Device, DeviceState } from "../types.js";
 import { convertLastSeenToDate, toHex } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
@@ -138,7 +138,7 @@ export default function DevicesPage(): JSX.Element {
                         <FontAwesomeIcon icon={faServer} />
                     </span>
                 ),
-                accessorFn: ({ sourceIdx }) => sourceIdx,
+                accessorFn: ({ sourceIdx }) => `${sourceIdx} ${API_NAMES[sourceIdx]}`,
                 cell: ({
                     row: {
                         original: { sourceIdx },
