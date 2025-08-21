@@ -25,4 +25,4 @@ export const DEVICES_HIDE_DISABLED_KEY = "devices-hide-disabled";
 
 export const TABLE_COLUMN_VISIBILITY_KEY = "table-column-visibility";
 export const TABLE_COLUMN_FILTER_KEY = "table-column-filter";
-export const DASHBOARD_FILTER_KEY = "dashboard-filter";
+export const DASHBOARD_FILTER_FRIENDLY_NAME_KEY = "dashboard-filter-friendly-name";

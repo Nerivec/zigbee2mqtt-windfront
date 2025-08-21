@@ -56,7 +56,7 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
             }
         }
 
-        elements.sort((elA, elB) => elA.device.ieee_address!.localeCompare(elB.device.ieee_address!));
+        elements.sort((elA, elB) => elA.device.ieee_address.localeCompare(elB.device.ieee_address));
 
         return elements;
     }, [sourceIdx, group, devices, lastSeenConfig, deviceStates, removeDeviceFromGroup, setDeviceState]);

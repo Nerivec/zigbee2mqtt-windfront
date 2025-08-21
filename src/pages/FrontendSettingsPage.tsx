@@ -9,7 +9,7 @@ import SelectField from "../components/form-fields/SelectField.js";
 import type { NetworkRawDisplayType } from "../components/network-page/index.js";
 import {
     AUTH_FLAG_KEY,
-    DASHBOARD_FILTER_KEY,
+    DASHBOARD_FILTER_FRIENDLY_NAME_KEY,
     DEVICES_HIDE_DISABLED_KEY,
     HOMEPAGE_KEY,
     I18NEXTLNG_KEY,
@@ -96,7 +96,7 @@ export default function FrontendSettingsPage() {
         store2.remove(NETWORK_MAP_SHOW_ICONS_KEY);
         store2.remove(I18NEXTLNG_KEY);
         store2.remove(DEVICES_HIDE_DISABLED_KEY);
-        store2.remove(DASHBOARD_FILTER_KEY);
+        store2.remove(DASHBOARD_FILTER_FRIENDLY_NAME_KEY);
 
         for (const key of keys) {
             if (key.startsWith(TABLE_COLUMN_VISIBILITY_KEY) || key.startsWith(TABLE_COLUMN_FILTER_KEY)) {

@@ -9,7 +9,7 @@ import DashboardItem, { type DashboardItemProps } from "../components/dashboard-
 import { isValidForDashboard } from "../components/dashboard-page/index.js";
 import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import { useColumnCount } from "../hooks/useColumnCount.js";
-import { DASHBOARD_FILTER_KEY } from "../localStoreConsts.js";
+import { DASHBOARD_FILTER_FRIENDLY_NAME_KEY } from "../localStoreConsts.js";
 import { API_URLS, useAppStore } from "../store.js";
 import { filterExposes } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
@@ -20,12 +20,12 @@ export default function Dashboard() {
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const devices = useAppStore((state) => state.devices);
     const { t } = useTranslation(["zigbee", "settings"]);
-    const [filterValue, setFilterValue] = useState(store2.get(DASHBOARD_FILTER_KEY, ""));
+    const [filterFriendlyName, setFilterFriendlyName] = useState<string>(store2.get(DASHBOARD_FILTER_FRIENDLY_NAME_KEY, ""));
     const columnCount = useColumnCount();
 
     useEffect(() => {
-        store2.set(DASHBOARD_FILTER_KEY, filterValue);
-    }, [filterValue]);
+        store2.set(DASHBOARD_FILTER_FRIENDLY_NAME_KEY, filterFriendlyName);
+    }, [filterFriendlyName]);
 
     const renameDevice = useCallback(
         async (sourceIdx: number, from: string, to: string, homeassistantRename: boolean): Promise<void> => {
@@ -57,7 +57,7 @@ export default function Dashboard() {
                 if (
                     !device.disabled &&
                     device.supported &&
-                    (!filterValue || device.friendly_name.toLowerCase().includes(filterValue.toLowerCase())) &&
+                    (!filterFriendlyName || device.friendly_name.toLowerCase().includes(filterFriendlyName.toLowerCase())) &&
                     device.definition
                 ) {
                     const filteredFeatures = filterExposes(device.definition.exposes, isValidForDashboard);
@@ -78,27 +78,27 @@ export default function Dashboard() {
             }
         }
 
-        elements.sort((elA, elB) => elA.device.ieee_address!.localeCompare(elB.device.ieee_address!));
+        elements.sort((elA, elB) => elA.device.ieee_address.localeCompare(elB.device.ieee_address));
 
         return elements;
-    }, [devices, deviceStates, bridgeInfo, filterValue, renameDevice, removeDevice]);
+    }, [devices, deviceStates, bridgeInfo, filterFriendlyName, renameDevice, removeDevice]);
 
     return (
         <>
             <div className="flex flex-row justify-center items-center gap-3 mb-3">
                 <div className="join">
                     {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
-                    <label className="input w-64 join-item">
+                    <label className="input join-item">
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                         <DebouncedInput
                             className=""
                             type="search"
-                            onChange={(value) => setFilterValue(value.toString())}
+                            onChange={(value) => setFilterFriendlyName(value.toString())}
                             placeholder={t("common:search")}
-                            value={filterValue}
+                            value={filterFriendlyName}
                         />
                     </label>
-                    <Button item="" onClick={setFilterValue} className="btn btn-square join-item" title={t("common:clear")}>
+                    <Button item="" onClick={setFilterFriendlyName} className="btn btn-square join-item" title={t("common:clear")}>
                         <FontAwesomeIcon icon={faClose} />
                     </Button>
                 </div>
