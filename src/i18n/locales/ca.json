@@ -82,15 +82,15 @@
         "about": "Sobre",
         "bind": "Vincular",
         "clusters": "Clústers",
-        "dev_console": "Dev console",
-        "reporting": "Reporting",
+        "dev_console": "Consola de desenvolupament",
+        "reporting": "Informes",
         "settings": "Configuració",
-        "settings_specific": "Settings (specific)",
+        "settings_specific": "Configuracions (específiques)",
         "state": "Estat",
         "groups": "Grups",
-        "scene": "Scene",
-        "exposes": "Exposes",
-        "select_a_device": "Select a device"
+        "scene": "Escena",
+        "exposes": "Exposa",
+        "select_a_device": "Seleccionar un dispositiu"
     },
     "groups": {
         "settings": "Configuració",
@@ -166,19 +166,19 @@
         "all": "Tots",
         "dashboard": "Tauler",
         "devices": "Dispositius",
-        "disable_join": "Disable join",
+        "disable_join": "Deshabilitar unió",
         "extensions": "Extensions",
         "groups": "Grups",
         "logs": "Registres",
         "network": "Xarxa",
         "ota": "OTA",
-        "permit_join": "Permit join",
-        "restart": "Restart",
+        "permit_join": "Permetre unió",
+        "restart": "Reiniciar",
         "settings": "Configuració",
-        "toggle_dropdown": "Toggle dropdown",
+        "toggle_dropdown": "Commutar menú desplegable",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket status",
-        "transaction_prefix": "Transaction prefix"
+        "transaction_prefix": "Prefix de transacció"
     },
     "ota": {
         "check": "Check for new updates",
@@ -240,7 +240,7 @@
         "homepage": "Homepage",
         "dashboard_column_display": "Dashboard column display",
         "permit_join_time": "Permit join time",
-        "dev_console": "Dev console",
+        "dev_console": "Consola de desenvolupament",
         "max_on_screen_notifications": "Max on-screen notifications",
         "network_raw": "Network data/map",
         "network_map": "Network map",
@@ -298,10 +298,10 @@
     "zigbee": {
         "actions": "Accions",
         "attribute": "Atribut",
-        "unknown": "Unknown",
+        "unknown": "Desconegut",
         "mains_single_phase": "Mains (single phase)",
         "mains_3_phase": "Mains (3 phase)",
-        "battery": "Battery",
+        "battery": "Bateria",
         "dc_source": "DC Source",
         "emergency_mains_constantly_powered": "Emergency mains constantly powered",
         "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
@@ -347,7 +347,7 @@
         "device": "Device",
         "channel": "Channel",
         "possible": "Possible",
-        "available": "Available",
+        "available": "Disponible",
         "edit_description": "Edit description",
         "save_description": "Save description",
         "update_description": "Update description",
@@ -365,7 +365,7 @@
         "EndDevice": "End device",
         "Router": "Router",
         "GreenPower": "GreenPower",
-        "Unknown": "Unknown",
+        "Unknown": "Desconegut",
         "Coordinator": "Coordinator"
     },
     "scene": {
@@ -389,10 +389,10 @@
     },
     "availability": {
         "availability": "Availability",
-        "offline": "Offline",
-        "online": "Online",
+        "offline": "Fora de línia",
+        "online": "En línia",
         "disabled": "Desactivat",
-        "enabled": "Enabled"
+        "enabled": "Habilitat"
     },
     "devConsole": {
         "generate_external_definition": "Generate external definition",

@@ -82,15 +82,15 @@
         "about": "Über",
         "bind": "Binden",
         "clusters": "Cluster",
-        "dev_console": "Dev console",
-        "reporting": "Reporting",
+        "dev_console": "Entwicklerkonsole",
+        "reporting": "Berichterstattung",
         "settings": "Einstellungen",
-        "settings_specific": "Settings (specific)",
+        "settings_specific": "Einstellungen (spezifisch)",
         "state": "Status",
         "groups": "Gruppen",
-        "scene": "Scene",
-        "exposes": "Exposes",
-        "select_a_device": "Select a device"
+        "scene": "Szene",
+        "exposes": "Exponiert",
+        "select_a_device": "Gerät auswählen"
     },
     "groups": {
         "settings": "Einstellungen",
@@ -114,10 +114,10 @@
         "highlight_only": "Highlight only"
     },
     "network": {
-        "network_hierarchy": "Network hierarchy",
+        "network_hierarchy": "Netzwerkhierarchie",
         "help": "Hilfe",
-        "load": "Load",
-        "reload": "Reload",
+        "load": "Laden",
+        "reload": "Neu laden",
         "loading": "Depending on the size of the network and the quality of its links, this can take a while.",
         "parent": "Parent",
         "child": "Child",
@@ -178,7 +178,7 @@
         "toggle_dropdown": "Dropdown umschalten",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket status",
-        "transaction_prefix": "Transaction prefix"
+        "transaction_prefix": "Transaktionspräfix"
     },
     "ota": {
         "check": "Check for new updates",
@@ -240,7 +240,7 @@
         "homepage": "Homepage",
         "dashboard_column_display": "Dashboard column display",
         "permit_join_time": "Permit join time",
-        "dev_console": "Dev console",
+        "dev_console": "Entwicklerkonsole",
         "max_on_screen_notifications": "Max on-screen notifications",
         "network_raw": "Network data/map",
         "network_map": "Network map",
@@ -298,10 +298,10 @@
     "zigbee": {
         "actions": "Aktionen",
         "attribute": "Attribut",
-        "unknown": "Unknown",
+        "unknown": "Unbekannt",
         "mains_single_phase": "Mains (single phase)",
         "mains_3_phase": "Mains (3 phase)",
-        "battery": "Battery",
+        "battery": "Batterie",
         "dc_source": "DC Source",
         "emergency_mains_constantly_powered": "Emergency mains constantly powered",
         "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
@@ -347,7 +347,7 @@
         "device": "Device",
         "channel": "Channel",
         "possible": "Possible",
-        "available": "Available",
+        "available": "Verfügbar",
         "edit_description": "Edit description",
         "save_description": "Save description",
         "update_description": "Update description",
@@ -365,7 +365,7 @@
         "EndDevice": "End device",
         "Router": "Router",
         "GreenPower": "GreenPower",
-        "Unknown": "Unknown",
+        "Unknown": "Unbekannt",
         "Coordinator": "Coordinator"
     },
     "scene": {
@@ -392,7 +392,7 @@
         "offline": "Offline",
         "online": "Online",
         "disabled": "Deaktiviert",
-        "enabled": "Enabled"
+        "enabled": "Aktiviert"
     },
     "devConsole": {
         "generate_external_definition": "Generate external definition",

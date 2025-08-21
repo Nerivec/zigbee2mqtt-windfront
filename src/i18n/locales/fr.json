@@ -114,10 +114,10 @@
         "highlight_only": "Surligner seulement"
     },
     "network": {
-        "network_hierarchy": "Network hierarchy",
+        "network_hierarchy": "Hiérarchie du réseau",
         "help": "Aide",
-        "load": "Load",
-        "reload": "Reload",
+        "load": "Charger",
+        "reload": "Recharger",
         "loading": "Depending on the size of the network and the quality of its links, this can take a while.",
         "parent": "Parent",
         "child": "Child",
@@ -178,7 +178,7 @@
         "toggle_dropdown": "Basculer le menu déroulant",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket status",
-        "transaction_prefix": "Transaction prefix"
+        "transaction_prefix": "Préfixe de transaction"
     },
     "ota": {
         "check": "Check for new updates",
@@ -240,7 +240,7 @@
         "homepage": "Homepage",
         "dashboard_column_display": "Dashboard column display",
         "permit_join_time": "Permit join time",
-        "dev_console": "Dev console",
+        "dev_console": "Console de développement",
         "max_on_screen_notifications": "Max on-screen notifications",
         "network_raw": "Network data/map",
         "network_map": "Network map",
@@ -298,10 +298,10 @@
     "zigbee": {
         "actions": "Actions",
         "attribute": "Attribut",
-        "unknown": "Unknown",
+        "unknown": "Inconnu",
         "mains_single_phase": "Mains (single phase)",
         "mains_3_phase": "Mains (3 phase)",
-        "battery": "Battery",
+        "battery": "Batterie",
         "dc_source": "DC Source",
         "emergency_mains_constantly_powered": "Emergency mains constantly powered",
         "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
@@ -347,7 +347,7 @@
         "device": "Device",
         "channel": "Channel",
         "possible": "Possible",
-        "available": "Available",
+        "available": "Disponible",
         "edit_description": "Edit description",
         "save_description": "Save description",
         "update_description": "Update description",
@@ -365,7 +365,7 @@
         "EndDevice": "End device",
         "Router": "Router",
         "GreenPower": "GreenPower",
-        "Unknown": "Unknown",
+        "Unknown": "Inconnu",
         "Coordinator": "Coordinator"
     },
     "scene": {
@@ -389,10 +389,10 @@
     },
     "availability": {
         "availability": "Availability",
-        "offline": "Offline",
-        "online": "Online",
+        "offline": "Hors ligne",
+        "online": "En ligne",
         "disabled": "Désactivé",
-        "enabled": "Enabled"
+        "enabled": "Activé"
     },
     "devConsole": {
         "generate_external_definition": "Generate external definition",

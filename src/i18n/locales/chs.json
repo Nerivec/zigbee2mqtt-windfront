@@ -82,15 +82,15 @@
         "about": "关于",
         "bind": "绑定",
         "clusters": "集群",
-        "dev_console": "Dev console",
-        "reporting": "Reporting",
+        "dev_console": "开发控制台",
+        "reporting": "报告",
         "settings": "设置",
-        "settings_specific": "Settings (specific)",
+        "settings_specific": "设置（特定）",
         "state": "状态",
         "groups": "群组",
-        "scene": "Scene",
-        "exposes": "Exposes",
-        "select_a_device": "Select a device"
+        "scene": "场景",
+        "exposes": "暴露",
+        "select_a_device": "选择设备"
     },
     "groups": {
         "settings": "设置",
@@ -166,19 +166,19 @@
         "all": "全部",
         "dashboard": "仪表板",
         "devices": "设备",
-        "disable_join": "Disable join",
+        "disable_join": "禁用加入",
         "extensions": "Extensions",
         "groups": "群组",
         "logs": "日志",
         "network": "网络",
         "ota": "OTA",
-        "permit_join": "Permit join",
-        "restart": "Restart",
+        "permit_join": "允许加入",
+        "restart": "重启",
         "settings": "设置",
-        "toggle_dropdown": "Toggle dropdown",
+        "toggle_dropdown": "切换下拉菜单",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket status",
-        "transaction_prefix": "Transaction prefix"
+        "transaction_prefix": "事务前缀"
     },
     "ota": {
         "check": "Check for new updates",
@@ -240,7 +240,7 @@
         "homepage": "Homepage",
         "dashboard_column_display": "Dashboard column display",
         "permit_join_time": "Permit join time",
-        "dev_console": "Dev console",
+        "dev_console": "开发控制台",
         "max_on_screen_notifications": "Max on-screen notifications",
         "network_raw": "Network data/map",
         "network_map": "Network map",
@@ -298,10 +298,10 @@
     "zigbee": {
         "actions": "操作",
         "attribute": "属性",
-        "unknown": "Unknown",
+        "unknown": "未知",
         "mains_single_phase": "Mains (single phase)",
         "mains_3_phase": "Mains (3 phase)",
-        "battery": "Battery",
+        "battery": "电池",
         "dc_source": "DC Source",
         "emergency_mains_constantly_powered": "Emergency mains constantly powered",
         "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
@@ -347,7 +347,7 @@
         "device": "Device",
         "channel": "Channel",
         "possible": "Possible",
-        "available": "Available",
+        "available": "可用",
         "edit_description": "Edit description",
         "save_description": "Save description",
         "update_description": "Update description",
@@ -365,7 +365,7 @@
         "EndDevice": "End device",
         "Router": "Router",
         "GreenPower": "GreenPower",
-        "Unknown": "Unknown",
+        "Unknown": "未知",
         "Coordinator": "Coordinator"
     },
     "scene": {
@@ -389,10 +389,10 @@
     },
     "availability": {
         "availability": "Availability",
-        "offline": "Offline",
-        "online": "Online",
+        "offline": "离线",
+        "online": "在线",
         "disabled": "已禁用",
-        "enabled": "Enabled"
+        "enabled": "已启用"
     },
     "devConsole": {
         "generate_external_definition": "Generate external definition",
