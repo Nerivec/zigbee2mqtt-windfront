@@ -1,166 +1,166 @@
 {
+    "availability": {
+        "availability": "Availability",
+        "disabled": "Devre dışı",
+        "enabled": "Etkin",
+        "offline": "Çevrimdışı",
+        "online": "Çevrimiçi"
+    },
     "common": {
         "action": "Eylem",
         "actions": "Eylemler",
+        "all_features": "Tüm özellikler",
+        "all_properties": "Tüm özellikler",
+        "all_sources": "Tüm kaynaklar",
         "apply": "Uygula",
         "attribute": "Özellik",
+        "available_only": "Sadece mevcut olanlar",
+        "battery_low_only": "Sadece düşük pil",
         "bind": "Bağla",
+        "cancel": "İptal",
         "clear": "Temizle",
         "clear_all": "Tümünü temizle",
         "close": "Kapat",
-        "cancel": "İptal",
+        "close_notifications": "Bildirimleri kapat",
         "cluster": "Küme",
         "clusters": "Kümeler",
+        "columns": "Sütunlar",
+        "command": "Komut",
         "confirmation": "Onay istemi",
+        "default": "Varsayılan",
         "delete": "Sil",
         "destination": "Hedef",
+        "destination_endpoint": "Hedef uç nokta",
         "devices": "Cihazlar",
         "dialog_confirmation_prompt": "Emin misiniz?",
         "disable": "Devre dışı bırak",
-        "search": "Ara",
-        "highlight": "Vurgula",
+        "disabled": "Devre dışı",
+        "documentation": "Belgeler",
+        "done": "Tamamlandı",
+        "empty_exposes_definition": "Boş maruz kalma tanımı",
+        "enter_auth_token": "Kimlik doğrulama belirteci girin",
+        "entries": "Girişler",
+        "execute": "Çalıştır",
+        "execute_command": "Komutu çalıştır",
+        "failed": "Başarısız",
+        "friendly_name": "Kolay ad",
+        "go_to_page": "Sayfaya git",
         "groups": "Gruplar",
+        "hide_disabled": "Devre dışıları gizle",
+        "highlight": "Vurgula",
+        "init": "Başlat",
         "loading": "Yükleniyor...",
+        "max": "Maks",
+        "min": "Min",
+        "more": "Daha fazla",
+        "multi_instance": "Çoklu-Örnek",
+        "name": "İsim",
         "none": "Hiçbiri",
         "ok": "Tamam",
+        "optional": "İsteğe bağlı",
+        "page": "Sayfa",
+        "payload": "Yük",
         "read": "Oku",
+        "read_the_docs_info": "Bu konuda belgeleri okuyun…",
         "save": "Kaydet",
-        "select_value": "Değer seç",
+        "search": "Ara",
         "select_device": "Cihaz seç",
         "select_endpoint": "Uç nokta seç",
         "select_group": "Grup seç",
+        "select_value": "Değer seç",
+        "send": "Gönder",
+        "show": "Göster",
+        "show_end_devices": "Son cihazları göster",
+        "show_only": "Sadece göster",
+        "show_routers": "Yönlendiricileri göster",
+        "show_source_name": "Kaynak adını göster",
+        "source": "Kaynak",
         "source_endpoint": "Kaynak uç nokta",
         "the_only_endpoint": "Tek uç nokta",
-        "unbind": "Bağlantıyı kes",
-        "write": "Yaz",
-        "destination_endpoint": "Hedef uç nokta",
-        "read_the_docs_info": "Bu konuda belgeleri okuyun…",
-        "page": "Sayfa",
-        "go_to_page": "Sayfaya git",
-        "show": "Göster",
-        "min": "Min",
-        "max": "Maks",
-        "done": "Tamamlandı",
-        "enter_auth_token": "Kimlik doğrulama belirteci girin",
-        "token": "Token",
-        "documentation": "Belgeler",
-        "optional": "İsteğe bağlı",
-        "init": "Başlat",
-        "undefined": "Tanımsız",
+        "token": "Jeton",
         "type_to_filter": "Filtrelemek için yazın...",
-        "name": "İsim",
-        "friendly_name": "Kolay ad",
+        "unbind": "Bağlantıyı kes",
+        "undefined": "Tanımsız",
         "unknown_device": "Bilinmeyen cihaz",
         "unknown_group": "Bilinmeyen grup",
-        "failed": "Başarısız",
-        "disabled": "Devre dışı",
-        "hide_disabled": "Devre dışıları gizle",
-        "battery_low_only": "Sadece düşük pil",
-        "available_only": "Sadece mevcut olanlar",
-        "execute": "Çalıştır",
-        "command": "Komut",
-        "payload": "Yük",
-        "execute_command": "Komutu çalıştır",
-        "send": "Gönder",
-        "columns": "Sütunlar",
-        "entries": "Girişler",
-        "source": "Kaynak",
-        "close_notifications": "Bildirimleri kapat",
-        "more": "Daha fazla",
-        "default": "Varsayılan",
-        "multi_instance": "Çoklu-Örnek",
-        "all_sources": "Tüm kaynaklar",
-        "show_source_name": "Kaynak adını göster",
-        "show_only": "Sadece göster",
-        "empty_exposes_definition": "Boş maruz kalma tanımı",
-        "all_features": "Tüm özellikler",
-        "all_properties": "Tüm özellikler",
-        "show_routers": "Yönlendiricileri göster",
-        "show_end_devices": "Son cihazları göster"
+        "write": "Yaz"
+    },
+    "devConsole": {
+        "add_update_external_converter": "Add or update external converter",
+        "add_update_external_extension": "Add or update external extension",
+        "code": "Code",
+        "codespace_info": "A Github Codespace is available to help in development",
+        "create_new_converter": "Create new converter",
+        "create_new_extension": "Create new extension",
+        "external_converters": "External Converters",
+        "external_extensions": "External Extensions",
+        "generate_external_definition": "Generate external definition",
+        "generated_external_definition": "Generated external definition",
+        "hide_definition": "Hide definition",
+        "mqtt": "MQTT",
+        "mqtt_topic_info": "Omit the 'base_topic', frontend messages are sent over WebSocket directly to Zigbee2MQTT.",
+        "reset_frontend_state": "Reset frontend state",
+        "select_converter_to_edit": "Select converter to edit",
+        "select_extension_to_edit": "Select extension to edit",
+        "send_mqtt": "Send MQTT message",
+        "show_definition": "Show definition",
+        "state_property": "State property",
+        "state_property_info": "Set the result into the device's state (only for read)",
+        "topic": "Konu"
     },
     "devicePage": {
         "about": "Hakkında",
         "bind": "Bağla",
         "clusters": "Kümeler",
         "dev_console": "Geliştirici konsolu",
+        "exposes": "Açığa çıkarır",
+        "groups": "Gruplar",
         "reporting": "Raporlama",
+        "scene": "Sahne",
+        "select_a_device": "Bir cihaz seçin",
         "settings": "Ayarlar",
         "settings_specific": "Ayarlar (özel)",
-        "state": "Durum",
-        "groups": "Gruplar",
-        "scene": "Sahne",
-        "exposes": "Açığa çıkarır",
-        "select_a_device": "Bir cihaz seçin"
+        "state": "Durum"
     },
     "groups": {
-        "settings": "Ayarlar",
-        "add_to_group_header": "Gruba bir cihaz ekle",
         "add_to_group": "Gruba ekle",
+        "add_to_group_header": "Gruba bir cihaz ekle",
         "create_group": "Grup oluştur",
         "friendly_name_placeholder": "yatak_odası_ışıkları, bahçe...",
-        "remove_group": "Grubu kaldır",
         "group_id": "Grup ID",
         "group_members": "Grup üyeleri",
         "group_scenes": "Grup sahneleri",
-        "scenes": "Sahneler",
+        "remove_from_group": "Gruptan kaldır",
+        "remove_group": "Grubu kaldır",
         "rename_group": "Grubu yeniden adlandır",
-        "remove_from_group": "Gruptan kaldır"
+        "scenes": "Sahneler",
+        "settings": "Ayarlar"
+    },
+    "health": {
+        "awaiting_next_check": "Awaiting next check",
+        "interview_info": "Device interviews can heavily influence this data.",
+        "last_check": "Son kontrol",
+        "leave_count": "Leave count",
+        "load_average": "Load average",
+        "messages": "Messages",
+        "messages_per_sec": "Messages per sec",
+        "network_address_changes": "Network address changes",
+        "os": "OS",
+        "process": "İşlem",
+        "published": "Yayınlandı",
+        "queued": "Sırada",
+        "ram_usage": "RAM usage",
+        "received": "Received",
+        "response_time": "Yanıt süresi",
+        "uptime": "Çalışma süresi",
+        "very_low": "Very low"
     },
     "logs": {
-        "log_level_config": "Log seviyesi yapılandırması",
         "empty_logs_message": "Gösterilecek bir şey yok",
         "filter_by_text": "Metinle filtrele",
-        "logs_limit": "Log limiti",
-        "highlight_only": "Sadece vurgula"
-    },
-    "network": {
-        "network_hierarchy": "Ağ hiyerarşisi",
-        "help": "Yardım",
-        "load": "Yükle",
-        "reload": "Yeniden yükle",
-        "loading": "Ağın boyutuna ve bağlantılarının kalitesine bağlı olarak bu biraz zaman alabilir.",
-        "parent": "Ebeveyn",
-        "child": "Çocuk",
-        "sibling": "Kardeş",
-        "children": "Çocuklar",
-        "siblings": "Kardeşler",
-        "previous_children": "Önceki çocuklar",
-        "nodes": "Düğümler",
-        "edges": "Kenarlar",
-        "legend": "Açıklama",
-        "depth": "Derinlik",
-        "routes": "Rotalar",
-        "type": "Tip",
-        "raw": "Veri/harita görüntüle",
-        "graphviz": "Harici - Graphviz",
-        "plantuml": "Harici - PlantUML",
-        "enable_routes": "Rotaları etkinleştir",
-        "display_type": "Görüntüleme türü",
-        "data": "Veri",
-        "map": "Harita",
-        "layout_type": "Düzen türü",
-        "label_type": "Etiket türü",
-        "download_image": "Görüntü olarak indir",
-        "zoom_in": "Yakınlaştır",
-        "zoom_out": "Uzaklaştır",
-        "fit_view": "Görünümü sığdır",
-        "reset_controls": "Kontrolleri sıfırla",
-        "find_node": "Düğüm bul",
-        "scroll_to_top": "Scroll to top",
-        "node_strength": "Node strength",
-        "link_distance": "Link distance",
-        "icons": "Icons",
-        "show_icons": "Show icons",
-        "copy_paste_on": "Copy and paste the following data in one of the available online viewers/editors.",
-        "highlight_info": "Click on a device's image to highlight it automatically.",
-        "legend_node_siblings": "Only highest-rated siblings are shown, which should roughly match the actual connections of the network.",
-        "legend_node_size": "Nodes are sized by centrality.",
-        "legend_node_select": "Selecting a node will select the depending one-hop part of the network.",
-        "legend_node_fold": "Node context menu fold/expand button will affect the depending part of the network.",
-        "legend_edge_toggle": "Toggling relationship edges will change the layout. When disabling one or more, the actual layout of the network is no longer accurately represented.",
-        "begin_info_type": "The type is used to retrieve a different network map format. External ones are meant to be copied for use outside of the frontend (some example websites are given once generated).",
-        "begin_info_routes": "Enabling routes will retrieve the routes table from devices (not all coordinators/devices support this, but failures should not prevent the rest of the data from loading). This is currently only used in the 'data' display.",
-        "begin_info_display": "The display type allows to switch between a data-oriented view and a map view."
+        "highlight_only": "Sadece vurgula",
+        "log_level_config": "Log seviyesi yapılandırması",
+        "logs_limit": "Log limiti"
     },
     "navbar": {
         "all": "Tümü",
@@ -175,294 +175,178 @@
         "permit_join": "Katılmaya izin ver",
         "restart": "Yeniden başlat",
         "settings": "Ayarlar",
-        "toggle_dropdown": "Toggle dropdown",
+        "toggle_dropdown": "Açılır menüyü aç/kapat",
         "touchlink": "Dokunma bağlantısı",
-        "websocket_status": "WebSocket status",
-        "transaction_prefix": "Transaction prefix"
+        "transaction_prefix": "Transaction prefix",
+        "websocket_status": "WebSocket status"
+    },
+    "network": {
+        "begin_info_display": "The display type allows to switch between a data-oriented view and a map view.",
+        "begin_info_routes": "Enabling routes will retrieve the routes table from devices (not all coordinators/devices support this, but failures should not prevent the rest of the data from loading). This is currently only used in the 'data' display.",
+        "begin_info_type": "The type is used to retrieve a different network map format. External ones are meant to be copied for use outside of the frontend (some example websites are given once generated).",
+        "child": "Çocuk",
+        "children": "Çocuklar",
+        "copy_paste_on": "Copy and paste the following data in one of the available online viewers/editors.",
+        "data": "Veri",
+        "depth": "Derinlik",
+        "display_type": "Görüntüleme türü",
+        "download_image": "Görüntü olarak indir",
+        "edges": "Kenarlar",
+        "enable_routes": "Rotaları etkinleştir",
+        "find_node": "Düğüm bul",
+        "fit_view": "Görünümü sığdır",
+        "graphviz": "Harici - Graphviz",
+        "help": "Yardım",
+        "highlight_info": "Click on a device's image to highlight it automatically.",
+        "icons": "Simgeler",
+        "label_type": "Etiket türü",
+        "layout_type": "Düzen türü",
+        "legend": "Açıklama",
+        "legend_edge_toggle": "Toggling relationship edges will change the layout. When disabling one or more, the actual layout of the network is no longer accurately represented.",
+        "legend_node_fold": "Node context menu fold/expand button will affect the depending part of the network.",
+        "legend_node_select": "Selecting a node will select the depending one-hop part of the network.",
+        "legend_node_siblings": "Only highest-rated siblings are shown, which should roughly match the actual connections of the network.",
+        "legend_node_size": "Nodes are sized by centrality.",
+        "link_distance": "Link distance",
+        "load": "Yükle",
+        "loading": "Ağın boyutuna ve bağlantılarının kalitesine bağlı olarak bu biraz zaman alabilir.",
+        "map": "Harita",
+        "network_hierarchy": "Ağ hiyerarşisi",
+        "node_strength": "Düğüm gücü",
+        "nodes": "Düğümler",
+        "parent": "Ebeveyn",
+        "plantuml": "Harici - PlantUML",
+        "previous_children": "Önceki çocuklar",
+        "raw": "Veri/harita görüntüle",
+        "reload": "Yeniden yükle",
+        "reset_controls": "Kontrolleri sıfırla",
+        "routes": "Rotalar",
+        "scroll_to_top": "Üste kaydır",
+        "show_icons": "Simgeleri göster",
+        "sibling": "Kardeş",
+        "siblings": "Kardeşler",
+        "type": "Tip",
+        "zoom_in": "Yakınlaştır",
+        "zoom_out": "Uzaklaştır"
     },
     "ota": {
+        "app": "App",
+        "available_firmware_version": "Available firmware version",
         "check": "Check for new updates",
-        "check_selected": "Check selected",
-        "update_selected": "Update selected",
-        "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times.",
+        "check_selected": "Seçilenleri kontrol et",
         "empty_ota_message": "No device currently support OTA",
+        "firmware_version": "Firmware version",
         "remaining_time": "Remaining time",
         "schedule": "Schedule update",
         "schedule_info": "Will update on next OTA request from device",
+        "stack": "Stack",
         "unschedule": "Cancel scheduled update",
         "update": "Update device firmware",
-        "firmware_version": "Firmware version",
-        "available_firmware_version": "Available firmware version",
-        "app": "App",
-        "stack": "Stack"
+        "update_selected": "Update selected",
+        "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times."
+    },
+    "scene": {
+        "add": "Ekle",
+        "add_update_header": "Add/update a scene",
+        "manage_scenes_header": "Sahneleri yönet",
+        "recall": "Recall",
+        "remove": "Kaldır",
+        "remove_all": "Remove all",
+        "scene_id": "Sahne ID",
+        "scene_name": "Scene Name",
+        "select_scene": "Select Scene",
+        "store": "Store"
     },
     "settings": {
         "about": "Hakkında",
+        "add_install_code": "Add install code",
         "advanced": "Gelişmiş",
         "availability": "Availability",
-        "blocklist": "Blocklist",
-        "revision": "Revision",
+        "blocklist": "Engelleme listesi",
+        "bridge": "Köprü",
         "coordinator": "Koordinatör",
+        "coordinator_ieee_address": "Coordinator IEEE Address",
+        "dashboard_column_display": "Dashboard column display",
+        "dev_console": "Geliştirici konsolu",
         "donate": "Donate",
         "donation_text": "Burada tüm sıkı çalışma için bize teşekkür edebilirsiniz. Güzel bir şey söylemekten çekinmeyin ;)",
         "download_state": "Download state",
         "experimental": "Experimental",
         "external_converters": "Harici dönüştürücüler",
-        "frontend": "Frontend",
+        "frontend": "Ön yüz",
+        "frontend_notice": "Bu ayarlar tarayıcınızda yerel olarak saklanır. Özel pencereler kullanmak veya önbelleği temizlemek onları varsayılan değerlere sıfırlar.",
         "frontend_version": "Frontend version",
+        "health": "Health",
+        "homeassistant": "Home Assistant integration",
+        "homepage": "Homepage",
+        "install_code": "Install code",
+        "language": "Dil",
+        "localise_images": "Localise device images",
+        "machine": "Machine",
         "main": "Main",
+        "max_on_screen_notifications": "Max on-screen notifications",
         "mqtt": "MQTT",
+        "network_map": "Network map",
+        "network_raw": "Network data/map",
+        "node_version": "Node version",
         "ota": "OTA updates",
         "passlist": "Passlist",
-        "bridge": "Köprü",
+        "permit_join_time": "Katılım izin süresi",
+        "request_z2m_backup": "Request Z2m backup",
+        "reset_all": "Tümünü sıfırla",
+        "reset_auth": "Reset auth",
+        "reset_settings": "Ayarları sıfırla",
         "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
+        "revision": "Revision",
         "serial": "Serial",
         "settings": "Ayarlar",
-        "tools": "Tools",
-        "zigbee2mqtt_version": "Zigbee2MQTT version",
-        "translate": "Translate",
         "stats": "Stats",
-        "coordinator_ieee_address": "Coordinator IEEE Address",
-        "request_z2m_backup": "Request Z2m backup",
-        "add_install_code": "Add install code",
-        "install_code": "Install code",
-        "homeassistant": "Home Assistant integration",
-        "translation_prompt": "Çeviride yardımcı olabilirsiniz",
-        "zigbee_herdsman_converters_version": "zigbee-herdsman-converters version",
-        "zigbee_herdsman_version": "zigbee-herdsman version",
-        "localise_images": "Localise device images",
-        "frontend_notice": "Bu ayarlar tarayıcınızda yerel olarak saklanır. Özel pencereler kullanmak veya önbelleği temizlemek onları varsayılan değerlere sıfırlar.",
-        "reset_settings": "Reset settings",
-        "reset_auth": "Reset auth",
-        "reset_all": "Tümünü sıfırla",
-        "language": "Dil",
         "theme": "Tema",
-        "homepage": "Homepage",
-        "dashboard_column_display": "Dashboard column display",
-        "permit_join_time": "Permit join time",
-        "dev_console": "Geliştirici konsolu",
-        "max_on_screen_notifications": "Max on-screen notifications",
-        "network_raw": "Network data/map",
-        "network_map": "Network map",
-        "machine": "Machine",
-        "node_version": "Node version",
+        "tools": "Araçlar",
+        "translate": "Translate",
+        "translation_prompt": "Çeviride yardımcı olabilirsiniz",
         "version": "Sürüm",
-        "health": "Health"
-    },
-    "health": {
-        "awaiting_next_check": "Awaiting next check",
-        "last_check": "Son kontrol",
-        "response_time": "Response time",
-        "os": "OS",
-        "process": "Process",
-        "load_average": "Load average",
-        "ram_usage": "RAM usage",
-        "uptime": "Uptime",
-        "queued": "Sırada",
-        "published": "Yayınlandı",
-        "received": "Received",
-        "messages": "Messages",
-        "messages_per_sec": "Messages per sec",
-        "leave_count": "Leave count",
-        "network_address_changes": "Network address changes",
-        "very_low": "Very low",
-        "interview_info": "Device interviews can heavily influence this data."
-    },
-    "touchlink": {
-        "detected_devices_message": "Detected {{count}} touchlink devices.",
-        "rescan": "Scan again",
-        "scan": "Scan",
-        "identify": "Identify",
-        "factory_reset": "Fabrika sıfırlaması",
-        "scan_source": "Scan source",
-        "select_scan_source": "Select scan source"
-    },
-    "values": {
-        "clear": "Temizle",
-        "closed": "Closed",
-        "false": "Yanlış",
-        "not_supported": "Not supported",
-        "occupied": "Occupied",
-        "open": "Aç",
-        "supported": "Desteklenen",
-        "true": "Doğru",
-        "empty_string": "Empty string(\"\")",
-        "leaking": "Leaking",
-        "tampered": "Tampered",
-        "null": "Boş",
-        "Clear": "Temizle",
-        "Closed": "Closed",
-        "Occupied": "Occupied",
-        "Open": "Aç"
-    },
-    "zigbee": {
-        "actions": "Eylemler",
-        "attribute": "Özellik",
-        "unknown": "Bilinmeyen",
-        "mains_single_phase": "Mains (single phase)",
-        "mains_3_phase": "Mains (3 phase)",
-        "battery": "Pil",
-        "dc_source": "DC Source",
-        "emergency_mains_constantly_powered": "Emergency mains constantly powered",
-        "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
-        "block_join": "Block from joining again",
-        "cluster": "Küme",
-        "description": "Açıklama",
-        "device_type": "Device type",
-        "endpoint": "Uç nokta",
-        "firmware_id": "Firmware Kimliği",
-        "firmware_build_date": "Firmware build date",
-        "force_remove": "Zorla kaldır",
-        "force_remove_notice": "Sadece son çare olarak kullanın (ağa yayılmayacak)",
-        "ieee_address": "IEEE Address",
-        "interview": "Görüşme",
-        "interview_failed": "Interview failed",
-        "interviewing": "Interviewing",
-        "interview_state": "Interview state",
-        "last_seen": "Last seen",
-        "lqi": "LQI",
-        "manufacturer": "Üretici",
-        "max_rep_interval": "Max rep interval",
-        "min_rep_change": "Min rep change",
-        "min_rep_interval": "Min rep interval",
-        "model": "Model",
-        "network_address": "Network address",
-        "network_address_hex": "Network address in hexadecimal format",
-        "network_address_dec": "Network address in decimal format",
-        "none": "Hiçbiri",
-        "pic": "Pic",
-        "power": "Güç",
-        "power_level": "power level",
-        "reconfigure": "Reconfigure",
-        "remove_device": "Remove device",
-        "rename_device": "Rename device",
-        "select_attribute": "Select attribute",
-        "select_cluster": "Select cluster",
-        "support_status": "Support status",
-        "unsupported": "Desteklenmeyen",
-        "updating_firmware": "Updating firmware",
-        "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
-        "zigbee_manufacturer": "ZigBee Üreticisi",
-        "zigbee_model": "ZigBee Modeli",
-        "device": "Cihaz",
-        "channel": "Channel",
-        "possible": "Possible",
-        "available": "Mevcut",
-        "edit_description": "Edit description",
-        "save_description": "Save description",
-        "update_description": "Update description",
-        "read_write_attributes": "Read / Write attributes from endpoint cluster",
-        "input_clusters": "Input clusters",
-        "output_clusters": "Output clusters",
-        "custom_clusters": "Custom clusters",
-        "other_zcl_clusters": "Diğer ZCL kümeleri",
-        "how_to_add_support": "How to add support?",
-        "submit_converter": "Submit converter",
-        "request_support": "Request support",
-        "report_problem": "Report problem",
-        "group": "Grup",
-        "type": "Tip",
-        "EndDevice": "Uç cihaz",
-        "Router": "Yönlendirici",
-        "GreenPower": "YeşilGüç",
-        "Unknown": "Bilinmeyen",
-        "Coordinator": "Koordinatör"
-    },
-    "scene": {
-        "manage_scenes_header": "Sahneleri yönet",
-        "add_update_header": "Add/update a scene",
-        "scene_id": "Scene ID",
-        "recall": "Recall",
-        "store": "Store",
-        "remove": "Kaldır",
-        "remove_all": "Remove all",
-        "add": "Ekle",
-        "select_scene": "Select Scene",
-        "scene_name": "Scene Name"
-    },
-    "stats": {
-        "byType": "By device type",
-        "byPowerSource": "By power source",
-        "byVendor": "By vendor",
-        "byModel": "By model",
-        "total": "Toplam"
-    },
-    "availability": {
-        "availability": "Availability",
-        "offline": "Çevrimdışı",
-        "online": "Çevrimiçi",
-        "disabled": "Devre dışı",
-        "enabled": "Etkin"
-    },
-    "devConsole": {
-        "generate_external_definition": "Generate external definition",
-        "generated_external_definition": "Generated external definition",
-        "state_property": "State property",
-        "state_property_info": "Set the result into the device's state (only for read)",
-        "reset_frontend_state": "Reset frontend state",
-        "mqtt": "MQTT",
-        "external_converters": "External Converters",
-        "external_extensions": "External Extensions",
-        "topic": "Konu",
-        "send_mqtt": "Send MQTT message",
-        "mqtt_topic_info": "Omit the 'base_topic', frontend messages are sent over WebSocket directly to Zigbee2MQTT.",
-        "code": "Code",
-        "add_update_external_extension": "Add or update external extension",
-        "create_new_extension": "Create new extension",
-        "select_extension_to_edit": "Select extension to edit",
-        "add_update_external_converter": "Add or update external converter",
-        "create_new_converter": "Create new converter",
-        "select_converter_to_edit": "Select converter to edit",
-        "codespace_info": "A Github Codespace is available to help in development",
-        "show_definition": "Show definition",
-        "hide_definition": "Hide definition"
+        "zigbee2mqtt_version": "Zigbee2MQTT version",
+        "zigbee_herdsman_converters_version": "zigbee-herdsman-converters version",
+        "zigbee_herdsman_version": "zigbee-herdsman version"
     },
     "settingsSchemaDescriptions": {
-        "Home Assistant integration (MQTT discovery)": "Home Assistant integration (MQTT discovery)",
-        "Enable Home Assistant integration": "Enable Home Assistant integration",
-        "Home Assistant discovery topic": "Home Assistant discovery topic",
-        "Home Assistant status topic": "Home Assistant status topic",
-        "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action": {
-            "": "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action."
-        },
-        "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions": {
-            " The events and attributes are currently deemed experimental and subject to change": {
-                "": "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change."
+        "Absolute path to SSL/TLS certificate for client-authentication": "Absolute path to SSL/TLS certificate for client-authentication",
+        "Absolute path to SSL/TLS certificate of CA used to sign server and client certificates": "Absolute path to SSL/TLS certificate of CA used to sign server and client certificates",
+        "Absolute path to SSL/TLS key for client-authentication": "Absolute path to SSL/TLS key for client-authentication",
+        "Adapter concurrency (e": {
+            "g": {
+                " 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Adapter concurrency (e.g. 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)"
             }
         },
-        "Checks whether devices are online/offline": "Checks whether devices are online/offline",
-        "Enable availability checks": "Enable availability checks",
-        "Options for active devices (routers/mains powered)": "Options for active devices (routers/mains powered)",
-        "Time after which an active device will be marked as offline in minutes": "Time after which an active device will be marked as offline in minutes",
-        "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time": "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time",
-        "Enable timeout backoff on failed availability pings (x1": {
-            "5, x3, x6, x12": {
-                "": {
-                    "": {
-                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
-                    }
+        "Adapter delay": "Adapter delay",
+        "Adapter type, not needed unless you are experiencing problems": "Adapter type, not needed unless you are experiencing problems",
+        "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message": "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message",
+        "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg",
+        "Allow only certain devices to join the network (by ieeeAddr)": {
+            " Note that all devices not on the passlist will be removed from the network!": "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!"
+        },
+        "Base URL for the frontend": {
+            " If hosted under a subpath, e": {
+                "g": {
+                    " 'http://localhost:8080/z2m', set this to '/z2m'": "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'"
                 }
             }
         },
-        "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device": {
-            " A value of zero disables pausing": {
-                "": "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing."
+        "Baud rate speed for the serial port": {
+            " This must match what the firmware on your adapter supports (most commonly 115200)": {
+                "": "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200)."
             }
         },
-        "Options for passive devices (mostly battery powered)": "Options for passive devices (mostly battery powered)",
-        "Time after which an passive device will be marked as offline in minutes": "Time after which an passive device will be marked as offline in minutes",
-        "MQTT base topic for Zigbee2MQTT MQTT messages": "MQTT base topic for Zigbee2MQTT MQTT messages",
-        "MQTT server URL (use mqtts:// for SSL/TLS connection)": "MQTT server URL (use mqtts:// for SSL/TLS connection)",
-        "MQTT keepalive in second": "MQTT keepalive in second",
-        "Absolute path to SSL/TLS certificate of CA used to sign server and client certificates": "Absolute path to SSL/TLS certificate of CA used to sign server and client certificates",
-        "Absolute path to SSL/TLS key for client-authentication": "Absolute path to SSL/TLS key for client-authentication",
-        "Absolute path to SSL/TLS certificate for client-authentication": "Absolute path to SSL/TLS certificate for client-authentication",
-        "MQTT server authentication user": "MQTT server authentication user",
-        "MQTT server authentication password": "MQTT server authentication password",
-        "MQTT client ID": "MQTT client ID",
-        "Disable self-signed SSL certificate": "Disable self-signed SSL certificate",
-        "Include device information to mqtt messages": "Include device information to mqtt messages",
-        "MQTT protocol version": "MQTT protocol version",
+        "Block devices from the network (by ieeeAddr)": "Block devices from the network (by ieeeAddr)",
+        "Checks whether devices are online/offline": "Checks whether devices are online/offline",
+        "Console json log": "Console json log",
+        "Control when to publish state OFF or CLOSE for a group": {
+            " 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF"
+        },
+        "Create symlink to current logs in the log directory": "Create symlink to current logs in the log directory",
+        "Debounces messages of this device": "Debounces messages of this device",
+        "Disable LED of the adapter if supported": "Disable LED of the adapter if supported",
         "Disable retain for all send messages": {
             " ONLY enable if your MQTT broker doesn't support retained message (e": {
                 "g": {
@@ -472,61 +356,120 @@
                 }
             }
         },
-        "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT": {
-            " NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead": {
-                "": "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead."
-            }
-        },
-        "Location of the adapter": {
-            " To autodetect the port, set null": "Location of the adapter. To autodetect the port, set null"
-        },
-        "Disable LED of the adapter if supported": "Disable LED of the adapter if supported",
-        "Adapter type, not needed unless you are experiencing problems": "Adapter type, not needed unless you are experiencing problems",
-        "Baud rate speed for the serial port": {
-            " This must match what the firmware on your adapter supports (most commonly 115200)": {
-                "": "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200)."
-            }
-        },
-        "RTS / CTS Hardware Flow Control for serial port": "RTS / CTS Hardware Flow Control for serial port",
-        "Block devices from the network (by ieeeAddr)": "Block devices from the network (by ieeeAddr)",
-        "Allow only certain devices to join the network (by ieeeAddr)": {
-            " Note that all devices not on the passlist will be removed from the network!": "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!"
-        },
-        "Your device may request a check for a new firmware update": {
-            " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
-                " The value is set in minutes, and the default is 1 day": {
-                    "": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day."
+        "Disable self-signed SSL certificate": "Disable self-signed SSL certificate",
+        "Disables the device (excludes device from network scans, availability and group state updates)": "Disables the device (excludes device from network scans, availability and group state updates)",
+        "Do not log these namespaces (regex-based) for debug level": "Do not log these namespaces (regex-based) for debug level",
+        "Enable Home Assistant integration": "Enable Home Assistant integration",
+        "Enable availability checks": "Enable availability checks",
+        "Enable frontend": "Enable frontend",
+        "Enable timeout backoff on failed availability pings (x1": {
+            "5, x3, x6, x12": {
+                "": {
+                    "": {
+                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
+                    }
                 }
             }
         },
-        "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers": {
-            " If you disable these device initiated checks, you can still initiate a firmware update check manually": {
-                "": "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually."
+        "Enables authentication, disabled by default": "Enables authentication, disabled by default",
+        "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)": "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)",
+        "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change": {
+            "": "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change."
+        },
+        "Filter attributes with regex from optimistic publish payload when calling /set": {
+            " (This has no effect if optimistic is set to false)": {
+                "": "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false)."
             }
         },
-        "Location of override OTA index file": "Location of override OTA index file",
-        "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
-            " You can increase this value if your network appears unstable during OTA": {
-                "": "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA."
-            }
-        },
-        "The size of file chunks sent during an update (in bytes)": {
-            " Note: This value may get ignored for manufacturers that require specific values": {
-                "": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values."
-            }
-        },
-        "Enable frontend": "Enable frontend",
-        "Package used for the frontend": "Package used for the frontend",
-        "Frontend binding port": {
-            " Ignored when using a unix domain socket": "Frontend binding port. Ignored when using a unix domain socket"
+        "Filter attributes with regex from published payload": {
+            "": "Filter attributes with regex from published payload."
         },
         "Frontend binding host": {
             " Binds to a unix socket when an absolute path is given instead": {
                 "": "Frontend binding host. Binds to a unix socket when an absolute path is given instead."
             }
         },
-        "Enables authentication, disabled by default": "Enables authentication, disabled by default",
-        "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page": "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page",
+        "Frontend binding port": {
+            " Ignored when using a unix domain socket": "Frontend binding port. Ignored when using a unix domain socket"
+        },
+        "Hide frontend notifications matching specified regex strings": {
+            " Example: 'z2m: Failed to ping": {
+                "*'": "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'"
+            }
+        },
+        "Home Assistant discovery topic": "Home Assistant discovery topic",
+        "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions": {
+            " The events and attributes are currently deemed experimental and subject to change": {
+                "": "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change."
+            }
+        },
+        "Home Assistant integration (MQTT discovery)": "Home Assistant integration (MQTT discovery)",
+        "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action": {
+            "": "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action."
+        },
+        "Home Assistant status topic": "Home Assistant status topic",
+        "Host to indicate that log messages are coming from (Default: localhost)": {
+            "": "Host to indicate that log messages are coming from (Default: localhost)."
+        },
+        "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)": {
+            "": "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)."
+        },
+        "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)": {
+            "": "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)."
+        },
+        "Include device information to mqtt messages": "Include device information to mqtt messages",
+        "Interval between checks in minutes": "Interval between checks in minutes",
+        "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
+            " You can increase this value if your network appears unstable during OTA": {
+                "": "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA."
+            }
+        },
+        "Location of log directory": "Location of log directory",
+        "Location of override OTA index file": "Location of override OTA index file",
+        "Location of the adapter": {
+            " To autodetect the port, set null": "Location of the adapter. To autodetect the port, set null"
+        },
+        "Log debug level to MQTT and frontend (may decrease overall performance)": "Log debug level to MQTT and frontend (may decrease overall performance)",
+        "Log file name, can also contain timestamp": "Log file name, can also contain timestamp",
+        "Log rotation": "Log rotation",
+        "Log timestamp format": "Log timestamp format",
+        "Logging level": "Logging level",
+        "MQTT base topic for Zigbee2MQTT MQTT messages": "MQTT base topic for Zigbee2MQTT MQTT messages",
+        "MQTT client ID": "MQTT client ID",
+        "MQTT keepalive in second": "MQTT keepalive in second",
+        "MQTT message payload will contain all attributes, not only changed ones": {
+            " Has to be true when integrating via Home Assistant": "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant"
+        },
+        "MQTT protocol version": "MQTT protocol version",
+        "MQTT server URL (use mqtts:// for SSL/TLS connection)": "MQTT server URL (use mqtts:// for SSL/TLS connection)",
+        "MQTT server authentication password": "MQTT server authentication password",
+        "MQTT server authentication user": "MQTT server authentication user",
+        "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time": "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time",
+        "Name of the device in Home Assistant": "Name of the device in Home Assistant",
+        "Network encryption key, changing requires re-pairing all devices!": "Network encryption key, changing requires re-pairing all devices!",
+        "Number of log directories to keep before deleting the oldest one": "Number of log directories to keep before deleting the oldest one",
+        "Options for active devices (routers/mains powered)": "Options for active devices (routers/mains powered)",
+        "Options for passive devices (mostly battery powered)": "Options for passive devices (mostly battery powered)",
+        "Output location of the log, leave empty to suppress logging": "Output location of the log, leave empty to suppress logging",
+        "PID of the process that log messages are coming from (Default process": {
+            "pid)": {
+                "": "PID of the process that log messages are coming from (Default process.pid)."
+            }
+        },
+        "Package used for the frontend": "Package used for the frontend",
+        "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device": {
+            " A value of zero disables pausing": {
+                "": "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing."
+            }
+        },
+        "Periodically check the health of Zigbee2MQTT": "Periodically check the health of Zigbee2MQTT",
+        "Persist cached state, only used when cache_state: true": "Persist cached state, only used when cache_state: true",
+        "Protects unique payload values of specified payload properties from overriding within debounce time": "Protects unique payload values of specified payload properties from overriding within debounce time",
+        "Publish optimistic state after set": "Publish optimistic state after set",
+        "QoS level for MQTT messages of this device": "QoS level for MQTT messages of this device",
+        "QoS level for MQTT messages of this group": "QoS level for MQTT messages of this group",
+        "RTS / CTS Hardware Flow Control for serial port": "RTS / CTS Hardware Flow Control for serial port",
+        "Retain MQTT messages of this device": "Retain MQTT messages of this device",
         "SSL Certificate file path for exposing HTTPS": {
             " The sibling property 'ssl_key' must be set for HTTPS to be activated": {
                 "": "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated."
@@ -537,37 +480,27 @@
                 "": "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated."
             }
         },
-        "Base URL for the frontend": {
-            " If hosted under a subpath, e": {
-                "g": {
-                    " 'http://localhost:8080/z2m', set this to '/z2m'": "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'"
-                }
-            }
-        },
-        "Hide frontend notifications matching specified regex strings": {
-            " Example: 'z2m: Failed to ping": {
-                "*'": "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'"
-            }
-        },
-        "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)": {
-            "": "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)."
-        },
-        "Log rotation": "Log rotation",
-        "Console json log": "Console json log",
-        "Create symlink to current logs in the log directory": "Create symlink to current logs in the log directory",
-        "Output location of the log, leave empty to suppress logging": "Output location of the log, leave empty to suppress logging",
-        "Location of log directory": "Location of log directory",
-        "Log file name, can also contain timestamp": "Log file name, can also contain timestamp",
-        "Logging level": "Logging level",
+        "Send cached state on startup, only used when cache_state: true": "Send cached state on startup, only used when cache_state: true",
         "Set individual log levels for certain namespaces": "Set individual log levels for certain namespaces",
-        "Log debug level to MQTT and frontend (may decrease overall performance)": "Log debug level to MQTT and frontend (may decrease overall performance)",
-        "Do not log these namespaces (regex-based) for debug level": "Do not log these namespaces (regex-based) for debug level",
-        "Number of log directories to keep before deleting the oldest one": "Number of log directories to keep before deleting the oldest one",
+        "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
+            "version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5"
+        },
+        "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT": {
+            " NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead": {
+                "": "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead."
+            }
+        },
+        "The end of line character to be added to the end of the message (Default: Message without modifications)": {
+            "": "The end of line character to be added to the end of the message (Default: Message without modifications)."
+        },
         "The host running syslogd, defaults to localhost": {
             "": "The host running syslogd, defaults to localhost."
         },
-        "The port on the host that syslog is running on, defaults to syslogd's default port": {
-            "": "The port on the host that syslog is running on, defaults to syslogd's default port."
+        "The minimum time between payloads in seconds": {
+            " Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded"
+        },
+        "The name of the application (Default: Zigbee2MQTT)": {
+            "": "The name of the application (Default: Zigbee2MQTT)."
         },
         "The network protocol to log over (e": {
             "g": {
@@ -583,73 +516,16 @@
                 }
             }
         },
-        "PID of the process that log messages are coming from (Default process": {
-            "pid)": {
-                "": "PID of the process that log messages are coming from (Default process.pid)."
-            }
+        "The port on the host that syslog is running on, defaults to syslogd's default port": {
+            "": "The port on the host that syslog is running on, defaults to syslogd's default port."
         },
-        "Host to indicate that log messages are coming from (Default: localhost)": {
-            "": "Host to indicate that log messages are coming from (Default: localhost)."
+        "The size of file chunks sent during an update (in bytes)": {
+            " Note: This value may get ignored for manufacturers that require specific values": {
+                "": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values."
+            }
         },
         "The type of the syslog protocol to use (Default: BSD, also valid: 5424)": {
             "": "The type of the syslog protocol to use (Default: BSD, also valid: 5424)."
-        },
-        "The name of the application (Default: Zigbee2MQTT)": {
-            "": "The name of the application (Default: Zigbee2MQTT)."
-        },
-        "The end of line character to be added to the end of the message (Default: Message without modifications)": {
-            "": "The end of line character to be added to the end of the message (Default: Message without modifications)."
-        },
-        "ZigBee pan ID, changing requires re-pairing all devices!": "ZigBee pan ID, changing requires re-pairing all devices!",
-        "Zigbee extended pan ID, changing requires re-pairing all devices!": "Zigbee extended pan ID, changing requires re-pairing all devices!",
-        "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)": "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)",
-        "Adapter concurrency (e": {
-            "g": {
-                " 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Adapter concurrency (e.g. 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)"
-            }
-        },
-        "Adapter delay": "Adapter delay",
-        "MQTT message payload will contain all attributes, not only changed ones": {
-            " Has to be true when integrating via Home Assistant": "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant"
-        },
-        "Persist cached state, only used when cache_state: true": "Persist cached state, only used when cache_state: true",
-        "Send cached state on startup, only used when cache_state: true": "Send cached state on startup, only used when cache_state: true",
-        "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message": "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message",
-        "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg",
-        "Network encryption key, changing requires re-pairing all devices!": "Network encryption key, changing requires re-pairing all devices!",
-        "Log timestamp format": "Log timestamp format",
-        "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)": "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)",
-        "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)": "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)",
-        "Periodically check the health of Zigbee2MQTT": "Periodically check the health of Zigbee2MQTT",
-        "Interval between checks in minutes": "Interval between checks in minutes",
-        "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)": {
-            "": "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)."
-        },
-        "Used in the MQTT topic of a device": {
-            " By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID"
-        },
-        "Retain MQTT messages of this device": "Retain MQTT messages of this device",
-        "Disables the device (excludes device from network scans, availability and group state updates)": "Disables the device (excludes device from network scans, availability and group state updates)",
-        "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
-            "version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5"
-        },
-        "QoS level for MQTT messages of this device": "QoS level for MQTT messages of this device",
-        "The minimum time between payloads in seconds": {
-            " Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded"
-        },
-        "Debounces messages of this device": "Debounces messages of this device",
-        "Protects unique payload values of specified payload properties from overriding within debounce time": "Protects unique payload values of specified payload properties from overriding within debounce time",
-        "Publish optimistic state after set": "Publish optimistic state after set",
-        "Filter attributes with regex from published payload": {
-            "": "Filter attributes with regex from published payload."
-        },
-        "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change": {
-            "": "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change."
-        },
-        "Filter attributes with regex from optimistic publish payload when calling /set": {
-            " (This has no effect if optimistic is set to false)": {
-                "": "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false)."
-            }
         },
         "The user-defined device icon for the frontend": {
             " It can be a full URL link to an image (e": {
@@ -670,10 +546,134 @@
                 }
             }
         },
-        "Name of the device in Home Assistant": "Name of the device in Home Assistant",
-        "QoS level for MQTT messages of this group": "QoS level for MQTT messages of this group",
-        "Control when to publish state OFF or CLOSE for a group": {
-            " 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF"
-        }
+        "Time after which an active device will be marked as offline in minutes": "Time after which an active device will be marked as offline in minutes",
+        "Time after which an passive device will be marked as offline in minutes": "Time after which an passive device will be marked as offline in minutes",
+        "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)": "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)",
+        "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page": "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page",
+        "Used in the MQTT topic of a device": {
+            " By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID"
+        },
+        "Your device may request a check for a new firmware update": {
+            " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
+                " The value is set in minutes, and the default is 1 day": {
+                    "": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day."
+                }
+            }
+        },
+        "ZigBee pan ID, changing requires re-pairing all devices!": "ZigBee pan ID, changing requires re-pairing all devices!",
+        "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)": "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)",
+        "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers": {
+            " If you disable these device initiated checks, you can still initiate a firmware update check manually": {
+                "": "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually."
+            }
+        },
+        "Zigbee extended pan ID, changing requires re-pairing all devices!": "Zigbee extended pan ID, changing requires re-pairing all devices!"
+    },
+    "stats": {
+        "byModel": "By model",
+        "byPowerSource": "By power source",
+        "byType": "By device type",
+        "byVendor": "By vendor",
+        "total": "Toplam"
+    },
+    "touchlink": {
+        "detected_devices_message": "Detected {{count}} touchlink devices.",
+        "factory_reset": "Fabrika sıfırlaması",
+        "identify": "Tanımla",
+        "rescan": "Scan again",
+        "scan": "Scan",
+        "scan_source": "Scan source",
+        "select_scan_source": "Select scan source"
+    },
+    "values": {
+        "Clear": "Temizle",
+        "Closed": "Kapalı",
+        "Occupied": "Meşgul",
+        "Open": "Aç",
+        "clear": "Temizle",
+        "closed": "Kapalı",
+        "empty_string": "Boş dize(\"\")",
+        "false": "Yanlış",
+        "leaking": "Leaking",
+        "not_supported": "Desteklenmiyor",
+        "null": "Boş",
+        "occupied": "Meşgul",
+        "open": "Aç",
+        "supported": "Desteklenen",
+        "tampered": "Tampered",
+        "true": "Doğru"
+    },
+    "zigbee": {
+        "Coordinator": "Koordinatör",
+        "EndDevice": "Uç cihaz",
+        "GreenPower": "YeşilGüç",
+        "Router": "Yönlendirici",
+        "Unknown": "Bilinmeyen",
+        "actions": "Eylemler",
+        "attribute": "Özellik",
+        "available": "Mevcut",
+        "battery": "Pil",
+        "block_join": "Block from joining again",
+        "channel": "Channel",
+        "cluster": "Küme",
+        "custom_clusters": "Custom clusters",
+        "dc_source": "DC Source",
+        "description": "Açıklama",
+        "device": "Cihaz",
+        "device_type": "Device type",
+        "edit_description": "Edit description",
+        "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
+        "emergency_mains_constantly_powered": "Emergency mains constantly powered",
+        "endpoint": "Uç nokta",
+        "firmware_build_date": "Firmware build date",
+        "firmware_id": "Firmware Kimliği",
+        "force_remove": "Zorla kaldır",
+        "force_remove_notice": "Sadece son çare olarak kullanın (ağa yayılmayacak)",
+        "group": "Grup",
+        "how_to_add_support": "How to add support?",
+        "ieee_address": "IEEE Address",
+        "input_clusters": "Input clusters",
+        "interview": "Görüşme",
+        "interview_failed": "Interview failed",
+        "interview_state": "Interview state",
+        "interviewing": "Interviewing",
+        "last_seen": "Last seen",
+        "lqi": "LQI",
+        "mains_3_phase": "Mains (3 phase)",
+        "mains_single_phase": "Mains (single phase)",
+        "manufacturer": "Üretici",
+        "max_rep_interval": "Max rep interval",
+        "min_rep_change": "Min rep change",
+        "min_rep_interval": "Min rep interval",
+        "model": "Model",
+        "network_address": "Network address",
+        "network_address_dec": "Network address in decimal format",
+        "network_address_hex": "Network address in hexadecimal format",
+        "none": "Hiçbiri",
+        "other_zcl_clusters": "Diğer ZCL kümeleri",
+        "output_clusters": "Output clusters",
+        "pic": "Pic",
+        "possible": "Possible",
+        "power": "Güç",
+        "power_level": "power level",
+        "read_write_attributes": "Read / Write attributes from endpoint cluster",
+        "reconfigure": "Reconfigure",
+        "remove_device": "Remove device",
+        "rename_device": "Rename device",
+        "report_problem": "Report problem",
+        "request_support": "Request support",
+        "save_description": "Save description",
+        "select_attribute": "Select attribute",
+        "select_cluster": "Select cluster",
+        "submit_converter": "Submit converter",
+        "support_status": "Support status",
+        "type": "Tip",
+        "unknown": "Bilinmeyen",
+        "unsupported": "Desteklenmeyen",
+        "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
+        "update_description": "Update description",
+        "updating_firmware": "Updating firmware",
+        "zigbee_manufacturer": "ZigBee Üreticisi",
+        "zigbee_model": "ZigBee Modeli"
     }
 }
