@@ -1,679 +1,679 @@
 {
-  "common": {
-    "action": "Akce",
-    "actions": "Akce",
-    "apply": "Použít",
-    "attribute": "Atribut",
-    "bind": "Svázat",
-    "clear": "Vymazat",
-    "clear_all": "Vymazat vše",
-    "close": "Zavřít",
-    "cancel": "Zrušit",
-    "cluster": "Cluster",
-    "clusters": "Clustery",
-    "confirmation": "Potvrzovací výzva",
-    "delete": "Smazat",
-    "destination": "Cíl",
-    "devices": "Zařízení",
-    "dialog_confirmation_prompt": "Jste si jisti?",
-    "disable": "Zakázat",
-    "search": "Hledat",
-    "highlight": "Zvýraznit",
-    "groups": "Skupiny",
-    "loading": "Načítání...",
-    "none": "Žádný",
-    "ok": "OK",
-    "read": "Číst",
-    "save": "Uložit",
-    "select_value": "Vybrat hodnotu",
-    "select_device": "Vybrat zařízení",
-    "select_endpoint": "Vybrat endpoint",
-    "select_group": "Vybrat skupinu",
-    "source_endpoint": "Zdrojový endpoint",
-    "the_only_endpoint": "Jediný endpoint",
-    "unbind": "Zrušit vazbu",
-    "write": "Zapsat",
-    "destination_endpoint": "Cílový endpoint",
-    "read_the_docs_info": "Přečtěte si o tom v dokumentaci…",
-    "page": "Stránka",
-    "go_to_page": "Jít na stránku",
-    "show": "Zobrazit",
-    "min": "Min",
-    "max": "Max",
-    "done": "Hotovo",
-    "enter_auth_token": "Zadejte ověřovací token",
-    "token": "Token",
-    "documentation": "Dokumentace",
-    "optional": "Volitelné",
-    "init": "Inicializovat",
-    "undefined": "Nedefinováno",
-    "type_to_filter": "Zadejte pro filtrování...",
-    "name": "Název",
-    "friendly_name": "Přívětivé jméno",
-    "unknown_device": "Neznámé zařízení",
-    "unknown_group": "Neznámá skupina",
-    "failed": "Selhalo",
-    "disabled": "Zakázáno",
-    "hide_disabled": "Skrýt zakázané",
-    "battery_low_only": "Pouze slabá baterie",
-    "available_only": "Pouze dostupné",
-    "execute": "Provést",
-    "command": "Příkaz",
-    "payload": "Náklad",
-    "execute_command": "Provést příkaz",
-    "send": "Odeslat",
-    "columns": "Sloupce",
-    "entries": "Záznamy",
-    "source": "Zdroj",
-    "close_notifications": "Zavřít oznámení",
-    "more": "Více",
-    "default": "Výchozí",
-    "multi_instance": "Multi-Instance",
-    "all_sources": "Všechny zdroje",
-    "show_source_name": "Zobrazit název zdroje",
-    "show_only": "Zobrazit pouze",
-    "empty_exposes_definition": "Prázdná definice expozice",
-    "all_features": "Všechny funkce",
-    "all_properties": "Všechny vlastnosti",
-    "show_routers": "Zobrazit routery",
-    "show_end_devices": "Zobrazit koncová zařízení"
-  },
-  "devicePage": {
-    "about": "O aplikaci",
-    "bind": "Svázat",
-    "clusters": "Clustery",
-    "dev_console": "Vývojářská konzole",
-    "reporting": "Hlášení",
-    "settings": "Nastavení",
-    "settings_specific": "Nastavení (specifická)",
-    "state": "Stav",
-    "groups": "Skupiny",
-    "scene": "Scéna",
-    "exposes": "Exponuje",
-    "select_a_device": "Vyberte zařízení"
-  },
-  "groups": {
-    "settings": "Nastavení",
-    "add_to_group_header": "Přidat zařízení do skupiny",
-    "add_to_group": "Add to group",
-    "create_group": "Create group",
-    "friendly_name_placeholder": "bedroom_lights, garden...",
-    "remove_group": "Remove group",
-    "group_id": "Group ID",
-    "group_members": "Group members",
-    "group_scenes": "Group scenes",
-    "scenes": "Scenes",
-    "rename_group": "Rename group",
-    "remove_from_group": "Remove from group"
-  },
-  "logs": {
-    "log_level_config": "Log level config",
-    "empty_logs_message": "Nic k zobrazení",
-    "filter_by_text": "Filter by text",
-    "logs_limit": "Logs limit",
-    "highlight_only": "Highlight only"
-  },
-  "network": {
-    "network_hierarchy": "Network hierarchy",
-    "help": "Nápověda",
-    "load": "Load",
-    "reload": "Reload",
-    "loading": "Depending on the size of the network and the quality of its links, this can take a while.",
-    "parent": "Parent",
-    "child": "Child",
-    "sibling": "Sibling",
-    "children": "Children",
-    "siblings": "Siblings",
-    "previous_children": "Previous children",
-    "nodes": "Nodes",
-    "edges": "Edges",
-    "legend": "Legend",
-    "depth": "Depth",
-    "routes": "Routes",
-    "type": "Typ",
-    "raw": "Display data/map",
-    "graphviz": "External - Graphviz",
-    "plantuml": "External - PlantUML",
-    "enable_routes": "Enable routes",
-    "display_type": "Display type",
-    "data": "Data",
-    "map": "Map",
-    "layout_type": "Layout type",
-    "label_type": "Label type",
-    "download_image": "Download as image",
-    "zoom_in": "Zoom in",
-    "zoom_out": "Zoom out",
-    "fit_view": "Fit view",
-    "reset_controls": "Reset controls",
-    "find_node": "Find node",
-    "scroll_to_top": "Scroll to top",
-    "node_strength": "Node strength",
-    "link_distance": "Link distance",
-    "icons": "Icons",
-    "show_icons": "Show icons",
-    "copy_paste_on": "Copy and paste the following data in one of the available online viewers/editors.",
-    "highlight_info": "Click on a device's image to highlight it automatically.",
-    "legend_node_siblings": "Only highest-rated siblings are shown, which should roughly match the actual connections of the network.",
-    "legend_node_size": "Nodes are sized by centrality.",
-    "legend_node_select": "Selecting a node will select the depending one-hop part of the network.",
-    "legend_node_fold": "Node context menu fold/expand button will affect the depending part of the network.",
-    "legend_edge_toggle": "Toggling relationship edges will change the layout. When disabling one or more, the actual layout of the network is no longer accurately represented.",
-    "begin_info_type": "The type is used to retrieve a different network map format. External ones are meant to be copied for use outside of the frontend (some example websites are given once generated).",
-    "begin_info_routes": "Enabling routes will retrieve the routes table from devices (not all coordinators/devices support this, but failures should not prevent the rest of the data from loading). This is currently only used in the 'data' display.",
-    "begin_info_display": "The display type allows to switch between a data-oriented view and a map view."
-  },
-  "navbar": {
-    "all": "Vše",
-    "dashboard": "Dashboard",
-    "devices": "Zařízení",
-    "disable_join": "Disable join",
-    "extensions": "Rozšíření",
-    "groups": "Skupiny",
-    "logs": "Protokoly",
-    "network": "Síť",
-    "ota": "OTA",
-    "permit_join": "Povolit připojení",
-    "restart": "Restartovat",
-    "settings": "Nastavení",
-    "toggle_dropdown": "Toggle dropdown",
-    "touchlink": "Touchlink",
-    "websocket_status": "WebSocket status",
-    "transaction_prefix": "Transaction prefix"
-  },
-  "ota": {
-    "check": "Check for new updates",
-    "check_selected": "Check selected",
-    "update_selected": "Update selected",
-    "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times.",
-    "empty_ota_message": "No device currently support OTA",
-    "remaining_time": "Remaining time",
-    "schedule": "Schedule update",
-    "schedule_info": "Will update on next OTA request from device",
-    "unschedule": "Cancel scheduled update",
-    "update": "Update device firmware",
-    "firmware_version": "Firmware version",
-    "available_firmware_version": "Available firmware version",
-    "app": "App",
-    "stack": "Stack"
-  },
-  "settings": {
-    "about": "O aplikaci",
-    "advanced": "Advanced",
-    "availability": "Availability",
-    "blocklist": "Blocklist",
-    "revision": "Revision",
-    "coordinator": "Koordinátor",
-    "donate": "Donate",
-    "donation_text": "Here you can thank us for all the hard work. Don't hesitate to say something nice as well ;)",
-    "download_state": "Download state",
-    "experimental": "Experimental",
-    "external_converters": "External converters",
-    "frontend": "Frontend",
-    "frontend_version": "Frontend version",
-    "main": "Main",
-    "mqtt": "MQTT",
-    "ota": "OTA updates",
-    "passlist": "Passlist",
-    "bridge": "Most",
-    "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
-    "serial": "Serial",
-    "settings": "Nastavení",
-    "tools": "Tools",
-    "zigbee2mqtt_version": "Zigbee2MQTT version",
-    "translate": "Translate",
-    "stats": "Stats",
-    "coordinator_ieee_address": "Coordinator IEEE Address",
-    "request_z2m_backup": "Request Z2m backup",
-    "add_install_code": "Add install code",
-    "install_code": "Install code",
-    "homeassistant": "Home Assistant integration",
-    "translation_prompt": "You can help with the translation at",
-    "zigbee_herdsman_converters_version": "zigbee-herdsman-converters version",
-    "zigbee_herdsman_version": "zigbee-herdsman version",
-    "localise_images": "Localise device images",
-    "frontend_notice": "These settings are stored locally in your browser. Using private windows or clearing the cache will reset them to defaults.",
-    "reset_settings": "Reset settings",
-    "reset_auth": "Reset auth",
-    "reset_all": "Resetovat vše",
-    "language": "Jazyk",
-    "theme": "Téma",
-    "homepage": "Homepage",
-    "dashboard_column_display": "Dashboard column display",
-    "permit_join_time": "Permit join time",
-    "dev_console": "Vývojářská konzole",
-    "max_on_screen_notifications": "Max on-screen notifications",
-    "network_raw": "Network data/map",
-    "network_map": "Network map",
-    "machine": "Machine",
-    "node_version": "Node version",
-    "version": "Verze",
-    "health": "Health"
-  },
-  "health": {
-    "awaiting_next_check": "Awaiting next check",
-    "last_check": "Last check",
-    "response_time": "Response time",
-    "os": "OS",
-    "process": "Process",
-    "load_average": "Load average",
-    "ram_usage": "RAM usage",
-    "uptime": "Uptime",
-    "queued": "Queued",
-    "published": "Published",
-    "received": "Received",
-    "messages": "Messages",
-    "messages_per_sec": "Messages per sec",
-    "leave_count": "Leave count",
-    "network_address_changes": "Network address changes",
-    "very_low": "Very low",
-    "interview_info": "Device interviews can heavily influence this data."
-  },
-  "touchlink": {
-    "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
-    "identify": "Identify",
-    "factory_reset": "Tovární nastavení",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
-  },
-  "values": {
-    "clear": "Vymazat",
-    "closed": "Closed",
-    "false": "Nepravda",
-    "not_supported": "Not supported",
-    "occupied": "Occupied",
-    "open": "Otevřít",
-    "supported": "Supported",
-    "true": "Pravda",
-    "empty_string": "Empty string(\"\")",
-    "leaking": "Leaking",
-    "tampered": "Tampered",
-    "null": "Null",
-    "Clear": "Vymazat",
-    "Closed": "Closed",
-    "Occupied": "Occupied",
-    "Open": "Otevřít"
-  },
-  "zigbee": {
-    "actions": "Akce",
-    "attribute": "Atribut",
-    "unknown": "Neznámé",
-    "mains_single_phase": "Mains (single phase)",
-    "mains_3_phase": "Mains (3 phase)",
-    "battery": "Baterie",
-    "dc_source": "DC Source",
-    "emergency_mains_constantly_powered": "Emergency mains constantly powered",
-    "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
-    "block_join": "Block from joining again",
-    "cluster": "Cluster",
-    "description": "Popis",
-    "device_type": "Device type",
-    "endpoint": "Koncový bod",
-    "firmware_id": "Firmware ID",
-    "firmware_build_date": "Firmware build date",
-    "force_remove": "Force remove",
-    "force_remove_notice": "Use only as last resort (will not propagate to the network)",
-    "ieee_address": "IEEE Address",
-    "interview": "Rozhovor",
-    "interview_failed": "Interview failed",
-    "interviewing": "Interviewing",
-    "interview_state": "Interview state",
-    "last_seen": "Last seen",
-    "lqi": "LQI",
-    "manufacturer": "Manufacturer",
-    "max_rep_interval": "Max rep interval",
-    "min_rep_change": "Min rep change",
-    "min_rep_interval": "Min rep interval",
-    "model": "Model",
-    "network_address": "Network address",
-    "network_address_hex": "Network address in hexadecimal format",
-    "network_address_dec": "Network address in decimal format",
-    "none": "Žádný",
-    "pic": "Pic",
-    "power": "Výkon",
-    "power_level": "power level",
-    "reconfigure": "Reconfigure",
-    "remove_device": "Remove device",
-    "rename_device": "Rename device",
-    "select_attribute": "Select attribute",
-    "select_cluster": "Select cluster",
-    "support_status": "Support status",
-    "unsupported": "Unsupported",
-    "updating_firmware": "Updating firmware",
-    "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
-    "zigbee_manufacturer": "ZigBee Manufacturer",
-    "zigbee_model": "ZigBee Model",
-    "device": "Zařízení",
-    "channel": "Channel",
-    "possible": "Possible",
-    "available": "Dostupné",
-    "edit_description": "Edit description",
-    "save_description": "Save description",
-    "update_description": "Update description",
-    "read_write_attributes": "Read / Write attributes from endpoint cluster",
-    "input_clusters": "Input clusters",
-    "output_clusters": "Output clusters",
-    "custom_clusters": "Custom clusters",
-    "other_zcl_clusters": "Other ZCL clusters",
-    "how_to_add_support": "How to add support?",
-    "submit_converter": "Submit converter",
-    "request_support": "Request support",
-    "report_problem": "Report problem",
-    "group": "Skupina",
-    "type": "Typ",
-    "EndDevice": "Koncové zařízení",
-    "Router": "Router",
-    "GreenPower": "GreenPower",
-    "Unknown": "Neznámé",
-    "Coordinator": "Koordinátor"
-  },
-  "scene": {
-    "manage_scenes_header": "Manage scenes",
-    "add_update_header": "Add/update a scene",
-    "scene_id": "Scene ID",
-    "recall": "Recall",
-    "store": "Store",
-    "remove": "Odstranit",
-    "remove_all": "Remove all",
-    "add": "Přidat",
-    "select_scene": "Select Scene",
-    "scene_name": "Scene Name"
-  },
-  "stats": {
-    "byType": "By device type",
-    "byPowerSource": "By power source",
-    "byVendor": "By vendor",
-    "byModel": "By model",
-    "total": "Celkem"
-  },
-  "availability": {
-    "availability": "Availability",
-    "offline": "Offline",
-    "online": "Online",
-    "disabled": "Zakázáno",
-    "enabled": "Povoleno"
-  },
-  "devConsole": {
-    "generate_external_definition": "Generate external definition",
-    "generated_external_definition": "Generated external definition",
-    "state_property": "State property",
-    "state_property_info": "Set the result into the device's state (only for read)",
-    "reset_frontend_state": "Reset frontend state",
-    "mqtt": "MQTT",
-    "external_converters": "External Converters",
-    "external_extensions": "External Extensions",
-    "topic": "Téma",
-    "send_mqtt": "Send MQTT message",
-    "mqtt_topic_info": "Omit the 'base_topic', frontend messages are sent over WebSocket directly to Zigbee2MQTT.",
-    "code": "Code",
-    "add_update_external_extension": "Add or update external extension",
-    "create_new_extension": "Create new extension",
-    "select_extension_to_edit": "Select extension to edit",
-    "add_update_external_converter": "Add or update external converter",
-    "create_new_converter": "Create new converter",
-    "select_converter_to_edit": "Select converter to edit",
-    "codespace_info": "A Github Codespace is available to help in development",
-    "show_definition": "Show definition",
-    "hide_definition": "Hide definition"
-  },
-  "settingsSchemaDescriptions": {
-    "Home Assistant integration (MQTT discovery)": "Integrace Home Assistant (MQTT discovery)",
-    "Enable Home Assistant integration": "Povolit integraci Home Assistant",
-    "Home Assistant discovery topic": "Téma objevování Home Assistant",
-    "Home Assistant status topic": "Téma stavu Home Assistant",
-    "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action": {
-      "": "Starší sensor akcí Home Assistant, když je povolen, bude objeven sensor akcí a prázdná `action` bude odeslána po každé publikované akci."
+    "common": {
+        "action": "Akce",
+        "actions": "Akce",
+        "apply": "Použít",
+        "attribute": "Atribut",
+        "bind": "Svázat",
+        "clear": "Vymazat",
+        "clear_all": "Vymazat vše",
+        "close": "Zavřít",
+        "cancel": "Zrušit",
+        "cluster": "Cluster",
+        "clusters": "Clustery",
+        "confirmation": "Potvrzovací výzva",
+        "delete": "Smazat",
+        "destination": "Cíl",
+        "devices": "Zařízení",
+        "dialog_confirmation_prompt": "Jste si jisti?",
+        "disable": "Zakázat",
+        "search": "Hledat",
+        "highlight": "Zvýraznit",
+        "groups": "Skupiny",
+        "loading": "Načítání...",
+        "none": "Žádný",
+        "ok": "OK",
+        "read": "Číst",
+        "save": "Uložit",
+        "select_value": "Vybrat hodnotu",
+        "select_device": "Vybrat zařízení",
+        "select_endpoint": "Vybrat endpoint",
+        "select_group": "Vybrat skupinu",
+        "source_endpoint": "Zdrojový endpoint",
+        "the_only_endpoint": "Jediný endpoint",
+        "unbind": "Zrušit vazbu",
+        "write": "Zapsat",
+        "destination_endpoint": "Cílový endpoint",
+        "read_the_docs_info": "Přečtěte si o tom v dokumentaci…",
+        "page": "Stránka",
+        "go_to_page": "Jít na stránku",
+        "show": "Zobrazit",
+        "min": "Min",
+        "max": "Max",
+        "done": "Hotovo",
+        "enter_auth_token": "Zadejte ověřovací token",
+        "token": "Token",
+        "documentation": "Dokumentace",
+        "optional": "Volitelné",
+        "init": "Inicializovat",
+        "undefined": "Nedefinováno",
+        "type_to_filter": "Zadejte pro filtrování...",
+        "name": "Název",
+        "friendly_name": "Přívětivé jméno",
+        "unknown_device": "Neznámé zařízení",
+        "unknown_group": "Neznámá skupina",
+        "failed": "Selhalo",
+        "disabled": "Zakázáno",
+        "hide_disabled": "Skrýt zakázané",
+        "battery_low_only": "Pouze slabá baterie",
+        "available_only": "Pouze dostupné",
+        "execute": "Provést",
+        "command": "Příkaz",
+        "payload": "Náklad",
+        "execute_command": "Provést příkaz",
+        "send": "Odeslat",
+        "columns": "Sloupce",
+        "entries": "Záznamy",
+        "source": "Zdroj",
+        "close_notifications": "Zavřít oznámení",
+        "more": "Více",
+        "default": "Výchozí",
+        "multi_instance": "Multi-instance",
+        "all_sources": "Všechny zdroje",
+        "show_source_name": "Zobrazit název zdroje",
+        "show_only": "Zobrazit pouze",
+        "empty_exposes_definition": "Prázdná definice expozice",
+        "all_features": "Všechny funkce",
+        "all_properties": "Všechny vlastnosti",
+        "show_routers": "Zobrazit routery",
+        "show_end_devices": "Zobrazit koncová zařízení"
     },
-    "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions": {
-      " The events and attributes are currently deemed experimental and subject to change": {
-        "": "Experimentální události entit Home Assistant, když je povoleno, Zigbee2MQTT přidá události entit pro vystavené akce. Události a atributy jsou v současnosti považovány za experimentální a mohou se změnit."
-      }
+    "devicePage": {
+        "about": "O aplikaci",
+        "bind": "Svázat",
+        "clusters": "Clustery",
+        "dev_console": "Vývojářská konzole",
+        "reporting": "Hlášení",
+        "settings": "Nastavení",
+        "settings_specific": "Nastavení (specifická)",
+        "state": "Stav",
+        "groups": "Skupiny",
+        "scene": "Scéna",
+        "exposes": "Exponuje",
+        "select_a_device": "Vyberte zařízení"
     },
-    "Checks whether devices are online/offline": "Kontroluje, zda jsou zařízení online/offline",
-    "Enable availability checks": "Povolit kontroly dostupnosti",
-    "Options for active devices (routers/mains powered)": "Možnosti pro aktivní zařízení (routery/napájené ze sítě)",
-    "Time after which an active device will be marked as offline in minutes": "Čas, po kterém bude aktivní zařízení označeno jako offline v minutách",
-    "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time": "Maximální rozptyl (v msec) povolený při timeoutu, aby se zabránilo pokusům o spuštění availability pingů ve stejnou dobu",
-    "Enable timeout backoff on failed availability pings (x1": {
-      "5, x3, x6, x12": {
-        "": {
-          "": {
-            ")": "Povolit timeout backoff při neúspěšných availability pings (x1.5, x3, x6, x12...)"
-          }
-        }
-      }
+    "groups": {
+        "settings": "Nastavení",
+        "add_to_group_header": "Přidat zařízení do skupiny",
+        "add_to_group": "Přidat do skupiny",
+        "create_group": "Vytvořit skupinu",
+        "friendly_name_placeholder": "světla_ložnice, zahrada...",
+        "remove_group": "Odstranit skupinu",
+        "group_id": "Group ID",
+        "group_members": "Členové skupiny",
+        "group_scenes": "Scény skupiny",
+        "scenes": "Scény",
+        "rename_group": "Přejmenovat skupinu",
+        "remove_from_group": "Odstranit ze skupiny"
     },
-    "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device": {
-      " A value of zero disables pausing": {
-        "": "Pozastavit availability pingy, když backoff překročí tento limit, dokud není přijata nová Zigbee zpráva ze zařízení. Hodnota nula zakáže pozastavení."
-      }
+    "logs": {
+        "log_level_config": "Konfigurace úrovně logování",
+        "empty_logs_message": "Nic k zobrazení",
+        "filter_by_text": "Filter by text",
+        "logs_limit": "Logs limit",
+        "highlight_only": "Highlight only"
     },
-    "Options for passive devices (mostly battery powered)": "Možnosti pro pasivní zařízení (většinou na baterie)",
-    "Time after which an passive device will be marked as offline in minutes": "Čas, po kterém bude pasivní zařízení označeno jako offline v minutách",
-    "MQTT base topic for Zigbee2MQTT MQTT messages": "Základní MQTT téma pro Zigbee2MQTT MQTT zprávy",
-    "MQTT server URL (use mqtts:// for SSL/TLS connection)": "URL serveru MQTT (použijte mqtts:// pro SSL/TLS připojení)",
-    "MQTT keepalive in second": "MQTT keepalive v sekundách",
-    "Absolute path to SSL/TLS certificate of CA used to sign server and client certificates": "Absolutní cesta k SSL/TLS certifikátu CA používanému k podepsání serverových a klientských certifikátů",
-    "Absolute path to SSL/TLS key for client-authentication": "Absolutní cesta k SSL/TLS klíči pro autentifikaci klienta",
-    "Absolute path to SSL/TLS certificate for client-authentication": "Absolutní cesta k SSL/TLS certifikátu pro autentifikaci klienta",
-    "MQTT server authentication user": "Uživatel pro autentifikaci MQTT serveru",
-    "MQTT server authentication password": "Heslo pro autentifikaci MQTT serveru",
-    "MQTT client ID": "ID klienta MQTT",
-    "Disable self-signed SSL certificate": "Zakázat vlastnoručně podepsaný SSL certifikát",
-    "Include device information to mqtt messages": "Zahrnout informace o zařízení do MQTT zpráv",
-    "MQTT protocol version": "Verze protokolu MQTT",
-    "Disable retain for all send messages": {
-      " ONLY enable if your MQTT broker doesn't support retained message (e": {
-        "g": {
-          " AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform)": {
-            " Enabling will break the Home Assistant integration": "Zakázat retain pro všechny odesílané zprávy. POUZE povolte, pokud váš MQTT broker nepodporuje retained zprávy (např. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Povolení poruší integraci Home Assistant"
-          }
-        }
-      }
+    "network": {
+        "network_hierarchy": "Network hierarchy",
+        "help": "Nápověda",
+        "load": "Load",
+        "reload": "Reload",
+        "loading": "Depending on the size of the network and the quality of its links, this can take a while.",
+        "parent": "Parent",
+        "child": "Child",
+        "sibling": "Sibling",
+        "children": "Children",
+        "siblings": "Siblings",
+        "previous_children": "Previous children",
+        "nodes": "Nodes",
+        "edges": "Edges",
+        "legend": "Legend",
+        "depth": "Depth",
+        "routes": "Routes",
+        "type": "Typ",
+        "raw": "Display data/map",
+        "graphviz": "External - Graphviz",
+        "plantuml": "External - PlantUML",
+        "enable_routes": "Enable routes",
+        "display_type": "Display type",
+        "data": "Data",
+        "map": "Mapa",
+        "layout_type": "Layout type",
+        "label_type": "Label type",
+        "download_image": "Download as image",
+        "zoom_in": "Zoom in",
+        "zoom_out": "Zoom out",
+        "fit_view": "Fit view",
+        "reset_controls": "Reset controls",
+        "find_node": "Find node",
+        "scroll_to_top": "Scroll to top",
+        "node_strength": "Node strength",
+        "link_distance": "Link distance",
+        "icons": "Icons",
+        "show_icons": "Show icons",
+        "copy_paste_on": "Copy and paste the following data in one of the available online viewers/editors.",
+        "highlight_info": "Click on a device's image to highlight it automatically.",
+        "legend_node_siblings": "Only highest-rated siblings are shown, which should roughly match the actual connections of the network.",
+        "legend_node_size": "Nodes are sized by centrality.",
+        "legend_node_select": "Selecting a node will select the depending one-hop part of the network.",
+        "legend_node_fold": "Node context menu fold/expand button will affect the depending part of the network.",
+        "legend_edge_toggle": "Toggling relationship edges will change the layout. When disabling one or more, the actual layout of the network is no longer accurately represented.",
+        "begin_info_type": "The type is used to retrieve a different network map format. External ones are meant to be copied for use outside of the frontend (some example websites are given once generated).",
+        "begin_info_routes": "Enabling routes will retrieve the routes table from devices (not all coordinators/devices support this, but failures should not prevent the rest of the data from loading). This is currently only used in the 'data' display.",
+        "begin_info_display": "The display type allows to switch between a data-oriented view and a map view."
     },
-    "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT": {
-      " NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead": {
-        "": "Určuje maximální povolenou délku paketu (v bytech), kterou může server odeslat do Zigbee2MQTT. POZNÁMKA: Stejná hodnota existuje ve vašem MQTT brokeru, ale pro délku, kterou mu klient může odeslat."
-      }
+    "navbar": {
+        "all": "Vše",
+        "dashboard": "Dashboard",
+        "devices": "Zařízení",
+        "disable_join": "Disable join",
+        "extensions": "Rozšíření",
+        "groups": "Skupiny",
+        "logs": "Protokoly",
+        "network": "Síť",
+        "ota": "OTA",
+        "permit_join": "Povolit připojení",
+        "restart": "Restartovat",
+        "settings": "Nastavení",
+        "toggle_dropdown": "Toggle dropdown",
+        "touchlink": "Touchlink",
+        "websocket_status": "WebSocket status",
+        "transaction_prefix": "Transaction prefix"
     },
-    "Location of the adapter": {
-      " To autodetect the port, set null": "Umístění adaptéru. Pro automatickou detekci portu nastavte null"
+    "ota": {
+        "check": "Check for new updates",
+        "check_selected": "Check selected",
+        "update_selected": "Update selected",
+        "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times.",
+        "empty_ota_message": "No device currently support OTA",
+        "remaining_time": "Remaining time",
+        "schedule": "Schedule update",
+        "schedule_info": "Will update on next OTA request from device",
+        "unschedule": "Cancel scheduled update",
+        "update": "Update device firmware",
+        "firmware_version": "Firmware version",
+        "available_firmware_version": "Available firmware version",
+        "app": "App",
+        "stack": "Stack"
     },
-    "Disable LED of the adapter if supported": "Zakázat LED adaptéru, pokud je podporován",
-    "Adapter type, not needed unless you are experiencing problems": "Typ adaptéru, není potřeba, pokud nemáte problémy",
-    "Baud rate speed for the serial port": {
-      " This must match what the firmware on your adapter supports (most commonly 115200)": {
-        "": "Rychlost baud rate pro sériový port. Toto musí odpovídat tomu, co podporuje firmware vašeho adaptéru (nejčastěji 115200)."
-      }
+    "settings": {
+        "about": "O aplikaci",
+        "advanced": "Pokročilé",
+        "availability": "Availability",
+        "blocklist": "Blocklist",
+        "revision": "Revision",
+        "coordinator": "Koordinátor",
+        "donate": "Donate",
+        "donation_text": "Here you can thank us for all the hard work. Don't hesitate to say something nice as well ;)",
+        "download_state": "Download state",
+        "experimental": "Experimental",
+        "external_converters": "Externí převodníky",
+        "frontend": "Frontend",
+        "frontend_version": "Frontend version",
+        "main": "Main",
+        "mqtt": "MQTT",
+        "ota": "OTA updates",
+        "passlist": "Passlist",
+        "bridge": "Most",
+        "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
+        "serial": "Serial",
+        "settings": "Nastavení",
+        "tools": "Tools",
+        "zigbee2mqtt_version": "Zigbee2MQTT version",
+        "translate": "Translate",
+        "stats": "Stats",
+        "coordinator_ieee_address": "Coordinator IEEE Address",
+        "request_z2m_backup": "Request Z2m backup",
+        "add_install_code": "Add install code",
+        "install_code": "Install code",
+        "homeassistant": "Home Assistant integration",
+        "translation_prompt": "You can help with the translation at",
+        "zigbee_herdsman_converters_version": "zigbee-herdsman-converters version",
+        "zigbee_herdsman_version": "zigbee-herdsman version",
+        "localise_images": "Localise device images",
+        "frontend_notice": "These settings are stored locally in your browser. Using private windows or clearing the cache will reset them to defaults.",
+        "reset_settings": "Reset settings",
+        "reset_auth": "Reset auth",
+        "reset_all": "Resetovat vše",
+        "language": "Jazyk",
+        "theme": "Téma",
+        "homepage": "Homepage",
+        "dashboard_column_display": "Dashboard column display",
+        "permit_join_time": "Permit join time",
+        "dev_console": "Vývojářská konzole",
+        "max_on_screen_notifications": "Max on-screen notifications",
+        "network_raw": "Network data/map",
+        "network_map": "Network map",
+        "machine": "Machine",
+        "node_version": "Node version",
+        "version": "Verze",
+        "health": "Health"
     },
-    "RTS / CTS Hardware Flow Control for serial port": "RTS / CTS hardwarové řízení toku pro sériový port",
-    "Block devices from the network (by ieeeAddr)": "Blokovat zařízení ze sítě (podle ieeeAddr)",
-    "Allow only certain devices to join the network (by ieeeAddr)": {
-      " Note that all devices not on the passlist will be removed from the network!": "Povolit pouze určitá zařízení připojit se k síti (podle ieeeAddr). Všechna zařízení, která nejsou na seznamu povolených, budou ze sítě odstraněna!"
+    "health": {
+        "awaiting_next_check": "Awaiting next check",
+        "last_check": "Last check",
+        "response_time": "Response time",
+        "os": "OS",
+        "process": "Process",
+        "load_average": "Load average",
+        "ram_usage": "RAM usage",
+        "uptime": "Uptime",
+        "queued": "Queued",
+        "published": "Published",
+        "received": "Received",
+        "messages": "Messages",
+        "messages_per_sec": "Messages per sec",
+        "leave_count": "Leave count",
+        "network_address_changes": "Network address changes",
+        "very_low": "Very low",
+        "interview_info": "Device interviews can heavily influence this data."
     },
-    "Your device may request a check for a new firmware update": {
-      " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
-        " The value is set in minutes, and the default is 1 day": {
-          "": "Vaše zařízení může požádat o kontrolu nové aktualizace firmwaru. Tato hodnota určuje, jak často mohou být skutečně kontaktovány servery třetích stran pro hledání aktualizací firmwaru. Hodnota je nastavena v minutách a výchozí je 1 den."
-        }
-      }
+    "touchlink": {
+        "detected_devices_message": "Detected {{count}} touchlink devices.",
+        "rescan": "Scan again",
+        "scan": "Scan",
+        "identify": "Identify",
+        "factory_reset": "Tovární nastavení",
+        "scan_source": "Scan source",
+        "select_scan_source": "Select scan source"
     },
-    "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers": {
-      " If you disable these device initiated checks, you can still initiate a firmware update check manually": {
-        "": "Zigbee zařízení mohou požádat o aktualizaci firmwaru a dělají to často, což způsobuje, že Zigbee2MQTT kontaktuje servery třetích stran. Pokud zakážete tyto kontroly iniciované zařízením, stále můžete ručně spustit kontrolu aktualizace firmwaru."
-      }
+    "values": {
+        "clear": "Vymazat",
+        "closed": "Closed",
+        "false": "Nepravda",
+        "not_supported": "Not supported",
+        "occupied": "Occupied",
+        "open": "Otevřít",
+        "supported": "Supported",
+        "true": "Pravda",
+        "empty_string": "Empty string(\"\")",
+        "leaking": "Leaking",
+        "tampered": "Tampered",
+        "null": "Null",
+        "Clear": "Vymazat",
+        "Closed": "Closed",
+        "Occupied": "Occupied",
+        "Open": "Otevřít"
     },
-    "Location of override OTA index file": "Umístění souboru override OTA indexu",
-    "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
-      " You can increase this value if your network appears unstable during OTA": {
-        "": "Omezuje rychlost požadavků (v milisekundách) během OTA aktualizací, aby se snížila přetížení sítě. Tuto hodnotu můžete zvýšit, pokud se vaše síť zdá nestabilní během OTA."
-      }
+    "zigbee": {
+        "actions": "Akce",
+        "attribute": "Atribut",
+        "unknown": "Neznámé",
+        "mains_single_phase": "Mains (single phase)",
+        "mains_3_phase": "Mains (3 phase)",
+        "battery": "Baterie",
+        "dc_source": "DC Source",
+        "emergency_mains_constantly_powered": "Emergency mains constantly powered",
+        "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
+        "block_join": "Block from joining again",
+        "cluster": "Cluster",
+        "description": "Popis",
+        "device_type": "Device type",
+        "endpoint": "Koncový bod",
+        "firmware_id": "Firmware ID",
+        "firmware_build_date": "Firmware build date",
+        "force_remove": "Force remove",
+        "force_remove_notice": "Use only as last resort (will not propagate to the network)",
+        "ieee_address": "IEEE Address",
+        "interview": "Rozhovor",
+        "interview_failed": "Interview failed",
+        "interviewing": "Interviewing",
+        "interview_state": "Interview state",
+        "last_seen": "Last seen",
+        "lqi": "LQI",
+        "manufacturer": "Manufacturer",
+        "max_rep_interval": "Max rep interval",
+        "min_rep_change": "Min rep change",
+        "min_rep_interval": "Min rep interval",
+        "model": "Model",
+        "network_address": "Network address",
+        "network_address_hex": "Network address in hexadecimal format",
+        "network_address_dec": "Network address in decimal format",
+        "none": "Žádný",
+        "pic": "Pic",
+        "power": "Výkon",
+        "power_level": "power level",
+        "reconfigure": "Reconfigure",
+        "remove_device": "Remove device",
+        "rename_device": "Rename device",
+        "select_attribute": "Select attribute",
+        "select_cluster": "Select cluster",
+        "support_status": "Support status",
+        "unsupported": "Unsupported",
+        "updating_firmware": "Updating firmware",
+        "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
+        "zigbee_manufacturer": "ZigBee Manufacturer",
+        "zigbee_model": "ZigBee Model",
+        "device": "Zařízení",
+        "channel": "Channel",
+        "possible": "Possible",
+        "available": "Dostupné",
+        "edit_description": "Edit description",
+        "save_description": "Save description",
+        "update_description": "Update description",
+        "read_write_attributes": "Read / Write attributes from endpoint cluster",
+        "input_clusters": "Input clusters",
+        "output_clusters": "Output clusters",
+        "custom_clusters": "Custom clusters",
+        "other_zcl_clusters": "Other ZCL clusters",
+        "how_to_add_support": "How to add support?",
+        "submit_converter": "Submit converter",
+        "request_support": "Request support",
+        "report_problem": "Report problem",
+        "group": "Skupina",
+        "type": "Typ",
+        "EndDevice": "Koncové zařízení",
+        "Router": "Router",
+        "GreenPower": "GreenPower",
+        "Unknown": "Neznámé",
+        "Coordinator": "Koordinátor"
     },
-    "The size of file chunks sent during an update (in bytes)": {
-      " Note: This value may get ignored for manufacturers that require specific values": {
-        "": "Velikost částí souboru odeslaných během aktualizace (v bytech). Poznámka: Tato hodnota může být ignorována pro výrobce, kteří vyžadují specifické hodnoty."
-      }
+    "scene": {
+        "manage_scenes_header": "Manage scenes",
+        "add_update_header": "Add/update a scene",
+        "scene_id": "Scene ID",
+        "recall": "Recall",
+        "store": "Store",
+        "remove": "Odstranit",
+        "remove_all": "Remove all",
+        "add": "Přidat",
+        "select_scene": "Select Scene",
+        "scene_name": "Scene Name"
     },
-    "Enable frontend": "Povolit frontend",
-    "Package used for the frontend": "Balíček používaný pro frontend",
-    "Frontend binding port": {
-      " Ignored when using a unix domain socket": "Port připojení frontendu. Ignorováno při použití unix domain socketu"
+    "stats": {
+        "byType": "By device type",
+        "byPowerSource": "By power source",
+        "byVendor": "By vendor",
+        "byModel": "By model",
+        "total": "Celkem"
     },
-    "Frontend binding host": {
-      " Binds to a unix socket when an absolute path is given instead": {
-        "": "Host připojení frontendu. Připojuje se k unix socketu, když je místo toho zadána absolutní cesta."
-      }
+    "availability": {
+        "availability": "Availability",
+        "offline": "Offline",
+        "online": "Online",
+        "disabled": "Zakázáno",
+        "enabled": "Povoleno"
     },
-    "Enables authentication, disabled by default": "Povoluje autentifikaci, ve výchozím stavu zakázáno",
-    "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page": "URL, na které lze dosáhnout frontendu, v současnosti se používá pouze pro konfigurační stránku zařízení Home Assistant",
-    "SSL Certificate file path for exposing HTTPS": {
-      " The sibling property 'ssl_key' must be set for HTTPS to be activated": {
-        "": "Cesta k souboru SSL certifikátu pro vystavení HTTPS. Sousední vlastnost 'ssl_key' musí být nastavena, aby bylo HTTPS aktivováno."
-      }
+    "devConsole": {
+        "generate_external_definition": "Generate external definition",
+        "generated_external_definition": "Generated external definition",
+        "state_property": "State property",
+        "state_property_info": "Set the result into the device's state (only for read)",
+        "reset_frontend_state": "Reset frontend state",
+        "mqtt": "MQTT",
+        "external_converters": "External Converters",
+        "external_extensions": "External Extensions",
+        "topic": "Téma",
+        "send_mqtt": "Send MQTT message",
+        "mqtt_topic_info": "Omit the 'base_topic', frontend messages are sent over WebSocket directly to Zigbee2MQTT.",
+        "code": "Code",
+        "add_update_external_extension": "Add or update external extension",
+        "create_new_extension": "Create new extension",
+        "select_extension_to_edit": "Select extension to edit",
+        "add_update_external_converter": "Add or update external converter",
+        "create_new_converter": "Create new converter",
+        "select_converter_to_edit": "Select converter to edit",
+        "codespace_info": "A Github Codespace is available to help in development",
+        "show_definition": "Show definition",
+        "hide_definition": "Hide definition"
     },
-    "SSL key file path for exposing HTTPS": {
-      " The sibling property 'ssl_cert' must be set for HTTPS to be activated": {
-        "": "Cesta k souboru SSL klíče pro vystavení HTTPS. Sousední vlastnost 'ssl_cert' musí být nastavena, aby bylo HTTPS aktivováno."
-      }
-    },
-    "Base URL for the frontend": {
-      " If hosted under a subpath, e": {
-        "g": {
-          " 'http://localhost:8080/z2m', set this to '/z2m'": "Základní URL pro frontend. Pokud je hostován pod podcestou, např. 'http://localhost:8080/z2m', nastavte toto na '/z2m'"
-        }
-      }
-    },
-    "Hide frontend notifications matching specified regex strings": {
-      " Example: 'z2m: Failed to ping": {
-        "*'": "Skrýt oznámení frontendu odpovídající zadaným regex řetězcům. Příklad: 'z2m: Failed to ping.*'"
-      }
-    },
-    "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)": {
-      "": "Pokud je true, frontend UI není poskytováno, pouze WebSocket je udržován Zigbee2MQTT (musíte si podle potřeby poskytovat samostatné UI)."
-    },
-    "Log rotation": "Rotace logů",
-    "Console json log": "Konzolový json log",
-    "Create symlink to current logs in the log directory": "Vytvořit symbolický odkaz na aktuální logy v adresáři logů",
-    "Output location of the log, leave empty to suppress logging": "Výstupní umístění logu, ponechte prázdné pro potlačení logování",
-    "Location of log directory": "Umístění adresáře logů",
-    "Log file name, can also contain timestamp": "Název souboru logu, může také obsahovat časové razítko",
-    "Logging level": "Úroveň logování",
-    "Set individual log levels for certain namespaces": "Nastavit individuální úrovně logování pro určité jmenné prostory",
-    "Log debug level to MQTT and frontend (may decrease overall performance)": "Logovat debug úroveň do MQTT a frontendu (může snížit celkový výkon)",
-    "Do not log these namespaces (regex-based) for debug level": "Nelogovat tyto jmenné prostory (založené na regex) pro debug úroveň",
-    "Number of log directories to keep before deleting the oldest one": "Počet adresářů logů, které si ponechat před smazáním nejstaršího",
-    "The host running syslogd, defaults to localhost": {
-      "": "Host běžící syslogd, výchozí je localhost."
-    },
-    "The port on the host that syslog is running on, defaults to syslogd's default port": {
-      "": "Port na hostu, na kterém běží syslog, výchozí je výchozí port syslogd."
-    },
-    "The network protocol to log over (e": {
-      "g": {
-        " tcp4, udp4, tls4, unix, unix-connect, etc)": {
-          "": "Síťový protokol pro logování (např. tcp4, udp4, tls4, unix, unix-connect, atd.)."
-        }
-      }
-    },
-    "The path to the syslog dgram socket (i": {
-      "e": {
-        " /dev/log or /var/run/syslog for OS X)": {
-          "": "Cesta k syslog dgram socketu (např. /dev/log nebo /var/run/syslog pro OS X)."
-        }
-      }
-    },
-    "PID of the process that log messages are coming from (Default process": {
-      "pid)": {
-        "": "PID procesu, ze kterého pocházejí log zprávy (Výchozí process.pid)."
-      }
-    },
-    "Host to indicate that log messages are coming from (Default: localhost)": {
-      "": "Host označující, odkud pocházejí log zprávy (Výchozí: localhost)."
-    },
-    "The type of the syslog protocol to use (Default: BSD, also valid: 5424)": {
-      "": "Typ syslog protokolu k použití (Výchozí: BSD, také platný: 5424)."
-    },
-    "The name of the application (Default: Zigbee2MQTT)": {
-      "": "Název aplikace (Výchozí: Zigbee2MQTT)."
-    },
-    "The end of line character to be added to the end of the message (Default: Message without modifications)": {
-      "": "Znak konce řádku, který má být přidán na konec zprávy (Výchozí: Zpráva bez úprav)."
-    },
-    "ZigBee pan ID, changing requires re-pairing all devices!": "ZigBee pan ID, změna vyžaduje nové párování všech zařízení!",
-    "Zigbee extended pan ID, changing requires re-pairing all devices!": "Zigbee rozšířené pan ID, změna vyžaduje nové párování všech zařízení!",
-    "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)": "Zigbee kanál, změna může vyžadovat nové párování některých zařízení! (Poznámka: použijte ZLL kanál: 11, 15, 20, nebo 25, abyste se vyhnuli problémům)",
-    "Adapter concurrency (e": {
-      "g": {
-        " 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Souběžnost adaptéru (např. 2 pro CC2531 nebo 16 pro CC26X2R1) (výchozí: null, používá doporučenou hodnotu)"
-      }
-    },
-    "Adapter delay": "Zpoždění adaptéru",
-    "MQTT message payload will contain all attributes, not only changed ones": {
-      " Has to be true when integrating via Home Assistant": "Obsah MQTT zprávy bude obsahovat všechny atributy, nejen změněné. Musí být true při integraci přes Home Assistant"
-    },
-    "Persist cached state, only used when cache_state: true": "Zachovat stav v cache, používá se pouze když cache_state: true",
-    "Send cached state on startup, only used when cache_state: true": "Odeslat stav z cache při spuštění, používá se pouze když cache_state: true",
-    "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message": "Přidat atribut last_seen do MQTT zpráv, obsahuje datum/čas poslední Zigbee zprávy",
-    "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "Přidat atribut elapsed do MQTT zpráv, obsahuje milisekundy od předchozí zprávy",
-    "Network encryption key, changing requires re-pairing all devices!": "Šifrovací klíč sítě, změna vyžaduje nové párování všech zařízení!",
-    "Log timestamp format": "Formát časového razítka logu",
-    "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)": "Vysílací výkon adaptéru, dostupný pouze pro Z-Stack (CC253*/CC2652/CC1352) adaptéry, CC2652 = 5dbm, CC1352 max je = 20dbm (výchozí 5dbm)",
-    "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)": "Příklady, když je publikován 'state' zařízení json: téma: 'zigbee2mqtt/my_bulb' obsah '{\"state\": \"ON\"}' atribut: téma 'zigbee2mqtt/my_bulb/state' obsah 'ON' attribute_and_json: jak json tak atribut (viz výše)",
-    "Periodically check the health of Zigbee2MQTT": "Pravidelně kontrolovat zdraví Zigbee2MQTT",
-    "Interval between checks in minutes": "Interval mezi kontrolami v minutách",
-    "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)": {
-      "": "Pokud je true, bude resetovat statistiky pokaždé, když je vykonána kontrola zdraví (platí pouze pro statistiky, které lze resetovat)."
-    },
-    "Used in the MQTT topic of a device": {
-      " By default this is the device ID": "Používá se v MQTT tématu zařízení. Ve výchozím stavu je to ID zařízení"
-    },
-    "Retain MQTT messages of this device": "Zachovat MQTT zprávy tohoto zařízení",
-    "Disables the device (excludes device from network scans, availability and group state updates)": "Zakáže zařízení (vylučuje zařízení ze síťových skenů, dostupnosti a aktualizací stavu skupin)",
-    "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
-      "version to 5": "Nastavuje vypršení MQTT zprávy v sekundách, ujistěte se, že nastavíte mqtt.version na 5"
-    },
-    "QoS level for MQTT messages of this device": "Úroveň QoS pro MQTT zprávy tohoto zařízení",
-    "The minimum time between payloads in seconds": {
-      " Payloads received whilst the device is being throttled will be discarded": "Minimální čas mezi obsahy v sekundách. Obsahy přijaté během omezování zařízení budou zahozeny"
-    },
-    "Debounces messages of this device": "Debounces zpráv tohoto zařízení",
-    "Protects unique payload values of specified payload properties from overriding within debounce time": "Chrání jedinečné hodnoty obsahu určených vlastností obsahu před přepsáním během debounce času",
-    "Publish optimistic state after set": "Publikovat optimistický stav po nastavení",
-    "Filter attributes with regex from published payload": {
-      "": "Filtrovat atributy pomocí regex z publikovaného obsahu."
-    },
-    "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change": {
-      "": "Filtrovat atributy pomocí regex od přidání do cache, toto zabraňuje atributu být v publikovaném obsahu, když se hodnota nezměnila."
-    },
-    "Filter attributes with regex from optimistic publish payload when calling /set": {
-      " (This has no effect if optimistic is set to false)": {
-        "": "Filtrovat atributy pomocí regex z optimistického publikovaného obsahu při volání /set. (To nemá žádný účinek, pokud je optimistic nastaveno na false)."
-      }
-    },
-    "The user-defined device icon for the frontend": {
-      " It can be a full URL link to an image (e": {
-        "g": {
-          " https://SOME": {
-            "SITE/MODEL123": {
-              "jpg) or a path to a local file inside the `device_icons` directory (e": {
-                "g": {
-                  " device_icons/MODEL123": {
-                    "png)": {
-                      "": "Uživatelem definovaná ikona zařízení pro frontend. Může to být úplný URL odkaz na obrázek (např. https://SOME.SITE/MODEL123.jpg) nebo cesta k místnímu souboru uvnitř adresáře `device_icons` (např. device_icons/MODEL123.png)."
-                    }
-                  }
-                }
-              }
+    "settingsSchemaDescriptions": {
+        "Home Assistant integration (MQTT discovery)": "Integrace Home Assistant (MQTT discovery)",
+        "Enable Home Assistant integration": "Povolit integraci Home Assistant",
+        "Home Assistant discovery topic": "Téma objevování Home Assistant",
+        "Home Assistant status topic": "Téma stavu Home Assistant",
+        "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action": {
+            "": "Starší sensor akcí Home Assistant, když je povolen, bude objeven sensor akcí a prázdná `action` bude odeslána po každé publikované akci."
+        },
+        "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions": {
+            " The events and attributes are currently deemed experimental and subject to change": {
+                "": "Experimentální události entit Home Assistant, když je povoleno, Zigbee2MQTT přidá události entit pro vystavené akce. Události a atributy jsou v současnosti považovány za experimentální a mohou se změnit."
             }
-          }
+        },
+        "Checks whether devices are online/offline": "Kontroluje, zda jsou zařízení online/offline",
+        "Enable availability checks": "Povolit kontroly dostupnosti",
+        "Options for active devices (routers/mains powered)": "Možnosti pro aktivní zařízení (routery/napájené ze sítě)",
+        "Time after which an active device will be marked as offline in minutes": "Čas, po kterém bude aktivní zařízení označeno jako offline v minutách",
+        "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time": "Maximální rozptyl (v msec) povolený při timeoutu, aby se zabránilo pokusům o spuštění availability pingů ve stejnou dobu",
+        "Enable timeout backoff on failed availability pings (x1": {
+            "5, x3, x6, x12": {
+                "": {
+                    "": {
+                        ")": "Povolit timeout backoff při neúspěšných availability pings (x1.5, x3, x6, x12...)"
+                    }
+                }
+            }
+        },
+        "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device": {
+            " A value of zero disables pausing": {
+                "": "Pozastavit availability pingy, když backoff překročí tento limit, dokud není přijata nová Zigbee zpráva ze zařízení. Hodnota nula zakáže pozastavení."
+            }
+        },
+        "Options for passive devices (mostly battery powered)": "Možnosti pro pasivní zařízení (většinou na baterie)",
+        "Time after which an passive device will be marked as offline in minutes": "Čas, po kterém bude pasivní zařízení označeno jako offline v minutách",
+        "MQTT base topic for Zigbee2MQTT MQTT messages": "Základní MQTT téma pro Zigbee2MQTT MQTT zprávy",
+        "MQTT server URL (use mqtts:// for SSL/TLS connection)": "URL serveru MQTT (použijte mqtts:// pro SSL/TLS připojení)",
+        "MQTT keepalive in second": "MQTT keepalive v sekundách",
+        "Absolute path to SSL/TLS certificate of CA used to sign server and client certificates": "Absolutní cesta k SSL/TLS certifikátu CA používanému k podepsání serverových a klientských certifikátů",
+        "Absolute path to SSL/TLS key for client-authentication": "Absolutní cesta k SSL/TLS klíči pro autentifikaci klienta",
+        "Absolute path to SSL/TLS certificate for client-authentication": "Absolutní cesta k SSL/TLS certifikátu pro autentifikaci klienta",
+        "MQTT server authentication user": "Uživatel pro autentifikaci MQTT serveru",
+        "MQTT server authentication password": "Heslo pro autentifikaci MQTT serveru",
+        "MQTT client ID": "ID klienta MQTT",
+        "Disable self-signed SSL certificate": "Zakázat vlastnoručně podepsaný SSL certifikát",
+        "Include device information to mqtt messages": "Zahrnout informace o zařízení do MQTT zpráv",
+        "MQTT protocol version": "Verze protokolu MQTT",
+        "Disable retain for all send messages": {
+            " ONLY enable if your MQTT broker doesn't support retained message (e": {
+                "g": {
+                    " AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform)": {
+                        " Enabling will break the Home Assistant integration": "Zakázat retain pro všechny odesílané zprávy. POUZE povolte, pokud váš MQTT broker nepodporuje retained zprávy (např. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Povolení poruší integraci Home Assistant"
+                    }
+                }
+            }
+        },
+        "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT": {
+            " NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead": {
+                "": "Určuje maximální povolenou délku paketu (v bytech), kterou může server odeslat do Zigbee2MQTT. POZNÁMKA: Stejná hodnota existuje ve vašem MQTT brokeru, ale pro délku, kterou mu klient může odeslat."
+            }
+        },
+        "Location of the adapter": {
+            " To autodetect the port, set null": "Umístění adaptéru. Pro automatickou detekci portu nastavte null"
+        },
+        "Disable LED of the adapter if supported": "Zakázat LED adaptéru, pokud je podporován",
+        "Adapter type, not needed unless you are experiencing problems": "Typ adaptéru, není potřeba, pokud nemáte problémy",
+        "Baud rate speed for the serial port": {
+            " This must match what the firmware on your adapter supports (most commonly 115200)": {
+                "": "Rychlost baud rate pro sériový port. Toto musí odpovídat tomu, co podporuje firmware vašeho adaptéru (nejčastěji 115200)."
+            }
+        },
+        "RTS / CTS Hardware Flow Control for serial port": "RTS / CTS hardwarové řízení toku pro sériový port",
+        "Block devices from the network (by ieeeAddr)": "Blokovat zařízení ze sítě (podle ieeeAddr)",
+        "Allow only certain devices to join the network (by ieeeAddr)": {
+            " Note that all devices not on the passlist will be removed from the network!": "Povolit pouze určitá zařízení připojit se k síti (podle ieeeAddr). Všechna zařízení, která nejsou na seznamu povolených, budou ze sítě odstraněna!"
+        },
+        "Your device may request a check for a new firmware update": {
+            " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
+                " The value is set in minutes, and the default is 1 day": {
+                    "": "Vaše zařízení může požádat o kontrolu nové aktualizace firmwaru. Tato hodnota určuje, jak často mohou být skutečně kontaktovány servery třetích stran pro hledání aktualizací firmwaru. Hodnota je nastavena v minutách a výchozí je 1 den."
+                }
+            }
+        },
+        "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers": {
+            " If you disable these device initiated checks, you can still initiate a firmware update check manually": {
+                "": "Zigbee zařízení mohou požádat o aktualizaci firmwaru a dělají to často, což způsobuje, že Zigbee2MQTT kontaktuje servery třetích stran. Pokud zakážete tyto kontroly iniciované zařízením, stále můžete ručně spustit kontrolu aktualizace firmwaru."
+            }
+        },
+        "Location of override OTA index file": "Umístění souboru override OTA indexu",
+        "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
+            " You can increase this value if your network appears unstable during OTA": {
+                "": "Omezuje rychlost požadavků (v milisekundách) během OTA aktualizací, aby se snížila přetížení sítě. Tuto hodnotu můžete zvýšit, pokud se vaše síť zdá nestabilní během OTA."
+            }
+        },
+        "The size of file chunks sent during an update (in bytes)": {
+            " Note: This value may get ignored for manufacturers that require specific values": {
+                "": "Velikost částí souboru odeslaných během aktualizace (v bytech). Poznámka: Tato hodnota může být ignorována pro výrobce, kteří vyžadují specifické hodnoty."
+            }
+        },
+        "Enable frontend": "Povolit frontend",
+        "Package used for the frontend": "Balíček používaný pro frontend",
+        "Frontend binding port": {
+            " Ignored when using a unix domain socket": "Port připojení frontendu. Ignorováno při použití unix domain socketu"
+        },
+        "Frontend binding host": {
+            " Binds to a unix socket when an absolute path is given instead": {
+                "": "Host připojení frontendu. Připojuje se k unix socketu, když je místo toho zadána absolutní cesta."
+            }
+        },
+        "Enables authentication, disabled by default": "Povoluje autentifikaci, ve výchozím stavu zakázáno",
+        "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page": "URL, na které lze dosáhnout frontendu, v současnosti se používá pouze pro konfigurační stránku zařízení Home Assistant",
+        "SSL Certificate file path for exposing HTTPS": {
+            " The sibling property 'ssl_key' must be set for HTTPS to be activated": {
+                "": "Cesta k souboru SSL certifikátu pro vystavení HTTPS. Sousední vlastnost 'ssl_key' musí být nastavena, aby bylo HTTPS aktivováno."
+            }
+        },
+        "SSL key file path for exposing HTTPS": {
+            " The sibling property 'ssl_cert' must be set for HTTPS to be activated": {
+                "": "Cesta k souboru SSL klíče pro vystavení HTTPS. Sousední vlastnost 'ssl_cert' musí být nastavena, aby bylo HTTPS aktivováno."
+            }
+        },
+        "Base URL for the frontend": {
+            " If hosted under a subpath, e": {
+                "g": {
+                    " 'http://localhost:8080/z2m', set this to '/z2m'": "Základní URL pro frontend. Pokud je hostován pod podcestou, např. 'http://localhost:8080/z2m', nastavte toto na '/z2m'"
+                }
+            }
+        },
+        "Hide frontend notifications matching specified regex strings": {
+            " Example: 'z2m: Failed to ping": {
+                "*'": "Skrýt oznámení frontendu odpovídající zadaným regex řetězcům. Příklad: 'z2m: Failed to ping.*'"
+            }
+        },
+        "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)": {
+            "": "Pokud je true, frontend UI není poskytováno, pouze WebSocket je udržován Zigbee2MQTT (musíte si podle potřeby poskytovat samostatné UI)."
+        },
+        "Log rotation": "Rotace logů",
+        "Console json log": "Konzolový json log",
+        "Create symlink to current logs in the log directory": "Vytvořit symbolický odkaz na aktuální logy v adresáři logů",
+        "Output location of the log, leave empty to suppress logging": "Výstupní umístění logu, ponechte prázdné pro potlačení logování",
+        "Location of log directory": "Umístění adresáře logů",
+        "Log file name, can also contain timestamp": "Název souboru logu, může také obsahovat časové razítko",
+        "Logging level": "Úroveň logování",
+        "Set individual log levels for certain namespaces": "Nastavit individuální úrovně logování pro určité jmenné prostory",
+        "Log debug level to MQTT and frontend (may decrease overall performance)": "Logovat debug úroveň do MQTT a frontendu (může snížit celkový výkon)",
+        "Do not log these namespaces (regex-based) for debug level": "Nelogovat tyto jmenné prostory (založené na regex) pro debug úroveň",
+        "Number of log directories to keep before deleting the oldest one": "Počet adresářů logů, které si ponechat před smazáním nejstaršího",
+        "The host running syslogd, defaults to localhost": {
+            "": "Host běžící syslogd, výchozí je localhost."
+        },
+        "The port on the host that syslog is running on, defaults to syslogd's default port": {
+            "": "Port na hostu, na kterém běží syslog, výchozí je výchozí port syslogd."
+        },
+        "The network protocol to log over (e": {
+            "g": {
+                " tcp4, udp4, tls4, unix, unix-connect, etc)": {
+                    "": "Síťový protokol pro logování (např. tcp4, udp4, tls4, unix, unix-connect, atd.)."
+                }
+            }
+        },
+        "The path to the syslog dgram socket (i": {
+            "e": {
+                " /dev/log or /var/run/syslog for OS X)": {
+                    "": "Cesta k syslog dgram socketu (např. /dev/log nebo /var/run/syslog pro OS X)."
+                }
+            }
+        },
+        "PID of the process that log messages are coming from (Default process": {
+            "pid)": {
+                "": "PID procesu, ze kterého pocházejí log zprávy (Výchozí process.pid)."
+            }
+        },
+        "Host to indicate that log messages are coming from (Default: localhost)": {
+            "": "Host označující, odkud pocházejí log zprávy (Výchozí: localhost)."
+        },
+        "The type of the syslog protocol to use (Default: BSD, also valid: 5424)": {
+            "": "Typ syslog protokolu k použití (Výchozí: BSD, také platný: 5424)."
+        },
+        "The name of the application (Default: Zigbee2MQTT)": {
+            "": "Název aplikace (Výchozí: Zigbee2MQTT)."
+        },
+        "The end of line character to be added to the end of the message (Default: Message without modifications)": {
+            "": "Znak konce řádku, který má být přidán na konec zprávy (Výchozí: Zpráva bez úprav)."
+        },
+        "ZigBee pan ID, changing requires re-pairing all devices!": "ZigBee pan ID, změna vyžaduje nové párování všech zařízení!",
+        "Zigbee extended pan ID, changing requires re-pairing all devices!": "Zigbee rozšířené pan ID, změna vyžaduje nové párování všech zařízení!",
+        "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)": "Zigbee kanál, změna může vyžadovat nové párování některých zařízení! (Poznámka: použijte ZLL kanál: 11, 15, 20, nebo 25, abyste se vyhnuli problémům)",
+        "Adapter concurrency (e": {
+            "g": {
+                " 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Souběžnost adaptéru (např. 2 pro CC2531 nebo 16 pro CC26X2R1) (výchozí: null, používá doporučenou hodnotu)"
+            }
+        },
+        "Adapter delay": "Zpoždění adaptéru",
+        "MQTT message payload will contain all attributes, not only changed ones": {
+            " Has to be true when integrating via Home Assistant": "Obsah MQTT zprávy bude obsahovat všechny atributy, nejen změněné. Musí být true při integraci přes Home Assistant"
+        },
+        "Persist cached state, only used when cache_state: true": "Zachovat stav v cache, používá se pouze když cache_state: true",
+        "Send cached state on startup, only used when cache_state: true": "Odeslat stav z cache při spuštění, používá se pouze když cache_state: true",
+        "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message": "Přidat atribut last_seen do MQTT zpráv, obsahuje datum/čas poslední Zigbee zprávy",
+        "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "Přidat atribut elapsed do MQTT zpráv, obsahuje milisekundy od předchozí zprávy",
+        "Network encryption key, changing requires re-pairing all devices!": "Šifrovací klíč sítě, změna vyžaduje nové párování všech zařízení!",
+        "Log timestamp format": "Formát časového razítka logu",
+        "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)": "Vysílací výkon adaptéru, dostupný pouze pro Z-Stack (CC253*/CC2652/CC1352) adaptéry, CC2652 = 5dbm, CC1352 max je = 20dbm (výchozí 5dbm)",
+        "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)": "Příklady, když je publikován 'state' zařízení json: téma: 'zigbee2mqtt/my_bulb' obsah '{\"state\": \"ON\"}' atribut: téma 'zigbee2mqtt/my_bulb/state' obsah 'ON' attribute_and_json: jak json tak atribut (viz výše)",
+        "Periodically check the health of Zigbee2MQTT": "Pravidelně kontrolovat zdraví Zigbee2MQTT",
+        "Interval between checks in minutes": "Interval mezi kontrolami v minutách",
+        "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)": {
+            "": "Pokud je true, bude resetovat statistiky pokaždé, když je vykonána kontrola zdraví (platí pouze pro statistiky, které lze resetovat)."
+        },
+        "Used in the MQTT topic of a device": {
+            " By default this is the device ID": "Používá se v MQTT tématu zařízení. Ve výchozím stavu je to ID zařízení"
+        },
+        "Retain MQTT messages of this device": "Zachovat MQTT zprávy tohoto zařízení",
+        "Disables the device (excludes device from network scans, availability and group state updates)": "Zakáže zařízení (vylučuje zařízení ze síťových skenů, dostupnosti a aktualizací stavu skupin)",
+        "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
+            "version to 5": "Nastavuje vypršení MQTT zprávy v sekundách, ujistěte se, že nastavíte mqtt.version na 5"
+        },
+        "QoS level for MQTT messages of this device": "Úroveň QoS pro MQTT zprávy tohoto zařízení",
+        "The minimum time between payloads in seconds": {
+            " Payloads received whilst the device is being throttled will be discarded": "Minimální čas mezi obsahy v sekundách. Obsahy přijaté během omezování zařízení budou zahozeny"
+        },
+        "Debounces messages of this device": "Debounces zpráv tohoto zařízení",
+        "Protects unique payload values of specified payload properties from overriding within debounce time": "Chrání jedinečné hodnoty obsahu určených vlastností obsahu před přepsáním během debounce času",
+        "Publish optimistic state after set": "Publikovat optimistický stav po nastavení",
+        "Filter attributes with regex from published payload": {
+            "": "Filtrovat atributy pomocí regex z publikovaného obsahu."
+        },
+        "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change": {
+            "": "Filtrovat atributy pomocí regex od přidání do cache, toto zabraňuje atributu být v publikovaném obsahu, když se hodnota nezměnila."
+        },
+        "Filter attributes with regex from optimistic publish payload when calling /set": {
+            " (This has no effect if optimistic is set to false)": {
+                "": "Filtrovat atributy pomocí regex z optimistického publikovaného obsahu při volání /set. (To nemá žádný účinek, pokud je optimistic nastaveno na false)."
+            }
+        },
+        "The user-defined device icon for the frontend": {
+            " It can be a full URL link to an image (e": {
+                "g": {
+                    " https://SOME": {
+                        "SITE/MODEL123": {
+                            "jpg) or a path to a local file inside the `device_icons` directory (e": {
+                                "g": {
+                                    " device_icons/MODEL123": {
+                                        "png)": {
+                                            "": "Uživatelem definovaná ikona zařízení pro frontend. Může to být úplný URL odkaz na obrázek (např. https://SOME.SITE/MODEL123.jpg) nebo cesta k místnímu souboru uvnitř adresáře `device_icons` (např. device_icons/MODEL123.png)."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Name of the device in Home Assistant": "Název zařízení v Home Assistant",
+        "QoS level for MQTT messages of this group": "Úroveň QoS pro MQTT zprávy této skupiny",
+        "Control when to publish state OFF or CLOSE for a group": {
+            " 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Kontrola, kdy publikovat stav OFF nebo CLOSE pro skupinu. 'all_members_off': publikovat stav OFF/CLOSE pouze když jsou všichni členové skupiny ve stavu OFF/CLOSE, 'last_member_state': publikovat stav OFF kdykoli se jeden z jejích členů změní na OFF"
         }
-      }
-    },
-    "Name of the device in Home Assistant": "Název zařízení v Home Assistant",
-    "QoS level for MQTT messages of this group": "Úroveň QoS pro MQTT zprávy této skupiny",
-    "Control when to publish state OFF or CLOSE for a group": {
-      " 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Kontrola, kdy publikovat stav OFF nebo CLOSE pro skupinu. 'all_members_off': publikovat stav OFF/CLOSE pouze když jsou všichni členové skupiny ve stavu OFF/CLOSE, 'last_member_state': publikovat stav OFF kdykoli se jeden z jejích členů změní na OFF"
     }
-  }
 }
