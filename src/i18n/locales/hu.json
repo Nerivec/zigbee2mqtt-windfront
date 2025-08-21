@@ -99,7 +99,7 @@
         "create_group": "Csoport létrehozása",
         "friendly_name_placeholder": "hálószoba_lámpák, kert...",
         "remove_group": "Csoport eltávolítása",
-        "group_id": "Group ID",
+        "group_id": "Csoport azonosító",
         "group_members": "Csoport tagjai",
         "group_scenes": "Csoport jelenetek",
         "scenes": "Jelenetek",
@@ -118,29 +118,29 @@
         "help": "Súgó",
         "load": "Betöltés",
         "reload": "Újratöltés",
-        "loading": "Depending on the size of the network and the quality of its links, this can take a while.",
-        "parent": "Parent",
-        "child": "Child",
-        "sibling": "Sibling",
-        "children": "Children",
-        "siblings": "Siblings",
-        "previous_children": "Previous children",
-        "nodes": "Nodes",
-        "edges": "Edges",
-        "legend": "Legend",
-        "depth": "Depth",
-        "routes": "Routes",
+        "loading": "A hálózat méretétől és a kapcsolatok minőségétől függően ez eltarthat egy ideig.",
+        "parent": "Szülő",
+        "child": "Gyermek",
+        "sibling": "Testvér",
+        "children": "Gyerekek",
+        "siblings": "Testvérek",
+        "previous_children": "Korábbi gyerekek",
+        "nodes": "Csomópontok",
+        "edges": "Élek",
+        "legend": "Jelmagyarázat",
+        "depth": "Mélység",
+        "routes": "Útvonalak",
         "type": "Típus",
-        "raw": "Display data/map",
+        "raw": "Adatok/térkép megjelenítése",
         "graphviz": "External - Graphviz",
         "plantuml": "External - PlantUML",
-        "enable_routes": "Enable routes",
-        "display_type": "Display type",
-        "data": "Data",
+        "enable_routes": "Útvonalak engedélyezése",
+        "display_type": "Megjelenítési típus",
+        "data": "Adat",
         "map": "Map",
-        "layout_type": "Layout type",
-        "label_type": "Label type",
-        "download_image": "Download as image",
+        "layout_type": "Elrendezés típusa",
+        "label_type": "Címke típusa",
+        "download_image": "Letöltés képként",
         "zoom_in": "Zoom in",
         "zoom_out": "Zoom out",
         "fit_view": "Fit view",
@@ -284,7 +284,7 @@
         "not_supported": "Not supported",
         "occupied": "Occupied",
         "open": "Megnyitás",
-        "supported": "Supported",
+        "supported": "Támogatott",
         "true": "Igaz",
         "empty_string": "Empty string(\"\")",
         "leaking": "Leaking",
@@ -321,11 +321,11 @@
         "interview_state": "Interview state",
         "last_seen": "Last seen",
         "lqi": "LQI",
-        "manufacturer": "Manufacturer",
+        "manufacturer": "Gyártó",
         "max_rep_interval": "Max rep interval",
         "min_rep_change": "Min rep change",
         "min_rep_interval": "Min rep interval",
-        "model": "Model",
+        "model": "Modell",
         "network_address": "Network address",
         "network_address_hex": "Network address in hexadecimal format",
         "network_address_dec": "Network address in decimal format",
@@ -339,7 +339,7 @@
         "select_attribute": "Select attribute",
         "select_cluster": "Select cluster",
         "support_status": "Support status",
-        "unsupported": "Unsupported",
+        "unsupported": "Nem támogatott",
         "updating_firmware": "Updating firmware",
         "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
         "zigbee_manufacturer": "ZigBee Manufacturer",
@@ -423,11 +423,11 @@
         "Home Assistant discovery topic": "Home Assistant felfedezési téma",
         "Home Assistant status topic": "Home Assistant állapot téma",
         "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action": {
-            "": "Home Assistant örökölt műveletek szenzor, amikor engedélyezve egy művelet szenzor felfedezésre kerül és egy üres `action` kerül elküldésre minden közzétett művelet után."
+            "": "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action."
         },
         "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions": {
             " The events and attributes are currently deemed experimental and subject to change": {
-                "": "Home Assistant kísérleti esemény entitások, amikor engedélyezve a Zigbee2MQTT esemény entitásokat fog hozzáadni a kifejtett műveletekhez. Az események és attribútumok jelenleg kísérletinek tekintendők és változhatnak."
+                "": "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change."
             }
         },
         "Checks whether devices are online/offline": "Ellenőrzi, hogy az eszközök online/offline állapotban vannak-e",
@@ -439,14 +439,14 @@
             "5, x3, x6, x12": {
                 "": {
                     "": {
-                        ")": "Időtúllépés visszalépés engedélyezése sikertelen elérhetőség ping-eknél (x1.5, x3, x6, x12...)"
+                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
                     }
                 }
             }
         },
         "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device": {
             " A value of zero disables pausing": {
-                "": "Elérhetőség ping-ek szüneteltetése amikor a visszalépés eléri ezt a határt, amíg új Zigbee üzenet nem érkezik az eszköztől. A nulla érték letiltja a szüneteltetést."
+                "": "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing."
             }
         },
         "Options for passive devices (mostly battery powered)": "Passzív eszközök beállításai (többnyire akkumulátoros)",
@@ -467,90 +467,90 @@
             " ONLY enable if your MQTT broker doesn't support retained message (e": {
                 "g": {
                     " AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform)": {
-                        " Enabling will break the Home Assistant integration": "Retain letiltása minden küldött üzenetnél. CSAK akkor engedélyezd, ha az MQTT bróker nem támogatja a tárolt üzeneteket (pl. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Az engedélyezés megszakítja a Home Assistant integrációt"
+                        " Enabling will break the Home Assistant integration": "Disable retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration"
                     }
                 }
             }
         },
         "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT": {
             " NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead": {
-                "": "Megadja a maximális megengedett csomag hosszt (bájtokban), amelyet a szerver küldhet a Zigbee2MQTT-nek. MEGJEGYZÉS: Ugyanez az érték létezik az MQTT brókerben, de a kliens által küldhető hosszúságra vonatkozik."
+                "": "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead."
             }
         },
         "Location of the adapter": {
-            " To autodetect the port, set null": "Az adapter helye. Port automatikus érzékeléséhez állítsd null-ra"
+            " To autodetect the port, set null": "Location of the adapter. To autodetect the port, set null"
         },
         "Disable LED of the adapter if supported": "Adapter LED letiltása, ha támogatott",
         "Adapter type, not needed unless you are experiencing problems": "Adapter típus, nem szükséges, hacsak nem tapasztalsz problémákat",
         "Baud rate speed for the serial port": {
             " This must match what the firmware on your adapter supports (most commonly 115200)": {
-                "": "Baud sebesség a soros porthoz. Ennek meg kell egyeznie azzal, amit az adapter firmware támogat (leggyakrabban 115200)."
+                "": "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200)."
             }
         },
         "RTS / CTS Hardware Flow Control for serial port": "RTS / CTS hardver folyamatvezérlés a soros porthoz",
         "Block devices from the network (by ieeeAddr)": "Eszközök blokkolása a hálózatról (ieeeAddr alapján)",
         "Allow only certain devices to join the network (by ieeeAddr)": {
-            " Note that all devices not on the passlist will be removed from the network!": "Csak bizonyos eszközök csatlakozásának engedélyezése a hálózathoz (ieeeAddr alapján). Figyelem, minden eszköz, amely nincs az engedélyezettek listáján, el lesz távolítva a hálózatról!"
+            " Note that all devices not on the passlist will be removed from the network!": "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!"
         },
         "Your device may request a check for a new firmware update": {
             " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
                 " The value is set in minutes, and the default is 1 day": {
-                    "": "Az eszközöd kérheti új firmware frissítés ellenőrzését. Ez az érték határozza meg, hogy milyen gyakran lehet ténylegesen kapcsolatba lépni harmadik fél szervereivel firmware frissítések kereséséhez. Az érték percekben van megadva, az alapértelmezett 1 nap."
+                    "": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day."
                 }
             }
         },
         "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers": {
             " If you disable these device initiated checks, you can still initiate a firmware update check manually": {
-                "": "A Zigbee eszközök kérhetnek firmware frissítést és gyakran teszik ezt, ami miatt a Zigbee2MQTT kapcsolatba lép harmadik fél szerverekkel. Ha letiltod ezeket az eszköz által kezdeményezett ellenőrzéseket, továbbra is manuálisan kezdeményezhetsz firmware frissítés ellenőrzést."
+                "": "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually."
             }
         },
         "Location of override OTA index file": "Felülíró OTA index fájl helye",
         "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
             " You can increase this value if your network appears unstable during OTA": {
-                "": "Korlátozza a kérések sebességét (milliszekundumban) OTA frissítések alatt a hálózati torlódás csökkentése érdekében. Növelheted ezt az értéket, ha a hálózatod instabilnak tűnik OTA közben."
+                "": "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA."
             }
         },
         "The size of file chunks sent during an update (in bytes)": {
             " Note: This value may get ignored for manufacturers that require specific values": {
-                "": "A frissítés során küldött fájl darabok mérete (bájtokban). Megjegyzés: Ez az érték figyelmen kívül hagyható azoknál a gyártóknál, akik speciális értékeket igényelnek."
+                "": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values."
             }
         },
         "Enable frontend": "Frontend engedélyezése",
         "Package used for the frontend": "Frontend-hez használt csomag",
         "Frontend binding port": {
-            " Ignored when using a unix domain socket": "Frontend kötési port. Figyelmen kívül hagyva unix domain socket használatakor"
+            " Ignored when using a unix domain socket": "Frontend binding port. Ignored when using a unix domain socket"
         },
         "Frontend binding host": {
             " Binds to a unix socket when an absolute path is given instead": {
-                "": "Frontend kötési host. Unix socket-hez kötődik, amikor abszolút útvonal van megadva helyette."
+                "": "Frontend binding host. Binds to a unix socket when an absolute path is given instead."
             }
         },
         "Enables authentication, disabled by default": "Hitelesítés engedélyezése, alapértelmezetten letiltva",
         "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page": "URL, amelyen a frontend elérhető, jelenleg csak a Home Assistant eszköz konfigurációs oldalához használt",
         "SSL Certificate file path for exposing HTTPS": {
             " The sibling property 'ssl_key' must be set for HTTPS to be activated": {
-                "": "SSL tanúsítvány fájl útvonal HTTPS kifejtéséhez. A testvér 'ssl_key' tulajdonságot be kell állítani a HTTPS aktiválásához."
+                "": "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated."
             }
         },
         "SSL key file path for exposing HTTPS": {
             " The sibling property 'ssl_cert' must be set for HTTPS to be activated": {
-                "": "SSL kulcs fájl útvonal HTTPS kifejtéséhez. A testvér 'ssl_cert' tulajdonságot be kell állítani a HTTPS aktiválásához."
+                "": "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated."
             }
         },
         "Base URL for the frontend": {
             " If hosted under a subpath, e": {
                 "g": {
-                    " 'http://localhost:8080/z2m', set this to '/z2m'": "Alap URL a frontend-hez. Ha alútvonal alatt van hosztolva, pl. 'http://localhost:8080/z2m', állítsd ezt '/z2m'-re"
+                    " 'http://localhost:8080/z2m', set this to '/z2m'": "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'"
                 }
             }
         },
         "Hide frontend notifications matching specified regex strings": {
             " Example: 'z2m: Failed to ping": {
-                "*'": "Frontend értesítések elrejtése megadott regex karakterláncokkal egyezők. Példa: 'z2m: Failed to ping.*'"
+                "*'": "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'"
             }
         },
         "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)": {
-            "": "Ha igaz, a frontend UI nem kerül kiszolgálásra, csak a WebSocket-et tartja fenn a Zigbee2MQTT (szükség esetén saját magadnak kell kiszolgálnod egy különálló UI-t)."
+            "": "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)."
         },
         "Log rotation": "Napló rotáció",
         "Console json log": "Konzol json napló",
@@ -564,53 +564,53 @@
         "Do not log these namespaces (regex-based) for debug level": "Ne naplózd ezeket a névtereket (regex alapú) debug szinthez",
         "Number of log directories to keep before deleting the oldest one": "Megtartandó napló könyvtárak száma a legrégebbi törlése előtt",
         "The host running syslogd, defaults to localhost": {
-            "": "A syslogd-t futtató host, alapértelmezett a localhost."
+            "": "The host running syslogd, defaults to localhost."
         },
         "The port on the host that syslog is running on, defaults to syslogd's default port": {
-            "": "A port a host-on, amelyen a syslog fut, alapértelmezett a syslogd alapértelmezett portja."
+            "": "The port on the host that syslog is running on, defaults to syslogd's default port."
         },
         "The network protocol to log over (e": {
             "g": {
                 " tcp4, udp4, tls4, unix, unix-connect, etc)": {
-                    "": "A hálózati protokoll, amelyen keresztül naplózni kell (pl. tcp4, udp4, tls4, unix, unix-connect, stb.)."
+                    "": "The network protocol to log over (e.g. tcp4, udp4, tls4, unix, unix-connect, etc)."
                 }
             }
         },
         "The path to the syslog dgram socket (i": {
             "e": {
                 " /dev/log or /var/run/syslog for OS X)": {
-                    "": "A syslog dgram socket útvonala (azaz /dev/log vagy /var/run/syslog OS X-hez)."
+                    "": "The path to the syslog dgram socket (i.e. /dev/log or /var/run/syslog for OS X)."
                 }
             }
         },
         "PID of the process that log messages are coming from (Default process": {
             "pid)": {
-                "": "A folyamat PID-je, amelyből a napló üzenetek érkeznek (Alapértelmezett process.pid)."
+                "": "PID of the process that log messages are coming from (Default process.pid)."
             }
         },
         "Host to indicate that log messages are coming from (Default: localhost)": {
-            "": "Host jelzése, hogy a napló üzenetek honnan érkeznek (Alapértelmezett: localhost)."
+            "": "Host to indicate that log messages are coming from (Default: localhost)."
         },
         "The type of the syslog protocol to use (Default: BSD, also valid: 5424)": {
-            "": "A használandó syslog protokoll típusa (Alapértelmezett: BSD, szintén érvényes: 5424)."
+            "": "The type of the syslog protocol to use (Default: BSD, also valid: 5424)."
         },
         "The name of the application (Default: Zigbee2MQTT)": {
-            "": "Az alkalmazás neve (Alapértelmezett: Zigbee2MQTT)."
+            "": "The name of the application (Default: Zigbee2MQTT)."
         },
         "The end of line character to be added to the end of the message (Default: Message without modifications)": {
-            "": "A sorvég karakter, amelyet az üzenet végéhez kell hozzáadni (Alapértelmezett: Üzenet módosítások nélkül)."
+            "": "The end of line character to be added to the end of the message (Default: Message without modifications)."
         },
         "ZigBee pan ID, changing requires re-pairing all devices!": "ZigBee pan ID, a változtatás minden eszköz újrapárosítását igényli!",
         "Zigbee extended pan ID, changing requires re-pairing all devices!": "Zigbee kiterjesztett pan ID, a változtatás minden eszköz újrapárosítását igényli!",
         "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)": "Zigbee csatorna, a változtatás néhány eszköz újrapárosítását igényelheti! (Megjegyzés: használj ZLL csatornát: 11, 15, 20, vagy 25 a problémák elkerülése érdekében)",
         "Adapter concurrency (e": {
             "g": {
-                " 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Adapter párhuzamosság (pl. 2 CC2531-hez vagy 16 CC26X2R1-hez) (alapértelmezett: null, ajánlott értéket használ)"
+                " 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Adapter concurrency (e.g. 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)"
             }
         },
         "Adapter delay": "Adapter késleltetés",
         "MQTT message payload will contain all attributes, not only changed ones": {
-            " Has to be true when integrating via Home Assistant": "Az MQTT üzenet tartalma minden attribútumot tartalmazni fog, nem csak a megváltozottakat. Igaznak kell lennie Home Assistant-on keresztüli integráció esetén"
+            " Has to be true when integrating via Home Assistant": "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant"
         },
         "Persist cached state, only used when cache_state: true": "Gyorsítótárazott állapot megőrzése, csak cache_state: true esetén használt",
         "Send cached state on startup, only used when cache_state: true": "Gyorsítótárazott állapot küldése indításkor, csak cache_state: true esetén használt",
@@ -623,32 +623,32 @@
         "Periodically check the health of Zigbee2MQTT": "Zigbee2MQTT állapotának rendszeres ellenőrzése",
         "Interval between checks in minutes": "Ellenőrzések közötti időköz percekben",
         "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)": {
-            "": "Ha igaz, minden egészségügyi ellenőrzés végrehajtásakor visszaállítja a statisztikákat (csak olyan statisztikákra vonatkozik, amelyek visszaállíthatók)."
+            "": "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)."
         },
         "Used in the MQTT topic of a device": {
-            " By default this is the device ID": "Egy eszköz MQTT témájában használt. Alapértelmezetten ez az eszköz ID"
+            " By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID"
         },
         "Retain MQTT messages of this device": "Ezen eszköz MQTT üzeneteinek megtartása",
         "Disables the device (excludes device from network scans, availability and group state updates)": "Eszköz letiltása (kizárja az eszközt a hálózati vizsgálatokból, elérhetőségből és csoport állapot frissítésekből)",
         "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
-            "version to 5": "Beállítja az MQTT üzenet lejáratát másodpercekben, Ügyelj arra, hogy az mqtt.version-t 5-re állítsd"
+            "version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5"
         },
         "QoS level for MQTT messages of this device": "QoS szint ezen eszköz MQTT üzeneteihez",
         "The minimum time between payloads in seconds": {
-            " Payloads received whilst the device is being throttled will be discarded": "A minimális idő a tartalmak között másodpercekben. Az eszköz szabályozása közben kapott tartalmak el lesznek dobva"
+            " Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded"
         },
         "Debounces messages of this device": "Ezen eszköz üzeneteinek debounce-olása",
         "Protects unique payload values of specified payload properties from overriding within debounce time": "Megóvja a megadott tartalom tulajdonságok egyedi tartalom értékeit a felülírástól a debounce időn belül",
         "Publish optimistic state after set": "Optimista állapot közzététele beállítás után",
         "Filter attributes with regex from published payload": {
-            "": "Attribútumok szűrése regex-szel a közzétett tartalomból."
+            "": "Filter attributes with regex from published payload."
         },
         "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change": {
-            "": "Attribútumok szűrése regex-szel a gyorsítótárhoz való hozzáadástól, ez megakadályozza, hogy az attribútum a közzétett tartalomban legyen, amikor az érték nem változott."
+            "": "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change."
         },
         "Filter attributes with regex from optimistic publish payload when calling /set": {
             " (This has no effect if optimistic is set to false)": {
-                "": "Attribútumok szűrése regex-szel az optimista közzétételi tartalomból /set hívásakor. (Ennek nincs hatása, ha az optimistic false-ra van állítva)."
+                "": "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false)."
             }
         },
         "The user-defined device icon for the frontend": {
@@ -660,7 +660,7 @@
                                 "g": {
                                     " device_icons/MODEL123": {
                                         "png)": {
-                                            "": "A felhasználó által definiált eszköz ikon a frontend-hez. Lehet egy teljes URL link egy képhez (pl. https://SOME.SITE/MODEL123.jpg) vagy egy helyi fájl útvonala a `device_icons` könyvtárban (pl. device_icons/MODEL123.png)."
+                                            "": "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png)."
                                         }
                                     }
                                 }
@@ -673,47 +673,7 @@
         "Name of the device in Home Assistant": "Az eszköz neve a Home Assistant-ban",
         "QoS level for MQTT messages of this group": "QoS szint ezen csoport MQTT üzeneteihez",
         "Control when to publish state OFF or CLOSE for a group": {
-            " 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Vezérli, hogy mikor tegye közzé az OFF vagy CLOSE állapotot egy csoporthoz. 'all_members_off': csak akkor tegye közzé az OFF/CLOSE állapotot, amikor minden csoport tag OFF/CLOSE állapotban van, 'last_member_state': tegye közzé az OFF állapotot, amikor valamelyik tag OFF-ra vált"
-        },
-        "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action.": "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action.",
-        "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change.": "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change.",
-        "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)",
-        "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing.": "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing.",
-        "Disable retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration": "Disable retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration",
-        "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead.": "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead.",
-        "Location of the adapter. To autodetect the port, set null": "Location of the adapter. To autodetect the port, set null",
-        "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200).": "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200).",
-        "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!": "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!",
-        "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day.": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day.",
-        "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually.": "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually.",
-        "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA.": "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA.",
-        "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values.": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values.",
-        "Frontend binding port. Ignored when using a unix domain socket": "Frontend binding port. Ignored when using a unix domain socket",
-        "Frontend binding host. Binds to a unix socket when an absolute path is given instead.": "Frontend binding host. Binds to a unix socket when an absolute path is given instead.",
-        "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated.": "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated.",
-        "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated.": "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated.",
-        "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'": "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'",
-        "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'": "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'",
-        "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed).": "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed).",
-        "The host running syslogd, defaults to localhost.": "The host running syslogd, defaults to localhost.",
-        "The port on the host that syslog is running on, defaults to syslogd's default port.": "The port on the host that syslog is running on, defaults to syslogd's default port.",
-        "The network protocol to log over (e.g. tcp4, udp4, tls4, unix, unix-connect, etc).": "The network protocol to log over (e.g. tcp4, udp4, tls4, unix, unix-connect, etc).",
-        "The path to the syslog dgram socket (i.e. /dev/log or /var/run/syslog for OS X).": "The path to the syslog dgram socket (i.e. /dev/log or /var/run/syslog for OS X).",
-        "PID of the process that log messages are coming from (Default process.pid).": "PID of the process that log messages are coming from (Default process.pid).",
-        "Host to indicate that log messages are coming from (Default: localhost).": "Host to indicate that log messages are coming from (Default: localhost).",
-        "The type of the syslog protocol to use (Default: BSD, also valid: 5424).": "The type of the syslog protocol to use (Default: BSD, also valid: 5424).",
-        "The name of the application (Default: Zigbee2MQTT).": "The name of the application (Default: Zigbee2MQTT).",
-        "The end of line character to be added to the end of the message (Default: Message without modifications).": "The end of line character to be added to the end of the message (Default: Message without modifications).",
-        "Adapter concurrency (e.g. 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Adapter concurrency (e.g. 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)",
-        "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant": "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant",
-        "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset).": "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset).",
-        "Used in the MQTT topic of a device. By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID",
-        "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5",
-        "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded",
-        "Filter attributes with regex from published payload.": "Filter attributes with regex from published payload.",
-        "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change.": "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change.",
-        "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false).": "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false).",
-        "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).": "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).",
-        "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF"
+            " 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF"
+        }
     }
 }

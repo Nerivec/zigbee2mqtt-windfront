@@ -99,7 +99,7 @@
         "create_group": "Luo ryhmä",
         "friendly_name_placeholder": "makuuhuone_valot, puutarha...",
         "remove_group": "Poista ryhmä",
-        "group_id": "Group ID",
+        "group_id": "Ryhmä-ID",
         "group_members": "Ryhmän jäsenet",
         "group_scenes": "Ryhmän kohtaukset",
         "scenes": "Kohtaukset",
@@ -118,29 +118,29 @@
         "help": "Ohje",
         "load": "Lataa",
         "reload": "Lataa uudelleen",
-        "loading": "Depending on the size of the network and the quality of its links, this can take a while.",
-        "parent": "Parent",
-        "child": "Child",
-        "sibling": "Sibling",
-        "children": "Children",
-        "siblings": "Siblings",
-        "previous_children": "Previous children",
-        "nodes": "Nodes",
-        "edges": "Edges",
-        "legend": "Legend",
-        "depth": "Depth",
-        "routes": "Routes",
+        "loading": "Verkon koosta ja sen yhteyksien laadusta riippuen tämä voi kestää hetken.",
+        "parent": "Vanhempi",
+        "child": "Lapsi",
+        "sibling": "Sisarus",
+        "children": "Lapset",
+        "siblings": "Sisarukset",
+        "previous_children": "Edelliset lapset",
+        "nodes": "Solmut",
+        "edges": "Reunat",
+        "legend": "Selite",
+        "depth": "Syvyys",
+        "routes": "Reitit",
         "type": "Tyyppi",
-        "raw": "Display data/map",
+        "raw": "Näytä data/kartta",
         "graphviz": "External - Graphviz",
         "plantuml": "External - PlantUML",
-        "enable_routes": "Enable routes",
-        "display_type": "Display type",
+        "enable_routes": "Ota reitit käyttöön",
+        "display_type": "Näyttötyyppi",
         "data": "Data",
         "map": "Map",
-        "layout_type": "Layout type",
-        "label_type": "Label type",
-        "download_image": "Download as image",
+        "layout_type": "Asettelutyyppi",
+        "label_type": "Otsikkotyyppi",
+        "download_image": "Lataa kuvana",
         "zoom_in": "Zoom in",
         "zoom_out": "Zoom out",
         "fit_view": "Fit view",
@@ -284,7 +284,7 @@
         "not_supported": "Not supported",
         "occupied": "Occupied",
         "open": "Avaa",
-        "supported": "Supported",
+        "supported": "Tuettu",
         "true": "Tosi",
         "empty_string": "Empty string(\"\")",
         "leaking": "Leaking",
@@ -321,11 +321,11 @@
         "interview_state": "Interview state",
         "last_seen": "Last seen",
         "lqi": "LQI",
-        "manufacturer": "Manufacturer",
+        "manufacturer": "Valmistaja",
         "max_rep_interval": "Max rep interval",
         "min_rep_change": "Min rep change",
         "min_rep_interval": "Min rep interval",
-        "model": "Model",
+        "model": "Malli",
         "network_address": "Network address",
         "network_address_hex": "Network address in hexadecimal format",
         "network_address_dec": "Network address in decimal format",
@@ -339,7 +339,7 @@
         "select_attribute": "Select attribute",
         "select_cluster": "Select cluster",
         "support_status": "Support status",
-        "unsupported": "Unsupported",
+        "unsupported": "Ei tuettu",
         "updating_firmware": "Updating firmware",
         "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
         "zigbee_manufacturer": "ZigBee Manufacturer",
@@ -423,11 +423,11 @@
         "Home Assistant discovery topic": "Home Assistant löytämisaihe",
         "Home Assistant status topic": "Home Assistant tilaaihe",
         "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action": {
-            "": "Home Assistant vanha toimintosensori, kun käytössä toimintosensori löydetään ja tyhjä `action` lähetetään jokaisen julkaistun toiminnon jälkeen."
+            "": "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action."
         },
         "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions": {
             " The events and attributes are currently deemed experimental and subject to change": {
-                "": "Home Assistant kokeelliset tapahtumayksikköt, kun käytössä Zigbee2MQTT lisää tapahtumayksikköjä paljastetuille toiminnoille. Tapahtumat ja attribuutit katsotaan tällä hetkellä kokeellisiksi ja voivat muuttua."
+                "": "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change."
             }
         },
         "Checks whether devices are online/offline": "Tarkistaa ovatko laitteet online/offline",
@@ -439,14 +439,14 @@
             "5, x3, x6, x12": {
                 "": {
                     "": {
-                        ")": "Ota käyttöön timeout backoff epäonnistuneissa saatavuusping-eissä (x1.5, x3, x6, x12...)"
+                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
                     }
                 }
             }
         },
         "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device": {
             " A value of zero disables pausing": {
-                "": "Keskeytä saatavuusping-it kun backoff ylittää tämän rajan kunnes uusi Zigbee viesti vastaanotetaan laitteesta. Nolla-arvo poistaa keskeytyksen käytöstä."
+                "": "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing."
             }
         },
         "Options for passive devices (mostly battery powered)": "Vaihtoehdot passiivisille laitteille (useimmiten akkukäyttöiset)",
@@ -467,90 +467,90 @@
             " ONLY enable if your MQTT broker doesn't support retained message (e": {
                 "g": {
                     " AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform)": {
-                        " Enabling will break the Home Assistant integration": "Poista retain käytöstä kaikille lähetettäville viesteille. Ota käyttöön VAIN jos MQTT välittäjäsi ei tue pidätettyjä viestejä (esim. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Käyttöönotto rikkoo Home Assistant integraation"
+                        " Enabling will break the Home Assistant integration": "Disable retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration"
                     }
                 }
             }
         },
         "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT": {
             " NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead": {
-                "": "Määrittää suurimman sallitun paketin pituuden (tavuina) jonka palvelin voi lähettää Zigbee2MQTT:lle. HUOM: Sama arvo on MQTT välittäjässäsi mutta asiakkaan sille lähettämälle pituudelle."
+                "": "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead."
             }
         },
         "Location of the adapter": {
-            " To autodetect the port, set null": "Sovittimen sijainti. Automaattiseen portin tunnistukseen aseta null"
+            " To autodetect the port, set null": "Location of the adapter. To autodetect the port, set null"
         },
         "Disable LED of the adapter if supported": "Poista sovittimen LED käytöstä jos tuettu",
         "Adapter type, not needed unless you are experiencing problems": "Sovittimen tyyppi, ei tarvita ellei kohtaa ongelmia",
         "Baud rate speed for the serial port": {
             " This must match what the firmware on your adapter supports (most commonly 115200)": {
-                "": "Sarjaportin baud-nopeus. Tämän täytyy vastata sitä mitä sovittimesi firmware tukee (yleisimmin 115200)."
+                "": "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200)."
             }
         },
         "RTS / CTS Hardware Flow Control for serial port": "RTS / CTS laitteiston vuonohjaus sarjaportille",
         "Block devices from the network (by ieeeAddr)": "Estä laitteet verkosta (ieeeAddr:n mukaan)",
         "Allow only certain devices to join the network (by ieeeAddr)": {
-            " Note that all devices not on the passlist will be removed from the network!": "Salli vain tiettyjen laitteiden liittyä verkkoon (ieeeAddr:n mukaan). Huomaa että kaikki laitteet jotka eivät ole hyväksyttyjen listalla poistetaan verkosta!"
+            " Note that all devices not on the passlist will be removed from the network!": "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!"
         },
         "Your device may request a check for a new firmware update": {
             " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
                 " The value is set in minutes, and the default is 1 day": {
-                    "": "Laitteesi voi pyytää uuden firmware-päivityksen tarkistusta. Tämä arvo määrittää kuinka usein kolmannen osapuolen palvelimia voidaan todella ottaa yhteyttä firmware-päivitysten etsimiseksi. Arvo asetetaan minuutteina ja oletusarvo on 1 päivä."
+                    "": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day."
                 }
             }
         },
         "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers": {
             " If you disable these device initiated checks, you can still initiate a firmware update check manually": {
-                "": "Zigbee laitteet voivat pyytää firmware-päivitystä ja tekevät niin usein, aiheuttaen Zigbee2MQTT:n ottamaan yhteyttä kolmannen osapuolen palvelimiin. Jos poistat nämä laitteen aloittamat tarkistukset käytöstä, voit edelleen aloittaa firmware-päivitystarkistuksen manuaalisesti."
+                "": "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually."
             }
         },
         "Location of override OTA index file": "Override OTA indeksitiedoston sijainti",
         "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
             " You can increase this value if your network appears unstable during OTA": {
-                "": "Rajoittaa pyyntöjen määrää (millisekunteina) OTA päivitysten aikana verkon ruuhkautumisen vähentämiseksi. Voit nostaa tätä arvoa jos verkkosi vaikuttaa epävakaalta OTA:n aikana."
+                "": "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA."
             }
         },
         "The size of file chunks sent during an update (in bytes)": {
             " Note: This value may get ignored for manufacturers that require specific values": {
-                "": "Päivityksen aikana lähetettyjen tiedostopalojen koko (tavuina). Huom: Tämä arvo voidaan jättää huomiotta valmistajille jotka vaativat erityisiä arvoja."
+                "": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values."
             }
         },
         "Enable frontend": "Ota käyttöön käyttöliittymä",
         "Package used for the frontend": "Käyttöliittymässä käytetty paketti",
         "Frontend binding port": {
-            " Ignored when using a unix domain socket": "Käyttöliittymän sidontaportti. Jätetään huomiotta kun käytetään unix domain socket-ia"
+            " Ignored when using a unix domain socket": "Frontend binding port. Ignored when using a unix domain socket"
         },
         "Frontend binding host": {
             " Binds to a unix socket when an absolute path is given instead": {
-                "": "Käyttöliittymän sidontaisäntä. Sitoo unix socket-iin kun absoluuttinen polku annetaan sen sijaan."
+                "": "Frontend binding host. Binds to a unix socket when an absolute path is given instead."
             }
         },
         "Enables authentication, disabled by default": "Ottaa käyttöön todennuksen, oletuksena poistettu käytöstä",
         "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page": "URL jossa käyttöliittymä voidaan saavuttaa, tällä hetkellä käytetään vain Home Assistant laitteen asetussivulla",
         "SSL Certificate file path for exposing HTTPS": {
             " The sibling property 'ssl_key' must be set for HTTPS to be activated": {
-                "": "SSL varmennetiedoston polku HTTPS:n paljastamiseksi. Sisarominaisuus 'ssl_key' täytyy asettaa HTTPS:n aktivoimiseksi."
+                "": "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated."
             }
         },
         "SSL key file path for exposing HTTPS": {
             " The sibling property 'ssl_cert' must be set for HTTPS to be activated": {
-                "": "SSL avaintiedoston polku HTTPS:n paljastamiseksi. Sisarominaisuus 'ssl_cert' täytyy asettaa HTTPS:n aktivoimiseksi."
+                "": "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated."
             }
         },
         "Base URL for the frontend": {
             " If hosted under a subpath, e": {
                 "g": {
-                    " 'http://localhost:8080/z2m', set this to '/z2m'": "Perus-URL käyttöliittymälle. Jos isännöity alipolun alla, esim. 'http://localhost:8080/z2m', aseta tämä '/z2m':ksi"
+                    " 'http://localhost:8080/z2m', set this to '/z2m'": "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'"
                 }
             }
         },
         "Hide frontend notifications matching specified regex strings": {
             " Example: 'z2m: Failed to ping": {
-                "*'": "Piilota käyttöliittymän ilmoitukset jotka vastaavat määritettyjä regex merkkijonoja. Esimerkki: 'z2m: Failed to ping.*'"
+                "*'": "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'"
             }
         },
         "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)": {
-            "": "Jos tosi, käyttöliittymää ei tarjoilla, vain WebSocket pidetään yllä Zigbee2MQTT:n toimesta (sinun täytyy tarjoilla itsenäinen käyttöliittymä itse tarpeen mukaan)."
+            "": "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)."
         },
         "Log rotation": "Lokin kierto",
         "Console json log": "Konsolin json loki",
@@ -564,53 +564,53 @@
         "Do not log these namespaces (regex-based) for debug level": "Älä lokita näitä nimiavaruuksia (regex-pohjaisia) debug-tasolle",
         "Number of log directories to keep before deleting the oldest one": "Säilytettävien lokihakemistojen määrä ennen vanhimman poistamista",
         "The host running syslogd, defaults to localhost": {
-            "": "Isäntä joka ajaa syslogd:tä, oletuksena localhost."
+            "": "The host running syslogd, defaults to localhost."
         },
         "The port on the host that syslog is running on, defaults to syslogd's default port": {
-            "": "Portti isännässä jossa syslog toimii, oletuksena syslogd:n oletusportti."
+            "": "The port on the host that syslog is running on, defaults to syslogd's default port."
         },
         "The network protocol to log over (e": {
             "g": {
                 " tcp4, udp4, tls4, unix, unix-connect, etc)": {
-                    "": "Verkkoprotokolla jota pitkin lokitetaan (esim. tcp4, udp4, tls4, unix, unix-connect, jne.)."
+                    "": "The network protocol to log over (e.g. tcp4, udp4, tls4, unix, unix-connect, etc)."
                 }
             }
         },
         "The path to the syslog dgram socket (i": {
             "e": {
                 " /dev/log or /var/run/syslog for OS X)": {
-                    "": "Polku syslog dgram socket-iin (eli /dev/log tai /var/run/syslog OS X:lle)."
+                    "": "The path to the syslog dgram socket (i.e. /dev/log or /var/run/syslog for OS X)."
                 }
             }
         },
         "PID of the process that log messages are coming from (Default process": {
             "pid)": {
-                "": "Prosessin PID josta lokiviestit tulevat (Oletus process.pid)."
+                "": "PID of the process that log messages are coming from (Default process.pid)."
             }
         },
         "Host to indicate that log messages are coming from (Default: localhost)": {
-            "": "Isäntä osoittamaan että lokiviestit tulevat (Oletus: localhost)."
+            "": "Host to indicate that log messages are coming from (Default: localhost)."
         },
         "The type of the syslog protocol to use (Default: BSD, also valid: 5424)": {
-            "": "Käytettävän syslog protokollan tyyppi (Oletus: BSD, myös kelvollinen: 5424)."
+            "": "The type of the syslog protocol to use (Default: BSD, also valid: 5424)."
         },
         "The name of the application (Default: Zigbee2MQTT)": {
-            "": "Sovelluksen nimi (Oletus: Zigbee2MQTT)."
+            "": "The name of the application (Default: Zigbee2MQTT)."
         },
         "The end of line character to be added to the end of the message (Default: Message without modifications)": {
-            "": "Rivinloppumerkki joka lisätään viestin loppuun (Oletus: Viesti ilman muokkausta)."
+            "": "The end of line character to be added to the end of the message (Default: Message without modifications)."
         },
         "ZigBee pan ID, changing requires re-pairing all devices!": "ZigBee pan ID, muuttaminen vaatii kaikkien laitteiden uudelleenparittamisen!",
         "Zigbee extended pan ID, changing requires re-pairing all devices!": "Zigbee laajennettu pan ID, muuttaminen vaatii kaikkien laitteiden uudelleenparittamisen!",
         "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)": "Zigbee kanava, muuttaminen saattaa vaatia joidenkin laitteiden uudelleenparittamisen! (Huom: käytä ZLL kanavaa: 11, 15, 20, tai 25 ongelmien välttämiseksi)",
         "Adapter concurrency (e": {
             "g": {
-                " 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Sovittimen samanaikaisuus (esim. 2 CC2531:lle tai 16 CC26X2R1:lle) (oletus: null, käyttää suositeltua arvoa)"
+                " 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Adapter concurrency (e.g. 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)"
             }
         },
         "Adapter delay": "Sovittimen viive",
         "MQTT message payload will contain all attributes, not only changed ones": {
-            " Has to be true when integrating via Home Assistant": "MQTT viestin sisältö sisältää kaikki attribuutit, ei vain muuttuneet. Täytyy olla tosi kun integroidaan Home Assistant:in kautta"
+            " Has to be true when integrating via Home Assistant": "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant"
         },
         "Persist cached state, only used when cache_state: true": "Säilytä välimuistissa oleva tila, käytetään vain kun cache_state: true",
         "Send cached state on startup, only used when cache_state: true": "Lähetä välimuistissa oleva tila käynnistyksessä, käytetään vain kun cache_state: true",
@@ -623,32 +623,32 @@
         "Periodically check the health of Zigbee2MQTT": "Tarkista säännöllisesti Zigbee2MQTT:n terveydentila",
         "Interval between checks in minutes": "Tarkistusten välinen aika minuutteina",
         "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)": {
-            "": "Jos tosi, nollaa tilastot joka kerta kun terveystarkistus suoritetaan (soveltuu vain tilastoihin jotka voidaan nollata)."
+            "": "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)."
         },
         "Used in the MQTT topic of a device": {
-            " By default this is the device ID": "Käytetään laitteen MQTT aiheessa. Oletuksena tämä on laitteen ID"
+            " By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID"
         },
         "Retain MQTT messages of this device": "Säilytä tämän laitteen MQTT viestit",
         "Disables the device (excludes device from network scans, availability and group state updates)": "Poistaa laitteen käytöstä (sulkee laitteen pois verkkoskannauksista, saatavuudesta ja ryhmätilapäivityksistä)",
         "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
-            "version to 5": "Asettaa MQTT viestin vanhenemisen sekunteina, Varmista että asetat mqtt.version arvoksi 5"
+            "version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5"
         },
         "QoS level for MQTT messages of this device": "QoS taso tämän laitteen MQTT viesteille",
         "The minimum time between payloads in seconds": {
-            " Payloads received whilst the device is being throttled will be discarded": "Pienin aika sisältöjen välillä sekunteina. Sisällöt jotka vastaanotetaan laitteen kuristamisen aikana hylätään"
+            " Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded"
         },
         "Debounces messages of this device": "Debounce tämän laitteen viestit",
         "Protects unique payload values of specified payload properties from overriding within debounce time": "Suojaa ainutlaatuisia sisältöarvoja määritetyistä sisältöominaisuuksista ylikirjoittamiselta debounce-ajan sisällä",
         "Publish optimistic state after set": "Julkaise optimistinen tila asetuksen jälkeen",
         "Filter attributes with regex from published payload": {
-            "": "Suodata attribuutteja regex:llä julkaistusta sisällöstä."
+            "": "Filter attributes with regex from published payload."
         },
         "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change": {
-            "": "Suodata attribuutteja regex:llä välimuistiin lisäämisestä, tämä estää attribuutin olemasta julkaistussa sisällössä kun arvo ei muuttunut."
+            "": "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change."
         },
         "Filter attributes with regex from optimistic publish payload when calling /set": {
             " (This has no effect if optimistic is set to false)": {
-                "": "Suodata attribuutteja regex:llä optimistisesta julkaisusisällöstä kun kutsutaan /set. (Tällä ei ole vaikutusta jos optimistic on asetettu false:ksi)."
+                "": "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false)."
             }
         },
         "The user-defined device icon for the frontend": {
@@ -660,7 +660,7 @@
                                 "g": {
                                     " device_icons/MODEL123": {
                                         "png)": {
-                                            "": "Käyttäjän määrittelemä laitekuvake käyttöliittymälle. Se voi olla täydellinen URL linkki kuvaan (esim. https://SOME.SITE/MODEL123.jpg) tai polku paikalliseen tiedostoon `device_icons` hakemistossa (esim. device_icons/MODEL123.png)."
+                                            "": "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png)."
                                         }
                                     }
                                 }
@@ -673,47 +673,7 @@
         "Name of the device in Home Assistant": "Laitteen nimi Home Assistant:issa",
         "QoS level for MQTT messages of this group": "QoS taso tämän ryhmän MQTT viesteille",
         "Control when to publish state OFF or CLOSE for a group": {
-            " 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Hallitse milloin julkaista tila OFF tai CLOSE ryhmälle. 'all_members_off': julkaise tila OFF/CLOSE vain kun kaikki ryhmän jäsenet ovat tilassa OFF/CLOSE, 'last_member_state': julkaise tila OFF aina kun joku sen jäsenistä vaihtaa OFF:iin"
-        },
-        "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action.": "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action.",
-        "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change.": "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change.",
-        "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)",
-        "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing.": "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing.",
-        "Disable retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration": "Disable retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration",
-        "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead.": "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead.",
-        "Location of the adapter. To autodetect the port, set null": "Location of the adapter. To autodetect the port, set null",
-        "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200).": "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200).",
-        "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!": "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!",
-        "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day.": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day.",
-        "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually.": "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually.",
-        "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA.": "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA.",
-        "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values.": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values.",
-        "Frontend binding port. Ignored when using a unix domain socket": "Frontend binding port. Ignored when using a unix domain socket",
-        "Frontend binding host. Binds to a unix socket when an absolute path is given instead.": "Frontend binding host. Binds to a unix socket when an absolute path is given instead.",
-        "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated.": "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated.",
-        "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated.": "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated.",
-        "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'": "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'",
-        "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'": "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'",
-        "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed).": "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed).",
-        "The host running syslogd, defaults to localhost.": "The host running syslogd, defaults to localhost.",
-        "The port on the host that syslog is running on, defaults to syslogd's default port.": "The port on the host that syslog is running on, defaults to syslogd's default port.",
-        "The network protocol to log over (e.g. tcp4, udp4, tls4, unix, unix-connect, etc).": "The network protocol to log over (e.g. tcp4, udp4, tls4, unix, unix-connect, etc).",
-        "The path to the syslog dgram socket (i.e. /dev/log or /var/run/syslog for OS X).": "The path to the syslog dgram socket (i.e. /dev/log or /var/run/syslog for OS X).",
-        "PID of the process that log messages are coming from (Default process.pid).": "PID of the process that log messages are coming from (Default process.pid).",
-        "Host to indicate that log messages are coming from (Default: localhost).": "Host to indicate that log messages are coming from (Default: localhost).",
-        "The type of the syslog protocol to use (Default: BSD, also valid: 5424).": "The type of the syslog protocol to use (Default: BSD, also valid: 5424).",
-        "The name of the application (Default: Zigbee2MQTT).": "The name of the application (Default: Zigbee2MQTT).",
-        "The end of line character to be added to the end of the message (Default: Message without modifications).": "The end of line character to be added to the end of the message (Default: Message without modifications).",
-        "Adapter concurrency (e.g. 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Adapter concurrency (e.g. 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)",
-        "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant": "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant",
-        "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset).": "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset).",
-        "Used in the MQTT topic of a device. By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID",
-        "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5",
-        "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded",
-        "Filter attributes with regex from published payload.": "Filter attributes with regex from published payload.",
-        "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change.": "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change.",
-        "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false).": "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false).",
-        "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).": "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).",
-        "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF"
+            " 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF"
+        }
     }
 }
