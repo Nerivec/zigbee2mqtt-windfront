@@ -150,7 +150,7 @@
         "node_strength": "Node strength",
         "link_distance": "Link distance",
         "icons": "Icons",
-        "show_icons": "Show icons",
+        "show_icons": "Mostrar icons",
         "copy_paste_on": "Copy and paste the following data in one of the available online viewers/editors.",
         "highlight_info": "Click on a device's image to highlight it automatically.",
         "legend_node_siblings": "Only highest-rated siblings are shown, which should roughly match the actual connections of the network.",
@@ -183,16 +183,16 @@
     "ota": {
         "check": "Check for new updates",
         "check_selected": "Check selected",
-        "update_selected": "Update selected",
+        "update_selected": "Actualitzar selected",
         "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times.",
         "empty_ota_message": "No device currently support OTA",
         "remaining_time": "Remaining time",
         "schedule": "Schedule update",
         "schedule_info": "Will update on next OTA request from device",
-        "unschedule": "Cancel scheduled update",
-        "update": "Update device firmware",
+        "unschedule": "Cancel·lar scheduled update",
+        "update": "Actualitzar device firmware",
         "firmware_version": "Firmware version",
-        "available_firmware_version": "Available firmware version",
+        "available_firmware_version": "Disponible firmware version",
         "app": "App",
         "stack": "Stack"
     },
@@ -232,18 +232,18 @@
         "zigbee_herdsman_version": "zigbee-herdsman version",
         "localise_images": "Localise device images",
         "frontend_notice": "Aquesta configuració s'emmagatzema localment al teu navegador. Usar finestres privades o netejar la memòria cau les restablirà als valors per defecte.",
-        "reset_settings": "Reset settings",
-        "reset_auth": "Reset auth",
+        "reset_settings": "Restablir settings",
+        "reset_auth": "Restablir auth",
         "reset_all": "Restablir tot",
         "language": "Idioma",
         "theme": "Tema",
-        "homepage": "Homepage",
-        "dashboard_column_display": "Dashboard column display",
+        "homepage": "Inicipage",
+        "dashboard_column_display": "Tauler column display",
         "permit_join_time": "Permit join time",
         "dev_console": "Consola de desenvolupament",
-        "max_on_screen_notifications": "Max on-screen notifications",
-        "network_raw": "Network data/map",
-        "network_map": "Network map",
+        "max_on_screen_notifications": "Màx on-screen notifications",
+        "network_raw": "Xarxa data/map",
+        "network_map": "Xarxa map",
         "machine": "Machine",
         "node_version": "Node version",
         "version": "Versió",
@@ -264,9 +264,9 @@
         "messages": "Messages",
         "messages_per_sec": "Messages per sec",
         "leave_count": "Leave count",
-        "network_address_changes": "Network address changes",
+        "network_address_changes": "Xarxa address changes",
         "very_low": "Very low",
-        "interview_info": "Device interviews can heavily influence this data."
+        "interview_info": "Dispositiu interviews can heavily influence this data."
     },
     "touchlink": {
         "detected_devices_message": "Detected {{count}} touchlink devices.",
@@ -279,7 +279,7 @@
     },
     "values": {
         "clear": "Esborrar",
-        "closed": "Closed",
+        "closed": "Tancard",
         "false": "Fals",
         "not_supported": "Not supported",
         "occupied": "Occupied",
@@ -291,7 +291,7 @@
         "tampered": "Tampered",
         "null": "Null",
         "Clear": "Esborrar",
-        "Closed": "Closed",
+        "Closed": "Tancard",
         "Occupied": "Occupied",
         "Open": "Obert"
     },
@@ -308,7 +308,7 @@
         "block_join": "Block from joining again",
         "cluster": "Clúster",
         "description": "Descripció",
-        "device_type": "Device type",
+        "device_type": "Dispositiu type",
         "endpoint": "Punt final",
         "firmware_id": "Firmware ID",
         "firmware_build_date": "Firmware build date",
@@ -322,13 +322,13 @@
         "last_seen": "Last seen",
         "lqi": "LQI",
         "manufacturer": "Fabricant",
-        "max_rep_interval": "Max rep interval",
-        "min_rep_change": "Min rep change",
-        "min_rep_interval": "Min rep interval",
+        "max_rep_interval": "Màx rep interval",
+        "min_rep_change": "Mín rep change",
+        "min_rep_interval": "Mín rep interval",
         "model": "Model",
-        "network_address": "Network address",
-        "network_address_hex": "Network address in hexadecimal format",
-        "network_address_dec": "Network address in decimal format",
+        "network_address": "Xarxa address",
+        "network_address_hex": "Xarxa address in hexadecimal format",
+        "network_address_dec": "Xarxa address in decimal format",
         "none": "Cap",
         "pic": "Pic",
         "power": "Potència",
@@ -338,7 +338,7 @@
         "rename_device": "Rename device",
         "select_attribute": "Select attribute",
         "select_cluster": "Select cluster",
-        "support_status": "Support status",
+        "support_status": "Suport status",
         "unsupported": "No compatible",
         "updating_firmware": "Updating firmware",
         "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
@@ -348,10 +348,10 @@
         "channel": "Channel",
         "possible": "Possible",
         "available": "Disponible",
-        "edit_description": "Edit description",
-        "save_description": "Save description",
-        "update_description": "Update description",
-        "read_write_attributes": "Read / Write attributes from endpoint cluster",
+        "edit_description": "Editar description",
+        "save_description": "Desar description",
+        "update_description": "Actualitzar description",
+        "read_write_attributes": "Llegir / Write attributes from endpoint cluster",
         "input_clusters": "Input clusters",
         "output_clusters": "Output clusters",
         "custom_clusters": "Custom clusters",
@@ -371,14 +371,14 @@
     "scene": {
         "manage_scenes_header": "Manage scenes",
         "add_update_header": "Add/update a scene",
-        "scene_id": "Scene ID",
+        "scene_id": "Escena ID",
         "recall": "Recall",
         "store": "Store",
         "remove": "Eliminar",
         "remove_all": "Remove all",
         "add": "Afegir",
-        "select_scene": "Select Scene",
-        "scene_name": "Scene Name"
+        "select_scene": "Select Escena",
+        "scene_name": "Scene Nom"
     },
     "stats": {
         "byType": "By device type",
@@ -399,7 +399,7 @@
         "generated_external_definition": "Generated external definition",
         "state_property": "State property",
         "state_property_info": "Set the result into the device's state (only for read)",
-        "reset_frontend_state": "Reset frontend state",
+        "reset_frontend_state": "Restablir frontend state",
         "mqtt": "MQTT",
         "external_converters": "External Converters",
         "external_extensions": "External Extensions",
@@ -414,7 +414,7 @@
         "create_new_converter": "Create new converter",
         "select_converter_to_edit": "Select converter to edit",
         "codespace_info": "A Github Codespace is available to help in development",
-        "show_definition": "Show definition",
+        "show_definition": "Mostrar definition",
         "hide_definition": "Hide definition"
     },
     "settingsSchemaDescriptions": {
@@ -439,7 +439,7 @@
             "5, x3, x6, x12": {
                 "": {
                     "": {
-                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
+                        ")": "Activar timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
                     }
                 }
             }
@@ -522,7 +522,7 @@
         },
         "Frontend binding host": {
             " Binds to a unix socket when an absolute path is given instead": {
-                "": "Frontend binding host. Binds to a unix socket when an absolute path is given instead."
+                "": "Frontend binding host. Vinculars to a unix socket when an absolute path is given instead."
             }
         },
         "Enables authentication, disabled by default": "Habilita l'autenticació, desactivada per defecte",

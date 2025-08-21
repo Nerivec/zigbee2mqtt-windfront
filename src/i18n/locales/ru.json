@@ -189,8 +189,8 @@
         "remaining_time": "Remaining time",
         "schedule": "Schedule update",
         "schedule_info": "Will update on next OTA request from device",
-        "unschedule": "Cancel scheduled update",
-        "update": "Update device firmware",
+        "unschedule": "Отмена scheduled update",
+        "update": "Обновить device firmware",
         "firmware_version": "Firmware version",
         "available_firmware_version": "Available firmware version",
         "app": "App",
@@ -232,18 +232,18 @@
         "zigbee_herdsman_version": "zigbee-herdsman version",
         "localise_images": "Localise device images",
         "frontend_notice": "Эти настройки хранятся локально в вашем браузере. Использование приватных окон или очистка кэша сбросит их к значениям по умолчанию.",
-        "reset_settings": "Reset settings",
-        "reset_auth": "Reset auth",
+        "reset_settings": "Сбросить settings",
+        "reset_auth": "Сбросить auth",
         "reset_all": "Сбросить все",
         "language": "Язык",
         "theme": "Тема",
-        "homepage": "Homepage",
-        "dashboard_column_display": "Dashboard column display",
+        "homepage": "Главнаяpage",
+        "dashboard_column_display": "Панель column display",
         "permit_join_time": "Permit join time",
         "dev_console": "Консоль разработчика",
         "max_on_screen_notifications": "Max on-screen notifications",
-        "network_raw": "Network data/map",
-        "network_map": "Network map",
+        "network_raw": "Сеть data/map",
+        "network_map": "Сеть map",
         "machine": "Machine",
         "node_version": "Node version",
         "version": "Версия",
@@ -264,9 +264,9 @@
         "messages": "Сообщения",
         "messages_per_sec": "Messages per sec",
         "leave_count": "Leave count",
-        "network_address_changes": "Network address changes",
+        "network_address_changes": "Сеть address changes",
         "very_low": "Very low",
-        "interview_info": "Device interviews can heavily influence this data."
+        "interview_info": "Устройство interviews can heavily influence this data."
     },
     "touchlink": {
         "detected_devices_message": "Detected {{count}} touchlink devices.",
@@ -279,7 +279,7 @@
     },
     "values": {
         "clear": "Очистить",
-        "closed": "Closed",
+        "closed": "Закрытьd",
         "false": "Ложь",
         "not_supported": "Not supported",
         "occupied": "Occupied",
@@ -291,7 +291,7 @@
         "tampered": "Tampered",
         "null": "Null",
         "Clear": "Очистить",
-        "Closed": "Closed",
+        "Closed": "Закрытьd",
         "Occupied": "Occupied",
         "Open": "Открыть"
     },
@@ -308,7 +308,7 @@
         "block_join": "Block from joining again",
         "cluster": "Кластер",
         "description": "Описание",
-        "device_type": "Device type",
+        "device_type": "Устройство type",
         "endpoint": "Конечная точка",
         "firmware_id": "Firmware ID",
         "firmware_build_date": "Firmware build date",
@@ -327,8 +327,8 @@
         "min_rep_interval": "Min rep interval",
         "model": "Модель",
         "network_address": "Сетевой адрес",
-        "network_address_hex": "Network address in hexadecimal format",
-        "network_address_dec": "Network address in decimal format",
+        "network_address_hex": "Сеть address in hexadecimal format",
+        "network_address_dec": "Сеть address in decimal format",
         "none": "Нет",
         "pic": "Pic",
         "power": "Мощность",
@@ -348,9 +348,9 @@
         "channel": "Канал",
         "possible": "Possible",
         "available": "Доступно",
-        "edit_description": "Edit description",
-        "save_description": "Save description",
-        "update_description": "Update description",
+        "edit_description": "Редактировать description",
+        "save_description": "Сохранить description",
+        "update_description": "Обновить description",
         "read_write_attributes": "Read / Write attributes from endpoint cluster",
         "input_clusters": "Input clusters",
         "output_clusters": "Output clusters",
@@ -378,7 +378,7 @@
         "remove_all": "Remove all",
         "add": "Добавить",
         "select_scene": "Select Scene",
-        "scene_name": "Scene Name"
+        "scene_name": "Scene Имя"
     },
     "stats": {
         "byType": "By device type",
@@ -399,7 +399,7 @@
         "generated_external_definition": "Generated external definition",
         "state_property": "State property",
         "state_property_info": "Set the result into the device's state (only for read)",
-        "reset_frontend_state": "Reset frontend state",
+        "reset_frontend_state": "Сбросить frontend state",
         "mqtt": "MQTT",
         "external_converters": "External Converters",
         "external_extensions": "External Extensions",
@@ -414,7 +414,7 @@
         "create_new_converter": "Create new converter",
         "select_converter_to_edit": "Select converter to edit",
         "codespace_info": "A Github Codespace is available to help in development",
-        "show_definition": "Show definition",
+        "show_definition": "Показать definition",
         "hide_definition": "Hide definition"
     },
     "settingsSchemaDescriptions": {
@@ -439,7 +439,7 @@
             "5, x3, x6, x12": {
                 "": {
                     "": {
-                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
+                        ")": "Включить timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
                     }
                 }
             }

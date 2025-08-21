@@ -99,11 +99,11 @@
         "hide_definition": "Hide definition",
         "mqtt": "MQTT",
         "mqtt_topic_info": "Omit the 'base_topic', frontend messages are sent over WebSocket directly to Zigbee2MQTT.",
-        "reset_frontend_state": "Reset frontend state",
+        "reset_frontend_state": "Ripristina frontend state",
         "select_converter_to_edit": "Select converter to edit",
         "select_extension_to_edit": "Select extension to edit",
         "send_mqtt": "Send MQTT message",
-        "show_definition": "Show definition",
+        "show_definition": "Mostra definition",
         "state_property": "State property",
         "state_property_info": "Set the result into the device's state (only for read)",
         "topic": "Argomento"
@@ -138,13 +138,13 @@
     },
     "health": {
         "awaiting_next_check": "Awaiting next check",
-        "interview_info": "Device interviews can heavily influence this data.",
+        "interview_info": "Dispositivo interviews can heavily influence this data.",
         "last_check": "Ultimo controllo",
         "leave_count": "Leave count",
         "load_average": "Load average",
         "messages": "Messaggi",
         "messages_per_sec": "Messages per sec",
-        "network_address_changes": "Network address changes",
+        "network_address_changes": "Rete address changes",
         "os": "OS",
         "process": "Processo",
         "published": "Pubblicato",
@@ -240,8 +240,8 @@
         "schedule": "Schedule update",
         "schedule_info": "Will update on next OTA request from device",
         "stack": "Stack",
-        "unschedule": "Cancel scheduled update",
-        "update": "Update device firmware",
+        "unschedule": "Annulla scheduled update",
+        "update": "Aggiorna device firmware",
         "update_selected": "Aggiorna selezionati",
         "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times."
     },
@@ -253,7 +253,7 @@
         "remove": "Rimuovi",
         "remove_all": "Remove all",
         "scene_id": "ID scena",
-        "scene_name": "Scene Name",
+        "scene_name": "Scene Nome",
         "select_scene": "Select Scene",
         "store": "Store"
     },
@@ -286,15 +286,15 @@
         "main": "Main",
         "max_on_screen_notifications": "Max on-screen notifications",
         "mqtt": "MQTT",
-        "network_map": "Network map",
-        "network_raw": "Network data/map",
+        "network_map": "Rete map",
+        "network_raw": "Rete data/map",
         "node_version": "Node version",
         "ota": "OTA updates",
         "passlist": "Passlist",
         "permit_join_time": "Tempo permesso di adesione",
         "request_z2m_backup": "Request Z2m backup",
         "reset_all": "Reset tutto",
-        "reset_auth": "Reset auth",
+        "reset_auth": "Ripristina auth",
         "reset_settings": "Ripristina impostazioni",
         "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
         "revision": "Revision",
@@ -346,7 +346,7 @@
         },
         "Create symlink to current logs in the log directory": "Create symlink to current logs in the log directory",
         "Debounces messages of this device": "Debounces messages of this device",
-        "Disable LED of the adapter if supported": "Disable LED of the adapter if supported",
+        "Disable LED of the adapter if supported": "Disabilita LED of the adapter if supported",
         "Disable retain for all send messages": {
             " ONLY enable if your MQTT broker doesn't support retained message (e": {
                 "g": {
@@ -357,21 +357,21 @@
             }
         },
         "Disable self-signed SSL certificate": "Disabilita certificato SSL auto-firmato",
-        "Disables the device (excludes device from network scans, availability and group state updates)": "Disables the device (excludes device from network scans, availability and group state updates)",
+        "Disables the device (excludes device from network scans, availability and group state updates)": "Disabilitas the device (excludes device from network scans, availability and group state updates)",
         "Do not log these namespaces (regex-based) for debug level": "Do not log these namespaces (regex-based) for debug level",
         "Enable Home Assistant integration": "Abilita integrazione Home Assistant",
         "Enable availability checks": "Abilita controlli di disponibilità",
-        "Enable frontend": "Enable frontend",
+        "Enable frontend": "Abilita frontend",
         "Enable timeout backoff on failed availability pings (x1": {
             "5, x3, x6, x12": {
                 "": {
                     "": {
-                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
+                        ")": "Abilita timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
                     }
                 }
             }
         },
-        "Enables authentication, disabled by default": "Enables authentication, disabled by default",
+        "Enables authentication, disabled by default": "Abilitas authentication, disabled by default",
         "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)": "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)",
         "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change": {
             "": "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change."
@@ -446,7 +446,7 @@
         "MQTT server authentication user": "Utente autenticazione server MQTT",
         "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time": "Jitter massimo (in ms) consentito su timeout per evitare che i ping di disponibilità tentino di attivarsi nello stesso momento",
         "Name of the device in Home Assistant": "Name of the device in Home Assistant",
-        "Network encryption key, changing requires re-pairing all devices!": "Network encryption key, changing requires re-pairing all devices!",
+        "Network encryption key, changing requires re-pairing all devices!": "Rete encryption key, changing requires re-pairing all devices!",
         "Number of log directories to keep before deleting the oldest one": "Number of log directories to keep before deleting the oldest one",
         "Options for active devices (routers/mains powered)": "Opzioni per dispositivi attivi (router/alimentati da rete)",
         "Options for passive devices (mostly battery powered)": "Opzioni per dispositivi passivi (principalmente alimentati a batteria)",
@@ -620,8 +620,8 @@
         "dc_source": "DC Source",
         "description": "Descrizione",
         "device": "Dispositivo",
-        "device_type": "Device type",
-        "edit_description": "Edit description",
+        "device_type": "Dispositivo type",
+        "edit_description": "Modifica description",
         "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
         "emergency_mains_constantly_powered": "Emergency mains constantly powered",
         "endpoint": "Endpoint",
@@ -647,8 +647,8 @@
         "min_rep_interval": "Min rep interval",
         "model": "Modello",
         "network_address": "Indirizzo di rete",
-        "network_address_dec": "Network address in decimal format",
-        "network_address_hex": "Network address in hexadecimal format",
+        "network_address_dec": "Rete address in decimal format",
+        "network_address_hex": "Rete address in hexadecimal format",
         "none": "Nessuno",
         "other_zcl_clusters": "Altri cluster ZCL",
         "output_clusters": "Output clusters",
@@ -662,7 +662,7 @@
         "rename_device": "Rename device",
         "report_problem": "Report problem",
         "request_support": "Request support",
-        "save_description": "Save description",
+        "save_description": "Salva description",
         "select_attribute": "Select attribute",
         "select_cluster": "Select cluster",
         "submit_converter": "Submit converter",
@@ -671,7 +671,7 @@
         "unknown": "Sconosciuto",
         "unsupported": "Non supportato",
         "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
-        "update_description": "Update description",
+        "update_description": "Aggiorna description",
         "updating_firmware": "Updating firmware",
         "zigbee_manufacturer": "ZigBee Manufacturer",
         "zigbee_model": "ZigBee Model"

@@ -150,7 +150,7 @@
         "node_strength": "Node strength",
         "link_distance": "Link distance",
         "icons": "Icons",
-        "show_icons": "Show icons",
+        "show_icons": "Vis icons",
         "copy_paste_on": "Copy and paste the following data in one of the available online viewers/editors.",
         "highlight_info": "Click on a device's image to highlight it automatically.",
         "legend_node_siblings": "Only highest-rated siblings are shown, which should roughly match the actual connections of the network.",
@@ -166,7 +166,7 @@
         "all": "Alle",
         "dashboard": "Dashboard",
         "devices": "Enheter",
-        "disable_join": "Disable join",
+        "disable_join": "Deaktiver join",
         "extensions": "Utvidelser",
         "groups": "Grupper",
         "logs": "Logger",
@@ -183,14 +183,14 @@
     "ota": {
         "check": "Check for new updates",
         "check_selected": "Check selected",
-        "update_selected": "Update selected",
+        "update_selected": "Oppdater selected",
         "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times.",
         "empty_ota_message": "No device currently support OTA",
         "remaining_time": "Remaining time",
         "schedule": "Schedule update",
         "schedule_info": "Will update on next OTA request from device",
-        "unschedule": "Cancel scheduled update",
-        "update": "Update device firmware",
+        "unschedule": "Avbryt scheduled update",
+        "update": "Oppdater device firmware",
         "firmware_version": "Firmware version",
         "available_firmware_version": "Available firmware version",
         "app": "App",
@@ -232,18 +232,18 @@
         "zigbee_herdsman_version": "zigbee-herdsman version",
         "localise_images": "Localise device images",
         "frontend_notice": "Disse innstillingene lagres lokalt i nettleseren din. Bruk av private vinduer eller tømming av hurtigbufferen vil tilbakestille dem til standardverdier.",
-        "reset_settings": "Reset settings",
-        "reset_auth": "Reset auth",
+        "reset_settings": "Tilbakestill settings",
+        "reset_auth": "Tilbakestill auth",
         "reset_all": "Tilbakestill alle",
         "language": "Språk",
         "theme": "Tema",
-        "homepage": "Homepage",
+        "homepage": "Hjempage",
         "dashboard_column_display": "Dashboard column display",
         "permit_join_time": "Permit join time",
         "dev_console": "Utviklerkonsoll",
         "max_on_screen_notifications": "Max on-screen notifications",
-        "network_raw": "Network data/map",
-        "network_map": "Network map",
+        "network_raw": "Nettverk data/map",
+        "network_map": "Nettverk map",
         "machine": "Machine",
         "node_version": "Node version",
         "version": "Versjon",
@@ -264,9 +264,9 @@
         "messages": "Messages",
         "messages_per_sec": "Messages per sec",
         "leave_count": "Leave count",
-        "network_address_changes": "Network address changes",
+        "network_address_changes": "Nettverk address changes",
         "very_low": "Very low",
-        "interview_info": "Device interviews can heavily influence this data."
+        "interview_info": "Enhet interviews can heavily influence this data."
     },
     "touchlink": {
         "detected_devices_message": "Detected {{count}} touchlink devices.",
@@ -279,7 +279,7 @@
     },
     "values": {
         "clear": "Tøm",
-        "closed": "Closed",
+        "closed": "Lukkd",
         "false": "Usant",
         "not_supported": "Ikke støttet",
         "occupied": "Occupied",
@@ -291,7 +291,7 @@
         "tampered": "Tampered",
         "null": "Null",
         "Clear": "Tøm",
-        "Closed": "Closed",
+        "Closed": "Lukkd",
         "Occupied": "Occupied",
         "Open": "Åpne"
     },
@@ -308,7 +308,7 @@
         "block_join": "Block from joining again",
         "cluster": "Kluster",
         "description": "Beskrivelse",
-        "device_type": "Device type",
+        "device_type": "Enhet type",
         "endpoint": "Endepunkt",
         "firmware_id": "Fastvare-ID",
         "firmware_build_date": "Firmware build date",
@@ -326,9 +326,9 @@
         "min_rep_change": "Min rep change",
         "min_rep_interval": "Min rep interval",
         "model": "Modell",
-        "network_address": "Network address",
-        "network_address_hex": "Network address in hexadecimal format",
-        "network_address_dec": "Network address in decimal format",
+        "network_address": "Nettverk address",
+        "network_address_hex": "Nettverk address in hexadecimal format",
+        "network_address_dec": "Nettverk address in decimal format",
         "none": "Ingen",
         "pic": "Pic",
         "power": "Strøm",
@@ -348,9 +348,9 @@
         "channel": "Channel",
         "possible": "Possible",
         "available": "Tilgjengelig",
-        "edit_description": "Edit description",
-        "save_description": "Save description",
-        "update_description": "Update description",
+        "edit_description": "Rediger description",
+        "save_description": "Lagre description",
+        "update_description": "Oppdater description",
         "read_write_attributes": "Read / Write attributes from endpoint cluster",
         "input_clusters": "Input clusters",
         "output_clusters": "Output clusters",
@@ -378,7 +378,7 @@
         "remove_all": "Remove all",
         "add": "Legg til",
         "select_scene": "Select Scene",
-        "scene_name": "Scene Name"
+        "scene_name": "Scene Navn"
     },
     "stats": {
         "byType": "By device type",
@@ -399,7 +399,7 @@
         "generated_external_definition": "Generated external definition",
         "state_property": "State property",
         "state_property_info": "Set the result into the device's state (only for read)",
-        "reset_frontend_state": "Reset frontend state",
+        "reset_frontend_state": "Tilbakestill frontend state",
         "mqtt": "MQTT",
         "external_converters": "External Converters",
         "external_extensions": "External Extensions",
@@ -414,7 +414,7 @@
         "create_new_converter": "Create new converter",
         "select_converter_to_edit": "Select converter to edit",
         "codespace_info": "A Github Codespace is available to help in development",
-        "show_definition": "Show definition",
+        "show_definition": "Vis definition",
         "hide_definition": "Hide definition"
     },
     "settingsSchemaDescriptions": {
@@ -431,7 +431,7 @@
             }
         },
         "Checks whether devices are online/offline": "Checks whether devices are online/offline",
-        "Enable availability checks": "Enable availability checks",
+        "Enable availability checks": "Aktiver availability checks",
         "Options for active devices (routers/mains powered)": "Options for active devices (routers/mains powered)",
         "Time after which an active device will be marked as offline in minutes": "Time after which an active device will be marked as offline in minutes",
         "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time": "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time",
@@ -439,7 +439,7 @@
             "5, x3, x6, x12": {
                 "": {
                     "": {
-                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
+                        ")": "Aktiver timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
                     }
                 }
             }
@@ -480,7 +480,7 @@
         "Location of the adapter": {
             " To autodetect the port, set null": "Location of the adapter. To autodetect the port, set null"
         },
-        "Disable LED of the adapter if supported": "Disable LED of the adapter if supported",
+        "Disable LED of the adapter if supported": "Deaktiver LED of the adapter if supported",
         "Adapter type, not needed unless you are experiencing problems": "Adapter type, not needed unless you are experiencing problems",
         "Baud rate speed for the serial port": {
             " This must match what the firmware on your adapter supports (most commonly 115200)": {
@@ -515,7 +515,7 @@
                 "": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values."
             }
         },
-        "Enable frontend": "Enable frontend",
+        "Enable frontend": "Aktiver frontend",
         "Package used for the frontend": "Package used for the frontend",
         "Frontend binding port": {
             " Ignored when using a unix domain socket": "Frontend binding port. Ignored when using a unix domain socket"
@@ -525,7 +525,7 @@
                 "": "Frontend binding host. Binds to a unix socket when an absolute path is given instead."
             }
         },
-        "Enables authentication, disabled by default": "Enables authentication, disabled by default",
+        "Enables authentication, disabled by default": "Aktivers authentication, disabled by default",
         "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page": "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page",
         "SSL Certificate file path for exposing HTTPS": {
             " The sibling property 'ssl_key' must be set for HTTPS to be activated": {
@@ -616,7 +616,7 @@
         "Send cached state on startup, only used when cache_state: true": "Send cached state on startup, only used when cache_state: true",
         "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message": "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message",
         "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg",
-        "Network encryption key, changing requires re-pairing all devices!": "Network encryption key, changing requires re-pairing all devices!",
+        "Network encryption key, changing requires re-pairing all devices!": "Nettverk encryption key, changing requires re-pairing all devices!",
         "Log timestamp format": "Log timestamp format",
         "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)": "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)",
         "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)": "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)",
@@ -629,7 +629,7 @@
             " By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID"
         },
         "Retain MQTT messages of this device": "Retain MQTT messages of this device",
-        "Disables the device (excludes device from network scans, availability and group state updates)": "Disables the device (excludes device from network scans, availability and group state updates)",
+        "Disables the device (excludes device from network scans, availability and group state updates)": "Deaktivers the device (excludes device from network scans, availability and group state updates)",
         "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
             "version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5"
         },

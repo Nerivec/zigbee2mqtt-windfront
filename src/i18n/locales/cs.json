@@ -99,11 +99,11 @@
         "hide_definition": "Hide definition",
         "mqtt": "MQTT",
         "mqtt_topic_info": "Omit the 'base_topic', frontend messages are sent over WebSocket directly to Zigbee2MQTT.",
-        "reset_frontend_state": "Reset frontend state",
+        "reset_frontend_state": "Resetovat frontend state",
         "select_converter_to_edit": "Select converter to edit",
         "select_extension_to_edit": "Select extension to edit",
         "send_mqtt": "Send MQTT message",
-        "show_definition": "Show definition",
+        "show_definition": "Zobrazit definition",
         "state_property": "State property",
         "state_property_info": "Set the result into the device's state (only for read)",
         "topic": "Téma"
@@ -138,13 +138,13 @@
     },
     "health": {
         "awaiting_next_check": "Awaiting next check",
-        "interview_info": "Device interviews can heavily influence this data.",
+        "interview_info": "Zařízení interviews can heavily influence this data.",
         "last_check": "Poslední kontrola",
         "leave_count": "Leave count",
         "load_average": "Load average",
         "messages": "Messages",
         "messages_per_sec": "Messages per sec",
-        "network_address_changes": "Network address changes",
+        "network_address_changes": "Síť address changes",
         "os": "OS",
         "process": "Proces",
         "published": "Publikováno",
@@ -164,9 +164,9 @@
     },
     "navbar": {
         "all": "Vše",
-        "dashboard": "Dashboard",
+        "dashboard": "Nástěnka",
         "devices": "Zařízení",
-        "disable_join": "Disable join",
+        "disable_join": "Zakázat join",
         "extensions": "Rozšíření",
         "groups": "Skupiny",
         "logs": "Protokoly",
@@ -231,7 +231,7 @@
     },
     "ota": {
         "app": "App",
-        "available_firmware_version": "Available firmware version",
+        "available_firmware_version": "Dostupné firmware version",
         "check": "Check for new updates",
         "check_selected": "Zkontrolovat vybrané",
         "empty_ota_message": "No device currently support OTA",
@@ -240,9 +240,9 @@
         "schedule": "Schedule update",
         "schedule_info": "Will update on next OTA request from device",
         "stack": "Stack",
-        "unschedule": "Cancel scheduled update",
-        "update": "Update device firmware",
-        "update_selected": "Update selected",
+        "unschedule": "Zrušit scheduled update",
+        "update": "Aktualizovat device firmware",
+        "update_selected": "Aktualizovat selected",
         "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times."
     },
     "scene": {
@@ -253,8 +253,8 @@
         "remove": "Odstranit",
         "remove_all": "Remove all",
         "scene_id": "ID scény",
-        "scene_name": "Scene Name",
-        "select_scene": "Select Scene",
+        "scene_name": "Scene Název",
+        "select_scene": "Select Scéna",
         "store": "Store"
     },
     "settings": {
@@ -266,7 +266,7 @@
         "bridge": "Most",
         "coordinator": "Koordinátor",
         "coordinator_ieee_address": "Coordinator IEEE Address",
-        "dashboard_column_display": "Dashboard column display",
+        "dashboard_column_display": "Nástěnka column display",
         "dev_console": "Vývojářská konzole",
         "donate": "Donate",
         "donation_text": "Zde nám můžete poděkovat za veškerou tvrdou práci. Neváhejte říct i něco hezkého ;)",
@@ -278,7 +278,7 @@
         "frontend_version": "Frontend version",
         "health": "Health",
         "homeassistant": "Home Assistant integration",
-        "homepage": "Homepage",
+        "homepage": "Domůpage",
         "install_code": "Install code",
         "language": "Jazyk",
         "localise_images": "Localise device images",
@@ -286,15 +286,15 @@
         "main": "Main",
         "max_on_screen_notifications": "Max on-screen notifications",
         "mqtt": "MQTT",
-        "network_map": "Network map",
-        "network_raw": "Network data/map",
+        "network_map": "Síť map",
+        "network_raw": "Síť data/map",
         "node_version": "Node version",
         "ota": "OTA updates",
         "passlist": "Passlist",
         "permit_join_time": "Povolit čas připojení",
         "request_z2m_backup": "Request Z2m backup",
         "reset_all": "Resetovat vše",
-        "reset_auth": "Reset auth",
+        "reset_auth": "Resetovat auth",
         "reset_settings": "Obnovit nastavení",
         "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
         "revision": "Revision",
@@ -366,7 +366,7 @@
             "5, x3, x6, x12": {
                 "": {
                     "": {
-                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
+                        ")": "Povolit timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
                     }
                 }
             }
@@ -386,7 +386,7 @@
         },
         "Frontend binding host": {
             " Binds to a unix socket when an absolute path is given instead": {
-                "": "Frontend binding host. Binds to a unix socket when an absolute path is given instead."
+                "": "Frontend binding host. Svázats to a unix socket when an absolute path is given instead."
             }
         },
         "Frontend binding port": {
@@ -620,8 +620,8 @@
         "dc_source": "DC Source",
         "description": "Popis",
         "device": "Zařízení",
-        "device_type": "Device type",
-        "edit_description": "Edit description",
+        "device_type": "Zařízení type",
+        "edit_description": "Upravit description",
         "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
         "emergency_mains_constantly_powered": "Emergency mains constantly powered",
         "endpoint": "Koncový bod",
@@ -645,10 +645,10 @@
         "max_rep_interval": "Max rep interval",
         "min_rep_change": "Min rep change",
         "min_rep_interval": "Min rep interval",
-        "model": "Model",
-        "network_address": "Network address",
-        "network_address_dec": "Network address in decimal format",
-        "network_address_hex": "Network address in hexadecimal format",
+        "model": "Režiml",
+        "network_address": "Síť address",
+        "network_address_dec": "Síť address in decimal format",
+        "network_address_hex": "Síť address in hexadecimal format",
         "none": "Žádný",
         "other_zcl_clusters": "Other ZCL clusters",
         "output_clusters": "Output clusters",
@@ -656,24 +656,24 @@
         "possible": "Possible",
         "power": "Výkon",
         "power_level": "power level",
-        "read_write_attributes": "Read / Write attributes from endpoint cluster",
+        "read_write_attributes": "Číst / Write attributes from endpoint cluster",
         "reconfigure": "Reconfigure",
         "remove_device": "Remove device",
         "rename_device": "Rename device",
         "report_problem": "Report problem",
         "request_support": "Request support",
-        "save_description": "Save description",
+        "save_description": "Uložit description",
         "select_attribute": "Select attribute",
         "select_cluster": "Select cluster",
         "submit_converter": "Submit converter",
-        "support_status": "Support status",
+        "support_status": "Podpora status",
         "type": "Typ",
         "unknown": "Neznámé",
         "unsupported": "Nepodporováno",
         "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
-        "update_description": "Update description",
+        "update_description": "Aktualizovat description",
         "updating_firmware": "Updating firmware",
         "zigbee_manufacturer": "ZigBee Manufacturer",
-        "zigbee_model": "ZigBee Model"
+        "zigbee_model": "ZigBee Režiml"
     }
 }
