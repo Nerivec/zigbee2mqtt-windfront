@@ -522,6 +522,118 @@
         "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).": "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).",
         "Name of the device in Home Assistant": "Name of the device in Home Assistant",
         "QoS level for MQTT messages of this group": "QoS level for MQTT messages of this group",
-        "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF"
+        "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF",
+        "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action": {},
+        "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions": {
+            " The events and attributes are currently deemed experimental and subject to change": {}
+        },
+        "Enable timeout backoff on failed availability pings (x1": {
+            "5, x3, x6, x12": {
+                "": {
+                    "": {}
+                }
+            }
+        },
+        "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device": {
+            " A value of zero disables pausing": {}
+        },
+        "Disable retain for all send messages": {
+            " ONLY enable if your MQTT broker doesn't support retained message (e": {
+                "g": {
+                    " AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform)": {}
+                }
+            }
+        },
+        "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT": {
+            " NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead": {}
+        },
+        "Location of the adapter": {},
+        "Baud rate speed for the serial port": {
+            " This must match what the firmware on your adapter supports (most commonly 115200)": {}
+        },
+        "Allow only certain devices to join the network (by ieeeAddr)": {},
+        "Your device may request a check for a new firmware update": {
+            " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
+                " The value is set in minutes, and the default is 1 day": {}
+            }
+        },
+        "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers": {
+            " If you disable these device initiated checks, you can still initiate a firmware update check manually": {}
+        },
+        "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
+            " You can increase this value if your network appears unstable during OTA": {}
+        },
+        "The size of file chunks sent during an update (in bytes)": {
+            " Note: This value may get ignored for manufacturers that require specific values": {}
+        },
+        "Frontend binding port": {},
+        "Frontend binding host": {
+            " Binds to a unix socket when an absolute path is given instead": {}
+        },
+        "SSL Certificate file path for exposing HTTPS": {
+            " The sibling property 'ssl_key' must be set for HTTPS to be activated": {}
+        },
+        "SSL key file path for exposing HTTPS": {
+            " The sibling property 'ssl_cert' must be set for HTTPS to be activated": {}
+        },
+        "Base URL for the frontend": {
+            " If hosted under a subpath, e": {
+                "g": {}
+            }
+        },
+        "Hide frontend notifications matching specified regex strings": {
+            " Example: 'z2m: Failed to ping": {}
+        },
+        "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)": {},
+        "The host running syslogd, defaults to localhost": {},
+        "The port on the host that syslog is running on, defaults to syslogd's default port": {},
+        "The network protocol to log over (e": {
+            "g": {
+                " tcp4, udp4, tls4, unix, unix-connect, etc)": {}
+            }
+        },
+        "The path to the syslog dgram socket (i": {
+            "e": {
+                " /dev/log or /var/run/syslog for OS X)": {}
+            }
+        },
+        "PID of the process that log messages are coming from (Default process": {
+            "pid)": {}
+        },
+        "Host to indicate that log messages are coming from (Default: localhost)": {},
+        "The type of the syslog protocol to use (Default: BSD, also valid: 5424)": {},
+        "The name of the application (Default: Zigbee2MQTT)": {},
+        "The end of line character to be added to the end of the message (Default: Message without modifications)": {},
+        "Adapter concurrency (e": {
+            "g": {}
+        },
+        "MQTT message payload will contain all attributes, not only changed ones": {},
+        "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)": {},
+        "Used in the MQTT topic of a device": {},
+        "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {},
+        "The minimum time between payloads in seconds": {},
+        "Filter attributes with regex from published payload": {},
+        "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change": {},
+        "Filter attributes with regex from optimistic publish payload when calling /set": {
+            " (This has no effect if optimistic is set to false)": {}
+        },
+        "The user-defined device icon for the frontend": {
+            " It can be a full URL link to an image (e": {
+                "g": {
+                    " https://SOME": {
+                        "SITE/MODEL123": {
+                            "jpg) or a path to a local file inside the `device_icons` directory (e": {
+                                "g": {
+                                    " device_icons/MODEL123": {
+                                        "png)": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Control when to publish state OFF or CLOSE for a group": {}
     }
 }
