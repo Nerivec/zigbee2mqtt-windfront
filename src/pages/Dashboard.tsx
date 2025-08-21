@@ -1,31 +1,54 @@
-import { faClose, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import store2 from "store2";
-import Button from "../components/Button.js";
+import DashboardHeader from "../components/dashboard-page/DashboardHeader.js";
 import DashboardItem, { type DashboardItemProps } from "../components/dashboard-page/DashboardItem.js";
-import { isValidForDashboard } from "../components/dashboard-page/index.js";
-import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import { useColumnCount } from "../hooks/useColumnCount.js";
-import { DASHBOARD_FILTER_FRIENDLY_NAME_KEY } from "../localStoreConsts.js";
-import { API_URLS, useAppStore } from "../store.js";
-import { filterExposes } from "../utils.js";
+import { useSearch } from "../hooks/useSearch.js";
+import {
+    DASHBOARD_FILTER_FEATURE_PROPERTY_KEY,
+    DASHBOARD_FILTER_FEATURE_TYPE_KEY,
+    DASHBOARD_FILTER_FRIENDLY_NAME_KEY,
+    DASHBOARD_FILTER_SHOW_END_DEVICES_KEY,
+    DASHBOARD_FILTER_SHOW_ROUTERS_KEY,
+    DASHBOARD_FILTER_SOURCE_KEY,
+} from "../localStoreConsts.js";
+import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 export default function Dashboard() {
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const deviceStates = useAppStore((state) => state.deviceStates);
+    const deviceDashbordFeatures = useAppStore((state) => state.deviceDashboardFeatures);
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const devices = useAppStore((state) => state.devices);
-    const { t } = useTranslation(["zigbee", "settings"]);
-    const [filterFriendlyName, setFilterFriendlyName] = useState<string>(store2.get(DASHBOARD_FILTER_FRIENDLY_NAME_KEY, ""));
+    const [searchTerm, normalizedSearchTerm, setSearchTerm] = useSearch(DASHBOARD_FILTER_FRIENDLY_NAME_KEY);
+    const [showRouters, setShowRouters] = useState<boolean>(store2.get(DASHBOARD_FILTER_SHOW_ROUTERS_KEY, true));
+    const [showEndDevices, setShowEndDevices] = useState<boolean>(store2.get(DASHBOARD_FILTER_SHOW_END_DEVICES_KEY, true));
+    const [selectedType, setSelectedType] = useState<string>(store2.get(DASHBOARD_FILTER_FEATURE_TYPE_KEY, ""));
+    const [selectedProperty, setSelectedProperty] = useState<string>(store2.get(DASHBOARD_FILTER_FEATURE_PROPERTY_KEY, ""));
+    const [sourceFilter, setSourceFilter] = useState<string>(store2.get(DASHBOARD_FILTER_SOURCE_KEY, ""));
     const columnCount = useColumnCount();
 
     useEffect(() => {
-        store2.set(DASHBOARD_FILTER_FRIENDLY_NAME_KEY, filterFriendlyName);
-    }, [filterFriendlyName]);
+        store2.set(DASHBOARD_FILTER_SHOW_ROUTERS_KEY, showRouters);
+    }, [showRouters]);
+
+    useEffect(() => {
+        store2.set(DASHBOARD_FILTER_SHOW_END_DEVICES_KEY, showEndDevices);
+    }, [showEndDevices]);
+
+    useEffect(() => {
+        store2.set(DASHBOARD_FILTER_FEATURE_TYPE_KEY, selectedType);
+    }, [selectedType]);
+
+    useEffect(() => {
+        store2.set(DASHBOARD_FILTER_FEATURE_PROPERTY_KEY, selectedProperty);
+    }, [selectedProperty]);
+
+    useEffect(() => {
+        store2.set(DASHBOARD_FILTER_SOURCE_KEY, sourceFilter);
+    }, [sourceFilter]);
 
     const renameDevice = useCallback(
         async (sourceIdx: number, from: string, to: string, homeassistantRename: boolean): Promise<void> => {
@@ -50,61 +73,101 @@ export default function Dashboard() {
         const elements: DashboardItemProps["data"][] = [];
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
+            if (sourceFilter && sourceFilter !== `${sourceIdx} ${API_NAMES[sourceIdx]}`) {
+                continue;
+            }
+
             const lastSeenConfig = bridgeInfo[sourceIdx].config.advanced.last_seen;
             const homeassistantEnabled = bridgeInfo[sourceIdx].config.homeassistant.enabled;
 
             for (const device of devices[sourceIdx]) {
-                if (
-                    !device.disabled &&
-                    device.supported &&
-                    (!filterFriendlyName || device.friendly_name.toLowerCase().includes(filterFriendlyName.toLowerCase())) &&
-                    device.definition
-                ) {
-                    const filteredFeatures = filterExposes(device.definition.exposes, isValidForDashboard);
-
-                    if (filteredFeatures.length > 0) {
-                        elements.push({
-                            sourceIdx,
-                            device,
-                            deviceState: deviceStates[sourceIdx][device.friendly_name] ?? {},
-                            features: filteredFeatures,
-                            lastSeenConfig,
-                            homeassistantEnabled,
-                            renameDevice,
-                            removeDevice,
-                        });
-                    }
+                if (device.disabled || !device.supported || !device.definition) {
+                    continue;
                 }
+
+                if ((!showRouters && device.type === "Router") || (!showEndDevices && device.type === "EndDevice")) {
+                    continue;
+                }
+
+                const dashboardFeatures = deviceDashbordFeatures[sourceIdx][device.ieee_address];
+
+                if (!dashboardFeatures || dashboardFeatures.length === 0) {
+                    continue;
+                }
+
+                if (selectedType !== "" && !dashboardFeatures.some((f) => f.type === selectedType)) {
+                    continue;
+                }
+
+                // using name to compare to avoid multi-endpoint issues
+                if (selectedProperty !== "" && !dashboardFeatures.some((f) => f.name === selectedProperty)) {
+                    continue;
+                }
+
+                if (normalizedSearchTerm.length > 0 && !device.friendly_name.toLowerCase().includes(normalizedSearchTerm)) {
+                    continue;
+                }
+
+                elements.push({
+                    sourceIdx,
+                    device,
+                    deviceState: deviceStates[sourceIdx][device.friendly_name] ?? {},
+                    features: dashboardFeatures,
+                    lastSeenConfig,
+                    homeassistantEnabled,
+                    renameDevice,
+                    removeDevice,
+                });
             }
         }
 
         elements.sort((elA, elB) => elA.device.ieee_address.localeCompare(elB.device.ieee_address));
 
         return elements;
-    }, [devices, deviceStates, bridgeInfo, filterFriendlyName, renameDevice, removeDevice]);
+    }, [
+        devices,
+        deviceStates,
+        deviceDashbordFeatures,
+        bridgeInfo,
+        normalizedSearchTerm,
+        showRouters,
+        showEndDevices,
+        selectedType,
+        selectedProperty,
+        sourceFilter,
+        renameDevice,
+        removeDevice,
+    ]);
 
     return (
         <>
-            <div className="flex flex-row justify-center items-center gap-3 mb-3">
-                <div className="join">
-                    {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
-                    <label className="input join-item">
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        <DebouncedInput
-                            className=""
-                            type="search"
-                            onChange={(value) => setFilterFriendlyName(value.toString())}
-                            placeholder={t("common:search")}
-                            value={filterFriendlyName}
-                        />
-                    </label>
-                    <Button item="" onClick={setFilterFriendlyName} className="btn btn-square join-item" title={t("common:clear")}>
-                        <FontAwesomeIcon icon={faClose} />
-                    </Button>
-                </div>
-            </div>
+            <DashboardHeader
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                showRouters={showRouters}
+                setShowRouters={setShowRouters}
+                showEndDevices={showEndDevices}
+                setShowEndDevices={setShowEndDevices}
+                selectedType={selectedType}
+                setSelectedType={setSelectedType}
+                selectedProperty={selectedProperty}
+                setSelectedProperty={setSelectedProperty}
+                sourceFilter={sourceFilter}
+                setSourceFilter={setSourceFilter}
+            />
             <div>
-                <VirtuosoMasonry useWindowScroll columnCount={columnCount} data={filteredData} ItemContent={DashboardItem} className="gap-3" />
+                {/* XXX: issues with going to zero items and back */}
+                {filteredData.length > 0 && (
+                    <VirtuosoMasonry
+                        // XXX: issues with filtering, workaround, re-render when it changes
+                        key={`dashboard-${normalizedSearchTerm}-${showRouters}-${showEndDevices}-${selectedType}-${selectedProperty}-${filteredData.length}`}
+                        useWindowScroll
+                        columnCount={columnCount}
+                        data={filteredData}
+                        ItemContent={DashboardItem}
+                        className="gap-3"
+                    />
+                )}
             </div>
         </>
     );

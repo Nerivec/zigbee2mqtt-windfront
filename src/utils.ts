@@ -133,7 +133,7 @@ export const getEndpoints = (entity?: Device | Group): Set<string | number> => {
 
 type ExposeValidateFn = (name: string | undefined, access: FeatureAccessMode) => boolean;
 
-const parseExpose = (expose: BasicFeature | FeatureWithSubFeatures, validateFn: ExposeValidateFn): FeatureWithAnySubFeatures | undefined => {
+export const parseExpose = (expose: BasicFeature | FeatureWithSubFeatures, validateFn: ExposeValidateFn): FeatureWithAnySubFeatures | undefined => {
     const { name, access } = expose;
 
     if (!validateFn(name, access)) {
@@ -155,28 +155,6 @@ const parseExpose = (expose: BasicFeature | FeatureWithSubFeatures, validateFn: 
     }
 
     return { ...expose };
-};
-
-export const filterExposes = (
-    exposes: NonNullable<Device["definition"]>["exposes"],
-    validateFn: ExposeValidateFn,
-    limit = 10,
-): FeatureWithAnySubFeatures[] => {
-    const filteredExposes: FeatureWithAnySubFeatures[] = [];
-
-    for (const expose of exposes) {
-        const validExpose = parseExpose(expose, validateFn);
-
-        if (validExpose) {
-            filteredExposes.push(validExpose);
-
-            if (filteredExposes.length === limit) {
-                break;
-            }
-        }
-    }
-
-    return filteredExposes;
 };
 
 // #endregion

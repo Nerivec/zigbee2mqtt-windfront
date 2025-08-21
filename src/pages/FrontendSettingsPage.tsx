@@ -94,12 +94,13 @@ export default function FrontendSettingsPage() {
         store2.remove(NETWORK_MAP_NODE_STRENGTH_KEY);
         store2.remove(NETWORK_MAP_LINK_DISTANCE_KEY);
         store2.remove(NETWORK_MAP_SHOW_ICONS_KEY);
+        store2.remove(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY);
         store2.remove(I18NEXTLNG_KEY);
         store2.remove(DEVICES_HIDE_DISABLED_KEY);
         store2.remove(DASHBOARD_FILTER_FRIENDLY_NAME_KEY);
 
         for (const key of keys) {
-            if (key.startsWith(TABLE_COLUMN_VISIBILITY_KEY) || key.startsWith(TABLE_COLUMN_FILTER_KEY)) {
+            if (key.startsWith(TABLE_COLUMN_VISIBILITY_KEY) || key.startsWith(TABLE_COLUMN_FILTER_KEY) || key.startsWith("dashboard-filter")) {
                 store2.remove(key);
             }
         }

@@ -1,52 +1,9 @@
-import { type Column, flexRender, type Row } from "@tanstack/react-table";
-import { useTranslation } from "react-i18next";
+import { flexRender, type Row } from "@tanstack/react-table";
 import { type TableComponents, TableVirtuoso } from "react-virtuoso";
 import type { UseTableProps, useTable } from "../../hooks/useTable.js";
 import { TABLE_COLUMN_FILTER_KEY } from "../../localStoreConsts.js";
-import { API_NAMES } from "../../store.js";
-import SourceExternalFilter from "./SourceExternalFilter.js";
+import TableHeader from "./TableHeader.js";
 import TextFilter from "./TextFilter.js";
-
-interface TableHeaderProps<T> {
-    tableId: string;
-    columns: Column<T>[];
-    entries: number;
-}
-
-function TableHeader<T>({ tableId, columns, entries }: TableHeaderProps<T>) {
-    const { t } = useTranslation("common");
-    let sourceColumn: Column<T> | undefined;
-
-    if (API_NAMES.length > 1) {
-        sourceColumn = columns.find((c) => c.id === "source");
-    }
-
-    return (
-        <div className="flex flex-row flex-wrap gap-2 text-xs px-3">
-            <span className="label">{t("columns")}: </span>
-            {columns.map((column) =>
-                column.id === "select" ? null : (
-                    <label key={column.id} className="label">
-                        <input
-                            checked={column.getIsVisible()}
-                            disabled={!column.getCanHide()}
-                            onChange={column.getToggleVisibilityHandler()}
-                            type="checkbox"
-                            className="checkbox checkbox-xs"
-                        />
-                        {typeof column.columnDef.header === "string" && column.columnDef.header ? column.columnDef.header : t(column.id)}
-                    </label>
-                ),
-            )}
-            <div className="ml-auto flex flex-row flex-wrap gap-2">
-                {sourceColumn && <SourceExternalFilter column={sourceColumn} tableId={tableId} />}
-                <span className="label">
-                    {t("entries")}: {entries}
-                </span>
-            </div>
-        </div>
-    );
-}
 
 const tableComponents: TableComponents<Row<unknown>, unknown> = {
     Table: ({ style, context, ...props }) => (

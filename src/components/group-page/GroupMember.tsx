@@ -1,13 +1,12 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import type { AppState } from "../../store.js";
-import { filterExposes } from "../../utils.js";
+import { useShallow } from "zustand/react/shallow";
+import { type AppState, useAppStore } from "../../store.js";
 import ConfirmButton from "../ConfirmButton.js";
 import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
 import DeviceCard from "../device/DeviceCard.js";
-import { isValidForScenes } from "../device-page/index.js";
 
 export type GroupMemberProps = {
     data: {
@@ -21,48 +20,59 @@ export type GroupMemberProps = {
     };
 };
 
-const GroupMember = memo(
-    ({ data: { sourceIdx, device, deviceState, groupMember, lastSeenConfig, removeDeviceFromGroup, setDeviceState } }: GroupMemberProps) => {
-        const { endpoint } = groupMember;
-        const { t } = useTranslation(["groups", "common"]);
-        const filteredFeatures = useMemo(() => (device.definition ? filterExposes(device.definition.exposes, isValidForScenes) : []), [device]);
+const GroupMember = ({
+    sourceIdx,
+    device,
+    deviceState,
+    groupMember,
+    lastSeenConfig,
+    removeDeviceFromGroup,
+    setDeviceState,
+}: GroupMemberProps["data"]) => {
+    const { endpoint } = groupMember;
+    const { t } = useTranslation(["groups", "common"]);
+    const scenesFeatures = useAppStore(useShallow((state) => state.deviceScenesFeatures[sourceIdx][device.ieee_address]));
 
-        const onCardChange = useCallback(
-            async (value: Record<string, unknown>) => await setDeviceState(device.ieee_address, value),
-            [device.ieee_address, setDeviceState],
-        );
+    const onCardChange = useCallback(
+        async (value: Record<string, unknown>) => await setDeviceState(device.ieee_address, value),
+        [device.ieee_address, setDeviceState],
+    );
 
-        const onCardRemove = useCallback(
-            async () => await removeDeviceFromGroup(device.ieee_address, endpoint),
-            [device.ieee_address, endpoint, removeDeviceFromGroup],
-        );
+    const onCardRemove = useCallback(
+        async () => await removeDeviceFromGroup(device.ieee_address, endpoint),
+        [device.ieee_address, endpoint, removeDeviceFromGroup],
+    );
 
-        return (
-            <div className="mb-3 card bg-base-200 rounded-box shadow-md">
-                <DeviceCard
-                    sourceIdx={sourceIdx}
-                    hideSourceDot
-                    features={filteredFeatures}
-                    device={device}
-                    endpoint={endpoint}
-                    deviceState={deviceState}
-                    onChange={onCardChange}
-                    featureWrapperClass={DashboardFeatureWrapper}
-                    lastSeenConfig={lastSeenConfig}
+    return (
+        <div className="mb-3 card bg-base-200 rounded-box shadow-md">
+            <DeviceCard
+                sourceIdx={sourceIdx}
+                hideSourceDot
+                features={scenesFeatures}
+                device={device}
+                endpoint={endpoint}
+                deviceState={deviceState}
+                onChange={onCardChange}
+                featureWrapperClass={DashboardFeatureWrapper}
+                lastSeenConfig={lastSeenConfig}
+            >
+                <ConfirmButton<string>
+                    onClick={onCardRemove}
+                    className="btn btn-square btn-outline btn-error btn-sm"
+                    title={t("remove_from_group")}
+                    modalDescription={t("common:dialog_confirmation_prompt")}
+                    modalCancelLabel={t("common:cancel")}
                 >
-                    <ConfirmButton<string>
-                        onClick={onCardRemove}
-                        className="btn btn-square btn-outline btn-error btn-sm"
-                        title={t("remove_from_group")}
-                        modalDescription={t("common:dialog_confirmation_prompt")}
-                        modalCancelLabel={t("common:cancel")}
-                    >
-                        <FontAwesomeIcon icon={faTrash} />
-                    </ConfirmButton>
-                </DeviceCard>
-            </div>
-        );
-    },
-);
+                    <FontAwesomeIcon icon={faTrash} />
+                </ConfirmButton>
+            </DeviceCard>
+        </div>
+    );
+};
 
-export default GroupMember;
+const GroupMemberGuarded = (props: GroupMemberProps) => {
+    // when filtering, indexing can get "out-of-whack" it appears
+    return props?.data ? <GroupMember {...props.data} /> : null;
+};
+
+export default GroupMemberGuarded;

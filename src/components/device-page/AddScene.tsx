@@ -1,15 +1,17 @@
 import { memo, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
+import { useShallow } from "zustand/react/shallow";
+import { useAppStore } from "../../store.js";
 import type { Device, DeviceState, Group } from "../../types.js";
-import { filterExposes, isDevice } from "../../utils.js";
+import { isDevice } from "../../utils.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import Button from "../Button.js";
 import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
 import Feature from "../features/Feature.js";
 import { getFeatureKey } from "../features/index.js";
 import InputField from "../form-fields/InputField.js";
-import { getScenes, isValidForScenes } from "./index.js";
+import { getScenes } from "./index.js";
 
 type AddSceneProps = {
     sourceIdx: number;
@@ -23,10 +25,7 @@ const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
     const [sceneId, setSceneId] = useState<number>(0);
     const [sceneName, setSceneName] = useState<string>("");
     const scenes = useMemo(() => getScenes(target), [target]);
-    const filteredFeatures = useMemo(
-        () => (isDevice(target) && target.definition ? filterExposes(target.definition.exposes, isValidForScenes) : []),
-        [target],
-    );
+    const scenesFeatures = useAppStore(useShallow((state) => (isDevice(target) ? state.deviceScenesFeatures[sourceIdx][target.ieee_address] : [])));
 
     const onCompositeChange = useCallback(
         async (value: Record<string, unknown> | unknown) => {
@@ -78,10 +77,10 @@ const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
                     onChange={(e) => setSceneName(e.target.value)}
                     required
                 />
-                {filteredFeatures.length > 0 && (
+                {scenesFeatures.length > 0 && (
                     <div className="card card-border bg-base-200 shadow my-2">
                         <div className="card-body">
-                            {filteredFeatures.map((feature) => (
+                            {scenesFeatures.map((feature) => (
                                 <Feature
                                     key={getFeatureKey(feature)}
                                     feature={feature}

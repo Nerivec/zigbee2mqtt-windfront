@@ -1,8 +1,9 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, memo, useMemo, useState } from "react";
+import { type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import { useSearch } from "../../hooks/useSearch.js";
 import type { TabName } from "../../pages/DevicePage.js";
 import { API_URLS, useAppStore } from "../../store.js";
 import type { Device } from "../../types.js";
@@ -16,7 +17,7 @@ interface HeaderDeviceSelectorProps {
 }
 
 const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "info" }: HeaderDeviceSelectorProps) => {
-    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [searchTerm, normalizedSearchTerm, setSearchTerm] = useSearch();
     const { t } = useTranslation("common");
     const devices = useAppStore((state) => state.devices);
 
@@ -25,30 +26,28 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             for (const device of devices[sourceIdx]) {
-                if (
-                    device.type !== "Coordinator" &&
-                    device.friendly_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                    (sourceIdx !== currentSourceIdx || device.ieee_address !== currentDevice?.ieee_address)
-                ) {
-                    elements.push(
-                        <li key={`${device.friendly_name}-${device.ieee_address}-${sourceIdx}`}>
-                            <Link
-                                to={`/device/${sourceIdx}/${device.ieee_address}/${tab}`}
-                                onClick={() => setSearchTerm("")}
-                                className="dropdown-item"
-                            >
-                                {<SourceDot idx={sourceIdx} autoHide namePostfix=" - " />} {device.friendly_name}
-                            </Link>
-                        </li>,
-                    );
+                if (device.type === "Coordinator" || (sourceIdx === currentSourceIdx && device.ieee_address === currentDevice?.ieee_address)) {
+                    continue;
                 }
+
+                if (normalizedSearchTerm.length > 0 && !device.friendly_name.toLowerCase().includes(normalizedSearchTerm)) {
+                    continue;
+                }
+
+                elements.push(
+                    <li key={`${device.friendly_name}-${device.ieee_address}-${sourceIdx}`}>
+                        <Link to={`/device/${sourceIdx}/${device.ieee_address}/${tab}`} onClick={() => setSearchTerm("")} className="dropdown-item">
+                            {<SourceDot idx={sourceIdx} autoHide namePostfix=" - " />} {device.friendly_name}
+                        </Link>
+                    </li>,
+                );
             }
         }
 
         elements.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
 
         return elements;
-    }, [devices, searchTerm, currentSourceIdx, currentDevice, tab]);
+    }, [devices, normalizedSearchTerm, currentSourceIdx, currentDevice, tab, setSearchTerm]);
 
     return (
         <PopoverDropdown

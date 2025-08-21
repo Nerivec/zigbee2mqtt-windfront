@@ -1,11 +1,12 @@
 import { faClose, faExclamationTriangle, faMagnifyingGlass, faMarker } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { groupBy } from "lodash";
-import { type JSX, memo, useCallback, useMemo, useState } from "react";
+import { type JSX, memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
+import { useSearch } from "../../hooks/useSearch.js";
 import { useAppStore } from "../../store.js";
 import { toHex } from "../../utils.js";
 import Button from "../Button.js";
@@ -22,14 +23,14 @@ type RawNetworkMapProps = {
 const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     const { t } = useTranslation(["network", "common"]);
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
-    const [filterValue, setFilterValue] = useState<string>("");
-    const [highlightValue, setHighlightValue] = useState<string>("");
+    const [searchTerm, normalizedSearchTerm, setSearchTerm] = useSearch();
+    const [highlightValue, normalizedHighlightValue, setHighlightValue] = useSearch();
 
     const highlight = useCallback(
         (friendlyName: string) => {
-            return !!highlightValue && friendlyName.toLowerCase().includes(highlightValue.toLowerCase());
+            return normalizedHighlightValue.length > 0 && friendlyName.toLowerCase().includes(normalizedHighlightValue);
         },
-        [highlightValue],
+        [normalizedHighlightValue],
     );
 
     const content = useMemo(() => {
@@ -38,7 +39,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         for (const node of map.nodes) {
             const device = devices.find((device) => device.ieee_address === node.ieeeAddr);
 
-            if (!filterValue || node.friendlyName.toLowerCase().includes(filterValue.toLowerCase())) {
+            if (normalizedSearchTerm.length === 0 || node.friendlyName.toLowerCase().includes(normalizedSearchTerm)) {
                 const grouped = groupBy(
                     map.links.filter((link) => link.target.ieeeAddr === node.ieeeAddr),
                     (link) => link.relationship,
@@ -108,7 +109,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         sortedNodes.sort((a, b) => (a.key === "Coordinator" ? -1 : a.key!.localeCompare(b.key!)));
 
         return sortedNodes;
-    }, [sourceIdx, devices, filterValue, map, highlight, t]);
+    }, [sourceIdx, devices, normalizedSearchTerm, map, highlight, setHighlightValue, t]);
 
     return (
         <>
@@ -120,18 +121,18 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                         <DebouncedInput
                             className=""
                             type="search"
-                            onChange={(value) => setFilterValue(value.toString())}
+                            onChange={(value) => setSearchTerm(value.toString())}
                             placeholder={t("common:search")}
-                            value={filterValue}
+                            value={searchTerm}
                             disabled={map.nodes.length === 0}
                         />
                     </label>
                     <Button
                         item=""
-                        onClick={setFilterValue}
+                        onClick={setSearchTerm}
                         className="btn btn-square join-item"
                         title={t("common:clear")}
-                        disabled={filterValue === ""}
+                        disabled={searchTerm.length === 0}
                     >
                         <FontAwesomeIcon icon={faClose} />
                     </Button>

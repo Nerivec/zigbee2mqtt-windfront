@@ -11,6 +11,7 @@ import DebouncedInput from "../components/form-fields/DebouncedInput.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import SourceDot from "../components/SourceDot.js";
 import { LOG_LEVELS, LOG_LEVELS_CMAP, LOG_LIMITS } from "../consts.js";
+import { useSearch } from "../hooks/useSearch.js";
 import { API_URLS, useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
 import { formatDate, getValidSourceIdx } from "../utils.js";
@@ -37,7 +38,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
     const logLevelConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.log_level));
     const logs = useAppStore(useShallow((state) => state.logs[sourceIdx]));
     const clearLogs = useAppStore((state) => state.clearLogs);
-    const [filterValue, setFilterValue] = useState<string>("");
+    const [searchTerm, normalizedSearchTerm, setSearchTerm] = useSearch();
     const [logLevel, setLogLevel] = useState<string>("all");
     const [highlightOnly, setHighlightOnly] = useState<boolean>(false);
 
@@ -46,15 +47,17 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
             logs.filter(
                 (log) =>
                     (logLevel === "all" || log.level === logLevel) &&
-                    (highlightOnly || !filterValue || log.message.toLowerCase().includes(filterValue.toLowerCase())),
+                    (highlightOnly || normalizedSearchTerm.length === 0 || log.message.toLowerCase().includes(normalizedSearchTerm)),
             ),
-        [filterValue, highlightOnly, logLevel, logs],
+        [normalizedSearchTerm, highlightOnly, logLevel, logs],
     );
 
     const colorLog = useCallback(
         (message: LogMessage["message"], level: LogMessage["level"]) =>
-            filterValue && message.toLowerCase().includes(filterValue.toLowerCase()) ? HIGHLIGHT_LEVEL_CMAP[level] : LOG_LEVELS_CMAP[level],
-        [filterValue],
+            normalizedSearchTerm.length > 0 && message.toLowerCase().includes(normalizedSearchTerm)
+                ? HIGHLIGHT_LEVEL_CMAP[level]
+                : LOG_LEVELS_CMAP[level],
+        [normalizedSearchTerm],
     );
 
     const setLogLevelConfig = useCallback(
@@ -86,17 +89,17 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                             <DebouncedInput
                                 className=""
                                 type="search"
-                                onChange={(value) => setFilterValue(value.toString())}
+                                onChange={(value) => setSearchTerm(value.toString())}
                                 placeholder={t("common:search")}
-                                value={filterValue}
+                                value={searchTerm}
                             />
                         </label>
                         <Button
                             item=""
-                            onClick={setFilterValue}
+                            onClick={setSearchTerm}
                             className="btn btn-square join-item"
                             title={t("common:clear")}
-                            disabled={filterValue === ""}
+                            disabled={searchTerm.length === 0}
                         >
                             <FontAwesomeIcon icon={faClose} />
                         </Button>

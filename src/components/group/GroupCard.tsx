@@ -1,6 +1,5 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { Group } from "../../types.js";
@@ -15,7 +14,7 @@ export type GroupCardProps = {
     };
 };
 
-const GroupCard = memo(({ data: { sourceIdx, group, endpoint, removeFromGroup } }: GroupCardProps) => {
+const GroupCard = ({ sourceIdx, group, endpoint, removeFromGroup }: GroupCardProps["data"]) => {
     const { t } = useTranslation(["groups", "common"]);
 
     return (
@@ -57,6 +56,11 @@ const GroupCard = memo(({ data: { sourceIdx, group, endpoint, removeFromGroup } 
             </div>
         </div>
     );
-});
+};
 
-export default GroupCard;
+const GroupCardGuarded = (props: GroupCardProps) => {
+    // when filtering, indexing can get "out-of-whack" it appears
+    return props?.data ? <GroupCard {...props.data} /> : null;
+};
+
+export default GroupCardGuarded;

@@ -14,7 +14,7 @@ type ExposesProps = {
 };
 
 export default function Exposes({ sourceIdx, device }: ExposesProps) {
-    const { t } = useTranslation(["exposes"]);
+    const { t } = useTranslation("common");
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const deviceState = useAppStore(useShallow((state) => state.deviceStates[sourceIdx][device.friendly_name] ?? {}));
 

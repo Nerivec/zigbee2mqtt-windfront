@@ -14,7 +14,7 @@ type DeviceSpecificSettingsProps = {
 };
 
 export default function DeviceSpecificSettings({ sourceIdx, device }: DeviceSpecificSettingsProps) {
-    const { t } = useTranslation(["exposes"]);
+    const { t } = useTranslation("common");
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const setDeviceOptions = useCallback(

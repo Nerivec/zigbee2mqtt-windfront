@@ -1,16 +1,19 @@
 import merge from "lodash/merge.js";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import { create } from "zustand";
+import { isValidForDashboard } from "./components/dashboard-page/index.js";
+import { isValidForScenes } from "./components/device-page/index.js";
 import { AVAILABILITY_FEATURE_TOPIC_ENDING, BLACKLISTED_NOTIFICATIONS, NOTIFICATIONS_LIMIT_PER_SOURCE, PUBLISH_GET_SET_REGEX } from "./consts.js";
 import { Z2M_API_NAMES, Z2M_API_URLS } from "./envs.js";
-import type { AvailabilityState, Device, LogMessage, Message, RecursiveMutable, Toast, TouchlinkDevice } from "./types.js";
-import { formatDate } from "./utils.js";
+import type { AvailabilityState, Device, FeatureWithAnySubFeatures, LogMessage, Message, RecursiveMutable, Toast, TouchlinkDevice } from "./types.js";
+import { formatDate, parseExpose } from "./utils.js";
 
 export interface AppState {
-    /** Sorted by friendlyName */
     devices: Record<number, Device[]>;
     deviceStates: Record<number, Record<string, Zigbee2MQTTAPI["{friendlyName}"]>>;
-    /** Sorted by friendlyName */
+    /** each mapped by IEEE */
+    deviceDashboardFeatures: Record<number, Record<string, FeatureWithAnySubFeatures[]>>;
+    deviceScenesFeatures: Record<number, Record<string, FeatureWithAnySubFeatures[]>>;
     groups: Record<number, Zigbee2MQTTAPI["bridge/groups"]>;
     bridgeState: Record<number, Zigbee2MQTTAPI["bridge/state"]>;
     bridgeHealth: Record<number, Zigbee2MQTTAPI["bridge/health"]>;
@@ -89,6 +92,8 @@ export const API_NAMES =
 const makeInitialState = (): AppState => {
     const devices: AppState["devices"] = {};
     const deviceStates: AppState["deviceStates"] = {};
+    const deviceDashboardFeatures: AppState["deviceDashboardFeatures"] = {};
+    const deviceScenesFeatures: AppState["deviceScenesFeatures"] = {};
     const groups: AppState["groups"] = {};
     const bridgeState: AppState["bridgeState"] = {};
     const bridgeHealth: AppState["bridgeHealth"] = {};
@@ -112,6 +117,8 @@ const makeInitialState = (): AppState => {
     for (let idx = 0; idx < API_URLS.length; idx++) {
         devices[idx] = [];
         deviceStates[idx] = {};
+        deviceDashboardFeatures[idx] = {};
+        deviceScenesFeatures[idx] = {};
         groups[idx] = [];
         bridgeState[idx] = { state: "offline" };
         bridgeHealth[idx] = {
@@ -275,6 +282,8 @@ const makeInitialState = (): AppState => {
     return {
         devices,
         deviceStates,
+        deviceDashboardFeatures,
+        deviceScenesFeatures,
         groups,
         bridgeState,
         bridgeHealth,
@@ -527,7 +536,42 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
     setBridgeDefinitions: (sourceIdx, bridgeDefinitions) =>
         set((state) => ({ bridgeDefinitions: { ...state.bridgeDefinitions, [sourceIdx]: bridgeDefinitions } })),
 
-    setDevices: (sourceIdx, devices) => set((state) => ({ devices: { ...state.devices, [sourceIdx]: devices } })),
+    setDevices: (sourceIdx, devices) =>
+        set((state) => {
+            const newDeviceDashboardFeatures: AppState["deviceDashboardFeatures"][number] = {};
+            const newDeviceScenesFeatures: AppState["deviceScenesFeatures"][number] = {};
+
+            for (const device of devices) {
+                if (device.disabled || !device.definition || device.definition.exposes.length === 0) {
+                    continue;
+                }
+
+                const dashboardExposes: FeatureWithAnySubFeatures[] = [];
+                const scenesExposes: FeatureWithAnySubFeatures[] = [];
+
+                for (const expose of device.definition.exposes) {
+                    const validDashboardExpose = parseExpose(expose, isValidForDashboard);
+                    const validScenesExpose = parseExpose(expose, isValidForScenes);
+
+                    if (validDashboardExpose) {
+                        dashboardExposes.push(validDashboardExpose);
+                    }
+
+                    if (validScenesExpose) {
+                        scenesExposes.push(validScenesExpose);
+                    }
+                }
+
+                newDeviceDashboardFeatures[device.ieee_address] = dashboardExposes;
+                newDeviceScenesFeatures[device.ieee_address] = scenesExposes;
+            }
+
+            return {
+                devices: { ...state.devices, [sourceIdx]: devices },
+                deviceDashboardFeatures: { ...state.deviceDashboardFeatures, [sourceIdx]: newDeviceDashboardFeatures },
+                deviceScenesFeatures: { ...state.deviceScenesFeatures, [sourceIdx]: newDeviceScenesFeatures },
+            };
+        }),
     setGroups: (sourceIdx, groups) => set((state) => ({ groups: { ...state.groups, [sourceIdx]: groups } })),
 
     setNetworkMap: (sourceIdx, networkMap) =>

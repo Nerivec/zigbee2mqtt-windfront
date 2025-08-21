@@ -93,7 +93,10 @@ export default function Groups({ sourceIdx, device }: GroupsProps) {
                 </div>
             </div>
             <div>
-                <VirtuosoMasonry useWindowScroll={true} columnCount={columnCount} data={memberGroups} ItemContent={GroupCard} className="gap-3" />
+                {/* XXX: issues with going to zero items and back */}
+                {memberGroups.length > 0 && (
+                    <VirtuosoMasonry useWindowScroll={true} columnCount={columnCount} data={memberGroups} ItemContent={GroupCard} className="gap-3" />
+                )}
             </div>
         </>
     );

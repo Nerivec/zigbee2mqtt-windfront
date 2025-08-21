@@ -63,6 +63,7 @@
         "send": "Envoyer",
         "columns": "Colonnes",
         "entries": "Entrées",
+        "empty_exposes_definition": "Définition d'exposés vide",
         "show_only": "Afficher uniquement"
     },
     "devicePage": {
@@ -78,9 +79,6 @@
         "scene": "Scène",
         "exposes": "Exposés",
         "select_a_device": "Sélectionner un appareil"
-    },
-    "exposes": {
-        "empty_exposes_definition": "Définition d'exposés vide"
     },
     "groups": {
         "settings": "Paramètres",

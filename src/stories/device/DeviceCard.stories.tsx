@@ -4,7 +4,8 @@ import DashboardFeatureWrapper from "../../components/dashboard-page/DashboardFe
 import { isValidForDashboard } from "../../components/dashboard-page/index.js";
 import DeviceCard from "../../components/device/DeviceCard.js";
 import { isValidForScenes } from "../../components/device-page/index.js";
-import { filterExposes } from "../../utils.js";
+import type { Device, FeatureWithAnySubFeatures } from "../../types.js";
+import { parseExpose } from "../../utils.js";
 import {
     BASIC_ENDDEVICE,
     BASIC_ENDDEVICE_STATE,
@@ -17,6 +18,23 @@ import {
     OTHER_ROUTER,
     OTHER_ROUTER_STATE,
 } from "../devices.js";
+
+export const filterExposes = (
+    exposes: NonNullable<Device["definition"]>["exposes"],
+    validateFn: Parameters<typeof parseExpose>[1],
+): FeatureWithAnySubFeatures[] => {
+    const filteredExposes: FeatureWithAnySubFeatures[] = [];
+
+    for (const expose of exposes) {
+        const validExpose = parseExpose(expose, validateFn);
+
+        if (validExpose) {
+            filteredExposes.push(validExpose);
+        }
+    }
+
+    return filteredExposes;
+};
 
 const meta = {
     title: "Components/Device/DeviceCard",

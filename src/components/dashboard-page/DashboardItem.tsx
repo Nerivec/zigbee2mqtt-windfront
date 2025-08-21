@@ -25,10 +25,17 @@ export type DashboardItemProps = {
 };
 
 const DashboardItem = ({
-    data: { sourceIdx, device, deviceState, features, lastSeenConfig, homeassistantEnabled, renameDevice, removeDevice },
-}: DashboardItemProps) => {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
+    sourceIdx,
+    device,
+    deviceState,
+    features,
+    lastSeenConfig,
+    homeassistantEnabled,
+    renameDevice,
+    removeDevice,
+}: DashboardItemProps["data"]) => {
     const { t } = useTranslation("zigbee");
+    const { sendMessage } = useContext(WebSocketApiRouterContext);
 
     const onCardChange = useCallback(
         async (value: unknown) => {
@@ -74,4 +81,9 @@ const DashboardItem = ({
     );
 };
 
-export default DashboardItem;
+const DashboardItemGuarded = (props: DashboardItemProps) => {
+    // when filtering, indexing can get "out-of-whack" it appears
+    return props?.data ? <DashboardItem {...props.data} /> : null;
+};
+
+export default DashboardItemGuarded;

@@ -69,8 +69,14 @@
         "more": "More",
         "default": "Default",
         "multi_instance": "Multi-Instance",
+        "all_sources": "All sources",
         "show_source_name": "Show source name",
-        "show_only": "Show only"
+        "show_only": "Show only",
+        "empty_exposes_definition": "Empty exposes definition",
+        "all_features": "All features",
+        "all_properties": "All properties",
+        "show_routers": "Show routers",
+        "show_end_devices": "Show end devices"
     },
     "devicePage": {
         "about": "About",
@@ -85,9 +91,6 @@
         "scene": "Scene",
         "exposes": "Exposes",
         "select_a_device": "Select a device"
-    },
-    "exposes": {
-        "empty_exposes_definition": "Empty exposes definition"
     },
     "groups": {
         "settings": "Settings",

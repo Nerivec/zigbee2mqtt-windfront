@@ -1,8 +1,9 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, memo, useMemo, useState } from "react";
+import { type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import { useSearch } from "../../hooks/useSearch.js";
 import type { TabName } from "../../pages/GroupPage.js";
 import { API_URLS, useAppStore } from "../../store.js";
 import type { Group } from "../../types.js";
@@ -16,7 +17,7 @@ interface HeaderGroupSelectorProps {
 }
 
 const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devices" }: HeaderGroupSelectorProps) => {
-    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [searchTerm, normalizedSearchTerm, setSearchTerm] = useSearch();
     const { t } = useTranslation("common");
     const groups = useAppStore((state) => state.groups);
 
@@ -25,25 +26,28 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             for (const group of groups[sourceIdx]) {
-                if (
-                    group.friendly_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                    (sourceIdx !== currentSourceIdx || group.id !== currentGroup?.id)
-                ) {
-                    elements.push(
-                        <li key={`${group.friendly_name}-${group.id}-${sourceIdx}`}>
-                            <Link to={`/group/${sourceIdx}/${group.id}/${tab}`} onClick={() => setSearchTerm("")} className="dropdown-item">
-                                {<SourceDot idx={sourceIdx} autoHide namePostfix=" - " />} {group.friendly_name}
-                            </Link>
-                        </li>,
-                    );
+                if (sourceIdx === currentSourceIdx && group.id === currentGroup?.id) {
+                    continue;
                 }
+
+                if (normalizedSearchTerm.length > 0 && !group.friendly_name.toLowerCase().includes(normalizedSearchTerm)) {
+                    continue;
+                }
+
+                elements.push(
+                    <li key={`${group.friendly_name}-${group.id}-${sourceIdx}`}>
+                        <Link to={`/group/${sourceIdx}/${group.id}/${tab}`} onClick={() => setSearchTerm("")} className="dropdown-item">
+                            {<SourceDot idx={sourceIdx} autoHide namePostfix=" - " />} {group.friendly_name}
+                        </Link>
+                    </li>,
+                );
             }
         }
 
         elements.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
 
         return elements;
-    }, [groups, searchTerm, currentSourceIdx, currentGroup, tab]);
+    }, [groups, normalizedSearchTerm, currentSourceIdx, currentGroup, tab, setSearchTerm]);
 
     return (
         <PopoverDropdown
