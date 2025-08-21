@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL, ZHC_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
-import { useAppStore } from "../../../store.js";
+import { API_URLS, useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { toHex } from "../../../utils.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
@@ -14,6 +14,7 @@ import DeviceControlEditName from "../../device/DeviceControlEditName.js";
 import DeviceControlGroup from "../../device/DeviceControlGroup.js";
 import DeviceControlUpdateDesc from "../../device/DeviceControlUpdateDesc.js";
 import DeviceImage from "../../device/DeviceImage.js";
+import SourceDot from "../../SourceDot.js";
 import Availability from "../../value-decorators/Availability.js";
 import DisplayValue from "../../value-decorators/DisplayValue.js";
 import LastSeen from "../../value-decorators/LastSeen.js";
@@ -141,7 +142,7 @@ ${JSON.stringify(bridgeHealth.devices[device.ieee_address] ?? {})}
 });
 
 export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
-    const { t } = useTranslation(["zigbee", "availability"]);
+    const { t } = useTranslation(["zigbee", "availability", "common"]);
     const deviceStates = useAppStore(useShallow((state) => state.deviceStates[sourceIdx]));
     const bridgeConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config));
     const availability = useAppStore(useShallow((state) => state.availability[sourceIdx]));
@@ -325,6 +326,17 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         </div>
                     </div>
                 </div>
+                {API_URLS.length > 1 && (
+                    <div className="stats stats-vertical lg:stats-horizontal shadow">
+                        <div className="stat">
+                            <div className="stat-title">{t("common:source")}</div>
+                            <div className="stat-value text-xl">
+                                <SourceDot idx={sourceIdx} alwaysShowName />
+                            </div>
+                            <div className="stat-desc">{API_URLS[sourceIdx]}</div>
+                        </div>
+                    </div>
+                )}
                 <div className="card-actions justify-end mt-2">
                     <ReportProblemLink sourceIdx={sourceIdx} device={device} />
                     <DeviceControlGroup

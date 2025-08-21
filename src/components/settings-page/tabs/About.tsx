@@ -13,7 +13,8 @@ import {
     ZH_RELEASE_TAG_URL,
     ZHC_RELEASE_TAG_URL,
 } from "../../../consts.js";
-import { useAppStore } from "../../../store.js";
+import { API_URLS, useAppStore } from "../../../store.js";
+import SourceDot from "../../SourceDot.js";
 import Stats from "../Stats.js";
 
 type ReportProblemLinkProps = { sourceIdx: number };
@@ -71,7 +72,7 @@ process.uptime_sec: \`${Math.round(bridgeHealth.process.uptime_sec)}\`
 });
 
 export default function About({ sourceIdx }: AboutProps) {
-    const { t } = useTranslation("settings");
+    const { t } = useTranslation(["settings", "common"]);
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
 
@@ -115,9 +116,18 @@ export default function About({ sourceIdx }: AboutProps) {
     );
 
     return (
-        <div className="flex flex-col gap-3 items-center">
+        <div className="flex flex-col gap-3 items-center text-center">
             <ReportProblemLink sourceIdx={sourceIdx} />
             <div className="stats stats-vertical lg:stats-horizontal shadow">
+                {API_URLS.length > 1 && (
+                    <div className="stat place-items-center">
+                        <div className="stat-title">{t("common:source")}</div>
+                        <div className="stat-value text-xl">
+                            <SourceDot idx={sourceIdx} alwaysShowName />
+                        </div>
+                        <div className="stat-desc max-w-md whitespace-normal">{API_URLS[sourceIdx]}</div>
+                    </div>
+                )}
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("zigbee2mqtt_version")}</div>
                     <div className="stat-value text-lg">{zigbee2mqttVersion}</div>
@@ -139,7 +149,7 @@ export default function About({ sourceIdx }: AboutProps) {
             <div className="stats stats-vertical lg:stats-horizontal shadow">
                 <div className="stat place-items-center">
                     <div className="stat-title">{t("machine")}</div>
-                    <div className="stat-value text-lg">{bridgeInfo.os.version}</div>
+                    <div className="stat-value text-lg max-w-md whitespace-normal">{bridgeInfo.os.version}</div>
                     <div className="stat-desc">CPU: {bridgeInfo.os.cpus}</div>
                     <div className="stat-desc">RAM: {bridgeInfo.os.memory_mb} MB</div>
                 </div>
