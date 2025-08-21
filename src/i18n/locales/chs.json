@@ -86,8 +86,8 @@
         "write": "写入"
     },
     "devConsole": {
-        "add_update_external_converter": "Add or update external converter",
-        "add_update_external_extension": "Add or update external extension",
+        "add_update_external_converter": "添加 or update external converter",
+        "add_update_external_extension": "添加 or update external extension",
         "code": "Code",
         "codespace_info": "A Github Codespace is available to help in development",
         "create_new_converter": "Create new converter",
@@ -99,11 +99,11 @@
         "hide_definition": "Hide definition",
         "mqtt": "MQTT",
         "mqtt_topic_info": "Omit the 'base_topic', frontend messages are sent over WebSocket directly to Zigbee2MQTT.",
-        "reset_frontend_state": "Reset frontend state",
+        "reset_frontend_state": "重置前端状态",
         "select_converter_to_edit": "Select converter to edit",
         "select_extension_to_edit": "Select extension to edit",
         "send_mqtt": "Send MQTT message",
-        "show_definition": "Show definition",
+        "show_definition": "显示定义",
         "state_property": "State property",
         "state_property_info": "Set the result into the device's state (only for read)",
         "topic": "主题"
@@ -138,13 +138,13 @@
     },
     "health": {
         "awaiting_next_check": "Awaiting next check",
-        "interview_info": "Device interviews can heavily influence this data.",
+        "interview_info": "设备访谈可能会严重影响此数据。",
         "last_check": "上次检查",
         "leave_count": "Leave count",
         "load_average": "Load average",
         "messages": "Messages",
         "messages_per_sec": "Messages per sec",
-        "network_address_changes": "Network address changes",
+        "network_address_changes": "网络地址更改",
         "os": "OS",
         "process": "进程",
         "published": "已发布",
@@ -231,7 +231,7 @@
     },
     "ota": {
         "app": "App",
-        "available_firmware_version": "Available firmware version",
+        "available_firmware_version": "可用固件版本",
         "check": "Check for new updates",
         "check_selected": "检查选中项",
         "empty_ota_message": "No device currently support OTA",
@@ -240,33 +240,33 @@
         "schedule": "Schedule update",
         "schedule_info": "Will update on next OTA request from device",
         "stack": "Stack",
-        "unschedule": "Cancel scheduled update",
-        "update": "Update device firmware",
-        "update_selected": "Update selected",
+        "unschedule": "取消计划更新",
+        "update": "更新设备固件",
+        "update_selected": "更新选中项",
         "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times."
     },
     "scene": {
         "add": "添加",
-        "add_update_header": "Add/update a scene",
+        "add_update_header": "添加/update a scene",
         "manage_scenes_header": "Manage scenes",
         "recall": "Recall",
         "remove": "移除",
         "remove_all": "Remove all",
         "scene_id": "场景ID",
-        "scene_name": "Scene Name",
-        "select_scene": "Select Scene",
+        "scene_name": "场景名称",
+        "select_scene": "选择场景",
         "store": "Store"
     },
     "settings": {
         "about": "关于",
-        "add_install_code": "Add install code",
+        "add_install_code": "添加 install code",
         "advanced": "高级",
         "availability": "Availability",
         "blocklist": "阻止列表",
         "bridge": "网桥",
         "coordinator": "协调器",
         "coordinator_ieee_address": "Coordinator IEEE Address",
-        "dashboard_column_display": "Dashboard column display",
+        "dashboard_column_display": "仪表板列显示",
         "dev_console": "开发控制台",
         "donate": "Donate",
         "donation_text": "在这里您可以感谢我们所有的辛勤工作。也请毫不犹豫地说些好话 ;)",
@@ -278,23 +278,23 @@
         "frontend_version": "Frontend version",
         "health": "Health",
         "homeassistant": "Home Assistant integration",
-        "homepage": "Homepage",
+        "homepage": "主页",
         "install_code": "Install code",
         "language": "语言",
         "localise_images": "Localise device images",
         "machine": "Machine",
         "main": "Main",
-        "max_on_screen_notifications": "Max on-screen notifications",
+        "max_on_screen_notifications": "屏幕上最大通知数",
         "mqtt": "MQTT",
-        "network_map": "Network map",
-        "network_raw": "Network data/map",
+        "network_map": "网络地图",
+        "network_raw": "网络数据/地图",
         "node_version": "Node version",
         "ota": "OTA updates",
         "passlist": "Passlist",
         "permit_join_time": "允许加入时间",
         "request_z2m_backup": "Request Z2m backup",
         "reset_all": "重置全部",
-        "reset_auth": "Reset auth",
+        "reset_auth": "重置认证",
         "reset_settings": "重置设置",
         "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
         "revision": "Revision",
@@ -324,7 +324,7 @@
         "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message": "向 MQTT 消息添加 last_seen 属性，包含最后一条 Zigbee 消息的日期/时间",
         "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "向 MQTT 消息添加 elapsed 属性，包含自上一条消息以来的毫秒数",
         "Allow only certain devices to join the network (by ieeeAddr)": {
-            " Note that all devices not on the passlist will be removed from the network!": "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!"
+            " Note that all devices not on the passlist will be removed from the network!": "Allow only certain devices to join the network (by ieee添加r). Note that all devices not on the passlist will be removed from the network!"
         },
         "Base URL for the frontend": {
             " If hosted under a subpath, e": {
@@ -366,7 +366,7 @@
             "5, x3, x6, x12": {
                 "": {
                     "": {
-                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
+                        ")": "在可用性ping失败时启用超时退避 (x1.5, x3, x6, x12...)"
                     }
                 }
             }
@@ -386,7 +386,7 @@
         },
         "Frontend binding host": {
             " Binds to a unix socket when an absolute path is given instead": {
-                "": "Frontend binding host. Binds to a unix socket when an absolute path is given instead."
+                "": "前端绑定主机。当给出绝对路径时，绑定到unix套接字。"
             }
         },
         "Frontend binding port": {
@@ -620,8 +620,8 @@
         "dc_source": "DC Source",
         "description": "描述",
         "device": "设备",
-        "device_type": "Device type",
-        "edit_description": "Edit description",
+        "device_type": "设备类型",
+        "edit_description": "编辑描述",
         "emergency_mains_and_transfer_switch": "Emergency mains and transfer switch",
         "emergency_mains_constantly_powered": "Emergency mains constantly powered",
         "endpoint": "端点",
@@ -642,13 +642,13 @@
         "mains_3_phase": "Mains (3 phase)",
         "mains_single_phase": "Mains (single phase)",
         "manufacturer": "制造商",
-        "max_rep_interval": "Max rep interval",
-        "min_rep_change": "Min rep change",
-        "min_rep_interval": "Min rep interval",
+        "max_rep_interval": "最大 rep interval",
+        "min_rep_change": "最小 rep change",
+        "min_rep_interval": "最小 rep interval",
         "model": "型号",
-        "network_address": "Network address",
-        "network_address_dec": "Network address in decimal format",
-        "network_address_hex": "Network address in hexadecimal format",
+        "network_address": "网络地址",
+        "network_address_dec": "十进制格式的网络地址",
+        "network_address_hex": "十六进制格式的网络地址",
         "none": "无",
         "other_zcl_clusters": "Other ZCL clusters",
         "output_clusters": "Output clusters",
@@ -656,24 +656,24 @@
         "possible": "Possible",
         "power": "电源",
         "power_level": "power level",
-        "read_write_attributes": "Read / Write attributes from endpoint cluster",
+        "read_write_attributes": "读取 / Write attributes from endpoint cluster",
         "reconfigure": "Reconfigure",
         "remove_device": "Remove device",
         "rename_device": "Rename device",
         "report_problem": "Report problem",
         "request_support": "Request support",
-        "save_description": "Save description",
+        "save_description": "保存描述",
         "select_attribute": "Select attribute",
         "select_cluster": "Select cluster",
         "submit_converter": "Submit converter",
-        "support_status": "Support status",
+        "support_status": "支持 status",
         "type": "类型",
         "unknown": "未知",
         "unsupported": "不支持",
         "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
-        "update_description": "Update description",
+        "update_description": "更新描述",
         "updating_firmware": "Updating firmware",
         "zigbee_manufacturer": "ZigBee Manufacturer",
-        "zigbee_model": "ZigBee Model"
+        "zigbee_model": "ZigBee 模式l"
     }
 }

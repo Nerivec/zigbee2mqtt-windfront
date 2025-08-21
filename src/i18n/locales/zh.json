@@ -522,7 +522,7 @@
         },
         "Frontend binding host": {
             " Binds to a unix socket when an absolute path is given instead": {
-                "": "Frontend binding host. Binds to a unix socket when an absolute path is given instead."
+                "": "前端繫結主機。當提供絕對路徑時，繫結到unix通訊端。"
             }
         },
         "Enables authentication, disabled by default": "啟用驗證，預設停用",
@@ -616,7 +616,7 @@
         "Send cached state on startup, only used when cache_state: true": "Send cached state on startup, only used when cache_state: true",
         "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message": "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message",
         "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg",
-        "Network encryption key, changing requires re-pairing all devices!": "Network encryption key, changing requires re-pairing all devices!",
+        "Network encryption key, changing requires re-pairing all devices!": "網路加密金鑰，變更需要重新配對所有裝置！",
         "Log timestamp format": "Log timestamp format",
         "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)": "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)",
         "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)": "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)",
@@ -629,7 +629,7 @@
             " By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID"
         },
         "Retain MQTT messages of this device": "Retain MQTT messages of this device",
-        "Disables the device (excludes device from network scans, availability and group state updates)": "Disables the device (excludes device from network scans, availability and group state updates)",
+        "Disables the device (excludes device from network scans, availability and group state updates)": "停用裝置（將裝置從網路掃描、可用性和群組狀態更新中排除）",
         "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
             "version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5"
         },
