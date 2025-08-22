@@ -1,9 +1,11 @@
 import { faBug, faCode, faCogs, faHeartPulse, faInfo, faThumbsUp, faToolbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, lazy, memo, useCallback, useEffect } from "react";
+import { lazy, memo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import SourceDot from "../components/SourceDot.js";
+import type { TabName as DeviceConsoleTabName } from "../components/settings-page/tabs/DevConsole.js";
+import type { TabName as SettingsTabName } from "../components/settings-page/tabs/Settings.js";
 import { API_URLS } from "../store.js";
 import { getValidSourceIdx } from "../utils.js";
 
@@ -12,11 +14,13 @@ type TabName = "about" | "health" | "settings" | "tools" | "bridge" | "dev-conso
 type UrlParams = {
     sourceIdx: `${number}`;
     tab?: TabName;
+    subTab?: string;
 };
 
 type SettingsPageTabProps = {
     sourceIdx: number;
     tab: UrlParams["tab"];
+    subTab: UrlParams["subTab"];
 };
 
 const AboutTab = lazy(async () => await import("../components/settings-page/tabs/About.js"));
@@ -27,32 +31,32 @@ const BridgeTab = lazy(async () => await import("../components/settings-page/tab
 const DevConsoleTab = lazy(async () => await import("../components/settings-page/tabs/DevConsole.js"));
 const DonateTab = lazy(async () => await import("../components/settings-page/tabs/Donate.js"));
 
-function renderTab(sourceIdx: number, tab: TabName) {
+function renderTab(sourceIdx: number, tab: TabName, subTab: string | undefined) {
     switch (tab) {
         case "about":
-            return <AboutTab sourceIdx={sourceIdx} />;
+            return <AboutTab key={sourceIdx} sourceIdx={sourceIdx} />;
         case "health":
-            return <HealthTab sourceIdx={sourceIdx} />;
+            return <HealthTab key={sourceIdx} sourceIdx={sourceIdx} />;
         case "settings":
-            return <SettingsTab sourceIdx={sourceIdx} />;
+            return <SettingsTab key={sourceIdx} sourceIdx={sourceIdx} tab={(subTab as SettingsTabName) ?? "main"} />;
         case "tools":
-            return <ToolsTab sourceIdx={sourceIdx} />;
+            return <ToolsTab key={sourceIdx} sourceIdx={sourceIdx} />;
         case "bridge":
-            return <BridgeTab sourceIdx={sourceIdx} />;
+            return <BridgeTab key={sourceIdx} sourceIdx={sourceIdx} />;
         case "dev-console":
-            return <DevConsoleTab sourceIdx={sourceIdx} />;
+            return <DevConsoleTab key={sourceIdx} sourceIdx={sourceIdx} tab={(subTab as DeviceConsoleTabName) ?? "mqtt"} />;
         case "donate":
             return <DonateTab />;
     }
 }
 
-const SettingsPageTab = memo(({ sourceIdx, tab }: SettingsPageTabProps) => {
+const SettingsPageTab = memo(({ sourceIdx, tab, subTab }: SettingsPageTabProps) => {
     const { t } = useTranslation(["settings", "navbar"]);
 
     const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
-    const tabs = (
-        <>
+    return (
+        <div className="tabs tabs-border">
             <NavLink to={`/settings/${sourceIdx}/about`} className={isTabActive}>
                 <FontAwesomeIcon icon={faInfo} className="me-2" />
                 {t("about")}
@@ -81,20 +85,14 @@ const SettingsPageTab = memo(({ sourceIdx, tab }: SettingsPageTabProps) => {
                 <FontAwesomeIcon icon={faThumbsUp} className="me-2" />
                 {t("donate")}
             </NavLink>
-        </>
-    );
-
-    return (
-        <div className="tabs tabs-border">
-            {tabs}
-            <div className="tab-content block h-full bg-base-100 p-3">{tab && renderTab(sourceIdx, tab)}</div>
+            <div className="tab-content block h-full bg-base-100 p-3">{tab && renderTab(sourceIdx, tab, subTab)}</div>
         </div>
     );
 });
 
 export default function SettingsPage() {
     const navigate = useNavigate();
-    const { sourceIdx, tab } = useParams<UrlParams>();
+    const { sourceIdx, tab, subTab } = useParams<UrlParams>();
     const [numSourceIdx, validSourceIdx] = getValidSourceIdx(sourceIdx);
 
     useEffect(() => {
@@ -102,29 +100,30 @@ export default function SettingsPage() {
             navigate(`/settings/0/${tab || "about"}`, { replace: true });
         } else if (!tab) {
             navigate(`/settings/${sourceIdx}/about`, { replace: true });
+        } else if (!subTab) {
+            if (tab === "settings") {
+                navigate(`/settings/${sourceIdx}/settings/main`, { replace: true });
+            } else if (tab === "dev-console") {
+                navigate(`/settings/${sourceIdx}/dev-console/mqtt`, { replace: true });
+            }
         }
-    }, [sourceIdx, validSourceIdx, tab, navigate]);
+    }, [sourceIdx, validSourceIdx, tab, subTab, navigate]);
 
-    const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
-
-    const tabs: JSX.Element[] = [];
-
-    for (let idx = 0; idx < API_URLS.length; idx++) {
-        tabs.push(
-            <NavLink key={idx} to={`/settings/${idx}/${tab || "about"}`} className={isTabActive}>
-                <SourceDot idx={idx} alwaysShowName />
-            </NavLink>,
-        );
-    }
+    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
     return API_URLS.length > 1 ? (
         <div className="tabs tabs-border">
-            {tabs}
+            {API_URLS.map((_v, idx) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: const
+                <NavLink key={idx} to={`/settings/${idx}/${tab || "about"}${subTab ? `/${subTab}` : ""}`} className={isTabActive}>
+                    <SourceDot idx={idx} alwaysShowName />
+                </NavLink>
+            ))}
             <div className="tab-content block h-full bg-base-100 pb-3 px-3">
-                <SettingsPageTab sourceIdx={numSourceIdx} tab={tab} />
+                <SettingsPageTab sourceIdx={numSourceIdx} tab={tab} subTab={subTab} />
             </div>
         </div>
     ) : (
-        <SettingsPageTab sourceIdx={numSourceIdx} tab={tab} />
+        <SettingsPageTab sourceIdx={numSourceIdx} tab={tab} subTab={subTab} />
     );
 }

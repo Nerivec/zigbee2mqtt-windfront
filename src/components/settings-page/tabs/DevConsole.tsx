@@ -2,6 +2,7 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { NavLink, type NavLinkRenderProps } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import { CONVERTERS_CODESPACE_URL, CONVERTERS_DOCS_URL, EXTENSIONS_DOCS_URL, MQTT_TOPICS_DOCS_URL } from "../../../consts.js";
 import { type AppState, useAppStore } from "../../../store.js";
@@ -12,13 +13,13 @@ import InputField from "../../form-fields/InputField.js";
 import SelectField from "../../form-fields/SelectField.js";
 import TextareaField from "../../form-fields/TextareaField.js";
 
-type TabName = "mqtt" | "external_converters" | "external_extensions";
+export type TabName = "mqtt" | "external_converters" | "external_extensions";
 
-type DevConsoleProps = { sourceIdx: number };
+type DevConsoleProps = { sourceIdx: number; tab: TabName };
 
-const TABS: TabName[] = ["mqtt", "external_converters", "external_extensions"];
+type DevConsoleTabProps = { sourceIdx: number };
 
-const MqttTab = ({ sourceIdx }: DevConsoleProps) => {
+const MqttTab = ({ sourceIdx }: DevConsoleTabProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const [topic, setTopic] = useState("");
@@ -91,7 +92,7 @@ const MqttTab = ({ sourceIdx }: DevConsoleProps) => {
     );
 };
 
-const ExternalConverterTab = ({ sourceIdx }: DevConsoleProps) => {
+const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const converters = useAppStore(useShallow((state) => state.converters[sourceIdx]));
@@ -201,7 +202,7 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleProps) => {
     );
 };
 
-const ExternalExtensionTab = ({ sourceIdx }: DevConsoleProps) => {
+const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const extensions = useAppStore(useShallow((state) => state.extensions[sourceIdx]));
@@ -313,24 +314,29 @@ function renderTab(sourceIdx: number, tab: TabName) {
         case "mqtt":
             return <MqttTab sourceIdx={sourceIdx} />;
         case "external_converters":
-            return <ExternalConverterTab key={sourceIdx} sourceIdx={sourceIdx} />;
+            return <ExternalConverterTab sourceIdx={sourceIdx} />;
         case "external_extensions":
-            return <ExternalExtensionTab key={sourceIdx} sourceIdx={sourceIdx} />;
+            return <ExternalExtensionTab sourceIdx={sourceIdx} />;
     }
 }
 
-export default function DevConsole({ sourceIdx }: DevConsoleProps) {
-    const [currentTab, setCurrentTab] = useState<TabName>(TABS[0]);
+export default function DevConsole({ sourceIdx, tab }: DevConsoleProps) {
     const { t } = useTranslation("devConsole");
+
+    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
     return (
         <div className="tabs tabs-border">
-            {TABS.map((tab) => (
-                <Button key={tab} className={`tab${currentTab === tab ? " tab-active" : ""}`} aria-current="page" item={tab} onClick={setCurrentTab}>
-                    {t(tab)}
-                </Button>
-            ))}
-            <div className="tab-content block h-full bg-base-100 p-3">{renderTab(sourceIdx, currentTab)}</div>
+            <NavLink to={`/settings/${sourceIdx}/dev-console/mqtt`} className={isTabActive}>
+                {t("mqtt")}
+            </NavLink>
+            <NavLink to={`/settings/${sourceIdx}/dev-console/external_converters`} className={isTabActive}>
+                {t("external_converters")}
+            </NavLink>
+            <NavLink to={`/settings/${sourceIdx}/dev-console/external_extensions`} className={isTabActive}>
+                {t("external_extensions")}
+            </NavLink>
+            <div className="tab-content block h-full bg-base-100 p-3">{renderTab(sourceIdx, tab)}</div>
         </div>
     );
 }

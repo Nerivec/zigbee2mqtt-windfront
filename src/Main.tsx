@@ -57,7 +57,7 @@ export function Main() {
                                             <Route path="/ota" element={<OtaPage />} />
                                             <Route path="/network/:sourceIdx?" element={<NetworkPage />} />
                                             <Route path="/logs/:sourceIdx?" element={<LogsPage />} />
-                                            <Route path="/settings/:sourceIdx?/:tab?" element={<SettingsPage />} />
+                                            <Route path="/settings/:sourceIdx?/:tab?/:subTab?" element={<SettingsPage />} />
                                             <Route path="/frontend-settings" element={<FrontendSettingsPage />} />
                                             <Route path="/" element={<HomePage />} />
                                             <Route path="*" element={<HomePage />} />

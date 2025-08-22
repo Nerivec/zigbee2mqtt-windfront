@@ -1,6 +1,6 @@
 import { faClose, faMagnifyingGlass, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import { useShallow } from "zustand/react/shallow";
@@ -165,19 +165,14 @@ export default function LogsPage() {
 
     const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
-    const tabs: JSX.Element[] = [];
-
-    for (let idx = 0; idx < API_URLS.length; idx++) {
-        tabs.push(
-            <NavLink key={idx} to={`/logs/${idx}`} className={isTabActive}>
-                <SourceDot idx={idx} alwaysShowName />
-            </NavLink>,
-        );
-    }
-
     return API_URLS.length > 1 ? (
         <div className="tabs tabs-border">
-            {tabs}
+            {API_URLS.map((_v, idx) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: const
+                <NavLink key={idx} to={`/logs/${idx}`} className={isTabActive}>
+                    <SourceDot idx={idx} alwaysShowName />
+                </NavLink>
+            ))}
             <div className="ml-auto flex flex-row flex-wrap gap-3 items-top">
                 <SelectField
                     name="log_limit"
