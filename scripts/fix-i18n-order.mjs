@@ -1,7 +1,6 @@
-import { readdirSync, readFileSync } from "node:fs";
-import { exit } from "node:process";
-import difference from "lodash/difference.js";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import get from "lodash/get.js";
+import pick from "lodash/pick.js";
 
 const LOCALES_PATH = "./src/i18n/locales/";
 const EN_LOCALE_FILE = "en.json";
@@ -30,8 +29,7 @@ const getKeys = (content, path) => {
 };
 
 const enKeys = getKeys(enTranslations);
-
-let error = false;
+const enBaseKeys = Object.keys(enTranslations);
 
 for (const localFile of readdirSync(LOCALES_PATH)) {
     if (localFile === EN_LOCALE_FILE) {
@@ -39,29 +37,14 @@ for (const localFile of readdirSync(LOCALES_PATH)) {
     }
 
     const translations = JSON.parse(readFileSync(`${LOCALES_PATH}${localFile}`, "utf8"));
-    const keys = getKeys(translations);
+    const ordered = pick(translations, enBaseKeys);
 
-    if (keys.length !== 0) {
-        const missing = difference(enKeys, keys);
-
-        if (missing.length !== 0) {
-            console.error(`[${localFile}]: Missing keys:`);
-            console.error(missing);
-
-            error = true;
-        }
-
-        const removed = difference(keys, enKeys);
-
-        if (removed.length !== 0) {
-            console.error(`[${localFile}]: Invalid keys:`);
-            console.error(removed);
-
-            error = true;
-        }
+    for (const key in ordered) {
+        ordered[key] = pick(
+            ordered[key],
+            enKeys.filter((k) => k.startsWith(`${key}.`)).map((k) => k.slice(key.length + 1)),
+        );
     }
-}
 
-if (error) {
-    exit(1);
+    writeFileSync(`${LOCALES_PATH}${localFile}`, JSON.stringify(ordered, undefined, 4), "utf8");
 }

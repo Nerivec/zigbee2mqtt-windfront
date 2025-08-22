@@ -1,6 +1,4 @@
 import { readdirSync, readFileSync } from "node:fs";
-import { exit } from "node:process";
-import difference from "lodash/difference.js";
 import get from "lodash/get.js";
 
 const LOCALES_PATH = "./src/i18n/locales/";
@@ -31,7 +29,13 @@ const getKeys = (content, path) => {
 
 const enKeys = getKeys(enTranslations);
 
-let error = false;
+/**
+ * Structure:
+ *   - file: the locale file where the untranslated item is (in `src/i18n/locales` directory)
+ *   - path: the keys path to reach the untranslated value in said file's JSON structure (can be used with `lodash` `get` & `set` once file is loaded and parsed)
+ *   - value: the untranslated value
+ */
+const untranslated = [];
 
 for (const localFile of readdirSync(LOCALES_PATH)) {
     if (localFile === EN_LOCALE_FILE) {
@@ -39,29 +43,25 @@ for (const localFile of readdirSync(LOCALES_PATH)) {
     }
 
     const translations = JSON.parse(readFileSync(`${LOCALES_PATH}${localFile}`, "utf8"));
-    const keys = getKeys(translations);
 
-    if (keys.length !== 0) {
-        const missing = difference(enKeys, keys);
+    for (const key of enKeys) {
+        // get the EN reference value at given path
+        const enTranslation = get(enTranslations, key);
+        // get the current file value at given path
+        const translation = get(translations, key);
 
-        if (missing.length !== 0) {
-            console.error(`[${localFile}]: Missing keys:`);
-            console.error(missing);
-
-            error = true;
-        }
-
-        const removed = difference(keys, enKeys);
-
-        if (removed.length !== 0) {
-            console.error(`[${localFile}]: Invalid keys:`);
-            console.error(removed);
-
-            error = true;
+        // if translations match, it means the current file value is completely untranslated
+        if (enTranslation === translation) {
+            untranslated.push({
+                file: localFile,
+                path: key,
+                value: enTranslation,
+            });
         }
     }
 }
 
-if (error) {
-    exit(1);
-}
+console.log(untranslated);
+
+// return the untranslated values for use in other scripts
+export default untranslated;
