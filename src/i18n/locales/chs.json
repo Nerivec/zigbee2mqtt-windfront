@@ -184,7 +184,7 @@
         "check": "检查 for new updates",
         "check_selected": "检查选中项",
         "update_selected": "更新选中项",
-        "update_selected_info": "An OTA 更新 is very taxing for a network. Make sure it is stable and opt for less used times.",
+        "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times.",
         "empty_ota_message": "No device currently support OTA",
         "remaining_time": "Remaining time",
         "schedule": "Schedule update",
