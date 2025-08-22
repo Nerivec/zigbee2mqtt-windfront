@@ -1,6 +1,6 @@
 {
     "availability": {
-        "availability": "可用性",
+        "availability": "Availability",
         "disabled": "已禁用",
         "enabled": "已启用",
         "offline": "离线",
@@ -88,12 +88,12 @@
     "devConsole": {
         "add_update_external_converter": "添加 or update external converter",
         "add_update_external_extension": "添加 or update external extension",
-        "code": "Code",
-        "codespace_info": "A Github Codespace is available to help in development",
+        "code": "代码",
+        "codespace_info": "A Github 代码space is available to help in development",
         "create_new_converter": "Create new converter",
         "create_new_extension": "Create new extension",
-        "external_converters": "External Converters",
-        "external_extensions": "External Extensions",
+        "external_converters": "外部 Converters",
+        "external_extensions": "外部 扩展",
         "generate_external_definition": "Generate external definition",
         "generated_external_definition": "Generated external definition",
         "hide_definition": "Hide definition",
@@ -104,7 +104,7 @@
         "select_extension_to_edit": "Select extension to edit",
         "send_mqtt": "Send MQTT message",
         "show_definition": "显示定义",
-        "state_property": "State property",
+        "state_property": "状态 property",
         "state_property_info": "Set the result into the device's state (only for read)",
         "topic": "主题"
     },
@@ -142,8 +142,8 @@
         "last_check": "上次检查",
         "leave_count": "Leave count",
         "load_average": "Load average",
-        "messages": "消息",
-        "messages_per_sec": "Messages per sec",
+        "messages": "消息s",
+        "messages_per_sec": "消息s per sec",
         "network_address_changes": "网络地址更改",
         "os": "OS",
         "process": "进程",
@@ -183,7 +183,7 @@
     "network": {
         "begin_info_display": "The display type allows to switch between a data-oriented view and a map view.",
         "begin_info_routes": "Enabling routes will retrieve the routes table from devices (not all coordinators/devices support this, but failures should not prevent the rest of the data from loading). This is currently only used in the 'data' display.",
-        "begin_info_type": "The type is used to retrieve a different network map format. External ones are meant to be copied for use outside of the frontend (some example websites are given once generated).",
+        "begin_info_type": "The type is used to retrieve a different network map format. 外部 ones are meant to be copied for use outside of the frontend (some example websites are given once generated).",
         "child": "子节点",
         "children": "子节点",
         "copy_paste_on": "Copy and paste the following data in one of the available online viewers/editors.",
@@ -232,7 +232,7 @@
     "ota": {
         "app": "App",
         "available_firmware_version": "可用固件版本",
-        "check": "Check for new updates",
+        "check": "检查 for new updates",
         "check_selected": "检查选中项",
         "empty_ota_message": "No device currently support OTA",
         "firmware_version": "Firmware version",
@@ -243,7 +243,7 @@
         "unschedule": "取消计划更新",
         "update": "更新设备固件",
         "update_selected": "更新选中项",
-        "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times."
+        "update_selected_info": "An OTA 更新 is very taxing for a network. Make sure it is stable and opt for less used times."
     },
     "scene": {
         "add": "添加",
@@ -261,17 +261,17 @@
         "about": "关于",
         "add_install_code": "添加 install code",
         "advanced": "高级",
-        "availability": "可用性",
+        "availability": "Availability",
         "blocklist": "阻止列表",
         "bridge": "网桥",
         "coordinator": "协调器",
-        "coordinator_ieee_address": "Coordinator IEEE Address",
+        "coordinator_ieee_address": "协调器 IEEE Address",
         "dashboard_column_display": "仪表板列显示",
         "dev_console": "开发控制台",
         "donate": "Donate",
         "donation_text": "在这里您可以感谢我们所有的辛勤工作。也请毫不犹豫地说些好话 ;)",
-        "download_state": "Download state",
-        "experimental": "实验性",
+        "download_state": "下载 state",
+        "experimental": "Experimental",
         "external_converters": "外部转换器",
         "frontend": "前端",
         "frontend_notice": "这些设置存储在您的浏览器本地。使用隐私窗口或清除缓存将重置为默认值。",
@@ -289,14 +289,14 @@
         "network_map": "网络地图",
         "network_raw": "网络数据/地图",
         "node_version": "Node version",
-        "ota": "OTA updates",
+        "ota": "OTA 更新s",
         "passlist": "Passlist",
         "permit_join_time": "允许加入时间",
         "request_z2m_backup": "Request Z2m backup",
         "reset_all": "重置全部",
         "reset_auth": "重置认证",
         "reset_settings": "重置设置",
-        "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
+        "restart_zigbee2mqtt": "重启 Zigbee2MQTT",
         "revision": "Revision",
         "serial": "Serial",
         "settings": "设置",
@@ -311,262 +311,168 @@
         "zigbee_herdsman_version": "zigbee-herdsman version"
     },
     "settingsSchemaDescriptions": {
-        "Home Assistant integration (MQTT discovery)": "Home Assistant integration (MQTT discovery)",
-        "Enable Home Assistant integration": "Enable Home Assistant integration",
-        "Home Assistant discovery topic": "Home Assistant discovery topic",
-        "Home Assistant status topic": "Home Assistant status topic",
-        "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action": {
-            "": "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action."
-        },
-        "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions": {
-            " The events and attributes are currently deemed experimental and subject to change": {
-                "": "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change."
-            }
-        },
+        "Home Assistant integration (MQTT discovery)": "Home Assistant 集成（MQTT 发现）",
+        "Enable Home Assistant integration": "启用 Home Assistant 集成",
+        "Home Assistant discovery topic": "Home Assistant 发现主题",
+        "Home Assistant status topic": "Home Assistant 状态主题",
+        "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action.": "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action.",
+        "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change.": "Home Assistant experimental event entities, when enabled Zigbee2MQTT will add event entities for exposed actions. The events and attributes are currently deemed experimental and subject to change.",
         "Checks whether devices are online/offline": "检查设备是否在线/离线",
         "Enable availability checks": "启用可用性检查",
         "Options for active devices (routers/mains powered)": "活跃设备选项（路由器/主电源供电）",
-        "Time after which an active device will be marked as offline in minutes": "Time after which an active device will be marked as offline in minutes",
-        "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time": "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time",
-        "Enable timeout backoff on failed availability pings (x1": {
-            "5, x3, x6, x12": {
-                "": {
-                    "": {
-                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
-                    }
-                }
-            }
-        },
-        "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device": {
-            " A value of zero disables pausing": {
-                "": "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing."
-            }
-        },
+        "Time after which an active device will be marked as offline in minutes": "Time after which an active device will be marked as offline in 分钟",
+        "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time": "最大imum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time",
+        "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)",
+        "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing.": "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing.",
         "Options for passive devices (mostly battery powered)": "被动设备选项（主要是电池供电）",
-        "Time after which an passive device will be marked as offline in minutes": "Time after which an passive device will be marked as offline in minutes",
-        "MQTT base topic for Zigbee2MQTT MQTT messages": "MQTT base topic for Zigbee2MQTT MQTT messages",
-        "MQTT server URL (use mqtts:// for SSL/TLS connection)": "MQTT server URL (use mqtts:// for SSL/TLS connection)",
-        "MQTT keepalive in second": "MQTT keepalive in second",
-        "Absolute path to SSL/TLS certificate of CA used to sign server and client certificates": "Absolute path to SSL/TLS certificate of CA used to sign server and client certificates",
-        "Absolute path to SSL/TLS key for client-authentication": "Absolute path to SSL/TLS key for client-authentication",
-        "Absolute path to SSL/TLS certificate for client-authentication": "Absolute path to SSL/TLS certificate for client-authentication",
-        "MQTT server authentication user": "MQTT server authentication user",
-        "MQTT server authentication password": "MQTT server authentication password",
-        "MQTT client ID": "MQTT client ID",
-        "Disable self-signed SSL certificate": "Disable self-signed SSL certificate",
-        "Include device information to mqtt messages": "Include device information to mqtt messages",
-        "MQTT protocol version": "MQTT protocol version",
-        "Disable retain for all send messages": {
-            " ONLY enable if your MQTT broker doesn't support retained message (e": {
-                "g": {
-                    " AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform)": {
-                        " Enabling will break the Home Assistant integration": "Disable retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration"
-                    }
-                }
-            }
-        },
-        "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT": {
-            " NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead": {
-                "": "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead."
-            }
-        },
-        "Location of the adapter": {
-            " To autodetect the port, set null": "Location of the adapter. To autodetect the port, set null"
-        },
-        "Disable LED of the adapter if supported": "Disable LED of the adapter if supported",
-        "Adapter type, not needed unless you are experiencing problems": "Adapter type, not needed unless you are experiencing problems",
-        "Baud rate speed for the serial port": {
-            " This must match what the firmware on your adapter supports (most commonly 115200)": {
-                "": "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200)."
-            }
-        },
-        "RTS / CTS Hardware Flow Control for serial port": "RTS / CTS Hardware Flow Control for serial port",
-        "Block devices from the network (by ieeeAddr)": "Block devices from the network (by ieeeAddr)",
-        "Allow only certain devices to join the network (by ieeeAddr)": {
-            " Note that all devices not on the passlist will be removed from the network!": "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!"
-        },
-        "Your device may request a check for a new firmware update": {
-            " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
-                " The value is set in minutes, and the default is 1 day": {
-                    "": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day."
-                }
-            }
-        },
-        "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers": {
-            " If you disable these device initiated checks, you can still initiate a firmware update check manually": {
-                "": "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually."
-            }
-        },
+        "Time after which an passive device will be marked as offline in minutes": "Time after which an passive device will be marked as offline in 分钟",
+        "MQTT base topic for Zigbee2MQTT MQTT messages": "Zigbee2MQTT MQTT 消息的基础主题",
+        "MQTT server URL (use mqtts:// for SSL/TLS connection)": "MQTT 服务器 URL（使用 mqtts:// 进行 SSL/TLS 连接）",
+        "MQTT keepalive in second": "MQTT 保活时间（秒）",
+        "Absolute path to SSL/TLS certificate of CA used to sign server and client certificates": "用于签署服务器和客户端证书的 CA 的 SSL/TLS 证书的绝对路径",
+        "Absolute path to SSL/TLS key for client-authentication": "用于客户端身份验证的 SSL/TLS 密钥的绝对路径",
+        "Absolute path to SSL/TLS certificate for client-authentication": "用于客户端身份验证的 SSL/TLS 证书的绝对路径",
+        "MQTT server authentication user": "MQTT 服务器认证用户",
+        "MQTT server authentication password": "MQTT 服务器认证密码",
+        "MQTT client ID": "MQTT 客户端 ID",
+        "Disable self-signed SSL certificate": "禁用自签名 SSL 证书",
+        "Include device information to mqtt messages": "在 MQTT 消息中包含设备信息",
+        "MQTT protocol version": "MQTT 协议版本",
+        "Disable retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration": "Disable retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration",
+        "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead.": "Specifies the maximum allowed packet length (in bytes) that the server can send to Zigbee2MQTT. NOTE: The same value exists in your MQTT broker but for the length the client can send to it instead.",
+        "Location of the adapter. To autodetect the port, set null": "Location of the adapter. To autodetect the port, set null",
+        "Disable LED of the adapter if supported": "如果支持，禁用适配器的 LED",
+        "Adapter type, not needed unless you are experiencing problems": "适配器类型，除非遇到问题，否则不需要",
+        "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200).": "Baud rate speed for the serial port. This must match what the firmware on your adapter supports (most commonly 115200).",
+        "RTS / CTS Hardware Flow Control for serial port": "串口的 RTS / CTS 硬件流控制",
+        "Block devices from the network (by ieeeAddr)": "阻止设备接入网络（通过 ieeeAddr）",
+        "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!": "Allow only certain devices to join the network (by ieeeAddr). Note that all devices not on the passlist will be removed from the network!",
+        "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day.": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day.",
+        "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually.": "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually.",
         "Location of override OTA index file": "Location of override OTA index file",
-        "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
-            " You can increase this value if your network appears unstable during OTA": {
-                "": "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA."
-            }
-        },
-        "The size of file chunks sent during an update (in bytes)": {
-            " Note: This value may get ignored for manufacturers that require specific values": {
-                "": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values."
-            }
-        },
-        "Enable frontend": "Enable frontend",
+        "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA.": "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA.",
+        "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values.": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values.",
+        "Enable frontend": "启用前端",
         "Package used for the frontend": "Package used for the frontend",
-        "Frontend binding port": {
-            " Ignored when using a unix domain socket": "Frontend binding port. Ignored when using a unix domain socket"
-        },
-        "Frontend binding host": {
-            " Binds to a unix socket when an absolute path is given instead": {
-                "": "Frontend binding host. Binds to a unix socket when an absolute path is given instead."
-            }
-        },
-        "Enables authentication, disabled by default": "Enables authentication, disabled by default",
+        "Frontend binding port. Ignored when using a unix domain socket": "Frontend binding port. Ignored when using a unix domain socket",
+        "Frontend binding host. Binds to a unix socket when an absolute path is given instead.": "Frontend binding host. Binds to a unix socket when an absolute path is given instead.",
+        "Enables authentication, disabled by default": "启用身份验证，默认禁用",
         "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page": "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page",
-        "SSL Certificate file path for exposing HTTPS": {
-            " The sibling property 'ssl_key' must be set for HTTPS to be activated": {
-                "": "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated."
-            }
-        },
-        "SSL key file path for exposing HTTPS": {
-            " The sibling property 'ssl_cert' must be set for HTTPS to be activated": {
-                "": "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated."
-            }
-        },
-        "Base URL for the frontend": {
-            " If hosted under a subpath, e": {
-                "g": {
-                    " 'http://localhost:8080/z2m', set this to '/z2m'": "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'"
-                }
-            }
-        },
-        "Hide frontend notifications matching specified regex strings": {
-            " Example: 'z2m: Failed to ping": {
-                "*'": "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'"
-            }
-        },
-        "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)": {
-            "": "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)."
-        },
-        "Log rotation": "Log rotation",
-        "Console json log": "Console json log",
+        "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated.": "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated.",
+        "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated.": "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated.",
+        "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'": "Base URL for the frontend. If hosted under a subpath, e.g. 'http://localhost:8080/z2m', set this to '/z2m'",
+        "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'": "隐藏匹配指定正则表达式字符串的前端通知。示例：'z2m: Failed to ping.*'",
+        "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed).": "如果为 true，则不提供前端 UI，Zigbee2MQTT 只维护 WebSocket（您需要根据需要自己提供独立的 UI）。",
+        "Log rotation": "日志轮转",
+        "Console json log": "控制台 JSON 日志",
         "Create symlink to current logs in the log directory": "在日志目录中创建指向当前日志的符号链接",
-        "Output location of the log, leave empty to suppress logging": "Output location of the log, leave empty to suppress logging",
-        "Location of log directory": "Location of log directory",
-        "Log file name, can also contain timestamp": "Log file name, can also contain timestamp",
-        "Logging level": "Logging level",
-        "Set individual log levels for certain namespaces": "Set individual log levels for certain namespaces",
-        "Log debug level to MQTT and frontend (may decrease overall performance)": "Log debug level to MQTT and frontend (may decrease overall performance)",
+        "Output location of the log, leave empty to suppress logging": "日志输出位置，留空以抑制日志记录",
+        "Location of log directory": "日志目录位置",
+        "Log file name, can also contain timestamp": "日志文件名，也可以包含时间戳",
+        "Logging level": "日志级别",
+        "Set individual log levels for certain namespaces": "为特定命名空间设置单独的日志级别",
+        "Log debug level to MQTT and frontend (may decrease overall performance)": "将调试级别记录到 MQTT 和前端（可能会降低整体性能）",
         "Do not log these namespaces (regex-based) for debug level": "Do not log these namespaces (regex-based) for debug level",
         "Number of log directories to keep before deleting the oldest one": "Number of log directories to keep before deleting the oldest one",
-        "The host running syslogd, defaults to localhost": {
-            "": "The host running syslogd, defaults to localhost."
-        },
-        "The port on the host that syslog is running on, defaults to syslogd's default port": {
-            "": "The port on the host that syslog is running on, defaults to syslogd's default port."
-        },
-        "The network protocol to log over (e": {
-            "g": {
-                " tcp4, udp4, tls4, unix, unix-connect, etc)": {
-                    "": "The network protocol to log over (e.g. tcp4, udp4, tls4, unix, unix-connect, etc)."
-                }
-            }
-        },
-        "The path to the syslog dgram socket (i": {
-            "e": {
-                " /dev/log or /var/run/syslog for OS X)": {
-                    "": "The path to the syslog dgram socket (i.e. /dev/log or /var/run/syslog for OS X)."
-                }
-            }
-        },
-        "PID of the process that log messages are coming from (Default process": {
-            "pid)": {
-                "": "PID of the process that log messages are coming from (Default process.pid)."
-            }
-        },
-        "Host to indicate that log messages are coming from (Default: localhost)": {
-            "": "Host to indicate that log messages are coming from (Default: localhost)."
-        },
-        "The type of the syslog protocol to use (Default: BSD, also valid: 5424)": {
-            "": "The type of the syslog protocol to use (Default: BSD, also valid: 5424)."
-        },
-        "The name of the application (Default: Zigbee2MQTT)": {
-            "": "The name of the application (Default: Zigbee2MQTT)."
-        },
-        "The end of line character to be added to the end of the message (Default: Message without modifications)": {
-            "": "The end of line character to be added to the end of the message (Default: Message without modifications)."
-        },
+        "The host running syslogd, defaults to localhost.": "The host running syslogd, defaults to localhost.",
+        "The port on the host that syslog is running on, defaults to syslogd's default port.": "The port on the host that syslog is running on, defaults to syslogd's default port.",
+        "The network protocol to log over (e.g. tcp4, udp4, tls4, unix, unix-connect, etc).": "The network protocol to log over (e.g. tcp4, udp4, tls4, unix, unix-connect, etc).",
+        "The path to the syslog dgram socket (i.e. /dev/log or /var/run/syslog for OS X).": "The path to the syslog dgram socket (i.e. /dev/log or /var/run/syslog for OS X).",
+        "PID of the process that log messages are coming from (Default process.pid).": "PID of the process that log messages are coming from (Default process.pid).",
+        "Host to indicate that log messages are coming from (Default: localhost).": "Host to indicate that log messages are coming from (Default: localhost).",
+        "The type of the syslog protocol to use (Default: BSD, also valid: 5424).": "The type of the syslog protocol to use (Default: BSD, also valid: 5424).",
+        "The name of the application (Default: Zigbee2MQTT).": "The name of the application (Default: Zigbee2MQTT).",
+        "The end of line character to be added to the end of the message (Default: Message without modifications).": "The end of line character to be added to the end of the message (Default: Message without modifications).",
         "ZigBee pan ID, changing requires re-pairing all devices!": "ZigBee pan ID, changing requires re-pairing all devices!",
         "Zigbee extended pan ID, changing requires re-pairing all devices!": "Zigbee extended pan ID, changing requires re-pairing all devices!",
         "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)": "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)",
-        "Adapter concurrency (e": {
-            "g": {
-                " 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "Adapter concurrency (e.g. 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)"
-            }
-        },
+        "Adapter concurrency (e.g. 2 for CC2531 or 16 for CC26X2R1) (default: null, uses recommended value)": "适配器并发（例如 CC2531 为 2 或 CC26X2R1 为 16）（默认：null，使用推荐值）",
         "Adapter delay": "适配器延迟",
-        "MQTT message payload will contain all attributes, not only changed ones": {
-            " Has to be true when integrating via Home Assistant": "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant"
-        },
+        "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant": "MQTT message payload will contain all attributes, not only changed ones. Has to be true when integrating via Home Assistant",
         "Persist cached state, only used when cache_state: true": "Persist cached state, only used when cache_state: true",
         "Send cached state on startup, only used when cache_state: true": "Send cached state on startup, only used when cache_state: true",
         "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message": "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message",
-        "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg",
-        "Network encryption key, changing requires re-pairing all devices!": "Network encryption key, changing requires re-pairing all devices!",
+        "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "Add an elapsed attribute to MQTT messages, contains milli秒 since the previous msg",
+        "Network encryption key, changing requires re-pairing all devices!": "网络 encryption key, changing requires re-pairing all devices!",
         "Log timestamp format": "Log timestamp format",
         "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)": "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)",
         "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)": "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)",
         "Periodically check the health of Zigbee2MQTT": "Periodically check the health of Zigbee2MQTT",
-        "Interval between checks in minutes": "Interval between checks in minutes",
-        "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)": {
-            "": "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)."
-        },
-        "Used in the MQTT topic of a device": {
-            " By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID"
-        },
+        "Interval between checks in minutes": "Interval between checks in 分钟",
+        "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset).": "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset).",
+        "Used in the MQTT topic of a device. By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID",
         "Retain MQTT messages of this device": "Retain MQTT messages of this device",
-        "Disables the device (excludes device from network scans, availability and group state updates)": "Disables the device (excludes device from network scans, availability and group state updates)",
-        "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
-            "version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5"
-        },
+        "Disables the device (excludes device from network scans, availability and group state updates)": "禁用s the device (excludes device from network scans, availability and group state updates)",
+        "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5",
         "QoS level for MQTT messages of this device": "QoS level for MQTT messages of this device",
-        "The minimum time between payloads in seconds": {
-            " Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded"
-        },
+        "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded",
         "Debounces messages of this device": "Debounces messages of this device",
         "Protects unique payload values of specified payload properties from overriding within debounce time": "Protects unique payload values of specified payload properties from overriding within debounce time",
         "Publish optimistic state after set": "Publish optimistic state after set",
-        "Filter attributes with regex from published payload": {
-            "": "Filter attributes with regex from published payload."
-        },
-        "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change": {
-            "": "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change."
-        },
-        "Filter attributes with regex from optimistic publish payload when calling /set": {
-            " (This has no effect if optimistic is set to false)": {
-                "": "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false)."
-            }
-        },
-        "The user-defined device icon for the frontend": {
-            " It can be a full URL link to an image (e": {
-                "g": {
-                    " https://SOME": {
-                        "SITE/MODEL123": {
-                            "jpg) or a path to a local file inside the `device_icons` directory (e": {
-                                "g": {
-                                    " device_icons/MODEL123": {
-                                        "png)": {
-                                            "": "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png)."
-                                        }
-                                    }
-                                }
-                            }
-                        }
+        "Filter attributes with regex from published payload.": "Filter attributes with regex from published payload.",
+        "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change.": "Filter attributes with regex from being added to the cache, this prevents the attribute from being in the published payload when the value didn't change.",
+        "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false).": "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false).",
+        "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).": "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).",
+        "Name of the device in Home Assistant": "Name of the device in Home Assistant",
+        "QoS level for MQTT messages of this group": "QoS level for MQTT messages of this group",
+        "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF",
+        "Enable timeout backoff on failed availability pings (x1": {
+            "5, x3, x6, x12": {
+                "": {
+                    "": {
+                        ")": "启用 timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
                     }
                 }
             }
         },
-        "Name of the device in Home Assistant": "Name of the device in Home Assistant",
-        "QoS level for MQTT messages of this group": "QoS level for MQTT messages of this group",
-        "Control when to publish state OFF or CLOSE for a group": {
-            " 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF"
+        "Disable retain for all send messages": {
+            " ONLY enable if your MQTT broker doesn't support retained message (e": {
+                "g": {
+                    " AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform)": {
+                        " Enabling will break the Home Assistant integration": "禁用 retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration"
+                    }
+                }
+            }
+        },
+        "Location of the adapter": {
+            " To autodetect the port, set null": "适配器位置。要自动检测端口，请设置为 null"
+        },
+        "Baud rate speed for the serial port": {
+            " This must match what the firmware on your adapter supports (most commonly 115200)": {
+                "": "串口的波特率速度。这必须与适配器固件支持的速度匹配（最常见的是 115200）。"
+            }
+        },
+        "Allow only certain devices to join the network (by ieeeAddr)": {
+            " Note that all devices not on the passlist will be removed from the network!": "只允许特定设备加入网络（通过 ieeeAddr）。注意，不在通行名单上的所有设备都将从网络中移除！"
+        },
+        "Your device may request a check for a new firmware update": {
+            " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
+                " The value is set in minutes, and the default is 1 day": {
+                    "": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in 分钟, and the default is 1 day."
+                }
+            }
+        },
+        "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
+            " You can increase this value if your network appears unstable during OTA": {
+                "": "Limits the rate of requests (in milli秒) during OTA 更新s to reduce network congestion. You can increase this value if your network appears unstable during OTA."
+            }
+        },
+        "Frontend binding port": {
+            " Ignored when using a unix domain socket": "前端绑定端口。使用 unix 域套接字时忽略"
+        },
+        "Frontend binding host": {
+            " Binds to a unix socket when an absolute path is given instead": {
+                "": "前端绑定主机。当给出绝对路径时，绑定到 unix 套接字。"
+            }
+        },
+        "The end of line character to be added to the end of the message (Default: Message without modifications)": {
+            "": "The end of line character to be added to the end of the message (Default: 消息 without modifications)."
+        },
+        "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
+            "version to 5": "Sets the MQTT 消息 Expiry in 秒, Make sure to set mqtt.version to 5"
+        },
+        "The minimum time between payloads in seconds": {
+            " Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in 秒. Payloads received whilst the device is being throttled will be discarded"
         }
     },
     "stats": {
@@ -574,7 +480,7 @@
         "byPowerSource": "By power source",
         "byType": "By device type",
         "byVendor": "By vendor",
-        "total": "Total"
+        "total": "总计"
     },
     "touchlink": {
         "detected_devices_message": "Detected {{count}} touchlink devices.",
@@ -634,13 +540,13 @@
         "ieee_address": "IEEE Address",
         "input_clusters": "Input clusters",
         "interview": "访谈",
-        "interview_failed": "访谈失败",
+        "interview_failed": "Interview failed",
         "interview_state": "Interview state",
-        "interviewing": "访谈中",
-        "last_seen": "最后看到",
+        "interviewing": "Interviewing",
+        "last_seen": "最后见于",
         "lqi": "LQI",
         "mains_3_phase": "Mains (3 phase)",
-        "mains_single_phase": "Mains (single phase)",
+        "mains_single_phase": "主电源（单相）",
         "manufacturer": "制造商",
         "max_rep_interval": "最大 rep interval",
         "min_rep_change": "最小 rep change",
@@ -657,7 +563,7 @@
         "power": "电源",
         "power_level": "power level",
         "read_write_attributes": "读取 / Write attributes from endpoint cluster",
-        "reconfigure": "重新配置",
+        "reconfigure": "Reconfigure",
         "remove_device": "Remove device",
         "rename_device": "Rename device",
         "report_problem": "Report problem",
@@ -670,7 +576,7 @@
         "type": "类型",
         "unknown": "未知",
         "unsupported": "不支持",
-        "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
+        "update_Home_assistant_entity_id": "更新 Home Assistant entity ID",
         "update_description": "更新描述",
         "updating_firmware": "Updating firmware",
         "zigbee_manufacturer": "ZigBee Manufacturer",
