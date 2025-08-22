@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FeatureAccessMode, type FeatureWithAnySubFeatures, type ListFeature } from "../../types.js";
 import Button from "../Button.js";
@@ -11,26 +11,28 @@ type Props = BaseFeatureProps<ListFeature> & {
     parentFeatures: FeatureWithAnySubFeatures[];
 };
 
+function isListRoot(parentFeatures: FeatureWithAnySubFeatures[]) {
+    if (parentFeatures !== undefined) {
+        if (parentFeatures.length === 0) {
+            return true;
+        }
+
+        if (parentFeatures.length === 1) {
+            // When parent is e.g. climate
+            const parentType = parentFeatures[0].type;
+
+            return parentType != null && parentType !== "composite" && parentType !== "list";
+        }
+    }
+
+    return false;
+}
+
 const List = memo((props: Props) => {
     const { t } = useTranslation(["list", "common"]);
     const { feature, minimal, parentFeatures, onChange, deviceValue } = props;
     const [currentValue, setCurrentValue] = useState<unknown[]>([]);
-    const isRoot = useMemo(() => {
-        if (parentFeatures !== undefined) {
-            if (parentFeatures.length === 0) {
-                return true;
-            }
-
-            if (parentFeatures.length === 1) {
-                // When parent is e.g. climate
-                const parentType = parentFeatures[0].type;
-
-                return parentType != null && parentType !== "composite" && parentType !== "list";
-            }
-        }
-
-        return false;
-    }, [parentFeatures]);
+    const isRoot = isListRoot(parentFeatures);
 
     useEffect(() => {
         if (deviceValue) {

@@ -1,6 +1,6 @@
 import { faClose, faEllipsisH, faPowerOff, faServer, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, type RefObject, useCallback, useContext, useMemo, useRef, type useState } from "react";
+import { memo, type RefObject, useCallback, useContext, useRef, type useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { ReadyState } from "react-use-websocket";
@@ -111,15 +111,6 @@ const Notifications = memo(({ setShowNotifications }: NotificationsProps) => {
     const { readyStates } = useContext(WebSocketApiRouterContext);
     const clearAllNotifications = useAppStore((state) => state.clearAllNotifications);
 
-    const sourceNotifications = useMemo(
-        () =>
-            API_URLS.map((_v, idx) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: static
-                <SourceNotifications key={`${idx}`} sourceIdx={idx} readyState={readyStates[idx]} />
-            )),
-        [readyStates],
-    );
-
     return (
         <div
             className="drawer-side justify-items-end z-99"
@@ -129,7 +120,10 @@ const Notifications = memo(({ setShowNotifications }: NotificationsProps) => {
             <span className="drawer-overlay" onClick={() => setShowNotifications(false)} />
             <aside className="bg-base-100 min-h-screen w-80" style={{ translate: "0%" }}>
                 <ul className="menu w-full px-1 py-0">
-                    {sourceNotifications}
+                    {API_URLS.map((_v, idx) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: static
+                        <SourceNotifications key={`${idx}`} sourceIdx={idx} readyState={readyStates[idx]} />
+                    ))}
                     {API_URLS.length > 1 && (
                         <ConfirmButton
                             className="btn btn-sm btn-error btn-outline mt-5"

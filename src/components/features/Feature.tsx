@@ -1,5 +1,5 @@
 import type React from "react";
-import { type FunctionComponent, type JSX, memo, type PropsWithChildren, useMemo } from "react";
+import type { FunctionComponent, JSX, PropsWithChildren } from "react";
 import type { Zigbee2MQTTDeviceOptions } from "zigbee2mqtt";
 import type { ColorFeature, Device, DeviceState, FeatureWithAnySubFeatures, GradientFeature } from "../../types.js";
 import type { ValueWithLabelOrPrimitive } from "../editors/EnumEditor.js";
@@ -33,41 +33,31 @@ interface FeatureProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onCha
     deviceState: DeviceState | Zigbee2MQTTDeviceOptions;
 }
 
-const Feature = memo((props: FeatureProps): JSX.Element => {
-    const {
-        feature,
+export default function Feature({
+    feature,
+    device,
+    deviceState,
+    steps,
+    onRead,
+    onChange,
+    featureWrapperClass: FeatureWrapper,
+    minimal,
+    endpointSpecific,
+    parentFeatures,
+}: FeatureProps): JSX.Element {
+    const deviceValue = feature.property ? deviceState[feature.property] : deviceState;
+    const key = getFeatureKey(feature);
+    const genericParams = {
         device,
-        deviceState,
-        steps,
-        onRead,
+        deviceValue,
         onChange,
+        onRead,
         featureWrapperClass: FeatureWrapper,
         minimal,
         endpointSpecific,
         parentFeatures,
-    } = props;
-    const deviceValue = useMemo(
-        () => (feature.property ? deviceState[feature.property] : deviceState),
-        [feature.property, deviceState[feature.property!]],
-    );
-    const key = useMemo(() => getFeatureKey(feature), [feature]);
-    const genericParams = useMemo(
-        () => ({
-            device,
-            deviceValue,
-            onChange,
-            onRead,
-            featureWrapperClass: FeatureWrapper,
-            minimal,
-            endpointSpecific,
-            parentFeatures,
-        }),
-        [device, deviceValue, onChange, onRead, FeatureWrapper, minimal, endpointSpecific, parentFeatures],
-    );
-    const wrapperParams = useMemo(
-        () => ({ feature, onRead, deviceValue, parentFeatures, endpointSpecific }),
-        [feature, onRead, deviceValue, parentFeatures, endpointSpecific],
-    );
+    };
+    const wrapperParams = { feature, onRead, deviceValue, parentFeatures, endpointSpecific };
 
     switch (feature.type) {
         case "binary": {
@@ -160,6 +150,4 @@ const Feature = memo((props: FeatureProps): JSX.Element => {
             );
         }
     }
-});
-
-export default Feature;
+}

@@ -308,22 +308,20 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleProps) => {
     );
 };
 
+function renderTab(sourceIdx: number, tab: TabName) {
+    switch (tab) {
+        case "mqtt":
+            return <MqttTab sourceIdx={sourceIdx} />;
+        case "external_converters":
+            return <ExternalConverterTab key={sourceIdx} sourceIdx={sourceIdx} />;
+        case "external_extensions":
+            return <ExternalExtensionTab key={sourceIdx} sourceIdx={sourceIdx} />;
+    }
+}
+
 export default function DevConsole({ sourceIdx }: DevConsoleProps) {
     const [currentTab, setCurrentTab] = useState<TabName>(TABS[0]);
     const { t } = useTranslation("devConsole");
-
-    const content = useMemo(() => {
-        switch (currentTab) {
-            case "mqtt":
-                return <MqttTab sourceIdx={sourceIdx} />;
-            case "external_converters":
-                return <ExternalConverterTab sourceIdx={sourceIdx} />;
-            case "external_extensions":
-                return <ExternalExtensionTab sourceIdx={sourceIdx} />;
-        }
-
-        return "";
-    }, [currentTab, sourceIdx]);
 
     return (
         <div className="tabs tabs-border">
@@ -332,7 +330,7 @@ export default function DevConsole({ sourceIdx }: DevConsoleProps) {
                     {t(tab)}
                 </Button>
             ))}
-            <div className="tab-content block h-full bg-base-100 p-3">{content}</div>
+            <div className="tab-content block h-full bg-base-100 p-3">{renderTab(sourceIdx, currentTab)}</div>
         </div>
     );
 }

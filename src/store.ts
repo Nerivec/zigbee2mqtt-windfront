@@ -1,4 +1,3 @@
-import merge from "lodash/merge.js";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import { create } from "zustand";
 import { isValidForDashboard } from "./components/dashboard-page/index.js";
@@ -496,7 +495,7 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
             const newDeviceStates: AppState["deviceStates"][number] = { ...state.deviceStates[sourceIdx] };
 
             for (const { topic, payload } of newEntries) {
-                newDeviceStates[topic] = merge(newDeviceStates[topic] ?? {}, payload);
+                newDeviceStates[topic] = { ...newDeviceStates[topic], ...payload };
             }
 
             return { deviceStates: { ...state.deviceStates, [sourceIdx]: newDeviceStates } };

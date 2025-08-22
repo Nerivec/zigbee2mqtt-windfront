@@ -48,7 +48,7 @@ export default function Toasts() {
                 break;
             }
 
-            elements.push(<Toast key={`${i}-${toast.transaction}`} idx={toasts.indexOf(toast)} toast={toast} remove={removeToast} />);
+            elements.push(<Toast key={`${i}-${toast.transaction}`} idx={i} toast={toast} remove={removeToast} />);
         }
 
         return elements;

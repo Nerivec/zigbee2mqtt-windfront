@@ -92,6 +92,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                 "0x0017880103d55d65": {
                     friendly_name: "0x0017880103d55d65",
                     description: "thisisaverylongdescriptionforthepurposeoftestingawkwardwrapping",
+                    optimistic: false,
                 },
                 "0x0017880104292f0a": {
                     description: "descr",

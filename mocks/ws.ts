@@ -27,14 +27,25 @@ const cloneDeviceState = (ieee: string) => {
     }
 };
 
+const randomString = (len: number): string =>
+    Math.random()
+        .toString(36)
+        .slice(2, 2 + len);
+
+// const randomIntInclusive = (min: number, max: number) =>  Math.floor(Math.random() * (max - min + 1)) + min;
+
 export function startServer() {
     const wss = new WebSocketServer({
         port: 8579,
     });
 
     wss.on("connection", (ws) => {
+        const bridgeInfo = merge({}, BRIDGE_INFO);
+        bridgeInfo.payload.commit = randomString(8);
+        bridgeInfo.payload.config.advanced.log_output = Math.random() < 0.25 ? ["syslog"] : Math.random() < 0.5 ? ["console", "file"] : ["console"];
+
         ws.send(JSON.stringify(BRIDGE_STATE));
-        ws.send(JSON.stringify(BRIDGE_INFO));
+        ws.send(JSON.stringify(bridgeInfo));
         ws.send(JSON.stringify(BRIDGE_DEVICES));
         ws.send(JSON.stringify(BRIDGE_GROUPS));
         ws.send(JSON.stringify(BRIDGE_DEFINITION));
@@ -191,18 +202,18 @@ export function startServer() {
                         if (msg.payload.time > 0) {
                             ws.send(JSON.stringify(PERMIT_JOIN_RESPONSE));
 
-                            const permitBridgeInfo = merge({}, BRIDGE_INFO);
+                            const permitBridgeInfo = merge({}, bridgeInfo);
                             permitBridgeInfo.payload.permit_join = true;
                             permitBridgeInfo.payload.permit_join_end = Date.now() + msg.payload.time * 1000;
 
                             ws.send(JSON.stringify(permitBridgeInfo));
 
                             setTimeout(() => {
-                                ws.send(JSON.stringify(BRIDGE_INFO));
+                                ws.send(JSON.stringify(bridgeInfo));
                             }, msg.payload.time * 1000);
                         } else {
                             sendResponseOK();
-                            ws.send(JSON.stringify(BRIDGE_INFO));
+                            ws.send(JSON.stringify(bridgeInfo));
                         }
                     }, 50);
                     break;

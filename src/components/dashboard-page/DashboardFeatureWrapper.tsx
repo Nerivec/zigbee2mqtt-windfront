@@ -1,16 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import camelCase from "lodash/camelCase.js";
 import startCase from "lodash/startCase.js";
-import { memo, type PropsWithChildren, useMemo } from "react";
+import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import type { FeatureWrapperProps } from "../features/FeatureWrapper.js";
 import { getFeatureIcon } from "../features/index.js";
 
-const DashboardFeatureWrapper = memo((props: PropsWithChildren<FeatureWrapperProps>) => {
-    const { children, feature, deviceValue, endpointSpecific } = props;
+export default function DashboardFeatureWrapper({ children, feature, deviceValue, endpointSpecific }: PropsWithChildren<FeatureWrapperProps>) {
     // @ts-expect-error `undefined` is fine
     const unit = feature.unit as string | undefined;
-    const fi = useMemo(() => getFeatureIcon(feature.name, deviceValue, unit), [unit, feature.name, deviceValue]);
+    const fi = getFeatureIcon(feature.name, deviceValue, unit);
     const { t } = useTranslation("zigbee");
     const featureName = feature.name === "state" ? feature.property : feature.name;
 
@@ -24,6 +23,4 @@ const DashboardFeatureWrapper = memo((props: PropsWithChildren<FeatureWrapperPro
             <div className="shrink-1">{children}</div>
         </div>
     );
-});
-
-export default DashboardFeatureWrapper;
+}

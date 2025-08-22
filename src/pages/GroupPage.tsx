@@ -1,11 +1,12 @@
 import { faCogs, faObjectGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { lazy, useCallback, useEffect, useMemo } from "react";
+import { lazy, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import HeaderGroupSelector from "../components/group-page/HeaderGroupSelector.js";
 import { useAppStore } from "../store.js";
+import type { Group } from "../types.js";
 import { getValidSourceIdx } from "../utils.js";
 
 export type TabName = "devices" | "settings";
@@ -18,6 +19,17 @@ type GroupPageUrlParams = {
 
 const DevicesTab = lazy(async () => await import("../components/group-page/tabs/Devices.js"));
 const GroupSettingsTab = lazy(async () => await import("../components/group-page/tabs/GroupSettings.js"));
+
+function renderTab(sourceIdx: number, tab: TabName, group: Group) {
+    const key = `${sourceIdx}-${group.id}`;
+
+    switch (tab) {
+        case "devices":
+            return <DevicesTab key={key} sourceIdx={sourceIdx} group={group} />;
+        case "settings":
+            return <GroupSettingsTab key={key} sourceIdx={sourceIdx} group={group} />;
+    }
+}
 
 export default function GroupPage() {
     const navigate = useNavigate();
@@ -37,20 +49,7 @@ export default function GroupPage() {
         }
     }, [sourceIdx, validSourceIdx, tab, group, navigate]);
 
-    const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
-
-    const content = useMemo(() => {
-        if (!group) {
-            return <div className="flex-auto justify-center items-center">{t("common:unknown_group")}</div>;
-        }
-
-        switch (tab) {
-            case "devices":
-                return <DevicesTab sourceIdx={numSourceIdx} group={group} />;
-            case "settings":
-                return <GroupSettingsTab sourceIdx={numSourceIdx} group={group} />;
-        }
-    }, [tab, numSourceIdx, group, t]);
+    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
     return (
         <>
@@ -65,7 +64,13 @@ export default function GroupPage() {
                     {t("settings")}
                 </NavLink>
             </div>
-            <div className="tab-content block h-full bg-base-100 p-3">{content}</div>
+            <div className="tab-content block h-full bg-base-100 p-3">
+                {tab && group ? (
+                    renderTab(numSourceIdx, tab, group)
+                ) : (
+                    <div className="flex-auto justify-center items-center">{t("common:unknown_group")}</div>
+                )}
+            </div>
         </>
     );
 }

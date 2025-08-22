@@ -2,7 +2,7 @@ import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import camelCase from "lodash/camelCase.js";
 import startCase from "lodash/startCase.js";
-import { memo, type PropsWithChildren, useCallback, useMemo } from "react";
+import { type PropsWithChildren, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { type ColorFeature, FeatureAccessMode, type FeatureWithAnySubFeatures } from "../../types.js";
 import Button from "../Button.js";
@@ -20,17 +20,20 @@ function isColorFeature(feature: FeatureWithAnySubFeatures): feature is ColorFea
     return feature.type === "composite" && (feature.name === "color_xy" || feature.name === "color_hs");
 }
 
-const FeatureWrapper = memo((props: PropsWithChildren<FeatureWrapperProps>) => {
+export default function FeatureWrapper({
+    children,
+    feature,
+    deviceValue,
+    onRead,
+    endpointSpecific,
+    parentFeatures,
+}: PropsWithChildren<FeatureWrapperProps>) {
     const { t } = useTranslation("zigbee");
-    const { children, feature, deviceValue, onRead, endpointSpecific } = props;
     // @ts-expect-error `undefined` is fine
     const unit = feature.unit as string | undefined;
-    const fi = useMemo(() => getFeatureIcon(feature.name, deviceValue, unit), [unit, feature.name, deviceValue]);
-    const isReadable = useMemo(
-        () => onRead !== undefined && (Boolean(feature.property && feature.access & FeatureAccessMode.GET) || isColorFeature(feature)),
-        [feature, onRead],
-    );
-    const parentFeature = props.parentFeatures?.[props.parentFeatures.length - 1];
+    const fi = getFeatureIcon(feature.name, deviceValue, unit);
+    const isReadable = onRead !== undefined && (Boolean(feature.property && feature.access & FeatureAccessMode.GET) || isColorFeature(feature));
+    const parentFeature = parentFeatures?.[parentFeatures.length - 1];
     const featureName = feature.name === "state" ? feature.property : feature.name;
     let label = feature.label || startCase(camelCase(featureName));
 
@@ -67,6 +70,4 @@ const FeatureWrapper = memo((props: PropsWithChildren<FeatureWrapperProps>) => {
             )}
         </div>
     );
-});
-
-export default FeatureWrapper;
+}

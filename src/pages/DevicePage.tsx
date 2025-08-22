@@ -12,12 +12,13 @@ import {
     faWandSparkles,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, lazy, useCallback, useEffect, useMemo } from "react";
+import { type JSX, lazy, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import HeaderDeviceSelector from "../components/device-page/HeaderDeviceSelector.js";
 import { useAppStore } from "../store.js";
+import type { Device } from "../types.js";
 import { getValidSourceIdx } from "../utils.js";
 
 export type TabName =
@@ -51,6 +52,35 @@ const ReportingTab = lazy(async () => await import("../components/device-page/ta
 const SceneTab = lazy(async () => await import("../components/device-page/tabs/Scene.js"));
 const StateTab = lazy(async () => await import("../components/device-page/tabs/State.js"));
 
+function renderTab(sourceIdx: number, tab: TabName, device: Device) {
+    const key = `${sourceIdx}-${device.ieee_address}`;
+
+    switch (tab) {
+        case "info":
+            return <DeviceInfoTab key={key} sourceIdx={sourceIdx} device={device} />;
+        case "exposes":
+            return <ExposesTab key={key} sourceIdx={sourceIdx} device={device} />;
+        case "bind":
+            return <BindTab key={key} sourceIdx={sourceIdx} device={device} />;
+        case "reporting":
+            return <ReportingTab key={key} sourceIdx={sourceIdx} device={device} />;
+        case "settings":
+            return <DeviceSettingsTab key={key} sourceIdx={sourceIdx} ieeeAddress={device.ieee_address} />;
+        case "settings-specific":
+            return <DeviceSpecificSettingsTab key={key} sourceIdx={sourceIdx} device={device} />;
+        case "state":
+            return <StateTab key={key} sourceIdx={sourceIdx} friendlyName={device.friendly_name} />;
+        case "clusters":
+            return <ClustersTab key={key} device={device} />;
+        case "groups":
+            return <GroupsTab key={key} sourceIdx={sourceIdx} device={device} />;
+        case "scene":
+            return <SceneTab key={key} sourceIdx={sourceIdx} device={device} />;
+        case "dev-console":
+            return <DevConsoleTab key={key} sourceIdx={sourceIdx} device={device} />;
+    }
+}
+
 export default function DevicePage(): JSX.Element {
     const navigate = useNavigate();
     const { t } = useTranslation(["devicePage", "common"]);
@@ -72,38 +102,7 @@ export default function DevicePage(): JSX.Element {
         }
     }, [sourceIdx, validSourceIdx, tab, device, navigate]);
 
-    const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
-
-    const content = useMemo(() => {
-        if (!device) {
-            return <div className="flex-auto justify-center items-center">{t("common:unknown_device")}</div>;
-        }
-
-        switch (tab) {
-            case "info":
-                return <DeviceInfoTab sourceIdx={numSourceIdx} device={device} />;
-            case "exposes":
-                return <ExposesTab sourceIdx={numSourceIdx} device={device} />;
-            case "bind":
-                return <BindTab sourceIdx={numSourceIdx} device={device} />;
-            case "reporting":
-                return <ReportingTab sourceIdx={numSourceIdx} device={device} />;
-            case "settings":
-                return <DeviceSettingsTab sourceIdx={numSourceIdx} device={device} />;
-            case "settings-specific":
-                return <DeviceSpecificSettingsTab sourceIdx={numSourceIdx} device={device} />;
-            case "state":
-                return <StateTab sourceIdx={numSourceIdx} device={device} />;
-            case "clusters":
-                return <ClustersTab device={device} />;
-            case "groups":
-                return <GroupsTab sourceIdx={numSourceIdx} device={device} />;
-            case "scene":
-                return <SceneTab sourceIdx={numSourceIdx} device={device} />;
-            case "dev-console":
-                return <DevConsoleTab sourceIdx={numSourceIdx} device={device} />;
-        }
-    }, [numSourceIdx, device, tab, t]);
+    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
     return (
         <>
@@ -153,7 +152,13 @@ export default function DevicePage(): JSX.Element {
                     <FontAwesomeIcon icon={faBug} className="me-2" />
                     {t("dev_console")}
                 </NavLink>
-                <div className="tab-content block h-full bg-base-100 p-3">{content}</div>
+                <div className="tab-content block h-full bg-base-100 p-3">
+                    {tab && device ? (
+                        renderTab(numSourceIdx, tab, device)
+                    ) : (
+                        <div className="flex-auto justify-center items-center">{t("common:unknown_device")}</div>
+                    )}
+                </div>
             </div>
         </>
     );

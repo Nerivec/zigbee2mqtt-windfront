@@ -7,25 +7,24 @@ import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { DEVICE_OPTIONS_DOCS_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
-import type { Device } from "../../../types.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
 import SettingsList from "../../json-schema/SettingsList.js";
 
 interface DeviceSettingsProps {
     sourceIdx: number;
-    device: Device;
+    ieeeAddress: string;
 }
 
-export default function DeviceSettings({ sourceIdx, device }: DeviceSettingsProps) {
+export default function DeviceSettings({ sourceIdx, ieeeAddress }: DeviceSettingsProps) {
     const { t } = useTranslation(["settings", "common"]);
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const { sendMessage } = useContext(WebSocketApiRouterContext);
 
     const setDeviceOptions = useCallback(
         async (options: Record<string, unknown>) => {
-            await sendMessage(sourceIdx, "bridge/request/device/options", { id: device.ieee_address, options });
+            await sendMessage(sourceIdx, "bridge/request/device/options", { id: ieeeAddress, options });
         },
-        [sourceIdx, device.ieee_address, sendMessage],
+        [sourceIdx, ieeeAddress, sendMessage],
     );
 
     return (
@@ -38,7 +37,7 @@ export default function DeviceSettings({ sourceIdx, device }: DeviceSettingsProp
             </div>
             <SettingsList
                 schema={(bridgeInfo.config_schema.definitions.device ?? { properties: {} }) as JSONSchema7}
-                data={merge({}, bridgeInfo.config.device_options, bridgeInfo.config.devices[device.ieee_address])}
+                data={merge({}, bridgeInfo.config.device_options, bridgeInfo.config.devices[ieeeAddress])}
                 set={setDeviceOptions}
                 namespace="definitions-device"
             />

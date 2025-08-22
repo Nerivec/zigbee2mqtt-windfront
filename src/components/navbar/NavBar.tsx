@@ -1,6 +1,6 @@
 import { faBars, faDisplay, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type MouseEvent, memo, useCallback, useMemo, useState } from "react";
+import { type MouseEvent, memo, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, type NavLinkRenderProps } from "react-router";
 import { API_NAMES, useAppStore } from "../../store.js";
@@ -56,71 +56,68 @@ const NavBar = memo(({ showNotifications, setShowNotifications }: NavBarProps) =
         }
     }, []);
 
-    const isNavActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "menu-active" : ""), []);
+    const isNavActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "menu-active" : "");
 
-    const links = useMemo(
-        () => (
-            <>
-                <li>
-                    <NavLink to="/devices" className={isNavActive}>
-                        {t("devices")}
+    const links = (
+        <>
+            <li>
+                <NavLink to="/devices" className={isNavActive}>
+                    {t("devices")}
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/dashboard" className={isNavActive}>
+                    {t("dashboard")}
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/groups" className={isNavActive}>
+                    {t("groups")}
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/ota" className={isNavActive}>
+                    {t("ota")}
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/touchlink" className={isNavActive}>
+                    {t("touchlink")}
+                </NavLink>
+            </li>
+            <li>
+                {API_NAMES.length > 1 ? (
+                    <NavBarSubMenu name={t("network")} navPath="/network" isNavActive={isNavActive} />
+                ) : (
+                    <NavLink to="/network" className={isNavActive}>
+                        {t("network")}
                     </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/dashboard" className={isNavActive}>
-                        {t("dashboard")}
+                )}
+            </li>
+            <li>
+                {API_NAMES.length > 1 ? (
+                    <NavBarSubMenu name={t("logs")} navPath="/logs" isNavActive={isNavActive} />
+                ) : (
+                    <NavLink to="/logs" className={isNavActive}>
+                        {t("logs")}
                     </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/groups" className={isNavActive}>
-                        {t("groups")}
+                )}
+            </li>
+            <li>
+                {API_NAMES.length > 1 ? (
+                    <NavBarSubMenu name={t("settings")} navPath="/settings" isNavActive={isNavActive} />
+                ) : (
+                    <NavLink to="/settings" className={isNavActive}>
+                        {t("settings")}
                     </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/ota" className={isNavActive}>
-                        {t("ota")}
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/touchlink" className={isNavActive}>
-                        {t("touchlink")}
-                    </NavLink>
-                </li>
-                <li>
-                    {API_NAMES.length > 1 ? (
-                        <NavBarSubMenu name={t("network")} navPath="/network" isNavActive={isNavActive} />
-                    ) : (
-                        <NavLink to="/network" className={isNavActive}>
-                            {t("network")}
-                        </NavLink>
-                    )}
-                </li>
-                <li>
-                    {API_NAMES.length > 1 ? (
-                        <NavBarSubMenu name={t("logs")} navPath="/logs" isNavActive={isNavActive} />
-                    ) : (
-                        <NavLink to="/logs" className={isNavActive}>
-                            {t("logs")}
-                        </NavLink>
-                    )}
-                </li>
-                <li>
-                    {API_NAMES.length > 1 ? (
-                        <NavBarSubMenu name={t("settings")} navPath="/settings" isNavActive={isNavActive} />
-                    ) : (
-                        <NavLink to="/settings" className={isNavActive}>
-                            {t("settings")}
-                        </NavLink>
-                    )}
-                </li>
-                <li>
-                    <NavLink to="/frontend-settings" className={isNavActive}>
-                        <FontAwesomeIcon icon={faDisplay} size={"xl"} />
-                    </NavLink>
-                </li>
-            </>
-        ),
-        [isNavActive, t],
+                )}
+            </li>
+            <li>
+                <NavLink to="/frontend-settings" className={isNavActive}>
+                    <FontAwesomeIcon icon={faDisplay} size={"xl"} />
+                </NavLink>
+            </li>
+        </>
     );
 
     return (

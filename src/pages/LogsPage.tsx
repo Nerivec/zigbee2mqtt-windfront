@@ -163,21 +163,17 @@ export default function LogsPage() {
         }
     }, [sourceIdx, validSourceIdx, navigate]);
 
-    const isTabActive = useCallback(({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab"), []);
+    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
-    const tabs = useMemo(() => {
-        const elements: JSX.Element[] = [];
+    const tabs: JSX.Element[] = [];
 
-        for (let idx = 0; idx < API_URLS.length; idx++) {
-            elements.push(
-                <NavLink key={idx} to={`/logs/${idx}`} className={isTabActive}>
-                    <SourceDot idx={idx} alwaysShowName />
-                </NavLink>,
-            );
-        }
-
-        return elements;
-    }, [isTabActive]);
+    for (let idx = 0; idx < API_URLS.length; idx++) {
+        tabs.push(
+            <NavLink key={idx} to={`/logs/${idx}`} className={isTabActive}>
+                <SourceDot idx={idx} alwaysShowName />
+            </NavLink>,
+        );
+    }
 
     return API_URLS.length > 1 ? (
         <div className="tabs tabs-border">
@@ -212,7 +208,7 @@ export default function LogsPage() {
                 </fieldset>
             </div>
             <div className="tab-content block h-full bg-base-100 pb-3 px-3">
-                <LogsTab sourceIdx={numSourceIdx} />
+                <LogsTab key={sourceIdx} sourceIdx={numSourceIdx} />
             </div>
         </div>
     ) : (

@@ -1,5 +1,4 @@
-import merge from "lodash/merge.js";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Zigbee2MQTTDeviceOptions } from "zigbee2mqtt";
 import type { DeviceState, FeatureWithAnySubFeatures } from "../../types.js";
@@ -20,29 +19,41 @@ interface CompositeState {
     [key: string]: unknown;
 }
 
-const FeatureSubFeatures = memo((props: FeatureSubFeaturesProps) => {
-    const { feature, onChange, parentFeatures, onRead, device, deviceState, featureWrapperClass, minimal, endpointSpecific, steps } = props;
+function isFeatureRoot(type: FeatureWithAnySubFeatures["type"], parentFeatures: FeatureWithAnySubFeatures[] | undefined) {
+    if (type === "composite" && parentFeatures !== undefined) {
+        if (parentFeatures.length === 0) {
+            return true;
+        }
+
+        if (parentFeatures.length === 1) {
+            // When parent is e.g. climate
+            const parentType = parentFeatures[0].type;
+
+            return parentType != null && parentType !== "composite" && parentType !== "list";
+        }
+    }
+
+    return false;
+}
+
+export default function FeatureSubFeatures({
+    feature,
+    onChange,
+    parentFeatures,
+    onRead,
+    device,
+    deviceState,
+    featureWrapperClass,
+    minimal,
+    endpointSpecific,
+    steps,
+}: FeatureSubFeaturesProps) {
     const { type, property } = feature;
     const [state, setState] = useState<CompositeState>({});
     const { t } = useTranslation(["composite", "common"]);
-    const combinedState = useMemo(() => merge({}, deviceState, state), [deviceState, state]);
+    const combinedState = useMemo(() => ({ ...deviceState, ...state }), [deviceState, state]);
     const features = ("features" in feature && feature.features) || [];
-    const isRoot = useMemo(() => {
-        if (type === "composite" && parentFeatures !== undefined) {
-            if (parentFeatures.length === 0) {
-                return true;
-            }
-
-            if (parentFeatures.length === 1) {
-                // When parent is e.g. climate
-                const parentType = parentFeatures[0].type;
-
-                return parentType != null && parentType !== "composite" && parentType !== "list";
-            }
-        }
-
-        return false;
-    }, [type, parentFeatures]);
+    const isRoot = isFeatureRoot(type, parentFeatures);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
@@ -51,7 +62,7 @@ const FeatureSubFeatures = memo((props: FeatureSubFeaturesProps) => {
 
     const onFeatureChange = useCallback(
         (value: Record<string, unknown>): void => {
-            setState({ ...state, ...value });
+            setState((prev) => ({ ...prev, ...value }));
 
             if (!isRoot) {
                 if (type === "composite") {
@@ -109,6 +120,4 @@ const FeatureSubFeatures = memo((props: FeatureSubFeaturesProps) => {
             )}
         </>
     );
-});
-
-export default FeatureSubFeatures;
+}
