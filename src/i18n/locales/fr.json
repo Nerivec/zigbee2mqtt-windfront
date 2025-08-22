@@ -191,7 +191,7 @@
     "schedule_info": "Se mettra à jour lors de la prochaine demande OTA de l'appareil",
     "unschedule": "Annuler scheduled update",
     "update": "Mettre à jour device firmware",
-    "firmware_version": "Firmware version",
+    "firmware_version": "Version du firmware",
     "available_firmware_version": "Version du firmware disponible",
     "app": "App",
     "stack": "Stack"

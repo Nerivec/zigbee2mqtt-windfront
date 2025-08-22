@@ -191,7 +191,7 @@
     "schedule_info": "Se actualizará en la próxima solicitud OTA del dispositivo",
     "unschedule": "Cancelar scheduled update",
     "update": "Actualizar device firmware",
-    "firmware_version": "Firmware version",
+    "firmware_version": "Versión del firmware",
     "available_firmware_version": "Versión de firmware disponible",
     "app": "App",
     "stack": "Stack"
@@ -228,8 +228,8 @@
     "install_code": "Código de instalación",
     "homeassistant": "Home Assistant integration",
     "translation_prompt": "Puedes ayudar con la traducción en",
-    "zigbee_herdsman_converters_version": "zigbee-herdsman-converters version",
-    "zigbee_herdsman_version": "zigbee-herdsman version",
+    "zigbee_herdsman_converters_version": "zigbee-herdsman-converters versión",
+    "zigbee_herdsman_version": "zigbee-herdsman versión",
     "localise_images": "Localise device images",
     "frontend_notice": "Estas configuraciones se almacenan localmente en tu navegador. Usar ventanas privadas o limpiar la caché las restablecerá a los valores predeterminados.",
     "reset_settings": "Restablecer configuración",
@@ -245,7 +245,7 @@
     "network_raw": "Red data/map",
     "network_map": "Red map",
     "machine": "Machine",
-    "node_version": "Node version",
+    "node_version": "Node versión",
     "version": "Versión",
     "health": "Health"
   },
