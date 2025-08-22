@@ -222,8 +222,8 @@
         "zigbee2mqtt_version": "Zigbee2MQTT version",
         "translate": "Превод",
         "stats": "Статистики",
-        "coordinator_ieee_address": "IEEE адрес на координатора",
-        "request_z2m_backup": "Заяви Z2m резервно копие",
+        "coordinator_ieee_address": "Coordinator IEEE Address",
+        "request_z2m_backup": "Request Z2m backup",
         "add_install_code": "Добави инсталационен код",
         "install_code": "Инсталационен код",
         "homeassistant": "Home Assistant integration",
@@ -385,7 +385,7 @@
         "byPowerSource": "По източник на захранване",
         "byVendor": "По производител",
         "byModel": "По модел",
-        "total": "Общо"
+        "total": "Total"
     },
     "availability": {
         "availability": "Достъпност",
