@@ -205,7 +205,7 @@
         "coordinator": "Coordinador",
         "donate": "Donate",
         "donation_text": "Aquí pots agrair-nos tota la feina dura. No dubtis a dir alguna cosa bonica també ;)",
-        "download_state": "Download state",
+        "download_state": "Descarregar state",
         "experimental": "Experimental",
         "external_converters": "Convertidors externs",
         "frontend": "Frontend",
@@ -215,14 +215,14 @@
         "ota": "OTA updates",
         "passlist": "Passlist",
         "bridge": "Pont",
-        "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
+        "restart_zigbee2mqtt": "Reiniciar Zigbee2MQTT",
         "serial": "Serial",
         "settings": "Configuració",
         "tools": "Tools",
         "zigbee2mqtt_version": "Zigbee2MQTT version",
         "translate": "Translate",
         "stats": "Stats",
-        "coordinator_ieee_address": "Coordinator IEEE Address",
+        "coordinator_ieee_address": "Coordinador IEEE Address",
         "request_z2m_backup": "Request Z2m backup",
         "add_install_code": "Afegir codi d'instal·lació",
         "install_code": "Codi d'instal·lació",
@@ -299,7 +299,7 @@
         "actions": "Accions",
         "attribute": "Atribut",
         "unknown": "Desconegut",
-        "mains_single_phase": "Mains (single phase)",
+        "mains_single_phase": "Xarxa (monofàsic)",
         "mains_3_phase": "Mains (3 phase)",
         "battery": "Bateria",
         "dc_source": "DC Source",
@@ -419,7 +419,7 @@
     },
     "settingsSchemaDescriptions": {
         "Home Assistant integration (MQTT discovery)": "Home Assistant integration (MQTT discovery)",
-        "Enable Home Assistant integration": "Enable Home Assistant integration",
+        "Enable Home Assistant integration": "Activar Home Assistant integration",
         "Home Assistant discovery topic": "Home Assistant discovery topic",
         "Home Assistant status topic": "Home Assistant status topic",
         "Home Assistant legacy actions sensor, when enabled a action sensor will be discoverd and an empty `action` will be send after every published action": {
@@ -431,15 +431,15 @@
             }
         },
         "Checks whether devices are online/offline": "Checks whether devices are online/offline",
-        "Enable availability checks": "Enable availability checks",
+        "Enable availability checks": "Activar availability checks",
         "Options for active devices (routers/mains powered)": "Options for active devices (routers/mains powered)",
-        "Time after which an active device will be marked as offline in minutes": "Time after which an active device will be marked as offline in minutes",
-        "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time": "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time",
+        "Time after which an active device will be marked as offline in minutes": "Time after which an active device will be marked as offline in minuts",
+        "Maximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time": "Màximum jitter (in msec) allowed on timeout to avoid availability pings trying to trigger around the same time",
         "Enable timeout backoff on failed availability pings (x1": {
             "5, x3, x6, x12": {
                 "": {
                     "": {
-                        ")": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
+                        ")": "Activar timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
                     }
                 }
             }
@@ -450,7 +450,7 @@
             }
         },
         "Options for passive devices (mostly battery powered)": "Options for passive devices (mostly battery powered)",
-        "Time after which an passive device will be marked as offline in minutes": "Time after which an passive device will be marked as offline in minutes",
+        "Time after which an passive device will be marked as offline in minutes": "Time after which an passive device will be marked as offline in minuts",
         "MQTT base topic for Zigbee2MQTT MQTT messages": "MQTT base topic for Zigbee2MQTT MQTT messages",
         "MQTT server URL (use mqtts:// for SSL/TLS connection)": "MQTT server URL (use mqtts:// for SSL/TLS connection)",
         "MQTT keepalive in second": "MQTT keepalive in second",
@@ -460,14 +460,14 @@
         "MQTT server authentication user": "MQTT server authentication user",
         "MQTT server authentication password": "MQTT server authentication password",
         "MQTT client ID": "MQTT client ID",
-        "Disable self-signed SSL certificate": "Disable self-signed SSL certificate",
+        "Disable self-signed SSL certificate": "Desactivar self-signed SSL certificate",
         "Include device information to mqtt messages": "Include device information to mqtt messages",
         "MQTT protocol version": "MQTT protocol version",
         "Disable retain for all send messages": {
             " ONLY enable if your MQTT broker doesn't support retained message (e": {
                 "g": {
                     " AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform)": {
-                        " Enabling will break the Home Assistant integration": "Disable retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration"
+                        " Enabling will break the Home Assistant integration": "Desactivar retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration"
                     }
                 }
             }
@@ -480,7 +480,7 @@
         "Location of the adapter": {
             " To autodetect the port, set null": "Location of the adapter. To autodetect the port, set null"
         },
-        "Disable LED of the adapter if supported": "Disable LED of the adapter if supported",
+        "Disable LED of the adapter if supported": "Desactivar LED of the adapter if supported",
         "Adapter type, not needed unless you are experiencing problems": "Adapter type, not needed unless you are experiencing problems",
         "Baud rate speed for the serial port": {
             " This must match what the firmware on your adapter supports (most commonly 115200)": {
@@ -495,7 +495,7 @@
         "Your device may request a check for a new firmware update": {
             " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
                 " The value is set in minutes, and the default is 1 day": {
-                    "": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day."
+                    "": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minuts, and the default is 1 day."
                 }
             }
         },
@@ -507,7 +507,7 @@
         "Location of override OTA index file": "Location of override OTA index file",
         "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
             " You can increase this value if your network appears unstable during OTA": {
-                "": "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA."
+                "": "Limits the rate of requests (in millisegons) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA."
             }
         },
         "The size of file chunks sent during an update (in bytes)": {
@@ -515,17 +515,17 @@
                 "": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values."
             }
         },
-        "Enable frontend": "Enable frontend",
+        "Enable frontend": "Activar frontend",
         "Package used for the frontend": "Package used for the frontend",
         "Frontend binding port": {
             " Ignored when using a unix domain socket": "Frontend binding port. Ignored when using a unix domain socket"
         },
         "Frontend binding host": {
             " Binds to a unix socket when an absolute path is given instead": {
-                "": "Frontend binding host. Binds to a unix socket when an absolute path is given instead."
+                "": "Frontend binding host. Vinculars to a unix socket when an absolute path is given instead."
             }
         },
-        "Enables authentication, disabled by default": "Enables authentication, disabled by default",
+        "Enables authentication, disabled by default": "Activars authentication, disabled by default",
         "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page": "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page",
         "SSL Certificate file path for exposing HTTPS": {
             " The sibling property 'ssl_key' must be set for HTTPS to be activated": {
@@ -546,7 +546,7 @@
         },
         "Hide frontend notifications matching specified regex strings": {
             " Example: 'z2m: Failed to ping": {
-                "*'": "Hide frontend notifications matching specified regex strings. Example: 'z2m: Failed to ping.*'"
+                "*'": "Hide frontend notifications matching specified regex strings. Example: 'z2m: Error en: ping.*'"
             }
         },
         "If true, the frontend UI is not served, only the WebSocket is maintained by Zigbee2MQTT (you are required to serve a standalone UI yourself as needed)": {
@@ -615,13 +615,13 @@
         "Persist cached state, only used when cache_state: true": "Persist cached state, only used when cache_state: true",
         "Send cached state on startup, only used when cache_state: true": "Send cached state on startup, only used when cache_state: true",
         "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message": "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message",
-        "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg",
+        "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg": "Add an elapsed attribute to MQTT messages, contains millisegons since the previous msg",
         "Network encryption key, changing requires re-pairing all devices!": "Network encryption key, changing requires re-pairing all devices!",
         "Log timestamp format": "Log timestamp format",
         "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)": "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)",
         "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)": "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)",
         "Periodically check the health of Zigbee2MQTT": "Periodically check the health of Zigbee2MQTT",
-        "Interval between checks in minutes": "Interval between checks in minutes",
+        "Interval between checks in minutes": "Interval between checks in minuts",
         "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)": {
             "": "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset)."
         },
@@ -629,13 +629,13 @@
             " By default this is the device ID": "Used in the MQTT topic of a device. By default this is the device ID"
         },
         "Retain MQTT messages of this device": "Retain MQTT messages of this device",
-        "Disables the device (excludes device from network scans, availability and group state updates)": "Disables the device (excludes device from network scans, availability and group state updates)",
+        "Disables the device (excludes device from network scans, availability and group state updates)": "Desactivars the device (excludes device from network scans, availability and group state updates)",
         "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
-            "version to 5": "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt.version to 5"
+            "version to 5": "Sets the MQTT Message Expiry in segons, Make sure to set mqtt.version to 5"
         },
         "QoS level for MQTT messages of this device": "QoS level for MQTT messages of this device",
         "The minimum time between payloads in seconds": {
-            " Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in seconds. Payloads received whilst the device is being throttled will be discarded"
+            " Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in segons. Payloads received whilst the device is being throttled will be discarded"
         },
         "Debounces messages of this device": "Debounces messages of this device",
         "Protects unique payload values of specified payload properties from overriding within debounce time": "Protects unique payload values of specified payload properties from overriding within debounce time",
