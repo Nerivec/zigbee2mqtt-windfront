@@ -1,5 +1,5 @@
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { type JSX, useState } from "react";
+import { type JSX, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../../Button.js";
 import InputField from "../../form-fields/InputField.js";
@@ -13,6 +13,19 @@ export const AddInstallCodeModal = NiceModal.create((props: AddInstallCodeModalP
     const modal = useModal();
     const { t } = useTranslation(["settings", "common"]);
     const [code, setCode] = useState("");
+
+    useEffect(() => {
+        const close = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                e.preventDefault();
+                modal.remove();
+            }
+        };
+
+        window.addEventListener("keydown", close);
+
+        return () => window.removeEventListener("keydown", close);
+    }, [modal]);
 
     return (
         <Modal

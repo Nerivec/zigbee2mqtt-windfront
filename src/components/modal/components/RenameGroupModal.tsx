@@ -20,6 +20,19 @@ export const RenameGroupForm = NiceModal.create(({ sourceIdx, name, onRename }: 
         setFriendlyName(name);
     }, [name]);
 
+    useEffect(() => {
+        const close = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                e.preventDefault();
+                modal.remove();
+            }
+        };
+
+        window.addEventListener("keydown", close);
+
+        return () => window.removeEventListener("keydown", close);
+    }, [modal]);
+
     return (
         <Modal
             isOpen={modal.visible}

@@ -1,5 +1,5 @@
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { type ChangeEvent, type JSX, useCallback, useState } from "react";
+import { type ChangeEvent, type JSX, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Device } from "../../../types.js";
 import Button from "../../Button.js";
@@ -27,6 +27,19 @@ export const RemoveDeviceModal = NiceModal.create(({ sourceIdx, device, removeDe
         modal.remove();
         await removeDevice(sourceIdx, device.ieee_address, removeParams.force, removeParams.block);
     }, [sourceIdx, modal.remove, removeDevice, device.ieee_address, removeParams]);
+
+    useEffect(() => {
+        const close = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                e.preventDefault();
+                modal.remove();
+            }
+        };
+
+        window.addEventListener("keydown", close);
+
+        return () => window.removeEventListener("keydown", close);
+    }, [modal]);
 
     return (
         <Modal

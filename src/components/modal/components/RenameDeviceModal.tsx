@@ -22,6 +22,19 @@ export const RenameDeviceModal = NiceModal.create(({ sourceIdx, homeassistantEna
         setFriendlyName(name);
     }, [name]);
 
+    useEffect(() => {
+        const close = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                e.preventDefault();
+                modal.remove();
+            }
+        };
+
+        window.addEventListener("keydown", close);
+
+        return () => window.removeEventListener("keydown", close);
+    }, [modal]);
+
     return (
         <Modal
             isOpen={modal.visible}
