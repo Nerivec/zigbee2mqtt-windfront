@@ -522,64 +522,6 @@
         "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).": "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).",
         "Name of the device in Home Assistant": "Name of the device in Home Assistant",
         "QoS level for MQTT messages of this group": "QoS level for MQTT messages of this group",
-        "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF",
-        "Enable timeout backoff on failed availability pings (x1": {
-            "5, x3, x6, x12": {
-                "": {
-                    "": {
-                        ")": "활성화 timeout backoff on failed availability pings (x1.5, x3, x6, x12...)"
-                    }
-                }
-            }
-        },
-        "Disable retain for all send messages": {
-            " ONLY enable if your MQTT broker doesn't support retained message (e": {
-                "g": {
-                    " AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform)": {
-                        " Enabling will break the Home Assistant integration": "비활성화 retain for all send messages. ONLY enable if your MQTT broker doesn't support retained message (e.g. AWS IoT core, Azure IoT Hub, Google Cloud IoT core, IBM Watson IoT Platform). Enabling will break the Home Assistant integration"
-                    }
-                }
-            }
-        },
-        "Location of the adapter": {
-            " To autodetect the port, set null": "어댑터 위치. 포트를 자동 감지하려면 null로 설정"
-        },
-        "Baud rate speed for the serial port": {
-            " This must match what the firmware on your adapter supports (most commonly 115200)": {
-                "": "시리얼 포트의 보드레이트 속도. 어댑터 펌웨어가 지원하는 속도와 일치해야 합니다 (가장 일반적으로 115200)."
-            }
-        },
-        "Allow only certain devices to join the network (by ieeeAddr)": {
-            " Note that all devices not on the passlist will be removed from the network!": "특정 기기만 네트워크에 가입 허용 (ieeeAddr로). 허용 목록에 없는 모든 기기는 네트워크에서 제거됩니다!"
-        },
-        "Your device may request a check for a new firmware update": {
-            " This value determines how frequently third party servers may actually be contacted to look for firmware updates": {
-                " The value is set in minutes, and the default is 1 day": {
-                    "": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in 분, and the default is 1 day."
-                }
-            }
-        },
-        "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion": {
-            " You can increase this value if your network appears unstable during OTA": {
-                "": "Limits the rate of requests (in milli초) during OTA 업데이트s to reduce network congestion. You can increase this value if your network appears unstable during OTA."
-            }
-        },
-        "Frontend binding port": {
-            " Ignored when using a unix domain socket": "프론트엔드 바인딩 포트. 유닉스 도메인 소켓 사용 시 무시됨"
-        },
-        "Frontend binding host": {
-            " Binds to a unix socket when an absolute path is given instead": {
-                "": "프론트엔드 바인딩 호스트. 절대 경로가 주어지면 유닉스 소켓에 바인딩됩니다."
-            }
-        },
-        "The end of line character to be added to the end of the message (Default: Message without modifications)": {
-            "": "The end of line character to be added to the end of the message (Default: 메시지 without modifications)."
-        },
-        "Sets the MQTT Message Expiry in seconds, Make sure to set mqtt": {
-            "version to 5": "Sets the MQTT 메시지 Expiry in 초, Make sure to set mqtt.version to 5"
-        },
-        "The minimum time between payloads in seconds": {
-            " Payloads received whilst the device is being throttled will be discarded": "The minimum time between payloads in 초. Payloads received whilst the device is being throttled will be discarded"
-        }
+        "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF"
     }
 }
