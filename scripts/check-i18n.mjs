@@ -45,7 +45,7 @@ for (const localFile of readdirSync(LOCALES_PATH)) {
         const missing = difference(enKeys, keys);
 
         if (missing.length !== 0) {
-            console.error("Missing keys:");
+            console.error(`[${localFile}]: Missing keys:`);
             console.error(missing);
 
             error = true;
@@ -54,7 +54,7 @@ for (const localFile of readdirSync(LOCALES_PATH)) {
         const removed = difference(keys, enKeys);
 
         if (removed.length !== 0) {
-            console.error("Invalid keys:");
+            console.error(`[${localFile}]: Invalid keys:`);
             console.error(removed);
 
             error = true;
