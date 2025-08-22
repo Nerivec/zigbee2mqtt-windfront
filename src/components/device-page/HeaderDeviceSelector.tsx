@@ -7,6 +7,7 @@ import { useSearch } from "../../hooks/useSearch.js";
 import type { TabName } from "../../pages/DevicePage.js";
 import { API_URLS, useAppStore } from "../../store.js";
 import type { Device } from "../../types.js";
+import DebouncedInput from "../form-fields/DebouncedInput.js";
 import PopoverDropdown from "../PopoverDropdown.js";
 import SourceDot from "../SourceDot.js";
 
@@ -60,9 +61,10 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
             }
             dropdownStyle="dropdown-start"
         >
+            {/** biome-ignore lint/a11y/noLabelWithoutControl: wrapped not detected */}
             <label className="input" key="search">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
-                <input type="search" placeholder={t("type_to_filter")} onChange={(e) => setSearchTerm(e.target.value)} value={searchTerm} />
+                <DebouncedInput onChange={setSearchTerm} placeholder={t("type_to_filter")} value={searchTerm} title={t("type_to_filter")} />
             </label>
             {items}
         </PopoverDropdown>

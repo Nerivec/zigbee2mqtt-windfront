@@ -41,13 +41,7 @@ export default function TextFilter<T>({ getFilterValue, setFilterValue, storeKey
             {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
             <label className="input input-xs outline-none! w-32 join-item">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
-                <DebouncedInput
-                    className=""
-                    type="search"
-                    onChange={onChange}
-                    placeholder={t("search")}
-                    value={(columnFilterValue as string) ?? ""}
-                />
+                <DebouncedInput onChange={onChange} placeholder={t("search")} value={(columnFilterValue as string) ?? ""} />
             </label>
             <Button
                 item=""

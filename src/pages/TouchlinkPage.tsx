@@ -168,6 +168,7 @@ export default function TouchlinkPage() {
                 },
                 enableSorting: false,
                 enableColumnFilter: false,
+                enableGlobalFilter: false,
             },
         ],
         [t, onIdentifyClick, onResetClick],

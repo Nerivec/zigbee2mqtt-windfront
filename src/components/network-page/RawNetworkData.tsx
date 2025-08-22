@@ -119,9 +119,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                     <label className="input w-64 join-item">
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                         <DebouncedInput
-                            className=""
-                            type="search"
-                            onChange={(value) => setSearchTerm(value.toString())}
+                            onChange={setSearchTerm}
                             placeholder={t("common:search")}
                             value={searchTerm}
                             disabled={map.nodes.length === 0}
@@ -142,9 +140,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                     <label className="input w-64 join-item">
                         <FontAwesomeIcon icon={faMarker} />
                         <DebouncedInput
-                            className=""
-                            type="search"
-                            onChange={(value) => setHighlightValue(value.toString())}
+                            onChange={setHighlightValue}
                             placeholder={t("common:highlight")}
                             value={highlightValue}
                             disabled={map.nodes.length === 0}

@@ -86,13 +86,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                         {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
                         <label className="input w-64 join-item">
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
-                            <DebouncedInput
-                                className=""
-                                type="search"
-                                onChange={(value) => setSearchTerm(value.toString())}
-                                placeholder={t("common:search")}
-                                value={searchTerm}
-                            />
+                            <DebouncedInput onChange={setSearchTerm} placeholder={t("common:search")} value={searchTerm} />
                         </label>
                         <Button
                             item=""

@@ -1,17 +1,20 @@
-import { type InputHTMLAttributes, memo, useEffect, useState } from "react";
+import { type ChangeEventHandler, type InputHTMLAttributes, type KeyboardEventHandler, memo, useCallback, useEffect, useState } from "react";
 
-type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value" | "defaultValue"> & {
+type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value" | "defaultValue" | "type"> & {
     value: string | number;
-    onChange: (value: string | number) => void;
+    onChange: (value: string) => void;
     debounce?: number;
 };
 
-/** A typical debounced input react component */
+/**
+ * Debounced input with `Esc` support for clearing.
+ * Uses `type=text` to avoid browser-specific behaviors of `search`.
+ */
 const DebouncedInput = memo(({ value: initialValue, onChange, debounce = 500, ...props }: Props) => {
-    const [value, setValue] = useState(initialValue);
+    const [value, setValue] = useState(initialValue.toString());
 
     useEffect(() => {
-        setValue(initialValue);
+        setValue(initialValue.toString());
     }, [initialValue]);
 
     useEffect(() => {
@@ -22,7 +25,18 @@ const DebouncedInput = memo(({ value: initialValue, onChange, debounce = 500, ..
         return () => clearTimeout(timeout);
     }, [value, debounce, onChange]);
 
-    return <input {...props} value={value} onChange={(e) => setValue(e.target.value)} />;
+    const onInputChange: ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
+        setValue(event.target.value);
+    }, []);
+
+    const onInputKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback((event) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            setValue("");
+        }
+    }, []);
+
+    return <input {...props} type="text" value={value} onChange={onInputChange} onKeyDown={onInputKeyDown} />;
 });
 
 export default DebouncedInput;

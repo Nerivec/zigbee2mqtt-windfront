@@ -187,6 +187,7 @@ export default function GroupsPage() {
                 ),
                 enableSorting: false,
                 enableColumnFilter: false,
+                enableGlobalFilter: false,
             },
         ],
         [onRenameClick, onRemoveClick, t],

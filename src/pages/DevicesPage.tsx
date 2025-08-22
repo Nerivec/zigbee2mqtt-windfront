@@ -345,6 +345,7 @@ export default function DevicesPage(): JSX.Element {
                 },
                 enableSorting: false,
                 enableColumnFilter: false,
+                enableGlobalFilter: false,
             },
         ],
         [

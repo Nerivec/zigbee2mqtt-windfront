@@ -223,7 +223,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     return (
         <div className="card lg:card-side bg-base-100">
             <figure className="w-64 h-64" style={{ overflow: "visible" }}>
-                <DeviceImage device={device} otaState={deviceState.update?.state} disabled={device.disabled} className="" />
+                <DeviceImage device={device} otaState={deviceState.update?.state} disabled={device.disabled} />
             </figure>
             <div className="card-body">
                 <h2 className="card-title">

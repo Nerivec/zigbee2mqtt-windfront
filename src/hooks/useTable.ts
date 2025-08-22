@@ -20,6 +20,7 @@ export interface UseTableProps<T> {
 }
 
 export function useTable<T>({ id, columns, data, visibleColumns, sorting }: UseTableProps<T>) {
+    const [globalFilter, setGlobalFilter] = useState<string>("");
     const columnVisibilityStoreKey = `${TABLE_COLUMN_VISIBILITY_KEY}_${id}`;
     const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>(store2.get(columnVisibilityStoreKey, visibleColumns ?? {}));
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -28,12 +29,14 @@ export function useTable<T>({ id, columns, data, visibleColumns, sorting }: UseT
         columns,
         filterFns: {},
         state: {
+            globalFilter,
             columnFilters,
             columnVisibility,
         },
         initialState: {
             sorting,
         },
+        onGlobalFilterChange: setGlobalFilter,
         onColumnVisibilityChange: setColumnVisibility,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),

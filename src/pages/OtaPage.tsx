@@ -354,6 +354,7 @@ export default function OtaPage() {
                     ),
                 enableSorting: false,
                 enableColumnFilter: false,
+                enableGlobalFilter: false,
             },
         ],
         [

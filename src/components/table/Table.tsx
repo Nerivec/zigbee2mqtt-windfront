@@ -37,7 +37,13 @@ export default function Table<T>({ id, table }: TableProps<T>) {
 
     return (
         <>
-            <TableHeader tableId={id} columns={table.getAllLeafColumns()} entries={rows.length} />
+            <TableHeader
+                tableId={id}
+                columns={table.getAllLeafColumns()}
+                entries={rows.length}
+                globalFilter={table.getState().globalFilter}
+                setGlobalFilter={table.setGlobalFilter}
+            />
 
             <TableVirtuoso<Row<T>>
                 useWindowScroll

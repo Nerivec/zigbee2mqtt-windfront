@@ -45,13 +45,7 @@ const DashboardHeader = memo(
                     {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
                     <label className="input join-item">
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        <DebouncedInput
-                            className=""
-                            type="search"
-                            onChange={(value) => setSearchTerm(value.toString())}
-                            placeholder={t("search")}
-                            value={searchTerm}
-                        />
+                        <DebouncedInput onChange={setSearchTerm} placeholder={t("search")} value={searchTerm} />
                     </label>
                     <Button item="" onClick={setSearchTerm} className="btn btn-square join-item" title={t("clear")}>
                         <FontAwesomeIcon icon={faClose} />

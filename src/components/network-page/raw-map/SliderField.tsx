@@ -42,7 +42,7 @@ const SliderField = memo((props: SliderFieldProps) => {
     return (
         <div className="flex flex-row flex-wrap items-center gap-2 bg-base-100 rounded-box px-2 pb-1" title={label}>
             <FontAwesomeIcon icon={icon} />
-            <div className="">
+            <div>
                 <input
                     className="range range-xs"
                     onChange={onChangeHandler}
