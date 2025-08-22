@@ -39,6 +39,7 @@ export default function GroupSettings({ sourceIdx, group }: DevicesProps) {
                 schema={(bridgeInfo.config_schema.definitions.group ?? { properties: {} }) as JSONSchema7}
                 data={bridgeInfo.config.groups[group.id] ?? {}}
                 set={setDeviceOptions}
+                namespace="definitions-group"
             />
         </>
     );

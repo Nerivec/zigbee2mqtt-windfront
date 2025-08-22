@@ -40,6 +40,7 @@ export default function DeviceSettings({ sourceIdx, device }: DeviceSettingsProp
                 schema={(bridgeInfo.config_schema.definitions.device ?? { properties: {} }) as JSONSchema7}
                 data={merge({}, bridgeInfo.config.device_options, bridgeInfo.config.devices[device.ieee_address])}
                 set={setDeviceOptions}
+                namespace="definitions-device"
             />
         </>
     );

@@ -13,6 +13,7 @@ type SettingsListProps = {
     data: Record<string, unknown>;
     set: (data: Record<string, unknown>) => Promise<void>;
     rootOnly?: boolean;
+    namespace: string;
 };
 
 const propertyToField = (
@@ -169,6 +170,7 @@ const groupProperties = (
     depth: number,
     required: string[] = [],
     rootOnly = false,
+    parentPath = "",
 ): JSX.Element[] => {
     const elements: JSX.Element[] = [];
     const nestedElements: JSX.Element[] = [];
@@ -179,6 +181,8 @@ const groupProperties = (
         if (typeof property === "boolean" || property.readOnly) {
             continue;
         }
+
+        const newPath = parentPath ? `${parentPath}-${key}` : key;
 
         if (property.properties) {
             if (!rootOnly) {
@@ -193,6 +197,8 @@ const groupProperties = (
                             async (options) => set({ [key]: options }),
                             depth + 1,
                             property.required,
+                            false,
+                            newPath,
                         )}
                     </div>,
                 );
@@ -214,6 +220,8 @@ const groupProperties = (
                                 async (options) => set({ [key]: options }),
                                 depth + 1,
                                 oneOf.required,
+                                false,
+                                newPath,
                             )}
                         </div>,
                     );
@@ -227,7 +235,7 @@ const groupProperties = (
                     depth,
                     required.includes(key),
                     property.description
-                        ? `${t(property.description)}${property.default != null ? ` (${t("common:default")}: ${property.default})` : ""}`
+                        ? `${t(newPath, property.description)}${property.default != null ? ` (${t("common:default")}: ${property.default})` : ""}`
                         : property.default != null
                           ? `${t("common:default")}: ${property.default}}`
                           : undefined,
@@ -248,10 +256,12 @@ const groupProperties = (
     return nestedElements.length > 0 ? elements.concat(nestedElements) : elements;
 };
 
-export default function SettingsList({ schema, data, set, rootOnly }: SettingsListProps) {
+export default function SettingsList({ schema, data, set, rootOnly, namespace }: SettingsListProps) {
     const { t } = useTranslation(["settingsSchemaDescriptions", "common"]);
 
     return (
-        <div className="list bg-base-100">{schema.properties && groupProperties(t, schema.properties, data, set, 0, schema.required, rootOnly)}</div>
+        <div className="list bg-base-100">
+            {schema.properties && groupProperties(t, schema.properties, data, set, 0, schema.required, rootOnly, namespace)}
+        </div>
     );
 }

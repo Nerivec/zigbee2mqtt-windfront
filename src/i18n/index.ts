@@ -13,6 +13,7 @@ import timeFi from "timeago.js/lib/lang/fi.js";
 import timeFR from "timeago.js/lib/lang/fr.js";
 import timeHu from "timeago.js/lib/lang/hu.js";
 import timeIt from "timeago.js/lib/lang/it.js";
+import timeJa from "timeago.js/lib/lang/ja.js";
 import timeKo from "timeago.js/lib/lang/ko.js";
 import timeNo from "timeago.js/lib/lang/nb_NO.js";
 import timeNl from "timeago.js/lib/lang/nl.js";
@@ -37,6 +38,7 @@ import fiTranslations from "./locales/fi.json" with { type: "json" };
 import frTranslations from "./locales/fr.json" with { type: "json" };
 import huTranslations from "./locales/hu.json" with { type: "json" };
 import itTranslations from "./locales/it.json" with { type: "json" };
+import jaTranslations from "./locales/ja.json" with { type: "json" };
 import koTranslations from "./locales/ko.json" with { type: "json" };
 import nlTranslations from "./locales/nl.json" with { type: "json" };
 import noTranslations from "./locales/no.json" with { type: "json" };
@@ -59,6 +61,7 @@ register("fi", timeFi);
 register("fr", timeFR);
 register("hu", timeHu);
 register("it", timeIt);
+register("ja", timeJa);
 register("ko", timeKo);
 register("nl", timeNl);
 register("no", timeNo);
@@ -84,6 +87,7 @@ const resources = {
     "zh-CN": chsTranslations as ResourceLanguage,
     nl: nlTranslations as ResourceLanguage,
     it: itTranslations as ResourceLanguage,
+    ja: jaTranslations as ResourceLanguage,
     zh: zhTranslations as ResourceLanguage,
     ko: koTranslations as ResourceLanguage,
     cs: csTranslations as ResourceLanguage,

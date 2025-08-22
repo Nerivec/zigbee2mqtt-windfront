@@ -165,5 +165,5 @@ npm run check:ci       # Check without fixes (CI mode) - under 1 second
 ### Performance Notes
 - Build output includes manual chunk splitting for optimal loading
 - Brotli compression enabled for production builds
-- Large chunks (>500KB) expected due to network visualization libraries
+- Large chunks (>500KB) expected due to network visualization libraries and i18n
 - Build warnings about chunk size are normal and expected

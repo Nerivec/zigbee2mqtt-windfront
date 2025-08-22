@@ -9,14 +9,17 @@ const enTranslations = JSON.parse(readFileSync(EN_LOCALE_PATH, "utf8"));
 const schema = await fetch(SETTINGS_SCHEMA_URL);
 const settingsSchemaDescriptions = {};
 
-const exportSettingsSchemaDescriptions = (obj) => {
+const exportSettingsSchemaDescriptions = (obj, parentPath = "") => {
     for (const key in obj) {
         const value = obj[key];
 
         if (isObject(value)) {
-            exportSettingsSchemaDescriptions(value);
+            exportSettingsSchemaDescriptions(
+                value,
+                key === "properties" || key === "oneOf" || !Number.isNaN(Number(key)) ? parentPath : parentPath ? `${parentPath}.${key}` : key,
+            );
         } else if (key === "description") {
-            settingsSchemaDescriptions[value] = value;
+            settingsSchemaDescriptions[parentPath] = value;
         }
     }
 };

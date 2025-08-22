@@ -59,12 +59,14 @@ export default function Settings({ sourceIdx }: SettingsProps) {
                             data={bridgeInfo.config as unknown as Record<string, unknown>}
                             set={setSettings}
                             rootOnly
+                            namespace=""
                         />
                     ) : bridgeInfo.config_schema.properties[currentTab] ? (
                         <SettingsList
                             schema={bridgeInfo.config_schema.properties[currentTab]}
                             data={bridgeInfo.config[currentTab]}
                             set={setSettings}
+                            namespace={currentTab}
                         />
                     ) : null}
                 </div>
