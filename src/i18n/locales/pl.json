@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Wiadomości",
     "messages_per_sec": "Wiadomości na sekundę",
-    "leave_count": "Leave count",
+    "leave_count": "Liczba wyjść",
     "network_address_changes": "Sieć address changes",
     "very_low": "Very low",
     "interview_info": "Urządzenie interviews can heavily influence this data."

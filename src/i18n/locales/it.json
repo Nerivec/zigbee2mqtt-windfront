@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Messaggi",
     "messages_per_sec": "Messaggi al secondo",
-    "leave_count": "Leave count",
+    "leave_count": "Conteggio uscite",
     "network_address_changes": "Rete address changes",
     "very_low": "Very low",
     "interview_info": "Dispositivo interviews can heavily influence this data."

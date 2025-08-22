@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Meddelanden",
     "messages_per_sec": "Meddelanden per sekund",
-    "leave_count": "Leave count",
+    "leave_count": "Antal avlämnanden",
     "network_address_changes": "Nätverk address changes",
     "very_low": "Very low",
     "interview_info": "Enhet interviews can heavily influence this data."

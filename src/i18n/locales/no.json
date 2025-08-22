@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Meldinger",
     "messages_per_sec": "Meldinger per sekund",
-    "leave_count": "Leave count",
+    "leave_count": "Antall avganger",
     "network_address_changes": "Nettverk address changes",
     "very_low": "Very low",
     "interview_info": "Enhet interviews can heavily influence this data."

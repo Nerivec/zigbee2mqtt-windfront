@@ -213,7 +213,7 @@
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA-updates",
-    "passlist": "Passlist",
+    "passlist": "Toegestane lijst",
     "bridge": "Brug",
     "restart_zigbee2mqtt": "Herstart Zigbee2MQTT",
     "serial": "Serial",
@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Berichten",
     "messages_per_sec": "Berichten per seconde",
-    "leave_count": "Leave count",
+    "leave_count": "Verlaat aantal",
     "network_address_changes": "Netwerk address changes",
     "very_low": "Very low",
     "interview_info": "Apparaat interviews can heavily influence this data."

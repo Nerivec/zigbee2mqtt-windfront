@@ -213,7 +213,7 @@
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA frissítések",
-    "passlist": "Passlist",
+    "passlist": "Engedélyezett lista",
     "bridge": "Híd",
     "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
     "serial": "Serial",
@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Üzenetek",
     "messages_per_sec": "Üzenetek másodpercenként",
-    "leave_count": "Leave count",
+    "leave_count": "Kilépések száma",
     "network_address_changes": "Hálózat address changes",
     "very_low": "Very low",
     "interview_info": "Eszköz interviews can heavily influence this data."

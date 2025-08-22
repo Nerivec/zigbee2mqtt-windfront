@@ -213,7 +213,7 @@
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA updates",
-    "passlist": "Passlist",
+    "passlist": "Llista de permisos",
     "bridge": "Pont",
     "restart_zigbee2mqtt": "Reiniciar Zigbee2MQTT",
     "serial": "Serial",
@@ -250,12 +250,12 @@
     "health": "Health"
   },
   "health": {
-    "awaiting_next_check": "Awaiting next check",
+    "awaiting_next_check": "Esperant la següent comprovació",
     "last_check": "Última comprovació",
     "response_time": "Response time",
     "os": "OS",
     "process": "Procés",
-    "load_average": "Load average",
+    "load_average": "Càrrega mitjana",
     "ram_usage": "RAM usage",
     "uptime": "Uptime",
     "queued": "En cua",
@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Missatges",
     "messages_per_sec": "Missatges per segon",
-    "leave_count": "Leave count",
+    "leave_count": "Recompte de sortides",
     "network_address_changes": "Xarxa address changes",
     "very_low": "Very low",
     "interview_info": "Dispositiu interviews can heavily influence this data."

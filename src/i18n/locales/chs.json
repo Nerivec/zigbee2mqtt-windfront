@@ -213,7 +213,7 @@
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA 更新s",
-    "passlist": "Passlist",
+    "passlist": "允许列表",
     "bridge": "网桥",
     "restart_zigbee2mqtt": "重启 Zigbee2MQTT",
     "serial": "Serial",
@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "消息s",
     "messages_per_sec": "消息s per sec",
-    "leave_count": "Leave count",
+    "leave_count": "离开计数",
     "network_address_changes": "网络地址更改",
     "very_low": "Very low",
     "interview_info": "设备访谈可能会严重影响此数据。"

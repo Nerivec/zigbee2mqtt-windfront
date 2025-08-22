@@ -250,12 +250,12 @@
     "health": "Health"
   },
   "health": {
-    "awaiting_next_check": "Awaiting next check",
+    "awaiting_next_check": "Aguardando próxima verificação",
     "last_check": "Última verificação",
     "response_time": "Tempo de resposta",
     "os": "OS",
     "process": "Processo",
-    "load_average": "Load average",
+    "load_average": "Carga média",
     "ram_usage": "RAM usage",
     "uptime": "Tempo de atividade",
     "queued": "Na fila",
@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Mensagens",
     "messages_per_sec": "Mensagens por segundo",
-    "leave_count": "Leave count",
+    "leave_count": "Contagem de saídas",
     "network_address_changes": "Rede address changes",
     "very_low": "Very low",
     "interview_info": "Dispositivo interviews can heavily influence this data."

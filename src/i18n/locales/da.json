@@ -213,7 +213,7 @@
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA opdateringer",
-    "passlist": "Passlist",
+    "passlist": "Tilladeliste",
     "bridge": "Bro",
     "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
     "serial": "Serial",
@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Beskeds",
     "messages_per_sec": "Beskeds per sec",
-    "leave_count": "Leave count",
+    "leave_count": "Antal afgang",
     "network_address_changes": "Netværk address changes",
     "very_low": "Very low",
     "interview_info": "Enhed interviews can heavily influence this data."

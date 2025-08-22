@@ -250,12 +250,12 @@
     "health": "Health"
   },
   "health": {
-    "awaiting_next_check": "Awaiting next check",
+    "awaiting_next_check": "Čekání na další kontrolu",
     "last_check": "Poslední kontrola",
     "response_time": "Doba odezvy",
     "os": "OS",
     "process": "Proces",
-    "load_average": "Load average",
+    "load_average": "Průměrné zatížení",
     "ram_usage": "RAM usage",
     "uptime": "Doba běhu",
     "queued": "Ve frontě",
@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Zprávy",
     "messages_per_sec": "Zpráv za sekundu",
-    "leave_count": "Leave count",
+    "leave_count": "Počet odchodů",
     "network_address_changes": "Síť address changes",
     "very_low": "Very low",
     "interview_info": "Zařízení interviews can heavily influence this data."

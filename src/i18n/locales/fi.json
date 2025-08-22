@@ -213,7 +213,7 @@
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA päivitykset",
-    "passlist": "Passlist",
+    "passlist": "Sallittujen lista",
     "bridge": "Silta",
     "restart_zigbee2mqtt": "Restart Zigbee2MQTT",
     "serial": "Serial",
@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Viestit",
     "messages_per_sec": "Viestejä sekunnissa",
-    "leave_count": "Leave count",
+    "leave_count": "Poistumiset",
     "network_address_changes": "Verkko address changes",
     "very_low": "Very low",
     "interview_info": "Laite interviews can heavily influence this data."

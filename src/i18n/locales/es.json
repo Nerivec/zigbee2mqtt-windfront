@@ -213,7 +213,7 @@
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "Actualizaciones OTA",
-    "passlist": "Passlist",
+    "passlist": "Lista de permisos",
     "bridge": "Puente",
     "restart_zigbee2mqtt": "Reiniciar Zigbee2MQTT",
     "serial": "Serie",
@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Mensajes",
     "messages_per_sec": "Mensajes por segundo",
-    "leave_count": "Leave count",
+    "leave_count": "Conteo de salidas",
     "network_address_changes": "Red address changes",
     "very_low": "Very low",
     "interview_info": "Dispositivo interviews can heavily influence this data."

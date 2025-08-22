@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Сообщения",
     "messages_per_sec": "Сообщений в секунду",
-    "leave_count": "Leave count",
+    "leave_count": "Количество выходов",
     "network_address_changes": "Сеть address changes",
     "very_low": "Very low",
     "interview_info": "Устройство interviews can heavily influence this data."

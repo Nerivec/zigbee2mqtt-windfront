@@ -263,7 +263,7 @@
     "received": "Received",
     "messages": "Mesajlar",
     "messages_per_sec": "Saniye başına mesaj",
-    "leave_count": "Leave count",
+    "leave_count": "Ayrılma sayısı",
     "network_address_changes": "Ağ address changes",
     "very_low": "Very low",
     "interview_info": "Cihaz interviews can heavily influence this data."
