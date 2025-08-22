@@ -226,7 +226,7 @@
     "request_z2m_backup": "Заявка за Z2M резервно копие",
     "add_install_code": "Добави инсталационен код",
     "install_code": "Инсталационен код",
-    "homeassistant": "Home Assistant integration",
+    "homeassistant": "Интеграция с Home Assistant",
     "translation_prompt": "Можете да помогнете с превода на",
     "zigbee_herdsman_converters_version": "версия на zigbee-herdsman-converters",
     "zigbee_herdsman_version": "версия на zigbee-herdsman",
@@ -418,7 +418,7 @@
     "hide_definition": "Скрий определението"
   },
   "settingsSchemaDescriptions": {
-    "Home Assistant integration (MQTT discovery)": "Home Assistant integration (MQTT discovery)",
+    "Home Assistant integration (MQTT discovery)": "Интеграция с Home Assistant (MQTT откриване)",
     "Enable Home Assistant integration": "Активирай Home Assistant integration",
     "Home Assistant discovery topic": "Тема за откриване на Home Assistant",
     "Home Assistant status topic": "Тема за състоянието на Home Assistant",
