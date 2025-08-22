@@ -256,7 +256,7 @@
     "os": "OS",
     "process": "Proces",
     "load_average": "Průměrné zatížení",
-    "ram_usage": "RAM usage",
+    "ram_usage": "Využití RAM",
     "uptime": "Doba běhu",
     "queued": "Ve frontě",
     "published": "Publikováno",
@@ -265,17 +265,17 @@
     "messages_per_sec": "Zpráv za sekundu",
     "leave_count": "Počet odchodů",
     "network_address_changes": "Síť address changes",
-    "very_low": "Very low",
+    "very_low": "Velmi nízké",
     "interview_info": "Zařízení interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Skenovat znovu",
+    "scan": "Skenovat",
     "identify": "Identifikovat",
     "factory_reset": "Tovární nastavení",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Zdroj skenování",
+    "select_scan_source": "Vyberte zdroj skenování"
   },
   "values": {
     "clear": "Vymazat",

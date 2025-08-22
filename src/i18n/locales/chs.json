@@ -209,7 +209,7 @@
     "experimental": "Experimental",
     "external_converters": "外部转换器",
     "frontend": "前端",
-    "frontend_version": "Frontend version",
+    "frontend_version": "前端版本",
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA 更新s",
@@ -265,17 +265,17 @@
     "messages_per_sec": "消息s per sec",
     "leave_count": "离开计数",
     "network_address_changes": "网络地址更改",
-    "very_low": "Very low",
+    "very_low": "很低",
     "interview_info": "设备访谈可能会严重影响此数据。"
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "重新扫描",
+    "scan": "扫描",
     "identify": "识别",
     "factory_reset": "恢复出厂设置",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "扫描源",
+    "select_scan_source": "选择扫描源"
   },
   "values": {
     "clear": "清除",

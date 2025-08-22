@@ -209,7 +209,7 @@
     "experimental": "Experimental",
     "external_converters": "Convertidores externos",
     "frontend": "Frontend",
-    "frontend_version": "Frontend version",
+    "frontend_version": "Versión del frontend",
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "Actualizaciones OTA",
@@ -265,17 +265,17 @@
     "messages_per_sec": "Mensajes por segundo",
     "leave_count": "Conteo de salidas",
     "network_address_changes": "Red address changes",
-    "very_low": "Very low",
+    "very_low": "Muy bajo",
     "interview_info": "Dispositivo interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Escanear de nuevo",
+    "scan": "Escanear",
     "identify": "Identificar",
     "factory_reset": "Restablecimiento de fábrica",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Fuente de escaneo",
+    "select_scan_source": "Seleccionar fuente de escaneo"
   },
   "values": {
     "clear": "Limpiar",

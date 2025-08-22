@@ -265,24 +265,24 @@
     "messages_per_sec": "Meldinger per sekund",
     "leave_count": "Antall avganger",
     "network_address_changes": "Nettverk address changes",
-    "very_low": "Very low",
+    "very_low": "Svært lav",
     "interview_info": "Enhet interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Skann på nytt",
+    "scan": "Skann",
     "identify": "Identifiser",
     "factory_reset": "Fabrikktilbakestilling",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Skannkilde",
+    "select_scan_source": "Velg skannkilde"
   },
   "values": {
     "clear": "Tøm",
     "closed": "Lukkd",
     "false": "Usant",
     "not_supported": "Ikke støttet",
-    "occupied": "Occupied",
+    "occupied": "Opptatt",
     "open": "Åpne",
     "supported": "Støttet",
     "true": "Sant",
@@ -292,7 +292,7 @@
     "null": "Null",
     "Clear": "Tøm",
     "Closed": "Lukkd",
-    "Occupied": "Occupied",
+    "Occupied": "Opptatt",
     "Open": "Åpne"
   },
   "zigbee": {

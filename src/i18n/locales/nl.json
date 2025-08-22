@@ -209,7 +209,7 @@
     "experimental": "Experimental",
     "external_converters": "Externe converters",
     "frontend": "Frontend",
-    "frontend_version": "Frontend version",
+    "frontend_version": "Frontend versie",
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA-updates",
@@ -256,7 +256,7 @@
     "os": "OS",
     "process": "Proces",
     "load_average": "Gemiddelde belasting",
-    "ram_usage": "RAM usage",
+    "ram_usage": "RAM gebruik",
     "uptime": "Uptime",
     "queued": "In de wachtrij",
     "published": "Gepubliceerd",
@@ -265,17 +265,17 @@
     "messages_per_sec": "Berichten per seconde",
     "leave_count": "Verlaat aantal",
     "network_address_changes": "Netwerk address changes",
-    "very_low": "Very low",
+    "very_low": "Zeer laag",
     "interview_info": "Apparaat interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Opnieuw scannen",
+    "scan": "Scannen",
     "identify": "Identificeer",
     "factory_reset": "Fabrieksinstellingen",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Scanbron",
+    "select_scan_source": "Selecteer scanbron"
   },
   "values": {
     "clear": "Wissen",

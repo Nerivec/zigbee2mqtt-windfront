@@ -265,17 +265,17 @@
     "messages_per_sec": "Saniye başına mesaj",
     "leave_count": "Ayrılma sayısı",
     "network_address_changes": "Ağ address changes",
-    "very_low": "Very low",
+    "very_low": "Çok düşük",
     "interview_info": "Cihaz interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Tekrar tara",
+    "scan": "Tara",
     "identify": "Tanımla",
     "factory_reset": "Fabrika sıfırlaması",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Tarama kaynağı",
+    "select_scan_source": "Tarama kaynağını seç"
   },
   "values": {
     "clear": "Temizle",

@@ -209,7 +209,7 @@
     "experimental": "Kokeellinen",
     "external_converters": "Ulkoiset muuntimet",
     "frontend": "Käyttöliittymä",
-    "frontend_version": "Frontend version",
+    "frontend_version": "Frontend-versio",
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA päivitykset",
@@ -265,17 +265,17 @@
     "messages_per_sec": "Viestejä sekunnissa",
     "leave_count": "Poistumiset",
     "network_address_changes": "Verkko address changes",
-    "very_low": "Very low",
+    "very_low": "Erittäin matala",
     "interview_info": "Laite interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Skannaa uudelleen",
+    "scan": "Skannaa",
     "identify": "Tunnista",
     "factory_reset": "Tehdasasetusten palautus",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Skannauslähde",
+    "select_scan_source": "Valitse skannauslähde"
   },
   "values": {
     "clear": "Tyhjennä",

@@ -265,17 +265,17 @@
     "messages_per_sec": "Beskeds per sec",
     "leave_count": "Antal afgang",
     "network_address_changes": "Netværk address changes",
-    "very_low": "Very low",
+    "very_low": "Meget lav",
     "interview_info": "Enhed interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Skan igen",
+    "scan": "Skan",
     "identify": "Identificer",
     "factory_reset": "Fabriksnulstilling",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Skan kilde",
+    "select_scan_source": "Vælg skan kilde"
   },
   "values": {
     "clear": "Ryd",

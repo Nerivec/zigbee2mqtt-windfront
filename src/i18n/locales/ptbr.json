@@ -256,7 +256,7 @@
     "os": "OS",
     "process": "Processo",
     "load_average": "Carga média",
-    "ram_usage": "RAM usage",
+    "ram_usage": "Uso de RAM",
     "uptime": "Tempo de atividade",
     "queued": "Na fila",
     "published": "Publicado",
@@ -265,17 +265,17 @@
     "messages_per_sec": "Mensagens por segundo",
     "leave_count": "Contagem de saídas",
     "network_address_changes": "Rede address changes",
-    "very_low": "Very low",
+    "very_low": "Muito baixo",
     "interview_info": "Dispositivo interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Escanear novamente",
+    "scan": "Escanear",
     "identify": "Identificar",
     "factory_reset": "Reset de fábrica",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Fonte de escaneamento",
+    "select_scan_source": "Selecionar fonte de escaneamento"
   },
   "values": {
     "clear": "Limpar",

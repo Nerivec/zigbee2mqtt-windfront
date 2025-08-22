@@ -265,24 +265,24 @@
     "messages_per_sec": "Mezuak segundoko",
     "leave_count": "Irteera kopurua",
     "network_address_changes": "Sare helbidearen aldaketak",
-    "very_low": "Very low",
+    "very_low": "Oso baxua",
     "interview_info": "Gailuen elkarrizketak datu hauetan eragin handia izan dezakete."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Eskaneatu berriro",
+    "scan": "Eskaneatu",
     "identify": "Identifikatu",
     "factory_reset": "Fabrikako berrezarpena",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Eskaneatze iturria",
+    "select_scan_source": "Hautatu eskaneatze iturria"
   },
   "values": {
     "clear": "Garbitu",
     "closed": "Itxita",
     "false": "Gezurra",
     "not_supported": "Ez onartua",
-    "occupied": "Occupied",
+    "occupied": "Hartuta",
     "open": "Ireki",
     "supported": "Onartuta",
     "true": "Egia",
@@ -292,7 +292,7 @@
     "null": "Null",
     "Clear": "Garbitu",
     "Closed": "Itxita",
-    "Occupied": "Occupied",
+    "Occupied": "Hartuta",
     "Open": "Ireki"
   },
   "zigbee": {

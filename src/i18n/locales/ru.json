@@ -265,24 +265,24 @@
     "messages_per_sec": "Сообщений в секунду",
     "leave_count": "Количество выходов",
     "network_address_changes": "Сеть address changes",
-    "very_low": "Very low",
+    "very_low": "Очень низкий",
     "interview_info": "Устройство interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Сканировать снова",
+    "scan": "Сканировать",
     "identify": "Идентифицировать",
     "factory_reset": "Сброс к заводским",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Источник сканирования",
+    "select_scan_source": "Выберите источник сканирования"
   },
   "values": {
     "clear": "Очистить",
     "closed": "Закрытьd",
     "false": "Ложь",
     "not_supported": "Не поддерживается",
-    "occupied": "Occupied",
+    "occupied": "Занято",
     "open": "Открыть",
     "supported": "Поддерживается",
     "true": "Истина",
@@ -292,7 +292,7 @@
     "null": "Null",
     "Clear": "Очистить",
     "Closed": "Закрытьd",
-    "Occupied": "Occupied",
+    "Occupied": "Занято",
     "Open": "Открыть"
   },
   "zigbee": {

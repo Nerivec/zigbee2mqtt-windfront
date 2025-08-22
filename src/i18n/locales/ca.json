@@ -209,7 +209,7 @@
     "experimental": "Experimental",
     "external_converters": "Convertidors externs",
     "frontend": "Frontend",
-    "frontend_version": "Frontend version",
+    "frontend_version": "Versió del frontend",
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA updates",
@@ -252,11 +252,11 @@
   "health": {
     "awaiting_next_check": "Esperant la següent comprovació",
     "last_check": "Última comprovació",
-    "response_time": "Response time",
+    "response_time": "Temps de resposta",
     "os": "OS",
     "process": "Procés",
     "load_average": "Càrrega mitjana",
-    "ram_usage": "RAM usage",
+    "ram_usage": "Ús de RAM",
     "uptime": "Uptime",
     "queued": "En cua",
     "published": "Publicat",
@@ -265,24 +265,24 @@
     "messages_per_sec": "Missatges per segon",
     "leave_count": "Recompte de sortides",
     "network_address_changes": "Xarxa address changes",
-    "very_low": "Very low",
+    "very_low": "Molt baix",
     "interview_info": "Dispositiu interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Escaneja de nou",
+    "scan": "Escanejar",
     "identify": "Identificar",
     "factory_reset": "Restabliment de fàbrica",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Font d'escaneig",
+    "select_scan_source": "Selecciona la font d'escaneig"
   },
   "values": {
     "clear": "Esborrar",
     "closed": "Tancard",
     "false": "Fals",
-    "not_supported": "Not supported",
-    "occupied": "Occupied",
+    "not_supported": "No suportat",
+    "occupied": "Ocupat",
     "open": "Obert",
     "supported": "Compatible",
     "true": "Cert",
@@ -292,7 +292,7 @@
     "null": "Null",
     "Clear": "Esborrar",
     "Closed": "Tancard",
-    "Occupied": "Occupied",
+    "Occupied": "Ocupat",
     "Open": "Obert"
   },
   "zigbee": {

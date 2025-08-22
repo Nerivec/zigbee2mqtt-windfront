@@ -265,17 +265,17 @@
     "messages_per_sec": "Messaggi al secondo",
     "leave_count": "Conteggio uscite",
     "network_address_changes": "Rete address changes",
-    "very_low": "Very low",
+    "very_low": "Molto basso",
     "interview_info": "Dispositivo interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Scansiona di nuovo",
+    "scan": "Scansiona",
     "identify": "Identifica",
     "factory_reset": "Reset di fabbrica",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Sorgente di scansione",
+    "select_scan_source": "Seleziona sorgente di scansione"
   },
   "values": {
     "clear": "Cancella",

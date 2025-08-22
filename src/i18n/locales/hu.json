@@ -209,7 +209,7 @@
     "experimental": "Kísérleti",
     "external_converters": "Külső konverterek",
     "frontend": "Frontend",
-    "frontend_version": "Frontend version",
+    "frontend_version": "Frontend verzió",
     "main": "Main",
     "mqtt": "MQTT",
     "ota": "OTA frissítések",
@@ -265,17 +265,17 @@
     "messages_per_sec": "Üzenetek másodpercenként",
     "leave_count": "Kilépések száma",
     "network_address_changes": "Hálózat address changes",
-    "very_low": "Very low",
+    "very_low": "Nagyon alacsony",
     "interview_info": "Eszköz interviews can heavily influence this data."
   },
   "touchlink": {
     "detected_devices_message": "Detected {{count}} touchlink devices.",
-    "rescan": "Scan again",
-    "scan": "Scan",
+    "rescan": "Újbóli szkennelés",
+    "scan": "Szkennelés",
     "identify": "Azonosítás",
     "factory_reset": "Gyári visszaállítás",
-    "scan_source": "Scan source",
-    "select_scan_source": "Select scan source"
+    "scan_source": "Szkennelési forrás",
+    "select_scan_source": "Szkennelési forrás kiválasztása"
   },
   "values": {
     "clear": "Törlés",
