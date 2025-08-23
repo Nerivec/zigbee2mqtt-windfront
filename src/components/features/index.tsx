@@ -1,62 +1,111 @@
 import {
     faA,
     faArrowsLeftRightToLine,
-    faAtom,
+    faArrowsRotate,
     faBatteryEmpty,
     faBatteryFull,
     faBatteryHalf,
     faBatteryQuarter,
     faBatteryThreeQuarters,
+    faBell,
     faBolt,
+    faBrain,
     faCalendarDay,
     faCalendarWeek,
     faCheck,
     faCircle,
+    faCircleCheck,
+    faCircleExclamation,
+    faCircleInfo,
+    faClock,
+    faCloud,
     faCloudDownloadAlt,
     faCloudRain,
+    faCloudShowersHeavy,
+    faCloudSunRain,
     faCog,
-    faCopyright,
+    faCompass,
     faCube,
+    faDatabase,
     faDoorClosed,
     faDoorOpen,
+    faDroplet,
+    faDumbbell,
     faExclamationCircle,
-    faExclamationTriangle,
+    faFan,
+    faFaucet,
     faFaucetDrip,
     faFeather,
-    faFillDrip,
+    faFileContract,
+    faFilm,
+    faFilter,
+    faFlask,
+    faGaugeHigh,
     faGear,
+    faGraduationCap,
+    faHashtag,
+    faHeartPulse,
+    faIcons,
+    faIdBadge,
     faIndustry,
     faInfinity,
+    faKey,
+    faLanguage,
+    faLayerGroup,
+    faLightbulb,
+    faLocationArrow,
+    faLock,
+    faLungs,
+    faMap,
+    faMobileVibrate,
+    faNetworkWired,
     faPalette,
+    faPause,
     faPercent,
-    faPersonRays,
+    faPerson,
+    faPersonWalking,
     faPlane,
-    faPlug,
+    faPlay,
     faPlugCircleXmark,
     faPowerOff,
     faRadiation,
     faRadiationAlt,
     faRainbow,
+    faRotate,
+    faRuler,
+    faSeedling,
+    faShieldHalved,
     faSignal,
+    faSliders,
     faSlidersH,
     faSmoking,
+    faSnowflake,
     faStarHalfAlt,
+    faStop,
     faSun,
+    faTag,
+    faTemperatureHigh,
+    faTemperatureLow,
+    faTextHeight,
     faThermometerEmpty,
     faThermometerFull,
     faThermometerHalf,
     faThermometerQuarter,
     faThermometerThreeQuarters,
-    faTint,
+    faToggleOn,
+    faTowerBroadcast,
     faTriangleExclamation,
     faTurnUp,
-    faUserCog,
+    faUserLock,
+    faUserShield,
+    faVolumeHigh,
     faVolumeUp,
-    faWalking,
     faWandMagicSparkles,
     faWarehouse,
     faWater,
     faWaveSquare,
+    faWifi,
+    faWindowMaximize,
     faX,
     faY,
     faZ,
@@ -81,66 +130,363 @@ export interface BaseWithSubFeaturesProps<T extends FeatureWithAnySubFeatures> e
     deviceState: DeviceState | Zigbee2MQTTDeviceOptions;
 }
 
-export type FaIconFlip = "horizontal" | "vertical" | "both";
 export type TemperatureUnit = "°C" | "°F";
 
-export const TYPE_TO_CLASS_MAP: Record<string, IconDefinition> = {
+const ICON_MAP: Record<string, IconDefinition> = {
     action: faA,
-    alarm: faExclamationTriangle,
-    angle_x: faX,
-    angle_y: faY,
-    angle_z: faZ,
-    approach_distance: faArrowsLeftRightToLine,
-    away_mode: faPlane,
+
+    // Power / electrical
+    // battery: faBatteryFull, // customized in fn
     battery_low: faBatteryEmpty,
+    rms_voltage: faBolt,
+    over_voltage: faBolt,
+    under_voltage: faBolt,
+    voltage: faBolt,
+    overpower: faBolt,
+    overcurrent: faBolt,
+    current: faBolt,
+    reactive_energy: faBolt,
+    signed_power: faBolt,
+    power: faBolt,
+    energy: faBolt,
+    watt: faBolt,
+    frequency: faWaveSquare,
+    power_factor: faIndustry,
+
+    // Temperature / climate
+    // cpu_temperature: faTemperatureHigh, // customized in fn
+    heating_stop: faTemperatureHigh,
+    heat_protect: faTemperatureHigh,
+    warm_floor: faTemperatureHigh,
+    // temperature: faTemperatureHigh, // customized in fn
+    cold_water: faSnowflake,
+    frost: faSnowflake,
+    cool: faTemperatureLow,
+    hot_water: faTemperatureHigh,
+    pressure: faCloudDownloadAlt,
+
+    // Environment (humidity / air / gas)
+    humidity: faDroplet,
+    moisture: faDroplet,
+    soil_moisture: faSeedling,
+    co2: faCloud,
+    eco2: faCloud,
+    pm25: faCloud,
+    pm10: faCloud,
+    voc: faCloud,
+    aqi: faCloud,
+    air_quality: faCloud,
+    hcho: faFlask,
+    formaldehyd: faFlask,
+    gas: faCloud,
+    smoke: faSmoking,
+    carbon_monoxide: faCloud,
+
+    // Water / leak / irrigation
+    active_water_leak: faWater,
+    water_leak: faWater,
+    leakage: faWater,
+    leak: faWater,
+    rainwater: faCloudShowersHeavy,
+    rain: faCloudRain,
+    irrigation: faSeedling,
+    watering: faSeedling,
+    tank_level: faWater,
+    tds: faWater,
+    salinity: faWater,
+    ph: faWater,
+    orp: faWater,
+    free_chlorine: faWater,
+    flow: faFaucetDrip,
+
+    // Motion / presence / people
+    away_mode: faPlane,
+    mmwave: faPersonWalking,
+    motionless: faPerson,
+    motion: faPersonWalking,
+    movement: faPersonWalking,
+    moving: faPersonWalking,
+    radar: faPersonWalking,
+    vibration: faMobileVibrate,
+    presence: faPerson,
+    occupancy: faPerson,
+    occupied: faPerson,
+    vacancy: faPerson,
+    vacant: faPerson,
+    human: faPerson,
+    people: faPerson,
+
+    // Locks / security / access
+    keypad: faLock,
+    child_lock: faLock,
+    button_lock: faLock,
+    lock_mode: faLock,
+    hooks_lock: faLock,
+    lock: faLock,
+    pin_code: faKey,
+    master_pin: faKey,
+    rfid: faIdBadge,
+    permission: faUserLock,
+    admin: faUserShield,
+    master: faUserShield,
+
+    // Doors / windows / contact
+    garage_door: faWarehouse,
+    door_state: faDoorClosed,
+    door: faDoorClosed,
+    window_open: faWindowMaximize,
+    window: faWindowMaximize,
+    // contact: faDoorClosed, // customized in fn
+    fixed_window_sash: faWindowMaximize,
+
+    // Switches / relay / valve
+    relay: faToggleOn,
+    switch: faToggleOn,
+    toggle: faToggleOn,
+    electric_valve: faFaucet,
+    valve: faFaucet,
+    flow_switch: faFaucet,
+    pump: faFaucet,
+
+    // Lighting / brightness
+    led_disabled: faLightbulb,
+    led: faLightbulb,
+    backlight: faLightbulb,
     brightness: faSun,
-    co2: faAtom,
+    luminance: faSun,
+    illuminance: faSun,
+    illuminance_lux: faSun,
+    lux_value: faSun,
+    white_brightness: faSun,
+    light_mode: faLightbulb,
+    light: faLightbulb,
+    rgb_light: faPalette,
+    color: faPalette,
     color_hs: faPalette,
     color_temp: faSlidersH,
     color_temp_startup: faSlidersH,
     color_xy: faPalette,
-    current: faCopyright,
-    distance: faArrowsLeftRightToLine,
-    effect: faWandMagicSparkles,
-    energy: faPlug,
-    flow: faFaucetDrip,
-    frequency: faWaveSquare,
     gradient: faRainbow,
-    holidays_schedule: faCalendarDay,
-    humidity: faTint,
-    humidity_alarm: faTriangleExclamation,
-    illuminance: faSun,
-    illuminance_lux: faSun,
-    level_config: faGear,
-    linkquality: faSignal,
-    mode: faUserCog,
-    occupancy: faWalking,
+
+    // Position / orientation / distance
+    orientation: faCompass,
+    target_distance: faRuler,
+    distance: faRuler,
     position: faPercent,
-    power: faPowerOff,
-    power_factor: faIndustry,
-    power_outage_count: faPlugCircleXmark,
-    presence: faPersonRays,
-    pressure: faCloudDownloadAlt,
-    radiation_dose_per_hour: faRadiation,
-    radioactive_events_per_minute: faRadiationAlt,
-    rainwater: faCloudRain,
-    sensitivity: faFeather,
+    tilt: faLocationArrow,
+    direction: faLocationArrow,
+    axis: faRuler,
+    location_x: faRuler,
+    range: faRuler,
+    angle_x: faX,
+    angle_y: faY,
+    angle_z: faZ,
+    approach_distance: faArrowsLeftRightToLine,
     side: faCube,
-    smoke: faSmoking,
-    soil_moisture: faFillDrip,
+
+    // Time / scheduling
+    timestamp: faClock,
+    countdown: faClock,
+    timer: faClock,
+    schedule: faCalendarWeek,
+    weekdays: faCalendarWeek,
+    monday: faCalendarWeek,
+    tuesday: faCalendarWeek,
+    wednesday: faCalendarWeek,
+    thursday: faCalendarWeek,
+    friday: faCalendarWeek,
+    saturday: faCalendarWeek,
+    sunday: faCalendarWeek,
+    week: faCalendarWeek,
+    dayTime: faClock,
+    hour: faClock,
+    minute: faClock,
+    time_format: faClock,
+    time: faClock,
+    uptime: faClock,
+    interval: faClock,
+    duration: faClock,
+    delay: faClock,
+    holidays_schedule: faCalendarDay,
+    workdays_schedule: faCalendarDay,
+
+    // Scenes / effects
+    gradient_scene: faFilm,
+    scene: faFilm,
+    individual_led_effect: faWandMagicSparkles,
+    effect: faWandMagicSparkles,
+
+    // Audio / sound
+    ringtone: faVolumeHigh,
+    melody: faVolumeHigh,
+    sound_volume: faVolumeHigh,
+    volume: faVolumeHigh,
+    buzzer: faVolumeHigh,
+    beep: faVolumeHigh,
+    handlesound: faVolumeHigh,
+    keysound: faVolumeHigh,
+    play_voice: faVolumeHigh,
+    pulse_command: faVolumeHigh,
+    squawk: faVolumeHigh,
+    siren_and_light: faBell,
     sound: faVolumeUp,
-    state: faStarHalfAlt,
-    station: faWarehouse,
-    system_mode: faCog,
+
+    // Alerts / faults / security
+    humidity_alarm: faTriangleExclamation,
+    sos: faTriangleExclamation,
+    broadcast_alarm: faTriangleExclamation,
+    linkage_alarm: faTriangleExclamation,
+    alarm: faTriangleExclamation,
+    alert_behaviour: faTriangleExclamation,
+    warning: faTriangleExclamation,
+    clear_fault: faCircleCheck,
+    fault: faCircleExclamation,
+    error: faCircleExclamation,
+    breaker: faCircleExclamation,
+    trouble: faCircleExclamation,
+    supervision: faShieldHalved,
+    protection: faShieldHalved,
+    power_outage_count: faPlugCircleXmark,
     tamper: faExclamationCircle,
     temperature_alarm: faTriangleExclamation,
+
+    // Status / state / power
+    factory_reset: faPowerOff,
+    restore_default: faPowerOff,
+    reset_switch: faPowerOff,
+    powerup_status: faPowerOff,
+    status: faCircleInfo,
+    state: faStarHalfAlt,
+    enabled: faCircleCheck,
+    online: faWifi,
+    lifecycle: faInfinity,
     test: faCheck,
     trigger_count: faTurnUp,
-    vibration: faWater,
-    voltage: faBolt,
-    water_leak: faWater,
-    week: faCalendarWeek,
-    workdays_schedule: faCalendarDay,
+
+    // Connectivity / network
+    wifi: faWifi,
+    rssi: faWifi,
+    transmit_power: faTowerBroadcast,
+    radio_strength: faTowerBroadcast,
+    rf_pairing: faTowerBroadcast,
+    ip_address: faNetworkWired,
+    linkquality: faSignal,
+
+    // Data / update / configuration
+    update_frequency: faRotate,
+    refresh_rate: faRotate,
+    forceupdate: faRotate,
+    update: faRotate,
+    data_report: faDatabase,
+    data: faDatabase,
+    payload: faDatabase,
+    config: faSliders,
+    settings_reset: faSliders,
+    settings: faSliders,
+    setup: faSliders,
+    adaptation_run_settings: faSliders,
+    adaptation: faSliders,
+    regulator_mode: faSliders,
+    operating_mode: faSliders,
+    operation_mode: faSliders,
+    manual_mode: faSliders,
+    automatic_mode: faSliders,
+    mode: faSliders,
+    options: faSliders,
+    advanced: faSliders,
+    algorithm: faBrain,
+    control_algorithm: faBrain,
+    calibration: faRuler,
+    calibrate: faRuler,
+    limits_calibration: faRuler,
+    set_upper_limit: faRuler,
+    limit: faRuler,
+    level_config: faGear,
+    sensitivity: faFeather,
+    system_mode: faCog,
+
+    // Health
+    heartbeat: faHeartPulse,
+    breathing_rate: faLungs,
+    pulse: faHeartPulse,
+
+    // Strength / force
+    strength: faDumbbell,
+    force: faDumbbell,
+
+    // Percent
+    percent_state: faPercent,
+    percent: faPercent,
+    percentage: faPercent,
+
+    // Playback control
+    play: faPlay,
+    pause: faPause,
+    stop: faStop,
+
+    // Restart / relaunch
+    restart: faArrowsRotate,
+    relaunch: faArrowsRotate,
+
+    // Identifiers
+    serial_number: faHashtag,
+    meter_id: faHashtag,
+    sceneid: faHashtag,
+    id: faHashtag,
+
+    // Grouping / layout
+    group: faLayerGroup,
+    zone: faLayerGroup,
+    zones: faLayerGroup,
+    region: faMap,
+    sub_region: faMap,
+
+    // Contracts / production
+    contract: faFileContract,
+    contract_type: faFileContract,
+    production: faIndustry,
+    producer: faIndustry,
+
+    // Generic descriptors
+    model: faTag,
+    name: faTag,
+    type: faTag,
+    station: faWarehouse,
+
+    // Icons / UI
+    icon_application: faIcons,
+    font_size: faTextHeight,
+    theme: faPalette,
+    language: faLanguage,
+    translation: faLanguage,
+
+    // Learning
+    learn_ir_code: faGraduationCap,
+    spatial_learning: faGraduationCap,
+    learning: faGraduationCap,
+
+    // Speed / performance
+    fan_speed: faFan,
+    speed: faGaugeHigh,
+    supported_max_motor_speed: faGaugeHigh,
+
+    // Growth / feeding
+    fertility: faSeedling,
+    feed: faSeedling,
+
+    // Filters
+    replace_filter: faFilter,
+    filter_age: faFilter,
+    filter: faFilter,
+
+    // Radiation
+    radiation_dose_per_hour: faRadiation,
+    radioactive_events_per_minute: faRadiationAlt,
+    radioactive_events: faRadiationAlt,
+    radiation: faRadiation,
+
+    // Weather general
+    weather: faCloudSunRain,
 };
 
 const getBatteryIcon = (level: number | undefined, outClasses: string[]) => {
@@ -245,6 +591,7 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
 
             break;
         }
+        case "cpu_temperature":
         case "device_temperature":
         case "temperature":
         case "local_temperature": {
@@ -270,7 +617,6 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
         case "occupancy": {
             if (value) {
                 classes.push("text-warning");
-                spec.beat = true;
             }
 
             break;
@@ -278,7 +624,6 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
         case "presence": {
             if (value) {
                 classes.push("text-warning");
-                spec.beat = true;
             }
 
             break;
@@ -321,7 +666,7 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
         return [icon, classes.join(" "), spec];
     }
 
-    icon = TYPE_TO_CLASS_MAP[name];
+    icon = ICON_MAP[name];
 
     return icon ? [icon, classes.join(" "), spec] : [faCircle, "opacity-0", {}];
 };
