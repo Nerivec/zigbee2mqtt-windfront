@@ -36,7 +36,12 @@ const NumberField = memo((props: NumberFieldProps) => {
 
     return (
         <fieldset className="fieldset">
-            {label && <legend className="fieldset-legend">{label}</legend>}
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {props.required ? " *" : ""}
+                </legend>
+            )}
             {props.min != null && props.max != null && (
                 <div className="w-full max-w-xs">
                     <input

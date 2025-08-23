@@ -61,11 +61,13 @@ const propertyToField = (
                         name={key}
                         label={key}
                         detail={description}
-                        onChange={(e) => !e.target.validationMessage && set({ [key]: Number.parseInt(e.target.value, 10) })}
+                        onChange={(e) =>
+                            !e.target.validationMessage && set({ [key]: e.target.value === "" ? null : Number.parseInt(e.target.value, 10) })
+                        }
                         required={required}
                         defaultValue={(value as number) ?? ""}
                     >
-                        <option value="" disabled>
+                        <option value="" disabled={required}>
                             -
                         </option>
                         {(property.enum as number[]).map((entry) => (
@@ -100,11 +102,11 @@ const propertyToField = (
                         name={key}
                         label={key}
                         detail={description}
-                        onChange={(e) => !e.target.validationMessage && set({ [key]: e.target.value })}
+                        onChange={(e) => !e.target.validationMessage && set({ [key]: e.target.value === "" ? null : e.target.value })}
                         required={required}
                         defaultValue={(value as string) ?? ""}
                     >
-                        <option value="" disabled>
+                        <option value="" disabled={required}>
                             -
                         </option>
                         {(property.enum as string[]).map((entry) => (
@@ -123,7 +125,7 @@ const propertyToField = (
                     label={key}
                     detail={description}
                     type="text"
-                    onBlur={(e) => !e.target.validationMessage && set({ [key]: e.target.value })}
+                    onBlur={(e) => !e.target.validationMessage && set({ [key]: e.target.value === "" ? null : e.target.value })}
                     required={required}
                     defaultValue={(value as string) ?? ""}
                 />

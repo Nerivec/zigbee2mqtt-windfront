@@ -13,7 +13,12 @@ const TextareaField = memo((props: TextAreaFieldProps) => {
 
     return (
         <fieldset className="fieldset">
-            {label && <legend className="fieldset-legend">{label}</legend>}
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {props.required ? " *" : ""}
+                </legend>
+            )}
             <textarea className={`textarea${props.required ? " validator" : ""}`} onChange={onChange} onBlur={onBlur} {...rest} />
             {detail && <div className="label">{detail}</div>}
         </fieldset>

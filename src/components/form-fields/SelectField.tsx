@@ -12,7 +12,12 @@ const SelectField = memo((props: SelectFieldProps) => {
 
     return (
         <fieldset className="fieldset">
-            {label && <legend className="fieldset-legend">{label}</legend>}
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {props.required ? " *" : ""}
+                </legend>
+            )}
             <select className={`select${props.required ? " validator" : ""}`} onChange={onChange} {...rest}>
                 {children}
             </select>

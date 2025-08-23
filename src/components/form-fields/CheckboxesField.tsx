@@ -1,9 +1,9 @@
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type ChangeEvent, memo, useCallback, useEffect, useState } from "react";
+import { type ChangeEvent, type DetailedHTMLProps, type InputHTMLAttributes, memo, useCallback, useEffect, useState } from "react";
 import Button from "../Button.js";
 
-type CheckboxFieldProps = {
+type CheckboxFieldProps = Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "type"> & {
     names: string[];
     defaultsChecked: string[];
     label?: string;
@@ -12,7 +12,7 @@ type CheckboxFieldProps = {
 };
 
 const CheckboxesField = memo((props: CheckboxFieldProps) => {
-    const { names, label, detail, defaultsChecked, onSubmit } = props;
+    const { names, label, detail, defaultsChecked, onSubmit, ...rest } = props;
     const [currentValues, setCurrentValues] = useState<string[]>(defaultsChecked || []);
 
     useEffect(() => {
@@ -27,11 +27,23 @@ const CheckboxesField = memo((props: CheckboxFieldProps) => {
 
     return (
         <fieldset className="fieldset gap-2">
-            {label && <legend className="fieldset-legend">{label}</legend>}
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {props.required ? " *" : ""}
+                </legend>
+            )}
             <div className="flex flex-row flex-wrap gap-2">
                 {names.map((name) => (
                     <label className="label" key={name}>
-                        <input name={name} className="checkbox" type="checkbox" onChange={onChange} checked={currentValues.includes(name)} />
+                        <input
+                            name={name}
+                            className="checkbox"
+                            type="checkbox"
+                            onChange={onChange}
+                            checked={currentValues.includes(name)}
+                            {...rest}
+                        />
                         {name}
                     </label>
                 ))}

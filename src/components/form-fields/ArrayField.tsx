@@ -1,9 +1,9 @@
 import { faCheck, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type FocusEvent, memo, useCallback, useEffect, useState } from "react";
+import { type DetailedHTMLProps, type FocusEvent, type InputHTMLAttributes, memo, useCallback, useEffect, useState } from "react";
 import Button from "../Button.js";
 
-type ArrayFieldProps = {
+type ArrayFieldProps = Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "type"> & {
     defaultValues: (string | number)[];
     label?: string;
     detail?: string;
@@ -12,7 +12,7 @@ type ArrayFieldProps = {
 };
 
 const ArrayField = memo((props: ArrayFieldProps) => {
-    const { defaultValues, label, detail, type, onSubmit } = props;
+    const { defaultValues, label, detail, type, onSubmit, ...rest } = props;
     const [currentValues, setCurrentValues] = useState<(string | number)[]>(defaultValues || []);
 
     useEffect(() => {
@@ -51,7 +51,12 @@ const ArrayField = memo((props: ArrayFieldProps) => {
 
     return (
         <fieldset className="fieldset gap-2">
-            {label && <legend className="fieldset-legend">{label}</legend>}
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {props.required ? " *" : ""}
+                </legend>
+            )}
             <div className="flex flex-row flex-wrap gap-2">
                 {currentValues.map((value, idx) => (
                     // biome-ignore lint/suspicious/noArrayIndexKey: lack of data
@@ -63,6 +68,7 @@ const ArrayField = memo((props: ArrayFieldProps) => {
                             }}
                             type={type}
                             defaultValue={Number.isNaN(value) ? "" : value}
+                            {...rest}
                         />
                         <Button<void> className="btn btn-error btn-outline join-item" onClick={() => onRemoveClick(idx)}>
                             <FontAwesomeIcon icon={faTrash} />

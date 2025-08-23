@@ -14,7 +14,12 @@ const InputField = memo((props: InputFieldProps) => {
 
     return (
         <fieldset className="fieldset">
-            {label && <legend className="fieldset-legend">{label}</legend>}
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {props.required ? " *" : ""}
+                </legend>
+            )}
             <input className={`input min-w-xs${props.pattern || props.required ? " validator" : ""}`} onChange={onChange} onBlur={onBlur} {...rest} />
             {detail && <p className="label">{detail}</p>}
         </fieldset>

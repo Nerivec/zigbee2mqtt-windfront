@@ -12,7 +12,12 @@ const CheckboxField = memo((props: CheckboxFieldProps) => {
 
     return (
         <fieldset className="fieldset">
-            {label && <legend className="fieldset-legend">{label}</legend>}
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {props.required ? " *" : ""}
+                </legend>
+            )}
             {detail ? (
                 <label className="label">
                     <input className={`checkbox${props.required ? " validator" : ""}`} type="checkbox" onChange={onChange} {...rest} />
