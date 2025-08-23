@@ -1,4 +1,3 @@
-import { memo } from "react";
 import type { CoverFeature, WithAnySubFeatures } from "../../types.js";
 import type { ValueWithLabelOrPrimitive } from "../editors/EnumEditor.js";
 import FeatureSubFeatures from "./FeatureSubFeatures.js";
@@ -11,8 +10,6 @@ const STEPS_CONFIG = {
 
 type CoverProps = BaseWithSubFeaturesProps<WithAnySubFeatures<CoverFeature>>;
 
-const Cover = memo((props: CoverProps) => {
+export default function Cover(props: CoverProps) {
     return <FeatureSubFeatures {...props} steps={STEPS_CONFIG} />;
-});
-
-export default Cover;
+}

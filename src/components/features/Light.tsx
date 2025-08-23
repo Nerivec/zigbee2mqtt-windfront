@@ -1,4 +1,3 @@
-import { memo } from "react";
 import type { LightFeature, WithAnySubFeatures } from "../../types.js";
 import { scale } from "../../utils.js";
 import type { ValueWithLabelOrPrimitive } from "../editors/EnumEditor.js";
@@ -18,8 +17,6 @@ const STEPS_CONFIG = {
     })),
 };
 
-const Light = memo((props: LightProps) => {
+export default function Light(props: LightProps) {
     return <FeatureSubFeatures {...props} steps={STEPS_CONFIG} />;
-});
-
-export default Light;
+}
