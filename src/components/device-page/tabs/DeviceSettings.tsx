@@ -1,5 +1,3 @@
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { JSONSchema7 } from "json-schema";
 import merge from "lodash/merge.js";
 import { useCallback, useContext } from "react";
@@ -8,6 +6,7 @@ import { useShallow } from "zustand/react/shallow";
 import { DEVICE_OPTIONS_DOCS_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import InfoAlert from "../../InfoAlert.js";
 import SettingsList from "../../json-schema/SettingsList.js";
 
 interface DeviceSettingsProps {
@@ -29,12 +28,11 @@ export default function DeviceSettings({ sourceIdx, ieeeAddress }: DeviceSetting
 
     return (
         <>
-            <div className="alert alert-info alert-soft mb-3" role="alert">
-                <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
+            <InfoAlert>
                 <a href={DEVICE_OPTIONS_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
                     {t("common:read_the_docs_info")}
                 </a>
-            </div>
+            </InfoAlert>
             <SettingsList
                 schema={(bridgeInfo.config_schema.definitions.device ?? { properties: {} }) as JSONSchema7}
                 data={merge({}, bridgeInfo.config.device_options, bridgeInfo.config.devices[ieeeAddress])}

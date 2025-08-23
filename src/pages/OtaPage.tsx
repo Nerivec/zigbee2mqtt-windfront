@@ -1,12 +1,12 @@
 import { faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { ColumnDef } from "@tanstack/react-table";
-import { type ChangeEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import ConfirmButton from "../components/ConfirmButton.js";
 import DeviceImage from "../components/device/DeviceImage.js";
-import CheckboxField from "../components/form-fields/CheckboxField.js";
+import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
 import { formatOtaFileVersion } from "../components/ota-page/index.js";
 import OtaControlGroup from "../components/ota-page/OtaControlGroup.js";
 import OtaFileVersion from "../components/ota-page/OtaFileVersion.js";
@@ -17,9 +17,10 @@ import ModelLink from "../components/value-decorators/ModelLink.js";
 import OtaLink from "../components/value-decorators/OtaLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
-import { useTableWithFilteredData } from "../hooks/useTable.js";
+import { useTable } from "../hooks/useTable.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { Device, DeviceState } from "../types.js";
+import { toHex } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 type OtaTableData = {
@@ -31,7 +32,6 @@ type OtaTableData = {
         batteryState?: string | null;
         batteryLow?: boolean | null;
     };
-    selected: boolean;
 };
 
 export default function OtaPage() {
@@ -39,12 +39,11 @@ export default function OtaPage() {
     const deviceStates = useAppStore((state) => state.deviceStates);
     const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["ota", "zigbee", "common"]);
-    const [selectedDevices, setSelectedDevices] = useState<[number, string][]>([]);
-    const [availableOnly, setAvailableOnly] = useState(false);
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
-        setSelectedDevices([]);
+        setRowSelection({});
     }, [devices]);
 
     const otaDevices = useMemo(() => {
@@ -55,68 +54,49 @@ export default function OtaPage() {
                 if (device.definition?.supports_ota && !device.disabled) {
                     const state = deviceStates[sourceIdx][device.friendly_name] ?? {};
 
-                    if (!availableOnly || state.update?.state === "available" || state.update?.state === "updating") {
-                        filteredDevices.push({
-                            sourceIdx,
-                            device,
-                            state: state.update,
-                            batteryState:
-                                device.power_source === "Battery"
-                                    ? {
-                                          batteryPercent: state.battery as number,
-                                          batteryState: state.battery_state as string,
-                                          batteryLow: state.battery_low as boolean,
-                                      }
-                                    : undefined,
-                            selected: selectedDevices.some(([idx, ieee]) => idx === sourceIdx && ieee === device.ieee_address),
-                        });
-                    }
+                    filteredDevices.push({
+                        sourceIdx,
+                        device,
+                        state: state.update,
+                        batteryState:
+                            device.power_source === "Battery"
+                                ? {
+                                      batteryPercent: state.battery as number,
+                                      batteryState: state.battery_state as string,
+                                      batteryLow: state.battery_low as boolean,
+                                  }
+                                : undefined,
+                    });
                 }
             }
         }
 
         return filteredDevices;
-    }, [deviceStates, devices, selectedDevices, availableOnly]);
+    }, [deviceStates, devices]);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
-    const onSelectAllChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setSelectedDevices(e.target.checked ? getFilteredData().map(({ original: { sourceIdx, device } }) => [sourceIdx, device.ieee_address]) : []);
-    }, []);
+    const rowSelectionCount = useMemo(() => Object.keys(rowSelection).length, [rowSelection]);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
-    const onSelectChange = useCallback((sourceIdx: number, device: Device, select: boolean) => {
-        if (select) {
-            if (getFilteredData().find(({ original }) => original.sourceIdx === sourceIdx && original.device.ieee_address === device.ieee_address)) {
-                setSelectedDevices((prev) => [...prev, [sourceIdx, device.ieee_address]]);
+    // biome-ignore lint/correctness/useExhaustiveDependencies: can't dep table
+    const actOnFilteredSelected = useCallback(
+        async (topic: "bridge/request/device/ota_update/check" | "bridge/request/device/ota_update/update") => {
+            const promises: Promise<void>[] = [];
+
+            for (const row of table.getFilteredRowModel().rows) {
+                if (row.getIsSelected()) {
+                    const { sourceIdx, device } = row.original;
+
+                    promises.push(sendMessage(sourceIdx, topic, { id: device.ieee_address }));
+                }
             }
-        } else {
-            setSelectedDevices((prev) => prev.filter(([idx, ieee]) => idx !== sourceIdx || ieee !== device.ieee_address));
-        }
-    }, []);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
-    const checkSelected = useCallback(async () => {
-        const promises = selectedDevices.map(([sourceIdx, ieee]) => {
-            return getFilteredData().find(({ original }) => original.sourceIdx === sourceIdx && original.device.ieee_address === ieee)
-                ? sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee })
-                : Promise.resolve();
-        });
+            setRowSelection({});
 
-        setSelectedDevices([]);
-        await Promise.allSettled(promises);
-    }, [selectedDevices, sendMessage]);
-
-    // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
-    const updateSelected = useCallback(async () => {
-        const promises = selectedDevices.map(([sourceIdx, ieee]) => {
-            return getFilteredData().find(({ original }) => original.sourceIdx === sourceIdx && original.device.ieee_address === ieee)
-                ? sendMessage(sourceIdx, "bridge/request/device/ota_update/update", { id: ieee })
-                : Promise.resolve();
-        });
-
-        setSelectedDevices([]);
-        await Promise.allSettled(promises);
-    }, [selectedDevices, sendMessage]);
+            if (promises.length > 0) {
+                await Promise.allSettled(promises);
+            }
+        },
+        [sendMessage],
+    );
 
     const onCheckClick = useCallback(
         async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee }),
@@ -138,41 +118,29 @@ export default function OtaPage() {
         [sendMessage],
     );
 
-    const onAvailableOnlyChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setAvailableOnly(e.target.checked);
-    }, []);
-
-    // biome-ignore lint/correctness/useExhaustiveDependencies: getFilteredData does not change
     const columns = useMemo<ColumnDef<OtaTableData, unknown>[]>(
         () => [
             {
                 id: "select",
                 size: 45,
-                header: () => (
-                    <label>
-                        <input
-                            type="checkbox"
-                            className="checkbox"
-                            onChange={onSelectAllChange}
-                            checked={selectedDevices.length !== 0 && selectedDevices.length === getFilteredData().length}
-                        />
-                    </label>
+                header: ({ table }) => (
+                    <IndeterminateCheckbox
+                        checked={table.getIsAllRowsSelected()}
+                        indeterminate={table.getIsSomeRowsSelected()}
+                        onChange={table.getToggleAllRowsSelectedHandler()}
+                    />
                 ),
                 accessorFn: () => "",
-                cell: ({
-                    row: {
-                        original: { sourceIdx, device, selected },
-                    },
-                }) => (
-                    <label>
-                        <input
-                            type="checkbox"
-                            className="checkbox"
-                            onChange={(e) => onSelectChange(sourceIdx, device, e.target.checked)}
-                            checked={selected}
-                        />
-                    </label>
+                cell: ({ row }) => (
+                    <input
+                        type="checkbox"
+                        className="checkbox"
+                        checked={row.getIsSelected()}
+                        disabled={!row.getCanSelect()}
+                        onChange={row.getToggleSelectedHandler()}
+                    />
                 ),
+                enableGlobalFilter: false,
                 enableColumnFilter: false,
                 enableSorting: false,
             },
@@ -184,20 +152,24 @@ export default function OtaPage() {
                         <FontAwesomeIcon icon={faServer} />
                     </span>
                 ),
-                accessorFn: ({ sourceIdx }) => `${sourceIdx} ${API_NAMES[sourceIdx]}`,
+                accessorFn: ({ sourceIdx }) => API_NAMES[sourceIdx],
                 cell: ({
                     row: {
                         original: { sourceIdx },
                     },
                 }) => <SourceDot idx={sourceIdx} nameClassName="hidden md:inline-block" />,
-                enableColumnFilter: false,
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "select",
+                    showFacetedOccurrences: true,
+                },
             },
             {
                 id: "friendly_name",
                 size: 250,
                 minSize: 175,
                 header: t("common:friendly_name"),
-                accessorFn: ({ device }) => [device.friendly_name, device.description, device.ieee_address].join(" "),
+                accessorFn: ({ device }) => `${device.friendly_name} ${device.description ?? ""} ${device.ieee_address}`,
                 cell: ({
                     row: {
                         original: { sourceIdx, device, state, batteryState },
@@ -229,14 +201,51 @@ export default function OtaPage() {
                         </div>
                     </div>
                 ),
-                filterFn: "includesString",
                 sortingFn: (rowA, rowB) => rowA.original.device.friendly_name.localeCompare(rowB.original.device.friendly_name),
+                filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                    textFaceted: true,
+                },
+            },
+            {
+                id: "ieee_address",
+                minSize: 175,
+                header: t("zigbee:ieee_address"),
+                accessorFn: ({ device }) => `${device.ieee_address} ${toHex(device.network_address, 4)} ${device.network_address}`,
+                cell: ({
+                    row: {
+                        original: { sourceIdx, device },
+                    },
+                }) => (
+                    <>
+                        <div>
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
+                                {device.ieee_address}
+                            </Link>
+                        </div>
+                        <div className="flex flex-row gap-1">
+                            <span className="badge badge-ghost badge-sm cursor-default" title={t("zigbee:network_address_hex")}>
+                                {toHex(device.network_address, 4)}
+                            </span>
+                            <span className="badge badge-ghost badge-sm cursor-default" title={t("zigbee:network_address_dec")}>
+                                {device.network_address}
+                            </span>
+                        </div>
+                    </>
+                ),
+                sortingFn: (rowA, rowB) => rowA.original.device.ieee_address.localeCompare(rowB.original.device.ieee_address),
+                filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                },
             },
             {
                 id: "model",
                 minSize: 175,
                 header: t("zigbee:model"),
-                accessorFn: ({ device }) => [device.definition?.model, device.model_id, device.definition?.vendor, device.manufacturer].join(" "),
+                accessorFn: ({ device }) =>
+                    `${device.definition?.model ?? ""} ${device.model_id ?? ""} ${device.definition?.vendor ?? device.manufacturer ?? ""}`,
                 cell: ({
                     row: {
                         original: { device },
@@ -252,12 +261,17 @@ export default function OtaPage() {
                     </>
                 ),
                 filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                    textFaceted: true,
+                    showFacetedOccurrences: true,
+                },
             },
             {
                 id: "firmware_id",
                 minSize: 175,
                 header: t("zigbee:firmware_id"),
-                accessorFn: ({ device }) => [device.software_build_id, device.date_code].join(" "),
+                accessorFn: ({ device }) => `${device.software_build_id ?? ""} ${device.date_code ?? ""}`,
                 cell: ({
                     row: {
                         original: { device },
@@ -267,13 +281,17 @@ export default function OtaPage() {
                         <OtaLink device={device} />
                         {device.date_code && (
                             <div>
-                                <span className="badge badge-sm badge-ghost cursor-default" title={t("zigbee:firmware_build_date")}>
+                                <span className="badge badge-sm badge-ghost" title={t("zigbee:firmware_build_date")}>
                                     {device.date_code}
                                 </span>
                             </div>
                         )}
                     </>
                 ),
+                filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                },
             },
             {
                 id: "firmware_version",
@@ -285,6 +303,10 @@ export default function OtaPage() {
                         original: { state },
                     },
                 }) => <OtaFileVersion version={state?.installed_version} />,
+                filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                },
             },
             {
                 id: "available_firmware_version",
@@ -296,43 +318,24 @@ export default function OtaPage() {
                         original: { state },
                     },
                 }) => <OtaFileVersion version={state?.latest_version} />,
+                filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                },
+            },
+            {
+                id: "state",
+                header: t("state"),
+                accessorFn: ({ state }) => t(state?.state ?? "zigbee:unknown"),
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "select",
+                },
             },
             {
                 id: "actions",
                 minSize: 130,
-                header: () => (
-                    <div className="flex flex-col">
-                        <CheckboxField
-                            name="available_only"
-                            detail={t("common:available_only")}
-                            onChange={onAvailableOnlyChange}
-                            checked={availableOnly}
-                            className="checkbox checkbox-sm"
-                        />
-                        <div className="join join-vertical">
-                            <ConfirmButton
-                                className="btn btn-outline btn-error btn-xs join-item"
-                                onClick={checkSelected}
-                                title={t("check_selected")}
-                                modalDescription={t("common:dialog_confirmation_prompt")}
-                                modalCancelLabel={t("common:cancel")}
-                                disabled={selectedDevices.length === 0}
-                            >
-                                {`${t("check_selected")} (${selectedDevices.length})`}
-                            </ConfirmButton>
-                            <ConfirmButton
-                                className="btn btn-outline btn-error btn-xs join-item"
-                                onClick={updateSelected}
-                                title={t("update_selected")}
-                                modalDescription={t("update_selected_info")}
-                                modalCancelLabel={t("common:cancel")}
-                                disabled={selectedDevices.length === 0}
-                            >
-                                {`${t("update_selected")} (${selectedDevices.length})`}
-                            </ConfirmButton>
-                        </div>
-                    </div>
-                ),
+                header: "",
                 accessorFn: ({ state }) => state?.state,
                 cell: ({
                     row: {
@@ -357,29 +360,75 @@ export default function OtaPage() {
                 enableGlobalFilter: false,
             },
         ],
-        [
-            selectedDevices.length,
-            availableOnly,
-            onSelectAllChange,
-            onSelectChange,
-            checkSelected,
-            updateSelected,
-            onCheckClick,
-            onUpdateClick,
-            onScheduleClick,
-            onUnscheduleClick,
-            onAvailableOnlyChange,
-            t,
-        ],
+        [onCheckClick, onUpdateClick, onScheduleClick, onUnscheduleClick, t],
     );
 
-    const { table, getFilteredData } = useTableWithFilteredData({
+    const { table, resetFilters, globalFilter, columnFilters } = useTable({
         id: "ota-devices",
         columns,
         data: otaDevices,
-        visibleColumns: { source: API_URLS.length > 1 },
+        visibleColumns: { source: API_URLS.length > 1, state: false },
         sorting: [{ id: "friendly_name", desc: false }],
+        rowSelection,
+        onRowSelectionChange: setRowSelection,
     });
 
-    return <Table id="ota-devices" table={table} />;
+    // Automatically prune selection when filters or state/data change
+    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
+    useEffect(() => {
+        const validIds = new Set<string>();
+
+        for (const row of table.getFilteredRowModel().rows) {
+            validIds.add(row.id);
+        }
+
+        let changed = false;
+        const next: RowSelectionState = {};
+
+        for (const id in rowSelection) {
+            if (validIds.has(id)) {
+                next[id] = true;
+            } else {
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            setRowSelection(next);
+        }
+    }, [table, rowSelection, otaDevices, globalFilter, columnFilters]);
+
+    return (
+        <Table
+            id="ota-devices"
+            table={table}
+            resetFilters={resetFilters}
+            globalFilter={globalFilter}
+            columnFilters={columnFilters}
+            headerActions={
+                <div className="join join-vertical">
+                    <ConfirmButton
+                        className="btn btn-outline btn-error btn-xs join-item"
+                        onClick={async () => await actOnFilteredSelected("bridge/request/device/ota_update/check")}
+                        title={t("check_selected")}
+                        modalDescription={t("common:dialog_confirmation_prompt")}
+                        modalCancelLabel={t("common:cancel")}
+                        disabled={rowSelectionCount === 0}
+                    >
+                        {`${t("check_selected")} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                    <ConfirmButton
+                        className="btn btn-outline btn-error btn-xs join-item"
+                        onClick={async () => await actOnFilteredSelected("bridge/request/device/ota_update/update")}
+                        title={t("update_selected")}
+                        modalDescription={t("update_selected_info")}
+                        modalCancelLabel={t("common:cancel")}
+                        disabled={rowSelectionCount === 0}
+                    >
+                        {`${t("update_selected")} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                </div>
+            }
+        />
+    );
 }

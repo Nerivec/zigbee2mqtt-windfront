@@ -1,5 +1,3 @@
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { JSONSchema7 } from "json-schema";
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
@@ -8,6 +6,7 @@ import { useShallow } from "zustand/react/shallow";
 import { CONFIGURATION_DOCS_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import InfoAlert from "../../InfoAlert.js";
 import SettingsList from "../../json-schema/SettingsList.js";
 
 export type TabName = "main" | "frontend" | "mqtt" | "serial" | "availability" | "ota" | "advanced" | "homeassistant";
@@ -34,12 +33,11 @@ export default function Settings({ sourceIdx, tab }: SettingsProps) {
 
     return (
         <>
-            <div className="alert alert-info alert-soft mb-3" role="alert">
-                <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
+            <InfoAlert>
                 <a href={CONFIGURATION_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
                     {t("common:read_the_docs_info")}
                 </a>
-            </div>
+            </InfoAlert>
             <div className="tabs tabs-border">
                 <NavLink to={`/settings/${sourceIdx}/settings/main`} className={isTabActive}>
                     {t("main")}

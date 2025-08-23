@@ -61,7 +61,6 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
             }
             dropdownStyle="dropdown-start"
         >
-            {/** biome-ignore lint/a11y/noLabelWithoutControl: wrapped not detected */}
             <label className="input" key="search">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <DebouncedInput onChange={setSearchTerm} placeholder={t("type_to_filter")} value={searchTerm} title={t("type_to_filter")} />

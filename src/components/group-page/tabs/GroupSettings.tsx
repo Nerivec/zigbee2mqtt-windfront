@@ -1,5 +1,3 @@
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { JSONSchema7 } from "json-schema";
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
@@ -8,6 +6,7 @@ import { GROUP_OPTIONS_DOCS_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
 import type { Group } from "../../../types.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import InfoAlert from "../../InfoAlert.js";
 import SettingsList from "../../json-schema/SettingsList.js";
 
 type DevicesProps = {
@@ -29,12 +28,11 @@ export default function GroupSettings({ sourceIdx, group }: DevicesProps) {
 
     return (
         <>
-            <div className="alert alert-info alert-soft mb-3" role="alert">
-                <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
+            <InfoAlert>
                 <a href={GROUP_OPTIONS_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
                     {t("common:read_the_docs_info")}
                 </a>
-            </div>
+            </InfoAlert>
             <SettingsList
                 schema={(bridgeInfo.config_schema.definitions.group ?? { properties: {} }) as JSONSchema7}
                 data={bridgeInfo.config.groups[group.id] ?? {}}

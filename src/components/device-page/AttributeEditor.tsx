@@ -102,7 +102,6 @@ const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDe
                 <fieldset className="fieldset gap-2 p-3 rounded-box shadow-md">
                     {attributes.map(({ attribute, value = "", definition }) => (
                         <div key={attribute} className="join join-horizontal min-w-xs">
-                            {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
                             <label className="input join-item">
                                 {attribute}
                                 <AttributeValueInput

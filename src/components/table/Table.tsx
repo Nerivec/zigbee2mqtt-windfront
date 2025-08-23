@@ -1,9 +1,8 @@
 import { flexRender, type Row } from "@tanstack/react-table";
+import type { ReactNode } from "react";
 import { type TableComponents, TableVirtuoso } from "react-virtuoso";
 import type { UseTableProps, useTable } from "../../hooks/useTable.js";
-import { TABLE_COLUMN_FILTER_KEY } from "../../localStoreConsts.js";
 import TableHeader from "./TableHeader.js";
-import TextFilter from "./TextFilter.js";
 
 const tableComponents: TableComponents<Row<unknown>, unknown> = {
     Table: ({ style, context, ...props }) => (
@@ -28,32 +27,24 @@ const tableComponents: TableComponents<Row<unknown>, unknown> = {
     ),
 };
 
-interface TableProps<T> extends Pick<UseTableProps<T>, "id"> {
-    table: ReturnType<typeof useTable<T>>["table"];
+interface TableProps<T> extends Pick<UseTableProps<T>, "id">, ReturnType<typeof useTable<T>> {
+    headerActions?: ReactNode;
 }
 
-export default function Table<T>({ id, table }: TableProps<T>) {
-    const { rows } = table.getRowModel();
-
+export default function Table<T>({ headerActions, ...props }: TableProps<T>) {
     return (
         <>
-            <TableHeader
-                tableId={id}
-                columns={table.getAllLeafColumns()}
-                entries={rows.length}
-                globalFilter={table.getState().globalFilter}
-                setGlobalFilter={table.setGlobalFilter}
-            />
+            <TableHeader {...props} actions={headerActions} />
 
             <TableVirtuoso<Row<T>>
                 useWindowScroll
                 className="mt-1.5"
-                data={rows}
+                data={props.table.getRowModel().rows}
                 components={tableComponents as TableComponents<Row<T>, unknown>}
                 defaultItemHeight={73}
                 increaseViewportBy={{ top: 100, bottom: 100 }}
                 fixedHeaderContent={() =>
-                    table.getHeaderGroups().map((group) => (
+                    props.table.getHeaderGroups().map((group) => (
                         <tr key={group.id} className="bg-base-200">
                             {group.headers.map((header) => {
                                 const sorting = header.column.getIsSorted();
@@ -75,15 +66,6 @@ export default function Table<T>({ id, table }: TableProps<T>) {
                                                     {flexRender(header.column.columnDef.header, header.getContext())}
                                                     {sortingText}
                                                 </div>
-                                                {header.column.getCanFilter() ? (
-                                                    <div className="mt-1">
-                                                        <TextFilter
-                                                            getFilterValue={header.column.getFilterValue}
-                                                            setFilterValue={header.column.setFilterValue}
-                                                            storeKey={`${TABLE_COLUMN_FILTER_KEY}_${id}_${header.column.id}`}
-                                                        />
-                                                    </div>
-                                                ) : null}
                                             </>
                                         )}
                                     </th>

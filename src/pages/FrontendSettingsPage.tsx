@@ -11,6 +11,7 @@ import {
     AUTH_FLAG_KEY,
     DASHBOARD_FILTER_FRIENDLY_NAME_KEY,
     DEVICES_HIDE_DISABLED_KEY,
+    HIDE_STATIC_INFO_ALERTS,
     HOMEPAGE_KEY,
     I18NEXTLNG_KEY,
     MAX_ON_SCREEN_NOTIFICATIONS_KEY,
@@ -40,6 +41,7 @@ export default function FrontendSettingsPage() {
     const [networkMapLinkDistance, setNetworkMapLinkDistance] = useState<number>(store2.get(NETWORK_MAP_LINK_DISTANCE_KEY, 50));
     const [networkMapShowIcons, setNetworkMapShowIcons] = useState<boolean>(store2.get(NETWORK_MAP_SHOW_ICONS_KEY, false));
     const [miShowSourceName, setMiShowSourceName] = useState<boolean>(store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
+    const [hideStaticInfoAlerts, setHideStaticInfoAlerts] = useState<boolean>(store2.get(HIDE_STATIC_INFO_ALERTS, false));
 
     useEffect(() => {
         store2.set(HOMEPAGE_KEY, homepage);
@@ -80,6 +82,10 @@ export default function FrontendSettingsPage() {
     useEffect(() => {
         store2.set(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, miShowSourceName);
     }, [miShowSourceName]);
+
+    useEffect(() => {
+        store2.set(HIDE_STATIC_INFO_ALERTS, hideStaticInfoAlerts);
+    }, [hideStaticInfoAlerts]);
 
     const resetSettings = useCallback(() => {
         const keys = store2.keys();
@@ -187,6 +193,12 @@ export default function FrontendSettingsPage() {
                     minimal
                     initialValue={maxOnScreenNotifications}
                     onSubmit={(value, valid) => valid && value !== "" && setMaxOnScreenNotifications(value)}
+                />
+                <CheckboxField
+                    name="common:hide_static_info_alerts"
+                    label={t("common:hide_static_info_alerts")}
+                    onChange={(event) => setHideStaticInfoAlerts(event.target.checked)}
+                    defaultChecked={hideStaticInfoAlerts}
                 />
             </div>
             <h2 className="text-lg mt-2">{t("network_raw")}</h2>

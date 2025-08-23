@@ -54,9 +54,6 @@
         "unknown_group": "Unknown group",
         "failed": "Failed",
         "disabled": "Disabled",
-        "hide_disabled": "Hide disabled",
-        "battery_low_only": "Battery low only",
-        "available_only": "Available only",
         "execute": "Execute",
         "command": "Command",
         "payload": "Payload",
@@ -76,7 +73,13 @@
         "all_features": "All features",
         "all_properties": "All properties",
         "show_routers": "Show routers",
-        "show_end_devices": "Show end devices"
+        "show_end_devices": "Show end devices",
+        "hide_static_info_alerts": "Hide static info alerts",
+        "advanced_search": "Advanced search",
+        "filter": "filter",
+        "reset": "Reset",
+        "all": "All",
+        "last_seen_filter_info": "In minutes since last table update"
     },
     "devicePage": {
         "about": "About",
@@ -194,7 +197,12 @@
         "firmware_version": "Firmware version",
         "available_firmware_version": "Available firmware version",
         "app": "App",
-        "stack": "Stack"
+        "stack": "Stack",
+        "state": "State",
+        "updating": "Updating",
+        "idle": "Idle",
+        "available": "Available",
+        "scheduled": "Scheduled"
     },
     "settings": {
         "about": "About",
@@ -366,7 +374,9 @@
         "Router": "Router",
         "GreenPower": "GreenPower",
         "Unknown": "Unknown",
-        "Coordinator": "Coordinator"
+        "Coordinator": "Coordinator",
+        "power_source": "Power source",
+        "battery_low": "Battery low"
     },
     "scene": {
         "manage_scenes_header": "Manage scenes",

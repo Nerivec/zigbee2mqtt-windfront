@@ -1,13 +1,11 @@
 import { faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
-import { type ChangeEvent, type JSX, useCallback, useContext, useMemo, useState } from "react";
+import { type JSX, useCallback, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import store2 from "store2";
 import DeviceControlGroup from "../components/device/DeviceControlGroup.js";
 import DeviceImage from "../components/device/DeviceImage.js";
-import CheckboxField from "../components/form-fields/CheckboxField.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import Availability from "../components/value-decorators/Availability.js";
@@ -17,7 +15,6 @@ import ModelLink from "../components/value-decorators/ModelLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
-import { DEVICES_HIDE_DISABLED_KEY } from "../localStoreConsts.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { AvailabilityState, Device, DeviceState } from "../types.js";
 import { convertLastSeenToDate, toHex } from "../utils.js";
@@ -29,6 +26,7 @@ type DeviceTableData = {
     state: DeviceState;
     availabilityState: AvailabilityState;
     availabilityEnabledForDevice: boolean | undefined;
+    batteryLow?: boolean;
 };
 
 export default function DevicesPage(): JSX.Element {
@@ -37,8 +35,6 @@ export default function DevicesPage(): JSX.Element {
     const deviceStates = useAppStore((state) => state.deviceStates);
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const availability = useAppStore((state) => state.availability);
-    const [hideDisabled, setHideDisabled] = useState<boolean>(store2.get(DEVICES_HIDE_DISABLED_KEY, false));
-    const [batteryLowOnly, setBatteryLowOnly] = useState(false);
     const { t } = useTranslation(["zigbee", "common", "availability"]);
 
     const data = useMemo((): DeviceTableData[] => {
@@ -46,29 +42,24 @@ export default function DevicesPage(): JSX.Element {
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             for (const device of devices[sourceIdx]) {
-                if (device.type !== "Coordinator" && (!hideDisabled || !device.disabled)) {
+                if (device.type !== "Coordinator") {
                     const state = deviceStates[sourceIdx][device.friendly_name] ?? {};
                     const deviceAvailability = bridgeInfo[sourceIdx].config.devices[device.ieee_address]?.availability;
+                    let batteryLow: boolean | undefined;
 
-                    if (batteryLowOnly) {
-                        if (device.power_source !== "Battery") {
-                            continue;
-                        }
+                    if (device.power_source === "Battery") {
+                        batteryLow = false;
 
                         if ("battery" in state) {
-                            if ((state.battery as number) >= 20) {
-                                continue;
+                            if ((state.battery as number) < 20) {
+                                batteryLow = true;
                             }
                         } else if ("battery_state" in state) {
-                            if (state.battery_state !== "low") {
-                                continue;
+                            if (state.battery_state === "low") {
+                                batteryLow = true;
                             }
                         } else if ("battery_low" in state) {
-                            if (!state.battery_low) {
-                                continue;
-                            }
-                        } else {
-                            continue;
+                            batteryLow = Boolean(state.battery_low);
                         }
                     }
 
@@ -78,22 +69,14 @@ export default function DevicesPage(): JSX.Element {
                         state,
                         availabilityState: availability[sourceIdx][device.friendly_name] ?? { state: "offline" },
                         availabilityEnabledForDevice: deviceAvailability != null ? !!deviceAvailability : undefined,
+                        batteryLow,
                     });
                 }
             }
         }
 
         return renderDevices;
-    }, [devices, deviceStates, bridgeInfo, availability, hideDisabled, batteryLowOnly]);
-
-    const onHideDisabledChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        store2.set(DEVICES_HIDE_DISABLED_KEY, e.target.checked);
-        setHideDisabled(e.target.checked);
-    }, []);
-
-    const onBatteryLowOnlyChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setBatteryLowOnly(e.target.checked);
-    }, []);
+    }, [devices, deviceStates, bridgeInfo, availability]);
 
     const renameDevice = useCallback(
         async (sourceIdx: number, from: string, to: string, homeassistantRename: boolean): Promise<void> => {
@@ -138,20 +121,24 @@ export default function DevicesPage(): JSX.Element {
                         <FontAwesomeIcon icon={faServer} />
                     </span>
                 ),
-                accessorFn: ({ sourceIdx }) => `${sourceIdx} ${API_NAMES[sourceIdx]}`,
+                accessorFn: ({ sourceIdx }) => API_NAMES[sourceIdx],
                 cell: ({
                     row: {
                         original: { sourceIdx },
                     },
                 }) => <SourceDot idx={sourceIdx} nameClassName="hidden md:inline-block" />,
-                enableColumnFilter: false,
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "select",
+                    showFacetedOccurrences: true,
+                },
             },
             {
                 id: "friendly_name",
                 size: 250,
                 minSize: 175,
                 header: t("common:friendly_name"),
-                accessorFn: ({ device }) => [device.friendly_name, device.description].join(" "),
+                accessorFn: ({ device }) => `${device.friendly_name} ${device.description ?? ""}`,
                 cell: ({
                     row: {
                         original: { sourceIdx, device, state },
@@ -187,14 +174,18 @@ export default function DevicesPage(): JSX.Element {
                         </div>
                     </div>
                 ),
-                filterFn: "includesString",
                 sortingFn: (rowA, rowB) => rowA.original.device.friendly_name.localeCompare(rowB.original.device.friendly_name),
+                filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                    textFaceted: true,
+                },
             },
             {
                 id: "ieee_address",
                 minSize: 175,
                 header: t("ieee_address"),
-                accessorFn: ({ device }) => [device.ieee_address, toHex(device.network_address, 4), device.network_address].join(" "),
+                accessorFn: ({ device }) => `${device.ieee_address} ${toHex(device.network_address, 4)} ${device.network_address}`,
                 cell: ({
                     row: {
                         original: { sourceIdx, device },
@@ -216,14 +207,18 @@ export default function DevicesPage(): JSX.Element {
                         </div>
                     </>
                 ),
-                filterFn: "includesString",
                 sortingFn: (rowA, rowB) => rowA.original.device.ieee_address.localeCompare(rowB.original.device.ieee_address),
+                filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                },
             },
             {
                 id: "model",
                 minSize: 175,
                 header: t("model"),
-                accessorFn: ({ device }) => [device.definition?.model, device.model_id, device.definition?.vendor, device.manufacturer].join(" "),
+                accessorFn: ({ device }) =>
+                    `${device.definition?.model ?? ""} ${device.model_id ?? ""} ${device.definition?.vendor ?? device.manufacturer ?? ""}`,
                 cell: ({
                     row: {
                         original: { device },
@@ -239,6 +234,11 @@ export default function DevicesPage(): JSX.Element {
                     </>
                 ),
                 filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                    textFaceted: true,
+                    showFacetedOccurrences: true,
+                },
             },
             {
                 id: "type",
@@ -250,7 +250,11 @@ export default function DevicesPage(): JSX.Element {
                         original: { device },
                     },
                 }) => t(device.type),
-                enableColumnFilter: false,
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "select",
+                    showFacetedOccurrences: true,
+                },
             },
             {
                 id: "lqi",
@@ -262,25 +266,39 @@ export default function DevicesPage(): JSX.Element {
                         original: { state },
                     },
                 }) => <Lqi value={state.linkquality as number | undefined} />,
-                enableColumnFilter: false,
+                filterFn: "inNumberRange",
+                meta: {
+                    filterVariant: "range",
+                },
             },
             {
                 id: "last_seen",
                 header: t("last_seen"),
-                accessorFn: ({ sourceIdx, state }) =>
-                    convertLastSeenToDate(state.last_seen, bridgeInfo[sourceIdx].config.advanced.last_seen)?.getTime(),
+                accessorFn: ({ sourceIdx, state }) => {
+                    const lastTs = convertLastSeenToDate(state.last_seen, bridgeInfo[sourceIdx].config.advanced.last_seen)?.getTime();
+
+                    // since now (last time table updated)
+                    return lastTs ? Math.round((Date.now() - lastTs) / 1000 / 60) : undefined;
+                },
                 cell: ({
                     row: {
                         original: { sourceIdx, state },
                     },
                 }) => <LastSeen lastSeen={state.last_seen} config={bridgeInfo[sourceIdx].config.advanced.last_seen} />,
-                enableColumnFilter: false,
+                filterFn: "inNumberRange",
+                meta: {
+                    filterVariant: "range",
+                    tooltip: t("common:last_seen_filter_info"),
+                },
             },
             {
                 id: "availability",
                 size: 125,
                 header: t("availability:availability"),
-                accessorFn: ({ availabilityState }) => availabilityState.state,
+                accessorFn: ({ sourceIdx, availabilityState, availabilityEnabledForDevice }) =>
+                    t(
+                        `availability:${(availabilityEnabledForDevice ?? bridgeInfo[sourceIdx].config.availability.enabled) ? availabilityState.state : "disabled"}`,
+                    ),
                 cell: ({
                     row: {
                         original: { sourceIdx, device, availabilityState, availabilityEnabledForDevice },
@@ -295,36 +313,54 @@ export default function DevicesPage(): JSX.Element {
                         />
                     );
                 },
-                enableColumnFilter: false,
                 sortingFn: (rowA, rowB) =>
                     rowA.original.device.disabled || rowA.original.availabilityEnabledForDevice === false
                         ? 1
                         : rowB.original.device.disabled || rowB.original.availabilityEnabledForDevice === false
                           ? -1
                           : rowA.original.availabilityState.state.localeCompare(rowB.original.availabilityState.state),
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "select",
+                    showFacetedOccurrences: true,
+                },
+            },
+            {
+                id: "power_source",
+                size: 100,
+                header: t("power_source"),
+                accessorFn: ({ device }) => device.power_source,
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "select",
+                    showFacetedOccurrences: true,
+                },
+            },
+            {
+                id: "battery_low",
+                size: 100,
+                header: t("battery_low"),
+                accessorFn: ({ batteryLow }) => (batteryLow === undefined ? "N/A" : batteryLow),
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "boolean",
+                },
+            },
+            {
+                // allows including/excluding with string+select
+                id: "disabled",
+                size: 100,
+                header: t("common:disabled"),
+                accessorFn: ({ device }) => `${Boolean(device.disabled)}`,
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "select",
+                },
             },
             {
                 id: "actions",
-                size: 175,
-                minSize: 175,
-                header: () => (
-                    <div className="flex flex-col">
-                        <CheckboxField
-                            name="battery_low_only"
-                            detail={t("common:battery_low_only")}
-                            onChange={onBatteryLowOnlyChange}
-                            checked={batteryLowOnly}
-                            className="checkbox checkbox-sm"
-                        />
-                        <CheckboxField
-                            name="hide_disabled"
-                            detail={t("common:hide_disabled")}
-                            onChange={onHideDisabledChange}
-                            checked={hideDisabled}
-                            className="checkbox checkbox-sm"
-                        />
-                    </div>
-                ),
+                minSize: 130,
+                header: "",
                 cell: ({
                     row: {
                         original: { sourceIdx, device, state },
@@ -340,6 +376,7 @@ export default function DevicesPage(): JSX.Element {
                             removeDevice={removeDevice}
                             configureDevice={configureDevice}
                             interviewDevice={interviewDevice}
+                            btnClassName="btn-sm"
                         />
                     );
                 },
@@ -348,27 +385,16 @@ export default function DevicesPage(): JSX.Element {
                 enableGlobalFilter: false,
             },
         ],
-        [
-            hideDisabled,
-            batteryLowOnly,
-            bridgeInfo,
-            onHideDisabledChange,
-            onBatteryLowOnlyChange,
-            renameDevice,
-            removeDevice,
-            configureDevice,
-            interviewDevice,
-            t,
-        ],
+        [bridgeInfo, renameDevice, removeDevice, configureDevice, interviewDevice, t],
     );
 
-    const { table } = useTable({
+    const table = useTable({
         id: "all-devices",
         columns,
         data,
-        visibleColumns: { source: API_URLS.length > 1, type: false },
+        visibleColumns: { source: API_URLS.length > 1, type: false, power_source: false, battery_low: false, disabled: false },
         sorting: [{ id: "friendly_name", desc: false }],
     });
 
-    return <Table id="all-devices" table={table} />;
+    return <Table id="all-devices" {...table} />;
 }

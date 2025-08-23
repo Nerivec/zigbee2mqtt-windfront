@@ -70,7 +70,13 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
     return (
         <>
             <div className="flex flex-row flex-wrap gap-3 items-top">
-                <SelectField name="log_level" label={t("common:show_only")} value={logLevel} onChange={(e) => setLogLevel(e.target.value)}>
+                <SelectField
+                    name="log_level"
+                    label={t("common:show_only")}
+                    value={logLevel}
+                    onChange={(e) => setLogLevel(e.target.value)}
+                    className="select select-sm"
+                >
                     <option key="all" value="all">
                         all
                     </option>
@@ -83,15 +89,14 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend">{t("filter_by_text")}</legend>
                     <div className="join">
-                        {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
-                        <label className="input w-64 join-item">
+                        <label className="input input-sm w-64 join-item">
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                             <DebouncedInput onChange={setSearchTerm} placeholder={t("common:search")} value={searchTerm} />
                         </label>
                         <Button
                             item=""
                             onClick={setSearchTerm}
-                            className="btn btn-square join-item"
+                            className="btn btn-sm btn-square btn-warning btn-outline join-item"
                             title={t("common:clear")}
                             disabled={searchTerm.length === 0}
                         >
@@ -104,10 +109,16 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                     label={t("highlight_only")}
                     checked={highlightOnly}
                     onChange={(e) => setHighlightOnly(e.target.checked)}
+                    className="checkbox checkbox-sm"
                 />
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend">&nbsp;</legend>
-                    <Button<number> item={sourceIdx} onClick={clearLogs} className="btn btn-outline btn-primary" disabled={logs.length === 0}>
+                    <Button<number>
+                        item={sourceIdx}
+                        onClick={clearLogs}
+                        className="btn btn-sm btn-outline btn-warning btn-primary"
+                        disabled={logs.length === 0}
+                    >
                         <FontAwesomeIcon icon={faTrashCan} />
                         {t("common:clear")}
                     </Button>
@@ -118,6 +129,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                         label={t("log_level_config")}
                         value={logLevelConfig}
                         onChange={(e) => !e.target.validationMessage && setLogLevelConfig(e.target.value)}
+                        className="select select-sm"
                     >
                         {LOG_LEVELS.map((level) => (
                             <option key={level} value={level}>
@@ -181,6 +193,7 @@ export default function LogsPage() {
                         setLogsLimit(Number.parseInt(e.target.value, 10));
                     }}
                     value={logsLimit}
+                    className="select select-sm"
                 >
                     {LOG_LIMITS.map((limit) => (
                         <option key={limit} value={limit}>
@@ -192,7 +205,7 @@ export default function LogsPage() {
                     <legend className="fieldset-legend">&nbsp;</legend>
                     <ConfirmButton<void>
                         onClick={clearAllLogs}
-                        className="btn btn-outline btn-primary"
+                        className="btn btn-sm btn-outline btn-warning btn-primary"
                         title={t("common:clear_all")}
                         modalDescription={t("common:dialog_confirmation_prompt")}
                         modalCancelLabel={t("common:cancel")}

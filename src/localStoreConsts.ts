@@ -23,6 +23,7 @@ export const I18NEXTLNG_KEY = "i18nextLng";
 
 export const DEVICES_HIDE_DISABLED_KEY = "devices-hide-disabled";
 
+export const TABLE_FILTERS_KEY = "table-filters";
 export const TABLE_COLUMN_VISIBILITY_KEY = "table-column-visibility";
 export const TABLE_COLUMN_FILTER_KEY = "table-column-filter";
 export const DASHBOARD_FILTER_FRIENDLY_NAME_KEY = "dashboard-filter-friendly-name";
@@ -31,3 +32,5 @@ export const DASHBOARD_FILTER_SHOW_END_DEVICES_KEY = "dashboard-filter-show-end-
 export const DASHBOARD_FILTER_FEATURE_TYPE_KEY = "dashboard-filter-feature-type";
 export const DASHBOARD_FILTER_FEATURE_PROPERTY_KEY = "dashboard-filter-feature-property";
 export const DASHBOARD_FILTER_SOURCE_KEY = "dashboard-filter-source";
+
+export const HIDE_STATIC_INFO_ALERTS = "hide-static-info-alerts";

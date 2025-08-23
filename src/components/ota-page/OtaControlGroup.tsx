@@ -23,7 +23,7 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
         return (
             <div className="join join-horizontal">
                 <Button<[number, string]>
-                    className="btn btn-square btn-outline btn-primary join-item"
+                    className="btn btn-sm btn-square btn-outline btn-primary join-item"
                     onClick={onCheckClick}
                     item={[sourceIdx, device.ieee_address]}
                     title={t("check")}
@@ -31,7 +31,7 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                     <FontAwesomeIcon icon={faCloudArrowDown} />
                 </Button>
                 <ConfirmButton<[number, string]>
-                    className="btn btn-square btn-outline btn-info join-item"
+                    className="btn btn-sm btn-square btn-outline btn-info join-item"
                     onClick={onScheduleClick}
                     item={[sourceIdx, device.ieee_address]}
                     title={t("schedule")}
@@ -49,7 +49,7 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
             {state.state === "available" ? (
                 <>
                     <ConfirmButton<[number, string]>
-                        className="btn btn-square btn-outline btn-error join-item"
+                        className="btn btn-sm btn-square btn-outline btn-error join-item"
                         onClick={onUpdateClick}
                         item={[sourceIdx, device.ieee_address]}
                         title={t("update")}
@@ -59,7 +59,7 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                         <FontAwesomeIcon icon={faUpload} />
                     </ConfirmButton>
                     <ConfirmButton<[number, string]>
-                        className="btn btn-square btn-outline btn-info join-item"
+                        className="btn btn-sm btn-square btn-outline btn-info join-item"
                         onClick={onScheduleClick}
                         item={[sourceIdx, device.ieee_address]}
                         title={t("schedule")}
@@ -71,7 +71,7 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                 </>
             ) : state.state === "scheduled" ? (
                 <ConfirmButton<[number, string]>
-                    className="btn btn-square btn-outline btn-error join-item"
+                    className="btn btn-sm btn-square btn-outline btn-error join-item"
                     onClick={onUnscheduleClick}
                     item={[sourceIdx, device.ieee_address]}
                     title={t("unschedule")}
@@ -83,7 +83,7 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
             ) : (
                 <>
                     <Button<[number, string]>
-                        className="btn btn-square btn-outline btn-primary join-item"
+                        className="btn btn-sm btn-square btn-outline btn-primary join-item"
                         onClick={onCheckClick}
                         item={[sourceIdx, device.ieee_address]}
                         title={t("check")}
@@ -91,7 +91,7 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                         <FontAwesomeIcon icon={faCloudArrowDown} />
                     </Button>
                     <ConfirmButton<[number, string]>
-                        className="btn btn-square btn-outline btn-info join-item"
+                        className="btn btn-sm btn-square btn-outline btn-info join-item"
                         onClick={onScheduleClick}
                         item={[sourceIdx, device.ieee_address]}
                         title={t("schedule")}

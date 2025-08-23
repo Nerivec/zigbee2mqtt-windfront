@@ -42,12 +42,17 @@ const DashboardHeader = memo(
         return (
             <div className="flex flex-row flex-wrap justify-center items-center gap-3 mb-3 text-sm">
                 <div className="join">
-                    {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
-                    <label className="input join-item">
+                    <label className="input input-sm join-item">
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                         <DebouncedInput onChange={setSearchTerm} placeholder={t("search")} value={searchTerm} />
                     </label>
-                    <Button item="" onClick={setSearchTerm} className="btn btn-square join-item" title={t("clear")}>
+                    <Button
+                        item=""
+                        onClick={setSearchTerm}
+                        className="btn btn-sm btn-square btn-warning btn-outline join-item"
+                        title={t("clear")}
+                        disabled={searchTerm.length === 0}
+                    >
                         <FontAwesomeIcon icon={faClose} />
                     </Button>
                 </div>
@@ -69,7 +74,7 @@ const DashboardHeader = memo(
                     />
                     {t("show_end_devices")}
                 </label>
-                <select className="select w-auto" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+                <select className="select select-sm w-auto" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
                     <option value="">{t("all_features")}</option>
                     <option value="climate">Climate</option>
                     <option value="cover">Cover</option>
@@ -78,7 +83,7 @@ const DashboardHeader = memo(
                     <option value="lock">Lock</option>
                     <option value="switch">Switch</option>
                 </select>
-                <select className="select w-auto" value={selectedProperty} onChange={(e) => setSelectedProperty(e.target.value)}>
+                <select className="select select-sm w-auto" value={selectedProperty} onChange={(e) => setSelectedProperty(e.target.value)}>
                     <option value="">{t("all_properties")}</option>
                     <option value="action">Action</option>
                     <option value="alarm">Alarm</option>

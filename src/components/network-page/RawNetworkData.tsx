@@ -115,7 +115,6 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         <>
             <div className="flex flex-row justify-center items-center gap-3">
                 <div className="join">
-                    {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
                     <label className="input w-64 join-item">
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                         <DebouncedInput
@@ -128,7 +127,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                     <Button
                         item=""
                         onClick={setSearchTerm}
-                        className="btn btn-square join-item"
+                        className="btn btn-square btn-warning btn-outline join-item"
                         title={t("common:clear")}
                         disabled={searchTerm.length === 0}
                     >
@@ -136,7 +135,6 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                     </Button>
                 </div>
                 <div className="join">
-                    {/* biome-ignore lint/a11y/noLabelWithoutControl: wrapped input */}
                     <label className="input w-64 join-item">
                         <FontAwesomeIcon icon={faMarker} />
                         <DebouncedInput
@@ -150,7 +148,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                     <Button
                         item=""
                         onClick={setHighlightValue}
-                        className="btn btn-square join-item"
+                        className="btn btn-square btn-warning btn-outline join-item"
                         title={t("common:clear")}
                         disabled={highlightValue === ""}
                     >

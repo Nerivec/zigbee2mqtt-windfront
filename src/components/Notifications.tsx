@@ -95,7 +95,7 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotifications
                             <FontAwesomeIcon icon={faEllipsisH} />
                             {t("common:more")}
                         </Link>
-                        <Button className="btn btn-sm btn-error btn-outline" onClick={onClearClick} title={t("common:clear")}>
+                        <Button className="btn btn-sm btn-warning btn-outline" onClick={onClearClick} title={t("common:clear")}>
                             <FontAwesomeIcon icon={faTrashCan} />
                             {t("common:clear")}
                         </Button>
@@ -126,7 +126,7 @@ const Notifications = memo(({ setShowNotifications }: NotificationsProps) => {
                     ))}
                     {API_URLS.length > 1 && (
                         <ConfirmButton
-                            className="btn btn-sm btn-error btn-outline mt-5"
+                            className="btn btn-sm btn-warning btn-outline mt-5"
                             onClick={clearAllNotifications}
                             title={t("clear_all")}
                             modalDescription={t("dialog_confirmation_prompt")}

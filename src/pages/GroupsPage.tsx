@@ -84,13 +84,47 @@ export default function GroupsPage() {
                         <FontAwesomeIcon icon={faServer} />
                     </span>
                 ),
-                accessorFn: ({ sourceIdx }) => `${sourceIdx} ${API_NAMES[sourceIdx]}`,
+                accessorFn: ({ sourceIdx }) => API_NAMES[sourceIdx],
                 cell: ({
                     row: {
                         original: { sourceIdx },
                     },
                 }) => <SourceDot idx={sourceIdx} nameClassName="hidden md:inline-block" />,
-                enableColumnFilter: false,
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "select",
+                    showFacetedOccurrences: true,
+                },
+            },
+            {
+                id: "friendly_name",
+                size: 250,
+                minSize: 175,
+                header: t("common:friendly_name"),
+                accessorFn: ({ group }) => `${group.friendly_name} ${group.description ?? ""}`,
+                cell: ({
+                    row: {
+                        original: { sourceIdx, group },
+                    },
+                }) => (
+                    // min-w-0 serves to properly truncate content
+                    <div className="flex-grow flex flex-col min-w-0">
+                        <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover truncate">
+                            {group.friendly_name}
+                        </Link>
+                        {group.description && (
+                            <div className="max-w-3xs text-xs opacity-50 truncate" title={group.description}>
+                                {group.description}
+                            </div>
+                        )}
+                    </div>
+                ),
+                sortingFn: (rowA, rowB) => rowA.original.group.friendly_name.localeCompare(rowB.original.group.friendly_name),
+                filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                    textFaceted: true,
+                },
             },
             {
                 id: "group_id",
@@ -102,56 +136,38 @@ export default function GroupsPage() {
                         original: { sourceIdx, group },
                     },
                 }) => (
-                    <div className="flex items-center gap-3">
-                        <div className="avatar" />
-                        <div className="flex-grow flex flex-col">
-                            <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover">
-                                {group.id}
-                            </Link>
-                            {group.description && (
-                                <div className="max-w-xs text-xs opacity-50 truncate" title={group.description}>
-                                    {group.description}
-                                </div>
-                            )}
-                            <div className="flex flex-row gap-1 mt-0.5">
-                                <span className="badge badge-soft badge-sm badge-ghost cursor-default">
-                                    {t("scenes")}
-                                    {": "}
-                                    {group.scenes?.length ?? 0}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                ),
-                filterFn: "includesString",
-            },
-            {
-                id: "friendly_name",
-                size: 250,
-                minSize: 175,
-                header: t("common:friendly_name"),
-                accessorFn: ({ group }) => group.friendly_name,
-                cell: ({
-                    row: {
-                        original: { sourceIdx, group },
-                    },
-                }) => (
-                    <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover truncate">
-                        {group.friendly_name}
+                    <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover">
+                        {group.id}
                     </Link>
                 ),
-                filterFn: "includesString",
-                sortingFn: (rowA, rowB) => rowA.original.group.friendly_name.localeCompare(rowB.original.group.friendly_name),
+                filterFn: "weakEquals",
+                meta: {
+                    filterVariant: "text",
+                },
             },
             {
                 id: "members",
                 size: 125,
                 header: t("group_members"),
                 accessorFn: ({ group }) => group.members.length ?? 0,
-                enableColumnFilter: false,
+                filterFn: "inNumberRange",
+                meta: {
+                    filterVariant: "range",
+                },
+            },
+            {
+                id: "scenes",
+                size: 125,
+                header: t("group_scenes"),
+                accessorFn: ({ group }) => group.scenes.length ?? 0,
+                filterFn: "inNumberRange",
+                meta: {
+                    filterVariant: "range",
+                },
             },
             {
                 id: "actions",
+                minSize: 130,
                 header: "",
                 cell: ({
                     row: {
@@ -160,7 +176,7 @@ export default function GroupsPage() {
                 }) => (
                     <div className="join join-horizontal">
                         <Button<void>
-                            className="btn btn-square btn-outline btn-primary join-item"
+                            className="btn btn-sm btn-square btn-outline btn-primary join-item"
                             onClick={async () =>
                                 await NiceModal.show(RenameGroupForm, {
                                     sourceIdx,
@@ -177,7 +193,7 @@ export default function GroupsPage() {
                             title={t("remove_group")}
                             item={[sourceIdx, group.id.toString()]}
                             onClick={onRemoveClick}
-                            className="btn btn-square btn-outline btn-error join-item"
+                            className="btn btn-sm btn-square btn-outline btn-error join-item"
                             modalDescription={t("common:dialog_confirmation_prompt")}
                             modalCancelLabel={t("common:cancel")}
                         >
@@ -193,7 +209,7 @@ export default function GroupsPage() {
         [onRenameClick, onRemoveClick, t],
     );
 
-    const { table } = useTable({
+    const table = useTable({
         id: "all-groups",
         columns,
         data,
@@ -253,7 +269,7 @@ export default function GroupsPage() {
                     </div>
                 </div>
             </div>
-            <Table id="all-groups" table={table} />
+            <Table id="all-groups" {...table} />
         </>
     );
 }

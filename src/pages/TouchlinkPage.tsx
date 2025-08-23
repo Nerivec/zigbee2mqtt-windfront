@@ -88,13 +88,17 @@ export default function TouchlinkPage() {
                         <FontAwesomeIcon icon={faServer} />
                     </span>
                 ),
-                accessorFn: ({ sourceIdx }) => `${sourceIdx} ${API_NAMES[sourceIdx]}`,
+                accessorFn: ({ sourceIdx }) => API_NAMES[sourceIdx],
                 cell: ({
                     row: {
                         original: { sourceIdx },
                     },
                 }) => <SourceDot idx={sourceIdx} nameClassName="hidden md:inline-block" />,
-                enableColumnFilter: false,
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "select",
+                    showFacetedOccurrences: true,
+                },
             },
             {
                 id: "ieee_address",
@@ -113,9 +117,12 @@ export default function TouchlinkPage() {
                     ) : (
                         touchlinkDevice.ieee_address
                     ),
-                filterFn: "includesString",
                 // XXX: for some reason, the default sorting algorithm does not sort properly
                 sortingFn: (rowA, rowB) => rowA.original.touchlinkDevice.ieee_address.localeCompare(rowB.original.touchlinkDevice.ieee_address),
+                filterFn: "includesString",
+                meta: {
+                    filterVariant: "text",
+                },
             },
             {
                 id: "friendly_name",
@@ -127,16 +134,24 @@ export default function TouchlinkPage() {
                     (rowA.original.friendlyName ?? rowA.original.touchlinkDevice.ieee_address).localeCompare(
                         rowB.original.friendlyName ?? rowB.original.touchlinkDevice.ieee_address,
                     ),
+                meta: {
+                    filterVariant: "text",
+                    textFaceted: true,
+                },
             },
             {
                 id: "channel",
                 minSize: 175,
                 header: t("zigbee:channel"),
                 accessorFn: ({ touchlinkDevice }) => touchlinkDevice.channel,
-                filterFn: "includesString",
+                filterFn: "weakEquals",
+                meta: {
+                    filterVariant: "select",
+                },
             },
             {
                 id: "actions",
+                minSize: 130,
                 header: "",
                 cell: ({
                     row: {
@@ -149,7 +164,7 @@ export default function TouchlinkPage() {
                                 disabled={resetInProgress || identifyInProgress}
                                 item={[sourceIdx, touchlinkDevice]}
                                 title={t("identify")}
-                                className="btn btn-square btn-outline btn-primary join-item"
+                                className="btn btn-sm btn-square btn-outline btn-primary join-item"
                                 onClick={onIdentifyClick}
                             >
                                 <FontAwesomeIcon icon={identifyInProgress ? faCircleNotch : faExclamationTriangle} spin={identifyInProgress} />
@@ -158,7 +173,7 @@ export default function TouchlinkPage() {
                                 disabled={resetInProgress || identifyInProgress}
                                 item={[sourceIdx, touchlinkDevice]}
                                 title={t("factory_reset")}
-                                className="btn btn-square btn-outline btn-error join-item"
+                                className="btn btn-sm btn-square btn-outline btn-error join-item"
                                 onClick={onResetClick}
                             >
                                 <FontAwesomeIcon icon={resetInProgress ? faCircleNotch : faBroom} spin={resetInProgress} />
@@ -174,7 +189,7 @@ export default function TouchlinkPage() {
         [t, onIdentifyClick, onResetClick],
     );
 
-    const { table } = useTable({
+    const table = useTable({
         id: "touchlink-devices",
         columns,
         data,
@@ -215,7 +230,7 @@ export default function TouchlinkPage() {
                 </fieldset>
             </div>
 
-            <Table id="touchlink-devices" table={table} />
+            <Table id="touchlink-devices" {...table} />
         </>
     );
 }

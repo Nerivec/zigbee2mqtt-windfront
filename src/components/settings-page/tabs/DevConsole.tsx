@@ -1,5 +1,3 @@
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, useCallback, useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps } from "react-router";
@@ -12,6 +10,7 @@ import ConfirmButton from "../../ConfirmButton.js";
 import InputField from "../../form-fields/InputField.js";
 import SelectField from "../../form-fields/SelectField.js";
 import TextareaField from "../../form-fields/TextareaField.js";
+import InfoAlert from "../../InfoAlert.js";
 
 export type TabName = "mqtt" | "external_converters" | "external_extensions";
 
@@ -58,12 +57,11 @@ const MqttTab = ({ sourceIdx }: DevConsoleTabProps) => {
     return (
         <>
             <h2 className="text-lg mb-2">{t("send_mqtt")}</h2>
-            <div className="alert alert-info alert-soft" role="alert">
-                <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
+            <InfoAlert>
                 <a href={MQTT_TOPICS_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
                     {t("common:read_the_docs_info")}
                 </a>
-            </div>
+            </InfoAlert>
             <InputField
                 type="text"
                 name="topic"
@@ -143,15 +141,14 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
     return (
         <>
             <h2 className="text-lg mb-2">{t("add_update_external_converter")}</h2>
-            <div className="alert alert-info alert-soft" role="alert">
-                <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
+            <InfoAlert>
                 <a href={CONVERTERS_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
                     {t("common:read_the_docs_info")}
                 </a>
                 <a href={CONVERTERS_CODESPACE_URL} target="_blank" rel="noreferrer" className="link link-hover">
                     {t("codespace_info")}
                 </a>
-            </div>
+            </InfoAlert>
             <SelectField
                 name="converter_name_edit"
                 label={t("select_converter_to_edit")}
@@ -253,12 +250,11 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
     return (
         <>
             <h2 className="text-lg mb-2">{t("add_update_external_extension")}</h2>
-            <div className="alert alert-info alert-soft" role="alert">
-                <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
+            <InfoAlert>
                 <a href={EXTENSIONS_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
                     {t("common:read_the_docs_info")}
                 </a>
-            </div>
+            </InfoAlert>
             <SelectField
                 name="extension_name_edit"
                 label={t("select_extension_to_edit")}

@@ -1,28 +1,76 @@
-import type { Column } from "@tanstack/react-table";
+import { faClose, faFilter, faMagnifyingGlass, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { type ReactNode, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { API_NAMES } from "../../store.js";
-import type { GlobalFilterProps } from "./GlobalFilter.js";
-import SourceExternalFilter from "./SourceExternalFilter.js";
+import type { useTable } from "../../hooks/useTable.js";
+import Button from "../Button.js";
+import DebouncedInput from "../form-fields/DebouncedInput.js";
+import TableFiltersDrawer from "./TableFiltersDrawer.js";
 
-interface TableHeaderProps<T> extends GlobalFilterProps {
-    tableId: string;
-    columns: Column<T>[];
-    entries: number;
+export interface TableHeaderProps<T> extends ReturnType<typeof useTable<T>> {
+    actions?: ReactNode;
 }
 
-export default function TableHeader<T>({ tableId, columns, entries /*globalFilter, setGlobalFilter*/ }: TableHeaderProps<T>) {
+export default function TableHeader<T>({ table, resetFilters, globalFilter, columnFilters, actions }: TableHeaderProps<T>) {
     const { t } = useTranslation("common");
-    let sourceColumn: Column<T> | undefined;
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
-    if (API_NAMES.length > 1) {
-        sourceColumn = columns.find((c) => c.id === "source");
-    }
+    const activeFiltersCount = useMemo(() => {
+        let count = 0;
+
+        for (const cf of columnFilters) {
+            if (cf.value != null && cf.value !== "") {
+                count++;
+            }
+        }
+
+        return count;
+    }, [columnFilters]);
+
+    const columns = table.getAllLeafColumns();
 
     return (
         <>
-            {/* <div className="flex flex-row flex-wrap justify-center items-center gap-3 mb-3 text-sm">
-                <GlobalFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
-            </div> */}
+            <div className="flex flex-row flex-wrap justify-center items-center gap-3 mb-3 text-sm">
+                <div className="join">
+                    <label className="input input-sm outline-none! join-item">
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        <DebouncedInput onChange={table.setGlobalFilter} placeholder={t("search")} value={globalFilter} />
+                    </label>
+                    <Button
+                        item=""
+                        onClick={table.setGlobalFilter}
+                        className="btn btn-sm btn-square btn-warning btn-outline join-item"
+                        title={t("clear")}
+                        disabled={globalFilter == null || globalFilter === ""}
+                    >
+                        <FontAwesomeIcon icon={faClose} />
+                    </Button>
+                </div>
+                <div className="join">
+                    <Button<boolean>
+                        item={!drawerOpen}
+                        onClick={setDrawerOpen}
+                        className="btn btn-sm btn-info btn-outline join-item"
+                        title={t("filter")}
+                    >
+                        <FontAwesomeIcon icon={faFilter} />
+                        {t("advanced_search")}
+                        {activeFiltersCount > 0 ? <span className="badge badge-info badge-xs">{activeFiltersCount}</span> : null}
+                    </Button>
+                    <Button<void>
+                        className="btn btn-sm btn-square btn-warning btn-outline join-item"
+                        title={t("reset")}
+                        onClick={() => {
+                            resetFilters();
+                        }}
+                        disabled={activeFiltersCount === 0}
+                    >
+                        <FontAwesomeIcon icon={faRotateLeft} />
+                    </Button>
+                </div>
+                {actions}
+            </div>
             <div className="flex flex-row flex-wrap gap-2 text-xs px-3">
                 <span className="label">{t("columns")}: </span>
                 {columns.map((column) =>
@@ -40,12 +88,12 @@ export default function TableHeader<T>({ tableId, columns, entries /*globalFilte
                     ),
                 )}
                 <div className="ml-auto flex flex-row flex-wrap gap-2">
-                    {sourceColumn && <SourceExternalFilter column={sourceColumn} tableId={tableId} />}
                     <span className="label">
-                        {t("entries")}: {entries}
+                        {t("entries")}: {table.getRowModel().rows.length}
                     </span>
                 </div>
             </div>
+            {drawerOpen && <TableFiltersDrawer columns={columns} resetFilters={resetFilters} onClose={() => setDrawerOpen(false)} />}
         </>
     );
 }

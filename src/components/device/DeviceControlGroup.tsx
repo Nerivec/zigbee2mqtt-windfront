@@ -19,6 +19,7 @@ interface DeviceControlGroupProps {
     configureDevice: ([sourceIdx, id]: [number, string]) => Promise<void>;
     interviewDevice: ([sourceIdx, id]: [number, string]) => Promise<void>;
     removeDevice: (sourceIdx: number, id: string, force: boolean, block: boolean) => Promise<void>;
+    btnClassName?: string;
 }
 
 export default function DeviceControlGroup({
@@ -30,6 +31,7 @@ export default function DeviceControlGroup({
     configureDevice,
     interviewDevice,
     removeDevice,
+    btnClassName = "",
 }: DeviceControlGroupProps): JSX.Element {
     const { t } = useTranslation(["zigbee", "common"]);
     const disableInterview =
@@ -42,10 +44,10 @@ export default function DeviceControlGroup({
                 name={device.friendly_name}
                 renameDevice={renameDevice}
                 homeassistantEnabled={homeassistantEnabled}
-                style="btn-outline btn-primary join-item btn-square"
+                style={`btn-outline btn-primary join-item btn-square ${btnClassName}`}
             />
             <ConfirmButton<[number, string]>
-                className="btn btn-outline btn-warning join-item btn-square"
+                className={`btn btn-outline btn-warning join-item btn-square ${btnClassName}`}
                 onClick={configureDevice}
                 item={[sourceIdx, device.ieee_address]}
                 title={t("reconfigure")}
@@ -56,7 +58,7 @@ export default function DeviceControlGroup({
                 <FontAwesomeIcon icon={faRetweet} />
             </ConfirmButton>
             <ConfirmButton<[number, string]>
-                className="btn btn-outline btn-info join-item btn-square"
+                className={`btn btn-outline btn-info join-item btn-square ${btnClassName}`}
                 onClick={interviewDevice}
                 item={[sourceIdx, device.ieee_address]}
                 title={t("interview")}
@@ -68,7 +70,7 @@ export default function DeviceControlGroup({
             </ConfirmButton>
             <Button<void>
                 onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
-                className="btn btn-outline btn-error join-item btn-square"
+                className={`btn btn-outline btn-error join-item btn-square ${btnClassName}`}
                 title={t("remove_device")}
             >
                 <FontAwesomeIcon icon={faTrash} />

@@ -11,7 +11,7 @@ const SourceSwitcher = memo(({ currentValue, onChange, className }: SourceSwitch
     const { t } = useTranslation("common");
 
     return (
-        <select className={`${className} select w-auto`} value={currentValue ?? ""} onChange={onChange}>
+        <select className={`${className} select select-sm w-auto`} value={currentValue ?? ""} onChange={onChange}>
             <option value="">{t("all_sources")}</option>
             {API_NAMES.map((name, idx) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: static indexes

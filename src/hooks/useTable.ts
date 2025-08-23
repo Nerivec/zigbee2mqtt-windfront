@@ -2,14 +2,33 @@ import {
     type ColumnDef,
     type ColumnFiltersState,
     getCoreRowModel,
+    getFacetedMinMaxValues,
+    getFacetedRowModel,
+    getFacetedUniqueValues,
     getFilteredRowModel,
     getSortedRowModel,
+    type OnChangeFn,
+    type RowData,
+    type RowSelectionState,
     type SortingState,
     useReactTable,
 } from "@tanstack/react-table";
 import { useCallback, useEffect, useState } from "react";
 import store2 from "store2";
-import { TABLE_COLUMN_VISIBILITY_KEY } from "../localStoreConsts.js";
+import { TABLE_COLUMN_VISIBILITY_KEY, TABLE_FILTERS_KEY } from "../localStoreConsts.js";
+
+declare module "@tanstack/react-table" {
+    // allows us to define custom properties for our columns
+    // biome-ignore lint/correctness/noUnusedVariables: API
+    interface ColumnMeta<TData extends RowData, TValue> {
+        filterVariant?: "text" | "range" | "select" | "boolean";
+        textFaceted?: boolean;
+        /** applies to select and text */
+        maxFacetOptions?: number;
+        showFacetedOccurrences?: boolean;
+        tooltip?: string;
+    }
+}
 
 export interface UseTableProps<T> {
     id: string;
@@ -17,21 +36,47 @@ export interface UseTableProps<T> {
     data: T[];
     visibleColumns?: Record<string, boolean>;
     sorting?: SortingState;
+    rowSelection?: RowSelectionState;
+    onRowSelectionChange?: OnChangeFn<RowSelectionState>;
 }
 
-export function useTable<T>({ id, columns, data, visibleColumns, sorting }: UseTableProps<T>) {
-    const [globalFilter, setGlobalFilter] = useState<string>("");
+export function useTable<T>({ id, columns, data, visibleColumns, sorting, rowSelection, onRowSelectionChange }: UseTableProps<T>) {
     const columnVisibilityStoreKey = `${TABLE_COLUMN_VISIBILITY_KEY}_${id}`;
+    const globalFilterStoreKey = `${TABLE_FILTERS_KEY}_${id}_global`;
+    const columnfiltersStoreKey = `${TABLE_FILTERS_KEY}_${id}_columns`;
+
     const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>(store2.get(columnVisibilityStoreKey, visibleColumns ?? {}));
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+    useEffect(() => {
+        store2.set(columnVisibilityStoreKey, columnVisibility);
+    }, [columnVisibilityStoreKey, columnVisibility]);
+
+    const [globalFilter, setGlobalFilter] = useState<string>(store2.get(globalFilterStoreKey, ""));
+
+    useEffect(() => {
+        store2.set(globalFilterStoreKey, globalFilter);
+    }, [globalFilterStoreKey, globalFilter]);
+
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(store2.get(columnfiltersStoreKey, []));
+
+    useEffect(() => {
+        store2.set(columnfiltersStoreKey, columnFilters);
+    }, [columnfiltersStoreKey, columnFilters]);
+
+    const resetFilters = useCallback(() => {
+        setGlobalFilter("");
+        setColumnFilters([]);
+    }, []);
+
     const table = useReactTable({
         data,
         columns,
-        filterFns: {},
+        // filterFns: {},
         state: {
             globalFilter,
             columnFilters,
             columnVisibility,
+            rowSelection,
         },
         initialState: {
             sorting,
@@ -42,27 +87,18 @@ export function useTable<T>({ id, columns, data, visibleColumns, sorting }: UseT
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(), // client side filtering
         getSortedRowModel: getSortedRowModel(),
-        // getPaginationRowModel: getPaginationRowModel(),
-        manualPagination: true,
-        // debugTable: false,
-        // debugHeaders: false,
-        // debugColumns: false,
-        // debugCells: false,
-        // debugRows: false,
-        // debugAll: false,
+        getFacetedRowModel: getFacetedRowModel(),
+        getFacetedUniqueValues: getFacetedUniqueValues(),
+        getFacetedMinMaxValues: getFacetedMinMaxValues(),
+        onRowSelectionChange,
+        enableRowSelection: !!onRowSelectionChange,
+        // debugTable: true,
+        // debugHeaders: true,
+        // debugColumns: true,
+        // debugCells: true,
+        // debugRows: true,
+        // debugAll: true,
     });
 
-    useEffect(() => {
-        store2.set(columnVisibilityStoreKey, columnVisibility);
-    }, [columnVisibilityStoreKey, columnVisibility]);
-
-    return { table };
-}
-
-export function useTableWithFilteredData<T>(props: UseTableProps<T>) {
-    const { table } = useTable(props);
-
-    const getFilteredData = useCallback(() => table.getFilteredRowModel().rows, [table.getFilteredRowModel]);
-
-    return { table, getFilteredData };
+    return { table, resetFilters, globalFilter, columnFilters };
 }
