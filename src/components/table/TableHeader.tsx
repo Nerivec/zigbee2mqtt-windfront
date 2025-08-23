@@ -1,7 +1,7 @@
 import type { Column } from "@tanstack/react-table";
 import { useTranslation } from "react-i18next";
 import { API_NAMES } from "../../store.js";
-import GlobalFilter, { type GlobalFilterProps } from "./GlobalFilter.js";
+import type { GlobalFilterProps } from "./GlobalFilter.js";
 import SourceExternalFilter from "./SourceExternalFilter.js";
 
 interface TableHeaderProps<T> extends GlobalFilterProps {
@@ -10,7 +10,7 @@ interface TableHeaderProps<T> extends GlobalFilterProps {
     entries: number;
 }
 
-export default function TableHeader<T>({ tableId, columns, entries, globalFilter, setGlobalFilter }: TableHeaderProps<T>) {
+export default function TableHeader<T>({ tableId, columns, entries /*globalFilter, setGlobalFilter*/ }: TableHeaderProps<T>) {
     const { t } = useTranslation("common");
     let sourceColumn: Column<T> | undefined;
 
@@ -20,9 +20,9 @@ export default function TableHeader<T>({ tableId, columns, entries, globalFilter
 
     return (
         <>
-            <div className="flex flex-row flex-wrap justify-center items-center gap-3 mb-3 text-sm">
+            {/* <div className="flex flex-row flex-wrap justify-center items-center gap-3 mb-3 text-sm">
                 <GlobalFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
-            </div>
+            </div> */}
             <div className="flex flex-row flex-wrap gap-2 text-xs px-3">
                 <span className="label">{t("columns")}: </span>
                 {columns.map((column) =>
