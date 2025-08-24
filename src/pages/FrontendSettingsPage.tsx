@@ -226,6 +226,7 @@ export default function FrontendSettingsPage() {
                     <option value="radialOut3d">radialOut3d</option>
                     <option value="concentric2d">concentric2d</option>
                     <option value="concentric3d">concentric3d</option>
+                    <option value="circular2d">circular2d</option>
                 </SelectField>
                 <SelectField
                     name="network:label_type"
