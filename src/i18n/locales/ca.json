@@ -69,11 +69,7 @@
         "all_sources": "Totes les fonts",
         "show_source_name": "Mostra nom de la font",
         "show_only": "Mostra només",
-        "empty_exposes_definition": "Definició exposes buida",
-        "all_features": "Totes les funcions",
-        "all_properties": "Totes les propietats",
-        "show_routers": "Mostra routers",
-        "show_end_devices": "Mostra dispositius finals"
+        "empty_exposes_definition": "Definició exposes buida"
     },
     "devicePage": {
         "about": "Quant a",

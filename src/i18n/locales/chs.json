@@ -69,11 +69,7 @@
         "all_sources": "所有来源",
         "show_source_name": "显示来源名称",
         "show_only": "仅显示",
-        "empty_exposes_definition": "空 exposes 定义",
-        "all_features": "全部功能",
-        "all_properties": "全部属性",
-        "show_routers": "显示路由器",
-        "show_end_devices": "显示终端设备"
+        "empty_exposes_definition": "空 exposes 定义"
     },
     "devicePage": {
         "about": "关于",

@@ -152,7 +152,6 @@ export default function TouchlinkPage() {
             {
                 id: "actions",
                 minSize: 130,
-                header: "",
                 cell: ({
                     row: {
                         original: { sourceIdx, touchlinkDevice, resetInProgress, identifyInProgress },

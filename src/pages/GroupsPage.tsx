@@ -168,7 +168,6 @@ export default function GroupsPage() {
             {
                 id: "actions",
                 minSize: 130,
-                header: "",
                 cell: ({
                     row: {
                         original: { sourceIdx, group },

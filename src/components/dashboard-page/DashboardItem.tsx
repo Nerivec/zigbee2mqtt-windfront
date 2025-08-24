@@ -1,39 +1,17 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { Row } from "@tanstack/react-table";
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import type { Device, DeviceState, FeatureWithAnySubFeatures, LastSeenConfig } from "../../types.js";
+import type { DashboardTableData } from "../../pages/Dashboard.js";
 import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
 import Button from "../Button.js";
 import DeviceCard from "../device/DeviceCard.js";
-import DeviceControlEditName from "../device/DeviceControlEditName.js";
 import { RemoveDeviceModal } from "../modal/components/RemoveDeviceModal.js";
 import DashboardFeatureWrapper from "./DashboardFeatureWrapper.js";
 
-export type DashboardItemProps = {
-    data: {
-        sourceIdx: number;
-        device: Device;
-        deviceState: DeviceState;
-        features: FeatureWithAnySubFeatures[];
-        lastSeenConfig: LastSeenConfig;
-        homeassistantEnabled: boolean;
-        renameDevice: (sourceIdx: number, from: string, to: string, homeassistantRename: boolean) => Promise<void>;
-        removeDevice: (sourceIdx: number, id: string, force: boolean, block: boolean) => Promise<void>;
-    };
-};
-
-const DashboardItem = ({
-    sourceIdx,
-    device,
-    deviceState,
-    features,
-    lastSeenConfig,
-    homeassistantEnabled,
-    renameDevice,
-    removeDevice,
-}: DashboardItemProps["data"]) => {
+const DashboardItem = ({ original: { sourceIdx, device, deviceState, features, lastSeenConfig, removeDevice } }: Row<DashboardTableData>) => {
     const { t } = useTranslation("zigbee");
     const { sendMessage } = useContext(WebSocketApiRouterContext);
 
@@ -61,13 +39,6 @@ const DashboardItem = ({
                 lastSeenConfig={lastSeenConfig}
             >
                 <div className="join join-horizontal">
-                    <DeviceControlEditName
-                        sourceIdx={sourceIdx}
-                        name={device.friendly_name}
-                        renameDevice={renameDevice}
-                        homeassistantEnabled={homeassistantEnabled}
-                        style="btn-outline btn-primary btn-square btn-sm join-item"
-                    />
                     <Button<void>
                         onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
                         className="btn btn-outline btn-error btn-square btn-sm join-item"
@@ -81,7 +52,7 @@ const DashboardItem = ({
     );
 };
 
-const DashboardItemGuarded = (props: DashboardItemProps) => {
+const DashboardItemGuarded = (props: { data: Row<DashboardTableData> }) => {
     // when filtering, indexing can get "out-of-whack" it appears
     return props?.data ? <DashboardItem {...props.data} /> : null;
 };

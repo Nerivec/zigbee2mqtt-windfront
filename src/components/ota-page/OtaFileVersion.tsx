@@ -13,11 +13,11 @@ const OtaFileVersion = memo(({ version }: OtaFileVersionProps) => {
     return versions === undefined ? (
         <span>N/A</span>
     ) : (
-        <div className="join join-vertical">
-            <span className="badge badge-sm badge-soft badge-ghost join-item w-full">
+        <div className="flex flex-col">
+            <span>
                 {t("app")}: {`${versions[0]} build ${versions[1]}`}
             </span>
-            <span className="badge badge-sm badge-soft badge-ghost join-item w-full">
+            <span>
                 {t("stack")}: {`${versions[2]} build ${versions[3]}`}
             </span>
         </div>

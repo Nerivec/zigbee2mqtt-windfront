@@ -69,11 +69,7 @@
         "all_sources": "Tüm kaynaklar",
         "show_source_name": "Kaynak adını göster",
         "show_only": "Sadece göster",
-        "empty_exposes_definition": "Boş exposes tanımı",
-        "all_features": "Tüm özellikler",
-        "all_properties": "Tüm öznitelikler",
-        "show_routers": "Yönlendiricileri göster",
-        "show_end_devices": "Uç cihazları göster"
+        "empty_exposes_definition": "Boş exposes tanımı"
     },
     "devicePage": {
         "about": "Hakkında",

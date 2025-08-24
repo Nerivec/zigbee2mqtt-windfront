@@ -69,11 +69,7 @@
         "all_sources": "全部來源",
         "show_source_name": "顯示來源名稱",
         "show_only": "僅顯示",
-        "empty_exposes_definition": "空 exposes 定義",
-        "all_features": "全部功能",
-        "all_properties": "全部屬性",
-        "show_routers": "顯示路由器",
-        "show_end_devices": "顯示終端裝置"
+        "empty_exposes_definition": "空 exposes 定義"
     },
     "devicePage": {
         "about": "關於",

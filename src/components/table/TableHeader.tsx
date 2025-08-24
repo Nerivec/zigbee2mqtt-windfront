@@ -9,9 +9,10 @@ import TableFiltersDrawer from "./TableFiltersDrawer.js";
 
 export interface TableHeaderProps<T> extends ReturnType<typeof useTable<T>> {
     actions?: ReactNode;
+    noColumn?: boolean;
 }
 
-export default function TableHeader<T>({ table, resetFilters, globalFilter, columnFilters, actions }: TableHeaderProps<T>) {
+export default function TableHeader<T>({ table, resetFilters, globalFilter, columnFilters, actions, noColumn }: TableHeaderProps<T>) {
     const { t } = useTranslation("common");
     const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -52,7 +53,7 @@ export default function TableHeader<T>({ table, resetFilters, globalFilter, colu
                         item={!drawerOpen}
                         onClick={setDrawerOpen}
                         className="btn btn-sm btn-info btn-outline join-item"
-                        title={t("filter")}
+                        title={t("advanced_search")}
                     >
                         <FontAwesomeIcon icon={faFilter} />
                         {t("advanced_search")}
@@ -69,30 +70,32 @@ export default function TableHeader<T>({ table, resetFilters, globalFilter, colu
                         <FontAwesomeIcon icon={faRotateLeft} />
                     </Button>
                 </div>
-                {actions}
-            </div>
-            <div className="flex flex-row flex-wrap gap-2 text-xs px-3">
-                <span className="label">{t("columns")}: </span>
-                {columns.map((column) =>
-                    column.id === "select" ? null : (
-                        <label key={column.id} className="label">
-                            <input
-                                checked={column.getIsVisible()}
-                                disabled={!column.getCanHide()}
-                                onChange={column.getToggleVisibilityHandler()}
-                                type="checkbox"
-                                className="checkbox checkbox-xs"
-                            />
-                            {typeof column.columnDef.header === "string" && column.columnDef.header ? column.columnDef.header : t(column.id)}
-                        </label>
-                    ),
-                )}
-                <div className="ml-auto flex flex-row flex-wrap gap-2">
+                <div className="">
                     <span className="label">
                         {t("entries")}: {table.getRowModel().rows.length}
                     </span>
                 </div>
+                {actions}
             </div>
+            {!noColumn && (
+                <div className="flex flex-row flex-wrap gap-2 text-xs px-2">
+                    <span className="label">{t("columns")}: </span>
+                    {columns.map((column) =>
+                        column.id === "select" ? null : (
+                            <label key={column.id} className="label">
+                                <input
+                                    checked={column.getIsVisible()}
+                                    disabled={!column.getCanHide()}
+                                    onChange={column.getToggleVisibilityHandler()}
+                                    type="checkbox"
+                                    className="checkbox checkbox-xs"
+                                />
+                                {typeof column.columnDef.header === "string" && column.columnDef.header ? column.columnDef.header : t(column.id)}
+                            </label>
+                        ),
+                    )}
+                </div>
+            )}
             {drawerOpen && <TableFiltersDrawer columns={columns} resetFilters={resetFilters} onClose={() => setDrawerOpen(false)} />}
         </>
     );

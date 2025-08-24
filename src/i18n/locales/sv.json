@@ -69,11 +69,7 @@
         "all_sources": "Alla källor",
         "show_source_name": "Visa källnamn",
         "show_only": "Visa endast",
-        "empty_exposes_definition": "Tom exposes-definition",
-        "all_features": "Alla funktioner",
-        "all_properties": "Alla egenskaper",
-        "show_routers": "Visa routrar",
-        "show_end_devices": "Visa ändenheter"
+        "empty_exposes_definition": "Tom exposes-definition"
     },
     "devicePage": {
         "about": "Om",

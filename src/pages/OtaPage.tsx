@@ -325,7 +325,7 @@ export default function OtaPage() {
             },
             {
                 id: "state",
-                header: t("state"),
+                header: t("common:state"),
                 accessorFn: ({ state }) => t(state?.state ?? "zigbee:unknown"),
                 filterFn: "equals",
                 meta: {
@@ -335,7 +335,6 @@ export default function OtaPage() {
             {
                 id: "actions",
                 minSize: 130,
-                header: "",
                 accessorFn: ({ state }) => state?.state,
                 cell: ({
                     row: {

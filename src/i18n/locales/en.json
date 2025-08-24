@@ -70,16 +70,14 @@
         "show_source_name": "Show source name",
         "show_only": "Show only",
         "empty_exposes_definition": "Empty exposes definition",
-        "all_features": "All features",
-        "all_properties": "All properties",
-        "show_routers": "Show routers",
-        "show_end_devices": "Show end devices",
         "hide_static_info_alerts": "Hide static info alerts",
         "advanced_search": "Advanced search",
-        "filter": "filter",
         "reset": "Reset",
         "all": "All",
-        "last_seen_filter_info": "In minutes since last table update"
+        "last_seen_filter_info": "In minutes since last table update",
+        "feature_type": "Feature type",
+        "feature_name": "Feature name",
+        "state": "State"
     },
     "devicePage": {
         "about": "About",
@@ -198,7 +196,6 @@
         "available_firmware_version": "Available firmware version",
         "app": "App",
         "stack": "Stack",
-        "state": "State",
         "updating": "Updating",
         "idle": "Idle",
         "available": "Available",

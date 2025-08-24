@@ -69,11 +69,7 @@
         "all_sources": "Alle bronnen",
         "show_source_name": "Bronnaam tonen",
         "show_only": "Alleen tonen",
-        "empty_exposes_definition": "Lege exposes-definitie",
-        "all_features": "Alle functies",
-        "all_properties": "Alle eigenschappen",
-        "show_routers": "Routers tonen",
-        "show_end_devices": "Eindapparaten tonen"
+        "empty_exposes_definition": "Lege exposes-definitie"
     },
     "devicePage": {
         "about": "Over",

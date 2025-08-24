@@ -69,11 +69,7 @@
         "all_sources": "Alle Quellen",
         "show_source_name": "Quellnamen anzeigen",
         "show_only": "Nur anzeigen",
-        "empty_exposes_definition": "Leere Exposes-Definition",
-        "all_features": "Alle Funktionen",
-        "all_properties": "Alle Eigenschaften",
-        "show_routers": "Router anzeigen",
-        "show_end_devices": "Endgeräte anzeigen"
+        "empty_exposes_definition": "Leere Exposes-Definition"
     },
     "devicePage": {
         "about": "Info",

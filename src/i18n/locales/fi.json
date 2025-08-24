@@ -69,11 +69,7 @@
         "all_sources": "Kaikki lähteet",
         "show_source_name": "Näytä lähteen nimi",
         "show_only": "Näytä vain",
-        "empty_exposes_definition": "Tyhjä exposes-määritelmä",
-        "all_features": "Kaikki ominaisuudet",
-        "all_properties": "Kaikki ominaisuudet",
-        "show_routers": "Näytä reitittimet",
-        "show_end_devices": "Näytä päätelaitteet"
+        "empty_exposes_definition": "Tyhjä exposes-määritelmä"
     },
     "devicePage": {
         "about": "Tietoja",

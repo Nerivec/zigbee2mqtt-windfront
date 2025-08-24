@@ -69,11 +69,7 @@
         "all_sources": "Iturri guztiak",
         "show_source_name": "Erakutsi iturri izena",
         "show_only": "Erakutsi soilik",
-        "empty_exposes_definition": "Exposes definizio hutsik",
-        "all_features": "Ezaugarri guztiak",
-        "all_properties": "Propietate guztiak",
-        "show_routers": "Erakutsi routerrak",
-        "show_end_devices": "Erakutsi amaierako gailuak"
+        "empty_exposes_definition": "Exposes definizio hutsik"
     },
     "devicePage": {
         "about": "Honi buruz",

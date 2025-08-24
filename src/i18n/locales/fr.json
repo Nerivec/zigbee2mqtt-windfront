@@ -69,11 +69,7 @@
         "all_sources": "Toutes les sources",
         "show_source_name": "Afficher le nom de la source",
         "show_only": "Afficher seulement",
-        "empty_exposes_definition": "Définition d'exposition vide",
-        "all_features": "Toutes les fonctionnalités",
-        "all_properties": "Toutes les propriétés",
-        "show_routers": "Afficher les routeurs",
-        "show_end_devices": "Afficher les appareils terminaux"
+        "empty_exposes_definition": "Définition d'exposition vide"
     },
     "devicePage": {
         "about": "À propos",

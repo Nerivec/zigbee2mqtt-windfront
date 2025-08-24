@@ -69,11 +69,7 @@
         "all_sources": "Tutte le sorgenti",
         "show_source_name": "Mostra nome sorgente",
         "show_only": "Mostra solo",
-        "empty_exposes_definition": "Definizione exposes vuota",
-        "all_features": "Tutte le funzionalità",
-        "all_properties": "Tutte le proprietà",
-        "show_routers": "Mostra router",
-        "show_end_devices": "Mostra end devices"
+        "empty_exposes_definition": "Definizione exposes vuota"
     },
     "devicePage": {
         "about": "Informazioni",

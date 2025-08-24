@@ -69,11 +69,7 @@
         "all_sources": "모든 소스",
         "show_source_name": "소스 이름 표시",
         "show_only": "다음만 표시",
-        "empty_exposes_definition": "Exposes 정의 비어 있음",
-        "all_features": "모든 기능",
-        "all_properties": "모든 속성",
-        "show_routers": "라우터 표시",
-        "show_end_devices": "엔드 디바이스 표시"
+        "empty_exposes_definition": "Exposes 정의 비어 있음"
     },
     "devicePage": {
         "about": "정보",

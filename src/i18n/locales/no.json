@@ -69,11 +69,7 @@
         "all_sources": "Alle kilder",
         "show_source_name": "Vis kildenavn",
         "show_only": "Vis kun",
-        "empty_exposes_definition": "Tom exposes-definisjon",
-        "all_features": "Alle funksjoner",
-        "all_properties": "Alle egenskaper",
-        "show_routers": "Vis rutere",
-        "show_end_devices": "Vis end devices"
+        "empty_exposes_definition": "Tom exposes-definisjon"
     },
     "devicePage": {
         "about": "Om",

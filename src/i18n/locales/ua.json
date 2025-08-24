@@ -69,11 +69,7 @@
         "all_sources": "Усі джерела",
         "show_source_name": "Показати ім'я джерела",
         "show_only": "Показати лише",
-        "empty_exposes_definition": "Порожнє визначення exposes",
-        "all_features": "Усі функції",
-        "all_properties": "Усі властивості",
-        "show_routers": "Показати маршрутизатори",
-        "show_end_devices": "Показати кінцеві пристрої"
+        "empty_exposes_definition": "Порожнє визначення exposes"
     },
     "devicePage": {
         "about": "Про",

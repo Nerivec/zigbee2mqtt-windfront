@@ -21,7 +21,7 @@ declare module "@tanstack/react-table" {
     // allows us to define custom properties for our columns
     // biome-ignore lint/correctness/noUnusedVariables: API
     interface ColumnMeta<TData extends RowData, TValue> {
-        filterVariant?: "text" | "range" | "select" | "boolean";
+        filterVariant?: "text" | "range" | "select" | "boolean" | "arrSelect";
         textFaceted?: boolean;
         /** applies to select and text */
         maxFacetOptions?: number;

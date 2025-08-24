@@ -69,11 +69,7 @@
         "all_sources": "すべてのソース",
         "show_source_name": "ソース名を表示",
         "show_only": "のみ表示",
-        "empty_exposes_definition": "Exposes 定義なし",
-        "all_features": "すべての機能",
-        "all_properties": "すべてのプロパティ",
-        "show_routers": "ルーターを表示",
-        "show_end_devices": "エンドデバイスを表示"
+        "empty_exposes_definition": "Exposes 定義なし"
     },
     "devicePage": {
         "about": "概要",

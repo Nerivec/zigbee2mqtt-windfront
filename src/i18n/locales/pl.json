@@ -69,11 +69,7 @@
         "all_sources": "Wszystkie źródła",
         "show_source_name": "Pokaż nazwę źródła",
         "show_only": "Pokaż tylko",
-        "empty_exposes_definition": "Pusta definicja exposes",
-        "all_features": "Wszystkie funkcje",
-        "all_properties": "Wszystkie właściwości",
-        "show_routers": "Pokaż routery",
-        "show_end_devices": "Pokaż urządzenia końcowe"
+        "empty_exposes_definition": "Pusta definicja exposes"
     },
     "devicePage": {
         "about": "O",

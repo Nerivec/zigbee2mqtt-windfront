@@ -60,6 +60,60 @@ function RangeFilter<T>({ column, label }: FilterProps<T>) {
     );
 }
 
+function ArrSelectFilter<T>({ column, label }: FilterProps<T>) {
+    const { t } = useTranslation("common");
+    const meta = column.columnDef.meta ?? {};
+    const rawValue = column.getFilterValue();
+    const normValue = rawValue && (typeof rawValue === "string" || typeof rawValue === "number") ? rawValue : undefined;
+    const values: JSX.Element[] = [];
+    // prevent dupe keys (getFacetedUniqueValues doesn't work well with arrays since it appears to just match eq)
+    const added = new Set<string>();
+    const facetedUniqueValues = column.getFacetedUniqueValues();
+
+    // bypass in case not containing arrays
+    if (Array.isArray(facetedUniqueValues.keys().next().value)) {
+        for (const [val, occurrences] of column.getFacetedUniqueValues()) {
+            if (val != null) {
+                for (const entry of val) {
+                    if (entry == null || added.has(entry)) {
+                        continue;
+                    }
+
+                    values.push(
+                        <option key={entry} value={entry}>
+                            {meta.showFacetedOccurrences ? `${entry} (${occurrences})` : entry}
+                        </option>,
+                    );
+                    added.add(entry);
+
+                    if (meta.maxFacetOptions && values.length >= meta.maxFacetOptions) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        values.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
+    }
+
+    return (
+        <>
+            <label htmlFor={label} className="label text-xs">
+                {label}
+            </label>
+            <select
+                id={label}
+                className="select select-sm w-full outline-none!"
+                value={normValue ?? ""}
+                onChange={(e) => column.setFilterValue(e.target.value || undefined)}
+            >
+                <option value="">{t("all")}</option>
+                {values}
+            </select>
+        </>
+    );
+}
+
 function SelectFilter<T>({ column, label }: FilterProps<T>) {
     const { t } = useTranslation("common");
 
@@ -69,7 +123,7 @@ function SelectFilter<T>({ column, label }: FilterProps<T>) {
 
     const meta = column.columnDef.meta ?? {};
     const rawValue = column.getFilterValue();
-    const normValue = rawValue && (typeof rawValue === "string" || typeof rawValue === "number" || Array.isArray(rawValue)) ? rawValue : undefined;
+    const normValue = rawValue && (typeof rawValue === "string" || typeof rawValue === "number") ? rawValue : undefined;
     const values: JSX.Element[] = [];
 
     for (const [val, occurrences] of column.getFacetedUniqueValues()) {
@@ -210,6 +264,8 @@ export default function TableFiltersDrawer<T>({ columns, resetFilters, onClose }
                                         <SelectFilter column={col} label={label} />
                                     ) : meta.filterVariant === "boolean" ? (
                                         <BooleanFilter column={col} label={label} />
+                                    ) : meta.filterVariant === "arrSelect" ? (
+                                        <ArrSelectFilter column={col} label={label} />
                                     ) : (
                                         <TextFilter column={col} label={label} />
                                     )}

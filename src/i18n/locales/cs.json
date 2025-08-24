@@ -69,11 +69,7 @@
         "all_sources": "Všechny zdroje",
         "show_source_name": "Zobrazit název zdroje",
         "show_only": "Zobrazit pouze",
-        "empty_exposes_definition": "Prázdná definice exposes",
-        "all_features": "Všechny funkce",
-        "all_properties": "Všechny vlastnosti",
-        "show_routers": "Zobrazit routery",
-        "show_end_devices": "Zobrazit koncová zařízení"
+        "empty_exposes_definition": "Prázdná definice exposes"
     },
     "devicePage": {
         "about": "O aplikaci",

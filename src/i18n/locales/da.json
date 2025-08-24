@@ -68,11 +68,7 @@
         "all_sources": "Alle kilder",
         "show_source_name": "Vis kilde-navn",
         "show_only": "Vis kun",
-        "empty_exposes_definition": "Tom exposes-definition",
-        "all_features": "Alle funktioner",
-        "all_properties": "Alle egenskaber",
-        "show_routers": "Vis routere",
-        "show_end_devices": "Vis end devices"
+        "empty_exposes_definition": "Tom exposes-definition"
     },
     "devicePage": {
         "about": "Om",

@@ -69,11 +69,7 @@
         "all_sources": "Все источники",
         "show_source_name": "Показать имя источника",
         "show_only": "Показать только",
-        "empty_exposes_definition": "Пустое описание exposes",
-        "all_features": "Все функции",
-        "all_properties": "Все свойства",
-        "show_routers": "Показать роутеры",
-        "show_end_devices": "Показать концевые устройства"
+        "empty_exposes_definition": "Пустое описание exposes"
     },
     "devicePage": {
         "about": "О",

@@ -63,10 +63,14 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
 
     return (
         <div>
-            {/* XXX: issues with going to zero items and back */}
-            {filteredData.length > 0 && (
-                <VirtuosoMasonry useWindowScroll={true} columnCount={columnCount} data={filteredData} ItemContent={GroupMember} className="gap-3" />
-            )}
+            <VirtuosoMasonry
+                key={`groupmembers-${filteredData.length}`}
+                useWindowScroll={true}
+                columnCount={columnCount}
+                data={filteredData}
+                ItemContent={GroupMember}
+                className="gap-3"
+            />
         </div>
     );
 });

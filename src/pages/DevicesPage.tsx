@@ -273,6 +273,7 @@ export default function DevicesPage(): JSX.Element {
             },
             {
                 id: "last_seen",
+                size: 120,
                 header: t("last_seen"),
                 accessorFn: ({ sourceIdx, state }) => {
                     const lastTs = convertLastSeenToDate(state.last_seen, bridgeInfo[sourceIdx].config.advanced.last_seen)?.getTime();
@@ -360,7 +361,6 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "actions",
                 minSize: 130,
-                header: "",
                 cell: ({
                     row: {
                         original: { sourceIdx, device, state },
