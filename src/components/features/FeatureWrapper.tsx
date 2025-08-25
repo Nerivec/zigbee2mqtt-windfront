@@ -1,6 +1,5 @@
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import camelCase from "lodash/camelCase.js";
 import startCase from "lodash/startCase.js";
 import { type PropsWithChildren, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -35,7 +34,7 @@ export default function FeatureWrapper({
     const isReadable = onRead !== undefined && (Boolean(feature.property && feature.access & FeatureAccessMode.GET) || isColorFeature(feature));
     const parentFeature = parentFeatures?.[parentFeatures.length - 1];
     const featureName = feature.name === "state" ? feature.property : feature.name;
-    let label = feature.label || startCase(camelCase(featureName));
+    let label = feature.label || startCase(featureName);
 
     if (parentFeature?.label && feature.name === "state" && parentFeature.type !== "light" && parentFeature.type !== "switch") {
         label = `${parentFeature.label} ${feature.label.charAt(0).toLowerCase()}${feature.label.slice(1)}`;
