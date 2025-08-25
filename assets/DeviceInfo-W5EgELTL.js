@@ -1,0 +1,48 @@
+import{z as D,J as O,b as _,r,j as e,M as P,B as g,F as x,K as T,a as u,i as h,W as z,L as f,Y as M,az as v,aA as I,aB as y,ax as H,t as W,A as S,S as q,aC as E,ay as k}from"./index-beZWJRyb.js";import{s as F}from"./snakeCase-fdLBWBKL.js";import{a as G,A as B,D as J}from"./Availability-6ehPy70h.js";import{T as K}from"./TextareaField-DlF8jvMx.js";import{D as V}from"./DeviceImage-CoCXO2Fs.js";import{D as Y}from"./DisplayValue-BqZr-P7c.js";import{L as X}from"./LastSeen-DCGOhACd.js";import{M as Z,V as Q}from"./VendorLink-CYf7FC00.js";import{P as ee}from"./PowerSource-BE_p6vk5.js";import"./envs-CSqIi4cL.js";import"./_createCompounder-CAz50vL_.js";import"./isObjectLike-jixJMgJM.js";import"./RemoveDeviceModal-WBGBQ6Bf.js";import"./CheckboxField-DLXsOayI.js";import"./InputField-qWLzegwC.js";import"./index-QgSaPTKg.js";import"./format-BfbftA5l.js";const se=D.create(({device:t,setDeviceDescription:s})=>{const a=O(),{t:n}=_(["zigbee","common"]),[o,b]=r.useState(t.description||"");return r.useEffect(()=>{b(t.description||"")},[t.description]),r.useEffect(()=>{const l=m=>{m.key==="Escape"&&(m.preventDefault(),a.remove())};return window.addEventListener("keydown",l),()=>window.removeEventListener("keydown",l)},[a]),e.jsx(P,{isOpen:a.visible,title:`${n("update_description")} ${t.friendly_name}`,footer:e.jsxs(e.Fragment,{children:[e.jsx(g,{className:"btn btn-neutral",onClick:a.remove,children:n("common:cancel")}),e.jsx(g,{className:"btn btn-primary ms-1",onClick:async()=>{a.remove(),await s(t.ieee_address,o)},children:n("zigbee:save_description")})]}),children:e.jsx("div",{className:"flex flex-col gap-2",children:e.jsx(K,{label:n("description"),name:"update_description",onChange:l=>b(l.target.value),rows:3,value:o})})})}),te=r.memo(({device:t,setDeviceDescription:s})=>{const{t:a}=_("zigbee");return e.jsx(g,{className:`btn btn-link btn-sm${t.description?" btn-square":""}`,onClick:async()=>await D.show(se,{device:t,setDeviceDescription:s}),title:a("edit_description"),children:t.description?e.jsx(x,{icon:T}):a("edit_description")})}),ae=/\[(.*?)]\((.*?)\)/,ie={native:"badge-success",external:"badge-info",generated:"badge-warning"},ne=(t,s)=>{if(!(t==="bindings"||t==="configured_reportings"||t==="scenes"))return s},re=r.memo(({device:t})=>{const{t:s}=_("zigbee"),a={labels:"enhancement",title:`[External Converter] ${t.model_id} from ${t.manufacturer}`,body:`<!-- MAKE SURE THIS IS NOT ALREADY POSTED ${E.slice(0,-4)} -->
+
+This is my external converter for \`${t.model_id}\` from \`${t.manufacturer}\`
+software_build_id: \`${t.software_build_id}\`
+date_code: \`${t.date_code}\`
+endpoints:
+\`\`\`json
+${JSON.stringify(t.endpoints,ne)}
+\`\`\`
+
+### What works / what doesn't?
+
+### Converter
+
+\`\`\`js
+<!-- REPLACE THIS LINE WITH YOUR EXTERNAL CONVERTER'S CODE -->
+\`\`\`
+`};return e.jsx(f,{target:"_blank",rel:"noopener noreferrer",to:`${E}?${new URLSearchParams(a).toString()}`,className:"link link-hover",children:s("submit_converter")})}),oe=r.memo(({sourceIdx:t,device:s})=>{const{t:a}=_("zigbee"),n=u(h(l=>l.bridgeInfo[t])),o=u(h(l=>l.bridgeHealth[t])),b={labels:"problem",title:`[${s.model_id} / ${s.manufacturer}] ???`,body:`<!-- MAKE SURE THIS IS NOT ALREADY POSTED ${k.slice(0,-4)} -->
+
+### What happened?
+
+### What did you expect to happen?
+
+### How to reproduce it (minimal and precise)
+
+### Debug logs
+
+### Details
+os: \`${n.os.version}\`
+node: \`${n.os.node_version}\`
+zigbee2mqtt: \`${n.version}\` (\`${n.commit}\`)
+zigbee-herdsman: \`${n.zigbee_herdsman.version}\`
+zigbee-herdsman-converters: \`${n.zigbee_herdsman_converters.version}\`
+adapter: \`${n.coordinator.type}\` \`${JSON.stringify(n.coordinator.meta)}\`
+#### Device
+software_build_id: \`${s.software_build_id}\`
+date_code: \`${s.date_code}\`
+endpoints:
+\`\`\`json
+${JSON.stringify(s.endpoints)}
+\`\`\``};return o.response_time>0&&(b.body+=`
+##### Health
+time: \`${new Date(o.response_time)}\`
+process.uptime_sec: \`${o.process.uptime_sec}\`
+\`\`\`json
+${JSON.stringify(o.devices[s.ieee_address]??{})}
+\`\`\`
+`),e.jsx(f,{target:"_blank",rel:"noopener noreferrer",to:`${k}?${new URLSearchParams(b).toString()}`,className:"btn btn-ghost",children:a("report_problem")})});function Se({sourceIdx:t,device:s}){const{t:a}=_(["zigbee","availability","common"]),n=u(h(i=>i.deviceStates[t])),o=u(h(i=>i.bridgeInfo[t].config)),b=u(h(i=>i.availability[t])),l=o.homeassistant.enabled,m=r.useMemo(()=>n[s.friendly_name]??{},[s.friendly_name,n]),{sendMessage:d}=r.useContext(z),$=r.useCallback(async(i,c)=>{await d(t,"bridge/request/device/options",{id:i,options:{description:c}})},[t,d]),N=r.useCallback(async(i,c,p,j)=>{await d(i,"bridge/request/device/rename",{from:c,to:p,homeassistant_rename:j,last:void 0})},[d]),C=r.useCallback(async([i,c])=>{await d(i,"bridge/request/device/configure",{id:c})},[d]),L=r.useCallback(async([i,c])=>{await d(i,"bridge/request/device/interview",{id:c})},[d]),R=r.useCallback(async(i,c,p,j)=>{await d(i,"bridge/request/device/remove",{id:c,force:p,block:j})},[d]),w=o.devices[s.ieee_address]?.availability,A=r.useMemo(()=>{const i=s.definition?.description?ae.exec(s.definition?.description):void 0;if(i){const[,c,p]=i;return e.jsx(f,{target:"_blank",rel:"noopener noreferrer",to:p,className:"link link-hover",children:c})}return e.jsx(e.Fragment,{children:s.definition?.description})},[s.definition]),U=r.useMemo(()=>{switch(s.interview_state){case v.Pending:return e.jsx(x,{icon:y,className:"text-info"});case v.InProgress:return e.jsx(x,{icon:y,spin:!0,className:"text-info"});case v.Successful:return e.jsx(x,{icon:I,className:"text-success"});default:return e.jsx(x,{icon:M,beat:!0,className:"text-error"})}},[s.interview_state]);return e.jsxs("div",{className:"card lg:card-side bg-base-100",children:[e.jsx("figure",{className:"w-64 h-64",style:{overflow:"visible"},children:e.jsx(V,{device:s,otaState:m.update?.state,disabled:s.disabled})}),e.jsxs("div",{className:"card-body",children:[e.jsxs("h2",{className:"card-title",children:[s.friendly_name,e.jsx(G,{sourceIdx:t,name:s.friendly_name,renameDevice:N,homeassistantEnabled:l,style:"btn-link btn-sm btn-square"})]}),e.jsxs("div",{className:"flex flex-row flex-wrap gap-2",children:[e.jsxs("span",{className:`badge ${s.definition?ie[s.definition.source]:""}`,children:[e.jsx(Y,{name:"supported",value:s.supported}),s.definition?`: ${s.definition.source}`:""]}),!s.supported&&e.jsx("span",{className:"badge animate-bounce",children:e.jsx(f,{target:"_blank",rel:"noopener noreferrer",to:H,className:"link link-hover",children:a("how_to_add_support")})}),s.definition?.source==="external"&&e.jsx("span",{className:"badge animate-bounce",children:e.jsx(re,{device:s})}),e.jsxs("span",{className:"badge opacity-70",title:s.interview_state,children:[a("interview_state"),": ",U]})]}),e.jsxs("div",{children:[e.jsx("pre",{className:"inline",children:s.description||""}),e.jsx(te,{device:s,setDeviceDescription:$})]}),e.jsxs("div",{className:"stats stats-vertical lg:stats-horizontal shadow",children:[e.jsxs("div",{className:"stat",children:[e.jsx("div",{className:"stat-title",children:s.type}),e.jsx("div",{className:"stat-value text-xl",title:a("ieee_address"),children:s.ieee_address}),e.jsx("div",{className:"stat-value text-xl",title:a("network_address_hex"),children:W(s.network_address)}),e.jsxs("div",{className:"stat-desc",children:[a("network_address_dec"),": ",s.network_address]})]}),e.jsxs("div",{className:"stat",children:[e.jsx("div",{className:"stat-title",children:a("last_seen")}),e.jsx("div",{className:"stat-value text-xl",children:e.jsx(X,{config:o.advanced.last_seen,lastSeen:m.last_seen})}),e.jsxs("div",{className:"stat-desc",children:[a("availability:availability"),": ",e.jsx(B,{availability:b[s.friendly_name]??{state:"offline"},disabled:s.disabled,availabilityFeatureEnabled:o.availability.enabled,availabilityEnabledForDevice:w!=null?!!w:void 0})]})]}),e.jsxs("div",{className:"stat",children:[e.jsx("div",{className:"stat-title",children:a("power")}),e.jsx("div",{className:"stat-value text-xl",children:e.jsx(ee,{showLevel:!0,device:s,batteryPercent:m.battery,batteryState:m.battery_state,batteryLow:m.battery_low})}),e.jsx("div",{className:"stat-desc",children:s.type==="GreenPower"?"GreenPower":a(F(s.power_source)||"unknown")})]}),e.jsxs("div",{className:"stat",children:[e.jsx("div",{className:"stat-title",children:a("firmware_id")}),e.jsx("div",{className:"stat-value text-xl",children:s.software_build_id||a("unknown")}),e.jsx("div",{className:"stat-desc",children:s.date_code||a("unknown")})]})]}),e.jsxs("div",{className:"stats stats-vertical lg:stats-horizontal shadow",children:[e.jsxs("div",{className:"stat",children:[e.jsx("div",{className:"stat-title",children:a("zigbee_model")}),e.jsx("div",{className:"stat-value text-xl",children:s.model_id}),e.jsxs("div",{className:"stat-desc",children:[s.manufacturer," (",A,")"]})]}),e.jsxs("div",{className:"stat",children:[e.jsx("div",{className:"stat-title",children:a("model")}),e.jsx("div",{className:"stat-value text-xl",children:e.jsx(Z,{device:s})}),e.jsx("div",{className:"stat-desc",children:e.jsx(Q,{device:s})})]})]}),S.length>1&&e.jsx("div",{className:"stats stats-vertical lg:stats-horizontal shadow",children:e.jsxs("div",{className:"stat",children:[e.jsx("div",{className:"stat-title",children:a("common:source")}),e.jsx("div",{className:"stat-value text-xl",children:e.jsx(q,{idx:t,alwaysShowName:!0})}),e.jsx("div",{className:"stat-desc",children:S[t]})]})}),e.jsxs("div",{className:"card-actions justify-end mt-2",children:[e.jsx(oe,{sourceIdx:t,device:s}),e.jsx(J,{sourceIdx:t,device:s,otaState:m.update?.state,homeassistantEnabled:l,renameDevice:N,configureDevice:C,interviewDevice:L,removeDevice:R})]})]})]})}export{Se as default};

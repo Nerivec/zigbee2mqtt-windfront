@@ -1,0 +1,1 @@
+import{r,b as o,d as m,j as t,a5 as i}from"./index-beZWJRyb.js";import{f as c}from"./format-BfbftA5l.js";const x=r.memo(({lastSeen:s,config:e})=>{const{i18n:n}=o(),a=m(s,e);return a?t.jsx("span",{title:i(a),children:c(a,n.language)}):t.jsx("span",{children:"N/A"})});export{x as L};
