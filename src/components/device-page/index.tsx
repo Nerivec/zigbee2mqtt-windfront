@@ -1,4 +1,4 @@
-import { type Device, FeatureAccessMode, type Group, type Scene } from "../../types.js";
+import { type BasicFeature, type Device, FeatureAccessMode, type FeatureWithSubFeatures, type Group, type Scene } from "../../types.js";
 
 import { isDevice } from "../../utils.js";
 
@@ -26,22 +26,27 @@ const BLACKLISTED_FEATURE_NAMES = ["effect", "power_on_behavior", "gradient"];
 
 const WHITELIST_FEATURE_NAMES = ["state", "color_temp", "color", "transition", "brightness"];
 
-export const isValidForScenes = (name: string | undefined, access: FeatureAccessMode): boolean => {
-    if (name) {
-        if (WHITELIST_FEATURE_NAMES.includes(name)) {
+export const isValidForScenes = (expose: BasicFeature | FeatureWithSubFeatures): boolean => {
+    if (expose.name) {
+        if (WHITELIST_FEATURE_NAMES.includes(expose.name)) {
             return true;
         }
 
         for (const bName of BLACKLISTED_PARTIAL_FEATURE_NAMES) {
-            if (name.includes(bName)) {
+            if (expose.name.includes(bName)) {
                 return false;
             }
         }
 
-        if (BLACKLISTED_FEATURE_NAMES.includes(name)) {
+        if (BLACKLISTED_FEATURE_NAMES.includes(expose.name)) {
             return false;
         }
     }
 
-    return !access || access === FeatureAccessMode.ALL || access === FeatureAccessMode.SET || access === FeatureAccessMode.STATE_SET;
+    return (
+        !expose.access ||
+        expose.access === FeatureAccessMode.ALL ||
+        expose.access === FeatureAccessMode.SET ||
+        expose.access === FeatureAccessMode.STATE_SET
+    );
 };

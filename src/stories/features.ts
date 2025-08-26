@@ -16,16 +16,16 @@ import {
     type SwitchFeature,
     type TextFeature,
 } from "../types.js";
-import { parseExpose } from "../utils.js";
+import { parseAndCloneExpose } from "../utils.js";
 
 export const filterExposes = (
     exposes: NonNullable<Device["definition"]>["exposes"],
-    validateFn: Parameters<typeof parseExpose>[1],
+    validateFn: Parameters<typeof parseAndCloneExpose>[1],
 ): FeatureWithAnySubFeatures[] => {
     const filteredExposes: FeatureWithAnySubFeatures[] = [];
 
     for (const expose of exposes) {
-        const validExpose = parseExpose(expose, validateFn);
+        const validExpose = parseAndCloneExpose(expose, validateFn);
 
         if (validExpose) {
             filteredExposes.push(validExpose);

@@ -1,15 +1,6 @@
 import { saveAs } from "file-saver";
 import { API_URLS } from "./store.js";
-import type {
-    AnySubFeature,
-    BasicFeature,
-    Device,
-    FeatureAccessMode,
-    FeatureWithAnySubFeatures,
-    FeatureWithSubFeatures,
-    Group,
-    LastSeenConfig,
-} from "./types.js";
+import type { AnySubFeature, BasicFeature, Device, FeatureWithAnySubFeatures, FeatureWithSubFeatures, Group, LastSeenConfig } from "./types.js";
 
 // #region Compute
 
@@ -131,12 +122,13 @@ export const getEndpoints = (entity?: Device | Group): Set<string | number> => {
     return endpoints;
 };
 
-type ExposeValidateFn = (name: string | undefined, access: FeatureAccessMode) => boolean;
+type ExposeValidateFn = (expose: BasicFeature | FeatureWithSubFeatures) => boolean;
 
-export const parseExpose = (expose: BasicFeature | FeatureWithSubFeatures, validateFn: ExposeValidateFn): FeatureWithAnySubFeatures | undefined => {
-    const { name, access } = expose;
-
-    if (!validateFn(name, access)) {
+export const parseAndCloneExpose = (
+    expose: BasicFeature | FeatureWithSubFeatures,
+    validateFn: ExposeValidateFn,
+): FeatureWithAnySubFeatures | undefined => {
+    if (!validateFn(expose)) {
         return undefined;
     }
 
@@ -144,7 +136,7 @@ export const parseExpose = (expose: BasicFeature | FeatureWithSubFeatures, valid
         const features: AnySubFeature[] = [];
 
         for (const subFeature of expose.features) {
-            const validFeature = parseExpose(subFeature, validateFn);
+            const validFeature = parseAndCloneExpose(subFeature, validateFn);
 
             if (validFeature && !features.some((f) => f.property === validFeature.property)) {
                 features.push(validFeature);

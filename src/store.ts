@@ -5,7 +5,7 @@ import { isValidForScenes } from "./components/device-page/index.js";
 import { AVAILABILITY_FEATURE_TOPIC_ENDING, BLACKLISTED_NOTIFICATIONS, NOTIFICATIONS_LIMIT_PER_SOURCE, PUBLISH_GET_SET_REGEX } from "./consts.js";
 import { Z2M_API_NAMES, Z2M_API_URLS } from "./envs.js";
 import type { AvailabilityState, Device, FeatureWithAnySubFeatures, LogMessage, Message, RecursiveMutable, Toast, TouchlinkDevice } from "./types.js";
-import { formatDate, parseExpose } from "./utils.js";
+import { formatDate, parseAndCloneExpose } from "./utils.js";
 
 export interface AppState {
     devices: Record<number, Device[]>;
@@ -549,8 +549,8 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
                 const scenesExposes: FeatureWithAnySubFeatures[] = [];
 
                 for (const expose of device.definition.exposes) {
-                    const validDashboardExpose = parseExpose(expose, isValidForDashboard);
-                    const validScenesExpose = parseExpose(expose, isValidForScenes);
+                    const validDashboardExpose = parseAndCloneExpose(expose, isValidForDashboard);
+                    const validScenesExpose = parseAndCloneExpose(expose, isValidForScenes);
 
                     if (validDashboardExpose) {
                         dashboardExposes.push(validDashboardExpose);

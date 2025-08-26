@@ -1,36 +1,15 @@
-import type { FeatureAccessMode } from "../../types.js";
+import type { BasicFeature, FeatureWithSubFeatures } from "../../types.js";
 
-const BLACKLISTED_PARTIAL_FEATURE_NAMES = ["schedule_", "_mode", "_options", "_startup", "_type", "inching_", "cyclic_"];
+export const isValidForDashboard = (expose: BasicFeature | FeatureWithSubFeatures): boolean => {
+    // always ignore configs in dashboard
+    // ignore list because of size constraints
+    if (expose.category === "config" || expose.type === "list") {
+        return false;
+    }
 
-const BLACKLISTED_FEATURE_NAMES = [
-    "battery",
-    "linkquality",
-    "options",
-    "position",
-    "programming",
-    "strength",
-    "voltage",
-    "warning",
-    "gradient",
-    "power_outage_memory",
-    "power_on_behavior",
-];
-
-const WHITELISTED_FEATURE_NAMES = ["state", "brightness", "color_temp", "mode", "sound", "occupancy", "tamper", "alarm", "action", "contact"];
-
-export const isValidForDashboard = (name: string | undefined, _access: FeatureAccessMode): boolean => {
-    if (name) {
-        if (WHITELISTED_FEATURE_NAMES.includes(name)) {
-            return true;
-        }
-
-        for (const bName of BLACKLISTED_PARTIAL_FEATURE_NAMES) {
-            if (name.includes(bName)) {
-                return false;
-            }
-        }
-
-        if (BLACKLISTED_FEATURE_NAMES.includes(name)) {
+    if (expose.name) {
+        // specific blacklisting (already shown some other way)
+        if (expose.name === "linkquality" || expose.name === "battery" || expose.name === "voltage") {
             return false;
         }
     }
