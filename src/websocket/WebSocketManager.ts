@@ -104,6 +104,8 @@ class WebSocketManager {
             this.#rafHandle = undefined;
         }
 
+        this.#flush(true);
+
         for (const conn of this.#connections) {
             if (conn.reconnectTimer !== undefined) {
                 clearTimeout(conn.reconnectTimer);
@@ -121,12 +123,12 @@ class WebSocketManager {
                 conn.socket = undefined;
             }
 
-            for (const [k, p] of conn.pending) {
+            for (const [, p] of conn.pending) {
                 clearTimeout(p.timeoutId);
                 p.reject(new Error("WebSocket manager destroyed"));
-                conn.pending.delete(k);
             }
 
+            conn.pending.clear();
             useAppStore.getState().setPendingRequestsCount(conn.idx, 0);
         }
     }
@@ -137,6 +139,14 @@ class WebSocketManager {
         }
 
         this.#shuttingDown = true;
+
+        if (this.#rafHandle !== undefined) {
+            cancelAnimationFrame(this.#rafHandle);
+
+            this.#rafHandle = undefined;
+        }
+
+        this.#flush(true);
 
         for (const conn of this.#connections) {
             if (conn.reconnectTimer !== undefined) {
@@ -160,7 +170,7 @@ class WebSocketManager {
     }
 
     async sendMessage<T extends Zigbee2MQTTRequestEndpoints>(sourceIdx: number, topic: T, payload: Zigbee2MQTTAPI[T]): Promise<void> {
-        if (this.#destroyed || this.#shuttingDown) {
+        if (this.#destroyed) {
             return;
         }
 
@@ -315,12 +325,12 @@ class WebSocketManager {
             store2.remove(TOKEN_KEY);
         }
 
-        for (const [k, p] of conn.pending) {
+        for (const [, p] of conn.pending) {
             clearTimeout(p.timeoutId);
             p.reject(new Error("WebSocket closed"));
-            conn.pending.delete(k);
         }
 
+        conn.pending.clear();
         useAppStore.getState().setPendingRequestsCount(conn.idx, 0);
         this.#scheduleReconnect(conn);
     }
@@ -402,7 +412,7 @@ class WebSocketManager {
                 if (pending) {
                     conn.pending.delete(transaction);
                     useAppStore.getState().setPendingRequestsCount(sourceIdx, conn.pending.size);
-                    pending.reject(new Error("Request timed out"));
+                    pending.reject(new Error("Request timed out", { cause: transaction }));
                 }
             }, REQUEST_TIMEOUT_MS);
 
@@ -649,8 +659,8 @@ class WebSocketManager {
         });
     }
 
-    #flush(): void {
-        if (this.#destroyed) {
+    #flush(force = false): void {
+        if (this.#destroyed && !force) {
             return;
         }
 
