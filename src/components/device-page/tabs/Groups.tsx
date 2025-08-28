@@ -1,12 +1,12 @@
 import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useColumnCount } from "../../../hooks/useColumnCount.js";
 import { useAppStore } from "../../../store.js";
 import type { Device, Group } from "../../../types.js";
 import { getEndpoints } from "../../../utils.js";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import Button from "../../Button.js";
 import GroupCard, { type GroupCardProps } from "../../group/GroupCard.js";
 import EndpointPicker from "../../pickers/EndpointPicker.js";
@@ -19,7 +19,6 @@ type GroupsProps = {
 
 export default function Groups({ sourceIdx, device }: GroupsProps) {
     const { t } = useTranslation(["groups", "zigbee", "common"]);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const groups = useAppStore(useShallow((state) => state.groups[sourceIdx]));
     const [endpoint, setEndpoint] = useState<string | number>("");
     const [groupId, setGroupId] = useState<string | number>("");
@@ -42,7 +41,7 @@ export default function Groups({ sourceIdx, device }: GroupsProps) {
                 endpoint,
                 device: device.ieee_address,
             }),
-        [sourceIdx, groupId, device.ieee_address, endpoint, sendMessage],
+        [sourceIdx, groupId, device.ieee_address, endpoint],
     );
 
     const removeFromGroup = useCallback(
@@ -52,7 +51,7 @@ export default function Groups({ sourceIdx, device }: GroupsProps) {
                 endpoint: endpoint,
                 group: group.id.toString(),
             }),
-        [sourceIdx, device.ieee_address, sendMessage],
+        [sourceIdx, device.ieee_address],
     );
 
     const [memberGroups, nonMemberGroups] = useMemo(() => {

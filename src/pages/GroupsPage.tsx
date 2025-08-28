@@ -2,7 +2,7 @@ import NiceModal from "@ebay/nice-modal-react";
 import { faEdit, faPlus, faServer, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
@@ -16,7 +16,7 @@ import Table from "../components/table/Table.js";
 import { useTable } from "../hooks/useTable.js";
 import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { Group } from "../types.js";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+import { sendMessage } from "../websocket/WebSocketManager.js";
 
 type GroupTableData = {
     sourceIdx: number;
@@ -28,7 +28,6 @@ export default function GroupsPage() {
     const [newGroupId, setNewGroupId] = useState<string>("");
     const [newGroupSourceIdx, setNewGroupSourceIdx] = useState(0);
     const groups = useAppStore((state) => state.groups);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["groups", "common"]);
 
     const data = useMemo(() => {
@@ -57,16 +56,16 @@ export default function GroupsPage() {
         setNewGroupFriendlyName("");
         setNewGroupId("");
         setNewGroupSourceIdx(0);
-    }, [newGroupFriendlyName, newGroupId, newGroupSourceIdx, sendMessage]);
+    }, [newGroupFriendlyName, newGroupId, newGroupSourceIdx]);
 
     const onRenameClick = useCallback(
         async (sourceIdx: number, from: string, to: string) => await sendMessage(sourceIdx, "bridge/request/group/rename", { from, to }),
-        [sendMessage],
+        [],
     );
 
     const onRemoveClick = useCallback(
         async ([sourceIdx, id]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/group/remove", { id }),
-        [sendMessage],
+        [],
     );
 
     const isValidNewGroup = useMemo(() => {

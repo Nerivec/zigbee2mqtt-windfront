@@ -1,10 +1,10 @@
 import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
-import { memo, useCallback, useContext, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useColumnCount } from "../../hooks/useColumnCount.js";
 import { useAppStore } from "../../store.js";
 import type { Device, Group } from "../../types.js";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../websocket/WebSocketManager.js";
 import GroupMember, { type GroupMemberProps } from "./GroupMember.js";
 
 interface GroupMembersProps {
@@ -14,7 +14,6 @@ interface GroupMembersProps {
 }
 
 const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const deviceStates = useAppStore(useShallow((state) => state.deviceStates[sourceIdx]));
     const lastSeenConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.last_seen));
     const columnCount = useColumnCount();
@@ -22,7 +21,7 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
     const removeDeviceFromGroup = useCallback(
         async (deviceIeee: string, endpoint: number): Promise<void> =>
             await sendMessage(sourceIdx, "bridge/request/group/members/remove", { device: deviceIeee, endpoint, group: group.id.toString() }),
-        [sourceIdx, group.id, sendMessage],
+        [sourceIdx, group.id],
     );
 
     const setDeviceState = useCallback(
@@ -34,7 +33,7 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
                 value,
             );
         },
-        [sourceIdx, sendMessage],
+        [sourceIdx],
     );
 
     const filteredData = useMemo(() => {

@@ -1,6 +1,6 @@
 import { faCircleInfo, faDownLong, faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type ChangeEvent, lazy, memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { type ChangeEvent, lazy, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import store2 from "store2";
@@ -14,7 +14,7 @@ import SourceDot from "../components/SourceDot.js";
 import { NETWORK_RAW_DISPLAY_TYPE_KEY } from "../localStoreConsts.js";
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import { getValidSourceIdx } from "../utils.js";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+import { sendMessage } from "../websocket/WebSocketManager.js";
 
 type UrlParams = {
     sourceIdx: `${number}`;
@@ -30,7 +30,6 @@ const RawNetworkData = lazy(async () => await import("../components/network-page
 const RawNetworkMap = lazy(async () => await import("../components/network-page/RawNetworkMap.js"));
 
 const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["network", "common"]);
     const networkMapIsLoading = useAppStore(useShallow((state) => state.networkMapIsLoading[sourceIdx]));
     const networkMap = useAppStore(useShallow((state) => state.networkMap[sourceIdx]));
@@ -61,7 +60,7 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
         setNetworkMap(sourceIdx, undefined);
         setNetworkMapIsLoading(sourceIdx);
         await sendMessage(sourceIdx, "bridge/request/networkmap", { type: mapType, routes: enableRoutes });
-    }, [sourceIdx, mapType, enableRoutes, setNetworkMap, setNetworkMapIsLoading, sendMessage]);
+    }, [sourceIdx, mapType, enableRoutes, setNetworkMap, setNetworkMapIsLoading]);
 
     const content = useMemo(() => {
         if (networkMapIsLoading) {

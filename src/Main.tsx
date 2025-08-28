@@ -1,6 +1,6 @@
 import NiceModal from "@ebay/nice-modal-react";
-import React, { lazy, Suspense } from "react";
-import { I18nextProvider, useTranslation } from "react-i18next";
+import React, { lazy, Suspense, useEffect } from "react";
+import { I18nextProvider } from "react-i18next";
 import { HashRouter, Route, Routes } from "react-router";
 import { AuthForm } from "./components/modal/components/AuthModal.js";
 import NavBarWithNotifications from "./components/navbar/NavBar.js";
@@ -8,7 +8,7 @@ import ScrollToTop from "./components/ScrollToTop.js";
 import Toasts from "./components/Toasts.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
 import i18n from "./i18n/index.js";
-import { WebSocketApiRouter } from "./WebSocketApiRouter.js";
+import { getWebSocketManager } from "./websocket/WebSocketManager.js";
 
 const HomePage = lazy(async () => await import("./pages/HomePage.js"));
 const DevicesPage = lazy(async () => await import("./pages/DevicesPage.js"));
@@ -24,7 +24,10 @@ const SettingsPage = lazy(async () => await import("./pages/SettingsPage.js"));
 const FrontendSettingsPage = lazy(async () => await import("./pages/FrontendSettingsPage.js"));
 
 export function Main() {
-    const { t } = useTranslation("common");
+    useEffect(() => {
+        // side-effect - create and start socket(s) with singleton manager
+        getWebSocketManager();
+    }, []);
 
     return (
         <React.StrictMode>
@@ -34,38 +37,33 @@ export function Main() {
                     <ErrorBoundary>
                         <HashRouter>
                             <ScrollToTop />
-                            <WebSocketApiRouter>
-                                <NavBarWithNotifications />
-                                <main className="pt-3 px-2">
-                                    <Suspense
-                                        fallback={
-                                            <>
-                                                <div className="flex flex-row justify-center items-center gap-2">
-                                                    <span className="loading loading-infinity loading-xl" />
-                                                </div>
-                                                <div className="flex flex-row justify-center items-center gap-2">{t("loading")}</div>
-                                            </>
-                                        }
-                                    >
-                                        <Routes>
-                                            <Route path="/dashboard" element={<DashboardPage />} />
-                                            <Route path="/devices" element={<DevicesPage />} />
-                                            <Route path="/device/:sourceIdx/:deviceId/:tab?" element={<DevicePage />} />
-                                            <Route path="/groups" element={<GroupsPage />} />
-                                            <Route path="/group/:sourceIdx/:groupId/:tab?" element={<GroupPage />} />
-                                            <Route path="/touchlink" element={<TouchlinkPage />} />
-                                            <Route path="/ota" element={<OtaPage />} />
-                                            <Route path="/network/:sourceIdx?" element={<NetworkPage />} />
-                                            <Route path="/logs/:sourceIdx?" element={<LogsPage />} />
-                                            <Route path="/settings/:sourceIdx?/:tab?/:subTab?" element={<SettingsPage />} />
-                                            <Route path="/frontend-settings" element={<FrontendSettingsPage />} />
-                                            <Route path="/" element={<HomePage />} />
-                                            <Route path="*" element={<HomePage />} />
-                                        </Routes>
-                                    </Suspense>
-                                </main>
-                                <Toasts />
-                            </WebSocketApiRouter>
+                            <NavBarWithNotifications />
+                            <main className="pt-3 px-2">
+                                <Suspense
+                                    fallback={
+                                        <div className="flex flex-row justify-center items-center gap-2">
+                                            <span className="loading loading-infinity loading-xl" />
+                                        </div>
+                                    }
+                                >
+                                    <Routes>
+                                        <Route path="/dashboard" element={<DashboardPage />} />
+                                        <Route path="/devices" element={<DevicesPage />} />
+                                        <Route path="/device/:sourceIdx/:deviceId/:tab?" element={<DevicePage />} />
+                                        <Route path="/groups" element={<GroupsPage />} />
+                                        <Route path="/group/:sourceIdx/:groupId/:tab?" element={<GroupPage />} />
+                                        <Route path="/touchlink" element={<TouchlinkPage />} />
+                                        <Route path="/ota" element={<OtaPage />} />
+                                        <Route path="/network/:sourceIdx?" element={<NetworkPage />} />
+                                        <Route path="/logs/:sourceIdx?" element={<LogsPage />} />
+                                        <Route path="/settings/:sourceIdx?/:tab?/:subTab?" element={<SettingsPage />} />
+                                        <Route path="/frontend-settings" element={<FrontendSettingsPage />} />
+                                        <Route path="/" element={<HomePage />} />
+                                        <Route path="*" element={<HomePage />} />
+                                    </Routes>
+                                </Suspense>
+                            </main>
+                            <Toasts />
                         </HashRouter>
                     </ErrorBoundary>
                 </NiceModal.Provider>

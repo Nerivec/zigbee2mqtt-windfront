@@ -1,7 +1,7 @@
 import { faBroom, faCircleNotch, faExclamationTriangle, faMagnifyingGlassPlus, faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import Button from "../components/Button.js";
@@ -11,7 +11,7 @@ import Table from "../components/table/Table.js";
 import { useTable } from "../hooks/useTable.js";
 import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { TouchlinkDevice } from "../types.js";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+import { sendMessage } from "../websocket/WebSocketManager.js";
 
 type TouchlinkTableData = {
     sourceIdx: number;
@@ -22,7 +22,6 @@ type TouchlinkTableData = {
 };
 
 export default function TouchlinkPage() {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["touchlink", "common", "zigbee"]);
     const touchlinkDevices = useAppStore((state) => state.touchlinkDevices);
     const devices = useAppStore((state) => state.devices);
@@ -59,7 +58,7 @@ export default function TouchlinkPage() {
             setTouchlinkScan(sourceIdx, { inProgress: true, devices: [] });
             await sendMessage(sourceIdx, "bridge/request/touchlink/scan", "");
         },
-        [sendMessage, setTouchlinkScan],
+        [setTouchlinkScan],
     );
 
     const onIdentifyClick = useCallback(
@@ -67,7 +66,7 @@ export default function TouchlinkPage() {
             setTouchlinkIdentifyInProgress(sourceIdx, true);
             await sendMessage(sourceIdx, "bridge/request/touchlink/identify", device);
         },
-        [sendMessage, setTouchlinkIdentifyInProgress],
+        [setTouchlinkIdentifyInProgress],
     );
 
     const onResetClick = useCallback(
@@ -75,7 +74,7 @@ export default function TouchlinkPage() {
             setTouchlinkResetInProgress(sourceIdx, true);
             await sendMessage(sourceIdx, "bridge/request/touchlink/factory_reset", device);
         },
-        [sendMessage, setTouchlinkResetInProgress],
+        [setTouchlinkResetInProgress],
     );
 
     const columns = useMemo<ColumnDef<TouchlinkTableData, unknown>[]>(

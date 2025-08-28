@@ -2,7 +2,7 @@ import { faArrowsUpToLine } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
 import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
-import { useCallback, useContext, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../components/Button.js";
 import DashboardItem from "../components/dashboard-page/DashboardItem.js";
@@ -12,7 +12,7 @@ import { useTable } from "../hooks/useTable.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { Device, DeviceState, FeatureWithAnySubFeatures, LastSeenConfig } from "../types.js";
 import { getLastSeenEpoch, toHex } from "../utils.js";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+import { sendMessage } from "../websocket/WebSocketManager.js";
 
 export interface DashboardTableData {
     sourceIdx: number;
@@ -28,19 +28,15 @@ export interface DashboardTableData {
 
 export default function Dashboard() {
     const { t } = useTranslation(["common", "zigbee"]);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const deviceStates = useAppStore((state) => state.deviceStates);
     const deviceDashbordFeatures = useAppStore((state) => state.deviceDashboardFeatures);
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const devices = useAppStore((state) => state.devices);
     const columnCount = useColumnCount();
 
-    const removeDevice = useCallback(
-        async (sourceIdx: number, id: string, force: boolean, block: boolean): Promise<void> => {
-            await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block });
-        },
-        [sendMessage],
-    );
+    const removeDevice = useCallback(async (sourceIdx: number, id: string, force: boolean, block: boolean): Promise<void> => {
+        await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block });
+    }, []);
 
     const data = useMemo(() => {
         const elements: DashboardTableData[] = [];

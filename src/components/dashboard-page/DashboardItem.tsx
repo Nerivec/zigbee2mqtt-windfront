@@ -2,10 +2,10 @@ import NiceModal from "@ebay/nice-modal-react";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Row } from "@tanstack/react-table";
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import type { DashboardTableData } from "../../pages/Dashboard.js";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
 import DeviceCard from "../device/DeviceCard.js";
 import { RemoveDeviceModal } from "../modal/components/RemoveDeviceModal.js";
@@ -13,7 +13,6 @@ import DashboardFeatureWrapper from "./DashboardFeatureWrapper.js";
 
 const DashboardItem = ({ original: { sourceIdx, device, deviceState, features, lastSeenConfig, removeDevice } }: Row<DashboardTableData>) => {
     const { t } = useTranslation("zigbee");
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
 
     const onCardChange = useCallback(
         async (value: unknown) => {
@@ -24,7 +23,7 @@ const DashboardItem = ({ original: { sourceIdx, device, deviceState, features, l
                 value,
             );
         },
-        [sourceIdx, device.ieee_address, sendMessage],
+        [sourceIdx, device.ieee_address],
     );
 
     return (

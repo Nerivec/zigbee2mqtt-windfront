@@ -1,10 +1,10 @@
-import { type ChangeEvent, useCallback, useContext, useMemo, useState } from "react";
+import { type ChangeEvent, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import { CONVERTERS_CODESPACE_URL, CONVERTERS_DOCS_URL, EXTENSIONS_DOCS_URL, MQTT_TOPICS_DOCS_URL } from "../../../consts.js";
 import { type AppState, useAppStore } from "../../../store.js";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import Button from "../../Button.js";
 import ConfirmButton from "../../ConfirmButton.js";
 import InputField from "../../form-fields/InputField.js";
@@ -20,7 +20,6 @@ type DevConsoleTabProps = { sourceIdx: number };
 
 const MqttTab = ({ sourceIdx }: DevConsoleTabProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const [topic, setTopic] = useState("");
     const [mqttPayload, setMqttPayload] = useState("{}");
 
@@ -52,7 +51,7 @@ const MqttTab = ({ sourceIdx }: DevConsoleTabProps) => {
             topic,
             mqttPayload === "" ? mqttPayload : JSON.parse(mqttPayload),
         );
-    }, [sourceIdx, topic, mqttPayload, sendMessage]);
+    }, [sourceIdx, topic, mqttPayload]);
 
     return (
         <>
@@ -92,7 +91,6 @@ const MqttTab = ({ sourceIdx }: DevConsoleTabProps) => {
 
 const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const converters = useAppStore(useShallow((state) => state.converters[sourceIdx]));
     const [selectedConverter, setSelectedConverter] = useState<AppState["converters"][number][number]>();
     const [converter, setConverter] = useState({ name: "", code: "" });
@@ -132,11 +130,11 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
 
     const onSave = useCallback(async () => {
         await sendMessage(sourceIdx, "bridge/request/converter/save", converter);
-    }, [sourceIdx, converter, sendMessage]);
+    }, [sourceIdx, converter]);
 
     const onRemove = useCallback(async () => {
         await sendMessage(sourceIdx, "bridge/request/converter/remove", { name: converter.name });
-    }, [sourceIdx, converter.name, sendMessage]);
+    }, [sourceIdx, converter.name]);
 
     return (
         <>
@@ -201,7 +199,6 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
 
 const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const extensions = useAppStore(useShallow((state) => state.extensions[sourceIdx]));
     const [selectedExtension, setSelectedExtension] = useState<AppState["extensions"][number][number]>();
     const [extension, setExtension] = useState({ name: "", code: "" });
@@ -241,11 +238,11 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
 
     const onSave = useCallback(async () => {
         await sendMessage(sourceIdx, "bridge/request/extension/save", extension);
-    }, [sourceIdx, extension, sendMessage]);
+    }, [sourceIdx, extension]);
 
     const onRemove = useCallback(async () => {
         await sendMessage(sourceIdx, "bridge/request/extension/remove", { name: extension.name });
-    }, [sourceIdx, extension.name, sendMessage]);
+    }, [sourceIdx, extension.name]);
 
     return (
         <>

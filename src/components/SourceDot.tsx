@@ -1,11 +1,9 @@
 import { faDotCircle, faExclamationCircle, faQuestionCircle, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon, type FontAwesomeIconProps } from "@fortawesome/react-fontawesome";
-import { memo, useContext } from "react";
-import { ReadyState } from "react-use-websocket";
+import { memo } from "react";
 import store2 from "store2";
 import { MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY } from "../localStoreConsts.js";
-import { API_NAMES, MULTI_INSTANCE } from "../store.js";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+import { API_NAMES, MULTI_INSTANCE, useAppStore } from "../store.js";
 
 type SourceDotProps = Omit<FontAwesomeIconProps, "icon" | "style" | "title"> & {
     idx: number;
@@ -19,11 +17,10 @@ type SourceDotProps = Omit<FontAwesomeIconProps, "icon" | "style" | "title"> & {
 };
 
 const CONNECTION_STATUS = {
-    [ReadyState.CONNECTING]: faQuestionCircle,
-    [ReadyState.OPEN]: faDotCircle,
-    [ReadyState.CLOSING]: faExclamationCircle,
-    [ReadyState.CLOSED]: faXmarkCircle,
-    [ReadyState.UNINSTANTIATED]: faXmarkCircle,
+    [WebSocket.CONNECTING]: faQuestionCircle,
+    [WebSocket.OPEN]: faDotCircle,
+    [WebSocket.CLOSING]: faExclamationCircle,
+    [WebSocket.CLOSED]: faXmarkCircle,
 };
 
 const DOT_COLORS = [
@@ -45,7 +42,7 @@ const DOT_COLORS = [
 ];
 
 const SourceDot = memo(({ idx, autoHide, alwaysShowName, alwaysHideName, nameClassName, namePostfix, ...rest }: SourceDotProps) => {
-    const { readyStates } = useContext(WebSocketApiRouterContext);
+    const readyStates = useAppStore((state) => state.readyStates);
     const showName = !alwaysHideName && (alwaysShowName || store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
 
     if (autoHide && !MULTI_INSTANCE) {

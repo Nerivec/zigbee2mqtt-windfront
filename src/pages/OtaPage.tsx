@@ -1,7 +1,7 @@
 import { faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import ConfirmButton from "../components/ConfirmButton.js";
@@ -21,7 +21,7 @@ import { useTable } from "../hooks/useTable.js";
 import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { Device, DeviceState } from "../types.js";
 import { toHex } from "../utils.js";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+import { sendMessage } from "../websocket/WebSocketManager.js";
 
 type OtaTableData = {
     sourceIdx: number;
@@ -37,7 +37,6 @@ type OtaTableData = {
 export default function OtaPage() {
     const devices = useAppStore((state) => state.devices);
     const deviceStates = useAppStore((state) => state.deviceStates);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["ota", "zigbee", "common"]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
@@ -77,45 +76,42 @@ export default function OtaPage() {
     const rowSelectionCount = useMemo(() => Object.keys(rowSelection).length, [rowSelection]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: can't dep table
-    const actOnFilteredSelected = useCallback(
-        async (topic: "bridge/request/device/ota_update/check" | "bridge/request/device/ota_update/update") => {
-            const promises: Promise<void>[] = [];
+    const actOnFilteredSelected = useCallback(async (topic: "bridge/request/device/ota_update/check" | "bridge/request/device/ota_update/update") => {
+        const promises: Promise<void>[] = [];
 
-            for (const row of table.getFilteredRowModel().rows) {
-                if (row.getIsSelected()) {
-                    const { sourceIdx, device } = row.original;
+        for (const row of table.getFilteredRowModel().rows) {
+            if (row.getIsSelected()) {
+                const { sourceIdx, device } = row.original;
 
-                    promises.push(sendMessage(sourceIdx, topic, { id: device.ieee_address }));
-                }
+                promises.push(sendMessage(sourceIdx, topic, { id: device.ieee_address }));
             }
+        }
 
-            setRowSelection({});
+        setRowSelection({});
 
-            if (promises.length > 0) {
-                await Promise.allSettled(promises);
-            }
-        },
-        [sendMessage],
-    );
+        if (promises.length > 0) {
+            await Promise.allSettled(promises);
+        }
+    }, []);
 
     const onCheckClick = useCallback(
         async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee }),
-        [sendMessage],
+        [],
     );
 
     const onUpdateClick = useCallback(
         async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/update", { id: ieee }),
-        [sendMessage],
+        [],
     );
 
     const onScheduleClick = useCallback(
         async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/schedule", { id: ieee }),
-        [sendMessage],
+        [],
     );
 
     const onUnscheduleClick = useCallback(
         async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/unschedule", { id: ieee }),
-        [sendMessage],
+        [],
     );
 
     const columns = useMemo<ColumnDef<OtaTableData, unknown>[]>(
