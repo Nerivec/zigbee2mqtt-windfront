@@ -1,9 +1,9 @@
-import { memo, useCallback, useContext, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../store.js";
 import type { Device } from "../../types.js";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
 import InputField from "../form-fields/InputField.js";
 import TextareaField from "../form-fields/TextareaField.js";
@@ -21,7 +21,6 @@ const CommandExecutor = memo(({ sourceIdx, device }: CommandExecutorProps) => {
     const [cluster, setCluster] = useState<string>("");
     const [command, setCommand] = useState<string>("");
     const [payload, setPayload] = useState("{}");
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const bridgeDefinitions = useAppStore(useShallow((state) => state.bridgeDefinitions[sourceIdx]));
 
     const canExecute = useMemo(() => {
@@ -118,7 +117,7 @@ const CommandExecutor = memo(({ sourceIdx, device }: CommandExecutorProps) => {
                 command: { cluster, command: commandKey, payload: JSON.parse(payload) },
             },
         );
-    }, [sourceIdx, cluster, device.ieee_address, command, payload, endpoint, sendMessage]);
+    }, [sourceIdx, cluster, device.ieee_address, command, payload, endpoint]);
 
     return (
         <div className="flex-1 flex flex-col gap-3">

@@ -1,11 +1,11 @@
 import { faLink, faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { AppState } from "../../store.js";
 import type { Device, Group } from "../../types.js";
 import { getEndpoints, isDevice } from "../../utils.js";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
 import ClusterMultiPicker from "../pickers/ClusterMultiPicker.js";
 import DevicePicker from "../pickers/DevicePicker.js";
@@ -30,7 +30,6 @@ type Action = "Bind" | "Unbind";
 
 const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps) => {
     const [stateRule, setStateRule] = useState(rule);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["common", "zigbee"]);
 
     useEffect(() => {
@@ -110,7 +109,7 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                 await sendMessage(sourceIdx, "bridge/request/device/unbind", bindParams);
             }
         },
-        [sourceIdx, device, stateRule, sendMessage, devices, groups],
+        [sourceIdx, device, stateRule, devices, groups],
     );
 
     const sourceEndpoints = useMemo(() => getEndpoints(device), [device]);

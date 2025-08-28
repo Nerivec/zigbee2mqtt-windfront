@@ -1,7 +1,6 @@
-import { type JSX, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
 import type { Device } from "../../../types.js";
-
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import ReportingRow from "../ReportingRow.js";
 
 interface ReportingProps {
@@ -44,7 +43,6 @@ const convertBindingsIntoNiceStructure = (device: Device): NiceReportingRule[] =
 const getRuleKey = (rule: NiceReportingRule): string => `${rule.isNew}-${rule.endpoint}-${rule.cluster}-${rule.attribute}`;
 
 export default function Reporting({ sourceIdx, device }: ReportingProps): JSX.Element {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const [newReportingRule, setNewReportingRule] = useState(makeDefaultReportingRule(device.ieee_address));
     const reportingRules = useMemo(() => convertBindingsIntoNiceStructure(device), [device]);
 
@@ -68,7 +66,7 @@ export default function Reporting({ sourceIdx, device }: ReportingProps): JSX.El
                 option: {}, // TODO: check this
             });
         },
-        [sourceIdx, device.ieee_address, sendMessage],
+        [sourceIdx, device.ieee_address],
     );
 
     return (

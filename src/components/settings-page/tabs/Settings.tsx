@@ -1,11 +1,11 @@
 import type { JSONSchema7 } from "json-schema";
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import { CONFIGURATION_DOCS_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import InfoAlert from "../../InfoAlert.js";
 import SettingsList from "../../json-schema/SettingsList.js";
 
@@ -14,7 +14,6 @@ export type TabName = "main" | "frontend" | "mqtt" | "serial" | "availability" |
 type SettingsProps = { sourceIdx: number; tab: TabName };
 
 export default function Settings({ sourceIdx, tab }: SettingsProps) {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const { t } = useTranslation("settings");
 
@@ -26,7 +25,7 @@ export default function Settings({ sourceIdx, tab }: SettingsProps) {
                 await sendMessage(sourceIdx, "bridge/request/options", { options: { [tab]: options } });
             }
         },
-        [sourceIdx, tab, sendMessage],
+        [sourceIdx, tab],
     );
 
     const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");

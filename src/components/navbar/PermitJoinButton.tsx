@@ -1,13 +1,13 @@
 import { faAngleDown, faTowerBroadcast } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, memo, useCallback, useContext, useMemo, useState } from "react";
+import { type JSX, memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import { useShallow } from "zustand/react/shallow";
 import { PERMIT_JOIN_TIME_KEY } from "../../localStoreConsts.js";
 import { API_URLS, useAppStore } from "../../store.js";
 import type { Device } from "../../types.js";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
 import PopoverDropdown from "../PopoverDropdown.js";
 import SourceDot from "../SourceDot.js";
@@ -88,7 +88,6 @@ const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps)
 });
 
 const PermitJoinButton = memo(() => {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation("navbar");
     const [selectedRouter, setSelectedRouter] = useState<[number, Device | undefined]>([0, undefined]);
     const [permitClickedSourceIdx, setPermitClickedSourceIdx] = useState(0);
@@ -103,7 +102,7 @@ const PermitJoinButton = memo(() => {
             time: permitJoin ? 0 : store2.get(PERMIT_JOIN_TIME_KEY, 254),
             device: device?.ieee_address,
         });
-    }, [selectedRouter, permitJoin, sendMessage]);
+    }, [selectedRouter, permitJoin]);
 
     const permitJoinTimer = useMemo(
         () => (permitJoin ? <Countdown seconds={(permitJoinEnd! - Date.now()) / 1000} hideZeroes /> : null),

@@ -1,11 +1,11 @@
 import NiceModal from "@ebay/nice-modal-react";
 import saveAs from "file-saver";
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../../store.js";
 import { downloadAsZip } from "../../../utils.js";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import Button from "../../Button.js";
 import ConfirmButton from "../../ConfirmButton.js";
 import { AddInstallCodeModal } from "../../modal/components/AddInstallCodeModal.js";
@@ -14,7 +14,6 @@ import { ImageLocaliser } from "../ImageLocaliser.js";
 type ToolsProps = { sourceIdx: number };
 
 export default function Tools({ sourceIdx }: ToolsProps) {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const setBackupPreparing = useAppStore((state) => state.setBackupPreparing);
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const backup = useAppStore(useShallow((state) => state.backup[sourceIdx]));

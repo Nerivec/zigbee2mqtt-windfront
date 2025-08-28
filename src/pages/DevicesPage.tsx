@@ -1,7 +1,7 @@
 import { faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
-import { type JSX, useCallback, useContext, useMemo } from "react";
+import { type JSX, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import DeviceControlGroup from "../components/device/DeviceControlGroup.js";
@@ -17,7 +17,7 @@ import { useTable } from "../hooks/useTable.js";
 import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { AvailabilityState, Device, DeviceState } from "../types.js";
 import { getLastSeenEpoch, toHex } from "../utils.js";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+import { sendMessage } from "../websocket/WebSocketManager.js";
 
 type DeviceTableData = {
     sourceIdx: number;
@@ -29,7 +29,6 @@ type DeviceTableData = {
 };
 
 export default function DevicesPage(): JSX.Element {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const devices = useAppStore((state) => state.devices);
     const deviceStates = useAppStore((state) => state.deviceStates);
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
@@ -77,38 +76,26 @@ export default function DevicesPage(): JSX.Element {
         return renderDevices;
     }, [devices, deviceStates, bridgeInfo, availability]);
 
-    const renameDevice = useCallback(
-        async (sourceIdx: number, from: string, to: string, homeassistantRename: boolean): Promise<void> => {
-            await sendMessage(sourceIdx, "bridge/request/device/rename", {
-                from,
-                to,
-                homeassistant_rename: homeassistantRename,
-                last: undefined,
-            });
-        },
-        [sendMessage],
-    );
+    const renameDevice = useCallback(async (sourceIdx: number, from: string, to: string, homeassistantRename: boolean): Promise<void> => {
+        await sendMessage(sourceIdx, "bridge/request/device/rename", {
+            from,
+            to,
+            homeassistant_rename: homeassistantRename,
+            last: undefined,
+        });
+    }, []);
 
-    const configureDevice = useCallback(
-        async ([sourceIdx, id]: [number, string]): Promise<void> => {
-            await sendMessage(sourceIdx, "bridge/request/device/configure", { id });
-        },
-        [sendMessage],
-    );
+    const configureDevice = useCallback(async ([sourceIdx, id]: [number, string]): Promise<void> => {
+        await sendMessage(sourceIdx, "bridge/request/device/configure", { id });
+    }, []);
 
-    const interviewDevice = useCallback(
-        async ([sourceIdx, id]: [number, string]): Promise<void> => {
-            await sendMessage(sourceIdx, "bridge/request/device/interview", { id });
-        },
-        [sendMessage],
-    );
+    const interviewDevice = useCallback(async ([sourceIdx, id]: [number, string]): Promise<void> => {
+        await sendMessage(sourceIdx, "bridge/request/device/interview", { id });
+    }, []);
 
-    const removeDevice = useCallback(
-        async (sourceIdx: number, id: string, force: boolean, block: boolean): Promise<void> => {
-            await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block });
-        },
-        [sendMessage],
-    );
+    const removeDevice = useCallback(async (sourceIdx: number, id: string, force: boolean, block: boolean): Promise<void> => {
+        await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block });
+    }, []);
 
     const columns = useMemo<ColumnDef<DeviceTableData, unknown>[]>(
         () => [

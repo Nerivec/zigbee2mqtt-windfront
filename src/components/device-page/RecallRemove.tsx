@@ -1,7 +1,7 @@
-import { memo, useCallback, useContext, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Device, Group, Scene } from "../../types.js";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
 import ConfirmButton from "../ConfirmButton.js";
 import { getScenes } from "./index.js";
@@ -13,7 +13,6 @@ interface RecallRemoveProps {
 }
 
 const RecallRemove = memo(({ sourceIdx, target }: RecallRemoveProps) => {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["scene", "common"]);
     const [scene, setScene] = useState<Scene>({ id: 0, name: "Scene 0" });
     const [sceneIsNotSelected, setsceneIsNotSelected] = useState<boolean>(true);
@@ -42,7 +41,7 @@ const RecallRemove = memo(({ sourceIdx, target }: RecallRemoveProps) => {
                 `${target.friendly_name}/set`, // TODO: swap to ID/ieee_address
                 { scene_recall: scene.id },
             ),
-        [sourceIdx, target.friendly_name, scene.id, sendMessage],
+        [sourceIdx, target.friendly_name, scene.id],
     );
 
     const onRemoveClick = useCallback(
@@ -53,7 +52,7 @@ const RecallRemove = memo(({ sourceIdx, target }: RecallRemoveProps) => {
                 `${target.friendly_name}/set`, // TODO: swap to ID/ieee_address
                 { scene_remove: scene.id },
             ),
-        [sourceIdx, target.friendly_name, scene.id, sendMessage],
+        [sourceIdx, target.friendly_name, scene.id],
     );
 
     const onRemoveAllClick = useCallback(
@@ -64,7 +63,7 @@ const RecallRemove = memo(({ sourceIdx, target }: RecallRemoveProps) => {
                 `${target.friendly_name}/set`, // TODO: swap to ID/ieee_address
                 { scene_remove_all: "" },
             ),
-        [sourceIdx, target.friendly_name, sendMessage],
+        [sourceIdx, target.friendly_name],
     );
 
     return (

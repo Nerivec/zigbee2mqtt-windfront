@@ -1,9 +1,9 @@
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import Feature from "../../features/Feature.js";
 import FeatureWrapper from "../../features/FeatureWrapper.js";
 import { getFeatureKey } from "../../features/index.js";
@@ -15,7 +15,6 @@ type ExposesProps = {
 
 export default function Exposes({ sourceIdx, device }: ExposesProps) {
     const { t } = useTranslation("common");
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const deviceState = useAppStore(useShallow((state) => state.deviceStates[sourceIdx][device.friendly_name] ?? {}));
 
     const onChange = useCallback(
@@ -27,7 +26,7 @@ export default function Exposes({ sourceIdx, device }: ExposesProps) {
                 value,
             );
         },
-        [sourceIdx, device.ieee_address, sendMessage],
+        [sourceIdx, device.ieee_address],
     );
 
     const onRead = useCallback(
@@ -39,7 +38,7 @@ export default function Exposes({ sourceIdx, device }: ExposesProps) {
                 value,
             );
         },
-        [sourceIdx, device.ieee_address, sendMessage],
+        [sourceIdx, device.ieee_address],
     );
 
     return device.definition?.exposes?.length ? (
