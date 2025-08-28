@@ -22,6 +22,13 @@ export const TOAST_STATUSES_CMAP = {
 
 export const PUBLISH_GET_SET_REGEX = /^z2m: Publish '(set|get)' '(.+)' to '(.+)' failed.*\((.*)\)'$/;
 
+export const CONNECTION_STATUS: Record<number, [string, string]> = {
+    [WebSocket.CONNECTING]: ["CONNECTING", "text-info"],
+    [WebSocket.OPEN]: ["OPEN", "text-success"],
+    [WebSocket.CLOSING]: ["CLOSING", "text-warning"],
+    [WebSocket.CLOSED]: ["CLOSED", "text-error"],
+};
+
 export const SUPPORT_NEW_DEVICES_DOCS_URL = "https://www.zigbee2mqtt.io/advanced/support-new-devices/01_support_new_devices.html";
 
 export const DEVICE_OPTIONS_DOCS_URL = "https://www.zigbee2mqtt.io/guide/configuration/devices-groups.html#generic-device-options";

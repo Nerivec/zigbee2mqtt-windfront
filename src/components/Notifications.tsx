@@ -4,7 +4,7 @@ import { memo, type RefObject, useCallback, useRef, type useState } from "react"
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useShallow } from "zustand/react/shallow";
-import { LOG_LEVELS_CMAP } from "../consts.js";
+import { CONNECTION_STATUS, LOG_LEVELS_CMAP } from "../consts.js";
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
 import { getTransactionPrefix, sendMessage } from "../websocket/WebSocketManager.js";
@@ -21,13 +21,6 @@ type SourceNotificationsProps = { sourceIdx: number; readyState: number };
 type NotificationProps = {
     log: LogMessage;
     onClick: (ref: RefObject<HTMLDivElement | null>) => void;
-};
-
-const CONNECTION_STATUS: Record<number, [string, string]> = {
-    [WebSocket.CONNECTING]: ["CONNECTING", "text-info"],
-    [WebSocket.OPEN]: ["OPEN", "text-success"],
-    [WebSocket.CLOSING]: ["CLOSING", "text-warning"],
-    [WebSocket.CLOSED]: ["CLOSED", "text-error"],
 };
 
 const Notification = memo(({ log, onClick }: NotificationProps) => {
