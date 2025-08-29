@@ -675,13 +675,13 @@ class WebSocketManager {
 
         for (const conn of this.#connections) {
             if (conn.deviceQueue.length) {
-                const batch = conn.deviceQueue.splice(0, conn.deviceQueue.length);
+                const batch = conn.deviceQueue.splice(0);
 
                 store.updateDeviceStates(conn.idx, batch);
             }
 
             if (conn.logQueue.length) {
-                const batch = conn.logQueue.splice(0, conn.logQueue.length);
+                const batch = conn.logQueue.splice(0);
 
                 store.addLogs(conn.idx, batch);
             }
