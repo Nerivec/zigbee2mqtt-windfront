@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Max",
         "done": "Klart",
-        "enter_auth_token": "Ange autentiseringstoken",
-        "token": "Token",
         "documentation": "Dokumentation",
         "optional": "Valfritt",
         "init": "Initiera",

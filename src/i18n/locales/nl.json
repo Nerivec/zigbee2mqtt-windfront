@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Max",
         "done": "Gereed",
-        "enter_auth_token": "Voer auth token in",
-        "token": "Token",
         "documentation": "Documentatie",
         "optional": "Optioneel",
         "init": "Initialiseren",

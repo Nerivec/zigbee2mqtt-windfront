@@ -2,11 +2,14 @@ import NiceModal from "@ebay/nice-modal-react";
 import React, { lazy, Suspense, useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import { HashRouter, Route, Routes } from "react-router";
+import { useShallow } from "zustand/react/shallow";
 import NavBarWithNotifications from "./components/navbar/NavBar.js";
 import ScrollToTop from "./components/ScrollToTop.js";
 import Toasts from "./components/Toasts.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
 import i18n from "./i18n/index.js";
+import { LoginPage } from "./pages/LoginPage.js";
+import { useAppStore } from "./store.js";
 import { startWebSocketManager } from "./websocket/WebSocketManager.js";
 
 const HomePage = lazy(async () => await import("./pages/HomePage.js"));
@@ -23,9 +26,16 @@ const SettingsPage = lazy(async () => await import("./pages/SettingsPage.js"));
 const FrontendSettingsPage = lazy(async () => await import("./pages/FrontendSettingsPage.js"));
 
 function App() {
+    const authRequired = useAppStore(useShallow((s) => s.authRequired.some((v) => v === true)));
+
     useEffect(() => {
+        // do the initial startup, will determine if LoginPage needs to be shown or not
         startWebSocketManager();
     }, []);
+
+    if (authRequired) {
+        return <LoginPage />;
+    }
 
     return (
         <HashRouter>

@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Max",
         "done": "Fertig",
-        "enter_auth_token": "Authentifizierungs-Token eingeben",
-        "token": "Token",
         "documentation": "Dokumentation",
         "optional": "Optional",
         "init": "Initialisieren",

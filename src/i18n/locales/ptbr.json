@@ -41,8 +41,6 @@
         "min": "Mín",
         "max": "Máx",
         "done": "Concluído",
-        "enter_auth_token": "Digite o token",
-        "token": "Token",
         "documentation": "Documentação",
         "optional": "Opcional",
         "init": "Iniciar",

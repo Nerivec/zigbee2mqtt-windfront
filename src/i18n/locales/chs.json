@@ -41,8 +41,6 @@
         "min": "最小",
         "max": "最大",
         "done": "完成",
-        "enter_auth_token": "输入认证 Token",
-        "token": "Token",
         "documentation": "文档",
         "optional": "可选",
         "init": "初始化",

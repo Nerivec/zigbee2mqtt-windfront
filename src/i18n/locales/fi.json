@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Maks",
         "done": "Valmis",
-        "enter_auth_token": "Syötä auth-token",
-        "token": "Token",
         "documentation": "Dokumentaatio",
         "optional": "Valinnainen",
         "init": "Alusta",

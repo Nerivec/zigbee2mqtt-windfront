@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Maks",
         "done": "Bitti",
-        "enter_auth_token": "Kimlik belirtecini girin",
-        "token": "Token",
         "documentation": "Dokümantasyon",
         "optional": "İsteğe bağlı",
         "init": "Başlat",

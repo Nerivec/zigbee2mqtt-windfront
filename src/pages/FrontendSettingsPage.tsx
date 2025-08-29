@@ -7,6 +7,7 @@ import NumberField from "../components/form-fields/NumberField.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import {
     AUTH_FLAG_KEY,
+    AUTH_TOKEN_KEY,
     HIDE_STATIC_INFO_ALERTS,
     HOMEPAGE_KEY,
     I18NEXTLNG_KEY,
@@ -19,7 +20,6 @@ import {
     TABLE_FILTERS_KEY,
     TABLE_SORTING_KEY,
     THEME_KEY,
-    TOKEN_KEY,
 } from "../localStoreConsts.js";
 import { MULTI_INSTANCE } from "../store.js";
 
@@ -74,8 +74,13 @@ export default function FrontendSettingsPage() {
     }, []);
 
     const resetAuth = useCallback(() => {
-        store2.remove(TOKEN_KEY);
-        store2.remove(AUTH_FLAG_KEY);
+        const keys = store2.keys();
+
+        for (const key of keys) {
+            if (key.startsWith(AUTH_TOKEN_KEY) || key.startsWith(AUTH_FLAG_KEY)) {
+                store2.remove(key);
+            }
+        }
 
         window.location.reload();
     }, []);

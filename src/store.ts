@@ -48,6 +48,8 @@ export interface AppState {
 
     //-- WebSocket
     /** idx is API_URLS/source idx */
+    authRequired: boolean[];
+    /** idx is API_URLS/source idx */
     readyStates: number[];
     webSocketMetrics: Record<number, WebSocketMetrics>;
 
@@ -89,6 +91,7 @@ interface AppActions {
     addGeneratedExternalDefinition: (sourceIdx: number, payload: Zigbee2MQTTAPI["bridge/response/device/generate_external_definition"]) => void;
 
     //-- WebSocket
+    setAuthRequired: (sourceIdx: number, required: boolean) => void;
     setReadyState: (sourceIdx: number, readyState: number) => void;
     /** @see setPendingRequestsCount for `pendingRequests` */
     updateWebSocketMetrics: (sourceIdx: number, delta: Omit<WebSocketMetrics, "pendingRequests">) => void;
@@ -138,6 +141,7 @@ const makeInitialState = (): AppState => {
     const networkMapIsLoading: AppState["networkMapIsLoading"] = {};
     const preparingBackup: AppState["preparingBackup"] = {};
     const backup: AppState["backup"] = {};
+    const authRequired: AppState["authRequired"] = [];
     const readyStates: AppState["readyStates"] = [];
     const webSocketMetrics: AppState["webSocketMetrics"] = {};
 
@@ -304,6 +308,7 @@ const makeInitialState = (): AppState => {
         networkMapIsLoading[idx] = false;
         preparingBackup[idx] = false;
         backup[idx] = "";
+        authRequired[idx] = false;
         readyStates[idx] = WebSocket.CLOSED;
         webSocketMetrics[idx] = {
             messagesSent: 0,
@@ -345,6 +350,7 @@ const makeInitialState = (): AppState => {
         logsLimit: 100,
         notificationsAlert: [false, false],
         toasts: [],
+        authRequired,
         readyStates,
         webSocketMetrics,
     };
@@ -640,6 +646,13 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
         })),
 
     //-- WebSocket
+    setAuthRequired: (sourceIdx, required) =>
+        set((state) => {
+            const authRequired = Array.from(state.authRequired);
+            authRequired[sourceIdx] = required;
+
+            return { authRequired };
+        }),
     setReadyState: (sourceIdx, readyState) =>
         set((state) => {
             const readyStates = Array.from(state.readyStates);

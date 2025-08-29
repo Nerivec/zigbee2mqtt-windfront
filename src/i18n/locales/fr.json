@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Max",
         "done": "Terminé",
-        "enter_auth_token": "Entrer le jeton d'authentification",
-        "token": "Jeton",
         "documentation": "Documentation",
         "optional": "Optionnel",
         "init": "Initialiser",

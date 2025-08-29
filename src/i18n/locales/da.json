@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Maks",
         "done": "Færdig",
-        "enter_auth_token": "Indtast token",
-        "token": "Token",
         "documentation": "Dokumentation",
         "optional": "Valgfrit",
         "init": "Init",

@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Max",
         "done": "Eginda",
-        "enter_auth_token": "Sartu tokena",
-        "token": "Token",
         "documentation": "Dokumentazioa",
         "optional": "Aukerazkoa",
         "init": "Hasieratu",
