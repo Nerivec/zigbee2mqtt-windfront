@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { LabelVisibilityType, LayoutTypes } from "reagraph";
 import store2 from "store2";
 import ConfirmButton from "../components/ConfirmButton.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import NumberField from "../components/form-fields/NumberField.js";
 import SelectField from "../components/form-fields/SelectField.js";
-import type { NetworkRawDisplayType } from "../components/network-page/index.js";
 import {
     AUTH_FLAG_KEY,
     HIDE_STATIC_INFO_ALERTS,
@@ -14,11 +12,7 @@ import {
     I18NEXTLNG_KEY,
     MAX_ON_SCREEN_NOTIFICATIONS_KEY,
     MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY,
-    NETWORK_MAP_LABEL_TYPE_KEY,
-    NETWORK_MAP_LAYOUT_TYPE_KEY,
-    NETWORK_MAP_LINK_DISTANCE_KEY,
-    NETWORK_MAP_NODE_STRENGTH_KEY,
-    NETWORK_MAP_SHOW_ICONS_KEY,
+    NETWORK_MAP_CONFIG_KEY,
     NETWORK_RAW_DISPLAY_TYPE_KEY,
     PERMIT_JOIN_TIME_KEY,
     TABLE_COLUMNS_KEY,
@@ -26,6 +20,7 @@ import {
     THEME_KEY,
     TOKEN_KEY,
 } from "../localStoreConsts.js";
+import { API_URLS } from "../store.js";
 
 export default function FrontendSettingsPage() {
     const { t } = useTranslation(["settings", "navbar", "network", "common"]);
@@ -33,12 +28,6 @@ export default function FrontendSettingsPage() {
     const [permitJoinTime, setPermitJoinTime] = useState<number>(store2.get(PERMIT_JOIN_TIME_KEY, 254));
     const [maxOnScreenNotifications, setMaxOnScreenNotifications] = useState<number>(store2.get(MAX_ON_SCREEN_NOTIFICATIONS_KEY, 3));
     const [hideStaticInfoAlerts, setHideStaticInfoAlerts] = useState<boolean>(store2.get(HIDE_STATIC_INFO_ALERTS, false));
-    const [networkRawDisplayType, setNetworkRawDisplayType] = useState<NetworkRawDisplayType>(store2.get(NETWORK_RAW_DISPLAY_TYPE_KEY, "data"));
-    const [networkMapLayoutType, setNetworkMapLayoutType] = useState<LayoutTypes>(store2.get(NETWORK_MAP_LAYOUT_TYPE_KEY, "forceDirected2d"));
-    const [networkMapLabelType, setNetworkMapLabelType] = useState<LabelVisibilityType>(store2.get(NETWORK_MAP_LABEL_TYPE_KEY, "all"));
-    const [networkMapNodeStrength, setNetworkMapNodeStrength] = useState<number>(store2.get(NETWORK_MAP_NODE_STRENGTH_KEY, -750));
-    const [networkMapLinkDistance, setNetworkMapLinkDistance] = useState<number>(store2.get(NETWORK_MAP_LINK_DISTANCE_KEY, 50));
-    const [networkMapShowIcons, setNetworkMapShowIcons] = useState<boolean>(store2.get(NETWORK_MAP_SHOW_ICONS_KEY, false));
     const [miShowSourceName, setMiShowSourceName] = useState<boolean>(store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
 
     useEffect(() => {
@@ -58,30 +47,6 @@ export default function FrontendSettingsPage() {
     }, [hideStaticInfoAlerts]);
 
     useEffect(() => {
-        store2.set(NETWORK_RAW_DISPLAY_TYPE_KEY, networkRawDisplayType);
-    }, [networkRawDisplayType]);
-
-    useEffect(() => {
-        store2.set(NETWORK_MAP_LAYOUT_TYPE_KEY, networkMapLayoutType);
-    }, [networkMapLayoutType]);
-
-    useEffect(() => {
-        store2.set(NETWORK_MAP_LABEL_TYPE_KEY, networkMapLabelType);
-    }, [networkMapLabelType]);
-
-    useEffect(() => {
-        store2.set(NETWORK_MAP_NODE_STRENGTH_KEY, networkMapNodeStrength);
-    }, [networkMapNodeStrength]);
-
-    useEffect(() => {
-        store2.set(NETWORK_MAP_LINK_DISTANCE_KEY, networkMapLinkDistance);
-    }, [networkMapLinkDistance]);
-
-    useEffect(() => {
-        store2.set(NETWORK_MAP_SHOW_ICONS_KEY, networkMapShowIcons);
-    }, [networkMapShowIcons]);
-
-    useEffect(() => {
         store2.set(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, miShowSourceName);
     }, [miShowSourceName]);
 
@@ -94,11 +59,7 @@ export default function FrontendSettingsPage() {
         store2.remove(MAX_ON_SCREEN_NOTIFICATIONS_KEY);
         store2.remove(HIDE_STATIC_INFO_ALERTS);
         store2.remove(NETWORK_RAW_DISPLAY_TYPE_KEY);
-        store2.remove(NETWORK_MAP_LAYOUT_TYPE_KEY);
-        store2.remove(NETWORK_MAP_LABEL_TYPE_KEY);
-        store2.remove(NETWORK_MAP_NODE_STRENGTH_KEY);
-        store2.remove(NETWORK_MAP_LINK_DISTANCE_KEY);
-        store2.remove(NETWORK_MAP_SHOW_ICONS_KEY);
+        store2.remove(NETWORK_MAP_CONFIG_KEY);
         store2.remove(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY);
         store2.remove(I18NEXTLNG_KEY);
 
@@ -198,87 +159,19 @@ export default function FrontendSettingsPage() {
                     defaultChecked={hideStaticInfoAlerts}
                 />
             </div>
-            <h2 className="text-lg mt-2">{t("network_raw")}</h2>
-            <div className="flex flex-row flex-wrap gap-4">
-                <SelectField
-                    name="network:display_type"
-                    label={t("network:display_type")}
-                    onChange={(e) => !e.target.validationMessage && setNetworkRawDisplayType(e.target.value as NetworkRawDisplayType)}
-                    value={networkRawDisplayType}
-                    required
-                >
-                    <option value="data">{t("network:data")}</option>
-                    <option value="map">{t("network:map")}</option>
-                </SelectField>
-            </div>
-            <h2 className="text-lg mt-2">{t("network_map")}</h2>
-            <div className="flex flex-row flex-wrap gap-4">
-                <SelectField
-                    name="network:layout_type"
-                    label={t("network:layout_type")}
-                    onChange={(e) => !e.target.validationMessage && setNetworkMapLayoutType(e.target.value as LayoutTypes)}
-                    value={networkMapLayoutType}
-                    required
-                >
-                    <option value="forceDirected2d">forceDirected2d</option>
-                    <option value="forceDirected3d">forceDirected3d</option>
-                    <option value="radialOut2d">radialOut2d</option>
-                    <option value="radialOut3d">radialOut3d</option>
-                    <option value="concentric2d">concentric2d</option>
-                    <option value="concentric3d">concentric3d</option>
-                    <option value="circular2d">circular2d</option>
-                </SelectField>
-                <SelectField
-                    name="network:label_type"
-                    label={t("network:label_type")}
-                    onChange={(e) => !e.target.validationMessage && setNetworkMapLabelType(e.target.value as LabelVisibilityType)}
-                    value={networkMapLabelType}
-                    required
-                >
-                    <option value="all">all</option>
-                    <option value="auto">auto</option>
-                    <option value="none">none</option>
-                    <option value="nodes">nodes</option>
-                    <option value="edges">edges</option>
-                </SelectField>
-                <div className="min-w-xs">
-                    <NumberField
-                        name="network:node_strength"
-                        label={t("network:node_strength")}
-                        onSubmit={(value, valid) => valid && value !== "" && setNetworkMapNodeStrength(value)}
-                        min={-1000}
-                        max={-100}
-                        step={10}
-                        initialValue={networkMapNodeStrength}
-                    />
-                </div>
-                <div className="min-w-xs">
-                    <NumberField
-                        name="network:link_distance"
-                        label={t("network:link_distance")}
-                        onSubmit={(value, valid) => valid && value !== "" && setNetworkMapLinkDistance(value)}
-                        min={10}
-                        max={200}
-                        step={5}
-                        initialValue={networkMapLinkDistance}
-                    />
-                </div>
-                <CheckboxField
-                    name="network:show_icons"
-                    label={t("network:show_icons")}
-                    onChange={(event) => setNetworkMapShowIcons(event.target.checked)}
-                    defaultChecked={networkMapShowIcons}
-                />
-            </div>
-            <h2 className="text-lg mt-2">{t("common:multi_instance")}</h2>
-            <div className="flex flex-row flex-wrap gap-4">
-                <CheckboxField
-                    name="common:show_source_name"
-                    label={t("common:show_source_name")}
-                    onChange={(event) => setMiShowSourceName(event.target.checked)}
-                    defaultChecked={miShowSourceName}
-                />
-            </div>
+            {API_URLS.length > 1 && (
+                <>
+                    <h2 className="text-lg mt-2">{t("common:multi_instance")}</h2>
+                    <div className="flex flex-row flex-wrap gap-4">
+                        <CheckboxField
+                            name="common:show_source_name"
+                            label={t("common:show_source_name")}
+                            onChange={(event) => setMiShowSourceName(event.target.checked)}
+                            defaultChecked={miShowSourceName}
+                        />
+                    </div>
+                </>
+            )}
         </>
     );
 }

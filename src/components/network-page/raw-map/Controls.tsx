@@ -12,23 +12,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import saveAs from "file-saver";
-import { type ChangeEvent, memo, type RefObject, useCallback, useMemo } from "react";
+import { type ChangeEvent, type Dispatch, memo, type RefObject, type SetStateAction, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import type { GraphCanvasRef, GraphNode, LabelVisibilityType, LayoutTypes } from "reagraph";
 import Button from "../../Button.js";
 import { EDGE_RELATIONSHIP_FILL_COLORS, ZigbeeRelationship } from "../index.js";
+import type { NetworkMapConfig } from "../RawNetworkMap.js";
 import SliderField from "./SliderField.js";
 
 type ControlsProps = {
     graphRef: RefObject<GraphCanvasRef | null>;
-    layoutType: LayoutTypes;
-    onLayoutTypeChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-    labelType: LabelVisibilityType;
-    onLabelTypeChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-    nodeStrength: number;
-    onNodeStrengthChange: (value: number) => void;
-    linkDistance: number;
-    onLinkDistanceChange: (value: number) => void;
+    config: NetworkMapConfig;
+    setConfig: Dispatch<SetStateAction<NetworkMapConfig>>;
     nodes: GraphNode[];
     showParents: boolean;
     setShowParents: (value: boolean) => void;
@@ -36,21 +31,13 @@ type ControlsProps = {
     setShowChildren: (value: boolean) => void;
     showSiblings: boolean;
     setShowSiblings: (value: boolean) => void;
-    showIcons: boolean;
-    setShowIcons: (value: boolean) => void;
 };
 
 const Controls = memo(
     ({
         graphRef,
-        layoutType,
-        onLayoutTypeChange,
-        labelType,
-        onLabelTypeChange,
-        nodeStrength,
-        onNodeStrengthChange,
-        linkDistance,
-        onLinkDistanceChange,
+        config,
+        setConfig,
         nodes,
         showParents,
         setShowParents,
@@ -58,8 +45,6 @@ const Controls = memo(
         setShowChildren,
         showSiblings,
         setShowSiblings,
-        showIcons,
-        setShowIcons,
     }: ControlsProps) => {
         const { t } = useTranslation(["network", "common"]);
 
@@ -174,9 +159,9 @@ const Controls = memo(
                         />
                     </Button>
                     <Button<boolean>
-                        className={`btn btn-square btn-neutral btn-sm ${showIcons ? "" : "btn-outline"}`}
-                        item={!showIcons}
-                        onClick={setShowIcons}
+                        className={`btn btn-square btn-neutral btn-sm ${config.showIcons ? "" : "btn-outline"}`}
+                        item={!config.showIcons}
+                        onClick={(value) => setConfig((prev) => ({ ...prev, showIcons: value }))}
                         title={t("icons")}
                     >
                         <FontAwesomeIcon icon={faIcons} />
@@ -187,7 +172,12 @@ const Controls = memo(
                     </select>
                 </div>
                 <div className="absolute z-9 top-0 right-0 p-1 flex flex-row flex-wrap gap-1 items-start justify-end">
-                    <select className="select select-sm w-36" title={t("layout_type")} value={layoutType} onChange={onLayoutTypeChange}>
+                    <select
+                        className="select select-sm w-36"
+                        title={t("layout_type")}
+                        value={config.layoutType}
+                        onChange={(event) => event.target.value && setConfig((prev) => ({ ...prev, layoutType: event.target.value as LayoutTypes }))}
+                    >
                         <option value="" disabled>
                             {t("layout_type")}
                         </option>
@@ -199,7 +189,14 @@ const Controls = memo(
                         <option value="concentric3d">concentric3d</option>
                         <option value="circular2d">circular2d</option>
                     </select>
-                    <select className="select select-sm w-36" title={t("label_type")} value={labelType} onChange={onLabelTypeChange}>
+                    <select
+                        className="select select-sm w-36"
+                        title={t("label_type")}
+                        value={config.labelType}
+                        onChange={(event) =>
+                            event.target.value && setConfig((prev) => ({ ...prev, labelType: event.target.value as LabelVisibilityType }))
+                        }
+                    >
                         <option value="" disabled>
                             {t("label_type")}
                         </option>
@@ -215,21 +212,21 @@ const Controls = memo(
                         name="node_strength"
                         label={t("node_strength")}
                         icon={faMagnet}
-                        onSubmit={(value, valid) => valid && typeof value === "number" && onNodeStrengthChange(value)}
+                        onSubmit={(value, valid) => valid && typeof value === "number" && setConfig((prev) => ({ ...prev, nodeStrength: value }))}
                         min={-1000}
                         max={-100}
                         step={10}
-                        defaultValue={nodeStrength}
+                        defaultValue={config.nodeStrength}
                     />
                     <SliderField
                         name="link_distance"
                         label={t("link_distance")}
                         icon={faArrowsLeftRightToLine}
-                        onSubmit={(value, valid) => valid && typeof value === "number" && onLinkDistanceChange(value)}
+                        onSubmit={(value, valid) => valid && typeof value === "number" && setConfig((prev) => ({ ...prev, linkDistance: value }))}
                         min={10}
                         max={200}
                         step={5}
-                        defaultValue={linkDistance}
+                        defaultValue={config.linkDistance}
                     />
                 </div>
                 <div className="absolute z-9 bottom-0 right-0 p-1 flex flex-row flex-wrap gap-1 items-end justify-end">

@@ -1,5 +1,5 @@
 import merge from "lodash/merge.js";
-import { type ChangeEvent, memo, useCallback, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
     GraphCanvas,
@@ -16,13 +16,7 @@ import store2 from "store2";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
 import genericDevice from "../../images/generic-zigbee-device.png";
-import {
-    NETWORK_MAP_LABEL_TYPE_KEY,
-    NETWORK_MAP_LAYOUT_TYPE_KEY,
-    NETWORK_MAP_LINK_DISTANCE_KEY,
-    NETWORK_MAP_NODE_STRENGTH_KEY,
-    NETWORK_MAP_SHOW_ICONS_KEY,
-} from "../../localStoreConsts.js";
+import { NETWORK_MAP_CONFIG_KEY } from "../../localStoreConsts.js";
 import { useAppStore } from "../../store.js";
 import fontUrl from "./../../styles/NotoSans-Regular.ttf";
 import { getZ2MDeviceImage } from "../device/index.js";
@@ -30,6 +24,14 @@ import { cssColorToRgba, EDGE_RELATIONSHIP_FILL_COLORS, type NetworkMapLink, NOD
 import ContextMenu from "./raw-map/ContextMenu.js";
 import Controls from "./raw-map/Controls.js";
 import Legend from "./raw-map/Legend.js";
+
+export type NetworkMapConfig = {
+    layoutType: LayoutTypes;
+    labelType: LabelVisibilityType;
+    nodeStrength: number;
+    linkDistance: number;
+    showIcons: boolean;
+};
 
 type RawNetworkMapProps = {
     sourceIdx: number;
@@ -39,15 +41,33 @@ type RawNetworkMapProps = {
 const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     const { t } = useTranslation("network");
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
-    const [layoutType, setLayoutType] = useState<LayoutTypes>(store2.get(NETWORK_MAP_LAYOUT_TYPE_KEY, "forceDirected2d"));
-    const [labelType, setLabelType] = useState<LabelVisibilityType>(store2.get(NETWORK_MAP_LABEL_TYPE_KEY, "all"));
-    const [nodeStrength, setNodeStrength] = useState<number>(store2.get(NETWORK_MAP_NODE_STRENGTH_KEY, -750));
-    const [linkDistance, setLinkDistance] = useState<number>(store2.get(NETWORK_MAP_LINK_DISTANCE_KEY, 50));
+    const [config, setConfig] = useState<NetworkMapConfig>(
+        store2.get(NETWORK_MAP_CONFIG_KEY, {
+            layoutType: "forceDirected2d",
+            labelType: "all",
+            nodeStrength: -750,
+            linkDistance: 50,
+            showIcons: false,
+        } satisfies NetworkMapConfig),
+    );
     const [showParents, setShowParents] = useState(true);
     const [showChildren, setShowChildren] = useState(true);
     const [showSiblings, setShowSiblings] = useState(true);
-    const [showIcons, setShowIcons] = useState<boolean>(store2.get(NETWORK_MAP_SHOW_ICONS_KEY, false));
     const graphRef = useRef<GraphCanvasRef | null>(null);
+
+    useEffect(() => {
+        store2.set(NETWORK_MAP_CONFIG_KEY, config);
+    }, [config]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
+    useEffect(() => {
+        if (graphRef.current) {
+            graphRef.current.resetControls();
+            graphRef.current.centerGraph();
+            graphRef.current.fitNodesInView();
+        }
+    }, [config.layoutType]);
+
     const theme: Theme = useMemo(() => {
         // re-used for perf
         const ctx = new OffscreenCanvas(1, 1).getContext("2d")!;
@@ -115,7 +135,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
 
             let icon: string | undefined;
 
-            if (showIcons && device) {
+            if (config.showIcons && device) {
                 icon = device.definition?.icon ?? getZ2MDeviceImage(device);
 
                 if (icon === genericDevice) {
@@ -216,7 +236,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         }
 
         return [computedNodes, computedEdges];
-    }, [map, showParents, showChildren, showSiblings, t, devices, showIcons]);
+    }, [map, showParents, showChildren, showSiblings, t, devices, config.showIcons]);
 
     const { selections, actives, onNodeClick, onCanvasClick } = useSelection({
         ref: graphRef,
@@ -228,52 +248,14 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         focusOnSelect: false,
     });
 
-    const onLayoutTypeChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
-        if (event.target.value) {
-            store2.set(NETWORK_MAP_LAYOUT_TYPE_KEY, event.target.value);
-            setLayoutType(event.target.value as LayoutTypes);
-            graphRef.current?.resetControls();
-            graphRef.current?.centerGraph();
-            graphRef.current?.fitNodesInView();
-        }
-    }, []);
-
-    const onLabelTypeChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
-        if (event.target.value) {
-            store2.set(NETWORK_MAP_LABEL_TYPE_KEY, event.target.value);
-            setLabelType(event.target.value as LabelVisibilityType);
-        }
-    }, []);
-
-    const onNodeStrengthChange = useCallback((value: number) => {
-        store2.set(NETWORK_MAP_NODE_STRENGTH_KEY, value);
-        setNodeStrength(value);
-    }, []);
-
-    const onLinkDistanceChange = useCallback((value: number) => {
-        store2.set(NETWORK_MAP_LINK_DISTANCE_KEY, value);
-        setLinkDistance(value);
-    }, []);
-
-    const onShowIconsChange = useCallback((value: boolean) => {
-        store2.set(NETWORK_MAP_SHOW_ICONS_KEY, value);
-        setShowIcons(value);
-    }, []);
-
     return (
         <>
             <Legend />
             <div className="relative h-screen">
                 <Controls
                     graphRef={graphRef}
-                    layoutType={layoutType}
-                    onLayoutTypeChange={onLayoutTypeChange}
-                    labelType={labelType}
-                    onLabelTypeChange={onLabelTypeChange}
-                    nodeStrength={nodeStrength}
-                    onNodeStrengthChange={onNodeStrengthChange}
-                    linkDistance={linkDistance}
-                    onLinkDistanceChange={onLinkDistanceChange}
+                    config={config}
+                    setConfig={setConfig}
                     nodes={nodes}
                     showParents={showParents}
                     setShowParents={setShowParents}
@@ -281,30 +263,28 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                     setShowChildren={setShowChildren}
                     showSiblings={showSiblings}
                     setShowSiblings={setShowSiblings}
-                    showIcons={showIcons}
-                    setShowIcons={onShowIconsChange}
                 />
                 <GraphCanvas
                     ref={graphRef}
                     theme={theme}
                     nodes={nodes}
                     edges={edges}
-                    clusterAttribute={layoutType.startsWith("forceDirected") ? "parent" : undefined}
+                    clusterAttribute={config.layoutType.startsWith("forceDirected") ? "parent" : undefined}
                     selections={selections}
                     actives={actives}
                     onCanvasClick={onCanvasClick}
                     onNodeClick={onNodeClick}
-                    layoutType={layoutType}
+                    layoutType={config.layoutType}
                     layoutOverrides={{
-                        nodeStrength,
-                        linkDistance,
+                        nodeStrength: config.nodeStrength,
+                        linkDistance: config.linkDistance,
                     }}
                     sizingType="centrality"
-                    labelType={labelType}
+                    labelType={config.labelType}
                     labelFontUrl={fontUrl}
                     edgeLabelPosition="natural"
                     lassoType="node"
-                    cameraMode={layoutType.endsWith("3d") ? "rotate" : "pan"}
+                    cameraMode={config.layoutType.endsWith("3d") ? "rotate" : "pan"}
                     draggable
                     animated={false}
                     contextMenu={({ data: { data }, onCollapse, isCollapsed, canCollapse, onClose }) =>
