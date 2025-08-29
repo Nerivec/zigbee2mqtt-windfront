@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Max",
         "done": "Hotovo",
-        "enter_auth_token": "Vložte token",
-        "token": "Token",
         "documentation": "Dokumentace",
         "optional": "Volitelné",
         "init": "Inicializovat",

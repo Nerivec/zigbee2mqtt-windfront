@@ -1,11 +1,9 @@
-import NiceModal from "@ebay/nice-modal-react";
 import store2 from "store2";
 import type { Zigbee2MQTTAPI, Zigbee2MQTTRequestEndpoints, Zigbee2MQTTResponse } from "zigbee2mqtt";
-import { AuthModal } from "../components/modal/components/AuthModal.js";
 import { AVAILABILITY_FEATURE_TOPIC_ENDING } from "../consts.js";
 import { USE_PROXY } from "../envs.js";
-import { AUTH_FLAG_KEY, TOKEN_KEY } from "../localStoreConsts.js";
-import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
+import { AUTH_FLAG_KEY, AUTH_TOKEN_KEY } from "../localStoreConsts.js";
+import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { LogMessage, Message, RecursiveMutable, ResponseMessage } from "../types.js";
 import { randomString, stringifyWithUndefinedAsNull } from "../utils.js";
 
@@ -77,12 +75,6 @@ class WebSocketManager {
                 dirtyMetrics: false,
             });
         }
-    }
-
-    start(): void {
-        for (const conn of this.#connections) {
-            this.#open(conn);
-        }
 
         window.addEventListener("beforeunload", () => {
             this.#prepareUnload();
@@ -91,6 +83,16 @@ class WebSocketManager {
         window.addEventListener("pagehide", () => {
             this.#prepareUnload();
         });
+    }
+
+    start(): void {
+        if (this.#shuttingDown) {
+            return;
+        }
+
+        for (const conn of this.#connections) {
+            this.#open(conn);
+        }
     }
 
     destroy(reason?: string): void {
@@ -237,7 +239,7 @@ class WebSocketManager {
         }
     }
 
-    async #buildUrl(idx: number): Promise<string> {
+    #buildUrl(idx: number): string | undefined {
         const raw = API_URLS[idx];
         const protocol = window.location.protocol === "https:" ? "wss" : "ws";
         let url = new URL(`${protocol}://${raw}`);
@@ -250,39 +252,19 @@ class WebSocketManager {
             );
         }
 
-        if (!MULTI_INSTANCE) {
-            const authRequired = !!store2.get(AUTH_FLAG_KEY);
+        const authRequired = !!store2.get(`${AUTH_FLAG_KEY}_${idx}`);
 
-            if (authRequired) {
-                let token = new URLSearchParams(window.location.search).get("token") ?? (store2.get(TOKEN_KEY) as string | undefined);
+        if (authRequired) {
+            const token = new URLSearchParams(window.location.search).get("token") ?? (store2.get(`${AUTH_TOKEN_KEY}_${idx}`) as string | undefined);
 
-                if (!token) {
-                    await new Promise<void>((resolve) => {
-                        NiceModal.show(AuthModal, {
-                            onAuth: (newToken: string) => {
-                                store2.set(TOKEN_KEY, newToken);
+            if (!token) {
+                // trigger LoginPage
+                useAppStore.getState().setAuthRequired(idx, true);
 
-                                token = newToken;
-
-                                resolve();
-                            },
-                        });
-                    });
-                }
-
-                if (token) {
-                    url.searchParams.append("token", token);
-                } else {
-                    useAppStore.getState().addToast({
-                        sourceIdx: idx,
-                        topic: "Auth",
-                        status: "error",
-                        error: "Invalid token",
-                    });
-
-                    throw new Error("Invalid auth token");
-                }
+                return;
             }
+
+            url.searchParams.append("token", token);
         }
 
         return url.toString();
@@ -293,25 +275,26 @@ class WebSocketManager {
             return;
         }
 
-        this.#buildUrl(conn.idx).then((finalUrl) => {
-            if (this.#destroyed || this.#shuttingDown || conn.socket) {
-                return;
-            }
+        const finalUrl = this.#buildUrl(conn.idx);
 
-            try {
-                conn.socket = new WebSocket(finalUrl);
+        if (!finalUrl) {
+            // required auth token missing, LoginPage will take over for this conn
+            return;
+        }
 
-                useAppStore.getState().setReadyState(conn.idx, conn.socket?.readyState ?? WebSocket.CONNECTING);
-                conn.socket.addEventListener("open", () => this.#onOpen(conn));
-                conn.socket.addEventListener("message", (e) => this.#onMessage(conn, e));
-                conn.socket.addEventListener("close", (e) => this.#onClose(conn, e));
-                conn.socket.addEventListener("error", () => this.#onError(conn));
-            } catch (error) {
-                console.error("Failed to create WebSocket", error);
+        try {
+            conn.socket = new WebSocket(finalUrl);
 
-                this.#scheduleReconnect(conn);
-            }
-        });
+            useAppStore.getState().setReadyState(conn.idx, conn.socket?.readyState ?? WebSocket.CONNECTING);
+            conn.socket.addEventListener("open", () => this.#onOpen(conn));
+            conn.socket.addEventListener("message", (e) => this.#onMessage(conn, e));
+            conn.socket.addEventListener("close", (e) => this.#onClose(conn, e));
+            conn.socket.addEventListener("error", () => this.#onError(conn));
+        } catch (error) {
+            console.error("Failed to create WebSocket", error);
+
+            this.#scheduleReconnect(conn);
+        }
     }
 
     #onOpen(conn: Connection): void {
@@ -333,9 +316,12 @@ class WebSocketManager {
         useAppStore.getState().setReadyState(conn.idx, conn.socket?.readyState ?? WebSocket.CLOSED);
         console.log("WebSocket closed", conn, event);
 
-        if (event.code === UNAUTHORIZED_ERROR_CODE) {
-            store2.set(AUTH_FLAG_KEY, true);
-            store2.remove(TOKEN_KEY);
+        const unauthorized = event.code === UNAUTHORIZED_ERROR_CODE;
+
+        if (unauthorized) {
+            store2.set(`${AUTH_FLAG_KEY}_${conn.idx}`, true);
+            store2.remove(`${AUTH_TOKEN_KEY}_${conn.idx}`);
+            useAppStore.getState().setAuthRequired(conn.idx, true);
         }
 
         for (const [, p] of conn.pending) {
@@ -345,7 +331,13 @@ class WebSocketManager {
 
         conn.pending.clear();
         useAppStore.getState().setPendingRequestsCount(conn.idx, 0);
-        this.#scheduleReconnect(conn);
+
+        if (!unauthorized) {
+            this.#scheduleReconnect(conn);
+        } else {
+            // LoginPage handles reconnect here, so, allow `#open` to trigger again for this conn
+            conn.socket = undefined;
+        }
     }
 
     #onError(conn: Connection): void {

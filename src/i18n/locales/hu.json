@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Max",
         "done": "Kész",
-        "enter_auth_token": "Auth token megadása",
-        "token": "Token",
         "documentation": "Dokumentáció",
         "optional": "Opcionális",
         "init": "Inicializálás",

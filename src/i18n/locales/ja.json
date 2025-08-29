@@ -41,8 +41,6 @@
         "min": "最小",
         "max": "最大",
         "done": "完了",
-        "enter_auth_token": "認証トークンを入力",
-        "token": "トークン",
         "documentation": "ドキュメント",
         "optional": "任意",
         "init": "初期化",
