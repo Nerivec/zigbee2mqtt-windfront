@@ -1,10 +1,11 @@
 import NiceModal from "@ebay/nice-modal-react";
 import store2 from "store2";
 import type { Zigbee2MQTTAPI, Zigbee2MQTTRequestEndpoints, Zigbee2MQTTResponse } from "zigbee2mqtt";
+import { AuthModal } from "../components/modal/components/AuthModal.js";
 import { AVAILABILITY_FEATURE_TOPIC_ENDING } from "../consts.js";
 import { USE_PROXY } from "../envs.js";
 import { AUTH_FLAG_KEY, TOKEN_KEY } from "../localStoreConsts.js";
-import { API_NAMES, API_URLS, useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { LogMessage, Message, RecursiveMutable, ResponseMessage } from "../types.js";
 import { randomString, stringifyWithUndefinedAsNull } from "../utils.js";
 
@@ -76,7 +77,9 @@ class WebSocketManager {
                 dirtyMetrics: false,
             });
         }
+    }
 
+    start(): void {
         for (const conn of this.#connections) {
             this.#open(conn);
         }
@@ -247,27 +250,38 @@ class WebSocketManager {
             );
         }
 
-        const authRequired = !!store2.get(AUTH_FLAG_KEY);
+        if (!MULTI_INSTANCE) {
+            const authRequired = !!store2.get(AUTH_FLAG_KEY);
 
-        if (authRequired) {
-            let token = new URLSearchParams(window.location.search).get("token") ?? (store2.get(TOKEN_KEY) as string | undefined);
+            if (authRequired) {
+                let token = new URLSearchParams(window.location.search).get("token") ?? (store2.get(TOKEN_KEY) as string | undefined);
 
-            if (!token) {
-                await new Promise<void>((resolve) => {
-                    NiceModal.show("auth-form", {
-                        onAuth: (newToken: string) => {
-                            store2.set(TOKEN_KEY, newToken);
+                if (!token) {
+                    await new Promise<void>((resolve) => {
+                        NiceModal.show(AuthModal, {
+                            onAuth: (newToken: string) => {
+                                store2.set(TOKEN_KEY, newToken);
 
-                            token = newToken;
+                                token = newToken;
 
-                            resolve();
-                        },
+                                resolve();
+                            },
+                        });
                     });
-                });
-            }
+                }
 
-            if (token) {
-                url.searchParams.append("token", token);
+                if (token) {
+                    url.searchParams.append("token", token);
+                } else {
+                    useAppStore.getState().addToast({
+                        sourceIdx: idx,
+                        topic: "Auth",
+                        status: "error",
+                        error: "Invalid token",
+                    });
+
+                    throw new Error("Invalid auth token");
+                }
             }
         }
 
@@ -737,8 +751,8 @@ if (import.meta.hot) {
     });
 }
 
-export function getWebSocketManager(): WebSocketManager {
-    return manager;
+export function startWebSocketManager(): void {
+    manager.start();
 }
 
 export async function sendMessage<T extends Zigbee2MQTTRequestEndpoints>(sourceIdx: number, topic: T, payload: Zigbee2MQTTAPI[T]): Promise<void> {
