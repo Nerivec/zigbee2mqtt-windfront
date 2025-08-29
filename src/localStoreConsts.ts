@@ -11,7 +11,7 @@ export const MAX_ON_SCREEN_NOTIFICATIONS_KEY = "max-on-screen-notifications";
 export const HIDE_STATIC_INFO_ALERTS = "hide-static-info-alerts";
 
 export const TABLE_FILTERS_KEY = "table-filters";
-export const TABLE_COLUMN_VISIBILITY_KEY = "table-column-visibility";
+export const TABLE_COLUMNS_KEY = "table-columns";
 
 //-- Network
 export const NETWORK_RAW_DISPLAY_TYPE_KEY = "network-raw-display-type";

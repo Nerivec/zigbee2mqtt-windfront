@@ -15,7 +15,7 @@ import {
 } from "@tanstack/react-table";
 import { useCallback, useEffect, useState } from "react";
 import store2 from "store2";
-import { TABLE_COLUMN_VISIBILITY_KEY, TABLE_FILTERS_KEY } from "../localStoreConsts.js";
+import { TABLE_COLUMNS_KEY, TABLE_FILTERS_KEY } from "../localStoreConsts.js";
 
 declare module "@tanstack/react-table" {
     // allows us to define custom properties for our columns
@@ -41,9 +41,9 @@ export interface UseTableProps<T> {
 }
 
 export function useTable<T>({ id, columns, data, visibleColumns, sorting, rowSelection, onRowSelectionChange }: UseTableProps<T>) {
-    const columnVisibilityStoreKey = `${TABLE_COLUMN_VISIBILITY_KEY}_${id}`;
+    const columnVisibilityStoreKey = `${TABLE_COLUMNS_KEY}_${id}`;
     const globalFilterStoreKey = `${TABLE_FILTERS_KEY}_${id}_global`;
-    const columnfiltersStoreKey = `${TABLE_FILTERS_KEY}_${id}_columns`;
+    const columnFiltersStoreKey = `${TABLE_FILTERS_KEY}_${id}_columns`;
 
     const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>(store2.get(columnVisibilityStoreKey, visibleColumns ?? {}));
 
@@ -57,11 +57,11 @@ export function useTable<T>({ id, columns, data, visibleColumns, sorting, rowSel
         store2.set(globalFilterStoreKey, globalFilter);
     }, [globalFilterStoreKey, globalFilter]);
 
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(store2.get(columnfiltersStoreKey, []));
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(store2.get(columnFiltersStoreKey, []));
 
     useEffect(() => {
-        store2.set(columnfiltersStoreKey, columnFilters);
-    }, [columnfiltersStoreKey, columnFilters]);
+        store2.set(columnFiltersStoreKey, columnFilters);
+    }, [columnFiltersStoreKey, columnFilters]);
 
     const resetFilters = useCallback(() => {
         setGlobalFilter("");
