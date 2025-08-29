@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL, ZHC_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
-import { API_URLS, useAppStore } from "../../../store.js";
+import { API_URLS, MULTI_INSTANCE, useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { toHex } from "../../../utils.js";
 import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
@@ -338,7 +338,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             {bridgeConfig.mqtt.base_topic}/{device.friendly_name}
                         </div>
                     </div>
-                    {API_URLS.length > 1 && (
+                    {MULTI_INSTANCE && (
                         <div className="stat">
                             <div className="stat-title">{t("common:source")}</div>
                             <div className="stat-value text-xl">

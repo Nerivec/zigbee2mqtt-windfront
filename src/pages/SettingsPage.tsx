@@ -6,7 +6,7 @@ import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-
 import SourceDot from "../components/SourceDot.js";
 import type { TabName as DeviceConsoleTabName } from "../components/settings-page/tabs/DevConsole.js";
 import type { TabName as SettingsTabName } from "../components/settings-page/tabs/Settings.js";
-import { API_URLS } from "../store.js";
+import { API_URLS, MULTI_INSTANCE } from "../store.js";
 import { getValidSourceIdx } from "../utils.js";
 
 type TabName = "about" | "health" | "settings" | "tools" | "bridge" | "dev-console" | "donate";
@@ -111,7 +111,7 @@ export default function SettingsPage() {
 
     const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
-    return API_URLS.length > 1 ? (
+    return MULTI_INSTANCE ? (
         <div className="tabs tabs-border">
             {API_URLS.map((_v, idx) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: const

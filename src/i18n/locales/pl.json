@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "Wersja zigbee-herdsman-converters",
         "zigbee_herdsman_version": "Wersja zigbee-herdsman",
         "localise_images": "Lokalizuj obrazy urządzeń",
-        "frontend_notice": "Te ustawienia są lokalne. Tryb prywatny / czyszczenie cache resetuje.",
+        "frontend_notice": "Te ustawienia (oraz inne na niektórych stronach) są przechowywane lokalnie w Twojej przeglądarce. Korzystanie z okien prywatnych lub czyszczenie pamięci podręcznej przywróci je do wartości domyślnych.",
         "reset_settings": "Reset ustawień",
         "reset_auth": "Reset autoryzacji",
         "reset_all": "Reset wszystko",

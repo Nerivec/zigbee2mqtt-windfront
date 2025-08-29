@@ -4,7 +4,7 @@ import type { Column } from "@tanstack/react-table";
 import { Fragment, type JSX, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import type { useTable } from "../../hooks/useTable.js";
-import { API_URLS } from "../../store.js";
+import { MULTI_INSTANCE } from "../../store.js";
 import Button from "../Button.js";
 import DebouncedInput from "../form-fields/DebouncedInput.js";
 
@@ -117,7 +117,7 @@ function ArrSelectFilter<T>({ column, label }: FilterProps<T>) {
 function SelectFilter<T>({ column, label }: FilterProps<T>) {
     const { t } = useTranslation("common");
 
-    if (API_URLS.length < 2 && column.id === "source") {
+    if (!MULTI_INSTANCE && column.id === "source") {
         return null;
     }
 

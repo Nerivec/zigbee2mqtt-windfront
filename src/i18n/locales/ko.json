@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters 버전",
         "zigbee_herdsman_version": "zigbee-herdsman 버전",
         "localise_images": "디바이스 이미지 지역화",
-        "frontend_notice": "이 설정은 브라우저 로컬에 저장됩니다. 프라이빗 창/캐시 삭제 시 초기화.",
+        "frontend_notice": "이러한 설정(및 일부 페이지의 다른 설정)은 브라우저에 로컬로 저장됩니다. 시크릿/프라이빗 창을 사용하거나 캐시를 지우면 기본값으로 초기화됩니다.",
         "reset_settings": "설정 초기화",
         "reset_auth": "인증 초기화",
         "reset_all": "모두 초기화",

@@ -88,6 +88,8 @@ export const API_NAMES =
     import.meta.env.VITE_Z2M_API_NAMES?.split(",") ??
     (Z2M_API_NAMES.startsWith("${") ? API_URLS.map((_v, idx) => `${idx}`) : Z2M_API_NAMES.split(","));
 
+export const MULTI_INSTANCE = API_URLS.length > 1;
+
 const makeInitialState = (): AppState => {
     const devices: AppState["devices"] = {};
     const deviceStates: AppState["deviceStates"] = {};

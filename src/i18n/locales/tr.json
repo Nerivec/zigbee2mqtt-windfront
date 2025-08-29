@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters sürüm",
         "zigbee_herdsman_version": "zigbee-herdsman sürüm",
         "localise_images": "Cihaz görsellerini yerelleştir",
-        "frontend_notice": "Ayarlar tarayıcıda lokal tutulur. Gizli mod / önbellek temizleme sıfırlar.",
+        "frontend_notice": "Bu ayarlar (ve belirli sayfalardaki diğerleri) tarayıcınızda yerel olarak saklanır. Gizli/özel pencereler kullanmak veya önbelleği temizlemek bunları varsayılan değerlere sıfırlar.",
         "reset_settings": "Ayarları sıfırla",
         "reset_auth": "Kimliği sıfırla",
         "reset_all": "Hepsini sıfırla",

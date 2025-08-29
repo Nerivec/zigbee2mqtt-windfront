@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters 版本",
         "zigbee_herdsman_version": "zigbee-herdsman 版本",
         "localise_images": "在地化裝置圖",
-        "frontend_notice": "設定儲存在本機。無痕/清除快取會重置。",
+        "frontend_notice": "這些設定（以及在某些頁面上的其他設定）會儲存在您的瀏覽器本機。使用無痕/隱私視窗或清除快取會將它們重設為預設值。",
         "reset_settings": "重設設定",
         "reset_auth": "重設認證",
         "reset_all": "全部重設",

@@ -4,7 +4,7 @@ import { memo, useContext } from "react";
 import { ReadyState } from "react-use-websocket";
 import store2 from "store2";
 import { MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY } from "../localStoreConsts.js";
-import { API_NAMES } from "../store.js";
+import { API_NAMES, MULTI_INSTANCE } from "../store.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
 type SourceDotProps = Omit<FontAwesomeIconProps, "icon" | "style" | "title"> & {
@@ -48,7 +48,7 @@ const SourceDot = memo(({ idx, autoHide, alwaysShowName, alwaysHideName, nameCla
     const { readyStates } = useContext(WebSocketApiRouterContext);
     const showName = !alwaysHideName && (alwaysShowName || store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
 
-    if (autoHide && readyStates.length < 2) {
+    if (autoHide && !MULTI_INSTANCE) {
         return null;
     }
 

@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters версия",
         "zigbee_herdsman_version": "zigbee-herdsman версия",
         "localise_images": "Локализирай изображения",
-        "frontend_notice": "Настройките са локални. Частен режим ги занулява.",
+        "frontend_notice": "Тези настройки (и други на определени страници) се съхраняват локално във вашия браузър. Използването на частни прозорци или изчистването на кеша ще ги върне към стойностите по подразбиране.",
         "reset_settings": "Нулиране настройки",
         "reset_auth": "Нулиране auth",
         "reset_all": "Нулиране всичко",

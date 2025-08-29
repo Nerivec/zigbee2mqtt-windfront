@@ -13,7 +13,7 @@ import {
     ZH_RELEASE_TAG_URL,
     ZHC_RELEASE_TAG_URL,
 } from "../../../consts.js";
-import { API_URLS, useAppStore } from "../../../store.js";
+import { API_URLS, MULTI_INSTANCE, useAppStore } from "../../../store.js";
 import SourceDot from "../../SourceDot.js";
 import Stats from "../Stats.js";
 
@@ -119,7 +119,7 @@ export default function About({ sourceIdx }: AboutProps) {
         <div className="flex flex-col gap-3 items-center text-center">
             <ReportProblemLink sourceIdx={sourceIdx} />
             <div className="stats stats-vertical lg:stats-horizontal shadow">
-                {API_URLS.length > 1 && (
+                {MULTI_INSTANCE && (
                     <div className="stat place-items-center">
                         <div className="stat-title">{t("common:source")}</div>
                         <div className="stat-value text-xl">

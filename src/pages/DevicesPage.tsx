@@ -15,7 +15,7 @@ import ModelLink from "../components/value-decorators/ModelLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
-import { API_NAMES, API_URLS, useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { AvailabilityState, Device, DeviceState } from "../types.js";
 import { convertLastSeenToDate, toHex } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
@@ -393,7 +393,7 @@ export default function DevicesPage(): JSX.Element {
         id: "all-devices",
         columns,
         data,
-        visibleColumns: { source: API_URLS.length > 1, type: false, power_source: false, battery_low: false, disabled: false },
+        visibleColumns: { source: MULTI_INSTANCE, type: false, power_source: false, battery_low: false, disabled: false },
         sorting: [{ id: "friendly_name", desc: false }],
     });
 

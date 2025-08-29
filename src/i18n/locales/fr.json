@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "Version de zigbee-herdsman-converters",
         "zigbee_herdsman_version": "Version de zigbee-herdsman",
         "localise_images": "Localiser les images des appareils",
-        "frontend_notice": "Ces paramètres sont stockés localement dans votre navigateur. L'utilisation de fenêtres privées ou la suppression du cache les remettra aux valeurs par défaut.",
+        "frontend_notice": "Ces paramètres (et d’autres sur certaines pages) sont stockés localement dans votre navigateur. L’utilisation de fenêtres privées ou la suppression du cache les réinitialisera aux valeurs par défaut.",
         "reset_settings": "Réinitialiser les paramètres",
         "reset_auth": "Réinitialiser l'authentification",
         "reset_all": "Réinitialiser tout",

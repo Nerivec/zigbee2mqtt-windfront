@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters versjon",
         "zigbee_herdsman_version": "zigbee-herdsman versjon",
         "localise_images": "Lokaliser enhetsbilder",
-        "frontend_notice": "Lokale innstillinger. Privat modus nullstiller.",
+        "frontend_notice": "Disse innstillingene (og andre på enkelte sider) lagres lokalt i nettleseren din. Bruk av private vinduer eller tømming av hurtigbufferen vil tilbakestille dem til standardverdiene.",
         "reset_settings": "Nullstill innstillinger",
         "reset_auth": "Nullstill auth",
         "reset_all": "Nullstill alt",

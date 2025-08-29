@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters verzió",
         "zigbee_herdsman_version": "zigbee-herdsman verzió",
         "localise_images": "Eszközképek lokalizálása",
-        "frontend_notice": "Helyben tárolt beállítások. Privát mód törli.",
+        "frontend_notice": "Ezek a beállítások (és mások egyes oldalakon) a böngésződben helyben kerülnek tárolásra. A privát ablakok használata vagy a gyorsítótár törlése visszaállítja őket az alapértelmezésekre.",
         "reset_settings": "Beállítások visszaállítása",
         "reset_auth": "Auth visszaállítása",
         "reset_all": "Minden visszaállítása",

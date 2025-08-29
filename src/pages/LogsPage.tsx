@@ -12,7 +12,7 @@ import SelectField from "../components/form-fields/SelectField.js";
 import SourceDot from "../components/SourceDot.js";
 import { LOG_LEVELS, LOG_LEVELS_CMAP, LOG_LIMITS } from "../consts.js";
 import { useSearch } from "../hooks/useSearch.js";
-import { API_URLS, useAppStore } from "../store.js";
+import { API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
 import { formatDate, getValidSourceIdx } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
@@ -176,7 +176,7 @@ export default function LogsPage() {
 
     const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
-    return API_URLS.length > 1 ? (
+    return MULTI_INSTANCE ? (
         <div className="tabs tabs-border">
             {API_URLS.map((_v, idx) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: const

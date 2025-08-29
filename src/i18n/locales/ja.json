@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters 版",
         "zigbee_herdsman_version": "zigbee-herdsman 版",
         "localise_images": "デバイス画像ローカライズ",
-        "frontend_notice": "設定はブラウザローカル保存。プライベートモードやキャッシュ削除で初期化。",
+        "frontend_notice": "これらの設定（および特定のページにあるその他の設定）はブラウザ内にローカル保存されます。プライベートウィンドウを使用するかキャッシュを削除するとデフォルト値にリセットされます。",
         "reset_settings": "設定リセット",
         "reset_auth": "認証リセット",
         "reset_all": "全てリセット",

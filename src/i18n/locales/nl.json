@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters versie",
         "zigbee_herdsman_version": "zigbee-herdsman versie",
         "localise_images": "Apparaatafbeeldingen lokaliseren",
-        "frontend_notice": "Instellingen lokaal opgeslagen. Privé modus / cache wissen reset.",
+        "frontend_notice": "Deze instellingen (en andere op specifieke pagina’s) worden lokaal in je browser opgeslagen. Privévensters gebruiken of de cache legen zet ze terug naar de standaardwaarden.",
         "reset_settings": "Instellingen resetten",
         "reset_auth": "Authenticatie resetten",
         "reset_all": "Alles resetten",

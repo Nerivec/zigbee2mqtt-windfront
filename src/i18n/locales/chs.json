@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters 版本",
         "zigbee_herdsman_version": "zigbee-herdsman 版本",
         "localise_images": "本地化设备图片",
-        "frontend_notice": "设置存于本地，隐私窗口或清空缓存会重置。",
+        "frontend_notice": "这些设置（以及在某些页面上的其他设置）保存在您的浏览器本地。使用无痕/隐私窗口或清除缓存会将它们重置为默认值。",
         "reset_settings": "重置设置",
         "reset_auth": "重置认证",
         "reset_all": "全部重置",

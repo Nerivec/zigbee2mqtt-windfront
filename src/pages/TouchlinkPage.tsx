@@ -9,7 +9,7 @@ import SelectField from "../components/form-fields/SelectField.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import { useTable } from "../hooks/useTable.js";
-import { API_NAMES, API_URLS, useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { TouchlinkDevice } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
@@ -192,7 +192,7 @@ export default function TouchlinkPage() {
         id: "touchlink-devices",
         columns,
         data,
-        visibleColumns: { source: API_URLS.length > 1 },
+        visibleColumns: { source: MULTI_INSTANCE },
         sorting: [{ id: "friendly_name", desc: false }],
     });
 
@@ -203,7 +203,7 @@ export default function TouchlinkPage() {
     ) : (
         <>
             <div className="flex flex-row flex-wrap justify-center items-center gap-2 mb-3">
-                {API_NAMES.length > 1 && (
+                {MULTI_INSTANCE && (
                     <SelectField
                         name="scan_idx_picker"
                         label={t("scan_source")}

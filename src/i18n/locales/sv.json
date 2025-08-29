@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters version",
         "zigbee_herdsman_version": "zigbee-herdsman version",
         "localise_images": "Lokalisera enhetsbilder",
-        "frontend_notice": "Inställningar lagras lokalt. Privat läge / rensad cache återställer.",
+        "frontend_notice": "Dessa inställningar (och andra på specifika sidor) lagras lokalt i din webbläsare. Att använda privata fönster eller rensa cachen återställer dem till standardvärdena.",
         "reset_settings": "Återställ inställningar",
         "reset_auth": "Återställ autentisering",
         "reset_all": "Återställ allt",

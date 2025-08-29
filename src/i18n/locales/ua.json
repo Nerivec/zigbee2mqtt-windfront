@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters версія",
         "zigbee_herdsman_version": "zigbee-herdsman версія",
         "localise_images": "Локалізувати зображення",
-        "frontend_notice": "Налаштування локальні. Приватний режим / очищення кешу скидає.",
+        "frontend_notice": "Ці налаштування (та інші на окремих сторінках) зберігаються локально у вашому браузері. Використання приватних вікон або очищення кешу скине їх до значень за замовчуванням.",
         "reset_settings": "Скинути налаштування",
         "reset_auth": "Скинути автентифікацію",
         "reset_all": "Скинути все",

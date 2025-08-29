@@ -12,7 +12,7 @@ import SelectField from "../components/form-fields/SelectField.js";
 import type { NetworkRawDisplayType } from "../components/network-page/index.js";
 import SourceDot from "../components/SourceDot.js";
 import { NETWORK_RAW_DISPLAY_TYPE_KEY } from "../localStoreConsts.js";
-import { API_URLS, useAppStore } from "../store.js";
+import { API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import { getValidSourceIdx } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
@@ -176,7 +176,7 @@ export default function NetworkPage() {
 
     const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
-    return API_URLS.length > 1 ? (
+    return MULTI_INSTANCE ? (
         <div className="tabs tabs-border">
             {API_URLS.map((_v, idx) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: const

@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters verze",
         "zigbee_herdsman_version": "zigbee-herdsman verze",
         "localise_images": "Lokalizovat obrázky",
-        "frontend_notice": "Lokálně uloženo. InPrivate vše resetuje.",
+        "frontend_notice": "Tato nastavení (a další na konkrétních stránkách) jsou ukládána lokálně ve vašem prohlížeči. Použití anonymních oken nebo vymazání mezipaměti je resetuje na výchozí hodnoty.",
         "reset_settings": "Reset nastavení",
         "reset_auth": "Reset auth",
         "reset_all": "Reset vše",

@@ -20,7 +20,7 @@ import {
     THEME_KEY,
     TOKEN_KEY,
 } from "../localStoreConsts.js";
-import { API_URLS } from "../store.js";
+import { MULTI_INSTANCE } from "../store.js";
 
 export default function FrontendSettingsPage() {
     const { t } = useTranslation(["settings", "navbar", "network", "common"]);
@@ -159,7 +159,7 @@ export default function FrontendSettingsPage() {
                     defaultChecked={hideStaticInfoAlerts}
                 />
             </div>
-            {API_URLS.length > 1 && (
+            {MULTI_INSTANCE && (
                 <>
                     <h2 className="text-lg mt-2">{t("common:multi_instance")}</h2>
                     <div className="flex flex-row flex-wrap gap-4">

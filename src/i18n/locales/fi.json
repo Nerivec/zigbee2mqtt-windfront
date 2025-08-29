@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters versio",
         "zigbee_herdsman_version": "zigbee-herdsman versio",
         "localise_images": "Lokaloi laitekuvat",
-        "frontend_notice": "Asetukset tallennetaan paikallisesti. Yksityinen tila / välimuistin tyhjennys nollaa.",
+        "frontend_notice": "Nämä asetukset (sekä tietyillä sivuilla olevat muut) tallennetaan paikallisesti selaimeesi. Yksityisten ikkunoiden käyttö tai välimuistin tyhjentäminen palauttaa ne oletuksiin.",
         "reset_settings": "Nollaa asetukset",
         "reset_auth": "Nollaa todennus",
         "reset_all": "Nollaa kaikki",

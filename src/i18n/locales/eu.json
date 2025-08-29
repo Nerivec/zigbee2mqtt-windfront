@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters bertsioa",
         "zigbee_herdsman_version": "zigbee-herdsman bertsioa",
         "localise_images": "Lokalizatu irudiak",
-        "frontend_notice": "Ezarpen lokalak. Nabigatzaile pribatuak garbitzen du.",
+        "frontend_notice": "Ezarpen hauek (eta orri zehatz batzuetako beste batzuk) zure nabigatzailean lokalean gordetzen dira. Leiho pribatuak erabiltzeak edo cachea garbitzeak lehenespenetara berrezarriko ditu.",
         "reset_settings": "Berrezarri ezarpenak",
         "reset_auth": "Berrezarri auth",
         "reset_all": "Berrezarri dena",

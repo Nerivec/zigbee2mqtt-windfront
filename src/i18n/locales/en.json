@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters version",
         "zigbee_herdsman_version": "zigbee-herdsman version",
         "localise_images": "Localise device images",
-        "frontend_notice": "These settings are stored locally in your browser. Using private windows or clearing the cache will reset them to defaults.",
+        "frontend_notice": "These settings (and others on specific pages) are stored locally in your browser. Using private windows or clearing the cache will reset them to defaults.",
         "reset_settings": "Reset settings",
         "reset_auth": "Reset auth",
         "reset_all": "Reset all",

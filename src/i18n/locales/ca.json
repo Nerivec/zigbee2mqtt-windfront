@@ -237,7 +237,7 @@
         "zigbee_herdsman_converters_version": "Versió zigbee-herdsman-converters",
         "zigbee_herdsman_version": "Versió zigbee-herdsman",
         "localise_images": "Localitza imatges",
-        "frontend_notice": "Opcions locals. Mode privat les restaura.",
+        "frontend_notice": "Aquesta configuració (i d’altres en pàgines específiques) s’emmagatzema localment al teu navegador. L’ús de finestres privades o buidar la memòria cau les restablirà als valors per defecte.",
         "reset_settings": "Restableix configuració",
         "reset_auth": "Restableix auth",
         "reset_all": "Restableix tot",

@@ -14,7 +14,7 @@ import { RenameGroupForm } from "../components/modal/components/RenameGroupModal
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import { useTable } from "../hooks/useTable.js";
-import { API_NAMES, API_URLS, useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { Group } from "../types.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
 
@@ -215,14 +215,14 @@ export default function GroupsPage() {
         id: "all-groups",
         columns,
         data,
-        visibleColumns: { source: API_URLS.length > 1 },
+        visibleColumns: { source: MULTI_INSTANCE },
         sorting: [{ id: "friendly_name", desc: false }],
     });
 
     return (
         <>
             <div className="flex flex-row flex-wrap justify-center gap-2 mb-2">
-                {API_URLS.length > 1 && (
+                {MULTI_INSTANCE && (
                     <SelectField
                         name="source"
                         label={t("common:source")}

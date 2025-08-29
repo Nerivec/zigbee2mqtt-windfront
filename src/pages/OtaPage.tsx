@@ -18,7 +18,7 @@ import OtaLink from "../components/value-decorators/OtaLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
-import { API_NAMES, API_URLS, useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { Device, DeviceState } from "../types.js";
 import { toHex } from "../utils.js";
 import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
@@ -366,7 +366,7 @@ export default function OtaPage() {
         id: "ota-devices",
         columns,
         data: otaDevices,
-        visibleColumns: { source: API_URLS.length > 1, state: false },
+        visibleColumns: { source: MULTI_INSTANCE, state: false },
         sorting: [{ id: "friendly_name", desc: false }],
         rowSelection,
         onRowSelectionChange: setRowSelection,
