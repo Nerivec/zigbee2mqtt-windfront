@@ -191,6 +191,7 @@ export default function Health({ sourceIdx }: HealthProps) {
 
     const bridgeResponseTime = new Date(bridgeHealth.response_time);
     const processStartTime = new Date(Date.now() - bridgeHealth.process.uptime_sec * 1000);
+    const wsLastMessageTime = new Date(webSocketMetrics.lastMessageTs);
 
     return (
         <>
@@ -297,7 +298,8 @@ export default function Health({ sourceIdx }: HealthProps) {
                         <div className="stats stats-vertical lg:stats-horizontal shadow">
                             <div className="stat place-items-center">
                                 <div className="stat-title">{t("last_message")}</div>
-                                <div className="stat-value text-lg">{formatDate(new Date(webSocketMetrics.lastMessageTs))}</div>
+                                <div className="stat-value text-lg">{format(wsLastMessageTime, i18n.language)}</div>
+                                <div className="stat-desc">{wsLastMessageTime.toLocaleString()}</div>
                             </div>
                             <div className="stat place-items-center">
                                 <div className="stat-title">{t("sent")}</div>

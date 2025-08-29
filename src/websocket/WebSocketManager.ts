@@ -6,7 +6,7 @@ import { USE_PROXY } from "../envs.js";
 import { AUTH_FLAG_KEY, TOKEN_KEY } from "../localStoreConsts.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { LogMessage, Message, RecursiveMutable, ResponseMessage } from "../types.js";
-import { formatDate, randomString, stringifyWithUndefinedAsNull } from "../utils.js";
+import { randomString, stringifyWithUndefinedAsNull } from "../utils.js";
 
 // prevent stripping
 const USE_PROXY_BOOL = /(yes|true|1)/.test(USE_PROXY);
@@ -183,10 +183,9 @@ class WebSocketManager {
         }
 
         if (!conn.socket || conn.socket.readyState !== WebSocket.OPEN) {
-            const msg = `Cannot send to ${API_NAMES[sourceIdx]} (${sourceIdx}), WebSocket not open`;
+            const msg = "Cannot send, WebSocket not open";
             const store = useAppStore.getState();
 
-            console.error(msg);
             store.addToast({ sourceIdx, topic, status: "error", error: msg });
 
             return;
@@ -344,7 +343,7 @@ class WebSocketManager {
         this.#queueAddLog(conn, {
             // don't want this to spam toasts with some browsers closing WS on focus loss (should reconnect fine)
             level: "debug",
-            message: `frontend:ws: Failed to connect to WebSocket ${API_NAMES[conn.idx]}`,
+            message: "frontend:ws: Failed to connect to WebSocket",
             namespace: "frontend:ws",
         });
     }
@@ -357,7 +356,7 @@ class WebSocketManager {
         if (conn.attempts >= MAX_RECONNECT_ATTEMPTS) {
             this.#queueAddLog(conn, {
                 level: "error",
-                message: `frontend:ws: Failed to connect to WebSocket ${API_NAMES[conn.idx]} after ${conn.attempts} tries`,
+                message: `frontend:ws: Failed to connect to WebSocket after ${conn.attempts} tries`,
                 namespace: "frontend:ws",
             });
 
@@ -646,7 +645,7 @@ class WebSocketManager {
     }
 
     #queueAddLog(conn: Connection, log: Zigbee2MQTTAPI["bridge/logging"]) {
-        conn.logQueue.push({ ...log, timestamp: formatDate(new Date()) });
+        conn.logQueue.push({ ...log, timestamp: new Date().toLocaleString() });
 
         if (conn.logQueue.length >= BATCH_IMMEDIATE_THRESHOLD) {
             queueMicrotask(() => this.#flush());
