@@ -368,12 +368,7 @@ class WebSocketManager {
             return;
         }
 
-        conn.attempts++;
-        conn.metricsReconnects++;
-        conn.dirtyMetrics = true;
-
         this.#scheduleFlush();
-        console.log("WebSocket reconnect", conn);
 
         conn.reconnectTimer = window.setTimeout(() => {
             conn.reconnectTimer = undefined;
@@ -392,6 +387,18 @@ class WebSocketManager {
                 conn.socket = undefined;
             }
 
+            conn.attempts++;
+            conn.metricsReconnects++;
+            conn.dirtyMetrics = true;
+
+            console.log("WebSocket reconnect", conn);
+            // this toast is crafted to show specific info, does not follow usual "response-derived" pattern
+            useAppStore.getState().addToast({
+                sourceIdx: conn.idx,
+                topic: "WebSocket",
+                status: "ok",
+                error: "Reconnecting...",
+            });
             this.#open(conn);
         }, RECONNECT_INTERVAL_MS);
     }
