@@ -51,7 +51,13 @@ const ThemeSwitcher = memo(() => {
 
     useEffect(() => {
         store2.set(THEME_KEY, currentTheme);
-        document.documentElement.setAttribute("data-theme", currentTheme);
+
+        // system-derived theme (currentTheme === "") should not set "data-theme" attr
+        if (currentTheme) {
+            document.documentElement.setAttribute("data-theme", currentTheme);
+        } else {
+            document.documentElement.removeAttribute("data-theme");
+        }
     }, [currentTheme]);
 
     return (
