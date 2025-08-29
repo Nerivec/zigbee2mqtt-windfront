@@ -245,7 +245,7 @@ export default function TableFiltersDrawer<T>({ columns, resetFilters, onClose }
                     <FontAwesomeIcon icon={faFilter} />
                     <span className="font-semibold text-md">{t("advanced_search")}</span>
                 </div>
-                <div className="flex flex-col gap-2 p-3">
+                <div className="flex flex-col gap-2 px-2 pb-2">
                     {columns.map((col) => {
                         const meta = col.columnDef.meta;
 
