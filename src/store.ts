@@ -7,6 +7,18 @@ import { Z2M_API_NAMES, Z2M_API_URLS } from "./envs.js";
 import type { AvailabilityState, Device, FeatureWithAnySubFeatures, LogMessage, Message, RecursiveMutable, Toast, TouchlinkDevice } from "./types.js";
 import { parseAndCloneExpose } from "./utils.js";
 
+export interface WebSocketMetrics {
+    messagesSent: number;
+    bytesSent: number;
+    messagesReceived: number;
+    messagesBridge: number;
+    messagesDevice: number;
+    bytesReceived: number;
+    reconnects: number;
+    lastMessageTs: number;
+    pendingRequests: number;
+}
+
 export interface AppState {
     devices: Record<number, Device[]>;
     deviceStates: Record<number, Record<string, Zigbee2MQTTAPI["{friendlyName}"]>>;
@@ -34,6 +46,13 @@ export interface AppState {
     /** base64 */
     backup: Record<number, string>;
 
+    //-- WebSocket
+    /** idx is API_URLS/source idx */
+    authRequired: boolean[];
+    /** idx is API_URLS/source idx */
+    readyStates: number[];
+    webSocketMetrics: Record<number, WebSocketMetrics>;
+
     //-- non source dependent
     logsLimit: number;
     /** [bridge indicates restart required, error level log present] */
@@ -53,7 +72,7 @@ interface AppActions {
     clearLogs: (sourceIdx: number) => void;
     clearAllLogs: () => void;
     setLogsLimit: (newLimit: number) => void;
-    addLogs: (sourceIdx: number, newEntries: Zigbee2MQTTAPI["bridge/logging"][]) => void;
+    addLogs: (sourceIdx: number, newEntries: LogMessage[]) => void;
     clearNotifications: (sourceIdx: number) => void;
     clearAllNotifications: () => void;
     updateDeviceStates: (sourceIdx: number, newEntries: Message<Zigbee2MQTTAPI["{friendlyName}"]>[]) => void;
@@ -70,6 +89,14 @@ interface AppActions {
     setBackup: (sourceIdx: number, backupZipBase64: Zigbee2MQTTAPI["bridge/response/backup"]["zip"]) => void;
     setBackupPreparing: (sourceIdx: number) => void;
     addGeneratedExternalDefinition: (sourceIdx: number, payload: Zigbee2MQTTAPI["bridge/response/device/generate_external_definition"]) => void;
+
+    //-- WebSocket
+    setAuthRequired: (sourceIdx: number, required: boolean) => void;
+    setReadyState: (sourceIdx: number, readyState: number) => void;
+    /** @see setPendingRequestsCount for `pendingRequests` */
+    updateWebSocketMetrics: (sourceIdx: number, delta: Omit<WebSocketMetrics, "pendingRequests">) => void;
+    resetWebSocketMetrics: (sourceIdx: number) => void;
+    setPendingRequestsCount: (sourceIdx: number, pending: number) => void;
 
     //-- non source dependent
     addToast: (toast: Toast) => void;
@@ -114,6 +141,9 @@ const makeInitialState = (): AppState => {
     const networkMapIsLoading: AppState["networkMapIsLoading"] = {};
     const preparingBackup: AppState["preparingBackup"] = {};
     const backup: AppState["backup"] = {};
+    const authRequired: AppState["authRequired"] = [];
+    const readyStates: AppState["readyStates"] = [];
+    const webSocketMetrics: AppState["webSocketMetrics"] = {};
 
     for (let idx = 0; idx < API_URLS.length; idx++) {
         devices[idx] = [];
@@ -278,6 +308,19 @@ const makeInitialState = (): AppState => {
         networkMapIsLoading[idx] = false;
         preparingBackup[idx] = false;
         backup[idx] = "";
+        authRequired[idx] = false;
+        readyStates[idx] = WebSocket.CLOSED;
+        webSocketMetrics[idx] = {
+            messagesSent: 0,
+            bytesSent: 0,
+            messagesReceived: 0,
+            messagesBridge: 0,
+            messagesDevice: 0,
+            bytesReceived: 0,
+            reconnects: 0,
+            lastMessageTs: 0,
+            pendingRequests: 0,
+        };
     }
 
     return {
@@ -307,6 +350,9 @@ const makeInitialState = (): AppState => {
         logsLimit: 100,
         notificationsAlert: [false, false],
         toasts: [],
+        authRequired,
+        readyStates,
+        webSocketMetrics,
     };
 };
 
@@ -374,16 +420,14 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
             let addedToasts = false;
 
             for (const newEntry of newEntries) {
-                const log: LogMessage = { ...newEntry, timestamp: new Date().toLocaleString() };
+                newLogs.push(newEntry);
 
-                newLogs.push(log);
-
-                if (log.level === "debug") {
+                if (newEntry.level === "debug") {
                     continue;
                 }
 
                 const notifBlacklisted = (notificationFilter ? BLACKLISTED_NOTIFICATIONS.concat(notificationFilter) : BLACKLISTED_NOTIFICATIONS).some(
-                    (val) => new RegExp(val).test(log.message),
+                    (val) => new RegExp(val).test(newEntry.message),
                 );
 
                 if (!notifBlacklisted) {
@@ -391,11 +435,11 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
                         newNotifications.shift();
                     }
 
-                    newNotifications.push(log);
+                    newNotifications.push(newEntry);
                 }
 
-                if (log.level === "error") {
-                    const match = log.message.match(PUBLISH_GET_SET_REGEX);
+                if (newEntry.level === "error") {
+                    const match = newEntry.message.match(PUBLISH_GET_SET_REGEX);
 
                     if (match) {
                         addedToasts = true;
@@ -600,6 +644,69 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
                 [sourceIdx]: { ...state.generatedExternalDefinitions[sourceIdx], [id]: source },
             },
         })),
+
+    //-- WebSocket
+    setAuthRequired: (sourceIdx, required) =>
+        set((state) => {
+            const authRequired = Array.from(state.authRequired);
+            authRequired[sourceIdx] = required;
+
+            return { authRequired };
+        }),
+    setReadyState: (sourceIdx, readyState) =>
+        set((state) => {
+            const readyStates = Array.from(state.readyStates);
+            readyStates[sourceIdx] = readyState;
+
+            return { readyStates };
+        }),
+    updateWebSocketMetrics: (sourceIdx, delta) =>
+        set((state) => {
+            const current = state.webSocketMetrics[sourceIdx];
+            const updated: WebSocketMetrics = {
+                messagesSent: current.messagesSent + delta.messagesSent,
+                bytesSent: current.bytesSent + delta.bytesSent,
+                messagesReceived: current.messagesReceived + delta.messagesReceived,
+                messagesBridge: current.messagesBridge + delta.messagesBridge,
+                messagesDevice: current.messagesDevice + delta.messagesDevice,
+                bytesReceived: current.bytesReceived + delta.bytesReceived,
+                reconnects: current.reconnects + delta.reconnects,
+                /** 0 means unchanged, fallback to existing */
+                lastMessageTs: delta.lastMessageTs || current.lastMessageTs,
+                pendingRequests: current.pendingRequests,
+            };
+
+            return { webSocketMetrics: { ...state.webSocketMetrics, [sourceIdx]: updated } };
+        }),
+    resetWebSocketMetrics: (sourceIdx) =>
+        set((state) => ({
+            webSocketMetrics: {
+                ...state.webSocketMetrics,
+                [sourceIdx]: {
+                    messagesSent: 0,
+                    bytesSent: 0,
+                    messagesReceived: 0,
+                    messagesBridge: 0,
+                    messagesDevice: 0,
+                    bytesReceived: 0,
+                    reconnects: 0,
+                    lastMessageTs: 0,
+                    pendingRequests: 0,
+                },
+            },
+        })),
+    setPendingRequestsCount: (sourceIdx, pending) =>
+        set((state) => ({
+            webSocketMetrics: {
+                ...state.webSocketMetrics,
+                [sourceIdx]: {
+                    ...state.webSocketMetrics[sourceIdx],
+                    pendingRequests: pending,
+                },
+            },
+        })),
+
+    //-- non source dependent
 
     addToast: (toast) => set((state) => ({ toasts: [...state.toasts, toast] })),
     removeToast: (idx) =>

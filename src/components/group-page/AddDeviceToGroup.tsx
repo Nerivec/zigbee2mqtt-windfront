@@ -1,8 +1,8 @@
-import { memo, useCallback, useContext, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Device, Group } from "../../types.js";
 import { getEndpoints } from "../../utils.js";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
 import DevicePicker from "../pickers/DevicePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
@@ -18,7 +18,6 @@ const AddDeviceToGroup = memo(({ sourceIdx, devices, group }: AddDeviceToGroupPr
     const [deviceIeee, setDeviceIeee] = useState<string>("");
     const endpoints = useMemo(() => getEndpoints(devices.find((device) => device.ieee_address === deviceIeee)), [deviceIeee, devices]);
     const { t } = useTranslation(["groups", "zigbee"]);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
 
     const onDeviceChange = useCallback((selectedDevice: Device): void => {
         setDeviceIeee(selectedDevice.ieee_address);
@@ -30,7 +29,7 @@ const AddDeviceToGroup = memo(({ sourceIdx, devices, group }: AddDeviceToGroupPr
 
     const onAddClick = useCallback(
         async () => await sendMessage(sourceIdx, "bridge/request/group/members/add", { group: group.id.toString(), endpoint, device: deviceIeee }),
-        [sourceIdx, group.id, endpoint, deviceIeee, sendMessage],
+        [sourceIdx, group.id, endpoint, deviceIeee],
     );
 
     return (

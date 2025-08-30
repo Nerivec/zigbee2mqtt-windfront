@@ -1,14 +1,13 @@
 import { faClose, faEllipsisH, faInbox, faPowerOff, faServer, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, type RefObject, useCallback, useContext, useRef, type useState } from "react";
+import { memo, type RefObject, useCallback, useRef, type useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { ReadyState } from "react-use-websocket";
 import { useShallow } from "zustand/react/shallow";
-import { LOG_LEVELS_CMAP } from "../consts.js";
+import { CONNECTION_STATUS, LOG_LEVELS_CMAP } from "../consts.js";
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+import { getTransactionPrefix, sendMessage } from "../websocket/WebSocketManager.js";
 import Button from "./Button.js";
 import ConfirmButton from "./ConfirmButton.js";
 import SourceDot from "./SourceDot.js";
@@ -17,19 +16,11 @@ type NotificationsProps = {
     setShowNotifications: ReturnType<typeof useState<boolean>>[1];
 };
 
-type SourceNotificationsProps = { sourceIdx: number; readyState: ReadyState };
+type SourceNotificationsProps = { sourceIdx: number; readyState: number };
 
 type NotificationProps = {
     log: LogMessage;
     onClick: (ref: RefObject<HTMLDivElement | null>) => void;
-};
-
-const CONNECTION_STATUS = {
-    [ReadyState.CONNECTING]: "text-info",
-    [ReadyState.OPEN]: "text-success",
-    [ReadyState.CLOSING]: "text-warning",
-    [ReadyState.CLOSED]: "text-error",
-    [ReadyState.UNINSTANTIATED]: "text-error",
 };
 
 const Notification = memo(({ log, onClick }: NotificationProps) => {
@@ -48,13 +39,13 @@ const Notification = memo(({ log, onClick }: NotificationProps) => {
 });
 
 const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotificationsProps) => {
+    const status = CONNECTION_STATUS[readyState];
     const { t } = useTranslation(["navbar", "common"]);
-    const { sendMessage, transactionPrefixes } = useContext(WebSocketApiRouterContext);
     const notifications = useAppStore(useShallow((state) => state.notifications[sourceIdx]));
     const restartRequired = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].restart_required));
     const clearNotifications = useAppStore((state) => state.clearNotifications);
 
-    const restart = useCallback(async () => await sendMessage(sourceIdx, "bridge/request/restart", ""), [sourceIdx, sendMessage]);
+    const restart = useCallback(async () => await sendMessage(sourceIdx, "bridge/request/restart", ""), [sourceIdx]);
     const onNotificationClick = useCallback((ref: RefObject<HTMLDivElement | null>) => {
         if (ref?.current) {
             ref.current.className += " hidden";
@@ -66,7 +57,7 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotifications
         <li>
             <details open={sourceIdx === 0}>
                 <summary>
-                    <span title={`${sourceIdx} | ${t("transaction_prefix")}: ${transactionPrefixes[sourceIdx]}`}>
+                    <span title={`${sourceIdx} | ${t("transaction_prefix")}: ${getTransactionPrefix(sourceIdx)}`}>
                         {MULTI_INSTANCE ? <SourceDot idx={sourceIdx} alwaysShowName /> : "Zigbee2MQTT"}
                     </span>
                     <span className="ml-auto">
@@ -81,8 +72,8 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotifications
                                 <FontAwesomeIcon icon={faPowerOff} />
                             </ConfirmButton>
                         )}
-                        <span title={`${t("websocket_status")}: ${ReadyState[readyState]}`}>
-                            <FontAwesomeIcon icon={faServer} className={CONNECTION_STATUS[readyState]} />
+                        <span title={`${t("websocket_status")}: ${status?.[0]}`}>
+                            <FontAwesomeIcon icon={faServer} className={status?.[1]} />
                         </span>
                     </span>
                 </summary>
@@ -108,7 +99,7 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotifications
 
 const Notifications = memo(({ setShowNotifications }: NotificationsProps) => {
     const { t } = useTranslation("common");
-    const { readyStates } = useContext(WebSocketApiRouterContext);
+    const readyStates = useAppStore((state) => state.readyStates);
     const clearAllNotifications = useAppStore((state) => state.clearAllNotifications);
 
     return (

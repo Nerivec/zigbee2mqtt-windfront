@@ -1,6 +1,6 @@
 import { faClose, faMagnifyingGlass, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import { useShallow } from "zustand/react/shallow";
@@ -15,7 +15,7 @@ import { useSearch } from "../hooks/useSearch.js";
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
 import { getValidSourceIdx } from "../utils.js";
-import { WebSocketApiRouterContext } from "../WebSocketApiRouterContext.js";
+import { sendMessage } from "../websocket/WebSocketManager.js";
 
 const HIGHLIGHT_LEVEL_CMAP = {
     error: "bg-error text-error-content",
@@ -34,7 +34,6 @@ type LogsTabProps = {
 
 const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
     const { t } = useTranslation(["logs", "common"]);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const logLevelConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.log_level));
     const logs = useAppStore(useShallow((state) => state.logs[sourceIdx]));
     const clearLogs = useAppStore((state) => state.clearLogs);
@@ -64,7 +63,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
         async (level: string) => {
             await sendMessage(sourceIdx, "bridge/request/options", { options: { advanced: { log_level: level } } });
         },
-        [sourceIdx, sendMessage],
+        [sourceIdx],
     );
 
     return (

@@ -1,7 +1,7 @@
 import { faCheckCircle, faExclamationTriangle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import snakeCase from "lodash/snakeCase.js";
-import { memo, useCallback, useContext, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useShallow } from "zustand/react/shallow";
@@ -9,7 +9,7 @@ import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL,
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { toHex } from "../../../utils.js";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import DeviceControlEditName from "../../device/DeviceControlEditName.js";
 import DeviceControlGroup from "../../device/DeviceControlGroup.js";
 import DeviceControlUpdateDesc from "../../device/DeviceControlUpdateDesc.js";
@@ -148,43 +148,30 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     const availability = useAppStore(useShallow((state) => state.availability[sourceIdx]));
     const homeassistantEnabled = bridgeConfig.homeassistant.enabled;
     const deviceState = useMemo(() => deviceStates[device.friendly_name] ?? {}, [device.friendly_name, deviceStates]);
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
 
     const setDeviceDescription = useCallback(
         async (id: string, description: string): Promise<void> => {
             await sendMessage(sourceIdx, "bridge/request/device/options", { id, options: { description } });
         },
-        [sourceIdx, sendMessage],
+        [sourceIdx],
     );
-    const renameDevice = useCallback(
-        async (source: number, from: string, to: string, homeassistantRename: boolean): Promise<void> => {
-            await sendMessage(source, "bridge/request/device/rename", {
-                from,
-                to,
-                homeassistant_rename: homeassistantRename,
-                last: undefined,
-            });
-        },
-        [sendMessage],
-    );
-    const configureDevice = useCallback(
-        async ([source, id]: [number, string]): Promise<void> => {
-            await sendMessage(source, "bridge/request/device/configure", { id });
-        },
-        [sendMessage],
-    );
-    const interviewDevice = useCallback(
-        async ([source, id]: [number, string]): Promise<void> => {
-            await sendMessage(source, "bridge/request/device/interview", { id });
-        },
-        [sendMessage],
-    );
-    const removeDevice = useCallback(
-        async (source: number, id: string, force: boolean, block: boolean): Promise<void> => {
-            await sendMessage(source, "bridge/request/device/remove", { id, force, block });
-        },
-        [sendMessage],
-    );
+    const renameDevice = useCallback(async (source: number, from: string, to: string, homeassistantRename: boolean): Promise<void> => {
+        await sendMessage(source, "bridge/request/device/rename", {
+            from,
+            to,
+            homeassistant_rename: homeassistantRename,
+            last: undefined,
+        });
+    }, []);
+    const configureDevice = useCallback(async ([source, id]: [number, string]): Promise<void> => {
+        await sendMessage(source, "bridge/request/device/configure", { id });
+    }, []);
+    const interviewDevice = useCallback(async ([source, id]: [number, string]): Promise<void> => {
+        await sendMessage(source, "bridge/request/device/interview", { id });
+    }, []);
+    const removeDevice = useCallback(async (source: number, id: string, force: boolean, block: boolean): Promise<void> => {
+        await sendMessage(source, "bridge/request/device/remove", { id, force, block });
+    }, []);
 
     const deviceAvailability = bridgeConfig.devices[device.ieee_address]?.availability;
     const definitionDescription = useMemo(() => {

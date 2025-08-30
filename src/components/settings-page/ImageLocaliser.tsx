@@ -1,8 +1,8 @@
-import { type JSX, useCallback, useContext, useEffect, useState } from "react";
+import { type JSX, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { AppState } from "../../store.js";
 import type { Device } from "../../types.js";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
 import { getZ2MDeviceImage } from "../device/index.js";
 
@@ -40,7 +40,6 @@ async function downloadImage(imageSrc: string): Promise<string> {
 export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
     const [currentState, setCurrentState] = useState<LocaliserState>("none");
     const [localisationStatus, setLocalisationStatus] = useState<Record<string, LStatus>>({});
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation("settings");
 
     const localiseImage = useCallback(
@@ -57,7 +56,7 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
 
             return true;
         },
-        [sourceIdx, sendMessage],
+        [sourceIdx],
     );
 
     useEffect(() => {

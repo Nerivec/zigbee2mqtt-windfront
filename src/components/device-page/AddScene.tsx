@@ -1,11 +1,11 @@
-import { memo, useCallback, useContext, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../store.js";
 import type { Device, DeviceState, Group } from "../../types.js";
 import { isDevice } from "../../utils.js";
-import { WebSocketApiRouterContext } from "../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
 import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
 import Feature from "../features/Feature.js";
@@ -21,7 +21,6 @@ type AddSceneProps = {
 
 const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
     const { t } = useTranslation("scene");
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const [sceneId, setSceneId] = useState<number>(0);
     const [sceneName, setSceneName] = useState<string>("");
     const scenes = useMemo(() => getScenes(target), [target]);
@@ -36,7 +35,7 @@ const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
                 value,
             );
         },
-        [sourceIdx, target, sendMessage],
+        [sourceIdx, target],
     );
 
     const onStoreClick = useCallback(async () => {
@@ -48,7 +47,7 @@ const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
             `${target.friendly_name}/set`, // TODO: swap to ID/ieee_address
             { scene_store: payload },
         );
-    }, [sourceIdx, target, sceneId, sceneName, sendMessage]);
+    }, [sourceIdx, target, sceneId, sceneName]);
 
     const isValidSceneId = useMemo(() => {
         return sceneId >= 0 && sceneId <= 255 && !scenes.find((s) => s.id === sceneId);

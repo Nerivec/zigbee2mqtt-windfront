@@ -1,11 +1,11 @@
-import { memo, useCallback, useContext, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import { SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import Button from "../../Button.js";
 import ConfirmButton from "../../ConfirmButton.js";
 import TextareaField from "../../form-fields/TextareaField.js";
@@ -65,7 +65,6 @@ ${externalDefinition}
 });
 
 export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
     const { t } = useTranslation(["devConsole", "common"]);
     const externalDefinition = useAppStore(useShallow((state) => state.generatedExternalDefinitions[sourceIdx][device.ieee_address]));
     const resetDeviceState = useAppStore((state) => state.resetDeviceState);
@@ -92,7 +91,7 @@ export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
                 payload,
             );
         },
-        [sourceIdx, sendMessage],
+        [sourceIdx],
     );
 
     const writeDeviceAttributes = useCallback(
@@ -110,13 +109,13 @@ export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
                 payload,
             );
         },
-        [sourceIdx, sendMessage],
+        [sourceIdx],
     );
 
     const onGenerateExternalDefinitionClick = useCallback(async (): Promise<void> => {
         setExtDefLoading(true);
         await sendMessage(sourceIdx, "bridge/request/device/generate_external_definition", { id: device.ieee_address });
-    }, [sourceIdx, device.ieee_address, sendMessage]);
+    }, [sourceIdx, device.ieee_address]);
 
     const resetState = useCallback(() => {
         resetDeviceState(sourceIdx, device.friendly_name);

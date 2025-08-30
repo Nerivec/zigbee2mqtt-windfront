@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Max",
         "done": "Done",
-        "enter_auth_token": "Enter auth token",
-        "token": "Token",
         "documentation": "Documentation",
         "optional": "Optional",
         "init": "Init",
@@ -272,7 +270,11 @@
         "leave_count": "Leave count",
         "network_address_changes": "Network address changes",
         "very_low": "Very low",
-        "interview_info": "Device interviews can heavily influence this data."
+        "interview_info": "Device interviews can heavily influence this data.",
+        "sent": "Sent",
+        "last_message": "Last message",
+        "pending_requests": "Pending requests",
+        "reconnects": "Reconnects"
     },
     "touchlink": {
         "detected_devices_message": "Detected {{count}} touchlink devices.",

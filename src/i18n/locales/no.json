@@ -41,8 +41,6 @@
         "min": "Min",
         "max": "Maks",
         "done": "Ferdig",
-        "enter_auth_token": "Oppgi auth-token",
-        "token": "Token",
         "documentation": "Dokumentasjon",
         "optional": "Valgfritt",
         "init": "Init",

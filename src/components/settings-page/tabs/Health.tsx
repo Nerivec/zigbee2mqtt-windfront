@@ -1,4 +1,4 @@
-import { faCircleInfo, faDotCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo, faDotCircle, faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
@@ -7,13 +7,14 @@ import { Link } from "react-router";
 import { format } from "timeago.js";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
-import { LOAD_AVERAGE_DOCS_URL } from "../../../consts.js";
+import { CONNECTION_STATUS, LOAD_AVERAGE_DOCS_URL } from "../../../consts.js";
 import { useTable } from "../../../hooks/useTable.js";
-import { useAppStore } from "../../../store.js";
+import { MULTI_INSTANCE, useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { toHex } from "../../../utils.js";
 import DeviceImage from "../../device/DeviceImage.js";
 import InfoAlert from "../../InfoAlert.js";
+import SourceDot from "../../SourceDot.js";
 import Table from "../../table/Table.js";
 
 type HealthProps = { sourceIdx: number };
@@ -27,6 +28,9 @@ export default function Health({ sourceIdx }: HealthProps) {
     const { t, i18n } = useTranslation(["health", "settings", "common", "zigbee"]);
     const bridgeHealth = useAppStore(useShallow((state) => state.bridgeHealth[sourceIdx]));
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
+    const webSocketMetrics = useAppStore(useShallow((state) => state.webSocketMetrics[sourceIdx]));
+    const readyState = useAppStore(useShallow((state) => state.readyStates[sourceIdx]));
+    const status = CONNECTION_STATUS[readyState];
 
     const tableData = useMemo(() => {
         const healthDevices: HealthDeviceTableData[] = [];
@@ -187,6 +191,7 @@ export default function Health({ sourceIdx }: HealthProps) {
 
     const bridgeResponseTime = new Date(bridgeHealth.response_time);
     const processStartTime = new Date(Date.now() - bridgeHealth.process.uptime_sec * 1000);
+    const wsLastMessageTime = new Date(webSocketMetrics.lastMessageTs);
 
     return (
         <>
@@ -257,6 +262,66 @@ export default function Health({ sourceIdx }: HealthProps) {
                             <div className="stat place-items-center">
                                 <div className="stat-title">{t("received")}</div>
                                 <div className="stat-value text-lg">{bridgeHealth.mqtt.received}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="collapse collapse-arrow bg-base-100 shadow mb-3">
+                <input type="checkbox" />
+                <div className="collapse-title text-lg font-semibold text-center w-full">WebSocket</div>
+                <div className="collapse-content">
+                    <div className="flex flex-col gap-3 items-center mb-2">
+                        <div className="stats stats-vertical lg:stats-horizontal shadow">
+                            {MULTI_INSTANCE && (
+                                <div className="stat place-items-center">
+                                    <div className="stat-value text-lg">
+                                        <SourceDot idx={sourceIdx} alwaysShowName />
+                                    </div>
+                                </div>
+                            )}
+                            <div className="stat place-items-center">
+                                <div className="stat-value text-lg">
+                                    <FontAwesomeIcon icon={faServer} className={status?.[1]} />
+                                </div>
+                                <div className="stat-desc">{status?.[0]}</div>
+                            </div>
+                            <div className="stat place-items-center">
+                                <div className="stat-title">{t("reconnects")}</div>
+                                <div className="stat-value text-lg">{webSocketMetrics.reconnects}</div>
+                            </div>
+                            <div className="stat place-items-center">
+                                <div className="stat-title">{t("pending_requests")}</div>
+                                <div className="stat-value text-lg">{webSocketMetrics.pendingRequests}</div>
+                            </div>
+                        </div>
+                        <div className="stats stats-vertical lg:stats-horizontal shadow">
+                            <div className="stat place-items-center">
+                                <div className="stat-title">{t("last_message")}</div>
+                                <div className="stat-value text-lg">{format(wsLastMessageTime, i18n.language)}</div>
+                                <div className="stat-desc">{wsLastMessageTime.toLocaleString()}</div>
+                            </div>
+                            <div className="stat place-items-center">
+                                <div className="stat-title">{t("sent")}</div>
+                                <div className="stat-value text-lg">{webSocketMetrics.messagesSent}</div>
+                                <div className="stat-desc">{Math.round((webSocketMetrics.bytesSent / 1024 / 1024) * 100.0) / 100.0} MB</div>
+                            </div>
+                            <div className="stat place-items-center">
+                                <div className="stat-title">{t("received")}</div>
+                                <div className="stat-value text-lg">{webSocketMetrics.messagesReceived}</div>
+                                <div className="stat-desc">{Math.round((webSocketMetrics.bytesReceived / 1024 / 1024) * 100.0) / 100.0} MB</div>
+                            </div>
+                            <div className="stat place-items-center">
+                                <div className="stat-title">
+                                    {t("received")}: {t("settings:bridge")}
+                                </div>
+                                <div className="stat-value text-lg">{webSocketMetrics.messagesBridge}</div>
+                            </div>
+                            <div className="stat place-items-center">
+                                <div className="stat-title">
+                                    {t("received")}: {t("common:devices")}
+                                </div>
+                                <div className="stat-value text-lg">{webSocketMetrics.messagesDevice}</div>
                             </div>
                         </div>
                     </div>

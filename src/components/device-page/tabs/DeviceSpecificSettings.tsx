@@ -1,9 +1,9 @@
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
-import { WebSocketApiRouterContext } from "../../../WebSocketApiRouterContext.js";
+import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import Feature from "../../features/Feature.js";
 import FeatureWrapper from "../../features/FeatureWrapper.js";
 import { getFeatureKey } from "../../features/index.js";
@@ -16,12 +16,12 @@ type DeviceSpecificSettingsProps = {
 export default function DeviceSpecificSettings({ sourceIdx, device }: DeviceSpecificSettingsProps) {
     const { t } = useTranslation("common");
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
-    const { sendMessage } = useContext(WebSocketApiRouterContext);
+
     const setDeviceOptions = useCallback(
         async (options: Record<string, unknown>) => {
             await sendMessage(sourceIdx, "bridge/request/device/options", { id: device.ieee_address, options });
         },
-        [sourceIdx, device.ieee_address, sendMessage],
+        [sourceIdx, device.ieee_address],
     );
 
     return device.definition?.options?.length ? (

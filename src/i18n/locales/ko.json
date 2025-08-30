@@ -41,8 +41,6 @@
         "min": "최소",
         "max": "최대",
         "done": "완료",
-        "enter_auth_token": "인증 토큰 입력",
-        "token": "토큰",
         "documentation": "문서",
         "optional": "선택 사항",
         "init": "초기화",
