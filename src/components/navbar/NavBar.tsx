@@ -78,8 +78,8 @@ const NavBar = memo(({ showNotifications, setShowNotifications }: NavBarProps) =
     );
 
     return (
-        <div className="navbar bg-base-200 shadow">
-            <div className="navbar-start">
+        <div className="navbar bg-base-200 shadow p-0 w-full">
+            <div className="flex flex-row items-center">
                 <div className="dropdown">
                     {/* biome-ignore lint/a11y/noNoninteractiveTabindex: daisyui dropdown */}
                     <div className="btn btn-ghost lg:hidden" tabIndex={0}>
@@ -95,30 +95,28 @@ const NavBar = memo(({ showNotifications, setShowNotifications }: NavBarProps) =
                     </ul>
                 </div>
             </div>
-            <Link
-                to="/"
-                className="link link-hover me-1"
-                title={window.location !== window.parent.location ? `Zigbee2MQTT@${window.location.hostname}` : undefined}
-            >
-                Zigbee2MQTT
-            </Link>
-            <div className="navbar-center hidden lg:flex">
+            <div className="flex flex-row items-center hidden lg:flex 2xl:ml-auto">
+                <Link
+                    to="/"
+                    className="link link-hover mx-2"
+                    title={window.location !== window.parent.location ? `Zigbee2MQTT@${window.location.hostname}` : undefined}
+                >
+                    Zigbee2MQTT
+                </Link>
                 <ul className="menu menu-horizontal px-1">{links}</ul>
             </div>
-            <div className="navbar-end">
-                <ul className="menu menu-horizontal px-1 gap-0.5 md:gap-1 justify-end">
-                    <PermitJoinButton />
-                    <LanguageSwitcher />
-                    <ThemeSwitcher />
-                    <Button<boolean> className="drawer-button btn" item={!showNotifications} onClick={setShowNotifications}>
-                        <FontAwesomeIcon icon={faInbox} />
-                        {notificationsAlert[0] ? (
-                            <span className="status status-primary animate-bounce" />
-                        ) : notificationsAlert[1] ? (
-                            <span className="status status-error animate-bounce" />
-                        ) : null}
-                    </Button>
-                </ul>
+            <div className="flex flex-row gap-1 items-center ml-auto">
+                <PermitJoinButton />
+                <LanguageSwitcher />
+                <ThemeSwitcher />
+                <Button<boolean> className="drawer-button btn" item={!showNotifications} onClick={setShowNotifications}>
+                    <FontAwesomeIcon icon={faInbox} />
+                    {notificationsAlert[0] ? (
+                        <span className="status status-primary animate-bounce" />
+                    ) : notificationsAlert[1] ? (
+                        <span className="status status-error animate-bounce" />
+                    ) : null}
+                </Button>
             </div>
         </div>
     );

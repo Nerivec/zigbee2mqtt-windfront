@@ -109,32 +109,22 @@ const PermitJoinButton = memo(() => {
         [permitJoin, permitJoinEnd],
     );
 
-    const pjButton = useMemo(() => {
-        const [sourceIdx, device] = selectedRouter;
-
-        if (permitJoin) {
-            return (
-                <Button<void> onClick={onPermitJoinClick} className="btn btn-outline-secondary join-item" title={t("disable_join")}>
-                    <FontAwesomeIcon icon={faTowerBroadcast} className="text-success" beatFade />
-                    <SourceDot idx={sourceIdx} autoHide alwaysHideName />
-                    {device?.friendly_name ?? t("all")}
-                    {permitJoinTimer}
-                </Button>
-            );
-        }
-
-        return (
-            <Button<void> onClick={onPermitJoinClick} className="btn btn-outline-secondary join-item" title={t("permit_join")}>
-                <FontAwesomeIcon icon={faTowerBroadcast} className="text-error" />
-                <SourceDot idx={sourceIdx} autoHide alwaysHideName />
-                {device?.friendly_name ?? t("all")}
-            </Button>
-        );
-    }, [permitJoin, permitJoinTimer, selectedRouter, t, onPermitJoinClick]);
-
     return (
         <div className="join join-horizontal">
-            {pjButton}
+            {permitJoin ? (
+                <Button<void> onClick={onPermitJoinClick} className="btn btn-outline-secondary join-item max-w-56" title={t("disable_join")}>
+                    <FontAwesomeIcon icon={faTowerBroadcast} className="text-success" beatFade />
+                    <SourceDot idx={selectedRouter[0]} autoHide alwaysHideName />
+                    {selectedRouter[1]?.friendly_name ?? t("all")}
+                    {permitJoinTimer}
+                </Button>
+            ) : (
+                <Button<void> onClick={onPermitJoinClick} className="btn btn-outline-secondary join-item max-w-56" title={t("permit_join")}>
+                    <FontAwesomeIcon icon={faTowerBroadcast} className="text-error" />
+                    <SourceDot idx={selectedRouter[0]} autoHide alwaysHideName />
+                    {selectedRouter[1]?.friendly_name ?? t("all")}
+                </Button>
+            )}
             {!permitJoin && <PermitJoinDropdown setSelectedRouter={setSelectedRouter} />}
         </div>
     );
