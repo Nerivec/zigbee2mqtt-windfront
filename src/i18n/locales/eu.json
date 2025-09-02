@@ -374,7 +374,8 @@
         "Unknown": "Ezezaguna",
         "Coordinator": "Koordinatzailea",
         "power_source": "Energia iturria",
-        "battery_low": "Bateria baxua"
+        "battery_low": "Bateria baxua",
+        "battery_level": "Bateriaren maila"
     },
     "scene": {
         "manage_scenes_header": "Kudeatu eszenak",

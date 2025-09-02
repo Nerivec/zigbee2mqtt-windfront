@@ -374,7 +374,8 @@
         "Unknown": "알 수 없음",
         "Coordinator": "코디네이터",
         "power_source": "전원",
-        "battery_low": "배터리 부족"
+        "battery_low": "배터리 부족",
+        "battery_level": "배터리 잔량"
     },
     "scene": {
         "manage_scenes_header": "씬 관리",

@@ -374,7 +374,8 @@
         "Unknown": "Ismeretlen",
         "Coordinator": "Koordinátor",
         "power_source": "Tápegység",
-        "battery_low": "Alacsony töltöttség"
+        "battery_low": "Alacsony töltöttség",
+        "battery_level": "Akkumulátorszint"
     },
     "scene": {
         "manage_scenes_header": "Jelenetek kezelése",

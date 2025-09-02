@@ -374,7 +374,8 @@
         "Unknown": "Unknown",
         "Coordinator": "Coordinator",
         "power_source": "Power source",
-        "battery_low": "Battery low"
+        "battery_low": "Battery low",
+        "battery_level": "Battery level"
     },
     "scene": {
         "manage_scenes_header": "Manage scenes",

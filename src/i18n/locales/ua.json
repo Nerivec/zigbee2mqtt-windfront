@@ -374,7 +374,8 @@
         "Unknown": "Невідомо",
         "Coordinator": "Координатор",
         "power_source": "Джерело живлення",
-        "battery_low": "Низький заряд батареї"
+        "battery_low": "Низький заряд батареї",
+        "battery_level": "Рівень батареї"
     },
     "scene": {
         "manage_scenes_header": "Керування сценами",

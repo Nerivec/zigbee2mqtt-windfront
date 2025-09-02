@@ -374,7 +374,8 @@
         "Unknown": "Неизвестно",
         "Coordinator": "Координатор",
         "power_source": "Источник питания",
-        "battery_low": "Низкий заряд батареи"
+        "battery_low": "Низкий заряд батареи",
+        "battery_level": "Уровень заряда батареи"
     },
     "scene": {
         "manage_scenes_header": "Управление сценами",

@@ -374,7 +374,8 @@
         "Unknown": "Tuntematon",
         "Coordinator": "Koordinaattori",
         "power_source": "Virtalähde",
-        "battery_low": "Akku vähissä"
+        "battery_low": "Akku vähissä",
+        "battery_level": "Akun varaus"
     },
     "scene": {
         "manage_scenes_header": "Hallinnoi skenaarioita",

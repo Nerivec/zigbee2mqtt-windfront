@@ -374,7 +374,8 @@
         "Unknown": "Onbekend",
         "Coordinator": "Coördinator",
         "power_source": "Stroombron",
-        "battery_low": "Batterij bijna leeg"
+        "battery_low": "Batterij bijna leeg",
+        "battery_level": "Batterijniveau"
     },
     "scene": {
         "manage_scenes_header": "Scènes beheren",

@@ -374,7 +374,8 @@
         "Unknown": "Bilinmiyor",
         "Coordinator": "Koordinatör",
         "power_source": "Güç kaynağı",
-        "battery_low": "Düşük pil"
+        "battery_low": "Düşük pil",
+        "battery_level": "Pil seviyesi"
     },
     "scene": {
         "manage_scenes_header": "Sahneleri yönet",

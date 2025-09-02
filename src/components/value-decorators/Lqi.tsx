@@ -12,10 +12,7 @@ const Lqi = memo(({ value }: LqiProps) => {
 
     return (
         <>
-            <FontAwesomeIcon icon={icon} className={className} />{" "}
-            <span className={className}>
-                <DisplayValue value={value} name="linkquality" />
-            </span>
+            <FontAwesomeIcon icon={icon} className={className} /> <DisplayValue value={value} name="linkquality" />
         </>
     );
 });

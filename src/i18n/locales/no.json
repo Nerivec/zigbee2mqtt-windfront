@@ -374,7 +374,8 @@
         "Unknown": "Ukjent",
         "Coordinator": "Koordinator",
         "power_source": "Strømkilde",
-        "battery_low": "Lavt batteri"
+        "battery_low": "Lavt batteri",
+        "battery_level": "Batterinivå"
     },
     "scene": {
         "manage_scenes_header": "Administrer scener",

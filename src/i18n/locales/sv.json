@@ -374,7 +374,8 @@
         "Unknown": "Okänt",
         "Coordinator": "Koordinator",
         "power_source": "Strömkälla",
-        "battery_low": "Låg batterinivå"
+        "battery_low": "Låg batterinivå",
+        "battery_level": "Batterinivå"
     },
     "scene": {
         "manage_scenes_header": "Hantera scener",

@@ -374,7 +374,8 @@
         "Unknown": "Desconhecido",
         "Coordinator": "Coordenador",
         "power_source": "Fonte de energia",
-        "battery_low": "Bateria fraca"
+        "battery_low": "Bateria fraca",
+        "battery_level": "Nível da bateria"
     },
     "scene": {
         "manage_scenes_header": "Gerenciar cenas",

@@ -374,7 +374,8 @@
         "Unknown": "未知",
         "Coordinator": "协调器",
         "power_source": "电源",
-        "battery_low": "电量低"
+        "battery_low": "电量低",
+        "battery_level": "电池电量"
     },
     "scene": {
         "manage_scenes_header": "管理场景",

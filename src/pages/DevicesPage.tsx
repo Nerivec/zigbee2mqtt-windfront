@@ -12,7 +12,6 @@ import Availability from "../components/value-decorators/Availability.js";
 import LastSeen from "../components/value-decorators/LastSeen.js";
 import Lqi from "../components/value-decorators/Lqi.js";
 import ModelLink from "../components/value-decorators/ModelLink.js";
-import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
 import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
@@ -160,17 +159,6 @@ export default function DevicesPage(): JSX.Element {
                                     {device.description}
                                 </div>
                             )}
-                            <div className="flex flex-row gap-1 mt-0.5 items-center">
-                                <span className="badge badge-soft badge-sm badge-ghost cursor-default" title={t("power")}>
-                                    <PowerSource
-                                        device={device}
-                                        batteryPercent={state.battery as number}
-                                        batteryState={state.battery_state as string}
-                                        batteryLow={state.battery_low as boolean}
-                                        showLevel
-                                    />
-                                </span>
-                            </div>
                         </div>
                     </div>
                 ),
@@ -339,10 +327,30 @@ export default function DevicesPage(): JSX.Element {
                 },
             },
             {
+                id: "battery_level",
+                size: 100,
+                header: t("battery_level"),
+                accessorFn: ({ state }) => state.battery ?? undefined,
+                cell: ({
+                    row: {
+                        original: { state, batteryLow },
+                    },
+                }) => (state.battery == null ? "N/A" : <span className={batteryLow ? "text-error" : undefined}>{String(state.battery)}%</span>),
+                filterFn: "inNumberRange",
+                meta: {
+                    filterVariant: "range",
+                },
+            },
+            {
                 id: "battery_low",
                 size: 100,
                 header: t("battery_low"),
-                accessorFn: ({ batteryLow }) => (batteryLow === undefined ? "N/A" : batteryLow),
+                accessorFn: ({ batteryLow }) => batteryLow,
+                cell: ({
+                    row: {
+                        original: { batteryLow },
+                    },
+                }) => (batteryLow === undefined ? "N/A" : <span className={batteryLow ? "text-error" : undefined}>{String(batteryLow)}</span>),
                 filterFn: "equals",
                 meta: {
                     filterVariant: "boolean",
@@ -393,7 +401,7 @@ export default function DevicesPage(): JSX.Element {
         id: "all-devices",
         columns,
         data,
-        visibleColumns: { source: MULTI_INSTANCE, type: false, power_source: false, battery_low: false, disabled: false },
+        visibleColumns: { source: MULTI_INSTANCE, type: false, power_source: false, battery_level: false, battery_low: false, disabled: false },
         sorting: [{ id: "friendly_name", desc: false }],
     });
 

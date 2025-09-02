@@ -374,7 +374,8 @@
         "Unknown": "Neznámé",
         "Coordinator": "Koordinátor",
         "power_source": "Zdroj napájení",
-        "battery_low": "Nízká baterie"
+        "battery_low": "Nízká baterie",
+        "battery_level": "Úroveň baterie"
     },
     "scene": {
         "manage_scenes_header": "Správa scén",
