@@ -245,7 +245,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     </span>
                 </div>
                 <div>
-                    <pre className="inline">{device.description || ""}</pre>
+                    <pre className="inline text-wrap break-all">{device.description || ""}</pre>
                     <DeviceControlUpdateDesc device={device} setDeviceDescription={setDeviceDescription} />
                 </div>
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
