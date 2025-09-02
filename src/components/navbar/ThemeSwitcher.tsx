@@ -4,7 +4,7 @@ import { memo, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import store2 from "store2";
 import { THEME_KEY } from "../../localStoreConsts.js";
-import ModalDropdown from "../ModalDropdown.js";
+import DialogDropdown from "../DialogDropdown.js";
 
 const ALL_THEMES = [
     "", // "Default"
@@ -61,7 +61,7 @@ const ThemeSwitcher = memo(() => {
     }, [currentTheme]);
 
     return (
-        <ModalDropdown
+        <DialogDropdown
             buttonChildren={<FontAwesomeIcon icon={faPaintBrush} />}
             buttonStyle="btn-square"
             // do not allow theme-switching while on network page due to rendering of reagraph
@@ -79,7 +79,7 @@ const ThemeSwitcher = memo(() => {
                     />
                 </li>
             ))}
-        </ModalDropdown>
+        </DialogDropdown>
     );
 });
 

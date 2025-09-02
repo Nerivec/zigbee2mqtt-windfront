@@ -1,14 +1,14 @@
 import { type HTMLAttributes, memo, type ReactElement, useState } from "react";
 import Button from "./Button.js";
 
-interface ModalDropdownProps extends HTMLAttributes<HTMLUListElement> {
+interface DialogDropdownProps extends HTMLAttributes<HTMLUListElement> {
     /** If `ReactElement`, expected to be `<FontAwesomeIcon />`. */
     buttonChildren: ReactElement | string;
     buttonStyle?: string;
     buttonDisabled?: boolean;
 }
 
-const ModalDropdown = memo(({ buttonChildren, buttonStyle, buttonDisabled, children }: ModalDropdownProps) => {
+const DialogDropdown = memo(({ buttonChildren, buttonStyle, buttonDisabled, children }: DialogDropdownProps) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -26,7 +26,7 @@ const ModalDropdown = memo(({ buttonChildren, buttonStyle, buttonDisabled, child
                         }
                     }}
                 >
-                    <div className="modal-box flex-nowrap p-1 w-auto! max-h-[95vh] menu" style={{ scrollbarWidth: "thin" }}>
+                    <div className="modal-box flex-nowrap p-1 w-auto! max-h-[90vh] menu" style={{ scrollbarWidth: "thin" }}>
                         {children}
                     </div>
                 </dialog>
@@ -35,4 +35,4 @@ const ModalDropdown = memo(({ buttonChildren, buttonStyle, buttonDisabled, child
     );
 });
 
-export default ModalDropdown;
+export default DialogDropdown;

@@ -1,6 +1,6 @@
 import { type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import ModalDropdown from "../ModalDropdown.js";
+import DialogDropdown from "../DialogDropdown.js";
 
 const LOCALES_NAMES_MAP = {
     bg: "Български",
@@ -57,7 +57,7 @@ const LanguageSwitcher = memo(() => {
         return languages;
     }, [currentLanguage, i18n.changeLanguage, i18n.options.resources]);
 
-    return <ModalDropdown buttonChildren={currentLanguage}>{children}</ModalDropdown>;
+    return <DialogDropdown buttonChildren={currentLanguage}>{children}</DialogDropdown>;
 });
 
 export default LanguageSwitcher;

@@ -9,7 +9,7 @@ import { API_URLS, useAppStore } from "../../store.js";
 import type { Device } from "../../types.js";
 import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
-import ModalDropdown from "../ModalDropdown.js";
+import DialogDropdown from "../DialogDropdown.js";
 import SourceDot from "../SourceDot.js";
 import Countdown from "../value-decorators/Countdown.js";
 
@@ -75,7 +75,7 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
     }, [devices, selectedRouter, setSelectedRouter, t]);
 
     return (
-        <ModalDropdown
+        <DialogDropdown
             buttonChildren={
                 <span title={t("toggle_dropdown")}>
                     <FontAwesomeIcon icon={faAngleDown} />
@@ -84,7 +84,7 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
             buttonStyle="btn-square join-item"
         >
             {routers}
-        </ModalDropdown>
+        </DialogDropdown>
     );
 });
 
