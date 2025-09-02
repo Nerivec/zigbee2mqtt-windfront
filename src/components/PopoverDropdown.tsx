@@ -10,8 +10,7 @@ interface PopoverDropdownProps extends HTMLAttributes<HTMLUListElement> {
     dropdownStyle?: string;
 }
 
-const PopoverDropdown = memo((props: PopoverDropdownProps) => {
-    const { name, buttonChildren, buttonStyle, buttonDisabled, dropdownStyle, children } = props;
+const PopoverDropdown = memo(({ name, buttonChildren, buttonStyle, buttonDisabled, dropdownStyle, children }: PopoverDropdownProps) => {
     const popoverId = `popover-${name}`;
     const anchorName = `--anchor-${name}`;
 

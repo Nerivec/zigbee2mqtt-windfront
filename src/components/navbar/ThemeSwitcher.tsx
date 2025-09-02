@@ -4,7 +4,7 @@ import { memo, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import store2 from "store2";
 import { THEME_KEY } from "../../localStoreConsts.js";
-import PopoverDropdown from "../PopoverDropdown.js";
+import ModalDropdown from "../ModalDropdown.js";
 
 const ALL_THEMES = [
     "", // "Default"
@@ -61,27 +61,25 @@ const ThemeSwitcher = memo(() => {
     }, [currentTheme]);
 
     return (
-        <PopoverDropdown
-            name="theme-switcher"
+        <ModalDropdown
             buttonChildren={<FontAwesomeIcon icon={faPaintBrush} />}
             buttonStyle="btn-square"
-            dropdownStyle="dropdown-end"
             // do not allow theme-switching while on network page due to rendering of reagraph
-            buttonDisabled={routerLocation.pathname === "/network"}
+            buttonDisabled={routerLocation.pathname.startsWith("/network")}
         >
             {ALL_THEMES.map((theme) => (
                 <li key={theme || "default"}>
                     <input
                         type="radio"
                         name="theme-dropdown"
-                        className={`theme-controller w-full btn btn-sm btn-block ${currentTheme === theme.toLowerCase() ? "btn-primary" : "btn-ghost"}`}
+                        className={`theme-controller w-full font-normal btn btn-block ${currentTheme === theme.toLowerCase() ? "btn-primary" : "btn-ghost"}`}
                         aria-label={theme || "Default"}
                         value={theme.toLowerCase()}
                         onChange={() => setCurrentTheme(theme.toLowerCase())}
                     />
                 </li>
             ))}
-        </PopoverDropdown>
+        </ModalDropdown>
     );
 });
 

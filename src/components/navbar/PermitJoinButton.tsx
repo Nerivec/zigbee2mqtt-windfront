@@ -9,15 +9,16 @@ import { API_URLS, useAppStore } from "../../store.js";
 import type { Device } from "../../types.js";
 import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
-import PopoverDropdown from "../PopoverDropdown.js";
+import ModalDropdown from "../ModalDropdown.js";
 import SourceDot from "../SourceDot.js";
 import Countdown from "../value-decorators/Countdown.js";
 
 type PermitJoinDropdownProps = {
+    selectedRouter: [number, Device | undefined];
     setSelectedRouter: ReturnType<typeof useState<[number, Device | undefined]>>[1];
 };
 
-const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps) => {
+const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJoinDropdownProps) => {
     const { t } = useTranslation("navbar");
     const devices = useAppStore((state) => state.devices);
 
@@ -37,7 +38,9 @@ const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps)
                                 }
                             }}
                         >
-                            <span className="btn btn-sm btn-block btn-ghost">
+                            <span
+                                className={`dropdown-item${selectedRouter[0] === sourceIdx && selectedRouter[1]?.ieee_address === device.ieee_address ? " menu-active" : ""}`}
+                            >
                                 <SourceDot idx={sourceIdx} autoHide namePostfix=" - " />
                                 {device.friendly_name}
                             </span>
@@ -60,7 +63,7 @@ const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps)
                         }
                     }}
                 >
-                    <span className="btn btn-sm btn-block btn-ghost">
+                    <span className={`dropdown-item${selectedRouter[0] === sourceIdx && selectedRouter[1] === undefined ? " menu-active" : ""}`}>
                         <SourceDot idx={sourceIdx} autoHide namePostfix=" - " />
                         {t("all")}
                     </span>
@@ -69,21 +72,19 @@ const PermitJoinDropdown = memo(({ setSelectedRouter }: PermitJoinDropdownProps)
         }
 
         return filteredDevices;
-    }, [devices, setSelectedRouter, t]);
+    }, [devices, selectedRouter, setSelectedRouter, t]);
 
     return (
-        <PopoverDropdown
-            name="permit-join"
+        <ModalDropdown
             buttonChildren={
                 <span title={t("toggle_dropdown")}>
                     <FontAwesomeIcon icon={faAngleDown} />
                 </span>
             }
             buttonStyle="btn-square join-item"
-            dropdownStyle="dropdown-end"
         >
             {routers}
-        </PopoverDropdown>
+        </ModalDropdown>
     );
 });
 
@@ -125,7 +126,7 @@ const PermitJoinButton = memo(() => {
                     {selectedRouter[1]?.friendly_name ?? t("all")}
                 </Button>
             )}
-            {!permitJoin && <PermitJoinDropdown setSelectedRouter={setSelectedRouter} />}
+            {!permitJoin && <PermitJoinDropdown selectedRouter={selectedRouter} setSelectedRouter={setSelectedRouter} />}
         </div>
     );
 });

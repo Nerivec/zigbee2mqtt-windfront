@@ -8,7 +8,7 @@ import type { TabName } from "../../pages/DevicePage.js";
 import { API_URLS, useAppStore } from "../../store.js";
 import type { Device } from "../../types.js";
 import DebouncedInput from "../form-fields/DebouncedInput.js";
-import PopoverDropdown from "../PopoverDropdown.js";
+import ModalDropdown from "../ModalDropdown.js";
 import SourceDot from "../SourceDot.js";
 
 interface HeaderDeviceSelectorProps {
@@ -51,22 +51,20 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
     }, [devices, normalizedSearchTerm, currentSourceIdx, currentDevice, tab, setSearchTerm]);
 
     return (
-        <PopoverDropdown
-            name="header-device-selector"
+        <ModalDropdown
             buttonChildren={
                 <>
                     {currentSourceIdx !== undefined && <SourceDot idx={currentSourceIdx} autoHide />}
                     {currentDevice ? `${currentDevice.friendly_name} (${currentDevice.ieee_address})` : t("unknown_device")}
                 </>
             }
-            dropdownStyle="dropdown-start"
         >
             <label className="input" key="search">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <DebouncedInput onChange={setSearchTerm} placeholder={t("type_to_filter")} value={searchTerm} title={t("type_to_filter")} />
             </label>
             {items}
-        </PopoverDropdown>
+        </ModalDropdown>
     );
 });
 

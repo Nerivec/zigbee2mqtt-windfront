@@ -1,6 +1,6 @@
 import { type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import PopoverDropdown from "../PopoverDropdown.js";
+import ModalDropdown from "../ModalDropdown.js";
 
 const LOCALES_NAMES_MAP = {
     bg: "Български",
@@ -46,7 +46,7 @@ const LanguageSwitcher = memo(() => {
                         }
                     }}
                 >
-                    <span className={`btn btn-sm btn-block ${language === currentLanguage ? "btn-primary" : "btn-ghost"}`}>
+                    <span className={`dropdown-item${language === currentLanguage ? " menu-active" : ""}`}>
                         {LOCALES_NAMES_MAP[language]}
                         {language === "en" ? null : <span className="text-xs text-warning">AI</span>}
                     </span>
@@ -57,11 +57,7 @@ const LanguageSwitcher = memo(() => {
         return languages;
     }, [currentLanguage, i18n.changeLanguage, i18n.options.resources]);
 
-    return (
-        <PopoverDropdown name="locale-picker" buttonChildren={currentLanguage} dropdownStyle="dropdown-end">
-            {children}
-        </PopoverDropdown>
-    );
+    return <ModalDropdown buttonChildren={currentLanguage}>{children}</ModalDropdown>;
 });
 
 export default LanguageSwitcher;
