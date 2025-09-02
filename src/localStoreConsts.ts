@@ -12,6 +12,7 @@ export const HIDE_STATIC_INFO_ALERTS = "hide-static-info-alerts";
 
 export const TABLE_FILTERS_KEY = "table-filters";
 export const TABLE_COLUMNS_KEY = "table-columns";
+export const TABLE_SORTING_KEY = "table-sorting";
 
 //-- Network
 export const NETWORK_RAW_DISPLAY_TYPE_KEY = "network-raw-display-type";

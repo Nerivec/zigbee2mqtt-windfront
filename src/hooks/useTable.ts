@@ -15,7 +15,7 @@ import {
 } from "@tanstack/react-table";
 import { useCallback, useEffect, useState } from "react";
 import store2 from "store2";
-import { TABLE_COLUMNS_KEY, TABLE_FILTERS_KEY } from "../localStoreConsts.js";
+import { TABLE_COLUMNS_KEY, TABLE_FILTERS_KEY, TABLE_SORTING_KEY } from "../localStoreConsts.js";
 
 declare module "@tanstack/react-table" {
     // allows us to define custom properties for our columns
@@ -42,6 +42,7 @@ export interface UseTableProps<T> {
 
 export function useTable<T>({ id, columns, data, visibleColumns, sorting, rowSelection, onRowSelectionChange }: UseTableProps<T>) {
     const columnVisibilityStoreKey = `${TABLE_COLUMNS_KEY}_${id}`;
+    const tableSortingStoreKey = `${TABLE_SORTING_KEY}_${id}`;
     const globalFilterStoreKey = `${TABLE_FILTERS_KEY}_${id}_global`;
     const columnFiltersStoreKey = `${TABLE_FILTERS_KEY}_${id}_columns`;
 
@@ -50,6 +51,12 @@ export function useTable<T>({ id, columns, data, visibleColumns, sorting, rowSel
     useEffect(() => {
         store2.set(columnVisibilityStoreKey, columnVisibility);
     }, [columnVisibilityStoreKey, columnVisibility]);
+
+    const [tableSorting, setTableSorting] = useState<SortingState>(store2.get(tableSortingStoreKey, sorting ?? []));
+
+    useEffect(() => {
+        store2.set(tableSortingStoreKey, tableSorting);
+    }, [tableSortingStoreKey, tableSorting]);
 
     const [globalFilter, setGlobalFilter] = useState<string>(store2.get(globalFilterStoreKey, ""));
 
@@ -77,9 +84,7 @@ export function useTable<T>({ id, columns, data, visibleColumns, sorting, rowSel
             columnFilters,
             columnVisibility,
             rowSelection,
-        },
-        initialState: {
-            sorting,
+            sorting: tableSorting,
         },
         onGlobalFilterChange: setGlobalFilter,
         onColumnVisibilityChange: setColumnVisibility,
@@ -90,6 +95,7 @@ export function useTable<T>({ id, columns, data, visibleColumns, sorting, rowSel
         getFacetedRowModel: getFacetedRowModel(),
         getFacetedUniqueValues: getFacetedUniqueValues(),
         getFacetedMinMaxValues: getFacetedMinMaxValues(),
+        onSortingChange: setTableSorting,
         onRowSelectionChange,
         enableRowSelection: !!onRowSelectionChange,
         // debugTable: true,

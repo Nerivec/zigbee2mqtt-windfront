@@ -17,6 +17,7 @@ import {
     PERMIT_JOIN_TIME_KEY,
     TABLE_COLUMNS_KEY,
     TABLE_FILTERS_KEY,
+    TABLE_SORTING_KEY,
     THEME_KEY,
     TOKEN_KEY,
 } from "../localStoreConsts.js";
@@ -64,7 +65,7 @@ export default function FrontendSettingsPage() {
         store2.remove(I18NEXTLNG_KEY);
 
         for (const key of keys) {
-            if (key.startsWith(TABLE_COLUMNS_KEY) || key.startsWith(TABLE_FILTERS_KEY)) {
+            if (key.startsWith(TABLE_COLUMNS_KEY) || key.startsWith(TABLE_FILTERS_KEY) || key.startsWith(TABLE_SORTING_KEY)) {
                 store2.remove(key);
             }
         }
