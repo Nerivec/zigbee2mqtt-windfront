@@ -270,7 +270,11 @@
         "leave_count": "Кількість виходів",
         "network_address_changes": "Зміни мережевих адрес",
         "very_low": "Дуже низько",
-        "interview_info": "Інтерв'ю пристроїв може впливати на ці дані."
+        "interview_info": "Інтерв'ю пристроїв може впливати на ці дані.",
+        "sent": "Надіслано",
+        "last_message": "Останнє повідомлення",
+        "pending_requests": "Запити в очікуванні",
+        "reconnects": "Повторні підключення"
     },
     "touchlink": {
         "detected_devices_message": "Виявлено {{count}} touchlink пристр.",

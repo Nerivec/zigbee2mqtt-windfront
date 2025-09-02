@@ -270,7 +270,11 @@
         "leave_count": "Verlassensanzahl",
         "network_address_changes": "Netzwerkadressänderungen",
         "very_low": "Sehr niedrig",
-        "interview_info": "Geräteinterviews können diese Daten stark beeinflussen."
+        "interview_info": "Geräteinterviews können diese Daten stark beeinflussen.",
+        "sent": "Gesendet",
+        "last_message": "Letzte Nachricht",
+        "pending_requests": "Ausstehende Anfragen",
+        "reconnects": "Wiederverbindungen"
     },
     "touchlink": {
         "detected_devices_message": "{{count}} Touchlink-Geräte erkannt.",

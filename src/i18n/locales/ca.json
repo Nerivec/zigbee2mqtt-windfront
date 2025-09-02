@@ -270,7 +270,11 @@
         "leave_count": "Comptador sortides",
         "network_address_changes": "Canvis adreça xarxa",
         "very_low": "Molt baix",
-        "interview_info": "Device interview pot alterar xifres."
+        "interview_info": "Device interview pot alterar xifres.",
+        "sent": "Enviat",
+        "last_message": "Últim missatge",
+        "pending_requests": "Sol·licituds pendents",
+        "reconnects": "Reconnexions"
     },
     "touchlink": {
         "detected_devices_message": "Detectats {{count}} dispositius touchlink.",

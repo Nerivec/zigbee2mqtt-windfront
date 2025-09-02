@@ -270,7 +270,11 @@
         "leave_count": "Contagem de saídas",
         "network_address_changes": "Mudanças de endereço de rede",
         "very_low": "Muito baixo",
-        "interview_info": "Entrevistas do dispositivo podem impactar estes dados."
+        "interview_info": "Entrevistas do dispositivo podem impactar estes dados.",
+        "sent": "Enviado",
+        "last_message": "Última mensagem",
+        "pending_requests": "Solicitações pendentes",
+        "reconnects": "Reconexões"
     },
     "touchlink": {
         "detected_devices_message": "{{count}} dispositivos touchlink detectados.",

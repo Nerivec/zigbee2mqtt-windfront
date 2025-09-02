@@ -270,7 +270,11 @@
         "leave_count": "Irteera kopurua",
         "network_address_changes": "Helbide aldaketak",
         "very_low": "Oso baxu",
-        "interview_info": "Device interview datuak aldaraz ditzake."
+        "interview_info": "Device interview datuak aldaraz ditzake.",
+        "sent": "Bidaliak",
+        "last_message": "Azken mezua",
+        "pending_requests": "Zain dauden eskaerak",
+        "reconnects": "Berriro konektatzeak"
     },
     "touchlink": {
         "detected_devices_message": "{{count}} touchlink gailu detektatu.",

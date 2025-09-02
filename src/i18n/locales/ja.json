@@ -270,7 +270,11 @@
         "leave_count": "離脱回数",
         "network_address_changes": "ネットワークアドレス変更",
         "very_low": "非常に低い",
-        "interview_info": "デバイスインタビューがこのデータに影響します。"
+        "interview_info": "デバイスインタビューがこのデータに影響します。",
+        "sent": "送信済み",
+        "last_message": "最後のメッセージ",
+        "pending_requests": "保留中のリクエスト",
+        "reconnects": "再接続回数"
     },
     "touchlink": {
         "detected_devices_message": "{{count}} 個の touchlink デバイスを検出。",

@@ -270,7 +270,11 @@
         "leave_count": "Antall forlatelser",
         "network_address_changes": "Adresseendringer",
         "very_low": "Svært lav",
-        "interview_info": "Enhetsintervjuer kan påvirke tallene."
+        "interview_info": "Enhetsintervjuer kan påvirke tallene.",
+        "sent": "Sendt",
+        "last_message": "Siste melding",
+        "pending_requests": "Ventende forespørsler",
+        "reconnects": "Gjenoppkoblinger"
     },
     "touchlink": {
         "detected_devices_message": "Fant {{count}} touchlink-enheter.",

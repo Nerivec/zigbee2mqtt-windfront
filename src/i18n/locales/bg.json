@@ -270,7 +270,11 @@
         "leave_count": "Брой напускания",
         "network_address_changes": "Промени на адрес",
         "very_low": "Много ниско",
-        "interview_info": "Device interview може да влияе силно."
+        "interview_info": "Device interview може да влияе силно.",
+        "sent": "Изпратени",
+        "last_message": "Последно съобщение",
+        "pending_requests": "Чакащи заявки",
+        "reconnects": "Повторни свързвания"
     },
     "touchlink": {
         "detected_devices_message": "Открити {{count}} touchlink устройства.",

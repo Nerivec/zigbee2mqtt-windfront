@@ -270,7 +270,11 @@
         "leave_count": "离网次数",
         "network_address_changes": "网络地址变更",
         "very_low": "很低",
-        "interview_info": "设备访谈 (Device interview) 会影响此数据。"
+        "interview_info": "设备访谈 (Device interview) 会影响此数据。",
+        "sent": "已发送",
+        "last_message": "最后一条消息",
+        "pending_requests": "待处理请求",
+        "reconnects": "重连次数"
     },
     "touchlink": {
         "detected_devices_message": "检测到 {{count}} 个 touchlink 设备。",

@@ -270,7 +270,11 @@
         "leave_count": "Ayrılma sayısı",
         "network_address_changes": "Adres değişiklikleri",
         "very_low": "Çok düşük",
-        "interview_info": "Cihaz görüşmeleri bu verileri etkileyebilir."
+        "interview_info": "Cihaz görüşmeleri bu verileri etkileyebilir.",
+        "sent": "Gönderildi",
+        "last_message": "Son mesaj",
+        "pending_requests": "Bekleyen istekler",
+        "reconnects": "Yeniden bağlantılar"
     },
     "touchlink": {
         "detected_devices_message": "{{count}} touchlink cihaz bulundu.",

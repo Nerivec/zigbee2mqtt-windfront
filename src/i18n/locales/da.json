@@ -270,7 +270,11 @@
         "leave_count": "Antal afgang",
         "network_address_changes": "Adresseændringer",
         "very_low": "Meget lav",
-        "interview_info": "Device interview kan påvirke data."
+        "interview_info": "Device interview kan påvirke data.",
+        "sent": "Sendt",
+        "last_message": "Sidste besked",
+        "pending_requests": "Afventende forespørgsler",
+        "reconnects": "Genforbindelser"
     },
     "touchlink": {
         "detected_devices_message": "Registreret {{count}} touchlink enheder.",

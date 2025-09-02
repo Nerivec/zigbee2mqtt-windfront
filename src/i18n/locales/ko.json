@@ -270,7 +270,11 @@
         "leave_count": "이탈 횟수",
         "network_address_changes": "네트워크 주소 변경",
         "very_low": "매우 낮음",
-        "interview_info": "디바이스 인터뷰가 이 데이터에 영향을 줄 수 있습니다."
+        "interview_info": "디바이스 인터뷰가 이 데이터에 영향을 줄 수 있습니다.",
+        "sent": "전송됨",
+        "last_message": "마지막 메시지",
+        "pending_requests": "보류 중인 요청",
+        "reconnects": "재연결 횟수"
     },
     "touchlink": {
         "detected_devices_message": "Touchlink 디바이스 {{count}}개 감지.",

@@ -270,7 +270,11 @@
         "leave_count": "Liczba opuszczeń",
         "network_address_changes": "Zmiany adresów",
         "very_low": "Bardzo niskie",
-        "interview_info": "Wywiady urządzeń mogą wpływać na dane."
+        "interview_info": "Wywiady urządzeń mogą wpływać na dane.",
+        "sent": "Wysłano",
+        "last_message": "Ostatnia wiadomość",
+        "pending_requests": "Oczekujące żądania",
+        "reconnects": "Ponowne połączenia"
     },
     "touchlink": {
         "detected_devices_message": "Wykryto {{count}} urządzeń touchlink.",

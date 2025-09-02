@@ -270,7 +270,11 @@
         "leave_count": "離網次數",
         "network_address_changes": "網路位址變更",
         "very_low": "非常低",
-        "interview_info": "裝置訪談 (Device interview) 可能影響這些數據。"
+        "interview_info": "裝置訪談 (Device interview) 可能影響這些數據。",
+        "sent": "已傳送",
+        "last_message": "最後一則訊息",
+        "pending_requests": "待處理請求",
+        "reconnects": "重新連線次數"
     },
     "touchlink": {
         "detected_devices_message": "偵測到 {{count}} 個 touchlink 裝置。",

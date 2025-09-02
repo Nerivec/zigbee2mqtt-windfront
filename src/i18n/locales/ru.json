@@ -270,7 +270,11 @@
         "leave_count": "Количество выходов",
         "network_address_changes": "Изменения сетевых адресов",
         "very_low": "Очень низко",
-        "interview_info": "Интервью устройств могут значительно влиять на эти данные."
+        "interview_info": "Интервью устройств могут значительно влиять на эти данные.",
+        "sent": "Отправлено",
+        "last_message": "Последнее сообщение",
+        "pending_requests": "Ожидающие запросы",
+        "reconnects": "Повторные подключения"
     },
     "touchlink": {
         "detected_devices_message": "Обнаружено touchlink-устройств: {{count}}.",

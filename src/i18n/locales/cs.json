@@ -270,7 +270,11 @@
         "leave_count": "Počet odchodů",
         "network_address_changes": "Změny adresy",
         "very_low": "Velmi nízké",
-        "interview_info": "Device interview může čísla zkreslit."
+        "interview_info": "Device interview může čísla zkreslit.",
+        "sent": "Odesláno",
+        "last_message": "Poslední zpráva",
+        "pending_requests": "Čekající požadavky",
+        "reconnects": "Opětovná připojení"
     },
     "touchlink": {
         "detected_devices_message": "Zjištěno {{count}} touchlink zařízení.",

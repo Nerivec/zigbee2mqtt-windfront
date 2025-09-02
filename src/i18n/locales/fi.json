@@ -270,7 +270,11 @@
         "leave_count": "Poistumiset",
         "network_address_changes": "Osoitteen muutokset",
         "very_low": "Erittäin matala",
-        "interview_info": "Laitteen haastattelu voi vaikuttaa arvoihin."
+        "interview_info": "Laitteen haastattelu voi vaikuttaa arvoihin.",
+        "sent": "Lähetetty",
+        "last_message": "Viimeinen viesti",
+        "pending_requests": "Odottavat pyynnöt",
+        "reconnects": "Uudelleenyhdistämiset"
     },
     "touchlink": {
         "detected_devices_message": "Havaittiin {{count}} touchlink-laitetta.",

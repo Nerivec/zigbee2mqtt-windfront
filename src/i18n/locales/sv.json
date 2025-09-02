@@ -270,7 +270,11 @@
         "leave_count": "Leave-antal",
         "network_address_changes": "Adressändringar",
         "very_low": "Mycket låg",
-        "interview_info": "Enhetsintervjuer kan påverka dessa siffror."
+        "interview_info": "Enhetsintervjuer kan påverka dessa siffror.",
+        "sent": "Skickat",
+        "last_message": "Senaste meddelande",
+        "pending_requests": "Väntande förfrågningar",
+        "reconnects": "Återanslutningar"
     },
     "touchlink": {
         "detected_devices_message": "{{count}} touchlink-enheter hittades.",

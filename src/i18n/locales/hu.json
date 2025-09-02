@@ -270,7 +270,11 @@
         "leave_count": "Kilépések száma",
         "network_address_changes": "Címváltozások",
         "very_low": "Nagyon alacsony",
-        "interview_info": "Az eszköz interjú torzíthatja az adatokat."
+        "interview_info": "Az eszköz interjú torzíthatja az adatokat.",
+        "sent": "Elküldve",
+        "last_message": "Utolsó üzenet",
+        "pending_requests": "Függő kérések",
+        "reconnects": "Újracsatlakozások"
     },
     "touchlink": {
         "detected_devices_message": "{{count}} touchlink eszköz található.",
