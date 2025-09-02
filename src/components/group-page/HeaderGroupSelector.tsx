@@ -59,7 +59,7 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
                 </>
             }
         >
-            <label className="input" key="search">
+            <label className="input min-h-10" key="search">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
                 <DebouncedInput onChange={setSearchTerm} placeholder={t("type_to_filter")} value={searchTerm} title={t("type_to_filter")} />
             </label>
