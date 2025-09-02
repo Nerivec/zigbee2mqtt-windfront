@@ -60,7 +60,7 @@ const DevicePicker = memo(({ devices, value, label, onChange, groups = [], ...re
     }, [devices, groups, t]);
 
     return (
-        <SelectField name="device_picker" label={label} value={value} onChange={onSelectHandler} {...rest}>
+        <SelectField name="device_picker" label={label} value={value} onChange={onSelectHandler} className="select validator max-w-64" {...rest}>
             <option value="" disabled>
                 {t("select_device")}
             </option>

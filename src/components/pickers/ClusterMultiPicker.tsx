@@ -33,7 +33,7 @@ const ClusterMultiPicker = memo((props: ClusterMultiPickerProps) => {
                 .map((cluster) => (
                     <label key={cluster} className="label" title={cluster}>
                         <input
-                            className="checkbox"
+                            className="checkbox checkbox-sm"
                             type="checkbox"
                             checked={value.includes(cluster)}
                             name={cluster}

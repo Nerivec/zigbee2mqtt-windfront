@@ -164,6 +164,7 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                     values={sourceEndpoints}
                     value={stateRule.source.endpoint}
                     onChange={onSourceEndpointChange}
+                    required
                 />
                 <DevicePicker
                     label={t("destination")}
@@ -172,6 +173,7 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                     devices={devices}
                     groups={groups}
                     onChange={onDestinationChange}
+                    required
                 />
                 {stateRule.target.type === "endpoint" ? (
                     <EndpointPicker
@@ -192,7 +194,7 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                             item={"Bind"}
                             disabled={!isValidRule}
                             title={t("bind")}
-                            className="btn btn-primary join-item"
+                            className="btn btn-primary btn-outline join-item"
                             onClick={onBindOrUnBindClick}
                         >
                             <FontAwesomeIcon icon={faLink} />
@@ -202,7 +204,7 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                             item={"Unbind"}
                             disabled={stateRule.isNew || !isValidRule}
                             title={t("unbind")}
-                            className="btn btn-error join-item"
+                            className="btn btn-error btn-outline join-item"
                             onClick={onBindOrUnBindClick}
                         >
                             <FontAwesomeIcon icon={faUnlink} />
@@ -211,7 +213,7 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                     </div>
                 </fieldset>
             </div>
-            <div className="divider" />
+            <div className="divider my-1" />
         </>
     );
 });

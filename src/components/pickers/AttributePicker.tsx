@@ -61,6 +61,7 @@ const AttributePicker = memo(({ sourceIdx, cluster, device, onChange, label, ...
             label={label}
             onChange={(e: ChangeEvent<HTMLSelectElement>): void => onChange(e.target.value, clusterAttributes[e.target.value])}
             disabled={options.length === 0}
+            className="select validator max-w-64"
             {...rest}
         >
             <option value="" disabled>

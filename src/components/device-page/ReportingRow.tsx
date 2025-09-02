@@ -129,6 +129,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     value={stateRule.minimum_report_interval}
                     onChange={onReportNumberChange}
                     required
+                    className="input validator max-w-48"
                 />
                 <InputField
                     name="maximum_report_interval"
@@ -137,6 +138,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     value={stateRule.maximum_report_interval}
                     onChange={onReportNumberChange}
                     required
+                    className="input validator max-w-48"
                 />
                 <InputField
                     name="reportable_change"
@@ -145,17 +147,23 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     value={stateRule.reportable_change}
                     onChange={onReportNumberChange}
                     required
+                    className="input validator max-w-48"
                 />
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend">{t("actions")}</legend>
                     <div className="join join-horizontal">
-                        <Button<NiceReportingRule> className="btn btn-primary join-item" item={stateRule} onClick={onApply} disabled={!isValidRule}>
+                        <Button<NiceReportingRule>
+                            className="btn btn-primary btn-outline join-item"
+                            item={stateRule}
+                            onClick={onApply}
+                            disabled={!isValidRule}
+                        >
                             {t("common:apply")}
                         </Button>
                         {!stateRule.isNew ? (
                             <ConfirmButton<void>
                                 title={t("common:disable")}
-                                className="btn btn-error join-item"
+                                className="btn btn-error btn-outline join-item"
                                 onClick={onDisableRuleClick}
                                 modalDescription={t("common:dialog_confirmation_prompt")}
                                 modalCancelLabel={t("common:cancel")}
@@ -166,7 +174,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     </div>
                 </fieldset>
             </div>
-            <div className="divider" />
+            <div className="divider my-1" />
         </>
     );
 });
