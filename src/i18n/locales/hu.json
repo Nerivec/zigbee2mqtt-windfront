@@ -198,7 +198,9 @@
         "updating": "Frissítés folyamatban",
         "idle": "Tétlen",
         "available": "Elérhető",
-        "scheduled": "Ütemezett"
+        "scheduled": "Ütemezett",
+        "schedule_selected": "Kijelöltek ütemezése",
+        "unschedule_selected": "Kijelöltek ütemezésének törlése"
     },
     "settings": {
         "about": "Névjegy",

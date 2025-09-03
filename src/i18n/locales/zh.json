@@ -198,7 +198,9 @@
         "updating": "更新中",
         "idle": "閒置",
         "available": "可用",
-        "scheduled": "已排程"
+        "scheduled": "已排程",
+        "schedule_selected": "排程所選",
+        "unschedule_selected": "取消所選排程"
     },
     "settings": {
         "about": "關於",

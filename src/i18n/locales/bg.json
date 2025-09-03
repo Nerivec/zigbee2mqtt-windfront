@@ -198,7 +198,9 @@
         "updating": "Актуализира се",
         "idle": "Неактивно",
         "available": "Налично",
-        "scheduled": "Планирано"
+        "scheduled": "Планирано",
+        "schedule_selected": "Насрочи избраните",
+        "unschedule_selected": "Отмени насрочването на избраните"
     },
     "settings": {
         "about": "Относно",

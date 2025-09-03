@@ -198,7 +198,9 @@
         "updating": "Atualizando",
         "idle": "Inativo",
         "available": "Disponível",
-        "scheduled": "Agendado"
+        "scheduled": "Agendado",
+        "schedule_selected": "Agendar selecionados",
+        "unschedule_selected": "Desagendar selecionados"
     },
     "settings": {
         "about": "Sobre",

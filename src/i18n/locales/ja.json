@@ -198,7 +198,9 @@
         "updating": "更新中",
         "idle": "待機",
         "available": "利用可能",
-        "scheduled": "予定済み"
+        "scheduled": "予定済み",
+        "schedule_selected": "選択項目をスケジュール",
+        "unschedule_selected": "選択項目のスケジュールを解除"
     },
     "settings": {
         "about": "概要",

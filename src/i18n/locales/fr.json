@@ -198,7 +198,9 @@
         "updating": "Mise à jour",
         "idle": "Inactif",
         "available": "Disponible",
-        "scheduled": "Planifié"
+        "scheduled": "Planifié",
+        "schedule_selected": "Programmer la sélection",
+        "unschedule_selected": "Déprogrammer la sélection"
     },
     "settings": {
         "about": "À propos",

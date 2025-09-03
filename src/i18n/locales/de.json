@@ -198,7 +198,9 @@
         "updating": "Aktualisiere",
         "idle": "Leerlauf",
         "available": "Verfügbar",
-        "scheduled": "Geplant"
+        "scheduled": "Geplant",
+        "schedule_selected": "Ausgewählte planen",
+        "unschedule_selected": "Planung für Ausgewählte aufheben"
     },
     "settings": {
         "about": "Info",

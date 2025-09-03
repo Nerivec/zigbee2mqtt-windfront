@@ -198,7 +198,9 @@
         "updating": "Eguneratzen",
         "idle": "Inaktibo",
         "available": "Eskuragarri",
-        "scheduled": "Programatuta"
+        "scheduled": "Programatuta",
+        "schedule_selected": "Hautatuak programatu",
+        "unschedule_selected": "Hautatuak desprogramatu"
     },
     "settings": {
         "about": "Honi buruz",

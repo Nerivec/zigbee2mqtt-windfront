@@ -198,7 +198,9 @@
         "updating": "업데이트 중",
         "idle": "유휴",
         "available": "사용 가능",
-        "scheduled": "예약됨"
+        "scheduled": "예약됨",
+        "schedule_selected": "선택 항목 일정 등록",
+        "unschedule_selected": "선택 항목 일정 해제"
     },
     "settings": {
         "about": "정보",

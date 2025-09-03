@@ -198,7 +198,9 @@
         "updating": "Päivitetään",
         "idle": "Joutilaana",
         "available": "Saatavilla",
-        "scheduled": "Ajastettu"
+        "scheduled": "Ajastettu",
+        "schedule_selected": "Aikatauluta valitut",
+        "unschedule_selected": "Poista aikataulutus valituilta"
     },
     "settings": {
         "about": "Tietoja",

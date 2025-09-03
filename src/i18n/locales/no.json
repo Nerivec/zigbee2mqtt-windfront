@@ -198,7 +198,9 @@
         "updating": "Oppdaterer",
         "idle": "Inaktiv",
         "available": "Tilgjengelig",
-        "scheduled": "Planlagt"
+        "scheduled": "Planlagt",
+        "schedule_selected": "Planlegg valgte",
+        "unschedule_selected": "Fjern planlegging for valgte"
     },
     "settings": {
         "about": "Om",

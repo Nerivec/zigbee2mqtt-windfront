@@ -198,7 +198,9 @@
         "updating": "Actualitzant",
         "idle": "Inactiu",
         "available": "Disponible",
-        "scheduled": "Programat"
+        "scheduled": "Programat",
+        "schedule_selected": "Programa els seleccionats",
+        "unschedule_selected": "Desprograma els seleccionats"
     },
     "settings": {
         "about": "Quant a",

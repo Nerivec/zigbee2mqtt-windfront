@@ -198,7 +198,9 @@
         "updating": "Güncelleniyor",
         "idle": "Boşta",
         "available": "Mevcut",
-        "scheduled": "Zamanlandı"
+        "scheduled": "Zamanlandı",
+        "schedule_selected": "Seçilenleri zamanla",
+        "unschedule_selected": "Seçilenlerin zamanlamasını kaldır"
     },
     "settings": {
         "about": "Hakkında",

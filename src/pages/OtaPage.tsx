@@ -76,23 +76,32 @@ export default function OtaPage() {
     const rowSelectionCount = useMemo(() => Object.keys(rowSelection).length, [rowSelection]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: can't dep table
-    const actOnFilteredSelected = useCallback(async (topic: "bridge/request/device/ota_update/check" | "bridge/request/device/ota_update/update") => {
-        const promises: Promise<void>[] = [];
+    const actOnFilteredSelected = useCallback(
+        async (
+            topic:
+                | "bridge/request/device/ota_update/check"
+                | "bridge/request/device/ota_update/update"
+                | "bridge/request/device/ota_update/schedule"
+                | "bridge/request/device/ota_update/unschedule",
+        ) => {
+            const promises: Promise<void>[] = [];
 
-        for (const row of table.getFilteredRowModel().rows) {
-            if (row.getIsSelected()) {
-                const { sourceIdx, device } = row.original;
+            for (const row of table.getFilteredRowModel().rows) {
+                if (row.getIsSelected()) {
+                    const { sourceIdx, device } = row.original;
 
-                promises.push(sendMessage(sourceIdx, topic, { id: device.ieee_address }));
+                    promises.push(sendMessage(sourceIdx, topic, { id: device.ieee_address }));
+                }
             }
-        }
 
-        setRowSelection({});
+            setRowSelection({});
 
-        if (promises.length > 0) {
-            await Promise.allSettled(promises);
-        }
-    }, []);
+            if (promises.length > 0) {
+                await Promise.allSettled(promises);
+            }
+        },
+        [],
+    );
 
     const onCheckClick = useCallback(
         async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee }),
@@ -330,6 +339,7 @@ export default function OtaPage() {
             },
             {
                 id: "actions",
+                header: "",
                 minSize: 130,
                 accessorFn: ({ state }) => state?.state,
                 cell: ({
@@ -401,28 +411,56 @@ export default function OtaPage() {
             globalFilter={globalFilter}
             columnFilters={columnFilters}
             headerActions={
-                <div className="join join-vertical">
-                    <ConfirmButton
-                        className="btn btn-outline btn-error btn-xs join-item"
-                        onClick={async () => await actOnFilteredSelected("bridge/request/device/ota_update/check")}
-                        title={t("check_selected")}
-                        modalDescription={t("common:dialog_confirmation_prompt")}
-                        modalCancelLabel={t("common:cancel")}
-                        disabled={rowSelectionCount === 0}
-                    >
-                        {`${t("check_selected")} (${rowSelectionCount})`}
-                    </ConfirmButton>
-                    <ConfirmButton
-                        className="btn btn-outline btn-error btn-xs join-item"
-                        onClick={async () => await actOnFilteredSelected("bridge/request/device/ota_update/update")}
-                        title={t("update_selected")}
-                        modalDescription={t("update_selected_info")}
-                        modalCancelLabel={t("common:cancel")}
-                        disabled={rowSelectionCount === 0}
-                    >
-                        {`${t("update_selected")} (${rowSelectionCount})`}
-                    </ConfirmButton>
-                </div>
+                <>
+                    <div className="join join-vertical">
+                        <ConfirmButton<"bridge/request/device/ota_update/check">
+                            className="btn btn-outline btn-error btn-xs join-item"
+                            item="bridge/request/device/ota_update/check"
+                            onClick={actOnFilteredSelected}
+                            title={t("check_selected")}
+                            modalDescription={t("common:dialog_confirmation_prompt")}
+                            modalCancelLabel={t("common:cancel")}
+                            disabled={rowSelectionCount === 0}
+                        >
+                            {`${t("check_selected")} (${rowSelectionCount})`}
+                        </ConfirmButton>
+                        <ConfirmButton<"bridge/request/device/ota_update/update">
+                            className="btn btn-outline btn-error btn-xs join-item"
+                            item="bridge/request/device/ota_update/update"
+                            onClick={actOnFilteredSelected}
+                            title={t("update_selected")}
+                            modalDescription={t("update_selected_info")}
+                            modalCancelLabel={t("common:cancel")}
+                            disabled={rowSelectionCount === 0}
+                        >
+                            {`${t("update_selected")} (${rowSelectionCount})`}
+                        </ConfirmButton>
+                    </div>
+                    <div className="join join-vertical">
+                        <ConfirmButton<"bridge/request/device/ota_update/schedule">
+                            className="btn btn-outline btn-error btn-xs join-item"
+                            item="bridge/request/device/ota_update/schedule"
+                            onClick={actOnFilteredSelected}
+                            title={t("schedule_selected")}
+                            modalDescription={t("common:dialog_confirmation_prompt")}
+                            modalCancelLabel={t("common:cancel")}
+                            disabled={rowSelectionCount === 0}
+                        >
+                            {`${t("schedule_selected")} (${rowSelectionCount})`}
+                        </ConfirmButton>
+                        <ConfirmButton<"bridge/request/device/ota_update/unschedule">
+                            className="btn btn-outline btn-error btn-xs join-item"
+                            item="bridge/request/device/ota_update/unschedule"
+                            onClick={actOnFilteredSelected}
+                            title={t("unschedule_selected")}
+                            modalDescription={t("common:dialog_confirmation_prompt")}
+                            modalCancelLabel={t("common:cancel")}
+                            disabled={rowSelectionCount === 0}
+                        >
+                            {`${t("unschedule_selected")} (${rowSelectionCount})`}
+                        </ConfirmButton>
+                    </div>
+                </>
             }
         />
     );

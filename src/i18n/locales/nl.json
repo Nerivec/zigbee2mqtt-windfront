@@ -198,7 +198,9 @@
         "updating": "Bezig met bijwerken",
         "idle": "Inactief",
         "available": "Beschikbaar",
-        "scheduled": "Gepland"
+        "scheduled": "Gepland",
+        "schedule_selected": "Geselecteerde inplannen",
+        "unschedule_selected": "Inplanning geselecteerde opheffen"
     },
     "settings": {
         "about": "Over",

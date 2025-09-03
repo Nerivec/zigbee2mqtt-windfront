@@ -198,7 +198,9 @@
         "updating": "Aktualizowanie",
         "idle": "Bezczynny",
         "available": "Dostępny",
-        "scheduled": "Zaplanowany"
+        "scheduled": "Zaplanowany",
+        "schedule_selected": "Zaplanuj wybrane",
+        "unschedule_selected": "Anuluj zaplanowanie wybranych"
     },
     "settings": {
         "about": "O",

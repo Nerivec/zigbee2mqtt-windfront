@@ -198,7 +198,9 @@
         "updating": "Обновляется",
         "idle": "Бездействует",
         "available": "Доступно",
-        "scheduled": "Запланировано"
+        "scheduled": "Запланировано",
+        "schedule_selected": "Запланировать выбранные",
+        "unschedule_selected": "Отменить планирование выбранных"
     },
     "settings": {
         "about": "О программе",

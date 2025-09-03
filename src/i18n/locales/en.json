@@ -198,7 +198,9 @@
         "updating": "Updating",
         "idle": "Idle",
         "available": "Available",
-        "scheduled": "Scheduled"
+        "scheduled": "Scheduled",
+        "schedule_selected": "Schedule selected",
+        "unschedule_selected": "Unschedule selected"
     },
     "settings": {
         "about": "About",

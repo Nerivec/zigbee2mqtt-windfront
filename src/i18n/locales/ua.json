@@ -198,7 +198,9 @@
         "updating": "Оновлення",
         "idle": "Бездіяльний",
         "available": "Доступний",
-        "scheduled": "Заплановано"
+        "scheduled": "Заплановано",
+        "schedule_selected": "Запланувати вибрані",
+        "unschedule_selected": "Скасувати планування вибраних"
     },
     "settings": {
         "about": "Про програму",

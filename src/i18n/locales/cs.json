@@ -198,7 +198,9 @@
         "updating": "Aktualizace",
         "idle": "Nečinné",
         "available": "Dostupné",
-        "scheduled": "Naplánováno"
+        "scheduled": "Naplánováno",
+        "schedule_selected": "Naplánovat vybrané",
+        "unschedule_selected": "Zrušit naplánování vybraných"
     },
     "settings": {
         "about": "O aplikaci",

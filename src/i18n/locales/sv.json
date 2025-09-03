@@ -198,7 +198,9 @@
         "updating": "Uppdaterar",
         "idle": "Inaktiv",
         "available": "Tillgänglig",
-        "scheduled": "Schemalagd"
+        "scheduled": "Schemalagd",
+        "schedule_selected": "Schemalägg valda",
+        "unschedule_selected": "Ta bort schemaläggning för valda"
     },
     "settings": {
         "about": "Om",
