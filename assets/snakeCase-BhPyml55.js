@@ -1,0 +1,1 @@
+import{an as u}from"./index-Cc6KfuI_.js";import{b as C}from"./_createCompounder-BYEDaJ00.js";var e,r;function i(){if(r)return e;r=1;var a=C(),s=a(function(n,o,t){return n+(t?"_":"")+o.toLowerCase()});return e=s,e}var m=i();const k=u(m);export{k as s};
