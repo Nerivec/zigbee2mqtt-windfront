@@ -5,7 +5,7 @@ services:
     image: ghcr.io/nerivec/zigbee2mqtt-windfront
     restart: unless-stopped
     ports:
-      - 80:80
+      - 8080:8080
     networks:
       - network
     environment:
