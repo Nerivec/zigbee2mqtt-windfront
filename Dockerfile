@@ -1,6 +1,8 @@
 FROM nginxinc/nginx-unprivileged:alpine-slim AS prod
 
-EXPOSE 8080
+ENV NGINX_PORT=80
+
+EXPOSE 80
 
 COPY --chmod=755 .docker/scripts/ /docker-entrypoint.d/
 COPY --chown=nginx:root .docker/nginx.conf /etc/nginx/
