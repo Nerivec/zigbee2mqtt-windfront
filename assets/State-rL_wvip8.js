@@ -1,0 +1,1 @@
+import{a,k as r,j as i}from"./index-yzhFfA6P.js";import{J as p}from"./Json-BWwrKoCF.js";import"./envs-CSqIi4cL.js";function S({sourceIdx:t,friendlyName:e}){const o=a(r(s=>s.deviceStates[t][e]));return i.jsx(p,{obj:o??{}})}export{S as default};

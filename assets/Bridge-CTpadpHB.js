@@ -1,0 +1,1 @@
+import{a as t,k as e,j as a}from"./index-yzhFfA6P.js";import{J as i}from"./Json-BWwrKoCF.js";import"./envs-CSqIi4cL.js";function m({sourceIdx:o}){const r=t(e(s=>s.bridgeInfo[o]));return a.jsx(i,{obj:r})}export{m as default};
