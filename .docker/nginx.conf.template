@@ -38,7 +38,7 @@ http {
         ''      close;
     }
 
-    resolver $NGX_DNS_RESOLVER ipv6=off valid=10s;
+    resolver $NGINX_RESOLVER_ADDRESS ipv6=off valid=10s;
 
     server {
         listen       80;
