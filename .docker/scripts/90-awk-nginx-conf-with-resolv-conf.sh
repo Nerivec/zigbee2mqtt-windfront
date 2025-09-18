@@ -46,5 +46,5 @@ echo "Configured nameserver is: $NGINX_RESOLVER_ADDRESS"
 
 echo "Manipulating nginx.conf template configuration with the gathered data"
 
-# Substitute only the NGINX_RESOLVER_ADDRESS placeholder
+# Substitute the NGX_DNS_RESOLVER placeholder of nginx.conf.template with the IP address of the DNS Resolver
 envsubst '$NGINX_RESOLVER_ADDRESS' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
