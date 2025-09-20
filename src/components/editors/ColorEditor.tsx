@@ -163,6 +163,7 @@ const ColorEditor = memo((props: ColorEditorProps) => {
                         onChange={onSaturationChange}
                         onTouchEnd={onRangeSubmit}
                         onMouseUp={onRangeSubmit}
+                        onKeyUp={onRangeSubmit}
                     />
                 </div>
             </div>
@@ -178,6 +179,7 @@ const ColorEditor = memo((props: ColorEditorProps) => {
                         onChange={onHueChange}
                         onTouchEnd={onRangeSubmit}
                         onMouseUp={onRangeSubmit}
+                        onKeyUp={onRangeSubmit}
                     />
                 </div>
             </div>

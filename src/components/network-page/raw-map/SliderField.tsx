@@ -48,6 +48,7 @@ const SliderField = memo((props: SliderFieldProps) => {
                     onChange={onChangeHandler}
                     onTouchEnd={onSubmitHandler}
                     onMouseUp={onSubmitHandler}
+                    onKeyUp={onSubmitHandler}
                     {...rest}
                     type="range"
                     value={currentValue}

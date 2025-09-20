@@ -38,6 +38,7 @@ const RangeEditor = memo((props: RangeProps) => {
                         onChange={onInputChange}
                         onTouchEnd={onSubmit}
                         onMouseUp={onSubmit}
+                        onKeyUp={onSubmit}
                         {...rest}
                     />
                     <div className="flex justify-between px-1 mt-1 text-xs">
