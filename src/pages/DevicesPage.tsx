@@ -261,6 +261,14 @@ export default function DevicesPage(): JSX.Element {
                         original: { sourceIdx, state },
                     },
                 }) => <LastSeen lastSeen={state.last_seen} config={bridgeInfo[sourceIdx].config.advanced.last_seen} />,
+                // don't want to compare by minute (`accessorFn`), as that creates visual mismatches with `<LastSeen />`
+                sortingFn: (rowA, rowB) => {
+                    const a = getLastSeenEpoch(rowA.original.state.last_seen, bridgeInfo[rowA.original.sourceIdx].config.advanced.last_seen);
+                    const b = getLastSeenEpoch(rowB.original.state.last_seen, bridgeInfo[rowB.original.sourceIdx].config.advanced.last_seen);
+
+                    // @ts-expect-error undefined is fine
+                    return a > b ? -1 : a < b ? 1 : 0;
+                },
                 enableGlobalFilter: false,
                 filterFn: "inNumberRange",
                 meta: {
