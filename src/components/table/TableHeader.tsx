@@ -48,27 +48,43 @@ export default function TableHeader<T>({ table, resetFilters, globalFilter, colu
                         <FontAwesomeIcon icon={faClose} />
                     </Button>
                 </div>
-                <div className="join">
-                    <Button<boolean>
-                        item={!drawerOpen}
-                        onClick={setDrawerOpen}
-                        className="btn btn-sm btn-info btn-outline join-item"
-                        title={t("advanced_search")}
-                    >
-                        <FontAwesomeIcon icon={faFilter} />
-                        {t("advanced_search")}
-                        {activeFiltersCount > 0 ? <span className="badge badge-info badge-xs">{activeFiltersCount}</span> : null}
-                    </Button>
-                    <Button<void>
-                        className="btn btn-sm btn-square btn-warning btn-outline join-item"
-                        title={t("reset")}
-                        onClick={() => {
-                            resetFilters();
-                        }}
-                        disabled={activeFiltersCount === 0}
-                    >
-                        <FontAwesomeIcon icon={faRotateLeft} />
-                    </Button>
+                <div className="drawer drawer-end w-auto">
+                    <input id="table-filters-drawer" type="checkbox" className="drawer-toggle" />
+                    <div className="drawer-content">
+                        <div className="join">
+                            <label
+                                htmlFor="table-filters-drawer"
+                                className="drawer-button btn btn-sm btn-info btn-outline join-item"
+                                onClick={() => setDrawerOpen(!drawerOpen)}
+                                title={t("advanced_search")}
+                            >
+                                <FontAwesomeIcon icon={faFilter} />
+                                {t("advanced_search")}
+                                {activeFiltersCount > 0 ? <span className="badge badge-info badge-xs">{activeFiltersCount}</span> : null}
+                            </label>
+                            <Button<void>
+                                className="btn btn-sm btn-square btn-warning btn-outline join-item"
+                                title={t("reset")}
+                                onClick={() => {
+                                    resetFilters();
+                                }}
+                                disabled={activeFiltersCount === 0}
+                            >
+                                <FontAwesomeIcon icon={faRotateLeft} />
+                            </Button>
+                        </div>
+                    </div>
+                    <div className="drawer-side">
+                        <label
+                            htmlFor="table-filters-drawer"
+                            aria-label="close sidebar"
+                            className="drawer-overlay"
+                            onClick={() => setDrawerOpen(false)}
+                        />
+                        <aside className="bg-base-100 min-h-screen w-80">
+                            {drawerOpen && <TableFiltersDrawer columns={columns} resetFilters={resetFilters} />}
+                        </aside>
+                    </div>
                 </div>
                 <div className="">
                     <span className="label">
@@ -96,7 +112,6 @@ export default function TableHeader<T>({ table, resetFilters, globalFilter, colu
                     )}
                 </div>
             )}
-            {drawerOpen && <TableFiltersDrawer columns={columns} resetFilters={resetFilters} onClose={() => setDrawerOpen(false)} />}
         </>
     );
 }

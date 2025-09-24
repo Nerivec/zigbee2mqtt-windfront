@@ -4,7 +4,6 @@ import { memo, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, type NavLinkRenderProps } from "react-router";
 import { useAppStore } from "../../store.js";
-import Button from "../Button.js";
 import Notifications from "../Notifications.js";
 import LanguageSwitcher from "./LanguageSwitcher.js";
 import PermitJoinButton from "./PermitJoinButton.js";
@@ -109,14 +108,14 @@ const NavBar = memo(({ showNotifications, setShowNotifications }: NavBarProps) =
                 <PermitJoinButton />
                 <LanguageSwitcher />
                 <ThemeSwitcher />
-                <Button<boolean> className="drawer-button btn" item={!showNotifications} onClick={setShowNotifications}>
+                <label htmlFor="notifications-drawer" className="drawer-button btn" onClick={() => setShowNotifications(!showNotifications)}>
                     <FontAwesomeIcon icon={faInbox} />
                     {notificationsAlert[0] ? (
                         <span className="status status-primary animate-bounce" />
                     ) : notificationsAlert[1] ? (
                         <span className="status status-error animate-bounce" />
                     ) : null}
-                </Button>
+                </label>
             </div>
         </div>
     );
@@ -126,10 +125,21 @@ const NavBarWithNotifications = memo(() => {
     const [showNotifications, setShowNotifications] = useState(false);
 
     return (
-        <>
-            <NavBar showNotifications={showNotifications} setShowNotifications={setShowNotifications} />
-            {showNotifications && <Notifications setShowNotifications={setShowNotifications} />}
-        </>
+        <div className="drawer drawer-end w-auto">
+            <input id="notifications-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+                <NavBar showNotifications={showNotifications} setShowNotifications={setShowNotifications} />
+            </div>
+            <div className="drawer-side">
+                <label
+                    htmlFor="notifications-drawer"
+                    aria-label="close sidebar"
+                    className="drawer-overlay"
+                    onClick={() => setShowNotifications(false)}
+                />
+                <aside className="bg-base-100 min-h-screen w-80">{showNotifications && <Notifications />}</aside>
+            </div>
+        </div>
     );
 });
 

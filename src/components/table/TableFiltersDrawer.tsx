@@ -1,7 +1,7 @@
 import { faFilter, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Column } from "@tanstack/react-table";
-import { Fragment, type JSX, useEffect } from "react";
+import { Fragment, type JSX } from "react";
 import { useTranslation } from "react-i18next";
 import type { useTable } from "../../hooks/useTable.js";
 import { MULTI_INSTANCE } from "../../store.js";
@@ -214,74 +214,53 @@ function BooleanFilter<T>({ column, label }: FilterProps<T>) {
 
 interface TableFiltersDrawerProps<T> extends Pick<ReturnType<typeof useTable<T>>, "resetFilters"> {
     columns: Column<T>[];
-    onClose: () => void;
 }
 
-export default function TableFiltersDrawer<T>({ columns, resetFilters, onClose }: TableFiltersDrawerProps<T>): JSX.Element {
+export default function TableFiltersDrawer<T>({ columns, resetFilters }: TableFiltersDrawerProps<T>): JSX.Element {
     const { t } = useTranslation("common");
 
-    useEffect(() => {
-        const close = (e: KeyboardEvent) => {
-            if (e.key === "Escape") {
-                e.stopPropagation();
-                onClose();
-            }
-        };
-
-        window.addEventListener("keydown", close);
-
-        return () => window.removeEventListener("keydown", close);
-    }, [onClose]);
-
     return (
-        <div
-            className="drawer-side justify-items-end z-99"
-            style={{ pointerEvents: "auto", visibility: "visible", overflowY: "auto", opacity: "100%" }}
-        >
-            {/** biome-ignore lint/a11y/noStaticElementInteractions: special case */}
-            <span className="drawer-overlay" onClick={onClose} />
-            <aside className="bg-base-100 min-h-screen w-80" style={{ translate: "0%" }}>
-                <div className="flex items-center gap-2 p-2">
-                    <FontAwesomeIcon icon={faFilter} />
-                    <span className="font-semibold text-md">{t("advanced_search")}</span>
-                </div>
-                <div className="flex flex-col gap-2 px-2 pb-2">
-                    {columns.map((col) => {
-                        const meta = col.columnDef.meta;
+        <>
+            <div className="flex items-center gap-2 p-2">
+                <FontAwesomeIcon icon={faFilter} />
+                <span className="font-semibold text-md">{t("advanced_search")}</span>
+            </div>
+            <div className="flex flex-col gap-2 px-2 pb-2">
+                {columns.map((col) => {
+                    const meta = col.columnDef.meta;
 
-                        if (!meta || !meta.filterVariant) {
-                            return null;
-                        }
+                    if (!meta || !meta.filterVariant) {
+                        return null;
+                    }
 
-                        const label = typeof col.columnDef.header === "string" && col.columnDef.header ? col.columnDef.header : t(col.id);
+                    const label = typeof col.columnDef.header === "string" && col.columnDef.header ? col.columnDef.header : t(col.id);
 
-                        return (
-                            <Fragment key={col.id}>
-                                <div className="flex flex-row w-full gap-2">
-                                    {meta.filterVariant === "range" ? (
-                                        <RangeFilter column={col} label={label} />
-                                    ) : meta.filterVariant === "select" ? (
-                                        <SelectFilter column={col} label={label} />
-                                    ) : meta.filterVariant === "boolean" ? (
-                                        <BooleanFilter column={col} label={label} />
-                                    ) : meta.filterVariant === "arrSelect" ? (
-                                        <ArrSelectFilter column={col} label={label} />
-                                    ) : (
-                                        <TextFilter column={col} label={label} />
-                                    )}
-                                </div>
-                                {meta.tooltip && <p className="label text-xs ml-auto">{meta.tooltip}</p>}
-                            </Fragment>
-                        );
-                    })}
-                </div>
-                <div className="flex flex-row justify-end gap-2 p-3">
-                    <Button className="btn btn-sm btn-warning btn-outline mt-5" onClick={resetFilters}>
-                        <FontAwesomeIcon icon={faRotateLeft} />
-                        {t("reset")}
-                    </Button>
-                </div>
-            </aside>
-        </div>
+                    return (
+                        <Fragment key={col.id}>
+                            <div className="flex flex-row w-full gap-2">
+                                {meta.filterVariant === "range" ? (
+                                    <RangeFilter column={col} label={label} />
+                                ) : meta.filterVariant === "select" ? (
+                                    <SelectFilter column={col} label={label} />
+                                ) : meta.filterVariant === "boolean" ? (
+                                    <BooleanFilter column={col} label={label} />
+                                ) : meta.filterVariant === "arrSelect" ? (
+                                    <ArrSelectFilter column={col} label={label} />
+                                ) : (
+                                    <TextFilter column={col} label={label} />
+                                )}
+                            </div>
+                            {meta.tooltip && <p className="label text-xs ml-auto">{meta.tooltip}</p>}
+                        </Fragment>
+                    );
+                })}
+            </div>
+            <div className="flex flex-row justify-end gap-2 p-3">
+                <Button className="btn btn-sm btn-warning btn-outline mt-5" onClick={resetFilters}>
+                    <FontAwesomeIcon icon={faRotateLeft} />
+                    {t("reset")}
+                </Button>
+            </div>
+        </>
     );
 }

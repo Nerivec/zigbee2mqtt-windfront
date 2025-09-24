@@ -1,6 +1,6 @@
 import { faClose, faEllipsisH, faInbox, faPowerOff, faServer, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, type RefObject, useCallback, useRef, type useState } from "react";
+import { memo, type RefObject, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useShallow } from "zustand/react/shallow";
@@ -11,10 +11,6 @@ import { getTransactionPrefix, sendMessage } from "../websocket/WebSocketManager
 import Button from "./Button.js";
 import ConfirmButton from "./ConfirmButton.js";
 import SourceDot from "./SourceDot.js";
-
-type NotificationsProps = {
-    setShowNotifications: ReturnType<typeof useState<boolean>>[1];
-};
 
 type SourceNotificationsProps = { sourceIdx: number; readyState: number };
 
@@ -97,43 +93,36 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotifications
     );
 });
 
-const Notifications = memo(({ setShowNotifications }: NotificationsProps) => {
+const Notifications = memo(() => {
     const { t } = useTranslation("common");
     const readyStates = useAppStore((state) => state.readyStates);
     const clearAllNotifications = useAppStore((state) => state.clearAllNotifications);
 
     return (
-        <div
-            className="drawer-side justify-items-end z-99"
-            style={{ pointerEvents: "auto", visibility: "visible", overflowY: "auto", opacity: "100%" }}
-        >
-            {/** biome-ignore lint/a11y/noStaticElementInteractions: special case */}
-            <span className="drawer-overlay" onClick={() => setShowNotifications(false)} />
-            <aside className="bg-base-100 min-h-screen w-80" style={{ translate: "0%" }}>
-                <div className="flex items-center gap-2 p-2">
-                    <FontAwesomeIcon icon={faInbox} />
-                    <span className="font-semibold text-md">{t("notifications")}</span>
-                </div>
-                <ul className="menu w-full px-1 py-0">
-                    {API_URLS.map((_v, idx) => (
-                        // biome-ignore lint/suspicious/noArrayIndexKey: static
-                        <SourceNotifications key={`${idx}`} sourceIdx={idx} readyState={readyStates[idx]} />
-                    ))}
-                    {MULTI_INSTANCE && (
-                        <ConfirmButton
-                            className="btn btn-sm btn-warning btn-outline mt-5"
-                            onClick={clearAllNotifications}
-                            title={t("clear_all")}
-                            modalDescription={t("dialog_confirmation_prompt")}
-                            modalCancelLabel={t("cancel")}
-                        >
-                            <FontAwesomeIcon icon={faTrashCan} />
-                            {t("clear_all")}
-                        </ConfirmButton>
-                    )}
-                </ul>
-            </aside>
-        </div>
+        <>
+            <div className="flex items-center gap-2 p-2">
+                <FontAwesomeIcon icon={faInbox} />
+                <span className="font-semibold text-md">{t("notifications")}</span>
+            </div>
+            <ul className="menu w-full px-1 py-0">
+                {API_URLS.map((_v, idx) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: static
+                    <SourceNotifications key={`${idx}`} sourceIdx={idx} readyState={readyStates[idx]} />
+                ))}
+                {MULTI_INSTANCE && (
+                    <ConfirmButton
+                        className="btn btn-sm btn-warning btn-outline mt-5"
+                        onClick={clearAllNotifications}
+                        title={t("clear_all")}
+                        modalDescription={t("dialog_confirmation_prompt")}
+                        modalCancelLabel={t("cancel")}
+                    >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        {t("clear_all")}
+                    </ConfirmButton>
+                )}
+            </ul>
+        </>
     );
 });
 
