@@ -122,7 +122,7 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
     }, [sourceIdx, cluster, device.ieee_address, command, payload, endpoint]);
 
     return (
-        <div className="flex-1 flex flex-col gap-3">
+        <div className="flex-1 flex flex-col gap-3 w-full">
             <h2 className="text-lg">{t("execute_command")}</h2>
             <div className="flex flex-row flex-wrap gap-2">
                 <InputField

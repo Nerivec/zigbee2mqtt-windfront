@@ -1,5 +1,4 @@
 import { flexRender, type Row } from "@tanstack/react-table";
-import type { ReactNode } from "react";
 import { type TableComponents, TableVirtuoso } from "react-virtuoso";
 import type { UseTableProps, useTable } from "../../hooks/useTable.js";
 import TableHeader from "./TableHeader.js";
@@ -27,24 +26,23 @@ const tableComponents: TableComponents<Row<unknown>, unknown> = {
     ),
 };
 
-interface TableProps<T> extends Pick<UseTableProps<T>, "id">, ReturnType<typeof useTable<T>> {
-    headerActions?: ReactNode;
-}
+interface TableProps<T> extends Pick<UseTableProps<T>, "id">, ReturnType<typeof useTable<T>> {}
 
-export default function Table<T>({ headerActions, ...props }: TableProps<T>) {
+export default function Table<T>({ id, table }: TableProps<T>) {
     return (
         <>
-            <TableHeader {...props} actions={headerActions} />
+            <TableHeader table={table} />
 
             <TableVirtuoso<Row<T>>
                 useWindowScroll
+                id={id}
                 className="mt-1.5"
-                data={props.table.getRowModel().rows}
+                data={table.getRowModel().rows}
                 components={tableComponents as TableComponents<Row<T>, unknown>}
                 defaultItemHeight={73}
                 increaseViewportBy={{ top: 100, bottom: 100 }}
                 fixedHeaderContent={() =>
-                    props.table.getHeaderGroups().map((group) => (
+                    table.getHeaderGroups().map((group) => (
                         <tr key={group.id} className="bg-base-200">
                             {group.headers.map((header) => {
                                 const sorting = header.column.getIsSorted();

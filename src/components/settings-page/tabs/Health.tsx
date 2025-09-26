@@ -16,6 +16,7 @@ import DeviceImage from "../../device/DeviceImage.js";
 import InfoAlert from "../../InfoAlert.js";
 import SourceDot from "../../SourceDot.js";
 import Table from "../../table/Table.js";
+import TableSearch from "../../table/TableSearch.js";
 
 type HealthProps = { sourceIdx: number };
 
@@ -65,14 +66,14 @@ export default function Health({ sourceIdx }: HealthProps) {
                         original: { device },
                     },
                 }) => (
-                    // min-w-0 serves to properly truncate content
-                    <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex items-center gap-3">
                         <div className="avatar">
                             <div className="h-11 w-11" style={{ overflow: "visible" }}>
                                 <DeviceImage device={device} disabled={false} />
                             </div>
                         </div>
-                        <div className="flex flex-col">
+                        {/* min-w-0 serves to properly truncate content */}
+                        <div className="flex flex-col min-w-0">
                             <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover truncate">
                                 {device.friendly_name}
                             </Link>
@@ -196,13 +197,14 @@ export default function Health({ sourceIdx }: HealthProps) {
     return (
         <>
             <InfoAlert>{t("interview_info")}</InfoAlert>
+
             <div className="collapse collapse-arrow bg-base-100 shadow mb-3">
                 <input type="checkbox" />
                 <div className="collapse-title text-lg font-semibold text-center w-full">
                     {t("os")} / {t("process")} / MQTT
                 </div>
                 <div className="collapse-content">
-                    <div className="flex flex-col gap-3 items-center mb-2">
+                    <div className="flex flex-col gap-3 items-center mb-2 w-full">
                         <p className="text-sm" title={bridgeResponseTime.toLocaleString()}>
                             {t("last_check")}: {format(bridgeResponseTime, i18n.language)}
                         </p>
@@ -267,11 +269,12 @@ export default function Health({ sourceIdx }: HealthProps) {
                     </div>
                 </div>
             </div>
+
             <div className="collapse collapse-arrow bg-base-100 shadow mb-3">
                 <input type="checkbox" />
                 <div className="collapse-title text-lg font-semibold text-center w-full">WebSocket</div>
                 <div className="collapse-content">
-                    <div className="flex flex-col gap-3 items-center mb-2">
+                    <div className="flex flex-col gap-3 items-center mb-2 w-full">
                         <div className="stats stats-vertical lg:stats-horizontal shadow">
                             {MULTI_INSTANCE && (
                                 <div className="stat place-items-center">
@@ -327,6 +330,11 @@ export default function Health({ sourceIdx }: HealthProps) {
                     </div>
                 </div>
             </div>
+
+            <div className="mb-3">
+                <TableSearch {...table} />
+            </div>
+
             <Table id="health-devices" {...table} />
         </>
     );

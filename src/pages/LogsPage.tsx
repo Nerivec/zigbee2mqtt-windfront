@@ -12,6 +12,7 @@ import SelectField from "../components/form-fields/SelectField.js";
 import SourceDot from "../components/SourceDot.js";
 import { LOG_LEVELS, LOG_LEVELS_CMAP, LOG_LIMITS } from "../consts.js";
 import { useSearch } from "../hooks/useSearch.js";
+import { NavBarContent } from "../layout/NavBarContext.js";
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { LogMessage } from "../types.js";
 import { getValidSourceIdx } from "../utils.js";
@@ -36,6 +37,8 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
     const { t } = useTranslation(["logs", "common"]);
     const logLevelConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.log_level));
     const logs = useAppStore(useShallow((state) => state.logs[sourceIdx]));
+    const logsLimit = useAppStore((state) => state.logsLimit);
+    const setLogsLimit = useAppStore((state) => state.setLogsLimit);
     const clearLogs = useAppStore((state) => state.clearLogs);
     const [searchTerm, normalizedSearchTerm, setSearchTerm] = useSearch();
     const [logLevel, setLogLevel] = useState<string>("all");
@@ -121,7 +124,22 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                         {t("common:clear")}
                     </Button>
                 </fieldset>
-                <div className="ml-auto">
+                <div className="ml-auto flex flex-row gap-3">
+                    <SelectField
+                        name="log_limit"
+                        label={t("logs_limit")}
+                        onChange={(e) => {
+                            setLogsLimit(Number.parseInt(e.target.value, 10));
+                        }}
+                        value={logsLimit}
+                        className="select select-sm"
+                    >
+                        {LOG_LIMITS.map((limit) => (
+                            <option key={limit} value={limit}>
+                                {limit}
+                            </option>
+                        ))}
+                    </SelectField>
                     <SelectField
                         name="log_level_config"
                         label={t("log_level_config")}
@@ -137,6 +155,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                     </SelectField>
                 </div>
             </div>
+
             <div className="mockup-code w-full mt-1 mb-3">
                 {filteredLogs.length > 0 ? (
                     filteredLogs.map((log, idx) => (
@@ -158,13 +177,13 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
     );
 });
 
+const isNavActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "menu-active" : undefined);
+
 export default function LogsPage() {
     const navigate = useNavigate();
     const { sourceIdx } = useParams<UrlParams>();
     const [numSourceIdx, validSourceIdx] = getValidSourceIdx(sourceIdx);
-    const logsLimit = useAppStore((state) => state.logsLimit);
     const { t } = useTranslation(["logs", "common"]);
-    const setLogsLimit = useAppStore((state) => state.setLogsLimit);
     const clearAllLogs = useAppStore((state) => state.clearAllLogs);
 
     useEffect(() => {
@@ -173,50 +192,37 @@ export default function LogsPage() {
         }
     }, [sourceIdx, validSourceIdx, navigate]);
 
-    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
+    return (
+        <>
+            <NavBarContent>
+                {MULTI_INSTANCE && (
+                    <div className="flex-1 flex flex-col">
+                        <div className="menu menu-horizontal flex-1 pb-0">
+                            {API_URLS.map((v, idx) => (
+                                <li key={v}>
+                                    <NavLink to={`/logs/${idx}`} className={isNavActive}>
+                                        <SourceDot idx={idx} alwaysShowName />
+                                    </NavLink>
+                                </li>
+                            ))}
+                        </div>
+                        <div className="menu menu-horizontal justify-end">
+                            <ConfirmButton<void>
+                                onClick={clearAllLogs}
+                                className="btn btn-sm btn-outline btn-warning btn-primary"
+                                title={t("common:clear_all")}
+                                modalDescription={t("common:dialog_confirmation_prompt")}
+                                modalCancelLabel={t("common:cancel")}
+                            >
+                                <FontAwesomeIcon icon={faTrashCan} />
+                                {t("common:clear_all")}
+                            </ConfirmButton>
+                        </div>
+                    </div>
+                )}
+            </NavBarContent>
 
-    return MULTI_INSTANCE ? (
-        <div className="tabs tabs-border">
-            {API_URLS.map((_v, idx) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: const
-                <NavLink key={idx} to={`/logs/${idx}`} className={isTabActive}>
-                    <SourceDot idx={idx} alwaysShowName />
-                </NavLink>
-            ))}
-            <div className="ml-auto flex flex-row flex-wrap gap-3 items-top">
-                <SelectField
-                    name="log_limit"
-                    label={t("logs_limit")}
-                    onChange={(e) => {
-                        setLogsLimit(Number.parseInt(e.target.value, 10));
-                    }}
-                    value={logsLimit}
-                    className="select select-sm"
-                >
-                    {LOG_LIMITS.map((limit) => (
-                        <option key={limit} value={limit}>
-                            {limit}
-                        </option>
-                    ))}
-                </SelectField>
-                <fieldset className="fieldset self-end">
-                    <ConfirmButton<void>
-                        onClick={clearAllLogs}
-                        className="btn btn-sm btn-outline btn-warning btn-primary"
-                        title={t("common:clear_all")}
-                        modalDescription={t("common:dialog_confirmation_prompt")}
-                        modalCancelLabel={t("common:cancel")}
-                    >
-                        <FontAwesomeIcon icon={faTrashCan} />
-                        {t("common:clear_all")}
-                    </ConfirmButton>
-                </fieldset>
-            </div>
-            <div className="tab-content block h-full bg-base-100 pb-3 px-3">
-                <LogsTab key={sourceIdx} sourceIdx={numSourceIdx} />
-            </div>
-        </div>
-    ) : (
-        <LogsTab sourceIdx={numSourceIdx} />
+            <LogsTab key={sourceIdx} sourceIdx={numSourceIdx} />
+        </>
     );
 }

@@ -126,8 +126,8 @@ export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
     }, [sourceIdx, device.friendly_name, resetDeviceState]);
 
     return (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-row justify-center items-center gap-2">
+        <div className="flex flex-col gap-3 w-full">
+            <div className="flex flex-row flex-wrap justify-center items-center gap-2">
                 {!externalDefinition ? (
                     extDefLoading ? (
                         <span className="loading loading-infinity loading-xl" />

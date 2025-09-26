@@ -159,7 +159,7 @@ const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDe
     const endpoints = useMemo(() => getEndpoints(device), [device]);
 
     return endpoint ? (
-        <div className="flex-1 flex flex-col gap-3">
+        <div className="flex-1 flex flex-col gap-3 w-full">
             <h2 className="text-lg">{t("zigbee:read_write_attributes")}</h2>
             <div className="flex flex-row flex-wrap gap-2">
                 <EndpointPicker label={t("zigbee:endpoint")} values={endpoints} value={endpoint} onChange={onEndpointChange} required />

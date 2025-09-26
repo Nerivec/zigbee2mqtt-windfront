@@ -116,7 +116,7 @@ export default function About({ sourceIdx }: AboutProps) {
     );
 
     return (
-        <div className="flex flex-col gap-3 items-center text-center">
+        <div className="flex flex-col gap-3 items-center text-center w-full">
             <ReportProblemLink sourceIdx={sourceIdx} />
             <div className="stats stats-vertical lg:stats-horizontal shadow">
                 {MULTI_INSTANCE && (

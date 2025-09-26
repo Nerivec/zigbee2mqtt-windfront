@@ -80,7 +80,7 @@ export default function Bind({ sourceIdx, device }: BindProps): JSX.Element {
     }, [device.ieee_address]);
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
             {[...bindingRules, newBindingRule].map((rule) => (
                 <BindRow key={getRuleKey(rule)} rule={rule} sourceIdx={sourceIdx} groups={groups} device={device} devices={devices} />
             ))}

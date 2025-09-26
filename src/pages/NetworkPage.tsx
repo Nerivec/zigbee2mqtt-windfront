@@ -11,6 +11,7 @@ import CheckboxField from "../components/form-fields/CheckboxField.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import type { NetworkRawDisplayType } from "../components/network-page/index.js";
 import SourceDot from "../components/SourceDot.js";
+import { NavBarContent } from "../layout/NavBarContext.js";
 import { NETWORK_RAW_DISPLAY_TYPE_KEY } from "../localStoreConsts.js";
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import { getValidSourceIdx } from "../utils.js";
@@ -131,7 +132,7 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
 
     return (
         <>
-            <div className="flex flex-row justify-center gap-3 mb-2">
+            <div className="flex flex-row flex-wrap justify-center gap-3 mb-2">
                 <SelectField name="type" label={t("type")} value={mapType} onChange={onMapTypeChange}>
                     <option value="raw">{t("raw")}</option>
                     <option value="graphviz">{t("graphviz")}</option>
@@ -162,6 +163,8 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
     );
 });
 
+const isNavActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "menu-active" : undefined);
+
 export default function NetworkPage() {
     const navigate = useNavigate();
     const { sourceIdx } = useParams<UrlParams>();
@@ -173,21 +176,23 @@ export default function NetworkPage() {
         }
     }, [sourceIdx, validSourceIdx, navigate]);
 
-    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
+    return (
+        <>
+            <NavBarContent>
+                {MULTI_INSTANCE && (
+                    <div className="menu menu-horizontal flex-1">
+                        {API_URLS.map((v, idx) => (
+                            <li key={v}>
+                                <NavLink to={`/network/${idx}`} className={isNavActive}>
+                                    <SourceDot idx={idx} alwaysShowName />
+                                </NavLink>
+                            </li>
+                        ))}
+                    </div>
+                )}
+            </NavBarContent>
 
-    return MULTI_INSTANCE ? (
-        <div className="tabs tabs-border">
-            {API_URLS.map((_v, idx) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: const
-                <NavLink key={idx} to={`/network/${idx}`} className={isTabActive}>
-                    <SourceDot idx={idx} alwaysShowName />
-                </NavLink>
-            ))}
-            <div className="tab-content block h-full bg-base-100 pb-3 px-3">
-                <NetworkTab key={sourceIdx} sourceIdx={numSourceIdx} />
-            </div>
-        </div>
-    ) : (
-        <NetworkTab key={sourceIdx} sourceIdx={numSourceIdx} />
+            <NetworkTab key={sourceIdx} sourceIdx={numSourceIdx} />
+        </>
     );
 }

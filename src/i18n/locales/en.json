@@ -178,7 +178,9 @@
         "toggle_dropdown": "Toggle dropdown",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket status",
-        "transaction_prefix": "Transaction prefix"
+        "transaction_prefix": "Transaction prefix",
+        "frontend_settings": "Frontend settings",
+        "contribute": "Contribute"
     },
     "ota": {
         "check": "Check for new updates",
@@ -209,8 +211,6 @@
         "blocklist": "Blocklist",
         "revision": "Revision",
         "coordinator": "Coordinator",
-        "donate": "Donate",
-        "donation_text": "Here you can thank us for all the hard work. Don't hesitate to say something nice as well ;)",
         "download_state": "Download state",
         "experimental": "Experimental",
         "external_converters": "External converters",
@@ -233,7 +233,6 @@
         "add_install_code": "Add install code",
         "install_code": "Install code",
         "homeassistant": "Home Assistant integration",
-        "translation_prompt": "You can help with the translation at",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters version",
         "zigbee_herdsman_version": "zigbee-herdsman version",
         "localise_images": "Localise device images",
@@ -429,6 +428,12 @@
         "codespace_info": "A Github Codespace is available to help in development",
         "show_definition": "Show definition",
         "hide_definition": "Hide definition"
+    },
+    "contribute": {
+        "donation_text": "Here you can thank us for all the hard work. Don't hesitate to say something nice as well ;)",
+        "development": "Development",
+        "contributing": "Here is where you can find information to contribute to this project",
+        "translation": "Translation"
     },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant integration (MQTT discovery)",

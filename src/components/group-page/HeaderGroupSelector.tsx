@@ -55,7 +55,7 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
             buttonChildren={
                 <>
                     {currentSourceIdx !== undefined && <SourceDot idx={currentSourceIdx} autoHide />}
-                    {currentGroup ? `#${currentGroup.id} - ${currentGroup.friendly_name}` : t("unknown_group")}
+                    {currentGroup ? currentGroup.friendly_name : t("unknown_group")}
                 </>
             }
         >

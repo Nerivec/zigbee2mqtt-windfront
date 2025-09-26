@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps, useNavigate, useParams } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import HeaderDeviceSelector from "../components/device-page/HeaderDeviceSelector.js";
+import { NavBarContent } from "../layout/NavBarContext.js";
 import { useAppStore } from "../store.js";
 import type { Device } from "../types.js";
 import { getValidSourceIdx } from "../utils.js";
@@ -81,6 +82,8 @@ function renderTab(sourceIdx: number, tab: TabName, device: Device) {
     }
 }
 
+const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
+
 export default function DevicePage(): JSX.Element {
     const navigate = useNavigate();
     const { t } = useTranslation(["devicePage", "common"]);
@@ -102,11 +105,12 @@ export default function DevicePage(): JSX.Element {
         }
     }, [sourceIdx, validSourceIdx, tab, device, navigate]);
 
-    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
-
     return (
         <>
-            <HeaderDeviceSelector currentSourceIdx={numSourceIdx} currentDevice={device} tab={tab} />
+            <NavBarContent>
+                <HeaderDeviceSelector currentSourceIdx={numSourceIdx} currentDevice={device} tab={tab} />
+            </NavBarContent>
+
             <div className="tabs tabs-border mt-2">
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/info`} className={isTabActive}>
                     <FontAwesomeIcon icon={faInfo} className="me-2" />
@@ -152,6 +156,7 @@ export default function DevicePage(): JSX.Element {
                     <FontAwesomeIcon icon={faBug} className="me-2" />
                     {t("dev_console")}
                 </NavLink>
+
                 <div className="tab-content block h-full bg-base-100 p-3">
                     {tab && device ? (
                         renderTab(numSourceIdx, tab, device)

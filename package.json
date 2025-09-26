@@ -96,5 +96,9 @@
         "frontend",
         "zigbee",
         "zigbee2mqtt"
-    ]
+    ],
+    "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/Nerivec"
+    }
 }

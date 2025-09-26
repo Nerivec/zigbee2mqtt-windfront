@@ -70,7 +70,7 @@ export default function Reporting({ sourceIdx, device }: ReportingProps): JSX.El
     );
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
             {[...reportingRules, newReportingRule].map((rule) => (
                 <ReportingRow key={getRuleKey(rule)} sourceIdx={sourceIdx} rule={rule} device={device} onApply={onApply} />
             ))}

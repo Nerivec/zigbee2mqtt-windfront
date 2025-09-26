@@ -5,6 +5,7 @@ import ConfirmButton from "../components/ConfirmButton.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import NumberField from "../components/form-fields/NumberField.js";
 import SelectField from "../components/form-fields/SelectField.js";
+import { NavBarContent } from "../layout/NavBarContext.js";
 import {
     AUTH_FLAG_KEY,
     AUTH_TOKEN_KEY,
@@ -93,11 +94,10 @@ export default function FrontendSettingsPage() {
 
     return (
         <>
-            <div className="alert alert-info alert-vertical sm:alert-horizontal">
-                {t("frontend_notice")}
-                <div className="flex flex-row flex-wrap gap-2">
+            <NavBarContent>
+                <div className="flex flex-row flex-wrap flex-1 gap-1.5">
                     <ConfirmButton<void>
-                        className="btn btn-sm btn-error"
+                        className="btn btn-sm btn-outline btn-error"
                         onClick={resetSettings}
                         title={t("reset_settings")}
                         modalDescription={t("common:dialog_confirmation_prompt")}
@@ -106,7 +106,7 @@ export default function FrontendSettingsPage() {
                         {t("reset_settings")}
                     </ConfirmButton>
                     <ConfirmButton<void>
-                        className="btn btn-sm btn-error"
+                        className="btn btn-sm btn-outline btn-error"
                         onClick={resetAuth}
                         title={t("reset_auth")}
                         modalDescription={t("common:dialog_confirmation_prompt")}
@@ -115,7 +115,7 @@ export default function FrontendSettingsPage() {
                         {t("reset_auth")}
                     </ConfirmButton>
                     <ConfirmButton<void>
-                        className="btn btn-sm btn-error"
+                        className="btn btn-sm btn-outline btn-error"
                         onClick={resetAll}
                         title={t("reset_all")}
                         modalDescription={t("common:dialog_confirmation_prompt")}
@@ -124,7 +124,10 @@ export default function FrontendSettingsPage() {
                         {t("reset_all")}
                     </ConfirmButton>
                 </div>
-            </div>
+            </NavBarContent>
+
+            <div className="alert alert-info alert-vertical sm:alert-horizontal">{t("frontend_notice")}</div>
+
             <div className="flex flex-row flex-wrap gap-4 mt-3">
                 <SelectField
                     name="homepage"

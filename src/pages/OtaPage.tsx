@@ -13,11 +13,13 @@ import OtaFileVersion from "../components/ota-page/OtaFileVersion.js";
 import OtaUpdating from "../components/ota-page/OtaUpdating.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
+import TableSearch from "../components/table/TableSearch.js";
 import ModelLink from "../components/value-decorators/ModelLink.js";
 import OtaLink from "../components/value-decorators/OtaLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
+import { NavBarContent } from "../layout/NavBarContext.js";
 import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { Device, DeviceState } from "../types.js";
 import { toHex } from "../utils.js";
@@ -404,64 +406,61 @@ export default function OtaPage() {
     }, [table, rowSelection, otaDevices, globalFilter, columnFilters]);
 
     return (
-        <Table
-            id="ota-devices"
-            table={table}
-            resetFilters={resetFilters}
-            globalFilter={globalFilter}
-            columnFilters={columnFilters}
-            headerActions={
-                <>
-                    <div className="join join-vertical">
-                        <ConfirmButton<"bridge/request/device/ota_update/check">
-                            className="btn btn-outline btn-error btn-xs join-item"
-                            item="bridge/request/device/ota_update/check"
-                            onClick={actOnFilteredSelected}
-                            title={t("check_selected")}
-                            modalDescription={t("common:dialog_confirmation_prompt")}
-                            modalCancelLabel={t("common:cancel")}
-                            disabled={rowSelectionCount === 0}
-                        >
-                            {`${t("check_selected")} (${rowSelectionCount})`}
-                        </ConfirmButton>
-                        <ConfirmButton<"bridge/request/device/ota_update/update">
-                            className="btn btn-outline btn-error btn-xs join-item"
-                            item="bridge/request/device/ota_update/update"
-                            onClick={actOnFilteredSelected}
-                            title={t("update_selected")}
-                            modalDescription={t("update_selected_info")}
-                            modalCancelLabel={t("common:cancel")}
-                            disabled={rowSelectionCount === 0}
-                        >
-                            {`${t("update_selected")} (${rowSelectionCount})`}
-                        </ConfirmButton>
-                    </div>
-                    <div className="join join-vertical">
-                        <ConfirmButton<"bridge/request/device/ota_update/schedule">
-                            className="btn btn-outline btn-error btn-xs join-item"
-                            item="bridge/request/device/ota_update/schedule"
-                            onClick={actOnFilteredSelected}
-                            title={t("schedule_selected")}
-                            modalDescription={t("common:dialog_confirmation_prompt")}
-                            modalCancelLabel={t("common:cancel")}
-                            disabled={rowSelectionCount === 0}
-                        >
-                            {`${t("schedule_selected")} (${rowSelectionCount})`}
-                        </ConfirmButton>
-                        <ConfirmButton<"bridge/request/device/ota_update/unschedule">
-                            className="btn btn-outline btn-error btn-xs join-item"
-                            item="bridge/request/device/ota_update/unschedule"
-                            onClick={actOnFilteredSelected}
-                            title={t("unschedule_selected")}
-                            modalDescription={t("common:dialog_confirmation_prompt")}
-                            modalCancelLabel={t("common:cancel")}
-                            disabled={rowSelectionCount === 0}
-                        >
-                            {`${t("unschedule_selected")} (${rowSelectionCount})`}
-                        </ConfirmButton>
-                    </div>
-                </>
-            }
-        />
+        <>
+            <NavBarContent>
+                <TableSearch table={table} resetFilters={resetFilters} globalFilter={globalFilter} columnFilters={columnFilters} />
+            </NavBarContent>
+
+            <div className="mb-3">
+                <div className="flex flex-row flex-wrap gap-2 px-2 pb-3">
+                    <ConfirmButton<"bridge/request/device/ota_update/check">
+                        className="btn btn-outline btn-error btn-sm join-item"
+                        item="bridge/request/device/ota_update/check"
+                        onClick={actOnFilteredSelected}
+                        title={t("check_selected")}
+                        modalDescription={t("common:dialog_confirmation_prompt")}
+                        modalCancelLabel={t("common:cancel")}
+                        disabled={rowSelectionCount === 0}
+                    >
+                        {`${t("check_selected")} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                    <ConfirmButton<"bridge/request/device/ota_update/update">
+                        className="btn btn-outline btn-error btn-sm join-item"
+                        item="bridge/request/device/ota_update/update"
+                        onClick={actOnFilteredSelected}
+                        title={t("update_selected")}
+                        modalDescription={t("update_selected_info")}
+                        modalCancelLabel={t("common:cancel")}
+                        disabled={rowSelectionCount === 0}
+                    >
+                        {`${t("update_selected")} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                    <ConfirmButton<"bridge/request/device/ota_update/schedule">
+                        className="btn btn-outline btn-error btn-sm join-item"
+                        item="bridge/request/device/ota_update/schedule"
+                        onClick={actOnFilteredSelected}
+                        title={t("schedule_selected")}
+                        modalDescription={t("common:dialog_confirmation_prompt")}
+                        modalCancelLabel={t("common:cancel")}
+                        disabled={rowSelectionCount === 0}
+                    >
+                        {`${t("schedule_selected")} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                    <ConfirmButton<"bridge/request/device/ota_update/unschedule">
+                        className="btn btn-outline btn-error btn-sm join-item"
+                        item="bridge/request/device/ota_update/unschedule"
+                        onClick={actOnFilteredSelected}
+                        title={t("unschedule_selected")}
+                        modalDescription={t("common:dialog_confirmation_prompt")}
+                        modalCancelLabel={t("common:cancel")}
+                        disabled={rowSelectionCount === 0}
+                    >
+                        {`${t("unschedule_selected")} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                </div>
+
+                <Table id="ota-devices" table={table} resetFilters={resetFilters} globalFilter={globalFilter} columnFilters={columnFilters} />
+            </div>
+        </>
     );
 }

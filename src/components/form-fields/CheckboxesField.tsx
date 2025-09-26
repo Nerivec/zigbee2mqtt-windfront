@@ -52,7 +52,7 @@ const CheckboxesField = memo((props: CheckboxFieldProps) => {
                 <Button onClick={onApply} className="btn btn-sm btn-square btn-primary">
                     <FontAwesomeIcon icon={faCheck} />
                 </Button>
-                <span className="label">{detail}</span>
+                {detail && <p className="label text-wrap">{detail}</p>}
             </div>
         </fieldset>
     );

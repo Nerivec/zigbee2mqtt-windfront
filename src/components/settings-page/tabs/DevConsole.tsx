@@ -313,10 +313,10 @@ function renderTab(sourceIdx: number, tab: TabName) {
     }
 }
 
+const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
+
 export default function DevConsole({ sourceIdx, tab }: DevConsoleProps) {
     const { t } = useTranslation("devConsole");
-
-    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
     return (
         <div className="tabs tabs-border">

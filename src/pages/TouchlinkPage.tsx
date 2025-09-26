@@ -8,7 +8,9 @@ import Button from "../components/Button.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
+import TableSearch from "../components/table/TableSearch.js";
 import { useTable } from "../hooks/useTable.js";
+import { NavBarContent } from "../layout/NavBarContext.js";
 import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { TouchlinkDevice } from "../types.js";
 import { sendMessage } from "../websocket/WebSocketManager.js";
@@ -110,9 +112,11 @@ export default function TouchlinkPage() {
                     },
                 }) =>
                     friendlyName ? (
-                        <Link to={`/device/${sourceIdx}/${touchlinkDevice.ieee_address}/info`} className="link link-hover truncate">
-                            {touchlinkDevice.ieee_address}
-                        </Link>
+                        <div className="min-w-0">
+                            <Link to={`/device/${sourceIdx}/${touchlinkDevice.ieee_address}/info`} className="link link-hover truncate">
+                                {touchlinkDevice.ieee_address}
+                            </Link>
+                        </div>
                     ) : (
                         touchlinkDevice.ieee_address
                     ),
@@ -201,6 +205,10 @@ export default function TouchlinkPage() {
         </div>
     ) : (
         <>
+            <NavBarContent>
+                <TableSearch {...table} />
+            </NavBarContent>
+
             <div className="flex flex-row flex-wrap justify-center items-center gap-2 mb-3">
                 {MULTI_INSTANCE && (
                     <SelectField
@@ -208,7 +216,7 @@ export default function TouchlinkPage() {
                         label={t("scan_source")}
                         value={scanIdx}
                         onChange={(e) => !e.target.validationMessage && !!e.target.value && setScanIdx(Number.parseInt(e.target.value, 10))}
-                        className="select select-sm"
+                        className="select"
                     >
                         <option value="" disabled>
                             {t("select_scan_source")}
@@ -221,19 +229,16 @@ export default function TouchlinkPage() {
                     </SelectField>
                 )}
                 <fieldset className="fieldset self-end">
-                    <Button<number>
-                        className="btn btn-sm btn-outline btn-primary"
-                        item={scanIdx}
-                        onClick={onScanClick}
-                        disabled={touchlinkScanInProgress}
-                    >
+                    <Button<number> className="btn btn-outline btn-primary" item={scanIdx} onClick={onScanClick} disabled={touchlinkScanInProgress}>
                         <FontAwesomeIcon icon={faMagnifyingGlassPlus} />
                         {t("scan")}
                     </Button>
                 </fieldset>
             </div>
 
-            <Table id="touchlink-devices" {...table} />
+            <div className="mb-3">
+                <Table id="touchlink-devices" {...table} />
+            </div>
         </>
     );
 }

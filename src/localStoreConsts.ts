@@ -5,6 +5,7 @@ export const LAST_API_URL_KEY = "last-api-url";
 
 //-- General
 export const THEME_KEY = "theme";
+export const SIDEBAR_COLLAPSED_KEY = "windfront-sidebar-collapsed";
 export const HOMEPAGE_KEY = "homepage";
 export const PERMIT_JOIN_TIME_KEY = "permit-join-time";
 export const MAX_ON_SCREEN_NOTIFICATIONS_KEY = "max-on-screen-notifications";

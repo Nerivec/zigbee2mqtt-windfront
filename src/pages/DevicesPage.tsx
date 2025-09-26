@@ -8,12 +8,14 @@ import DeviceControlGroup from "../components/device/DeviceControlGroup.js";
 import DeviceImage from "../components/device/DeviceImage.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
+import TableSearch from "../components/table/TableSearch.js";
 import Availability from "../components/value-decorators/Availability.js";
 import LastSeen from "../components/value-decorators/LastSeen.js";
 import Lqi from "../components/value-decorators/Lqi.js";
 import ModelLink from "../components/value-decorators/ModelLink.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
+import { NavBarContent } from "../layout/NavBarContext.js";
 import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { AvailabilityState, Device, DeviceState } from "../types.js";
 import { getLastSeenEpoch, toHex } from "../utils.js";
@@ -400,5 +402,15 @@ export default function DevicesPage(): JSX.Element {
         sorting: [{ id: "friendly_name", desc: false }],
     });
 
-    return <Table id="all-devices" {...table} />;
+    return (
+        <>
+            <NavBarContent>
+                <TableSearch {...table} />
+            </NavBarContent>
+
+            <div className="mb-3">
+                <Table id="all-devices" {...table} />
+            </div>
+        </>
+    );
 }

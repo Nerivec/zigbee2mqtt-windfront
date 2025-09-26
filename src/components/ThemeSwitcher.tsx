@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import store2 from "store2";
-import { THEME_KEY } from "../../localStoreConsts.js";
-import DialogDropdown from "../DialogDropdown.js";
+import { THEME_KEY } from "../localStoreConsts.js";
+import DialogDropdown from "./DialogDropdown.js";
 
 const ALL_THEMES = [
     "", // "Default"
@@ -63,7 +63,7 @@ const ThemeSwitcher = memo(() => {
     return (
         <DialogDropdown
             buttonChildren={<FontAwesomeIcon icon={faPaintBrush} />}
-            buttonStyle="btn-square"
+            buttonStyle="btn-outline btn-primary"
             // do not allow theme-switching while on network page due to rendering of reagraph
             buttonDisabled={routerLocation.pathname.startsWith("/network")}
         >

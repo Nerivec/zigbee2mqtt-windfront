@@ -83,7 +83,7 @@ const ArrayField = memo((props: ArrayFieldProps) => {
                 <Button<void> onClick={onApply} className="btn btn-sm btn-square btn-primary">
                     <FontAwesomeIcon icon={faCheck} />
                 </Button>
-                {detail && <p className="label">{detail}</p>}
+                {detail && <p className="label text-wrap">{detail}</p>}
             </div>
         </fieldset>
     );

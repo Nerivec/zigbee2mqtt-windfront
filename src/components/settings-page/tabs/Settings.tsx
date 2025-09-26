@@ -11,6 +11,8 @@ import SettingsList from "../../json-schema/SettingsList.js";
 
 export type TabName = "main" | "frontend" | "mqtt" | "serial" | "availability" | "ota" | "advanced" | "homeassistant";
 
+const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
+
 type SettingsProps = { sourceIdx: number; tab: TabName };
 
 export default function Settings({ sourceIdx, tab }: SettingsProps) {
@@ -27,8 +29,6 @@ export default function Settings({ sourceIdx, tab }: SettingsProps) {
         },
         [sourceIdx, tab],
     );
-
-    const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
     return (
         <>

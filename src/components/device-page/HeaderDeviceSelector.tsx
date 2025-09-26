@@ -55,7 +55,7 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
             buttonChildren={
                 <>
                     {currentSourceIdx !== undefined && <SourceDot idx={currentSourceIdx} autoHide />}
-                    {currentDevice ? `${currentDevice.friendly_name} (${currentDevice.ieee_address})` : t("unknown_device")}
+                    {currentDevice ? currentDevice.friendly_name : t("unknown_device")}
                 </>
             }
         >

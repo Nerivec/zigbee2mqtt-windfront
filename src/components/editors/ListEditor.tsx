@@ -70,7 +70,7 @@ const ListEditor = memo((props: ListEditorProps) => {
                     featureWrapperClass={FeatureWrapper}
                     parentFeatures={parentFeatures}
                 />
-                <div className="join join-vertical lg:join-horizontal">
+                <div className="flex flex-row flex-wrap gap-1">
                     <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square join-item" onClick={handleRemoveClick}>
                         -
                     </Button>

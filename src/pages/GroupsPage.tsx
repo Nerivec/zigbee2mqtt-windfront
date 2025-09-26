@@ -13,7 +13,9 @@ import SelectField from "../components/form-fields/SelectField.js";
 import { RenameGroupForm } from "../components/modal/components/RenameGroupModal.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
+import TableSearch from "../components/table/TableSearch.js";
 import { useTable } from "../hooks/useTable.js";
+import { NavBarContent } from "../layout/NavBarContext.js";
 import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { Group } from "../types.js";
 import { sendMessage } from "../websocket/WebSocketManager.js";
@@ -220,6 +222,10 @@ export default function GroupsPage() {
 
     return (
         <>
+            <NavBarContent>
+                <TableSearch {...table} />
+            </NavBarContent>
+
             <div className="flex flex-row flex-wrap justify-center gap-2 mb-2">
                 {MULTI_INSTANCE && (
                     <SelectField
@@ -228,7 +234,7 @@ export default function GroupsPage() {
                         value={newGroupSourceIdx}
                         required
                         onChange={(e) => !e.target.validationMessage && setNewGroupSourceIdx(Number.parseInt(e.target.value, 10))}
-                        className="select select-sm"
+                        className="select"
                     >
                         {API_NAMES.map((name, idx) => (
                             <option key={`${idx}-${name}`} value={idx}>
@@ -246,7 +252,7 @@ export default function GroupsPage() {
                     onChange={(e) => setNewGroupFriendlyName(e.target.value)}
                     required
                     minLength={1}
-                    className="input input-sm"
+                    className="input"
                 />
                 <InputField
                     type="number"
@@ -256,16 +262,19 @@ export default function GroupsPage() {
                     min={0}
                     max={255}
                     onChange={(e) => setNewGroupId(e.target.value)}
-                    className="input input-sm"
+                    className="input"
                 />
                 <fieldset className="fieldset self-end">
-                    <Button<void> onClick={onGroupCreateSubmit} className="btn btn-sm btn-outline btn-primary" disabled={!isValidNewGroup}>
+                    <Button<void> onClick={onGroupCreateSubmit} className="btn btn-outline btn-primary" disabled={!isValidNewGroup}>
                         <FontAwesomeIcon icon={faPlus} />
                         {t("create_group")}
                     </Button>
                 </fieldset>
             </div>
-            <Table id="all-groups" {...table} />
+
+            <div className="mb-3">
+                <Table id="all-groups" {...table} />
+            </div>
         </>
     );
 }

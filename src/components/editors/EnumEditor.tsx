@@ -52,7 +52,7 @@ const EnumEditor = memo((props: EnumProps) => {
             })}
         </select>
     ) : (
-        <div className="join join-vertical lg:join-horizontal">
+        <div className="flex flex-row flex-wrap gap-1">
             {values.map((v) => {
                 const primitive = isPrimitive(v);
                 const current = primitive ? v === value : v.value === (primitiveValue ? value : value?.value);

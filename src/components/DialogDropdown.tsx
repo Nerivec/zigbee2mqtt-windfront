@@ -1,4 +1,5 @@
 import { type HTMLAttributes, memo, type ReactElement, useState } from "react";
+import { createPortal } from "react-dom";
 import Button from "./Button.js";
 
 interface DialogDropdownProps extends HTMLAttributes<HTMLUListElement> {
@@ -16,21 +17,23 @@ const DialogDropdown = memo(({ buttonChildren, buttonStyle, buttonDisabled, chil
             <Button item={!open} onClick={setOpen} className={`btn${buttonStyle ? ` ${buttonStyle}` : ""}`} disabled={buttonDisabled}>
                 {buttonChildren}
             </Button>
-            {open && (
-                <dialog
-                    className="modal modal-bottom sm:modal-middle"
-                    open
-                    onClick={(event) => {
-                        if ((event.target as HTMLElement).tagName !== "INPUT") {
-                            setOpen(false);
-                        }
-                    }}
-                >
-                    <div className="modal-box flex-nowrap p-1 w-auto! max-h-[90vh] menu" style={{ scrollbarWidth: "thin" }}>
-                        {children}
-                    </div>
-                </dialog>
-            )}
+            {open &&
+                createPortal(
+                    <dialog
+                        className="modal modal-bottom sm:modal-middle"
+                        open
+                        onClick={(event) => {
+                            if ((event.target as HTMLElement).tagName !== "INPUT") {
+                                setOpen(false);
+                            }
+                        }}
+                    >
+                        <ul className="modal-box flex-nowrap p-1 w-auto! menu" style={{ scrollbarWidth: "thin" }}>
+                            {children}
+                        </ul>
+                    </dialog>,
+                    document.body,
+                )}
         </>
     );
 });

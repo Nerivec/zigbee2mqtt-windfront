@@ -6,9 +6,10 @@ import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../components/Button.js";
 import DashboardItem from "../components/dashboard-page/DashboardItem.js";
-import TableHeader from "../components/table/TableHeader.js";
+import TableSearch from "../components/table/TableSearch.js";
 import { useColumnCount } from "../hooks/useColumnCount.js";
 import { useTable } from "../hooks/useTable.js";
+import { NavBarContent } from "../layout/NavBarContext.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { Device, DeviceState, FeatureWithAnySubFeatures, LastSeenConfig } from "../types.js";
 import { getLastSeenEpoch, toHex } from "../utils.js";
@@ -242,7 +243,10 @@ export default function Dashboard() {
 
     return (
         <>
-            <TableHeader {...table} noColumn />
+            <NavBarContent>
+                <TableSearch {...table} />
+            </NavBarContent>
+
             <div>
                 {/* XXX: issues with going to zero items and back */}
                 <VirtuosoMasonry
@@ -255,6 +259,7 @@ export default function Dashboard() {
                     className="gap-3"
                 />
             </div>
+
             <div className="sticky z-9 bottom-0 pb-1 w-full flex flex-row justify-end sm:hidden">
                 <Button
                     title={t("scroll_to_top")}
