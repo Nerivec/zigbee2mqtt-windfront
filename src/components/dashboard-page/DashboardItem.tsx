@@ -11,7 +11,9 @@ import DeviceCard from "../device/DeviceCard.js";
 import { RemoveDeviceModal } from "../modal/components/RemoveDeviceModal.js";
 import DashboardFeatureWrapper from "./DashboardFeatureWrapper.js";
 
-const DashboardItem = ({ original: { sourceIdx, device, deviceState, features, lastSeenConfig, removeDevice } }: Row<DashboardTableData>) => {
+const DashboardItem = ({
+    original: { sourceIdx, device, deviceState, deviceAvailability, features, lastSeenConfig, removeDevice },
+}: Row<DashboardTableData>) => {
     const { t } = useTranslation("zigbee");
 
     const onCardChange = useCallback(
@@ -27,7 +29,9 @@ const DashboardItem = ({ original: { sourceIdx, device, deviceState, features, l
     );
 
     return (
-        <div className="mb-3 card bg-base-200 rounded-box shadow-md">
+        <div
+            className={`mb-3 card card-border bg-base-200 rounded-box shadow-md ${deviceAvailability === "offline" ? "border-error/50" : "border-base-300"}`}
+        >
             <DeviceCard
                 features={features}
                 sourceIdx={sourceIdx}

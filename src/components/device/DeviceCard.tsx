@@ -84,6 +84,9 @@ const DeviceCard = memo(
                                     {device.description}
                                 </div>
                             )}
+                            <div className="text-xs opacity-50" title={t("last_seen")}>
+                                <LastSeen lastSeen={deviceState.last_seen} config={lastSeenConfig} />
+                            </div>
                             {!hideSourceDot && (
                                 <span className="absolute top-2 right-2">
                                     <SourceDot idx={sourceIdx} autoHide />
@@ -101,9 +104,6 @@ const DeviceCard = memo(
                     </div>
                 </div>
                 <div className="flex flex-row flex-wrap gap-1 mx-2 mb-2 justify-around items-center">
-                    <span className="badge badge-soft badge-ghost cursor-default" title={t("last_seen")}>
-                        <LastSeen lastSeen={deviceState.last_seen} config={lastSeenConfig} />
-                    </span>
                     <span className="badge badge-soft badge-ghost cursor-default" title={t("lqi")}>
                         <Lqi value={deviceState.linkquality as number | undefined} />
                     </span>

@@ -26,7 +26,15 @@ export function useColumnCount() {
             return 3;
         }
 
-        return 4;
+        if (width < 2048) {
+            return 4;
+        }
+
+        if (width < 2304) {
+            return 5;
+        }
+
+        return 6;
     }, [width]);
 
     return columnCount;

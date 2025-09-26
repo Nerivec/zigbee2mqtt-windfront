@@ -14,6 +14,8 @@ interface GroupMembersProps {
 }
 
 const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => {
+    const availability = useAppStore((state) => state.availability);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const deviceStates = useAppStore(useShallow((state) => state.deviceStates[sourceIdx]));
     const lastSeenConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.last_seen));
     const columnCount = useColumnCount();
@@ -38,16 +40,29 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
 
     const filteredData = useMemo(() => {
         const elements: GroupMemberProps["data"][] = [];
+        const availabilityEnabled = bridgeInfo[sourceIdx].config.availability.enabled;
 
         for (const groupMember of group.members) {
             const device = devices.find((device) => device.ieee_address === groupMember.ieee_address);
 
             if (device) {
+                let deviceAvailability: GroupMemberProps["data"]["deviceAvailability"] = "disabled";
+
+                if (!device.disabled) {
+                    const deviceAvailabilityConfig = bridgeInfo[sourceIdx].config.devices[device.ieee_address]?.availability;
+                    const availabilityEnabledForDevice = deviceAvailabilityConfig != null ? !!deviceAvailabilityConfig : undefined;
+                    deviceAvailability =
+                        (availabilityEnabledForDevice ?? availabilityEnabled)
+                            ? (availability[sourceIdx][device.friendly_name]?.state ?? "offline")
+                            : "disabled";
+                }
+
                 elements.push({
                     sourceIdx,
                     groupMember,
                     device,
                     deviceState: deviceStates[device.friendly_name] ?? {},
+                    deviceAvailability,
                     lastSeenConfig,
                     removeDeviceFromGroup,
                     setDeviceState,
@@ -58,7 +73,7 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
         elements.sort((elA, elB) => elA.device.ieee_address.localeCompare(elB.device.ieee_address));
 
         return elements;
-    }, [sourceIdx, group, devices, lastSeenConfig, deviceStates, removeDeviceFromGroup, setDeviceState]);
+    }, [sourceIdx, group, devices, lastSeenConfig, deviceStates, bridgeInfo, availability, removeDeviceFromGroup, setDeviceState]);
 
     return (
         <div>

@@ -25,7 +25,7 @@ type DeviceTableData = {
     sourceIdx: number;
     device: Device;
     state: DeviceState;
-    availabilityState: AvailabilityState;
+    availabilityState: AvailabilityState["state"];
     availabilityEnabledForDevice: boolean | undefined;
     batteryLow?: boolean;
 };
@@ -44,7 +44,7 @@ export default function DevicesPage(): JSX.Element {
             for (const device of devices[sourceIdx]) {
                 if (device.type !== "Coordinator") {
                     const state = deviceStates[sourceIdx][device.friendly_name] ?? {};
-                    const deviceAvailability = bridgeInfo[sourceIdx].config.devices[device.ieee_address]?.availability;
+                    const deviceAvailabilityConfig = bridgeInfo[sourceIdx].config.devices[device.ieee_address]?.availability;
                     let batteryLow: boolean | undefined;
 
                     if (device.power_source === "Battery") {
@@ -67,8 +67,8 @@ export default function DevicesPage(): JSX.Element {
                         sourceIdx,
                         device,
                         state,
-                        availabilityState: availability[sourceIdx][device.friendly_name] ?? { state: "offline" },
-                        availabilityEnabledForDevice: deviceAvailability != null ? !!deviceAvailability : undefined,
+                        availabilityState: availability[sourceIdx][device.friendly_name]?.state ?? "offline",
+                        availabilityEnabledForDevice: deviceAvailabilityConfig != null ? !!deviceAvailabilityConfig : undefined,
                         batteryLow,
                     });
                 }
@@ -282,9 +282,9 @@ export default function DevicesPage(): JSX.Element {
                 id: "availability",
                 size: 125,
                 header: t("availability:availability"),
-                accessorFn: ({ sourceIdx, availabilityState, availabilityEnabledForDevice }) =>
+                accessorFn: ({ sourceIdx, availabilityState, availabilityEnabledForDevice, device }) =>
                     t(
-                        `availability:${(availabilityEnabledForDevice ?? bridgeInfo[sourceIdx].config.availability.enabled) ? availabilityState.state : "disabled"}`,
+                        `availability:${device.disabled ? "disabled" : (availabilityEnabledForDevice ?? bridgeInfo[sourceIdx].config.availability.enabled) ? availabilityState : "disabled"}`,
                     ),
                 cell: ({
                     row: {
@@ -300,12 +300,6 @@ export default function DevicesPage(): JSX.Element {
                         />
                     );
                 },
-                sortingFn: (rowA, rowB) =>
-                    rowA.original.device.disabled || rowA.original.availabilityEnabledForDevice === false
-                        ? 1
-                        : rowB.original.device.disabled || rowB.original.availabilityEnabledForDevice === false
-                          ? -1
-                          : rowA.original.availabilityState.state.localeCompare(rowB.original.availabilityState.state),
                 filterFn: "equals",
                 meta: {
                     filterVariant: "select",

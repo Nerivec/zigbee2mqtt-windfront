@@ -4,7 +4,7 @@ import { DEVICE_AVAILABILITY_DOCS_URL } from "../../consts.js";
 import type { AvailabilityState } from "../../types.js";
 
 export type AvailabilityStateProps = {
-    availability: AvailabilityState;
+    availability: AvailabilityState["state"];
     availabilityFeatureEnabled: boolean;
     availabilityEnabledForDevice: boolean | undefined;
     disabled: boolean;
@@ -19,7 +19,7 @@ const Availability = memo((props: AvailabilityStateProps): JSX.Element => {
     }
 
     return (availabilityEnabledForDevice ?? availabilityFeatureEnabled) ? (
-        <span className={availability.state === "online" ? "text-success" : "text-error"}>{t(availability.state)}</span>
+        <span className={availability === "online" ? "text-success" : "text-error"}>{t(availability)}</span>
     ) : (
         <a className="link link-hover" target="_blank" rel="noopener noreferrer" href={DEVICE_AVAILABILITY_DOCS_URL}>
             {t("disabled")}

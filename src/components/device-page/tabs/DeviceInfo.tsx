@@ -270,7 +270,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             {t("availability:availability")}
                             {": "}
                             <Availability
-                                availability={availability[device.friendly_name] ?? { state: "offline" }}
+                                availability={availability[device.friendly_name]?.state ?? "offline"}
                                 disabled={device.disabled}
                                 availabilityFeatureEnabled={bridgeConfig.availability.enabled}
                                 availabilityEnabledForDevice={deviceAvailability != null ? !!deviceAvailability : undefined}

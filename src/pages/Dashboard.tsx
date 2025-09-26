@@ -11,7 +11,7 @@ import { useColumnCount } from "../hooks/useColumnCount.js";
 import { useTable } from "../hooks/useTable.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
-import type { Device, DeviceState, FeatureWithAnySubFeatures, LastSeenConfig } from "../types.js";
+import type { AvailabilityState, Device, DeviceState, FeatureWithAnySubFeatures, LastSeenConfig } from "../types.js";
 import { getLastSeenEpoch, toHex } from "../utils.js";
 import { sendMessage } from "../websocket/WebSocketManager.js";
 
@@ -19,6 +19,7 @@ export interface DashboardTableData {
     sourceIdx: number;
     device: Device;
     deviceState: DeviceState;
+    deviceAvailability: AvailabilityState["state"] | "disabled";
     batteryLow: boolean | undefined;
     features: FeatureWithAnySubFeatures[];
     featureTypes: string[]; // for filtering purposes
@@ -30,6 +31,7 @@ export interface DashboardTableData {
 export default function Dashboard() {
     const { t } = useTranslation(["common", "zigbee"]);
     const deviceStates = useAppStore((state) => state.deviceStates);
+    const availability = useAppStore((state) => state.availability);
     const deviceDashbordFeatures = useAppStore((state) => state.deviceDashboardFeatures);
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const devices = useAppStore((state) => state.devices);
@@ -44,6 +46,7 @@ export default function Dashboard() {
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             const lastSeenConfig = bridgeInfo[sourceIdx].config.advanced.last_seen;
+            const availabilityEnabled = bridgeInfo[sourceIdx].config.availability.enabled;
 
             for (const device of devices[sourceIdx]) {
                 if (device.disabled || !device.supported || !device.definition) {
@@ -107,10 +110,22 @@ export default function Dashboard() {
                     }
                 }
 
+                let deviceAvailability: DashboardTableData["deviceAvailability"] = "disabled";
+
+                if (!device.disabled) {
+                    const deviceAvailabilityConfig = bridgeInfo[sourceIdx].config.devices[device.ieee_address]?.availability;
+                    const availabilityEnabledForDevice = deviceAvailabilityConfig != null ? !!deviceAvailabilityConfig : undefined;
+                    deviceAvailability =
+                        (availabilityEnabledForDevice ?? availabilityEnabled)
+                            ? (availability[sourceIdx][device.friendly_name]?.state ?? "offline")
+                            : "disabled";
+                }
+
                 elements.push({
                     sourceIdx,
                     device,
                     deviceState,
+                    deviceAvailability,
                     batteryLow,
                     features: dashboardFeatures,
                     featureTypes: Array.from(featureTypes),
@@ -122,7 +137,7 @@ export default function Dashboard() {
         }
 
         return elements;
-    }, [devices, deviceStates, deviceDashbordFeatures, bridgeInfo, removeDevice]);
+    }, [devices, deviceStates, deviceDashbordFeatures, bridgeInfo, availability, removeDevice]);
 
     const columns = useMemo<ColumnDef<DashboardTableData, unknown>[]>(
         () => [
