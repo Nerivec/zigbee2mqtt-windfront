@@ -1,6 +1,6 @@
 import { faAngleDown, faTowerBroadcast } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, memo, useCallback, useMemo, useState } from "react";
+import { type CSSProperties, type JSX, memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import { useShallow } from "zustand/react/shallow";
@@ -115,22 +115,23 @@ const PermitJoinButton = memo(() => {
     );
 
     return (
-        <div className="join join-horizontal">
-            {permitJoin ? (
-                <Button<void> onClick={onPermitJoinClick} className="btn btn-outline btn-primary join-item grow" title={t("disable_join")}>
-                    <FontAwesomeIcon icon={faTowerBroadcast} className="text-success" beatFade />
-                    <SourceDot idx={selectedRouter[0]} autoHide alwaysHideName />
-                    <span className="truncate">{selectedRouter[1]?.friendly_name ?? t("all")}</span>
-                    {permitJoinTimer}
+        <div className="indicator w-full mb-4">
+            <div className="join join-horizontal w-full">
+                <Button<void> onClick={onPermitJoinClick} className="btn btn-outline btn-primary join-item grow">
+                    <FontAwesomeIcon icon={faTowerBroadcast} className={permitJoin ? "text-success" : "text-error"} />
+                    {permitJoin ? t("disable_join") : t("permit_join")}
+                    {permitJoin && permitJoinTimer}
                 </Button>
-            ) : (
-                <Button<void> onClick={onPermitJoinClick} className="btn btn-outline btn-primary join-item grow" title={t("permit_join")}>
-                    <FontAwesomeIcon icon={faTowerBroadcast} className="text-error" />
-                    <SourceDot idx={selectedRouter[0]} autoHide alwaysHideName />
-                    <span className="truncate">{selectedRouter[1]?.friendly_name ?? t("all")}</span>
-                </Button>
-            )}
-            {!permitJoin && <PermitJoinDropdown selectedRouter={selectedRouter} setSelectedRouter={setSelectedRouter} />}
+
+                {!permitJoin && <PermitJoinDropdown selectedRouter={selectedRouter} setSelectedRouter={setSelectedRouter} />}
+            </div>
+            <div
+                className="indicator-item indicator-bottom indicator-center badge badge-primary opacity-95 min-w-0 pointer-events-none"
+                style={{ "--indicator-y": "65%" } as CSSProperties}
+            >
+                <SourceDot idx={selectedRouter[0]} autoHide alwaysHideName />
+                <span className="truncate">{selectedRouter[1]?.friendly_name ?? t("all")}</span>
+            </div>
         </div>
     );
 });
