@@ -16,17 +16,24 @@ export default function Devices({ sourceIdx, group }: DevicesProps) {
 
     return (
         <>
-            <div className="flex flex-row flex-wrap justify-evenly gap-4 mb-4">
-                <div className="flex-1">
-                    <AddDeviceToGroup sourceIdx={sourceIdx} devices={devices} group={group} />
+            <div className="flex flex-row flex-wrap gap-4 mb-4 w-full">
+                <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">
+                    <div className="card-body p-4">
+                        <AddDeviceToGroup sourceIdx={sourceIdx} devices={devices} group={group} />
+                    </div>
                 </div>
-                <div className="flex-1">
-                    <RecallRemove sourceIdx={sourceIdx} target={group} />
+                <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">
+                    <div className="card-body p-4">
+                        <RecallRemove sourceIdx={sourceIdx} target={group} />
+                    </div>
                 </div>
-                <div className="flex-1">
-                    <AddScene sourceIdx={sourceIdx} target={group} deviceState={{}} />
+                <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">
+                    <div className="card-body p-4">
+                        <AddScene sourceIdx={sourceIdx} target={group} deviceState={{}} />
+                    </div>
                 </div>
             </div>
+
             <GroupMembers sourceIdx={sourceIdx} devices={devices} group={group} />
         </>
     );

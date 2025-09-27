@@ -13,12 +13,16 @@ export default function Scene({ sourceIdx, device }: SceneProps) {
     const deviceState = useAppStore(useShallow((state) => state.deviceStates[sourceIdx][device.friendly_name]));
 
     return (
-        <div className="flex flex-row flex-wrap justify-around items-start gap-3 my-2">
-            <div>
-                <AddScene sourceIdx={sourceIdx} target={device} deviceState={deviceState ?? {}} />
+        <div className="flex flex-row flex-wrap gap-4 w-full">
+            <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">
+                <div className="card-body p-4">
+                    <AddScene sourceIdx={sourceIdx} target={device} deviceState={deviceState ?? {}} />
+                </div>
             </div>
-            <div>
-                <RecallRemove sourceIdx={sourceIdx} target={device} />
+            <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">
+                <div className="card-body p-4">
+                    <RecallRemove sourceIdx={sourceIdx} target={device} />
+                </div>
             </div>
         </div>
     );

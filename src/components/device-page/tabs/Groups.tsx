@@ -1,16 +1,12 @@
 import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
-import { useCallback, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useCallback, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useColumnCount } from "../../../hooks/useColumnCount.js";
 import { useAppStore } from "../../../store.js";
 import type { Device, Group } from "../../../types.js";
-import { getEndpoints } from "../../../utils.js";
 import { sendMessage } from "../../../websocket/WebSocketManager.js";
-import Button from "../../Button.js";
 import GroupCard, { type GroupCardProps } from "../../group/GroupCard.js";
-import EndpointPicker from "../../pickers/EndpointPicker.js";
-import GroupPicker from "../../pickers/GroupPicker.js";
+import AddToGroup from "../AddToGroup.js";
 
 type GroupsProps = {
     sourceIdx: number;
@@ -18,31 +14,8 @@ type GroupsProps = {
 };
 
 export default function Groups({ sourceIdx, device }: GroupsProps) {
-    const { t } = useTranslation(["groups", "zigbee", "common"]);
     const groups = useAppStore(useShallow((state) => state.groups[sourceIdx]));
-    const [endpoint, setEndpoint] = useState<string | number>("");
-    const [groupId, setGroupId] = useState<string | number>("");
     const columnCount = useColumnCount();
-
-    const endpoints = useMemo(() => getEndpoints(device), [device]);
-
-    const onGroupChange = useCallback(
-        (selectedGroup: Group): void => {
-            setGroupId(selectedGroup.id);
-            setEndpoint(endpoints.values().next().value);
-        },
-        [endpoints],
-    );
-
-    const addToGroup = useCallback(
-        async () =>
-            await sendMessage(sourceIdx, "bridge/request/group/members/add", {
-                group: groupId.toString(),
-                endpoint,
-                device: device.ieee_address,
-            }),
-        [sourceIdx, groupId, device.ieee_address, endpoint],
-    );
 
     const removeFromGroup = useCallback(
         async ([group, endpoint]: [Group, number]): Promise<void> =>
@@ -75,20 +48,11 @@ export default function Groups({ sourceIdx, device }: GroupsProps) {
 
     return (
         <>
-            <div className="flex flex-row flex-wrap justify-around items-start gap-3 my-2">
-                <div>
-                    <h2 className="text-lg font-semibold">{t("add_to_group")}</h2>
-                    <div className="mb-3">
-                        <GroupPicker label={t("zigbee:group")} value={groupId} groups={nonMemberGroups} onChange={onGroupChange} required />
-                        <EndpointPicker label={t("zigbee:endpoint")} values={endpoints} value={endpoint} onChange={(e) => setEndpoint(e)} required />
+            <div className="flex flex-row flex-wrap gap-4 mb-3 w-full">
+                <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">
+                    <div className="card-body p-4">
+                        <AddToGroup sourceIdx={sourceIdx} device={device} nonMemberGroups={nonMemberGroups} />
                     </div>
-                    <Button<void>
-                        onClick={addToGroup}
-                        className="btn btn-primary"
-                        disabled={endpoint == null || groupId == null || endpoint === "" || groupId === ""}
-                    >
-                        {t("add_to_group")}
-                    </Button>
                 </div>
             </div>
             <div>

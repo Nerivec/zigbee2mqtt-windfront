@@ -79,8 +79,8 @@ const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
                     required
                 />
                 {scenesFeatures.length > 0 && (
-                    <div className="card card-border bg-base-200 shadow my-2">
-                        <div className="card-body">
+                    <div className="card card-border bg-base-100 shadow my-2">
+                        <div className="card-body p-4">
                             {scenesFeatures.map((feature) => (
                                 <Feature
                                     key={getFeatureKey(feature)}
