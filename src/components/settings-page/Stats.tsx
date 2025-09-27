@@ -31,7 +31,7 @@ function StatRow({ name, data }: StatRowProps) {
     return (
         <li>
             <details>
-                <summary>{t(name)}</summary>
+                <summary>{t(($) => $[name])}</summary>
                 <ul>{children}</ul>
             </details>
         </li>
@@ -53,10 +53,10 @@ const Stats = memo((props: StatsProps) => {
                 continue;
             }
 
-            const typeStr = t(`zigbee:${device.type}`);
-            const modelId = device.model_id || t("zigbee:unknown");
-            const manufacturer = device.manufacturer || t("zigbee:unknown");
-            const powerSource = t(`zigbee:${snakeCase(device.power_source || "unknown")}`);
+            const typeStr = t(($) => $.zigbee[device.type]);
+            const modelId = device.model_id || t(($) => $.unknown, { ns: "zigbee" });
+            const manufacturer = device.manufacturer || t(($) => $.unknown, { ns: "zigbee" });
+            const powerSource = t(($) => $.zigbee[snakeCase(device.power_source || "unknown")]);
 
             byType[typeStr] = (byType[typeStr] || 0) + 1;
             byPowerSource[powerSource] = (byPowerSource[powerSource] || 0) + 1;
@@ -78,7 +78,7 @@ const Stats = memo((props: StatsProps) => {
         <ul>
             <li>
                 <Link to="#">
-                    {t("total")} {devices.length - 1 /* coordinator */}
+                    {t(($) => $.total)} {devices.length - 1 /* coordinator */}
                 </Link>
             </li>
             {statRows}

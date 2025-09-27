@@ -80,7 +80,7 @@ ${JSON.stringify(device.endpoints, endpointsReplacer)}
             to={`${ZHC_NEW_GITHUB_ISSUE_URL}?${new URLSearchParams(githubUrlParams).toString()}`}
             className="link link-hover"
         >
-            {t("submit_converter")}
+            {t(($) => $.submit_converter)}
         </Link>
     );
 });
@@ -136,7 +136,7 @@ ${JSON.stringify(bridgeHealth.devices[device.ieee_address] ?? {})}
             to={`${Z2M_NEW_GITHUB_ISSUE_URL}?${new URLSearchParams(githubUrlParams).toString()}`}
             className="btn btn-ghost"
         >
-            {t("report_problem")}
+            {t(($) => $.report_problem)}
         </Link>
     );
 });
@@ -231,7 +231,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     {!device.supported && (
                         <span className="badge animate-bounce">
                             <Link target="_blank" rel="noopener noreferrer" to={SUPPORT_NEW_DEVICES_DOCS_URL} className="link link-hover">
-                                {t("how_to_add_support")}
+                                {t(($) => $.how_to_add_support)}
                             </Link>
                         </span>
                     )}
@@ -241,7 +241,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         </span>
                     )}
                     <span className="badge opacity-70" title={device.interview_state}>
-                        {t("interview_state")}: {deviceInterviewState}
+                        {t(($) => $.interview_state)}: {deviceInterviewState}
                     </span>
                 </div>
                 <div>
@@ -251,23 +251,23 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
                     <div className="stat">
                         <div className="stat-title">{device.type}</div>
-                        <div className="stat-value text-xl" title={t("ieee_address")}>
+                        <div className="stat-value text-xl" title={t(($) => $.ieee_address)}>
                             {device.ieee_address}
                         </div>
-                        <div className="stat-value text-xl" title={t("network_address_hex")}>
+                        <div className="stat-value text-xl" title={t(($) => $.network_address_hex)}>
                             {toHex(device.network_address)}
                         </div>
                         <div className="stat-desc">
-                            {t("network_address_dec")}: {device.network_address}
+                            {t(($) => $.network_address_dec)}: {device.network_address}
                         </div>
                     </div>
                     <div className="stat">
-                        <div className="stat-title">{t("last_seen")}</div>
+                        <div className="stat-title">{t(($) => $.last_seen)}</div>
                         <div className="stat-value text-xl">
                             <LastSeen config={bridgeConfig.advanced.last_seen} lastSeen={deviceState.last_seen} />
                         </div>
                         <div className="stat-desc">
-                            {t("availability:availability")}
+                            {t(($) => $.availability, { ns: "availability" })}
                             {": "}
                             <Availability
                                 availability={availability[device.friendly_name]?.state ?? "offline"}
@@ -278,7 +278,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         </div>
                     </div>
                     <div className="stat">
-                        <div className="stat-title">{t("power")}</div>
+                        <div className="stat-title">{t(($) => $.power)}</div>
                         <div className="stat-value text-xl">
                             <PowerSource
                                 showLevel={true}
@@ -289,27 +289,27 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             />
                         </div>
                         <div className="stat-desc">
-                            {device.type === "GreenPower" ? "GreenPower" : t(snakeCase(device.power_source) || "unknown")}
+                            {device.type === "GreenPower" ? "GreenPower" : t(($) => $[snakeCase(device.power_source)] || $.unknown)}
                         </div>
                     </div>
                     {
                         <div className="stat">
-                            <div className="stat-title">{t("firmware_id")}</div>
-                            <div className="stat-value text-xl">{device.software_build_id || t("unknown")}</div>
-                            <div className="stat-desc">{device.date_code || t("unknown")}</div>
+                            <div className="stat-title">{t(($) => $.firmware_id)}</div>
+                            <div className="stat-value text-xl">{device.software_build_id || t(($) => $.unknown)}</div>
+                            <div className="stat-desc">{device.date_code || t(($) => $.unknown)}</div>
                         </div>
                     }
                 </div>
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
                     <div className="stat">
-                        <div className="stat-title">{t("zigbee_model")}</div>
+                        <div className="stat-title">{t(($) => $.zigbee_model)}</div>
                         <div className="stat-value text-xl">{device.model_id}</div>
                         <div className="stat-desc">
                             {device.manufacturer} ({definitionDescription})
                         </div>
                     </div>
                     <div className="stat">
-                        <div className="stat-title">{t("model")}</div>
+                        <div className="stat-title">{t(($) => $.model)}</div>
                         <div className="stat-value text-xl">
                             <ModelLink device={device} />
                         </div>
@@ -327,7 +327,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     </div>
                     {MULTI_INSTANCE && (
                         <div className="stat">
-                            <div className="stat-title">{t("common:source")}</div>
+                            <div className="stat-title">{t(($) => $.source, { ns: "common" })}</div>
                             <div className="stat-value text-xl">
                                 <SourceDot idx={sourceIdx} alwaysShowName />
                             </div>

@@ -29,7 +29,7 @@ export default function GroupSettings({ sourceIdx, group }: DevicesProps) {
         <>
             <InfoAlert>
                 <a href={GROUP_OPTIONS_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
-                    {t("common:read_the_docs_info")}
+                    {t(($) => $.read_the_docs_info, { ns: "common" })}
                 </a>
             </InfoAlert>
             <SettingsList

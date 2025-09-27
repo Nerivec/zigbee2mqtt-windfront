@@ -252,7 +252,8 @@
         "machine": "機器",
         "node_version": "Node 版本",
         "version": "版本",
-        "health": "健康"
+        "health": "健康",
+        "download_z2m_backup": "下載 Zigbee2MQTT 備份"
     },
     "health": {
         "awaiting_next_check": "等待下次檢查",
@@ -429,6 +430,12 @@
         "show_definition": "顯示定義",
         "hide_definition": "隱藏定義"
     },
+    "contribute": {
+        "donation_text": "歡迎在此感謝我們的付出，也歡迎留下鼓勵的話語；)",
+        "development": "開發",
+        "contributing": "在這裡可以找到如何貢獻此專案的資訊",
+        "translation": "翻譯"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant 整合 (MQTT 探索)",
         "homeassistant-enabled": "啟用 Home Assistant 整合",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Home Assistant 名稱",
         "definitions-group-qos": "群組 QoS",
         "definitions-group-off_state": "群組 OFF/CLOSE 發布時機"
-    },
-    "contribute": {
-        "donation_text": "歡迎在此感謝我們的付出，也歡迎留下鼓勵的話語；)",
-        "development": "開發",
-        "contributing": "在這裡可以找到如何貢獻此專案的資訊",
-        "translation": "翻譯"
     }
 }

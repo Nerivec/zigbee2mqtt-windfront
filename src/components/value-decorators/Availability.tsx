@@ -15,14 +15,14 @@ const Availability = memo((props: AvailabilityStateProps): JSX.Element => {
     const { availability, availabilityFeatureEnabled, availabilityEnabledForDevice, disabled } = props;
 
     if (disabled) {
-        return <span>{t("disabled")}</span>;
+        return <span>{t(($) => $.disabled)}</span>;
     }
 
     return (availabilityEnabledForDevice ?? availabilityFeatureEnabled) ? (
-        <span className={availability === "online" ? "text-success" : "text-error"}>{t(availability)}</span>
+        <span className={availability === "online" ? "text-success" : "text-error"}>{t(($) => $[availability])}</span>
     ) : (
         <a className="link link-hover" target="_blank" rel="noopener noreferrer" href={DEVICE_AVAILABILITY_DOCS_URL}>
-            {t("disabled")}
+            {t(($) => $.disabled)}
         </a>
     );
 });

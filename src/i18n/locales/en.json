@@ -252,7 +252,8 @@
         "machine": "Machine",
         "node_version": "Node version",
         "version": "Version",
-        "health": "Health"
+        "health": "Health",
+        "download_z2m_backup": "Download Zigbee2MQTT backup"
     },
     "health": {
         "awaiting_next_check": "Awaiting next check",

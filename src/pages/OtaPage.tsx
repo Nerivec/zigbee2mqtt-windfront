@@ -155,7 +155,7 @@ export default function OtaPage() {
                 id: "source",
                 size: 60,
                 header: () => (
-                    <span title={t("common:source")}>
+                    <span title={t(($) => $.source, { ns: "common" })}>
                         <FontAwesomeIcon icon={faServer} />
                     </span>
                 ),
@@ -175,7 +175,7 @@ export default function OtaPage() {
                 id: "friendly_name",
                 size: 250,
                 minSize: 175,
-                header: t("common:friendly_name"),
+                header: t(($) => $.friendly_name, { ns: "common" }),
                 accessorFn: ({ device }) => `${device.friendly_name} ${device.description ?? ""} ${device.ieee_address}`,
                 cell: ({
                     row: {
@@ -218,7 +218,7 @@ export default function OtaPage() {
             {
                 id: "ieee_address",
                 minSize: 175,
-                header: t("zigbee:ieee_address"),
+                header: t(($) => $.ieee_address, { ns: "zigbee" }),
                 accessorFn: ({ device }) => `${device.ieee_address} ${toHex(device.network_address, 4)} ${device.network_address}`,
                 cell: ({
                     row: {
@@ -232,10 +232,10 @@ export default function OtaPage() {
                             </Link>
                         </div>
                         <div className="flex flex-row gap-1">
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t("zigbee:network_address_hex")}>
+                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_hex, { ns: "zigbee" })}>
                                 {toHex(device.network_address, 4)}
                             </span>
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t("zigbee:network_address_dec")}>
+                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_dec, { ns: "zigbee" })}>
                                 {device.network_address}
                             </span>
                         </div>
@@ -250,7 +250,7 @@ export default function OtaPage() {
             {
                 id: "model",
                 minSize: 175,
-                header: t("zigbee:model"),
+                header: t(($) => $.model, { ns: "zigbee" }),
                 accessorFn: ({ device }) =>
                     `${device.definition?.model ?? ""} ${device.model_id ?? ""} ${device.definition?.vendor ?? device.manufacturer ?? ""}`,
                 cell: ({
@@ -261,7 +261,7 @@ export default function OtaPage() {
                     <>
                         <ModelLink device={device} />
                         <div>
-                            <span className="badge badge-sm badge-ghost" title={t("zigbee:manufacturer")}>
+                            <span className="badge badge-sm badge-ghost" title={t(($) => $.manufacturer, { ns: "zigbee" })}>
                                 <VendorLink device={device} />
                             </span>
                         </div>
@@ -277,7 +277,7 @@ export default function OtaPage() {
             {
                 id: "firmware_id",
                 minSize: 175,
-                header: t("zigbee:firmware_id"),
+                header: t(($) => $.firmware_id, { ns: "zigbee" }),
                 accessorFn: ({ device }) => `${device.software_build_id ?? ""} ${device.date_code ?? ""}`,
                 cell: ({
                     row: {
@@ -288,7 +288,7 @@ export default function OtaPage() {
                         <OtaLink device={device} />
                         {device.date_code && (
                             <div>
-                                <span className="badge badge-sm badge-ghost" title={t("zigbee:firmware_build_date")}>
+                                <span className="badge badge-sm badge-ghost" title={t(($) => $.firmware_build_date, { ns: "zigbee" })}>
                                     {device.date_code}
                                 </span>
                             </div>
@@ -303,7 +303,7 @@ export default function OtaPage() {
             {
                 id: "firmware_version",
                 minSize: 175,
-                header: t("firmware_version"),
+                header: t(($) => $.firmware_version),
                 accessorFn: ({ state }) => formatOtaFileVersion(state?.installed_version)?.join(" "),
                 cell: ({
                     row: {
@@ -318,7 +318,7 @@ export default function OtaPage() {
             {
                 id: "available_firmware_version",
                 minSize: 175,
-                header: t("available_firmware_version"),
+                header: t(($) => $.available_firmware_version),
                 accessorFn: ({ state }) => formatOtaFileVersion(state?.latest_version)?.join(" "),
                 cell: ({
                     row: {
@@ -332,8 +332,8 @@ export default function OtaPage() {
             },
             {
                 id: "state",
-                header: t("common:state"),
-                accessorFn: ({ state }) => t(state?.state ?? "zigbee:unknown"),
+                header: t(($) => $.state, { ns: "common" }),
+                accessorFn: ({ state }) => (state?.state ? t(($) => $[state.state]) : t(($) => $.unknown, { ns: "zigbee" })),
                 filterFn: "equals",
                 meta: {
                     filterVariant: "select",
@@ -350,7 +350,7 @@ export default function OtaPage() {
                     },
                 }) =>
                     state?.state === "updating" ? (
-                        <OtaUpdating label={t("remaining_time")} remaining={state.remaining} progress={state.progress} />
+                        <OtaUpdating label={t(($) => $.remaining_time)} remaining={state.remaining} progress={state.progress} />
                     ) : (
                         <OtaControlGroup
                             sourceIdx={sourceIdx}
@@ -417,45 +417,45 @@ export default function OtaPage() {
                         className="btn btn-outline btn-error btn-sm join-item"
                         item="bridge/request/device/ota_update/check"
                         onClick={actOnFilteredSelected}
-                        title={t("check_selected")}
-                        modalDescription={t("common:dialog_confirmation_prompt")}
-                        modalCancelLabel={t("common:cancel")}
+                        title={t(($) => $.check_selected)}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                         disabled={rowSelectionCount === 0}
                     >
-                        {`${t("check_selected")} (${rowSelectionCount})`}
+                        {`${t(($) => $.check_selected)} (${rowSelectionCount})`}
                     </ConfirmButton>
                     <ConfirmButton<"bridge/request/device/ota_update/update">
                         className="btn btn-outline btn-error btn-sm join-item"
                         item="bridge/request/device/ota_update/update"
                         onClick={actOnFilteredSelected}
-                        title={t("update_selected")}
-                        modalDescription={t("update_selected_info")}
-                        modalCancelLabel={t("common:cancel")}
+                        title={t(($) => $.update_selected)}
+                        modalDescription={t(($) => $.update_selected_info)}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                         disabled={rowSelectionCount === 0}
                     >
-                        {`${t("update_selected")} (${rowSelectionCount})`}
+                        {`${t(($) => $.update_selected)} (${rowSelectionCount})`}
                     </ConfirmButton>
                     <ConfirmButton<"bridge/request/device/ota_update/schedule">
                         className="btn btn-outline btn-error btn-sm join-item"
                         item="bridge/request/device/ota_update/schedule"
                         onClick={actOnFilteredSelected}
-                        title={t("schedule_selected")}
-                        modalDescription={t("common:dialog_confirmation_prompt")}
-                        modalCancelLabel={t("common:cancel")}
+                        title={t(($) => $.schedule_selected)}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                         disabled={rowSelectionCount === 0}
                     >
-                        {`${t("schedule_selected")} (${rowSelectionCount})`}
+                        {`${t(($) => $.schedule_selected)} (${rowSelectionCount})`}
                     </ConfirmButton>
                     <ConfirmButton<"bridge/request/device/ota_update/unschedule">
                         className="btn btn-outline btn-error btn-sm join-item"
                         item="bridge/request/device/ota_update/unschedule"
                         onClick={actOnFilteredSelected}
-                        title={t("unschedule_selected")}
-                        modalDescription={t("common:dialog_confirmation_prompt")}
-                        modalCancelLabel={t("common:cancel")}
+                        title={t(($) => $.unschedule_selected)}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                         disabled={rowSelectionCount === 0}
                     >
-                        {`${t("unschedule_selected")} (${rowSelectionCount})`}
+                        {`${t(($) => $.unschedule_selected)} (${rowSelectionCount})`}
                     </ConfirmButton>
                 </div>
 

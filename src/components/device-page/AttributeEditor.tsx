@@ -56,7 +56,7 @@ const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDe
     const [cluster, setCluster] = useState("");
     const [attributes, setAttributes] = useState<AttributeInfo[]>([]);
     const [stateProperty, setStateProperty] = useState<string>("");
-    const { t } = useTranslation(["common", "zigbee"]);
+    const { t } = useTranslation(["common", "zigbee", "devConsole"]);
 
     const onEndpointChange = useCallback((endpoint: string | number) => {
         setCluster("");
@@ -160,13 +160,19 @@ const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDe
 
     return endpoint ? (
         <div className="flex-1 flex flex-col gap-3 w-full">
-            <h2 className="text-lg">{t("zigbee:read_write_attributes")}</h2>
+            <h2 className="text-lg">{t(($) => $.read_write_attributes, { ns: "zigbee" })}</h2>
             <div className="flex flex-row flex-wrap gap-2">
-                <EndpointPicker label={t("zigbee:endpoint")} values={endpoints} value={endpoint} onChange={onEndpointChange} required />
-                <ClusterSinglePicker label={t("cluster")} clusters={availableClusters} value={cluster} onChange={onClusterChange} required />
+                <EndpointPicker
+                    label={t(($) => $.endpoint, { ns: "zigbee" })}
+                    values={endpoints}
+                    value={endpoint}
+                    onChange={onEndpointChange}
+                    required
+                />
+                <ClusterSinglePicker label={t(($) => $.cluster)} clusters={availableClusters} value={cluster} onChange={onClusterChange} required />
                 <AttributePicker
                     sourceIdx={sourceIdx}
-                    label={t("attribute")}
+                    label={t(($) => $.attribute)}
                     value={""}
                     cluster={cluster}
                     device={device}
@@ -175,9 +181,9 @@ const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDe
                 <InputField
                     type="text"
                     name="state_property"
-                    label={t("devConsole:state_property")}
+                    label={t(($) => $.state_property, { ns: "devConsole" })}
                     value={stateProperty}
-                    detail={`${t("optional")}. ${t("devConsole:state_property_info")}`}
+                    detail={`${t(($) => $.optional)}. ${t(($) => $.state_property_info, { ns: "devConsole" })}`}
                     onChange={onStatePropertyChange}
                 />
             </div>
@@ -188,10 +194,10 @@ const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDe
                     className="btn btn-success join-item"
                     onClick={onReadClick}
                 >
-                    {t("read")}
+                    {t(($) => $.read)}
                 </Button>
                 <Button<void> disabled={disableButtons} className="btn btn-error join-item" onClick={onWriteClick}>
-                    {t("write")}
+                    {t(($) => $.write)}
                 </Button>
             </div>
             {lastLog && <LastLogResult message={lastLog} />}

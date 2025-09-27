@@ -55,13 +55,18 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
             buttonChildren={
                 <>
                     {currentSourceIdx !== undefined && <SourceDot idx={currentSourceIdx} autoHide />}
-                    {currentGroup ? currentGroup.friendly_name : t("unknown_group")}
+                    {currentGroup ? currentGroup.friendly_name : t(($) => $.unknown_group)}
                 </>
             }
         >
             <label className="input min-h-10" key="search">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
-                <DebouncedInput onChange={setSearchTerm} placeholder={t("type_to_filter")} value={searchTerm} title={t("type_to_filter")} />
+                <DebouncedInput
+                    onChange={setSearchTerm}
+                    placeholder={t(($) => $.type_to_filter)}
+                    value={searchTerm}
+                    title={t(($) => $.type_to_filter)}
+                />
             </label>
             {items}
         </DialogDropdown>

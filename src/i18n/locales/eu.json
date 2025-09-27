@@ -252,7 +252,8 @@
         "machine": "Makina",
         "node_version": "Node bertsioa",
         "version": "Bertsioa",
-        "health": "Osasuna"
+        "health": "Osasuna",
+        "download_z2m_backup": "Deskargatu Zigbee2MQTT babeskopia"
     },
     "health": {
         "awaiting_next_check": "Hurrengo egiaztapen zain",
@@ -429,6 +430,12 @@
         "show_definition": "Erakutsi definizioa",
         "hide_definition": "Ezkutatu definizioa"
     },
+    "contribute": {
+        "donation_text": "Hemen eskertu diezagukezu egindako lana. Hitz goxoa ere beti ongi etorria da ;)",
+        "development": "Garapena",
+        "contributing": "Hemen aurkituko duzu proiektu honetan nola lagundu",
+        "translation": "Itzulpena"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant integrazioa (MQTT discovery)",
         "homeassistant-enabled": "Gaitu integrazioa",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "HA izena",
         "definitions-group-qos": "Talde QoS",
         "definitions-group-off_state": "Noiz OFF/CLOSE"
-    },
-    "contribute": {
-        "donation_text": "Hemen eskertu diezagukezu egindako lana. Hitz goxoa ere beti ongi etorria da ;)",
-        "development": "Garapena",
-        "contributing": "Hemen aurkituko duzu proiektu honetan nola lagundu",
-        "translation": "Itzulpena"
     }
 }

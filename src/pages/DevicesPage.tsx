@@ -105,7 +105,7 @@ export default function DevicesPage(): JSX.Element {
                 id: "source",
                 size: 60,
                 header: () => (
-                    <span title={t("common:source")}>
+                    <span title={t(($) => $.source, { ns: "common" })}>
                         <FontAwesomeIcon icon={faServer} />
                     </span>
                 ),
@@ -125,7 +125,7 @@ export default function DevicesPage(): JSX.Element {
                 id: "friendly_name",
                 size: 250,
                 minSize: 175,
-                header: t("common:friendly_name"),
+                header: t(($) => $.friendly_name, { ns: "common" }),
                 accessorFn: ({ device }) => `${device.friendly_name} ${device.description ?? ""}`,
                 cell: ({
                     row: {
@@ -161,7 +161,7 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "ieee_address",
                 minSize: 175,
-                header: t("ieee_address"),
+                header: t(($) => $.ieee_address),
                 accessorFn: ({ device }) => `${device.ieee_address} ${toHex(device.network_address, 4)} ${device.network_address}`,
                 cell: ({
                     row: {
@@ -175,10 +175,10 @@ export default function DevicesPage(): JSX.Element {
                             </Link>
                         </div>
                         <div className="flex flex-row gap-1">
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t("network_address_hex")}>
+                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_hex)}>
                                 {toHex(device.network_address, 4)}
                             </span>
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t("network_address_dec")}>
+                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_dec)}>
                                 {device.network_address}
                             </span>
                         </div>
@@ -193,7 +193,7 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "model",
                 minSize: 175,
-                header: t("model"),
+                header: t(($) => $.model),
                 accessorFn: ({ device }) =>
                     `${device.definition?.model ?? ""} ${device.model_id ?? ""} ${device.definition?.vendor ?? device.manufacturer ?? ""}`,
                 cell: ({
@@ -204,7 +204,7 @@ export default function DevicesPage(): JSX.Element {
                     <>
                         <ModelLink device={device} />
                         <div className="flex flex-row gap-1">
-                            <span className="badge badge-ghost badge-sm" title={t("manufacturer")}>
+                            <span className="badge badge-ghost badge-sm" title={t(($) => $.manufacturer)}>
                                 <VendorLink device={device} />
                             </span>
                         </div>
@@ -220,13 +220,13 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "type",
                 size: 100,
-                header: t("type"),
-                accessorFn: ({ device }) => t(device.type),
+                header: t(($) => $.type),
+                accessorFn: ({ device }) => t(($) => $[device.type]),
                 cell: ({
                     row: {
                         original: { device },
                     },
-                }) => t(device.type),
+                }) => t(($) => $[device.type]),
                 filterFn: "equals",
                 meta: {
                     filterVariant: "select",
@@ -236,7 +236,7 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "lqi",
                 size: 70,
-                header: t("lqi"),
+                header: t(($) => $.lqi),
                 accessorFn: ({ state }) => state.linkquality,
                 cell: ({
                     row: {
@@ -251,7 +251,7 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "last_seen",
                 size: 120,
-                header: t("last_seen"),
+                header: t(($) => $.last_seen),
                 accessorFn: ({ sourceIdx, state }) => {
                     const lastTs = getLastSeenEpoch(state.last_seen, bridgeInfo[sourceIdx].config.advanced.last_seen);
 
@@ -275,16 +275,23 @@ export default function DevicesPage(): JSX.Element {
                 filterFn: "inNumberRange",
                 meta: {
                     filterVariant: "range",
-                    tooltip: t("common:last_seen_filter_info"),
+                    tooltip: t(($) => $.last_seen_filter_info, { ns: "common" }),
                 },
             },
             {
                 id: "availability",
                 size: 125,
-                header: t("availability:availability"),
+                header: t(($) => $.availability, { ns: "availability" }),
                 accessorFn: ({ sourceIdx, availabilityState, availabilityEnabledForDevice, device }) =>
                     t(
-                        `availability:${device.disabled ? "disabled" : (availabilityEnabledForDevice ?? bridgeInfo[sourceIdx].config.availability.enabled) ? availabilityState : "disabled"}`,
+                        ($) =>
+                            $.availability[
+                                device.disabled
+                                    ? "disabled"
+                                    : (availabilityEnabledForDevice ?? bridgeInfo[sourceIdx].config.availability.enabled)
+                                      ? availabilityState
+                                      : "disabled"
+                            ],
                     ),
                 cell: ({
                     row: {
@@ -309,7 +316,7 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "power_source",
                 size: 100,
-                header: t("power_source"),
+                header: t(($) => $.power_source),
                 accessorFn: ({ device }) => device.power_source,
                 filterFn: "equals",
                 meta: {
@@ -320,7 +327,7 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "battery_level",
                 size: 100,
-                header: t("battery_level"),
+                header: t(($) => $.battery_level),
                 accessorFn: ({ state }) => state.battery ?? undefined,
                 cell: ({
                     row: {
@@ -335,7 +342,7 @@ export default function DevicesPage(): JSX.Element {
             {
                 id: "battery_low",
                 size: 100,
-                header: t("battery_low"),
+                header: t(($) => $.battery_low),
                 accessorFn: ({ batteryLow }) => batteryLow,
                 cell: ({
                     row: {
@@ -351,7 +358,7 @@ export default function DevicesPage(): JSX.Element {
                 // allows including/excluding with string+select
                 id: "disabled",
                 size: 100,
-                header: t("common:disabled"),
+                header: t(($) => $.disabled, { ns: "common" }),
                 accessorFn: ({ device }) => `${Boolean(device.disabled)}`,
                 filterFn: "equals",
                 meta: {

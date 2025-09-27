@@ -252,7 +252,8 @@
         "machine": "Kone",
         "node_version": "Node-versio",
         "version": "Versio",
-        "health": "Terveys"
+        "health": "Terveys",
+        "download_z2m_backup": "Lataa Zigbee2MQTT-varmuuskopio"
     },
     "health": {
         "awaiting_next_check": "Odottaa seuraavaa tarkistusta",
@@ -429,6 +430,12 @@
         "show_definition": "Näytä määritelmä",
         "hide_definition": "Piilota määritelmä"
     },
+    "contribute": {
+        "donation_text": "Täällä voit kiittää meitä tehdystä työstä. Myös ystävälliset sanat ovat tervetulleita ;)",
+        "development": "Kehitys",
+        "contributing": "Täältä löydät tiedot, miten voit osallistua tähän projektiin",
+        "translation": "Käännös"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant -integraatio (MQTT discovery)",
         "homeassistant-enabled": "Ota integraatio käyttöön",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Nimi Home Assistantissa",
         "definitions-group-qos": "Ryhmän QoS",
         "definitions-group-off_state": "Milloin julkaista OFF/CLOSE"
-    },
-    "contribute": {
-        "donation_text": "Täällä voit kiittää meitä tehdystä työstä. Myös ystävälliset sanat ovat tervetulleita ;)",
-        "development": "Kehitys",
-        "contributing": "Täältä löydät tiedot, miten voit osallistua tähän projektiin",
-        "translation": "Käännös"
     }
 }

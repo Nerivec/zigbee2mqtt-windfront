@@ -28,7 +28,7 @@ const DeviceControlEditName = memo(({ sourceIdx, name, homeassistantEnabled, sty
                     homeassistantEnabled,
                 })
             }
-            title={t("rename_device")}
+            title={t(($) => $.rename_device)}
         >
             <FontAwesomeIcon icon={faEdit} />
         </Button>

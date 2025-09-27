@@ -252,7 +252,8 @@
         "machine": "机器",
         "node_version": "Node 版本",
         "version": "版本",
-        "health": "健康"
+        "health": "健康",
+        "download_z2m_backup": "下载 Zigbee2MQTT 备份"
     },
     "health": {
         "awaiting_next_check": "等待下次检查",
@@ -429,6 +430,12 @@
         "show_definition": "显示定义",
         "hide_definition": "隐藏定义"
     },
+    "contribute": {
+        "donation_text": "欢迎在此对我们的付出表示感谢，也欢迎留下鼓励的话语；)",
+        "development": "开发",
+        "contributing": "在这里可以找到如何为本项目做出贡献的信息",
+        "translation": "翻译"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant 集成 (MQTT 发现)",
         "homeassistant-enabled": "启用 Home Assistant 集成",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Home Assistant 名称",
         "definitions-group-qos": "分组 QoS",
         "definitions-group-off_state": "发布分组 OFF/CLOSE 时机"
-    },
-    "contribute": {
-        "donation_text": "欢迎在此对我们的付出表示感谢，也欢迎留下鼓励的话语；)",
-        "development": "开发",
-        "contributing": "在这里可以找到如何为本项目做出贡献的信息",
-        "translation": "翻译"
     }
 }

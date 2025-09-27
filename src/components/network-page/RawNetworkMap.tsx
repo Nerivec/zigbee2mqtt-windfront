@@ -129,7 +129,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                 parentFriendlyName = child ? map.nodes.find((n) => n.ieeeAddr === child!.target.ieeeAddr)?.friendlyName : undefined;
 
                 if (parentFriendlyName) {
-                    parentFriendlyName += ` - ${t("children")}`;
+                    parentFriendlyName += ` - ${t(($) => $.children)}`;
                 }
             }
 

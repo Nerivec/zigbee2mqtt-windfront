@@ -12,7 +12,7 @@ const SourceSwitcher = memo(({ currentValue, onChange, className }: SourceSwitch
 
     return (
         <select className={`${className} select select-sm w-auto`} value={currentValue ?? ""} onChange={onChange}>
-            <option value="">{t("all_sources")}</option>
+            <option value="">{t(($) => $.all_sources)}</option>
             {API_NAMES.map((name, idx) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: static indexes
                 <option key={`${name}-${idx}`} value={`${idx} ${name}`}>

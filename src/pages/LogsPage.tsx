@@ -74,7 +74,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
             <div className="flex flex-row flex-wrap gap-3 items-top">
                 <SelectField
                     name="log_level"
-                    label={t("common:show_only")}
+                    label={t(($) => $.show_only, { ns: "common" })}
                     value={logLevel}
                     onChange={(e) => setLogLevel(e.target.value)}
                     className="select select-sm"
@@ -89,17 +89,17 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                     ))}
                 </SelectField>
                 <fieldset className="fieldset">
-                    <legend className="fieldset-legend">{t("filter_by_text")}</legend>
+                    <legend className="fieldset-legend">{t(($) => $.filter_by_text)}</legend>
                     <div className="join">
                         <label className="input input-sm w-64 join-item">
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
-                            <DebouncedInput onChange={setSearchTerm} placeholder={t("common:search")} value={searchTerm} />
+                            <DebouncedInput onChange={setSearchTerm} placeholder={t(($) => $.search, { ns: "common" })} value={searchTerm} />
                         </label>
                         <Button
                             item=""
                             onClick={setSearchTerm}
                             className="btn btn-sm btn-square btn-warning btn-outline join-item"
-                            title={t("common:clear")}
+                            title={t(($) => $.clear, { ns: "common" })}
                             disabled={searchTerm.length === 0}
                         >
                             <FontAwesomeIcon icon={faClose} />
@@ -108,7 +108,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                 </fieldset>
                 <CheckboxField
                     name="highlight_only"
-                    label={t("highlight_only")}
+                    label={t(($) => $.highlight_only)}
                     checked={highlightOnly}
                     onChange={(e) => setHighlightOnly(e.target.checked)}
                     className="checkbox checkbox-sm"
@@ -121,13 +121,13 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                         disabled={logs.length === 0}
                     >
                         <FontAwesomeIcon icon={faTrashCan} />
-                        {t("common:clear")}
+                        {t(($) => $.clear, { ns: "common" })}
                     </Button>
                 </fieldset>
                 <div className="ml-auto flex flex-row gap-3">
                     <SelectField
                         name="log_limit"
-                        label={t("logs_limit")}
+                        label={t(($) => $.logs_limit)}
                         onChange={(e) => {
                             setLogsLimit(Number.parseInt(e.target.value, 10));
                         }}
@@ -142,7 +142,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                     </SelectField>
                     <SelectField
                         name="log_level_config"
-                        label={t("log_level_config")}
+                        label={t(($) => $.log_level_config)}
                         value={logLevelConfig}
                         onChange={(e) => !e.target.validationMessage && setLogLevelConfig(e.target.value)}
                         className="select select-sm"
@@ -168,7 +168,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                 ) : (
                     <pre data-prefix="~">
                         <code>
-                            [{new Date().toLocaleString()}] {t("empty_logs_message")}
+                            [{new Date().toLocaleString()}] {t(($) => $.empty_logs_message)}
                         </code>
                     </pre>
                 )}
@@ -210,12 +210,12 @@ export default function LogsPage() {
                             <ConfirmButton<void>
                                 onClick={clearAllLogs}
                                 className="btn btn-sm btn-outline btn-warning btn-primary"
-                                title={t("common:clear_all")}
-                                modalDescription={t("common:dialog_confirmation_prompt")}
-                                modalCancelLabel={t("common:cancel")}
+                                title={t(($) => $.clear_all, { ns: "common" })}
+                                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                             >
                                 <FontAwesomeIcon icon={faTrashCan} />
-                                {t("common:clear_all")}
+                                {t(($) => $.clear_all, { ns: "common" })}
                             </ConfirmButton>
                         </div>
                     </div>

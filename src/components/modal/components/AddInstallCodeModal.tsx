@@ -30,11 +30,11 @@ export const AddInstallCodeModal = NiceModal.create((props: AddInstallCodeModalP
     return (
         <Modal
             isOpen={modal.visible}
-            title={t("add_install_code")}
+            title={t(($) => $.add_install_code)}
             footer={
                 <>
                     <Button className="btn btn-neutral" onClick={modal.remove}>
-                        {t("common:cancel")}
+                        {t(($) => $.cancel, { ns: "common" })}
                     </Button>
                     <Button
                         className="btn btn-primary ms-1"
@@ -45,7 +45,7 @@ export const AddInstallCodeModal = NiceModal.create((props: AddInstallCodeModalP
                             }
                         }}
                     >
-                        {t("add_install_code")}
+                        {t(($) => $.add_install_code)}
                     </Button>
                 </>
             }
@@ -53,7 +53,7 @@ export const AddInstallCodeModal = NiceModal.create((props: AddInstallCodeModalP
             <div className="flex flex-col gap-2">
                 <InputField
                     name="install_code"
-                    label={t("install_code")}
+                    label={t(($) => $.install_code)}
                     onChange={(e) => setCode(e.target.value)}
                     value={code}
                     type="text"

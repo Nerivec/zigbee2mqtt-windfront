@@ -39,7 +39,7 @@ const EnumEditor = memo((props: EnumProps) => {
     return minimal ? (
         <select className="select" onChange={onSelectChange} value={(primitiveValue ? value : value?.value) ?? ""}>
             <option value="" disabled>
-                {t("select_value")}
+                {t(($) => $.select_value)}
             </option>
             {values.map((v) => {
                 const primitive = isPrimitive(v);

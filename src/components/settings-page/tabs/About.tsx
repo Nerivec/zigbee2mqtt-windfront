@@ -66,13 +66,13 @@ process.uptime_sec: \`${Math.round(bridgeHealth.process.uptime_sec)}\`
             to={`${Z2M_NEW_GITHUB_ISSUE_URL}?${new URLSearchParams(githubUrlParams).toString()}`}
             className="btn btn-ghost"
         >
-            {t("report_problem")}
+            {t(($) => $.report_problem)}
         </Link>
     );
 });
 
 export default function About({ sourceIdx }: AboutProps) {
-    const { t } = useTranslation(["settings", "common"]);
+    const { t } = useTranslation(["settings", "common", "zigbee"]);
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
 
@@ -121,7 +121,7 @@ export default function About({ sourceIdx }: AboutProps) {
             <div className="stats stats-vertical lg:stats-horizontal shadow">
                 {MULTI_INSTANCE && (
                     <div className="stat place-items-center">
-                        <div className="stat-title">{t("common:source")}</div>
+                        <div className="stat-title">{t(($) => $.source, { ns: "common" })}</div>
                         <div className="stat-value text-xl">
                             <SourceDot idx={sourceIdx} alwaysShowName />
                         </div>
@@ -129,41 +129,41 @@ export default function About({ sourceIdx }: AboutProps) {
                     </div>
                 )}
                 <div className="stat place-items-center">
-                    <div className="stat-title">{t("zigbee2mqtt_version")}</div>
+                    <div className="stat-title">{t(($) => $.zigbee2mqtt_version)}</div>
                     <div className="stat-value text-lg">{zigbee2mqttVersion}</div>
                     <div className="stat-desc">{zigbee2mqttCommit}</div>
                 </div>
                 <div className="stat place-items-center">
-                    <div className="stat-title">{t("frontend_version")}</div>
+                    <div className="stat-title">{t(($) => $.frontend_version)}</div>
                     <div className="stat-value text-lg">{frontendVersion}</div>
                 </div>
                 <div className="stat place-items-center">
-                    <div className="stat-title">{t("zigbee_herdsman_converters_version")}</div>
+                    <div className="stat-title">{t(($) => $.zigbee_herdsman_converters_version)}</div>
                     <div className="stat-value text-lg">{zhcVersion}</div>
                 </div>
                 <div className="stat place-items-center">
-                    <div className="stat-title">{t("zigbee_herdsman_version")}</div>
+                    <div className="stat-title">{t(($) => $.zigbee_herdsman_version)}</div>
                     <div className="stat-value text-lg">{zhVersion}</div>
                 </div>
             </div>
             <div className="stats stats-vertical lg:stats-horizontal shadow">
                 <div className="stat place-items-center">
-                    <div className="stat-title">{t("machine")}</div>
+                    <div className="stat-title">{t(($) => $.machine)}</div>
                     <div className="stat-value text-lg max-w-md whitespace-normal">{bridgeInfo.os.version}</div>
                     <div className="stat-desc">CPU: {bridgeInfo.os.cpus}</div>
                     <div className="stat-desc">RAM: {bridgeInfo.os.memory_mb} MB</div>
                 </div>
                 <div className="stat place-items-center">
-                    <div className="stat-title">{t("mqtt")}</div>
+                    <div className="stat-title">{t(($) => $.mqtt)}</div>
                     <div className="stat-value text-lg">{bridgeInfo.mqtt.server}</div>
                     <div className="stat-desc">
                         <a href={MQTT_SPEC_URL} target="_blank" rel="noreferrer" className="link link-hover">
-                            {t("version")}: {bridgeInfo.mqtt.version}
+                            {t(($) => $.version)}: {bridgeInfo.mqtt.version}
                         </a>
                     </div>
                 </div>
                 <div className="stat place-items-center">
-                    <div className="stat-title">{t("node_version")}</div>
+                    <div className="stat-title">{t(($) => $.node_version)}</div>
                     <div className="stat-value text-lg">
                         <a href={NODEJS_RELEASE_URL} target="_blank" rel="noreferrer" className="link link-hover">
                             {bridgeInfo.os.node_version}
@@ -171,22 +171,22 @@ export default function About({ sourceIdx }: AboutProps) {
                     </div>
                 </div>
                 <div className="stat place-items-center">
-                    <div className="stat-title">{t("coordinator")}</div>
+                    <div className="stat-title">{t(($) => $.coordinator)}</div>
                     <div className="stat-value text-lg">{bridgeInfo.coordinator.type}</div>
                     <div className="stat-desc">
-                        <span className="badge badge-sm badge-primary" title={t("coordinator_ieee_address")}>
+                        <span className="badge badge-sm badge-primary" title={t(($) => $.coordinator_ieee_address)}>
                             {bridgeInfo.coordinator.ieee_address}
                         </span>
                     </div>
                     <div className="stat-desc">
-                        {t("revision")}: {bridgeInfo.coordinator.meta.revision || t("zigbee:unknown")}
+                        {t(($) => $.revision)}: {bridgeInfo.coordinator.meta.revision || t(($) => $.unknown, { ns: "zigbee" })}
                     </div>
                 </div>
             </div>
             <ul className="menu bg-base-100 rounded-box shadow min-w-sm">
                 <li>
                     <details open>
-                        <summary>{t("stats")}</summary>
+                        <summary>{t(($) => $.stats)}</summary>
                         <Stats devices={devices} />
                     </details>
                 </li>

@@ -12,22 +12,22 @@ const BooleanValueView = memo((props: DisplayValueProps) => {
 
     switch (name) {
         case "contact": {
-            return value ? t("closed") : t("open");
+            return value ? t(($) => $.closed) : t(($) => $.open);
         }
         case "occupancy": {
-            return value ? t("occupied") : t("clear");
+            return value ? t(($) => $.occupied) : t(($) => $.clear);
         }
         case "water_leak": {
-            return value ? <span className="text-error animate-pulse">{t("leaking")}</span> : t("clear");
+            return value ? <span className="text-error animate-pulse">{t(($) => $.leaking)}</span> : t(($) => $.clear);
         }
         case "tamper": {
-            return value ? <span className="text-error animate-pulse">{t("tampered")}</span> : t("clear");
+            return value ? <span className="text-error animate-pulse">{t(($) => $.tampered)}</span> : t(($) => $.clear);
         }
         case "supported": {
-            return value ? t("supported") : t("not_supported");
+            return value ? t(($) => $.supported) : t(($) => $.not_supported);
         }
         default: {
-            return value ? t("true") : t("false");
+            return value ? t(($) => $.true) : t(($) => $.false);
         }
     }
 });
@@ -42,9 +42,9 @@ const DisplayValue = memo((props: DisplayValueProps) => {
         case "undefined":
             return "N/A";
         case "object":
-            return value === null ? t("null") : JSON.stringify(value);
+            return value === null ? t(($) => $.null) : JSON.stringify(value);
         case "string":
-            return value === "" ? <span className="text-xs opacity-50">{t("empty_string")}</span> : value;
+            return value === "" ? <span className="text-xs opacity-50">{t(($) => $.empty_string)}</span> : value;
         default:
             return JSON.stringify(value);
     }

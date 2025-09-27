@@ -17,25 +17,25 @@ type DeviceImageProps = {
 };
 
 const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
-    const { t } = useTranslation("zigbee");
+    const { t } = useTranslation(["zigbee", "common"]);
     const { device = {} as Device, disabled, otaState, className, noIndicator } = props;
 
     const interviewState = useMemo(
         () =>
             device.interview_state === InterviewState.InProgress ? (
-                <span title={t("interviewing")}>
+                <span title={t(($) => $.interviewing)}>
                     <FontAwesomeIcon icon={faSpinner} spin className="indicator-item indicator-bottom indicator-end text-info" />
                 </span>
             ) : device.interview_state === InterviewState.Failed ? (
-                <span title={t("interview_failed")}>
+                <span title={t(($) => $.interview_failed)}>
                     <FontAwesomeIcon icon={faExclamationTriangle} beat className="indicator-item indicator-bottom indicator-end text-error" />
                 </span>
             ) : device.definition?.source === "generated" ? (
-                <span title={t("unsupported")}>
+                <span title={t(($) => $.unsupported)}>
                     <FontAwesomeIcon icon={faQuestionCircle} beat className="indicator-item indicator-bottom indicator-end text-warning" />
                 </span>
             ) : device.definition?.source === "external" ? (
-                <span title={t("unsupported")}>
+                <span title={t(($) => $.unsupported)}>
                     <FontAwesomeIcon icon={faSquareArrowUpRight} className="indicator-item indicator-bottom indicator-end text-info" />
                 </span>
             ) : null,
@@ -50,13 +50,13 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
                 ) : (
                     <div className="indicator w-full">
                         {otaState === "updating" && (
-                            <span title={t("updating_firmware")}>
+                            <span title={t(($) => $.updating_firmware)}>
                                 <FontAwesomeIcon icon={faSync} spin className="indicator-item indicator-top indicator-end text-info" />
                             </span>
                         )}
                         {interviewState}
                         {disabled && (
-                            <span title={t("common:disabled")}>
+                            <span title={t(($) => $.disabled, { ns: "common" })}>
                                 <FontAwesomeIcon icon={faBan} className="indicator-item indicator-middle indicator-center text-error" size="2xl" />
                             </span>
                         )}

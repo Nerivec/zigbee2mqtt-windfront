@@ -34,11 +34,11 @@ const AddDeviceToGroup = memo(({ sourceIdx, devices, group }: AddDeviceToGroupPr
 
     return (
         <>
-            <h2 className="text-lg font-semibold">{t("add_to_group_header")}</h2>
+            <h2 className="text-lg font-semibold">{t(($) => $.add_to_group_header)}</h2>
             <div className="mb-3">
-                <DevicePicker label={t("zigbee:device")} value={deviceIeee} devices={devices} onChange={onDeviceChange} />
+                <DevicePicker label={t(($) => $.device, { ns: "zigbee" })} value={deviceIeee} devices={devices} onChange={onDeviceChange} />
                 <EndpointPicker
-                    label={t("zigbee:endpoint")}
+                    label={t(($) => $.endpoint, { ns: "zigbee" })}
                     values={endpoints}
                     value={endpoint}
                     onChange={(e) => setEndpoint(e)}
@@ -46,7 +46,7 @@ const AddDeviceToGroup = memo(({ sourceIdx, devices, group }: AddDeviceToGroupPr
                 />
             </div>
             <Button<void> onClick={onAddClick} className="btn btn-primary" disabled={endpoint == null || endpoint === "" || !deviceIeee}>
-                {t("add_to_group")}
+                {t(($) => $.add_to_group)}
             </Button>
         </>
     );

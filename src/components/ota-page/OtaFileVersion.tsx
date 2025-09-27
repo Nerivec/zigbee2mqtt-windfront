@@ -15,10 +15,10 @@ const OtaFileVersion = memo(({ version }: OtaFileVersionProps) => {
     ) : (
         <div className="flex flex-col">
             <span>
-                {t("app")}: {`${versions[0]} build ${versions[1]}`}
+                {t(($) => $.app)}: {`${versions[0]} build ${versions[1]}`}
             </span>
             <span>
-                {t("stack")}: {`${versions[2]} build ${versions[3]}`}
+                {t(($) => $.stack)}: {`${versions[2]} build ${versions[3]}`}
             </span>
         </div>
     );

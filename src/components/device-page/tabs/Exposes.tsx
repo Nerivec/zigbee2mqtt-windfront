@@ -57,6 +57,6 @@ export default function Exposes({ sourceIdx, device }: ExposesProps) {
             ))}
         </div>
     ) : (
-        t("empty_exposes_definition")
+        t(($) => $.empty_exposes_definition)
     );
 }

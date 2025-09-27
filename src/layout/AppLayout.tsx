@@ -44,15 +44,15 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
 
     const links = useMemo(
         () => [
-            { to: "/dashboard", icon: faTableColumns, title: t("dashboard") },
-            { to: "/devices", icon: faPlug, title: t("devices") },
-            { to: "/groups", icon: faTableCellsLarge, title: t("groups") },
-            { to: "/ota", icon: faCloudArrowUp, title: t("ota") },
-            { to: "/touchlink", icon: faMobileVibrate, title: t("touchlink") },
-            { to: "/network", icon: faHexagonNodes, title: t("network") },
-            { to: "/logs", icon: faList, title: t("logs") },
-            { to: "/settings", icon: faCogs, title: t("settings") },
-            { to: "/frontend-settings", icon: faDisplay, title: t("frontend_settings") },
+            { to: "/dashboard", icon: faTableColumns, title: t(($) => $.dashboard) },
+            { to: "/devices", icon: faPlug, title: t(($) => $.devices) },
+            { to: "/groups", icon: faTableCellsLarge, title: t(($) => $.groups) },
+            { to: "/ota", icon: faCloudArrowUp, title: t(($) => $.ota) },
+            { to: "/touchlink", icon: faMobileVibrate, title: t(($) => $.touchlink) },
+            { to: "/network", icon: faHexagonNodes, title: t(($) => $.network) },
+            { to: "/logs", icon: faList, title: t(($) => $.logs) },
+            { to: "/settings", icon: faCogs, title: t(($) => $.settings) },
+            { to: "/frontend-settings", icon: faDisplay, title: t(($) => $.frontend_settings) },
         ],
         [t],
     );
@@ -148,7 +148,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                                 <li className="">
                                     <NavLink to="/contribute" className="btn btn-sm btn-outline btn-secondary" onClick={onSidebarLinkClick}>
                                         <FontAwesomeIcon icon={faHeart} />
-                                        {t("contribute")}
+                                        {t(($) => $.contribute)}
                                     </NavLink>
                                 </li>
                             </ul>

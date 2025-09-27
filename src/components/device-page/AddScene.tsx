@@ -57,11 +57,11 @@ const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
 
     return (
         <>
-            <h2 className="text-lg font-semibold">{t("add_update_header")}</h2>
+            <h2 className="text-lg font-semibold">{t(($) => $.add_update_header)}</h2>
             <div className="mb-3">
                 <InputField
                     name="scene_id"
-                    label={t("scene_id")}
+                    label={t(($) => $.scene_id)}
                     type="number"
                     value={sceneId}
                     onChange={(e) => !!e.target.value && setSceneId(e.target.valueAsNumber)}
@@ -71,7 +71,7 @@ const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
                 />
                 <InputField
                     name="scene_name"
-                    label={t("scene_name")}
+                    label={t(($) => $.scene_name)}
                     type="text"
                     value={sceneName}
                     placeholder={`Scene ${sceneId}`}
@@ -98,7 +98,7 @@ const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
                 )}
             </div>
             <Button disabled={!isValidSceneId} onClick={onStoreClick} className="btn btn-primary">
-                {t("store")}
+                {t(($) => $.store)}
             </Button>
         </>
     );

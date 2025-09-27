@@ -50,7 +50,7 @@ export default function FeatureSubFeatures({
 }: FeatureSubFeaturesProps) {
     const { type, property } = feature;
     const [state, setState] = useState<CompositeState>({});
-    const { t } = useTranslation(["composite", "common"]);
+    const { t } = useTranslation("common");
     const combinedState = useMemo(() => ({ ...deviceState, ...state }), [deviceState, state]);
     const features = ("features" in feature && feature.features) || [];
     const isRoot = isFeatureRoot(type, parentFeatures);
@@ -114,7 +114,7 @@ export default function FeatureSubFeatures({
             {isRoot && (
                 <div className="self-end float-right">
                     <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply}>
-                        {t("common:apply")}
+                        {t(($) => $.apply)}
                     </Button>
                 </div>
             )}

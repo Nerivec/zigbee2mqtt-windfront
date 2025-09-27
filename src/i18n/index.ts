@@ -23,11 +23,10 @@ import timeRu from "timeago.js/lib/lang/ru.js";
 import timeSv from "timeago.js/lib/lang/sv.js";
 import timeTr from "timeago.js/lib/lang/tr.js";
 import timeUa from "timeago.js/lib/lang/uk.js";
-import timeChs from "timeago.js/lib/lang/zh_CN.js";
+import timeZhCn from "timeago.js/lib/lang/zh_CN.js";
 import timeZh from "timeago.js/lib/lang/zh_TW.js";
 import bgTranslations from "./locales/bg.json" with { type: "json" };
 import caTranslations from "./locales/ca.json" with { type: "json" };
-import chsTranslations from "./locales/chs.json" with { type: "json" };
 import csTranslations from "./locales/cs.json" with { type: "json" };
 import daTranslations from "./locales/da.json" with { type: "json" };
 import deTranslations from "./locales/de.json" with { type: "json" };
@@ -49,6 +48,7 @@ import svTranslations from "./locales/sv.json" with { type: "json" };
 import trTranslations from "./locales/tr.json" with { type: "json" };
 import uaTranslations from "./locales/ua.json" with { type: "json" };
 import zhTranslations from "./locales/zh.json" with { type: "json" };
+import zhCnTranslations from "./locales/zh-CN.json" with { type: "json" };
 
 register("bg", timeBg);
 register("ca", timeCa);
@@ -71,34 +71,34 @@ register("ru", timeRu);
 register("sv", timeSv);
 register("tr", timeTr);
 register("ua", timeUa);
-register("zh-CN", timeChs);
 register("zh", timeZh);
+register("zh-CN", timeZhCn);
 
 const resources = {
+    bg: bgTranslations as ResourceLanguage,
     ca: caTranslations as ResourceLanguage,
-    en: enTranslations as ResourceLanguage,
-    fr: frTranslations as ResourceLanguage,
-    pl: plTranslations as ResourceLanguage,
+    cs: csTranslations as ResourceLanguage,
+    da: daTranslations as ResourceLanguage,
     de: deTranslations as ResourceLanguage,
-    ru: ruTranslations as ResourceLanguage,
-    ptbr: ptbrTranslations as ResourceLanguage,
+    en: enTranslations as ResourceLanguage,
     es: esTranslations as ResourceLanguage,
-    ua: uaTranslations as ResourceLanguage,
-    "zh-CN": chsTranslations as ResourceLanguage,
-    nl: nlTranslations as ResourceLanguage,
+    eu: euTranslations as ResourceLanguage,
+    fi: fiTranslations as ResourceLanguage,
+    fr: frTranslations as ResourceLanguage,
+    hu: huTranslations as ResourceLanguage,
     it: itTranslations as ResourceLanguage,
     ja: jaTranslations as ResourceLanguage,
-    zh: zhTranslations as ResourceLanguage,
     ko: koTranslations as ResourceLanguage,
-    cs: csTranslations as ResourceLanguage,
-    fi: fiTranslations as ResourceLanguage,
+    nl: nlTranslations as ResourceLanguage,
+    no: noTranslations as ResourceLanguage,
+    pl: plTranslations as ResourceLanguage,
+    ptbr: ptbrTranslations as ResourceLanguage,
+    ru: ruTranslations as ResourceLanguage,
     sv: svTranslations as ResourceLanguage,
     tr: trTranslations as ResourceLanguage,
-    no: noTranslations as ResourceLanguage,
-    da: daTranslations as ResourceLanguage,
-    bg: bgTranslations as ResourceLanguage,
-    hu: huTranslations as ResourceLanguage,
-    eu: euTranslations as ResourceLanguage,
+    ua: uaTranslations as ResourceLanguage,
+    zh: zhTranslations as ResourceLanguage,
+    "zh-CN": zhCnTranslations as ResourceLanguage,
 } as const;
 
 const debug = process.env.NODE_ENV !== "production";
@@ -114,6 +114,7 @@ i18n.use(LanguageDetector)
         debug,
         resources,
         ns: Object.keys(enTranslations),
+        defaultNS: "common",
         interpolation: {
             escapeValue: false, // not needed for react as it escapes by default
         },

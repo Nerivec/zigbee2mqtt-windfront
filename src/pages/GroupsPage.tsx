@@ -84,7 +84,7 @@ export default function GroupsPage() {
                 id: "source",
                 size: 60,
                 header: () => (
-                    <span title={t("common:source")}>
+                    <span title={t(($) => $.source, { ns: "common" })}>
                         <FontAwesomeIcon icon={faServer} />
                     </span>
                 ),
@@ -104,7 +104,7 @@ export default function GroupsPage() {
                 id: "friendly_name",
                 size: 250,
                 minSize: 175,
-                header: t("common:friendly_name"),
+                header: t(($) => $.friendly_name, { ns: "common" }),
                 accessorFn: ({ group }) => `${group.friendly_name} ${group.description ?? ""}`,
                 cell: ({
                     row: {
@@ -133,7 +133,7 @@ export default function GroupsPage() {
             {
                 id: "group_id",
                 minSize: 175,
-                header: t("group_id"),
+                header: t(($) => $.group_id),
                 accessorFn: ({ group }) => group.id,
                 cell: ({
                     row: {
@@ -152,7 +152,7 @@ export default function GroupsPage() {
             {
                 id: "members",
                 size: 125,
-                header: t("group_members"),
+                header: t(($) => $.group_members),
                 accessorFn: ({ group }) => group.members.length ?? 0,
                 filterFn: "inNumberRange",
                 meta: {
@@ -162,7 +162,7 @@ export default function GroupsPage() {
             {
                 id: "scenes",
                 size: 125,
-                header: t("group_scenes"),
+                header: t(($) => $.group_scenes),
                 accessorFn: ({ group }) => group.scenes.length ?? 0,
                 filterFn: "inNumberRange",
                 meta: {
@@ -187,18 +187,18 @@ export default function GroupsPage() {
                                     onRename: onRenameClick,
                                 })
                             }
-                            title={t("rename_group")}
+                            title={t(($) => $.rename_group)}
                             disabled={group.friendly_name === "default_bind_group"}
                         >
                             <FontAwesomeIcon icon={faEdit} />
                         </Button>
                         <ConfirmButton<[number, string]>
-                            title={t("remove_group")}
+                            title={t(($) => $.remove_group)}
                             item={[sourceIdx, group.id.toString()]}
                             onClick={onRemoveClick}
                             className="btn btn-sm btn-square btn-outline btn-error join-item"
-                            modalDescription={t("common:dialog_confirmation_prompt")}
-                            modalCancelLabel={t("common:cancel")}
+                            modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                            modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                         >
                             <FontAwesomeIcon icon={faTrash} />
                         </ConfirmButton>
@@ -230,7 +230,7 @@ export default function GroupsPage() {
                 {MULTI_INSTANCE && (
                     <SelectField
                         name="source"
-                        label={t("common:source")}
+                        label={t(($) => $.source, { ns: "common" })}
                         value={newGroupSourceIdx}
                         required
                         onChange={(e) => !e.target.validationMessage && setNewGroupSourceIdx(Number.parseInt(e.target.value, 10))}
@@ -246,9 +246,9 @@ export default function GroupsPage() {
                 <InputField
                     type="text"
                     name="friendly_name"
-                    label={t("common:friendly_name")}
+                    label={t(($) => $.friendly_name, { ns: "common" })}
                     value={newGroupFriendlyName}
-                    placeholder={t("friendly_name_placeholder")}
+                    placeholder={t(($) => $.friendly_name_placeholder)}
                     onChange={(e) => setNewGroupFriendlyName(e.target.value)}
                     required
                     minLength={1}
@@ -257,7 +257,7 @@ export default function GroupsPage() {
                 <InputField
                     type="number"
                     name="group_id"
-                    label={t("group_id")}
+                    label={t(($) => $.group_id)}
                     value={newGroupId}
                     min={0}
                     max={255}
@@ -267,7 +267,7 @@ export default function GroupsPage() {
                 <fieldset className="fieldset self-end">
                     <Button<void> onClick={onGroupCreateSubmit} className="btn btn-outline btn-primary" disabled={!isValidNewGroup}>
                         <FontAwesomeIcon icon={faPlus} />
-                        {t("create_group")}
+                        {t(($) => $.create_group)}
                     </Button>
                 </fieldset>
             </div>

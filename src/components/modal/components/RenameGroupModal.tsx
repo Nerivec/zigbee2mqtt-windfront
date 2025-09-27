@@ -36,11 +36,11 @@ export const RenameGroupForm = NiceModal.create(({ sourceIdx, name, onRename }: 
     return (
         <Modal
             isOpen={modal.visible}
-            title={`${t("rename_group")} ${name}`}
+            title={`${t(($) => $.rename_group)} ${name}`}
             footer={
                 <>
                     <Button className="btn btn-neutral" onClick={modal.remove}>
-                        {t("common:cancel")}
+                        {t(($) => $.cancel, { ns: "common" })}
                     </Button>
                     <Button
                         className="btn btn-primary ms-1"
@@ -51,7 +51,7 @@ export const RenameGroupForm = NiceModal.create(({ sourceIdx, name, onRename }: 
                             }
                         }}
                     >
-                        {t("rename_group")}
+                        {t(($) => $.rename_group)}
                     </Button>
                 </>
             }
@@ -59,7 +59,7 @@ export const RenameGroupForm = NiceModal.create(({ sourceIdx, name, onRename }: 
             <div className="flex flex-col gap-2">
                 <InputField
                     name="friendly_name"
-                    label={t("common:friendly_name")}
+                    label={t(($) => $.friendly_name, { ns: "common" })}
                     onChange={(e) => setFriendlyName(e.target.value)}
                     value={friendlyName}
                     type="text"

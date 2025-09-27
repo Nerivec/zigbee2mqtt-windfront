@@ -252,7 +252,8 @@
         "machine": "マシン",
         "node_version": "Node バージョン",
         "version": "バージョン",
-        "health": "ヘルス"
+        "health": "ヘルス",
+        "download_z2m_backup": "Zigbee2MQTT バックアップをダウンロード"
     },
     "health": {
         "awaiting_next_check": "次の確認待ち",
@@ -429,6 +430,12 @@
         "show_definition": "定義表示",
         "hide_definition": "定義非表示"
     },
+    "contribute": {
+        "donation_text": "ここで私たちの取り組みに感謝の気持ちを伝えられます。あたたかい言葉もぜひ ;)",
+        "development": "開発",
+        "contributing": "このプロジェクトに貢献する方法の情報はこちら",
+        "translation": "翻訳"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant 連携 (MQTT discovery)",
         "homeassistant-enabled": "Home Assistant 連携を有効化",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Home Assistant におけるデバイス名",
         "definitions-group-qos": "このグループの MQTT メッセージの QoS レベル",
         "definitions-group-off_state": "グループの状態を OFF または CLOSE として公開するタイミングを制御します。'all_members_off': 全メンバーが OFF/CLOSE 状態のときのみ OFF/CLOSE を公開します。'last_member_state': いずれかのメンバーが OFF へ変化した時点で OFF を公開します。"
-    },
-    "contribute": {
-        "donation_text": "ここで私たちの取り組みに感謝の気持ちを伝えられます。あたたかい言葉もぜひ ;)",
-        "development": "開発",
-        "contributing": "このプロジェクトに貢献する方法の情報はこちら",
-        "translation": "翻訳"
     }
 }

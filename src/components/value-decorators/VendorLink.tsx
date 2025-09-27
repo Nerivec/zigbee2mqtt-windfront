@@ -10,7 +10,7 @@ type VendorLinkProps = {
 
 const VendorLink = memo(({ device }: VendorLinkProps) => {
     const { t } = useTranslation("zigbee");
-    let label = t("unsupported");
+    let label = t(($) => $.unsupported);
     let url = SUPPORT_NEW_DEVICES_DOCS_URL;
 
     if (device.supported && device.definition) {

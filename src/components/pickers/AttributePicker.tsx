@@ -65,7 +65,7 @@ const AttributePicker = memo(({ sourceIdx, cluster, device, onChange, label, ...
             {...rest}
         >
             <option value="" disabled>
-                {t("select_attribute")}
+                {t(($) => $.select_attribute)}
             </option>
             {options}
         </SelectField>

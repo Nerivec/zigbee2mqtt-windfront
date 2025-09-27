@@ -57,7 +57,7 @@ export default function FeatureWrapper({
             <div>
                 <div title={featureName}>
                     {label}
-                    {!endpointSpecific && feature.endpoint ? ` (${t("endpoint")}: ${feature.endpoint})` : ""}
+                    {!endpointSpecific && feature.endpoint ? ` (${t(($) => $.endpoint)}: ${feature.endpoint})` : ""}
                 </div>
                 <div className="text-xs font-semibold opacity-60">{feature.description}</div>
             </div>

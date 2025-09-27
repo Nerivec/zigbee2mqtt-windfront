@@ -26,7 +26,7 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                     className="btn btn-sm btn-square btn-outline btn-primary join-item"
                     onClick={onCheckClick}
                     item={[sourceIdx, device.ieee_address]}
-                    title={t("check")}
+                    title={t(($) => $.check)}
                 >
                     <FontAwesomeIcon icon={faCloudArrowDown} />
                 </Button>
@@ -34,9 +34,9 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                     className="btn btn-sm btn-square btn-outline btn-info join-item"
                     onClick={onScheduleClick}
                     item={[sourceIdx, device.ieee_address]}
-                    title={t("schedule")}
-                    modalDescription={t("schedule_info")}
-                    modalCancelLabel={t("common:cancel")}
+                    title={t(($) => $.schedule)}
+                    modalDescription={t(($) => $.schedule_info)}
+                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 >
                     <FontAwesomeIcon icon={faClock} />
                 </ConfirmButton>
@@ -52,9 +52,9 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                         className="btn btn-sm btn-square btn-outline btn-error join-item"
                         onClick={onUpdateClick}
                         item={[sourceIdx, device.ieee_address]}
-                        title={t("update")}
-                        modalDescription={t("common:dialog_confirmation_prompt")}
-                        modalCancelLabel={t("common:cancel")}
+                        title={t(($) => $.update)}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                     >
                         <FontAwesomeIcon icon={faUpload} />
                     </ConfirmButton>
@@ -62,9 +62,9 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                         className="btn btn-sm btn-square btn-outline btn-info join-item"
                         onClick={onScheduleClick}
                         item={[sourceIdx, device.ieee_address]}
-                        title={t("schedule")}
-                        modalDescription={t("schedule_info")}
-                        modalCancelLabel={t("common:cancel")}
+                        title={t(($) => $.schedule)}
+                        modalDescription={t(($) => $.schedule_info)}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                     >
                         <FontAwesomeIcon icon={faClock} />
                     </ConfirmButton>
@@ -74,9 +74,9 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                     className="btn btn-sm btn-square btn-outline btn-error join-item"
                     onClick={onUnscheduleClick}
                     item={[sourceIdx, device.ieee_address]}
-                    title={t("unschedule")}
-                    modalDescription={t("common:dialog_confirmation_prompt")}
-                    modalCancelLabel={t("common:cancel")}
+                    title={t(($) => $.unschedule)}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 >
                     <FontAwesomeIcon icon={faClockRotateLeft} />
                 </ConfirmButton>
@@ -86,7 +86,7 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                         className="btn btn-sm btn-square btn-outline btn-primary join-item"
                         onClick={onCheckClick}
                         item={[sourceIdx, device.ieee_address]}
-                        title={t("check")}
+                        title={t(($) => $.check)}
                     >
                         <FontAwesomeIcon icon={faCloudArrowDown} />
                     </Button>
@@ -94,9 +94,9 @@ const OtaControlGroup = memo(({ sourceIdx, device, state, onCheckClick, onUpdate
                         className="btn btn-sm btn-square btn-outline btn-info join-item"
                         onClick={onScheduleClick}
                         item={[sourceIdx, device.ieee_address]}
-                        title={t("schedule")}
-                        modalDescription={t("schedule_info")}
-                        modalCancelLabel={t("common:cancel")}
+                        title={t(($) => $.schedule)}
+                        modalDescription={t(($) => $.schedule_info)}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                     >
                         <FontAwesomeIcon icon={faClock} />
                     </ConfirmButton>

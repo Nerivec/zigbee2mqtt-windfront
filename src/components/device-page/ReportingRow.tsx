@@ -97,7 +97,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
         <>
             <div className="flex flex-row flex-wrap gap-2">
                 <EndpointPicker
-                    label={t("endpoint")}
+                    label={t(($) => $.endpoint)}
                     disabled={!rule.isNew}
                     values={sourceEndpoints}
                     value={stateRule.endpoint}
@@ -105,7 +105,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     required
                 />
                 <ClusterSinglePicker
-                    label={t("cluster")}
+                    label={t(($) => $.cluster)}
                     disabled={!stateRule.endpoint}
                     clusters={clusters}
                     value={stateRule.cluster}
@@ -114,7 +114,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                 />
                 <AttributePicker
                     sourceIdx={sourceIdx}
-                    label={t("attribute")}
+                    label={t(($) => $.attribute)}
                     disabled={!stateRule.cluster}
                     value={stateRule.attribute}
                     cluster={stateRule.cluster}
@@ -124,7 +124,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                 />
                 <InputField
                     name="minimum_report_interval"
-                    label={t("min_rep_interval")}
+                    label={t(($) => $.min_rep_interval)}
                     type="number"
                     value={stateRule.minimum_report_interval}
                     onChange={onReportNumberChange}
@@ -133,7 +133,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                 />
                 <InputField
                     name="maximum_report_interval"
-                    label={t("max_rep_interval")}
+                    label={t(($) => $.max_rep_interval)}
                     type="number"
                     value={stateRule.maximum_report_interval}
                     onChange={onReportNumberChange}
@@ -142,7 +142,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                 />
                 <InputField
                     name="reportable_change"
-                    label={t("min_rep_change")}
+                    label={t(($) => $.min_rep_change)}
                     type="number"
                     value={stateRule.reportable_change}
                     onChange={onReportNumberChange}
@@ -150,7 +150,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     className="input validator max-w-48"
                 />
                 <fieldset className="fieldset">
-                    <legend className="fieldset-legend">{t("actions")}</legend>
+                    <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
                     <div className="join join-horizontal">
                         <Button<NiceReportingRule>
                             className="btn btn-primary btn-outline join-item"
@@ -158,17 +158,17 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                             onClick={onApply}
                             disabled={!isValidRule}
                         >
-                            {t("common:apply")}
+                            {t(($) => $.apply, { ns: "common" })}
                         </Button>
                         {!stateRule.isNew ? (
                             <ConfirmButton<void>
-                                title={t("common:disable")}
+                                title={t(($) => $.disable, { ns: "common" })}
                                 className="btn btn-error btn-outline join-item"
                                 onClick={onDisableRuleClick}
-                                modalDescription={t("common:dialog_confirmation_prompt")}
-                                modalCancelLabel={t("common:cancel")}
+                                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                             >
-                                {t("common:disable")}
+                                {t(($) => $.disable, { ns: "common" })}
                             </ConfirmButton>
                         ) : null}
                     </div>

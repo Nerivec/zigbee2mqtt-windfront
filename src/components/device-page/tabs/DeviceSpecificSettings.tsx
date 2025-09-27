@@ -39,6 +39,6 @@ export default function DeviceSpecificSettings({ sourceIdx, device }: DeviceSpec
             ))}
         </div>
     ) : (
-        t("empty_exposes_definition")
+        t(($) => $.empty_exposes_definition)
     );
 }

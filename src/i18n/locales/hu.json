@@ -252,7 +252,8 @@
         "machine": "Gép",
         "node_version": "Node verzió",
         "version": "Verzió",
-        "health": "Állapot"
+        "health": "Állapot",
+        "download_z2m_backup": "Zigbee2MQTT biztonsági mentés letöltése"
     },
     "health": {
         "awaiting_next_check": "Következő ellenőrzésre vár",
@@ -429,6 +430,12 @@
         "show_definition": "Definíció megjelenítés",
         "hide_definition": "Definíció elrejtés"
     },
+    "contribute": {
+        "donation_text": "Itt megköszönheted a munkánkat. Egy kedves szó is mindig jól esik ;)",
+        "development": "Fejlesztés",
+        "contributing": "Itt találsz információt, hogyan tudsz hozzájárulni ehhez a projekthez",
+        "translation": "Fordítás"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant integráció (MQTT discovery)",
         "homeassistant-enabled": "Integráció engedélyezése",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Név Home Assistant",
         "definitions-group-qos": "Csoport QoS",
         "definitions-group-off_state": "Csoport OFF/CLOSE publikálás ideje"
-    },
-    "contribute": {
-        "donation_text": "Itt megköszönheted a munkánkat. Egy kedves szó is mindig jól esik ;)",
-        "development": "Fejlesztés",
-        "contributing": "Itt találsz információt, hogyan tudsz hozzájárulni ehhez a projekthez",
-        "translation": "Fordítás"
     }
 }

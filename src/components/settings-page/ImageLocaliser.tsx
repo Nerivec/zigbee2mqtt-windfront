@@ -40,7 +40,7 @@ async function downloadImage(imageSrc: string): Promise<string> {
 export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
     const [currentState, setCurrentState] = useState<LocaliserState>("none");
     const [localisationStatus, setLocalisationStatus] = useState<Record<string, LStatus>>({});
-    const { t } = useTranslation("settings");
+    const { t } = useTranslation(["settings", "common", "zigbee"]);
 
     const localiseImage = useCallback(
         async (device: Device) => {
@@ -80,7 +80,7 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
         case "none":
             return (
                 <Button className="btn btn-outline btn-primary join-item" onClick={() => setCurrentState("start")}>
-                    {t("localise_images")}
+                    {t(($) => $.localise_images)}
                 </Button>
             );
         case "inprogress":
@@ -93,15 +93,15 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
                                 className="flex-row justify-between items-center border-b py-0.5"
                             >
                                 {device.friendly_name}
-                                <span className="badge badge-xs">{t(`common:${localisationStatus[device.ieee_address]}`)}</span>
+                                <span className="badge badge-xs">{t(($) => $.common[localisationStatus[device.ieee_address]])}</span>
                             </li>
                         );
                     })}
                 </ul>
             );
         case "done":
-            return <div>{t("common:unknown")}</div>;
+            return <div>{t(($) => $.unknown, { ns: "zigbee" })}</div>;
     }
 
-    return <div>{t("zigbee:unknown")}</div>;
+    return <div>{t(($) => $.unknown, { ns: "zigbee" })}</div>;
 }

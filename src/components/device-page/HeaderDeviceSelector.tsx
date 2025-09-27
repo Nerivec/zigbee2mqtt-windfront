@@ -55,13 +55,18 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
             buttonChildren={
                 <>
                     {currentSourceIdx !== undefined && <SourceDot idx={currentSourceIdx} autoHide />}
-                    {currentDevice ? currentDevice.friendly_name : t("unknown_device")}
+                    {currentDevice ? currentDevice.friendly_name : t(($) => $.unknown_device)}
                 </>
             }
         >
             <label className="input min-h-10" key="search">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
-                <DebouncedInput onChange={setSearchTerm} placeholder={t("type_to_filter")} value={searchTerm} title={t("type_to_filter")} />
+                <DebouncedInput
+                    onChange={setSearchTerm}
+                    placeholder={t(($) => $.type_to_filter)}
+                    value={searchTerm}
+                    title={t(($) => $.type_to_filter)}
+                />
             </label>
             {items}
         </DialogDropdown>

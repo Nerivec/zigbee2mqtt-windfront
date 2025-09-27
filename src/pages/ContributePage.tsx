@@ -39,19 +39,19 @@ export default function ContributePage() {
         <div className="mb-3">
             <div className="flex flex-col gap-6 items-center">
                 <div className="flex flex-col gap-3 items-center">
-                    {t("donation_text")}
+                    {t(($) => $.donation_text)}
                     {DONATE_ROWS.sort(() => Math.random() - 0.5)}
                 </div>
 
-                <h2 className="text-lg font-bold">{t("development")}</h2>
-                <p>{t("contributing")}</p>
+                <h2 className="text-lg font-bold">{t(($) => $.development)}</h2>
+                <p>{t(($) => $.contributing)}</p>
                 <div className="flex flex-row flex-wrap gap-4 justify-center">
                     <a className="link link-hover link-primary" target="_blank" rel="noopener noreferrer" href={CONTRIBUTE_WINDFRONT_URL}>
                         WindFront
                         <FontAwesomeIcon icon={faExternalLink} size="lg" className="ms-1" />
                     </a>
                     <a className="link link-hover link-primary" target="_blank" rel="noopener noreferrer" href={CONTRIBUTE_TRANSLATION_URL}>
-                        {t("translation")}
+                        {t(($) => $.translation)}
                         <FontAwesomeIcon icon={faExternalLink} size="lg" className="ms-1" />
                     </a>
                 </div>

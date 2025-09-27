@@ -44,22 +44,22 @@ export const RemoveDeviceModal = NiceModal.create(({ sourceIdx, device, removeDe
     return (
         <Modal
             isOpen={modal.visible}
-            title={`${t("remove_device")} ${device.friendly_name}`}
+            title={`${t(($) => $.remove_device)} ${device.friendly_name}`}
             footer={
                 <>
                     <Button className="btn btn-neutral" onClick={modal.remove}>
-                        {t("common:cancel")}
+                        {t(($) => $.cancel, { ns: "common" })}
                     </Button>
                     <Button className="btn btn-error ms-1" onClick={onRemoveClick}>
-                        {t("common:delete")}
+                        {t(($) => $.delete, { ns: "common" })}
                     </Button>
                 </>
             }
         >
             <div className="flex flex-col gap-2">
-                <CheckboxField label={t("force_remove")} name="force" onChange={onDeviceRemovalParamChange} checked={removeParams.force} />
-                <span className="text-xs opacity-50">{t("force_remove_notice")}</span>
-                <CheckboxField label={t("block_join")} name="block" onChange={onDeviceRemovalParamChange} checked={removeParams.block} />
+                <CheckboxField label={t(($) => $.force_remove)} name="force" onChange={onDeviceRemovalParamChange} checked={removeParams.force} />
+                <span className="text-xs opacity-50">{t(($) => $.force_remove_notice)}</span>
+                <CheckboxField label={t(($) => $.block_join)} name="block" onChange={onDeviceRemovalParamChange} checked={removeParams.block} />
             </div>
         </Modal>
     );

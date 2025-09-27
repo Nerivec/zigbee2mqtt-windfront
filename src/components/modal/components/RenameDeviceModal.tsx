@@ -38,11 +38,11 @@ export const RenameDeviceModal = NiceModal.create(({ sourceIdx, homeassistantEna
     return (
         <Modal
             isOpen={modal.visible}
-            title={`${t("rename_device")} ${name}`}
+            title={`${t(($) => $.rename_device)} ${name}`}
             footer={
                 <>
                     <Button className="btn btn-neutral" onClick={modal.remove}>
-                        {t("common:cancel")}
+                        {t(($) => $.cancel, { ns: "common" })}
                     </Button>
                     <Button
                         className="btn btn-primary ms-1"
@@ -51,7 +51,7 @@ export const RenameDeviceModal = NiceModal.create(({ sourceIdx, homeassistantEna
                             await renameDevice(sourceIdx, name, friendlyName, isHASSRename);
                         }}
                     >
-                        {t("rename_device")}
+                        {t(($) => $.rename_device)}
                     </Button>
                 </>
             }
@@ -59,14 +59,14 @@ export const RenameDeviceModal = NiceModal.create(({ sourceIdx, homeassistantEna
             <div className="flex flex-col gap-2">
                 <InputField
                     name="friendly_name"
-                    label={t("common:friendly_name")}
+                    label={t(($) => $.friendly_name, { ns: "common" })}
                     onChange={(e) => setFriendlyName(e.target.value)}
                     value={friendlyName}
                     type="text"
                 />
                 {homeassistantEnabled && (
                     <CheckboxField
-                        label={t("update_Home_assistant_entity_id")}
+                        label={t(($) => $.update_Home_assistant_entity_id)}
                         name="update_Home_assistant_entity_id"
                         onChange={(e) => setIsHASSRename(e.target.checked)}
                         checked={isHASSRename}

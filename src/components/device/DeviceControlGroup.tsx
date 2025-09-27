@@ -50,9 +50,9 @@ export default function DeviceControlGroup({
                 className={`btn btn-outline btn-warning join-item btn-square ${btnClassName}`}
                 onClick={configureDevice}
                 item={[sourceIdx, device.ieee_address]}
-                title={t("reconfigure")}
-                modalDescription={t("common:dialog_confirmation_prompt")}
-                modalCancelLabel={t("common:cancel")}
+                title={t(($) => $.reconfigure)}
+                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 disabled={disableInterview}
             >
                 <FontAwesomeIcon icon={faRetweet} />
@@ -61,9 +61,9 @@ export default function DeviceControlGroup({
                 className={`btn btn-outline btn-info join-item btn-square ${btnClassName}`}
                 onClick={interviewDevice}
                 item={[sourceIdx, device.ieee_address]}
-                title={t("interview")}
-                modalDescription={t("common:dialog_confirmation_prompt")}
-                modalCancelLabel={t("common:cancel")}
+                title={t(($) => $.interview)}
+                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 disabled={disableInterview}
             >
                 <FontAwesomeIcon icon={faInfo} />
@@ -71,7 +71,7 @@ export default function DeviceControlGroup({
             <Button<void>
                 onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
                 className={`btn btn-outline btn-error join-item btn-square ${btnClassName}`}
-                title={t("remove_device")}
+                title={t(($) => $.remove_device)}
             >
                 <FontAwesomeIcon icon={faTrash} />
             </Button>

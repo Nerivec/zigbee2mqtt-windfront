@@ -34,7 +34,7 @@ const PowerSource = memo((props: PowerSourceProps) => {
 
     switch (source) {
         case "Battery": {
-            let title = t("battery");
+            let title = t(($) => $.battery);
             let batteryFormatted = "";
             let batteryIcon = faBatteryFull;
             let fade = false;
@@ -81,7 +81,7 @@ const PowerSource = memo((props: PowerSourceProps) => {
             }
 
             if (batteryFormatted !== "") {
-                title += `, ${t("power_level")}: ${batteryFormatted}`;
+                title += `, ${t(($) => $.power_level)}: ${batteryFormatted}`;
             }
 
             return (
@@ -94,18 +94,18 @@ const PowerSource = memo((props: PowerSourceProps) => {
         case "Mains (single phase)":
         case "Mains (3 phase)":
         case "DC Source": {
-            return <FontAwesomeIcon icon={faPlug} title={t(snakeCase(source))} {...rest} />;
+            return <FontAwesomeIcon icon={faPlug} title={t(($) => $[snakeCase(source)])} {...rest} />;
         }
         case "Emergency mains and transfer switch":
         case "Emergency mains constantly powered": {
-            return <FontAwesomeIcon icon={faPlugCircleExclamation} title={t(snakeCase(source))} {...rest} />;
+            return <FontAwesomeIcon icon={faPlugCircleExclamation} title={t(($) => $[snakeCase(source)])} {...rest} />;
         }
         default: {
             if (device?.type === "GreenPower") {
                 return <FontAwesomeIcon icon={faLeaf} title={"Green"} {...rest} />;
             }
 
-            return <FontAwesomeIcon icon={faQuestion} title={source ? t(snakeCase(source)) : undefined} {...rest} />;
+            return <FontAwesomeIcon icon={faQuestion} title={source ? t(($) => $[snakeCase(source)]) : undefined} {...rest} />;
         }
     }
 });

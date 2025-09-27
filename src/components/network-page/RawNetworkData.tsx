@@ -21,7 +21,7 @@ type RawNetworkMapProps = {
 };
 
 const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
-    const { t } = useTranslation(["network", "common"]);
+    const { t } = useTranslation(["network", "common", "zigbee"]);
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
     const [searchTerm, normalizedSearchTerm, setSearchTerm] = useSearch();
     const [highlightValue, normalizedHighlightValue, setHighlightValue] = useSearch();
@@ -68,7 +68,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                 sortedNodes.push(
                     <ul className="w-md menu bg-base-200 rounded-box shadow" key={node.friendlyName}>
                         <li
-                            title={`${t("zigbee:ieee_address")}: ${node.ieeeAddr} | ${t("zigbee:network_address")}: ${toHex(node.networkAddress, 4)} (${node.networkAddress})`}
+                            title={`${t(($) => $.ieee_address, { ns: "zigbee" })}: ${node.ieeeAddr} | ${t(($) => $.network_address, { ns: "zigbee" })}: ${toHex(node.networkAddress, 4)} (${node.networkAddress})`}
                             className={highlighted ? "bg-accent text-accent-content rounded-sm" : undefined}
                         >
                             {/** biome-ignore lint/a11y/noStaticElementInteractions: special case */}
@@ -83,7 +83,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                                     </span>
                                 )}
                                 {node.failed && node.failed.length > 0 && (
-                                    <span className="badge badge-ghost" title={`${t("common:failed")}: ${node.failed}`}>
+                                    <span className="badge badge-ghost" title={`${t(($) => $.failed, { ns: "common" })}: ${node.failed}`}>
                                         <FontAwesomeIcon icon={faExclamationTriangle} className="text-error" beatFade />
                                     </span>
                                 )}
@@ -94,9 +94,10 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                         </li>
                         <li>
                             <Link to={nodeLink} className="link link-hover">
-                                <span title={t("zigbee:ieee_address")}>{node.ieeeAddr}</span>
-                                <span title={t("zigbee:network_address_hex")} className="justify-self-end">
-                                    {toHex(node.networkAddress, 4)} | <span title={t("zigbee:network_address_dec")}>{node.networkAddress}</span>
+                                <span title={t(($) => $.ieee_address, { ns: "zigbee" })}>{node.ieeeAddr}</span>
+                                <span title={t(($) => $.network_address_hex, { ns: "zigbee" })} className="justify-self-end">
+                                    {toHex(node.networkAddress, 4)} |{" "}
+                                    <span title={t(($) => $.network_address_dec, { ns: "zigbee" })}>{node.networkAddress}</span>
                                 </span>
                             </Link>
                         </li>
@@ -119,7 +120,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                         <DebouncedInput
                             onChange={setSearchTerm}
-                            placeholder={t("common:search")}
+                            placeholder={t(($) => $.search, { ns: "common" })}
                             value={searchTerm}
                             disabled={map.nodes.length === 0}
                         />
@@ -128,7 +129,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                         item=""
                         onClick={setSearchTerm}
                         className="btn btn-square btn-warning btn-outline join-item"
-                        title={t("common:clear")}
+                        title={t(($) => $.clear, { ns: "common" })}
                         disabled={searchTerm.length === 0}
                     >
                         <FontAwesomeIcon icon={faClose} />
@@ -139,17 +140,17 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                         <FontAwesomeIcon icon={faMarker} />
                         <DebouncedInput
                             onChange={setHighlightValue}
-                            placeholder={t("common:highlight")}
+                            placeholder={t(($) => $.highlight, { ns: "common" })}
                             value={highlightValue}
                             disabled={map.nodes.length === 0}
-                            title={t("highlight_info")}
+                            title={t(($) => $.highlight_info)}
                         />
                     </label>
                     <Button
                         item=""
                         onClick={setHighlightValue}
                         className="btn btn-square btn-warning btn-outline join-item"
-                        title={t("common:clear")}
+                        title={t(($) => $.clear, { ns: "common" })}
                         disabled={highlightValue === ""}
                     >
                         <FontAwesomeIcon icon={faClose} />

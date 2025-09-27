@@ -16,12 +16,12 @@ const ScenePicker = memo(({ onSceneSelected, scenes = [], value }: ScenePickerPr
     return scenes.length > 0 ? (
         <SelectField
             name="scene_picker"
-            label={t("scene_name")}
+            label={t(($) => $.scene_name)}
             value={value?.id ?? ""}
             onChange={(e) => !e.target.validationMessage && !!e.target.value && onSceneSelected(Number.parseInt(e.target.value, 10))}
         >
             <option value="" disabled>
-                {t("select_scene")}
+                {t(($) => $.select_scene)}
             </option>
             {scenes.map((scene) => (
                 <option key={scene.id} value={scene.id}>
@@ -32,7 +32,7 @@ const ScenePicker = memo(({ onSceneSelected, scenes = [], value }: ScenePickerPr
     ) : (
         <InputField
             name="scene_picker"
-            label={t("scene_id")}
+            label={t(($) => $.scene_id)}
             type="number"
             value={value?.id ?? ""}
             onChange={(e) => !e.target.validationMessage && !!e.target.value && onSceneSelected(e.target.valueAsNumber)}

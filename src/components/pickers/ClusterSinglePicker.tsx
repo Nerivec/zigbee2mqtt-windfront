@@ -29,7 +29,7 @@ const ClusterSinglePicker = memo((props: ClusterSinglePickerProps) => {
                 }
 
                 options.push(
-                    <optgroup key={group.name} label={t(group.name)}>
+                    <optgroup key={group.name} label={t(($) => $[group.name])}>
                         {groupOptions}
                     </optgroup>,
                 );
@@ -58,7 +58,7 @@ const ClusterSinglePicker = memo((props: ClusterSinglePickerProps) => {
             {...rest}
         >
             <option value="" disabled>
-                {t("select_cluster")}
+                {t(($) => $.select_cluster)}
             </option>
             {options}
         </SelectField>

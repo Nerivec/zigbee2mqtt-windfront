@@ -85,7 +85,7 @@ export default function TouchlinkPage() {
                 id: "source",
                 size: 60,
                 header: () => (
-                    <span title={t("common:source")}>
+                    <span title={t(($) => $.source, { ns: "common" })}>
                         <FontAwesomeIcon icon={faServer} />
                     </span>
                 ),
@@ -104,7 +104,7 @@ export default function TouchlinkPage() {
             {
                 id: "ieee_address",
                 minSize: 175,
-                header: t("zigbee:ieee_address"),
+                header: t(($) => $.ieee_address, { ns: "zigbee" }),
                 accessorFn: ({ touchlinkDevice }) => touchlinkDevice.ieee_address,
                 cell: ({
                     row: {
@@ -130,7 +130,7 @@ export default function TouchlinkPage() {
             {
                 id: "friendly_name",
                 minSize: 175,
-                header: t("common:friendly_name"),
+                header: t(($) => $.friendly_name, { ns: "common" }),
                 accessorFn: ({ friendlyName }) => friendlyName,
                 filterFn: "includesString",
                 sortingFn: (rowA, rowB) =>
@@ -145,7 +145,7 @@ export default function TouchlinkPage() {
             {
                 id: "channel",
                 minSize: 175,
-                header: t("zigbee:channel"),
+                header: t(($) => $.channel, { ns: "zigbee" }),
                 accessorFn: ({ touchlinkDevice }) => touchlinkDevice.channel,
                 filterFn: "weakEquals",
                 meta: {
@@ -165,7 +165,7 @@ export default function TouchlinkPage() {
                             <Button<[number, TouchlinkDevice]>
                                 disabled={resetInProgress || identifyInProgress}
                                 item={[sourceIdx, touchlinkDevice]}
-                                title={t("identify")}
+                                title={t(($) => $.identify)}
                                 className="btn btn-sm btn-square btn-outline btn-primary join-item"
                                 onClick={onIdentifyClick}
                             >
@@ -174,7 +174,7 @@ export default function TouchlinkPage() {
                             <Button<[number, TouchlinkDevice]>
                                 disabled={resetInProgress || identifyInProgress}
                                 item={[sourceIdx, touchlinkDevice]}
-                                title={t("factory_reset")}
+                                title={t(($) => $.factory_reset)}
                                 className="btn btn-sm btn-square btn-outline btn-error join-item"
                                 onClick={onResetClick}
                             >
@@ -213,13 +213,13 @@ export default function TouchlinkPage() {
                 {MULTI_INSTANCE && (
                     <SelectField
                         name="scan_idx_picker"
-                        label={t("scan_source")}
+                        label={t(($) => $.scan_source)}
                         value={scanIdx}
                         onChange={(e) => !e.target.validationMessage && !!e.target.value && setScanIdx(Number.parseInt(e.target.value, 10))}
                         className="select"
                     >
                         <option value="" disabled>
-                            {t("select_scan_source")}
+                            {t(($) => $.select_scan_source)}
                         </option>
                         {API_NAMES.map((name, idx) => (
                             <option key={name} value={idx}>
@@ -231,7 +231,7 @@ export default function TouchlinkPage() {
                 <fieldset className="fieldset self-end">
                     <Button<number> className="btn btn-outline btn-primary" item={scanIdx} onClick={onScanClick} disabled={touchlinkScanInProgress}>
                         <FontAwesomeIcon icon={faMagnifyingGlassPlus} />
-                        {t("scan")}
+                        {t(($) => $.scan)}
                     </Button>
                 </fieldset>
             </div>

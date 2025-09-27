@@ -17,7 +17,7 @@ type SettingsProps = { sourceIdx: number; tab: TabName };
 
 export default function Settings({ sourceIdx, tab }: SettingsProps) {
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
-    const { t } = useTranslation("settings");
+    const { t } = useTranslation(["settings", "common"]);
 
     const setSettings = useCallback(
         async (options: Record<string, unknown>) => {
@@ -34,33 +34,33 @@ export default function Settings({ sourceIdx, tab }: SettingsProps) {
         <>
             <InfoAlert>
                 <a href={CONFIGURATION_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
-                    {t("common:read_the_docs_info")}
+                    {t(($) => $.read_the_docs_info, { ns: "common" })}
                 </a>
             </InfoAlert>
             <div className="tabs tabs-border">
                 <NavLink to={`/settings/${sourceIdx}/settings/main`} className={isTabActive}>
-                    {t("main")}
+                    {t(($) => $.main)}
                 </NavLink>
                 <NavLink to={`/settings/${sourceIdx}/settings/frontend`} className={isTabActive}>
-                    {t("frontend")}
+                    {t(($) => $.frontend)}
                 </NavLink>
                 <NavLink to={`/settings/${sourceIdx}/settings/mqtt`} className={isTabActive}>
-                    {t("mqtt")}
+                    {t(($) => $.mqtt)}
                 </NavLink>
                 <NavLink to={`/settings/${sourceIdx}/settings/serial`} className={isTabActive}>
-                    {t("serial")}
+                    {t(($) => $.serial)}
                 </NavLink>
                 <NavLink to={`/settings/${sourceIdx}/settings/availability`} className={isTabActive}>
-                    {t("availability")}
+                    {t(($) => $.availability)}
                 </NavLink>
                 <NavLink to={`/settings/${sourceIdx}/settings/ota`} className={isTabActive}>
-                    {t("ota")}
+                    {t(($) => $.ota)}
                 </NavLink>
                 <NavLink to={`/settings/${sourceIdx}/settings/advanced`} className={isTabActive}>
-                    {t("advanced")}
+                    {t(($) => $.advanced)}
                 </NavLink>
                 <NavLink to={`/settings/${sourceIdx}/settings/homeassistant`} className={isTabActive}>
-                    {t("homeassistant")}
+                    {t(($) => $.homeassistant)}
                 </NavLink>
                 <div className="tab-content block h-full bg-base-100 p-3">
                     {tab === "main" ? (

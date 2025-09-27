@@ -9,11 +9,11 @@ const Legend = memo(() => {
 
     return (
         <details className="collapse collapse-arrow rounded-b-none">
-            <summary className="collapse-title font-semibold">{t("legend")}</summary>
+            <summary className="collapse-title font-semibold">{t(($) => $.legend)}</summary>
             <div className="collapse-content text-sm">
                 <div className="flex flex-row flex-wrap gap-3 mb-2">
                     <div>
-                        <p>{t("nodes")}:</p>
+                        <p>{t(($) => $.nodes)}:</p>
                         <ul className="list-none list-inside">
                             <li style={{ color: NODE_TYPE_FILL_COLORS.Coordinator }}>
                                 <FontAwesomeIcon icon={faCircle} /> Coordinator
@@ -27,25 +27,25 @@ const Legend = memo(() => {
                         </ul>
                     </div>
                     <div>
-                        <p>{t("edges")}:</p>
+                        <p>{t(($) => $.edges)}:</p>
                         <ul className="list-none list-inside">
                             <li style={{ color: EDGE_RELATIONSHIP_FILL_COLORS[ZigbeeRelationship.NeighborIsParent] }}>
-                                <FontAwesomeIcon icon={faArrowRightLong} /> {t("parent")}
+                                <FontAwesomeIcon icon={faArrowRightLong} /> {t(($) => $.parent)}
                             </li>
                             <li style={{ color: EDGE_RELATIONSHIP_FILL_COLORS[ZigbeeRelationship.NeighborIsAChild] }}>
-                                <FontAwesomeIcon icon={faArrowRightLong} /> {t("child")}
+                                <FontAwesomeIcon icon={faArrowRightLong} /> {t(($) => $.child)}
                             </li>
                             <li style={{ color: EDGE_RELATIONSHIP_FILL_COLORS[ZigbeeRelationship.NeighborIsASibling] }}>
-                                <FontAwesomeIcon icon={faArrowRightLong} /> {t("sibling")}
+                                <FontAwesomeIcon icon={faArrowRightLong} /> {t(($) => $.sibling)}
                             </li>
                         </ul>
                     </div>
                 </div>
-                <p>{t("legend_node_siblings")}</p>
-                <p>{t("legend_node_size")}</p>
-                <p>{t("legend_node_select")}</p>
-                <p>{t("legend_node_fold")}</p>
-                <p>{t("legend_edge_toggle")}</p>
+                <p>{t(($) => $.legend_node_siblings)}</p>
+                <p>{t(($) => $.legend_node_size)}</p>
+                <p>{t(($) => $.legend_node_select)}</p>
+                <p>{t(($) => $.legend_node_fold)}</p>
+                <p>{t(($) => $.legend_edge_toggle)}</p>
             </div>
         </details>
     );

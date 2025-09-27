@@ -31,11 +31,11 @@ export const SearchModal = NiceModal.create(({ children, search }: SearchModalPr
     return (
         <Modal
             isOpen={modal.visible}
-            title={`${t("search")} ${name}`}
+            title={`${t(($) => $.search)} ${name}`}
             footer={
                 <>
                     <Button className="btn btn-neutral" onClick={modal.remove}>
-                        {t("common:cancel")}
+                        {t(($) => $.cancel)}
                     </Button>
                     <Button
                         className="btn btn-primary ms-1"
@@ -44,7 +44,7 @@ export const SearchModal = NiceModal.create(({ children, search }: SearchModalPr
                             search();
                         }}
                     >
-                        {t("search")}
+                        {t(($) => $.search)}
                     </Button>
                 </>
             }

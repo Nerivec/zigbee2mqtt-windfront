@@ -24,9 +24,9 @@ const DeviceControlUpdateDesc = memo(({ device, setDeviceDescription }: DeviceCo
                     setDeviceDescription,
                 })
             }
-            title={t("edit_description")}
+            title={t(($) => $.edit_description)}
         >
-            {device.description ? <FontAwesomeIcon icon={faEdit} /> : t("edit_description")}
+            {device.description ? <FontAwesomeIcon icon={faEdit} /> : t(($) => $.edit_description)}
         </Button>
     );
 });

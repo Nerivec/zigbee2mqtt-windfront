@@ -31,13 +31,13 @@ export default function TableSearch<T>({ table, resetFilters, globalFilter, colu
             <div className="join">
                 <label className="input input-sm lg:input-md join-item">
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    <DebouncedInput onChange={table.setGlobalFilter} placeholder={t("search")} value={globalFilter} />
+                    <DebouncedInput onChange={table.setGlobalFilter} placeholder={t(($) => $.search)} value={globalFilter} />
                 </label>
                 <Button
                     item=""
                     onClick={table.setGlobalFilter}
                     className="btn btn-sm lg:btn-md btn-square btn-warning btn-outline join-item"
-                    title={t("clear")}
+                    title={t(($) => $.clear)}
                     disabled={globalFilter == null || globalFilter === ""}
                 >
                     <FontAwesomeIcon icon={faClose} />
@@ -51,15 +51,15 @@ export default function TableSearch<T>({ table, resetFilters, globalFilter, colu
                             htmlFor="table-filters-drawer"
                             className="drawer-button btn btn-sm lg:btn-md btn-info btn-outline join-item"
                             onClick={() => setDrawerOpen(!drawerOpen)}
-                            title={t("advanced_search")}
+                            title={t(($) => $.advanced_search)}
                         >
                             <FontAwesomeIcon icon={faFilter} />
-                            {t("advanced_search")}
+                            {t(($) => $.advanced_search)}
                             {activeFiltersCount > 0 ? <span className="badge badge-info badge-xs lg:badge-sm">{activeFiltersCount}</span> : null}
                         </label>
                         <Button<void>
                             className="btn btn-sm lg:btn-md btn-square btn-warning btn-outline join-item"
-                            title={t("reset")}
+                            title={t(($) => $.reset)}
                             onClick={() => {
                                 resetFilters();
                             }}
@@ -83,7 +83,7 @@ export default function TableSearch<T>({ table, resetFilters, globalFilter, colu
             </div>
             <div className="">
                 <span className="label">
-                    {t("entries")}: {table.getRowModel().rows.length}
+                    {t(($) => $.entries)}: {table.getRowModel().rows.length}
                 </span>
             </div>
             {actions}

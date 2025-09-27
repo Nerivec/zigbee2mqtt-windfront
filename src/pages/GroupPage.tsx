@@ -61,11 +61,11 @@ export default function GroupPage() {
             <div className="tabs tabs-border mt-2">
                 <NavLink to={`/group/${numSourceIdx}/${groupId}/devices`} className={isTabActive}>
                     <FontAwesomeIcon icon={faObjectGroup} className="me-2" />
-                    {t("common:devices")}
+                    {t(($) => $.devices, { ns: "common" })}
                 </NavLink>
                 <NavLink to={`/group/${numSourceIdx}/${groupId}/settings`} className={isTabActive}>
                     <FontAwesomeIcon icon={faCogs} className="me-2" />
-                    {t("settings")}
+                    {t(($) => $.settings)}
                 </NavLink>
             </div>
 
@@ -73,7 +73,7 @@ export default function GroupPage() {
                 {tab && group ? (
                     renderTab(numSourceIdx, tab, group)
                 ) : (
-                    <div className="flex-auto justify-center items-center">{t("common:unknown_group")}</div>
+                    <div className="flex-auto justify-center items-center">{t(($) => $.unknown_group, { ns: "common" })}</div>
                 )}
             </div>
         </>

@@ -42,7 +42,7 @@ const GroupPicker = memo(({ groups, value, label, onChange, ...rest }: GroupPick
     return (
         <SelectField name="group_picker" label={label} value={value} onChange={onSelectHandler} {...rest}>
             <option value="" disabled>
-                {t("select_group")}
+                {t(($) => $.select_group)}
             </option>
             {options}
         </SelectField>

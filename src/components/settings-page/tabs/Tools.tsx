@@ -32,17 +32,17 @@ export default function Tools({ sourceIdx }: ToolsProps) {
             <ConfirmButton
                 className="btn btn-outline btn-error join-item mb-2"
                 onClick={async () => await sendMessage(sourceIdx, "bridge/request/restart", "")}
-                title={t("restart_zigbee2mqtt")}
-                modalDescription={t("common:dialog_confirmation_prompt")}
-                modalCancelLabel={t("common:cancel")}
+                title={t(($) => $.restart_zigbee2mqtt)}
+                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
             >
-                {t("restart_zigbee2mqtt")}
+                {t(($) => $.restart_zigbee2mqtt)}
             </ConfirmButton>
             <Button
                 className="btn btn-outline btn-primary join-item"
                 onClick={async () => await downloadAsZip(useAppStore.getState() as unknown as Record<string, unknown>, "state.json")}
             >
-                {t("download_state")}
+                {t(($) => $.download_state)}
             </Button>
             {preparingBackup ? (
                 <Button className="btn btn-primary join-item disabled">
@@ -50,7 +50,7 @@ export default function Tools({ sourceIdx }: ToolsProps) {
                 </Button>
             ) : backup ? (
                 <Button className="btn btn-outline btn-primary join-item" onClick={downloadBackup}>
-                    {t("download_z2m_backup")}
+                    {t(($) => $.download_z2m_backup)}
                 </Button>
             ) : (
                 <Button
@@ -60,7 +60,7 @@ export default function Tools({ sourceIdx }: ToolsProps) {
                         await sendMessage(sourceIdx, "bridge/request/backup", "");
                     }}
                 >
-                    {t("request_z2m_backup")}
+                    {t(($) => $.request_z2m_backup)}
                 </Button>
             )}
             <Button
@@ -71,7 +71,7 @@ export default function Tools({ sourceIdx }: ToolsProps) {
                     })
                 }
             >
-                {t("add_install_code")}
+                {t(($) => $.add_install_code)}
             </Button>
             <ImageLocaliser sourceIdx={sourceIdx} devices={devices} />
         </div>

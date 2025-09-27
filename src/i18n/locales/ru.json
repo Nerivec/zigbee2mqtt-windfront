@@ -252,7 +252,8 @@
         "machine": "Машина",
         "node_version": "Версия Node",
         "version": "Версия",
-        "health": "Здоровье"
+        "health": "Здоровье",
+        "download_z2m_backup": "Скачать резервную копию Zigbee2MQTT"
     },
     "health": {
         "awaiting_next_check": "Ожидание следующей проверки",
@@ -429,6 +430,12 @@
         "show_definition": "Показать определение",
         "hide_definition": "Скрыть определение"
     },
+    "contribute": {
+        "donation_text": "Здесь вы можете поблагодарить нас за проделанную работу. Добрые слова тоже приветствуются ;)",
+        "development": "Разработка",
+        "contributing": "Здесь вы найдёте информацию, как внести вклад в проект",
+        "translation": "Перевод"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Интеграция Home Assistant (MQTT discovery)",
         "homeassistant-enabled": "Включить интеграцию Home Assistant",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Имя в Home Assistant",
         "definitions-group-qos": "QoS группы",
         "definitions-group-off_state": "Когда публиковать OFF/CLOSE для группы"
-    },
-    "contribute": {
-        "donation_text": "Здесь вы можете поблагодарить нас за проделанную работу. Добрые слова тоже приветствуются ;)",
-        "development": "Разработка",
-        "contributing": "Здесь вы найдёте информацию, как внести вклад в проект",
-        "translation": "Перевод"
     }
 }

@@ -55,17 +55,17 @@ const MqttTab = ({ sourceIdx }: DevConsoleTabProps) => {
 
     return (
         <>
-            <h2 className="text-lg mb-2">{t("send_mqtt")}</h2>
+            <h2 className="text-lg mb-2">{t(($) => $.send_mqtt)}</h2>
             <InfoAlert>
                 <a href={MQTT_TOPICS_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
-                    {t("common:read_the_docs_info")}
+                    {t(($) => $.read_the_docs_info, { ns: "common" })}
                 </a>
             </InfoAlert>
             <InputField
                 type="text"
                 name="topic"
-                label={t("topic")}
-                detail={t("mqtt_topic_info")}
+                label={t(($) => $.topic)}
+                detail={t(($) => $.mqtt_topic_info)}
                 placeholder="bridge/request/permit_join"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
@@ -74,7 +74,7 @@ const MqttTab = ({ sourceIdx }: DevConsoleTabProps) => {
             />
             <TextareaField
                 name="payload"
-                label={t("common:payload")}
+                label={t(($) => $.payload, { ns: "common" })}
                 rows={5}
                 value={mqttPayload}
                 onChange={(e) => setMqttPayload(e.target.value)}
@@ -82,7 +82,7 @@ const MqttTab = ({ sourceIdx }: DevConsoleTabProps) => {
             />
             <div className="join join-horizontal mt-2">
                 <Button<void> onClick={onSend} disabled={!canSend} className="btn btn-success">
-                    {t("common:send")}
+                    {t(($) => $.send, { ns: "common" })}
                 </Button>
             </div>
         </>
@@ -138,22 +138,22 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
 
     return (
         <>
-            <h2 className="text-lg mb-2">{t("add_update_external_converter")}</h2>
+            <h2 className="text-lg mb-2">{t(($) => $.add_update_external_converter)}</h2>
             <InfoAlert>
                 <a href={CONVERTERS_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
-                    {t("common:read_the_docs_info")}
+                    {t(($) => $.read_the_docs_info, { ns: "common" })}
                 </a>
                 <a href={CONVERTERS_CODESPACE_URL} target="_blank" rel="noreferrer" className="link link-hover">
-                    {t("codespace_info")}
+                    {t(($) => $.codespace_info)}
                 </a>
             </InfoAlert>
             <SelectField
                 name="converter_name_edit"
-                label={t("select_converter_to_edit")}
+                label={t(($) => $.select_converter_to_edit)}
                 onChange={onSelectChange}
                 value={selectedConverter?.name ?? ""}
             >
-                <option value="">N/A - {t("create_new_converter")}</option>
+                <option value="">N/A - {t(($) => $.create_new_converter)}</option>
                 {converters.map((conv) => (
                     <option value={conv.name} key={conv.name}>
                         {conv.name}
@@ -162,7 +162,7 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
             </SelectField>
             <InputField
                 name="converter_name"
-                label={t("common:name")}
+                label={t(($) => $.name, { ns: "common" })}
                 type="text"
                 onChange={onNameChange}
                 value={converter.name}
@@ -171,7 +171,7 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
             />
             <TextareaField
                 name="converter_code"
-                label={t("code")}
+                label={t(($) => $.code)}
                 rows={5}
                 value={converter.code}
                 onChange={onCodeChange}
@@ -180,17 +180,17 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
             />
             <div className="join join-horizontal mt-2">
                 <Button<void> onClick={onSave} disabled={!canSave} className="btn btn-success join-item">
-                    {t("common:save")}
+                    {t(($) => $.save, { ns: "common" })}
                 </Button>
                 <ConfirmButton<void>
                     onClick={onRemove}
                     disabled={!selectedConverter}
                     className="btn btn-error join-item"
-                    title={t("common:delete")}
-                    modalDescription={t("common:dialog_confirmation_prompt")}
-                    modalCancelLabel={t("common:cancel")}
+                    title={t(($) => $.delete, { ns: "common" })}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 >
-                    {t("common:delete")}
+                    {t(($) => $.delete, { ns: "common" })}
                 </ConfirmButton>
             </div>
         </>
@@ -246,19 +246,19 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
 
     return (
         <>
-            <h2 className="text-lg mb-2">{t("add_update_external_extension")}</h2>
+            <h2 className="text-lg mb-2">{t(($) => $.add_update_external_extension)}</h2>
             <InfoAlert>
                 <a href={EXTENSIONS_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
-                    {t("common:read_the_docs_info")}
+                    {t(($) => $.read_the_docs_info, { ns: "common" })}
                 </a>
             </InfoAlert>
             <SelectField
                 name="extension_name_edit"
-                label={t("select_extension_to_edit")}
+                label={t(($) => $.select_extension_to_edit)}
                 onChange={onSelectChange}
                 value={selectedExtension?.name ?? ""}
             >
-                <option value="">N/A - {t("create_new_extension")}</option>
+                <option value="">N/A - {t(($) => $.create_new_extension)}</option>
                 {extensions.map((ext) => (
                     <option value={ext.name} key={ext.name}>
                         {ext.name}
@@ -267,7 +267,7 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
             </SelectField>
             <InputField
                 name="extension_name"
-                label={t("common:name")}
+                label={t(($) => $.name, { ns: "common" })}
                 type="text"
                 onChange={onNameChange}
                 value={extension.name}
@@ -276,7 +276,7 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
             />
             <TextareaField
                 name="extension_code"
-                label={t("code")}
+                label={t(($) => $.code)}
                 rows={5}
                 value={extension.code}
                 onChange={onCodeChange}
@@ -285,17 +285,17 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
             />
             <div className="join join-horizontal mt-2">
                 <Button<void> onClick={onSave} disabled={!canSave} className="btn btn-success join-item">
-                    {t("common:save")}
+                    {t(($) => $.save, { ns: "common" })}
                 </Button>
                 <ConfirmButton<void>
                     onClick={onRemove}
                     disabled={!selectedExtension}
                     className="btn btn-error join-item"
-                    title={t("common:delete")}
-                    modalDescription={t("common:dialog_confirmation_prompt")}
-                    modalCancelLabel={t("common:cancel")}
+                    title={t(($) => $.delete, { ns: "common" })}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 >
-                    {t("common:delete")}
+                    {t(($) => $.delete, { ns: "common" })}
                 </ConfirmButton>
             </div>
         </>
@@ -321,13 +321,13 @@ export default function DevConsole({ sourceIdx, tab }: DevConsoleProps) {
     return (
         <div className="tabs tabs-border">
             <NavLink to={`/settings/${sourceIdx}/dev-console/mqtt`} className={isTabActive}>
-                {t("mqtt")}
+                {t(($) => $.mqtt)}
             </NavLink>
             <NavLink to={`/settings/${sourceIdx}/dev-console/external_converters`} className={isTabActive}>
-                {t("external_converters")}
+                {t(($) => $.external_converters)}
             </NavLink>
             <NavLink to={`/settings/${sourceIdx}/dev-console/external_extensions`} className={isTabActive}>
-                {t("external_extensions")}
+                {t(($) => $.external_extensions)}
             </NavLink>
             <div className="tab-content block h-full bg-base-100 p-3">{renderTab(sourceIdx, tab)}</div>
         </div>

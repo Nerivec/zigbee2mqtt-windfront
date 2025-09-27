@@ -114,54 +114,54 @@ export default function DevicePage(): JSX.Element {
             <div className="tabs tabs-border mt-2">
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/info`} className={isTabActive}>
                     <FontAwesomeIcon icon={faInfo} className="me-2" />
-                    {t("about")}
+                    {t(($) => $.about)}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/exposes`} className={isTabActive}>
                     <FontAwesomeIcon icon={faWandMagic} className="me-2" />
-                    {t("exposes")}
+                    {t(($) => $.exposes)}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/bind`} className={isTabActive}>
                     <FontAwesomeIcon icon={faLink} className="me-2" />
-                    {t("bind")}
+                    {t(($) => $.bind)}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/reporting`} className={isTabActive}>
                     <FontAwesomeIcon icon={faDownLong} className="me-2" />
-                    {t("reporting")}
+                    {t(($) => $.reporting)}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/settings`} className={isTabActive}>
                     <FontAwesomeIcon icon={faCogs} className="me-2" />
-                    {t("settings")}
+                    {t(($) => $.settings)}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/settings-specific`} className={isTabActive}>
                     <FontAwesomeIcon icon={faCog} className="me-2" />
-                    {t("settings_specific")}
+                    {t(($) => $.settings_specific)}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/state`} className={isTabActive}>
                     <FontAwesomeIcon icon={faArrowsSpin} className="me-2" />
-                    {t("state")}
+                    {t(($) => $.state)}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/clusters`} className={isTabActive}>
                     <FontAwesomeIcon icon={faReceipt} className="me-2" />
-                    {t("clusters")}
+                    {t(($) => $.clusters)}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/groups`} className={isTabActive}>
                     <FontAwesomeIcon icon={faObjectGroup} className="me-2" />
-                    {t("groups")}
+                    {t(($) => $.groups)}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/scene`} className={isTabActive}>
                     <FontAwesomeIcon icon={faWandSparkles} className="me-2" />
-                    {t("scene")}
+                    {t(($) => $.scene)}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/dev-console`} className={isTabActive}>
                     <FontAwesomeIcon icon={faBug} className="me-2" />
-                    {t("dev_console")}
+                    {t(($) => $.dev_console)}
                 </NavLink>
 
                 <div className="tab-content block h-full bg-base-100 p-3">
                     {tab && device ? (
                         renderTab(numSourceIdx, tab, device)
                     ) : (
-                        <div className="flex-auto justify-center items-center">{t("common:unknown_device")}</div>
+                        <div className="flex-auto justify-center items-center">{t(($) => $.unknown_device, { ns: "common" })}</div>
                     )}
                 </div>
             </div>

@@ -18,7 +18,7 @@ type RawRelationProps = DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLL
 };
 
 const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlightValue, ...rest }: RawRelationProps) => {
-    const { t } = useTranslation(["network", "common"]);
+    const { t } = useTranslation(["network", "common", "zigbee"]);
 
     const highlighted = useMemo(() => highlight(device.friendly_name), [device.friendly_name, highlight]);
 
@@ -30,7 +30,7 @@ const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlight
     return (
         <li
             key={relation.source.ieeeAddr}
-            title={`${t("zigbee:ieee_address")}: ${device.ieee_address} | ${t("zigbee:network_address")}: ${toHex(device.network_address, 4)} (${device.network_address})`}
+            title={`${t(($) => $.ieee_address, { ns: "zigbee" })}: ${device.ieee_address} | ${t(($) => $.network_address, { ns: "zigbee" })}: ${toHex(device.network_address, 4)} (${device.network_address})`}
             className={highlighted ? "bg-accent text-accent-content rounded-sm" : undefined}
             {...rest}
         >
@@ -44,7 +44,7 @@ const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlight
                     <span className="badge badge-ghost">
                         <Lqi value={relation.linkquality} />
                     </span>
-                    <span className="badge badge-ghost" title={t("depth")}>
+                    <span className="badge badge-ghost" title={t(($) => $.depth)}>
                         <FontAwesomeIcon icon={faRoute} />
                         {relation.depth === 255 ? "N/A" : relation.depth}
                     </span>
@@ -52,18 +52,18 @@ const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlight
                 <ul>
                     <li>
                         <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
-                            {t("zigbee:ieee_address")}: {device.ieee_address}
+                            {t(($) => $.ieee_address, { ns: "zigbee" })}: {device.ieee_address}
                         </Link>
                     </li>
                     <li>
                         <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
-                            {t("zigbee:network_address")}: {toHex(device.network_address, 4)} ({device.network_address})
+                            {t(($) => $.network_address, { ns: "zigbee" })}: {toHex(device.network_address, 4)} ({device.network_address})
                         </Link>
                     </li>
                     {relation.routes.length > 0 && (
                         <>
                             <li>
-                                <span>{t("routes")}:</span>
+                                <span>{t(($) => $.routes)}:</span>
                             </li>
                             <ul>
                                 {relation.routes.map((route) => (

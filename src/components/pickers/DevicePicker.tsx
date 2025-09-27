@@ -43,12 +43,12 @@ const DevicePicker = memo(({ devices, value, label, onChange, groups = [], ...re
             ));
 
             options.push(
-                <optgroup key="Groups" label={t("groups")}>
+                <optgroup key="Groups" label={t(($) => $.groups)}>
                     {groupOptions}
                 </optgroup>,
             );
             options.push(
-                <optgroup key="Devices" label={t("devices")}>
+                <optgroup key="Devices" label={t(($) => $.devices)}>
                     {devicesOptions}
                 </optgroup>,
             );
@@ -62,7 +62,7 @@ const DevicePicker = memo(({ devices, value, label, onChange, groups = [], ...re
     return (
         <SelectField name="device_picker" label={label} value={value} onChange={onSelectHandler} className="select validator max-w-64" {...rest}>
             <option value="" disabled>
-                {t("select_device")}
+                {t(($) => $.select_device)}
             </option>
             {options}
         </SelectField>

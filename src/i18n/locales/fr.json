@@ -252,7 +252,8 @@
         "machine": "Machine",
         "node_version": "Version de Node",
         "version": "Version",
-        "health": "Santé"
+        "health": "Santé",
+        "download_z2m_backup": "Télécharger la sauvegarde Zigbee2MQTT"
     },
     "health": {
         "awaiting_next_check": "En attente de la prochaine vérification",
@@ -429,6 +430,12 @@
         "show_definition": "Afficher definition",
         "hide_definition": "Cacher definition"
     },
+    "contribute": {
+        "donation_text": "Ici, vous pouvez nous remercier pour tout le travail accompli. N'hésitez pas à laisser un mot gentil ;)",
+        "development": "Développement",
+        "contributing": "Ici, vous trouverez des informations pour contribuer à ce projet",
+        "translation": "Traduction"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Intégration Home Assistant (découverte MQTT)",
         "homeassistant-enabled": "Activer l'intégration Home Assistant",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Nom de l'appareil dans Home Assistant",
         "definitions-group-qos": "Level QoS pour messages MQTT de ce groupe",
         "definitions-group-off_state": "Contrôle la publication de l'état OFF/FERMÉ pour un groupe: 'all_members_off' = publier OFF/CLOSE quand tous les membres sont OFF/CLOSE ; 'last_member_state' = publier OFF dès qu'un membre passe à OFF"
-    },
-    "contribute": {
-        "donation_text": "Ici, vous pouvez nous remercier pour tout le travail accompli. N'hésitez pas à laisser un mot gentil ;)",
-        "development": "Développement",
-        "contributing": "Ici, vous trouverez des informations pour contribuer à ce projet",
-        "translation": "Traduction"
     }
 }

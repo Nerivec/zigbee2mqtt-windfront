@@ -21,13 +21,13 @@ export default function Clusters({ device }: ClustersProps) {
                 <li key={endpointId}>
                     <details open>
                         <summary>
-                            {t("endpoint")} {endpointId}
+                            {t(($) => $.endpoint)} {endpointId}
                         </summary>
                         <ul>
                             <li>
                                 <details>
                                     <summary>
-                                        <FontAwesomeIcon icon={faArrowCircleLeft} /> {t("output_clusters")}
+                                        <FontAwesomeIcon icon={faArrowCircleLeft} /> {t(($) => $.output_clusters)}
                                     </summary>
                                     <ul>
                                         {endpoint.clusters.output.map((cluster) => (
@@ -41,7 +41,7 @@ export default function Clusters({ device }: ClustersProps) {
                             <li>
                                 <details>
                                     <summary>
-                                        <FontAwesomeIcon icon={faArrowCircleRight} /> {t("input_clusters")}
+                                        <FontAwesomeIcon icon={faArrowCircleRight} /> {t(($) => $.input_clusters)}
                                     </summary>
                                     <ul>
                                         {endpoint.clusters.input.map((cluster) => (

@@ -30,7 +30,7 @@ const LOCALES_NAMES_MAP = {
 };
 
 const LanguageSwitcher = memo(() => {
-    const { i18n } = useTranslation("localeNames");
+    const { i18n } = useTranslation();
     const currentLanguage = LOCALES_NAMES_MAP[i18n.language] ? i18n.language : i18n.language.split("-")[0];
     const children = useMemo(() => {
         const languages: JSX.Element[] = [];

@@ -53,7 +53,7 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotifications
         <li>
             <details open={sourceIdx === 0}>
                 <summary>
-                    <span title={`${sourceIdx} | ${t("transaction_prefix")}: ${getTransactionPrefix(sourceIdx)}`}>
+                    <span title={`${sourceIdx} | ${t(($) => $.transaction_prefix)}: ${getTransactionPrefix(sourceIdx)}`}>
                         {MULTI_INSTANCE ? <SourceDot idx={sourceIdx} alwaysShowName /> : "Zigbee2MQTT"}
                     </span>
                     <span className="ml-auto">
@@ -61,14 +61,14 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotifications
                             <ConfirmButton
                                 className="btn btn-xs btn-square btn-error animate-pulse"
                                 onClick={restart}
-                                title={t("restart")}
-                                modalDescription={t("common:dialog_confirmation_prompt")}
-                                modalCancelLabel={t("common:cancel")}
+                                title={t(($) => $.restart)}
+                                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                             >
                                 <FontAwesomeIcon icon={faPowerOff} />
                             </ConfirmButton>
                         )}
-                        <span title={`${t("websocket_status")}: ${status?.[0]}`}>
+                        <span title={`${t(($) => $.websocket_status)}: ${status?.[0]}`}>
                             <FontAwesomeIcon icon={faServer} className={status?.[1]} />
                         </span>
                     </span>
@@ -78,13 +78,13 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotifications
                 ))}
                 {notifications.length > 0 && (
                     <div className="flex flex-row justify-between mt-3 mb-1">
-                        <Link to={`/logs/${sourceIdx}`} className="btn btn-sm btn-primary btn-outline" title={t("common:more")}>
+                        <Link to={`/logs/${sourceIdx}`} className="btn btn-sm btn-primary btn-outline" title={t(($) => $.more, { ns: "common" })}>
                             <FontAwesomeIcon icon={faEllipsisH} />
-                            {t("common:more")}
+                            {t(($) => $.more, { ns: "common" })}
                         </Link>
-                        <Button className="btn btn-sm btn-warning btn-outline" onClick={onClearClick} title={t("common:clear")}>
+                        <Button className="btn btn-sm btn-warning btn-outline" onClick={onClearClick} title={t(($) => $.clear, { ns: "common" })}>
                             <FontAwesomeIcon icon={faTrashCan} />
-                            {t("common:clear")}
+                            {t(($) => $.clear, { ns: "common" })}
                         </Button>
                     </div>
                 )}
@@ -102,7 +102,7 @@ const Notifications = memo(() => {
         <>
             <div className="flex items-center gap-2 p-2">
                 <FontAwesomeIcon icon={faInbox} />
-                <span className="font-semibold text-md">{t("notifications")}</span>
+                <span className="font-semibold text-md">{t(($) => $.notifications)}</span>
             </div>
             <ul className="menu w-full px-1 py-0">
                 {API_URLS.map((_v, idx) => (
@@ -113,12 +113,12 @@ const Notifications = memo(() => {
                     <ConfirmButton
                         className="btn btn-sm btn-warning btn-outline mt-5"
                         onClick={clearAllNotifications}
-                        title={t("clear_all")}
-                        modalDescription={t("dialog_confirmation_prompt")}
-                        modalCancelLabel={t("cancel")}
+                        title={t(($) => $.clear_all)}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt)}
+                        modalCancelLabel={t(($) => $.cancel)}
                     >
                         <FontAwesomeIcon icon={faTrashCan} />
-                        {t("clear_all")}
+                        {t(($) => $.clear_all)}
                     </ConfirmButton>
                 )}
             </ul>

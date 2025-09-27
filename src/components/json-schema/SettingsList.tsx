@@ -165,7 +165,7 @@ const propertyToField = (
 };
 
 const groupProperties = (
-    t: ReturnType<typeof useTranslation>["t"],
+    t: ReturnType<typeof useTranslation<["settingsSchemaDescriptions", "common"]>>["t"],
     properties: JSONSchema7["properties"],
     data: SettingsListProps["data"],
     set: SettingsListProps["set"],
@@ -237,9 +237,9 @@ const groupProperties = (
                     depth,
                     required.includes(key),
                     property.description
-                        ? `${t(newPath, property.description)}${property.default != null ? ` (${t("common:default")}: ${property.default})` : ""}`
+                        ? `${t(($) => $[newPath], { defaultValue: property.description })}${property.default != null ? ` (${t(($) => $.default, { ns: "common" })}: ${property.default})` : ""}`
                         : property.default != null
-                          ? `${t("common:default")}: ${property.default}}`
+                          ? `${t(($) => $.default, { ns: "common" })}: ${property.default}}`
                           : undefined,
                 );
 

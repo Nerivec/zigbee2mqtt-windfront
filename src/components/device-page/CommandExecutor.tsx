@@ -123,12 +123,12 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
 
     return (
         <div className="flex-1 flex flex-col gap-3 w-full">
-            <h2 className="text-lg">{t("execute_command")}</h2>
+            <h2 className="text-lg">{t(($) => $.execute_command)}</h2>
             <div className="flex flex-row flex-wrap gap-2">
                 <InputField
                     type="number"
                     name="endpoint"
-                    label={t("zigbee:endpoint")}
+                    label={t(($) => $.endpoint, { ns: "zigbee" })}
                     min={1}
                     max={255}
                     value={endpoint}
@@ -136,7 +136,7 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
                     required
                 />
                 <ClusterSinglePicker
-                    label={t("zigbee:cluster")}
+                    label={t(($) => $.cluster, { ns: "zigbee" })}
                     clusters={clusters}
                     value={cluster}
                     onChange={(cluster) => {
@@ -147,7 +147,7 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
                 <InputField
                     type="text"
                     name="command"
-                    label={t("command")}
+                    label={t(($) => $.command)}
                     value={command}
                     placeholder={"state, color..."}
                     onChange={(e) => setCommand(e.target.value)}
@@ -157,7 +157,7 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
             </div>
             <TextareaField
                 name="payload"
-                label={t("payload")}
+                label={t(($) => $.payload)}
                 rows={3}
                 value={payload}
                 onChange={(e) => setPayload(e.target.value)}
@@ -166,7 +166,7 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
             />
             <div>
                 <Button<void> onClick={onExecute} disabled={!canExecute} className="btn btn-success">
-                    {t("execute")}
+                    {t(($) => $.execute)}
                 </Button>
             </div>
             {lastLog && <LastLogResult message={lastLog} />}

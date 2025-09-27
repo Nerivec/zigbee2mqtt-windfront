@@ -10,7 +10,7 @@ export default function TableHeader<T>({ table }: TableHeaderProps<T>) {
 
     return (
         <div className="flex flex-row flex-wrap gap-2 text-xs px-2">
-            <span className="label">{t("columns")}: </span>
+            <span className="label">{t(($) => $.columns)}: </span>
             {table.getAllLeafColumns().map((column) =>
                 column.id === "select" ? null : (
                     <label key={column.id} className="label">
@@ -21,7 +21,7 @@ export default function TableHeader<T>({ table }: TableHeaderProps<T>) {
                             type="checkbox"
                             className="checkbox checkbox-xs"
                         />
-                        {typeof column.columnDef.header === "string" && column.columnDef.header ? column.columnDef.header : t(column.id)}
+                        {typeof column.columnDef.header === "string" && column.columnDef.header ? column.columnDef.header : t(($) => $[column.id])}
                     </label>
                 ),
             )}

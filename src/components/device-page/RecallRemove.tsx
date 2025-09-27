@@ -68,32 +68,32 @@ const RecallRemove = memo(({ sourceIdx, target }: RecallRemoveProps) => {
 
     return (
         <>
-            <h2 className="text-lg font-semibold">{t("manage_scenes_header")}</h2>
+            <h2 className="text-lg font-semibold">{t(($) => $.manage_scenes_header)}</h2>
             <div className="mb-3">
                 <ScenePicker onSceneSelected={onSceneSelected} value={sceneIsNotSelected ? undefined : scene} scenes={scenes} />
             </div>
             <div className="join join-horizontal w-full">
                 <Button disabled={sceneIsNotSelected} onClick={onRecallClick} className="btn btn-success join-item flex-1">
-                    {t("recall")}
+                    {t(($) => $.recall)}
                 </Button>
                 <ConfirmButton
                     disabled={sceneIsNotSelected}
                     onClick={onRemoveClick}
                     className="btn btn-error join-item flex-1"
-                    title={t("remove")}
-                    modalDescription={t("common:dialog_confirmation_prompt")}
-                    modalCancelLabel={t("common:cancel")}
+                    title={t(($) => $.remove)}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 >
-                    {t("remove")}
+                    {t(($) => $.remove)}
                 </ConfirmButton>
                 <ConfirmButton
                     onClick={onRemoveAllClick}
                     className="btn btn-error btn-outline join-item flex-1"
-                    title={t("remove_all")}
-                    modalDescription={t("common:dialog_confirmation_prompt")}
-                    modalCancelLabel={t("common:cancel")}
+                    title={t(($) => $.remove_all)}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 >
-                    {t("remove_all")}
+                    {t(($) => $.remove_all)}
                 </ConfirmButton>
             </div>
         </>

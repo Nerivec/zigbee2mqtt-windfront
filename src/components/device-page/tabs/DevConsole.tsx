@@ -59,7 +59,7 @@ ${externalDefinition}
             to={`${Z2M_NEW_GITHUB_ISSUE_URL}?${new URLSearchParams(githubUrlParams).toString()}`}
             className="btn"
         >
-            {t("request_support")}
+            {t(($) => $.request_support)}
         </Link>
     );
 });
@@ -133,23 +133,23 @@ export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
                         <span className="loading loading-infinity loading-xl" />
                     ) : (
                         <Button<void> className="btn btn-primary" onClick={onGenerateExternalDefinitionClick}>
-                            {t("generate_external_definition")}
+                            {t(($) => $.generate_external_definition)}
                         </Button>
                     )
                 ) : device.supported ? null : (
                     <RequestSupportLink sourceIdx={sourceIdx} device={device} externalDefinition={externalDefinition} />
                 )}
                 <Button item={!showDefinition} onClick={setShowDefinition} className="btn btn-primary">
-                    {t(showDefinition ? "hide_definition" : "show_definition")}
+                    {t(($) => (showDefinition ? $.hide_definition : $.show_definition))}
                 </Button>
                 <ConfirmButton
                     className="btn btn-error"
                     onClick={resetState}
-                    title={t("reset_frontend_state")}
-                    modalDescription={t("common:dialog_confirmation_prompt")}
-                    modalCancelLabel={t("common:cancel")}
+                    title={t(($) => $.reset_frontend_state)}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 >
-                    {t("reset_frontend_state")}
+                    {t(($) => $.reset_frontend_state)}
                 </ConfirmButton>
             </div>
             {externalDefinition && (
@@ -157,14 +157,14 @@ export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
                     <div className="divider" />
                     <TextareaField
                         name="generated_external_definition"
-                        label={t("generated_external_definition")}
+                        label={t(($) => $.generated_external_definition)}
                         value={externalDefinition}
                         className="textarea w-full"
                         rows={8}
                         readOnly
                     />
                     <Link to={SUPPORT_NEW_DEVICES_DOCS_URL} target="_blank" rel="noreferrer" className="link link-primary self-end">
-                        {t("common:documentation")}
+                        {t(($) => $.documentation, { ns: "common" })}
                     </Link>
                 </>
             )}

@@ -29,7 +29,7 @@ function isListRoot(parentFeatures: FeatureWithAnySubFeatures[]) {
 }
 
 const List = memo((props: Props) => {
-    const { t } = useTranslation(["list", "common"]);
+    const { t } = useTranslation("common");
     const { feature, minimal, parentFeatures, onChange, deviceValue } = props;
     const [currentValue, setCurrentValue] = useState<unknown[]>([]);
     const isRoot = isListRoot(parentFeatures);
@@ -73,7 +73,7 @@ const List = memo((props: Props) => {
                 {isRoot && (
                     <div>
                         <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply} disabled={currentValue.length === 0}>
-                            {t("common:apply")}
+                            {t(($) => $.apply)}
                         </Button>
                     </div>
                 )}

@@ -252,7 +252,8 @@
         "machine": "Машина",
         "node_version": "Node версія",
         "version": "Версія",
-        "health": "Стан"
+        "health": "Стан",
+        "download_z2m_backup": "Завантажити резервну копію Zigbee2MQTT"
     },
     "health": {
         "awaiting_next_check": "Очікування наступної перевірки",
@@ -429,6 +430,12 @@
         "show_definition": "Показати визначення",
         "hide_definition": "Сховати визначення"
     },
+    "contribute": {
+        "donation_text": "Тут ви можете подякувати нам за виконану роботу. Приємні слова теж вітаються ;)",
+        "development": "Розробка",
+        "contributing": "Тут знайдете інформацію, як долучитися до цього проєкту",
+        "translation": "Переклад"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Інтеграція Home Assistant (MQTT discovery)",
         "homeassistant-enabled": "Увімкнути інтеграцію",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Назва в HA",
         "definitions-group-qos": "QoS групи",
         "definitions-group-off_state": "Коли OFF/CLOSE"
-    },
-    "contribute": {
-        "donation_text": "Тут ви можете подякувати нам за виконану роботу. Приємні слова теж вітаються ;)",
-        "development": "Розробка",
-        "contributing": "Тут знайдете інформацію, як долучитися до цього проєкту",
-        "translation": "Переклад"
     }
 }

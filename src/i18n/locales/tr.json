@@ -252,7 +252,8 @@
         "machine": "Makine",
         "node_version": "Node sürümü",
         "version": "Sürüm",
-        "health": "Sağlık"
+        "health": "Sağlık",
+        "download_z2m_backup": "Zigbee2MQTT yedeğini indir"
     },
     "health": {
         "awaiting_next_check": "Sonraki kontrol bekleniyor",
@@ -429,6 +430,12 @@
         "show_definition": "Tanımı göster",
         "hide_definition": "Tanımı gizle"
     },
+    "contribute": {
+        "donation_text": "Burada emeğimiz için bize teşekkür edebilirsiniz. Güzel sözleriniz de bizi mutlu eder ;)",
+        "development": "Geliştirme",
+        "contributing": "Bu projeye nasıl katkıda bulunabileceğinize dair bilgileri burada bulabilirsiniz",
+        "translation": "Çeviri"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant entegrasyonu (MQTT discovery)",
         "homeassistant-enabled": "Home Assistant entegrasyonunu etkinleştir",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Home Assistant içindeki ad",
         "definitions-group-qos": "Grup QoS",
         "definitions-group-off_state": "Grup OFF/CLOSE yayınlama zamanı"
-    },
-    "contribute": {
-        "donation_text": "Burada emeğimiz için bize teşekkür edebilirsiniz. Güzel sözleriniz de bizi mutlu eder ;)",
-        "development": "Geliştirme",
-        "contributing": "Bu projeye nasıl katkıda bulunabileceğinize dair bilgileri burada bulabilirsiniz",
-        "translation": "Çeviri"
     }
 }

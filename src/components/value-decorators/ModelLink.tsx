@@ -17,7 +17,7 @@ const normalizeModel = (model: string): string => {
 
 const ModelLink = memo(({ device }: ModelLinkProps) => {
     const { t } = useTranslation("zigbee");
-    let label = device.model_id || t("unknown");
+    let label = device.model_id || t(($) => $.unknown);
     let url = SUPPORT_NEW_DEVICES_DOCS_URL;
 
     if (device.supported && device.definition) {

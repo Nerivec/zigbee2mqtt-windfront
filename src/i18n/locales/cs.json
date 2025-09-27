@@ -252,7 +252,8 @@
         "machine": "Stroj",
         "node_version": "Node verze",
         "version": "Verze",
-        "health": "Zdraví"
+        "health": "Zdraví",
+        "download_z2m_backup": "Stáhnout zálohu Zigbee2MQTT"
     },
     "health": {
         "awaiting_next_check": "Čekání na další kontrolu",
@@ -429,6 +430,12 @@
         "show_definition": "Zobrazit definici",
         "hide_definition": "Skrýt definici"
     },
+    "contribute": {
+        "donation_text": "Zde nám můžete poděkovat za naši práci. Nebojte se přidat i milé slovo ;)",
+        "development": "Vývoj",
+        "contributing": "Zde najdete informace, jak přispět do tohoto projektu",
+        "translation": "Překlad"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant integrace (MQTT discovery)",
         "homeassistant-enabled": "Povolit integraci",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Název HA",
         "definitions-group-qos": "QoS skupina",
         "definitions-group-off_state": "Kdy OFF/CLOSE"
-    },
-    "contribute": {
-        "donation_text": "Zde nám můžete poděkovat za naši práci. Nebojte se přidat i milé slovo ;)",
-        "development": "Vývoj",
-        "contributing": "Zde najdete informace, jak přispět do tohoto projektu",
-        "translation": "Překlad"
     }
 }

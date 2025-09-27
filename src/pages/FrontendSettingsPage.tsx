@@ -99,50 +99,50 @@ export default function FrontendSettingsPage() {
                     <ConfirmButton<void>
                         className="btn btn-sm btn-outline btn-error"
                         onClick={resetSettings}
-                        title={t("reset_settings")}
-                        modalDescription={t("common:dialog_confirmation_prompt")}
-                        modalCancelLabel={t("common:cancel")}
+                        title={t(($) => $.reset_settings)}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                     >
-                        {t("reset_settings")}
+                        {t(($) => $.reset_settings)}
                     </ConfirmButton>
                     <ConfirmButton<void>
                         className="btn btn-sm btn-outline btn-error"
                         onClick={resetAuth}
-                        title={t("reset_auth")}
-                        modalDescription={t("common:dialog_confirmation_prompt")}
-                        modalCancelLabel={t("common:cancel")}
+                        title={t(($) => $.reset_auth)}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                     >
-                        {t("reset_auth")}
+                        {t(($) => $.reset_auth)}
                     </ConfirmButton>
                     <ConfirmButton<void>
                         className="btn btn-sm btn-outline btn-error"
                         onClick={resetAll}
-                        title={t("reset_all")}
-                        modalDescription={t("common:dialog_confirmation_prompt")}
-                        modalCancelLabel={t("common:cancel")}
+                        title={t(($) => $.reset_all)}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                     >
-                        {t("reset_all")}
+                        {t(($) => $.reset_all)}
                     </ConfirmButton>
                 </div>
             </NavBarContent>
 
-            <div className="alert alert-info alert-vertical sm:alert-horizontal">{t("frontend_notice")}</div>
+            <div className="alert alert-info alert-vertical sm:alert-horizontal">{t(($) => $.frontend_notice)}</div>
 
             <div className="flex flex-row flex-wrap gap-4 mt-3">
                 <SelectField
                     name="homepage"
-                    label={t("homepage")}
+                    label={t(($) => $.homepage)}
                     onChange={(e) => !e.target.validationMessage && setHomepage(e.target.value)}
                     value={homepage}
                     required
                 >
-                    <option value="devices">{t("navbar:devices")}</option>
-                    <option value="dashboard">{t("navbar:dashboard")}</option>
+                    <option value="devices">{t(($) => $.devices, { ns: "navbar" })}</option>
+                    <option value="dashboard">{t(($) => $.dashboard, { ns: "navbar" })}</option>
                 </SelectField>
                 <NumberField
                     type="number"
                     name="permit_join_time"
-                    label={t("permit_join_time")}
+                    label={t(($) => $.permit_join_time)}
                     min={10}
                     max={254}
                     required
@@ -153,7 +153,7 @@ export default function FrontendSettingsPage() {
                 <NumberField
                     type="number"
                     name="max_on_screen_notifications"
-                    label={t("max_on_screen_notifications")}
+                    label={t(($) => $.max_on_screen_notifications)}
                     min={1}
                     max={5}
                     required
@@ -162,19 +162,19 @@ export default function FrontendSettingsPage() {
                     onSubmit={(value, valid) => valid && value !== "" && setMaxOnScreenNotifications(value)}
                 />
                 <CheckboxField
-                    name="common:hide_static_info_alerts"
-                    label={t("common:hide_static_info_alerts")}
+                    name="hide_static_info_alerts"
+                    label={t(($) => $.hide_static_info_alerts, { ns: "common" })}
                     onChange={(event) => setHideStaticInfoAlerts(event.target.checked)}
                     defaultChecked={hideStaticInfoAlerts}
                 />
             </div>
             {MULTI_INSTANCE && (
                 <>
-                    <h2 className="text-lg mt-2">{t("common:multi_instance")}</h2>
+                    <h2 className="text-lg mt-2">{t(($) => $.multi_instance, { ns: "common" })}</h2>
                     <div className="flex flex-row flex-wrap gap-4">
                         <CheckboxField
-                            name="common:show_source_name"
-                            label={t("common:show_source_name")}
+                            name="show_source_name"
+                            label={t(($) => $.show_source_name, { ns: "common" })}
                             onChange={(event) => setMiShowSourceName(event.target.checked)}
                             defaultChecked={miShowSourceName}
                         />

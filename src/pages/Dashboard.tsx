@@ -152,7 +152,7 @@ export default function Dashboard() {
             },
             {
                 id: "friendly_name",
-                header: t("friendly_name"),
+                header: t(($) => $.friendly_name),
                 accessorFn: ({ device }) => `${device.friendly_name} ${device.description ?? ""}`,
                 sortingFn: (rowA, rowB) => rowA.original.device.friendly_name.localeCompare(rowB.original.device.friendly_name),
                 filterFn: "includesString",
@@ -163,7 +163,7 @@ export default function Dashboard() {
             },
             {
                 id: "ieee_address",
-                header: t("zigbee:ieee_address"),
+                header: t(($) => $.ieee_address, { ns: "zigbee" }),
                 accessorFn: ({ device }) => `${device.ieee_address} ${toHex(device.network_address, 4)} ${device.network_address}`,
                 filterFn: "includesString",
                 meta: {
@@ -172,8 +172,8 @@ export default function Dashboard() {
             },
             {
                 id: "type",
-                header: t("zigbee:type"),
-                accessorFn: ({ device }) => t(`zigbee:${device.type}`),
+                header: t(($) => $.type, { ns: "zigbee" }),
+                accessorFn: ({ device }) => t(($) => $.zigbee[device.type]),
                 filterFn: "equals",
                 meta: {
                     filterVariant: "select",
@@ -182,7 +182,7 @@ export default function Dashboard() {
             },
             {
                 id: "state",
-                header: t("state"),
+                header: t(($) => $.state),
                 accessorFn: ({ deviceState }) => deviceState.state,
                 filterFn: "equals",
                 meta: {
@@ -192,7 +192,7 @@ export default function Dashboard() {
             },
             {
                 id: "lqi",
-                header: t("zigbee:lqi"),
+                header: t(($) => $.lqi, { ns: "zigbee" }),
                 accessorFn: ({ deviceState }) => deviceState.linkquality,
                 filterFn: "inNumberRange",
                 meta: {
@@ -201,7 +201,7 @@ export default function Dashboard() {
             },
             {
                 id: "last_seen",
-                header: t("zigbee:last_seen"),
+                header: t(($) => $.last_seen, { ns: "zigbee" }),
                 accessorFn: ({ deviceState, lastSeenConfig }) => {
                     const lastTs = getLastSeenEpoch(deviceState.last_seen, lastSeenConfig);
 
@@ -212,12 +212,12 @@ export default function Dashboard() {
                 filterFn: "inNumberRange",
                 meta: {
                     filterVariant: "range",
-                    tooltip: t("last_seen_filter_info"),
+                    tooltip: t(($) => $.last_seen_filter_info),
                 },
             },
             {
                 id: "battery_low",
-                header: t("zigbee:battery_low"),
+                header: t(($) => $.battery_low, { ns: "zigbee" }),
                 accessorFn: ({ batteryLow }) => (batteryLow === undefined ? "N/A" : batteryLow),
                 filterFn: "equals",
                 meta: {
@@ -226,7 +226,7 @@ export default function Dashboard() {
             },
             {
                 id: "feature_type",
-                header: t("feature_type"),
+                header: t(($) => $.feature_type),
                 accessorFn: ({ featureTypes }) => featureTypes,
                 filterFn: "arrIncludes",
                 meta: {
@@ -236,7 +236,7 @@ export default function Dashboard() {
             },
             {
                 id: "feature_name",
-                header: t("feature_name"),
+                header: t(($) => $.feature_name),
                 accessorFn: ({ featureNames }) => featureNames,
                 filterFn: "arrIncludes",
                 meta: {
@@ -277,7 +277,7 @@ export default function Dashboard() {
 
             <div className="sticky z-9 bottom-0 pb-1 w-full flex flex-row justify-end sm:hidden">
                 <Button
-                    title={t("scroll_to_top")}
+                    title={t(($) => $.scroll_to_top)}
                     className="btn btn-primary btn-square"
                     onClick={() => {
                         window.scrollTo(0, 0);

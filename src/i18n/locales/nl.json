@@ -252,7 +252,8 @@
         "machine": "Machine",
         "node_version": "Node-versie",
         "version": "Versie",
-        "health": "Gezondheid"
+        "health": "Gezondheid",
+        "download_z2m_backup": "Zigbee2MQTT-back-up downloaden"
     },
     "health": {
         "awaiting_next_check": "Wachten op volgende controle",
@@ -429,6 +430,12 @@
         "show_definition": "Definitie tonen",
         "hide_definition": "Definitie verbergen"
     },
+    "contribute": {
+        "donation_text": "Hier kunt u ons bedanken voor al het werk. Een vriendelijk woord is ook welkom ;)",
+        "development": "Ontwikkeling",
+        "contributing": "Hier vindt u informatie om aan dit project bij te dragen",
+        "translation": "Vertaling"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant-integratie (MQTT discovery)",
         "homeassistant-enabled": "Home Assistant-integratie inschakelen",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Naam in Home Assistant",
         "definitions-group-qos": "QoS groep",
         "definitions-group-off_state": "Wanneer OFF/CLOSE voor groep publiceren"
-    },
-    "contribute": {
-        "donation_text": "Hier kunt u ons bedanken voor al het werk. Een vriendelijk woord is ook welkom ;)",
-        "development": "Ontwikkeling",
-        "contributing": "Hier vindt u informatie om aan dit project bij te dragen",
-        "translation": "Vertaling"
     }
 }

@@ -14,7 +14,7 @@ export const Gradient = memo((props: GradientProps) => {
         feature: { length_min, length_max, property },
         deviceValue,
     } = props;
-    const { t } = useTranslation(["gradient", "common"]);
+    const { t } = useTranslation("common");
     const [colors, setColors] = useState<string[]>(length_min > 0 ? Array(length_min).fill("#ffffff") : []);
     const [canAdd, setCanAdd] = useState(false);
     const [canRemove, setCanRemove] = useState(false);
@@ -83,7 +83,7 @@ export const Gradient = memo((props: GradientProps) => {
             )}
             <div>
                 <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onGradientApply}>
-                    {t("common:apply")}
+                    {t(($) => $.apply)}
                 </Button>
             </div>
         </div>

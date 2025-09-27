@@ -70,7 +70,7 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
                     <div className="flex flex-row justify-center items-center gap-2">
                         <span className="loading loading-infinity loading-xl" />
                     </div>
-                    <div className="flex flex-row justify-center items-center gap-2">{t("common:loading")}</div>
+                    <div className="flex flex-row justify-center items-center gap-2">{t(($) => $.loading, { ns: "common" })}</div>
                 </>
             );
         }
@@ -89,7 +89,7 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
                         <>
                             <div className="alert alert-info alert-soft mb-3" role="alert">
                                 <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
-                                {t("copy_paste_on")}
+                                {t(($) => $.copy_paste_on)}
                                 <a href="https://dreampuf.github.io/GraphvizOnline" target="_blank" rel="noreferrer" className="link link-hover">
                                     https://dreampuf.github.io/GraphvizOnline
                                 </a>
@@ -106,7 +106,7 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
                         <>
                             <div className="alert alert-info alert-soft mb-3" role="alert">
                                 <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
-                                {t("copy_paste_on")}
+                                {t(($) => $.copy_paste_on)}
                                 <a href="https://editor.plantuml.com/uml/" target="_blank" rel="noreferrer" className="link link-hover">
                                     https://editor.plantuml.com/uml/
                                 </a>
@@ -123,9 +123,9 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
 
         return (
             <div className="flex flex-col justify-center items-center gap-2">
-                <p className="max-w-prose">{t("begin_info_type")}</p>
-                <p className="max-w-prose">{t("begin_info_routes")}</p>
-                <p className="max-w-prose">{t("begin_info_display")}</p>
+                <p className="max-w-prose">{t(($) => $.begin_info_type)}</p>
+                <p className="max-w-prose">{t(($) => $.begin_info_routes)}</p>
+                <p className="max-w-prose">{t(($) => $.begin_info_display)}</p>
             </div>
         );
     }, [sourceIdx, networkMap, networkMapIsLoading, displayType, t]);
@@ -133,27 +133,27 @@ const NetworkTab = memo(({ sourceIdx }: NetworkTabProps) => {
     return (
         <>
             <div className="flex flex-row flex-wrap justify-center gap-3 mb-2">
-                <SelectField name="type" label={t("type")} value={mapType} onChange={onMapTypeChange}>
-                    <option value="raw">{t("raw")}</option>
-                    <option value="graphviz">{t("graphviz")}</option>
-                    <option value="plantuml">{t("plantuml")}</option>
+                <SelectField name="type" label={t(($) => $.type)} value={mapType} onChange={onMapTypeChange}>
+                    <option value="raw">{t(($) => $.raw)}</option>
+                    <option value="graphviz">{t(($) => $.graphviz)}</option>
+                    <option value="plantuml">{t(($) => $.plantuml)}</option>
                 </SelectField>
-                <CheckboxField name="enable_routes" label={t("enable_routes")} checked={enableRoutes} onChange={onEnableRoutesChange} />
+                <CheckboxField name="enable_routes" label={t(($) => $.enable_routes)} checked={enableRoutes} onChange={onEnableRoutesChange} />
                 <fieldset className="fieldset self-end">
                     <Button
                         className="btn btn-outline btn-primary ms-3 me-6"
                         onClick={onRequestClick}
-                        title={networkMap ? t("reload") : t("load")}
+                        title={networkMap ? t(($) => $.reload) : t(($) => $.load)}
                         disabled={networkMapIsLoading}
                     >
                         {networkMap ? <FontAwesomeIcon icon={faSync} /> : <FontAwesomeIcon icon={faDownLong} />}
-                        {networkMap ? t("reload") : t("load")}
+                        {networkMap ? t(($) => $.reload) : t(($) => $.load)}
                     </Button>
                 </fieldset>
                 {mapType === "raw" && (
-                    <SelectField name="display_type" label={t("display_type")} value={displayType} onChange={onDisplayTypeChange}>
-                        <option value="data">{t("data")}</option>
-                        <option value="map">{t("map")}</option>
+                    <SelectField name="display_type" label={t(($) => $.display_type)} value={displayType} onChange={onDisplayTypeChange}>
+                        <option value="data">{t(($) => $.data)}</option>
+                        <option value="map">{t(($) => $.map)}</option>
                     </SelectField>
                 )}
             </div>

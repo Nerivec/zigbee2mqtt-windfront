@@ -77,14 +77,14 @@ const DeviceCard = memo(
                         <div className="min-w-0">
                             <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover font-semibold">
                                 {device.friendly_name}
-                                {endpoint != null ? ` (${t("endpoint")}: ${endpointName ? `${endpointName} / ` : ""}${endpoint})` : ""}
+                                {endpoint != null ? ` (${t(($) => $.endpoint)}: ${endpointName ? `${endpointName} / ` : ""}${endpoint})` : ""}
                             </Link>
                             {device.description && (
                                 <div className="text-xs opacity-50 truncate" title={device.description}>
                                     {device.description}
                                 </div>
                             )}
-                            <div className="text-xs opacity-50" title={t("last_seen")}>
+                            <div className="text-xs opacity-50" title={t(($) => $.last_seen)}>
                                 <LastSeen lastSeen={deviceState.last_seen} config={lastSeenConfig} />
                             </div>
                             {!hideSourceDot && (
@@ -99,15 +99,15 @@ const DeviceCard = memo(
                     </div>
                     <div className="flex flex-row justify-end mb-2">
                         <Link to={`/device/${sourceIdx}/${device.ieee_address}/exposes`} className="btn btn-xs">
-                            {t("devicePage:exposes")} <FontAwesomeIcon icon={faRightLong} size="lg" />
+                            {t(($) => $.exposes, { ns: "devicePage" })} <FontAwesomeIcon icon={faRightLong} size="lg" />
                         </Link>
                     </div>
                 </div>
                 <div className="flex flex-row flex-wrap gap-1 mx-2 mb-2 justify-around items-center">
-                    <span className="badge badge-soft badge-ghost cursor-default" title={t("lqi")}>
+                    <span className="badge badge-soft badge-ghost cursor-default" title={t(($) => $.lqi)}>
                         <Lqi value={deviceState.linkquality as number | undefined} />
                     </span>
-                    <span className="badge badge-soft badge-ghost cursor-default" title={t("power")}>
+                    <span className="badge badge-soft badge-ghost cursor-default" title={t(($) => $.power)}>
                         <PowerSource
                             device={device}
                             batteryPercent={deviceState.battery as number}

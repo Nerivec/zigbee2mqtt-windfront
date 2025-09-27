@@ -66,12 +66,12 @@ export default function SettingsPage() {
 
     const links = useMemo(
         () => [
-            { to: `/settings/${sourceIdx}/about`, icon: faInfo, title: t("about") },
-            { to: `/settings/${sourceIdx}/health`, icon: faHeartPulse, title: t("health") },
-            { to: `/settings/${sourceIdx}/settings`, icon: faCogs, title: t("settings") },
-            { to: `/settings/${sourceIdx}/tools`, icon: faToolbox, title: t("tools") },
-            { to: `/settings/${sourceIdx}/bridge`, icon: faCode, title: t("bridge") },
-            { to: `/settings/${sourceIdx}/dev-console`, icon: faBug, title: t("dev_console") },
+            { to: `/settings/${sourceIdx}/about`, icon: faInfo, title: t(($) => $.about) },
+            { to: `/settings/${sourceIdx}/health`, icon: faHeartPulse, title: t(($) => $.health) },
+            { to: `/settings/${sourceIdx}/settings`, icon: faCogs, title: t(($) => $.settings) },
+            { to: `/settings/${sourceIdx}/tools`, icon: faToolbox, title: t(($) => $.tools) },
+            { to: `/settings/${sourceIdx}/bridge`, icon: faCode, title: t(($) => $.bridge) },
+            { to: `/settings/${sourceIdx}/dev-console`, icon: faBug, title: t(($) => $.dev_console) },
         ],
         [sourceIdx, t],
     );

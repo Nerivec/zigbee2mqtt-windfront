@@ -252,7 +252,8 @@
         "machine": "Maskine",
         "node_version": "Node-version",
         "version": "Version",
-        "health": "Sundhed"
+        "health": "Sundhed",
+        "download_z2m_backup": "Hent Zigbee2MQTT-sikkerhedskopi"
     },
     "health": {
         "awaiting_next_check": "Venter på næste kontrol",
@@ -429,6 +430,12 @@
         "show_definition": "Vis definition",
         "hide_definition": "Skjul definition"
     },
+    "contribute": {
+        "donation_text": "Her kan du sige tak for alt arbejdet. En venlig kommentar er også velkommen ;)",
+        "development": "Udvikling",
+        "contributing": "Her finder du information om at bidrage til projektet",
+        "translation": "Oversættelse"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant integration (MQTT discovery)",
         "homeassistant-enabled": "Aktiver integration",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "HA Navn",
         "definitions-group-qos": "Gruppe QoS",
         "definitions-group-off_state": "Hvornår OFF/CLOSE"
-    },
-    "contribute": {
-        "donation_text": "Her kan du sige tak for alt arbejdet. En venlig kommentar er også velkommen ;)",
-        "development": "Udvikling",
-        "contributing": "Her finder du information om at bidrage til projektet",
-        "translation": "Oversættelse"
     }
 }

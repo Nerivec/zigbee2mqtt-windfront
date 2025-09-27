@@ -36,11 +36,11 @@ export const UpdateDeviceDescModal = NiceModal.create(({ device, setDeviceDescri
     return (
         <Modal
             isOpen={modal.visible}
-            title={`${t("update_description")} ${device.friendly_name}`}
+            title={`${t(($) => $.update_description)} ${device.friendly_name}`}
             footer={
                 <>
                     <Button className="btn btn-neutral" onClick={modal.remove}>
-                        {t("common:cancel")}
+                        {t(($) => $.cancel, { ns: "common" })}
                     </Button>
                     <Button
                         className="btn btn-primary ms-1"
@@ -49,14 +49,14 @@ export const UpdateDeviceDescModal = NiceModal.create(({ device, setDeviceDescri
                             await setDeviceDescription(device.ieee_address, description);
                         }}
                     >
-                        {t("zigbee:save_description")}
+                        {t(($) => $.save_description)}
                     </Button>
                 </>
             }
         >
             <div className="flex flex-col gap-2">
                 <TextareaField
-                    label={t("description")}
+                    label={t(($) => $.description)}
                     name="update_description"
                     onChange={(e) => setDescription(e.target.value)}
                     rows={3}

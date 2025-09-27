@@ -107,7 +107,7 @@ function ArrSelectFilter<T>({ column, label }: FilterProps<T>) {
                 value={normValue ?? ""}
                 onChange={(e) => column.setFilterValue(e.target.value || undefined)}
             >
-                <option value="">{t("all")}</option>
+                <option value="">{t(($) => $.all)}</option>
                 {values}
             </select>
         </>
@@ -153,7 +153,7 @@ function SelectFilter<T>({ column, label }: FilterProps<T>) {
                 value={normValue ?? ""}
                 onChange={(e) => column.setFilterValue(e.target.value || undefined)}
             >
-                <option value="">{t("all")}</option>
+                <option value="">{t(($) => $.all)}</option>
                 {values}
             </select>
         </>
@@ -223,7 +223,7 @@ export default function TableFiltersDrawer<T>({ columns, resetFilters }: TableFi
         <>
             <div className="flex items-center gap-2 p-2">
                 <FontAwesomeIcon icon={faFilter} />
-                <span className="font-semibold text-md">{t("advanced_search")}</span>
+                <span className="font-semibold text-md">{t(($) => $.advanced_search)}</span>
             </div>
             <div className="flex flex-col gap-2 px-2 pb-2 w-full">
                 {columns.map((col) => {
@@ -233,7 +233,7 @@ export default function TableFiltersDrawer<T>({ columns, resetFilters }: TableFi
                         return null;
                     }
 
-                    const label = typeof col.columnDef.header === "string" && col.columnDef.header ? col.columnDef.header : t(col.id);
+                    const label = typeof col.columnDef.header === "string" && col.columnDef.header ? col.columnDef.header : t(($) => $[col.id]);
 
                     return (
                         <Fragment key={col.id}>
@@ -258,7 +258,7 @@ export default function TableFiltersDrawer<T>({ columns, resetFilters }: TableFi
             <div className="flex flex-row justify-end gap-2 p-3">
                 <Button className="btn btn-sm btn-warning btn-outline mt-5" onClick={resetFilters}>
                     <FontAwesomeIcon icon={faRotateLeft} />
-                    {t("reset")}
+                    {t(($) => $.reset)}
                 </Button>
             </div>
         </>

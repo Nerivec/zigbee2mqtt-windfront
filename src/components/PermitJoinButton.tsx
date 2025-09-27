@@ -65,11 +65,11 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
                             setSelectedRouter([sourceIdx, undefined]);
                         }
                     }}
-                    title={MULTI_INSTANCE ? `${API_NAMES[sourceIdx]} - ${t("all")}` : t("all")}
+                    title={MULTI_INSTANCE ? `${API_NAMES[sourceIdx]} - ${t(($) => $.all)}` : t(($) => $.all)}
                 >
                     <span className={`dropdown-item${selectedRouter[0] === sourceIdx && selectedRouter[1] === undefined ? " menu-active" : ""}`}>
                         <SourceDot idx={sourceIdx} autoHide namePostfix=" - " />
-                        {t("all")}
+                        {t(($) => $.all)}
                     </span>
                 </li>,
             );
@@ -81,7 +81,7 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
     return (
         <DialogDropdown
             buttonChildren={
-                <span title={t("toggle_dropdown")}>
+                <span title={t(($) => $.toggle_dropdown)}>
                     <FontAwesomeIcon icon={faAngleDown} />
                 </span>
             }
@@ -119,18 +119,18 @@ const PermitJoinButton = memo(() => {
             <div className="join join-horizontal w-full">
                 <Button<void> onClick={onPermitJoinClick} className="btn btn-outline btn-primary join-item grow">
                     <FontAwesomeIcon icon={faTowerBroadcast} className={permitJoin ? "text-success" : "text-error"} />
-                    {permitJoin ? t("disable_join") : t("permit_join")}
+                    {permitJoin ? t(($) => $.disable_join) : t(($) => $.permit_join)}
                     {permitJoin && permitJoinTimer}
                 </Button>
 
                 {!permitJoin && <PermitJoinDropdown selectedRouter={selectedRouter} setSelectedRouter={setSelectedRouter} />}
             </div>
             <div
-                className="indicator-item indicator-bottom indicator-center badge badge-primary opacity-95 min-w-0 pointer-events-none"
+                className="indicator-item indicator-bottom indicator-center badge badge-sm badge-primary opacity-95 min-w-0 pointer-events-none"
                 style={{ "--indicator-y": "65%" } as CSSProperties}
             >
                 <SourceDot idx={selectedRouter[0]} autoHide alwaysHideName />
-                <span className="truncate">{selectedRouter[1]?.friendly_name ?? t("all")}</span>
+                <span className="truncate">{selectedRouter[1]?.friendly_name ?? t(($) => $.all)}</span>
             </div>
         </div>
     );

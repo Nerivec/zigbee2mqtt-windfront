@@ -9,7 +9,7 @@ type OtaLinkProps = {
 const OtaLink = memo(({ device }: OtaLinkProps) => {
     const { t } = useTranslation("zigbee");
     let url = "https://github.com/Koenkk/zigbee-OTA/releases";
-    const title = device.software_build_id || t("unknown");
+    const title = device.software_build_id || t(($) => $.unknown);
 
     switch (device?.definition?.vendor) {
         case "IKEA":

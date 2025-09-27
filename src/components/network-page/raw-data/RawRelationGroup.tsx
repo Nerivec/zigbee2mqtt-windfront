@@ -47,7 +47,7 @@ const RawRelationGroup = memo(({ sourceIdx, devices, relationship, relations, hi
                             />
                         ) : (
                             <li key={`${relation.source.ieeeAddr}-${relation.target.ieeeAddr}`}>
-                                {t("zigbee:unknown")}: {relation.source.ieeeAddr}
+                                {t(($) => $.unknown, { ns: "zigbee" })}: {relation.source.ieeeAddr}
                             </li>
                         );
                     })}

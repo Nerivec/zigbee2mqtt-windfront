@@ -45,7 +45,7 @@ const DashboardItem = ({
                     <Button<void>
                         onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
                         className="btn btn-outline btn-error btn-square btn-sm join-item"
-                        title={t("remove_device")}
+                        title={t(($) => $.remove_device)}
                     >
                         <FontAwesomeIcon icon={faTrash} />
                     </Button>

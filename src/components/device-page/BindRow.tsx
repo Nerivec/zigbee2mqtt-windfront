@@ -159,7 +159,7 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
         <>
             <div className="flex flex-row flex-wrap gap-2">
                 <EndpointPicker
-                    label={t("source_endpoint")}
+                    label={t(($) => $.source_endpoint)}
                     disabled={!stateRule.isNew}
                     values={sourceEndpoints}
                     value={stateRule.source.endpoint}
@@ -167,7 +167,7 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                     required
                 />
                 <DevicePicker
-                    label={t("destination")}
+                    label={t(($) => $.destination)}
                     disabled={!stateRule.isNew}
                     value={"ieee_address" in stateRule.target ? stateRule.target.ieee_address : stateRule.target.id}
                     devices={devices}
@@ -177,7 +177,7 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                 />
                 {stateRule.target.type === "endpoint" ? (
                     <EndpointPicker
-                        label={t("destination_endpoint")}
+                        label={t(($) => $.destination_endpoint)}
                         disabled={!stateRule.isNew}
                         values={destinationEndpoints}
                         value={stateRule.target.endpoint}
@@ -185,30 +185,35 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                     />
                 ) : null}
                 <div className="grow w-128">
-                    <ClusterMultiPicker label={t("clusters")} clusters={possibleClusters} value={stateRule.clusters} onChange={onClustersChange} />
+                    <ClusterMultiPicker
+                        label={t(($) => $.clusters)}
+                        clusters={possibleClusters}
+                        value={stateRule.clusters}
+                        onChange={onClustersChange}
+                    />
                 </div>
                 <fieldset className="fieldset">
-                    <legend className="fieldset-legend">{t("actions")}</legend>
+                    <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
                     <div className="join join-horizontal">
                         <Button<Action>
                             item={"Bind"}
                             disabled={!isValidRule}
-                            title={t("bind")}
+                            title={t(($) => $.bind)}
                             className="btn btn-primary btn-outline join-item"
                             onClick={onBindOrUnBindClick}
                         >
                             <FontAwesomeIcon icon={faLink} />
-                            {t("bind")}&nbsp;
+                            {t(($) => $.bind)}&nbsp;
                         </Button>
                         <Button<Action>
                             item={"Unbind"}
                             disabled={stateRule.isNew || !isValidRule}
-                            title={t("unbind")}
+                            title={t(($) => $.unbind)}
                             className="btn btn-error btn-outline join-item"
                             onClick={onBindOrUnBindClick}
                         >
                             <FontAwesomeIcon icon={faUnlink} />
-                            &nbsp;{t("unbind")}
+                            &nbsp;{t(($) => $.unbind)}
                         </Button>
                     </div>
                 </fieldset>

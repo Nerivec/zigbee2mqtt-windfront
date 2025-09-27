@@ -59,7 +59,7 @@ export default function Health({ sourceIdx }: HealthProps) {
             {
                 id: "friendly_name",
                 minSize: 175,
-                header: t("common:friendly_name"),
+                header: t(($) => $.friendly_name, { ns: "common" }),
                 accessorFn: ({ device }) => `${device.friendly_name} ${device.description ?? ""}`,
                 cell: ({
                     row: {
@@ -91,7 +91,7 @@ export default function Health({ sourceIdx }: HealthProps) {
             {
                 id: "ieee_address",
                 minSize: 175,
-                header: t("zigbee:ieee_address"),
+                header: t(($) => $.ieee_address, { ns: "zigbee" }),
                 accessorFn: ({ device }) => `${device.ieee_address} ${toHex(device.network_address, 4)} ${device.network_address}`,
                 cell: ({
                     row: {
@@ -105,10 +105,10 @@ export default function Health({ sourceIdx }: HealthProps) {
                             </Link>
                         </div>
                         <div className="flex flex-row gap-1">
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t("zigbee:network_address_hex")}>
+                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_hex, { ns: "zigbee" })}>
                                 {toHex(device.network_address, 4)}
                             </span>
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t("zigbee:network_address_dec")}>
+                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_dec, { ns: "zigbee" })}>
                                 {device.network_address}
                             </span>
                         </div>
@@ -122,7 +122,7 @@ export default function Health({ sourceIdx }: HealthProps) {
             },
             {
                 id: "messages",
-                header: t("messages"),
+                header: t(($) => $.messages),
                 accessorFn: ({ health }) => health.messages,
                 filterFn: "inNumberRange",
                 meta: {
@@ -131,7 +131,7 @@ export default function Health({ sourceIdx }: HealthProps) {
             },
             {
                 id: "messages_per_sec",
-                header: t("messages_per_sec"),
+                header: t(($) => $.messages_per_sec),
                 accessorFn: ({ health }) => health.messages_per_sec,
                 cell: ({
                     row: {
@@ -149,7 +149,7 @@ export default function Health({ sourceIdx }: HealthProps) {
                                   : ""
                         }
                     >
-                        {health.messages_per_sec <= 0.001 ? t("very_low") : health.messages_per_sec}
+                        {health.messages_per_sec <= 0.001 ? t(($) => $.very_low) : health.messages_per_sec}
                     </span>
                 ),
                 filterFn: "inNumberRange",
@@ -159,7 +159,7 @@ export default function Health({ sourceIdx }: HealthProps) {
             },
             {
                 id: "leave_count",
-                header: t("leave_count"),
+                header: t(($) => $.leave_count),
                 accessorFn: ({ health }) => health.leave_count,
                 filterFn: "inNumberRange",
                 meta: {
@@ -168,7 +168,7 @@ export default function Health({ sourceIdx }: HealthProps) {
             },
             {
                 id: "network_address_changes",
-                header: t("network_address_changes"),
+                header: t(($) => $.network_address_changes),
                 accessorFn: ({ health }) => health.network_address_changes,
                 filterFn: "inNumberRange",
                 meta: {
@@ -185,7 +185,7 @@ export default function Health({ sourceIdx }: HealthProps) {
         return (
             <div className="alert alert-info alert-soft" role="alert">
                 <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
-                {t("awaiting_next_check")}
+                {t(($) => $.awaiting_next_check)}
             </div>
         );
     }
@@ -196,26 +196,26 @@ export default function Health({ sourceIdx }: HealthProps) {
 
     return (
         <>
-            <InfoAlert>{t("interview_info")}</InfoAlert>
+            <InfoAlert>{t(($) => $.interview_info)}</InfoAlert>
 
             <div className="collapse collapse-arrow bg-base-100 shadow mb-3">
                 <input type="checkbox" />
                 <div className="collapse-title text-lg font-semibold text-center w-full">
-                    {t("os")} / {t("process")} / MQTT
+                    {t(($) => $.os)} / {t(($) => $.process)} / MQTT
                 </div>
                 <div className="collapse-content">
                     <div className="flex flex-col gap-3 items-center mb-2 w-full">
                         <p className="text-sm" title={bridgeResponseTime.toLocaleString()}>
-                            {t("last_check")}: {format(bridgeResponseTime, i18n.language)}
+                            {t(($) => $.last_check)}: {format(bridgeResponseTime, i18n.language)}
                         </p>
                         <div className="stats stats-vertical lg:stats-horizontal shadow">
                             <div className="stat place-items-center">
-                                <div className="stat-value text-xl">{t("os")}</div>
+                                <div className="stat-value text-xl">{t(($) => $.os)}</div>
                             </div>
                             {/* not available on Windows */}
                             {bridgeHealth.os.load_average.some((v) => v !== 0) && (
                                 <div className="stat place-items-center">
-                                    <div className="stat-title">{t("load_average")}</div>
+                                    <div className="stat-title">{t(($) => $.load_average)}</div>
                                     <div className="stat-value text-lg">{bridgeHealth.os.load_average.join(", ")}</div>
                                     <div className="stat-desc">
                                         <a href={LOAD_AVERAGE_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
@@ -225,44 +225,44 @@ export default function Health({ sourceIdx }: HealthProps) {
                                 </div>
                             )}
                             <div className="stat place-items-center">
-                                <div className="stat-title">{t("ram_usage")}</div>
+                                <div className="stat-title">{t(($) => $.ram_usage)}</div>
                                 <div className="stat-value text-lg">{bridgeHealth.os.memory_percent} %</div>
                                 <div className="stat-desc">{bridgeHealth.os.memory_used_mb} MB</div>
                             </div>
                         </div>
                         <div className="stats stats-vertical lg:stats-horizontal shadow">
                             <div className="stat place-items-center">
-                                <div className="stat-value text-xl">{t("process")}</div>
+                                <div className="stat-value text-xl">{t(($) => $.process)}</div>
                             </div>
                             <div className="stat place-items-center">
-                                <div className="stat-title">{t("uptime")}</div>
+                                <div className="stat-title">{t(($) => $.uptime)}</div>
                                 <div className="stat-value text-lg">{format(processStartTime, i18n.language)}</div>
                                 <div className="stat-desc">{processStartTime.toLocaleString()}</div>
                             </div>
                             <div className="stat place-items-center">
-                                <div className="stat-title">{t("ram_usage")}</div>
+                                <div className="stat-title">{t(($) => $.ram_usage)}</div>
                                 <div className="stat-value text-lg">{bridgeHealth.process.memory_percent} %</div>
                                 <div className="stat-desc">{bridgeHealth.process.memory_used_mb} MB</div>
                             </div>
                         </div>
                         <div className="stats stats-vertical lg:stats-horizontal shadow">
                             <div className="stat place-items-center">
-                                <div className="stat-value text-xl">{t("settings:mqtt")}</div>
+                                <div className="stat-value text-xl">{t(($) => $.mqtt, { ns: "settings" })}</div>
                             </div>
                             <div className="stat place-items-center">
                                 <div className="stat-value text-lg">
                                     <FontAwesomeIcon icon={faDotCircle} className={bridgeHealth.mqtt.connected ? "text-success" : "text-error"} />
                                 </div>
                                 <div className="stat-desc">
-                                    {t("queued")}: {bridgeHealth.mqtt.queued}
+                                    {t(($) => $.queued)}: {bridgeHealth.mqtt.queued}
                                 </div>
                             </div>
                             <div className="stat place-items-center">
-                                <div className="stat-title">{t("published")}</div>
+                                <div className="stat-title">{t(($) => $.published)}</div>
                                 <div className="stat-value text-lg">{bridgeHealth.mqtt.published}</div>
                             </div>
                             <div className="stat place-items-center">
-                                <div className="stat-title">{t("received")}</div>
+                                <div className="stat-title">{t(($) => $.received)}</div>
                                 <div className="stat-value text-lg">{bridgeHealth.mqtt.received}</div>
                             </div>
                         </div>
@@ -290,39 +290,39 @@ export default function Health({ sourceIdx }: HealthProps) {
                                 <div className="stat-desc">{status?.[0]}</div>
                             </div>
                             <div className="stat place-items-center">
-                                <div className="stat-title">{t("reconnects")}</div>
+                                <div className="stat-title">{t(($) => $.reconnects)}</div>
                                 <div className="stat-value text-lg">{webSocketMetrics.reconnects}</div>
                             </div>
                             <div className="stat place-items-center">
-                                <div className="stat-title">{t("pending_requests")}</div>
+                                <div className="stat-title">{t(($) => $.pending_requests)}</div>
                                 <div className="stat-value text-lg">{webSocketMetrics.pendingRequests}</div>
                             </div>
                         </div>
                         <div className="stats stats-vertical lg:stats-horizontal shadow">
                             <div className="stat place-items-center">
-                                <div className="stat-title">{t("last_message")}</div>
+                                <div className="stat-title">{t(($) => $.last_message)}</div>
                                 <div className="stat-value text-lg">{format(wsLastMessageTime, i18n.language)}</div>
                                 <div className="stat-desc">{wsLastMessageTime.toLocaleString()}</div>
                             </div>
                             <div className="stat place-items-center">
-                                <div className="stat-title">{t("sent")}</div>
+                                <div className="stat-title">{t(($) => $.sent)}</div>
                                 <div className="stat-value text-lg">{webSocketMetrics.messagesSent}</div>
                                 <div className="stat-desc">{Math.round((webSocketMetrics.bytesSent / 1024 / 1024) * 100.0) / 100.0} MB</div>
                             </div>
                             <div className="stat place-items-center">
-                                <div className="stat-title">{t("received")}</div>
+                                <div className="stat-title">{t(($) => $.received)}</div>
                                 <div className="stat-value text-lg">{webSocketMetrics.messagesReceived}</div>
                                 <div className="stat-desc">{Math.round((webSocketMetrics.bytesReceived / 1024 / 1024) * 100.0) / 100.0} MB</div>
                             </div>
                             <div className="stat place-items-center">
                                 <div className="stat-title">
-                                    {t("received")}: {t("settings:bridge")}
+                                    {t(($) => $.received)}: {t(($) => $.bridge, { ns: "settings" })}
                                 </div>
                                 <div className="stat-value text-lg">{webSocketMetrics.messagesBridge}</div>
                             </div>
                             <div className="stat place-items-center">
                                 <div className="stat-title">
-                                    {t("received")}: {t("common:devices")}
+                                    {t(($) => $.received)}: {t(($) => $.devices, { ns: "common" })}
                                 </div>
                                 <div className="stat-value text-lg">{webSocketMetrics.messagesDevice}</div>
                             </div>

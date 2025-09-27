@@ -252,7 +252,8 @@
         "machine": "Maskin",
         "node_version": "Node-versjon",
         "version": "Versjon",
-        "health": "Helse"
+        "health": "Helse",
+        "download_z2m_backup": "Last ned Zigbee2MQTT-sikkerhetskopi"
     },
     "health": {
         "awaiting_next_check": "Venter på neste sjekk",
@@ -429,6 +430,12 @@
         "show_definition": "Vis definisjon",
         "hide_definition": "Skjul definisjon"
     },
+    "contribute": {
+        "donation_text": "Her kan du takke oss for arbeidet. Et vennlig ord settes også pris på ;)",
+        "development": "Utvikling",
+        "contributing": "Her finner du informasjon om hvordan du kan bidra til dette prosjektet",
+        "translation": "Oversettelse"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant integrasjon (MQTT discovery)",
         "homeassistant-enabled": "Aktiver integrasjon",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Navn i Home Assistant",
         "definitions-group-qos": "QoS gruppe",
         "definitions-group-off_state": "Når publisere OFF/CLOSE"
-    },
-    "contribute": {
-        "donation_text": "Her kan du takke oss for arbeidet. Et vennlig ord settes også pris på ;)",
-        "development": "Utvikling",
-        "contributing": "Her finner du informasjon om hvordan du kan bidra til dette prosjektet",
-        "translation": "Oversettelse"
     }
 }

@@ -252,7 +252,8 @@
         "machine": "머신",
         "node_version": "Node 버전",
         "version": "버전",
-        "health": "상태"
+        "health": "상태",
+        "download_z2m_backup": "Zigbee2MQTT 백업 다운로드"
     },
     "health": {
         "awaiting_next_check": "다음 점검 대기",
@@ -429,6 +430,12 @@
         "show_definition": "정의 표시",
         "hide_definition": "정의 숨기기"
     },
+    "contribute": {
+        "donation_text": "여기에서 우리의 노력에 감사의 마음을 전할 수 있습니다. 따뜻한 한마디도 환영합니다 ;)",
+        "development": "개발",
+        "contributing": "이 프로젝트에 기여하는 방법은 여기에서 확인하세요",
+        "translation": "번역"
+    },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant 통합 (MQTT Discovery)",
         "homeassistant-enabled": "Home Assistant 통합 활성화",
@@ -535,11 +542,5 @@
         "definitions-device-homeassistant-name": "Home Assistant 내 이름",
         "definitions-group-qos": "이 그룹 MQTT QoS",
         "definitions-group-off_state": "OFF/CLOSE 발행 시점 제어"
-    },
-    "contribute": {
-        "donation_text": "여기에서 우리의 노력에 감사의 마음을 전할 수 있습니다. 따뜻한 한마디도 환영합니다 ;)",
-        "development": "개발",
-        "contributing": "이 프로젝트에 기여하는 방법은 여기에서 확인하세요",
-        "translation": "번역"
     }
 }

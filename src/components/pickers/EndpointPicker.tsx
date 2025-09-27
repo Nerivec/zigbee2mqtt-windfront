@@ -34,13 +34,13 @@ const EndpointPicker = memo((props: EndpointPickerProps) => {
             label={label}
             value={value ?? ""}
             onChange={(e) => onChange(e.target.value)}
-            title={hasOnlyOneEP ? t("the_only_endpoint") : ""}
+            title={hasOnlyOneEP ? t(($) => $.the_only_endpoint) : ""}
             disabled={(value && hasOnlyOneEP) || disabled}
             className="select validator max-w-32"
             {...rest}
         >
             <option value="" disabled>
-                {t("select_endpoint")}
+                {t(($) => $.select_endpoint)}
             </option>
             {options}
         </SelectField>

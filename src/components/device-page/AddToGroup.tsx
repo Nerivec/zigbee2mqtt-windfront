@@ -42,17 +42,23 @@ const AddToGroup = memo(({ sourceIdx, device, nonMemberGroups }: AddToGroupProps
 
     return (
         <>
-            <h2 className="text-lg font-semibold">{t("add_to_group")}</h2>
+            <h2 className="text-lg font-semibold">{t(($) => $.add_to_group)}</h2>
             <div className="mb-3">
-                <GroupPicker label={t("zigbee:group")} value={groupId} groups={nonMemberGroups} onChange={onGroupChange} required />
-                <EndpointPicker label={t("zigbee:endpoint")} values={endpoints} value={endpoint} onChange={(e) => setEndpoint(e)} required />
+                <GroupPicker label={t(($) => $.group, { ns: "zigbee" })} value={groupId} groups={nonMemberGroups} onChange={onGroupChange} required />
+                <EndpointPicker
+                    label={t(($) => $.endpoint, { ns: "zigbee" })}
+                    values={endpoints}
+                    value={endpoint}
+                    onChange={(e) => setEndpoint(e)}
+                    required
+                />
             </div>
             <Button<void>
                 onClick={addToGroup}
                 className="btn btn-primary"
                 disabled={endpoint == null || groupId == null || endpoint === "" || groupId === ""}
             >
-                {t("add_to_group")}
+                {t(($) => $.add_to_group)}
             </Button>
         </>
     );

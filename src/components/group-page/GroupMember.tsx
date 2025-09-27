@@ -64,9 +64,9 @@ const GroupMember = ({
                 <ConfirmButton<string>
                     onClick={onCardRemove}
                     className="btn btn-square btn-outline btn-error btn-sm"
-                    title={t("remove_from_group")}
-                    modalDescription={t("common:dialog_confirmation_prompt")}
-                    modalCancelLabel={t("common:cancel")}
+                    title={t(($) => $.remove_from_group)}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 >
                     <FontAwesomeIcon icon={faTrash} />
                 </ConfirmButton>
