@@ -1,16 +1,16 @@
 import {
+    faAnglesLeft,
     faBars,
-    faChevronLeft,
     faCogs,
     faDisplay,
-    faGrip,
     faHeart,
     faHexagonNodes,
-    faLayerGroup,
+    faList,
     faMicrochip,
+    faMobileVibrate,
     faPlug,
-    faTableList,
-    faWandMagicSparkles,
+    faTableCellsLarge,
+    faTableColumns,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, memo, useEffect, useMemo, useRef, useState } from "react";
@@ -44,13 +44,13 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
 
     const links = useMemo(
         () => [
+            { to: "/dashboard", icon: faTableColumns, title: t("dashboard") },
             { to: "/devices", icon: faPlug, title: t("devices") },
-            { to: "/dashboard", icon: faGrip, title: t("dashboard") },
-            { to: "/groups", icon: faLayerGroup, title: t("groups") },
+            { to: "/groups", icon: faTableCellsLarge, title: t("groups") },
             { to: "/ota", icon: faMicrochip, title: t("ota") },
-            { to: "/touchlink", icon: faWandMagicSparkles, title: t("touchlink") },
+            { to: "/touchlink", icon: faMobileVibrate, title: t("touchlink") },
             { to: "/network", icon: faHexagonNodes, title: t("network") },
-            { to: "/logs", icon: faTableList, title: t("logs") },
+            { to: "/logs", icon: faList, title: t("logs") },
             { to: "/settings", icon: faCogs, title: t("settings") },
             { to: "/frontend-settings", icon: faDisplay, title: t("frontend_settings") },
         ],
@@ -103,7 +103,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                         className="drawer-overlay lg:hidden"
                         onClick={() => setSidebarCollapsed(true)}
                     />
-                    <aside className={`bg-base-200 min-h-screen ${sidebarCollapsed ? "w-16" : "w-64"}`}>
+                    <aside className={`bg-base-200 min-h-screen ${sidebarCollapsed ? "lg:w-16" : "w-64"}`}>
                         <nav className="flex flex-col h-full w-full">
                             <ul className="menu w-full p-2">
                                 <li>
@@ -119,7 +119,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                                         }
                                         onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
                                     >
-                                        <FontAwesomeIcon icon={sidebarCollapsed ? faBars : faChevronLeft} size="lg" />
+                                        <FontAwesomeIcon icon={sidebarCollapsed ? faBars : faAnglesLeft} size="lg" />
                                         <span className="inline lg:hidden">Zigbee2MQTT</span>
                                         <span className={linkLabelLargeClassName}>Zigbee2MQTT</span>
                                     </button>

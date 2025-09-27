@@ -23,12 +23,10 @@ const Countdown = memo((props: CountdownProps) => {
     const showMinutes = !props.hideZeroes || minutes > 0;
 
     return (
-        <span className="countdown">
-            {showHours && <span style={{ "--value": hours } as React.CSSProperties}>{hours}</span>}
-            {showHours && ":"}
-            {showMinutes && <span style={{ "--value": minutes } as React.CSSProperties}>{minutes}</span>}
-            {showMinutes && ":"}
-            <span style={{ "--value": seconds } as React.CSSProperties}>{seconds}</span>
+        <span className="">
+            {showHours ? `${hours}:` : ""}
+            {showMinutes ? `${minutes.toString().padStart(2, "0")}:` : ""}
+            {seconds.toString().padStart(2, "0")}
         </span>
     );
 });
