@@ -97,7 +97,7 @@ export default function FrontendSettingsPage() {
             <NavBarContent>
                 <div className="flex flex-row flex-wrap flex-1 gap-1.5">
                     <ConfirmButton<void>
-                        className="btn btn-sm btn-outline btn-error"
+                        className="btn btn-sm btn-outline btn-error tooltip-bottom"
                         onClick={resetSettings}
                         title={t(($) => $.reset_settings)}
                         modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
@@ -106,7 +106,7 @@ export default function FrontendSettingsPage() {
                         {t(($) => $.reset_settings)}
                     </ConfirmButton>
                     <ConfirmButton<void>
-                        className="btn btn-sm btn-outline btn-error"
+                        className="btn btn-sm btn-outline btn-error tooltip-bottom"
                         onClick={resetAuth}
                         title={t(($) => $.reset_auth)}
                         modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
@@ -115,7 +115,7 @@ export default function FrontendSettingsPage() {
                         {t(($) => $.reset_auth)}
                     </ConfirmButton>
                     <ConfirmButton<void>
-                        className="btn btn-sm btn-outline btn-error"
+                        className="btn btn-sm btn-outline btn-error tooltip-bottom"
                         onClick={resetAll}
                         title={t(($) => $.reset_all)}
                         modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}

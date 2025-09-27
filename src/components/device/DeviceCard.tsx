@@ -104,10 +104,10 @@ const DeviceCard = memo(
                     </div>
                 </div>
                 <div className="flex flex-row flex-wrap gap-1 mx-2 mb-2 justify-around items-center">
-                    <span className="badge badge-soft badge-ghost cursor-default" title={t(($) => $.lqi)}>
+                    <span className="badge badge-soft badge-ghost cursor-default tooltip" data-tip={t(($) => $.lqi)}>
                         <Lqi value={deviceState.linkquality as number | undefined} />
                     </span>
-                    <span className="badge badge-soft badge-ghost cursor-default" title={t(($) => $.power)}>
+                    <span className="badge badge-soft badge-ghost cursor-default tooltip" data-tip={t(($) => $.power)}>
                         <PowerSource
                             device={device}
                             batteryPercent={deviceState.battery as number}

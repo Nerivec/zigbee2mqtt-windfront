@@ -36,7 +36,7 @@ export default function TableSearch<T>({ table, resetFilters, globalFilter, colu
                 <Button
                     item=""
                     onClick={table.setGlobalFilter}
-                    className="btn btn-sm lg:btn-md btn-square btn-warning btn-outline join-item"
+                    className="btn btn-sm lg:btn-md btn-square btn-warning btn-outline join-item tooltip-bottom"
                     title={t(($) => $.clear)}
                     disabled={globalFilter == null || globalFilter === ""}
                 >
@@ -49,16 +49,16 @@ export default function TableSearch<T>({ table, resetFilters, globalFilter, colu
                     <div className="join">
                         <label
                             htmlFor="table-filters-drawer"
-                            className="drawer-button btn btn-sm lg:btn-md btn-info btn-outline join-item"
+                            className="drawer-button btn btn-sm lg:btn-md btn-info btn-outline join-item tooltip tooltip-bottom"
                             onClick={() => setDrawerOpen(!drawerOpen)}
-                            title={t(($) => $.advanced_search)}
+                            data-tip={t(($) => $.advanced_search)}
                         >
                             <FontAwesomeIcon icon={faFilter} />
                             {t(($) => $.advanced_search)}
                             {activeFiltersCount > 0 ? <span className="badge badge-info badge-xs lg:badge-sm">{activeFiltersCount}</span> : null}
                         </label>
                         <Button<void>
-                            className="btn btn-sm lg:btn-md btn-square btn-warning btn-outline join-item"
+                            className="btn btn-sm lg:btn-md btn-square btn-warning btn-outline join-item tooltip-bottom"
                             title={t(($) => $.reset)}
                             onClick={() => {
                                 resetFilters();

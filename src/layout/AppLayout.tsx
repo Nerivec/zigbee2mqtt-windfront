@@ -30,7 +30,7 @@ type AppLayoutProps = {
 };
 
 // XXX: `leading-none` prevents misalignment when sidebar collapsed/not collapsed (icon/icon+text)
-const isNavActive = ({ isActive }: NavLinkRenderProps) => `py-2.5 leading-none ${isActive ? "menu-active" : ""}`;
+const isNavActive = ({ isActive }: NavLinkRenderProps) => `py-2.5 leading-none lg:grid lg:tooltip lg:tooltip-right ${isActive ? "menu-active" : ""}`;
 
 const AppLayout = memo(({ children }: AppLayoutProps) => {
     const { t } = useTranslation(["navbar", "common"]);
@@ -96,7 +96,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                     </div>
                     <main className="pt-2 px-2 grow [scrollbar-gutter:stable]">{children}</main>
                 </div>
-                <div className="drawer-side">
+                <div className="drawer-side lg:overflow-visible!">
                     <label
                         htmlFor="sidebar-drawer"
                         aria-label="close sidebar"
@@ -109,14 +109,8 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                                 <li>
                                     <button
                                         type="button"
-                                        className="py-2.5 leading-none hidden lg:grid"
-                                        title={
-                                            sidebarCollapsed
-                                                ? window.location !== window.parent.location
-                                                    ? `Zigbee2MQTT@${window.location.hostname}`
-                                                    : ""
-                                                : ""
-                                        }
+                                        className="py-2.5 leading-none hidden lg:grid lg:tooltip lg:tooltip-right"
+                                        data-tip={window.location !== window.parent.location ? `Zigbee2MQTT@${window.location.hostname}` : ""}
                                         onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
                                     >
                                         <FontAwesomeIcon icon={sidebarCollapsed ? faBars : faAnglesLeft} size="lg" />
@@ -125,8 +119,13 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                                     </button>
                                 </li>
                                 {links.map((link) => (
-                                    <li key={link.to} title={link.title}>
-                                        <NavLink to={link.to} className={isNavActive} onClick={onSidebarLinkClick}>
+                                    <li key={link.to}>
+                                        <NavLink
+                                            to={link.to}
+                                            className={isNavActive}
+                                            onClick={onSidebarLinkClick}
+                                            data-tip={sidebarCollapsed ? link.title : ""}
+                                        >
                                             <FontAwesomeIcon icon={link.icon} size="lg" />
                                             <span className="inline lg:hidden">{link.title}</span>
                                             <span className={linkLabelLargeClassName}>{link.title}</span>

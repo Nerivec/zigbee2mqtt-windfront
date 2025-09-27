@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import { useShallow } from "zustand/react/shallow";
 import { PERMIT_JOIN_TIME_KEY } from "../localStoreConsts.js";
-import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
+import { API_URLS, useAppStore } from "../store.js";
 import type { Device } from "../types.js";
 import { sendMessage } from "../websocket/WebSocketManager.js";
 import Button from "./Button.js";
@@ -38,7 +38,6 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
                                     setSelectedRouter([sourceIdx, device]);
                                 }
                             }}
-                            title={MULTI_INSTANCE ? `${API_NAMES[sourceIdx]} - ${device.friendly_name}` : device.friendly_name}
                         >
                             <span
                                 className={`dropdown-item${selectedRouter[0] === sourceIdx && selectedRouter[1]?.ieee_address === device.ieee_address ? " menu-active" : ""}`}
@@ -65,7 +64,6 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
                             setSelectedRouter([sourceIdx, undefined]);
                         }
                     }}
-                    title={MULTI_INSTANCE ? `${API_NAMES[sourceIdx]} - ${t(($) => $.all)}` : t(($) => $.all)}
                 >
                     <span className={`dropdown-item${selectedRouter[0] === sourceIdx && selectedRouter[1] === undefined ? " menu-active" : ""}`}>
                         <SourceDot idx={sourceIdx} autoHide namePostfix=" - " />
@@ -81,7 +79,7 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
     return (
         <DialogDropdown
             buttonChildren={
-                <span title={t(($) => $.toggle_dropdown)}>
+                <span className="tooltip tooltip-right" data-tip={t(($) => $.toggle_dropdown)}>
                     <FontAwesomeIcon icon={faAngleDown} />
                 </span>
             }

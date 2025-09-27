@@ -11,7 +11,7 @@ interface ConfirmButtonProps<T>
 }
 
 export default function ConfirmButton<T>(props: ConfirmButtonProps<T>): JSX.Element {
-    const { children, item, onClick, modalDescription, modalCancelLabel, title, ...rest } = props;
+    const { children, item, onClick, modalDescription, modalCancelLabel, title, className, ...rest } = props;
 
     const onClickHandler = useCallback(async (): Promise<void> => {
         await NiceModal.show(DialogConfirmationModal, {
@@ -24,7 +24,7 @@ export default function ConfirmButton<T>(props: ConfirmButtonProps<T>): JSX.Elem
     }, [item, onClick, title, modalDescription, modalCancelLabel]);
 
     return (
-        <button type="button" title={title} {...rest} onClick={onClickHandler}>
+        <button type="button" className={`${className} tooltip`} data-tip={title} {...rest} onClick={onClickHandler}>
             {children}
         </button>
     );

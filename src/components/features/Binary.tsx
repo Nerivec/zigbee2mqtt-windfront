@@ -43,7 +43,7 @@ const Binary = memo((props: BinaryProps) => {
                 {valueExists ? (
                     <input className="toggle" type="checkbox" checked={deviceValue === valueOn} onChange={onCheckboxChange} />
                 ) : (
-                    <span title={t(($) => $.unknown)}>
+                    <span className="tooltip" data-tip={t(($) => $.unknown)}>
                         <FontAwesomeIcon icon={faQuestion} />
                     </span>
                 )}

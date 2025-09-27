@@ -153,6 +153,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
                     <div className="join join-horizontal">
                         <Button<NiceReportingRule>
+                            title={t(($) => $.apply, { ns: "common" })}
                             className="btn btn-primary btn-outline join-item"
                             item={stateRule}
                             onClick={onApply}

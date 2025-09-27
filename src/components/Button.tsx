@@ -6,10 +6,16 @@ interface ButtonProps<T> extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "
 }
 
 export default function Button<T>(props: ButtonProps<T>): JSX.Element {
-    const { children, item, onClick, ...rest } = props;
+    const { children, item, onClick, title, className, ...rest } = props;
 
     return (
-        <button type="button" {...rest} onClick={async () => await onClick?.(item as T)}>
+        <button
+            type="button"
+            className={`${className} ${title ? "tooltip" : ""}`}
+            data-tip={title}
+            {...rest}
+            onClick={async () => await onClick?.(item as T)}
+        >
             {children}
         </button>
     );

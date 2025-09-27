@@ -23,7 +23,11 @@ const Notification = memo(({ log, onClick }: NotificationProps) => {
     const alertRef = useRef<HTMLDivElement | null>(null);
 
     return (
-        <div ref={alertRef} className={`alert ${LOG_LEVELS_CMAP[log.level]} break-all gap-1 p-2 pe-0.5`} title={log.timestamp}>
+        <div
+            ref={alertRef}
+            className={`alert ${LOG_LEVELS_CMAP[log.level]} break-all gap-1 p-2 pe-0.5 tooltip tooltip-left`}
+            data-tip={log.timestamp}
+        >
             <span>{log.message}</span>
             <div className="justify-self-end">
                 <Button item={alertRef} onClick={onClick} className="btn btn-xs btn-square">

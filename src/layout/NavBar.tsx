@@ -1,6 +1,7 @@
 import { faBars, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, type useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useAppStore } from "../store.js";
 import { useNavBarContent } from "./NavBarContext.js";
 
@@ -12,6 +13,8 @@ type NavBarProps = {
 
 const NavBar = memo(({ setSidebarCollapsed, showNotifications, setShowNotifications }: NavBarProps) => {
     const content = useNavBarContent();
+    const { t } = useTranslation("common");
+
     const notificationsAlert = useAppStore((state) => state.notificationsAlert);
 
     return (
@@ -31,7 +34,8 @@ const NavBar = memo(({ setSidebarCollapsed, showNotifications, setShowNotificati
             <div className="flex flex-row flex-wrap gap-1 items-center ml-auto">
                 <label
                     htmlFor="notifications-drawer"
-                    className="drawer-button btn btn-outline btn-primary"
+                    className="drawer-button btn btn-outline btn-primary tooltip tooltip-left"
+                    data-tip={t(($) => $.notifications)}
                     aria-label="toggle notifications"
                     onClick={() => setShowNotifications(!showNotifications)}
                 >

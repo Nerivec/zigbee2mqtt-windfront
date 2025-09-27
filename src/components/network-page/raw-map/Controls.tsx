@@ -85,12 +85,12 @@ const Controls = memo(
             <>
                 {/** 19rem matches for 2x w-36 select currently in right side */}
                 <div className="absolute z-9 top-0 left-0 p-1 flex flex-row flex-wrap gap-1 items-start max-w-[calc(100vw-19rem)] md:max-w-none">
-                    <Button title={t(($) => $.download_image)} className="btn btn-square btn-neutral btn-sm" onClick={downloadAsImage}>
+                    <Button title={t(($) => $.download_image)} className="btn btn-square btn-neutral btn-sm tooltip-right" onClick={downloadAsImage}>
                         <FontAwesomeIcon icon={faDownload} />
                     </Button>
                     <Button
                         title={t(($) => $.reset_controls)}
-                        className="btn btn-square btn-neutral btn-sm"
+                        className="btn btn-square btn-neutral btn-sm tooltip-right"
                         onClick={() => {
                             graphRef.current?.resetControls();
                         }}
@@ -99,7 +99,7 @@ const Controls = memo(
                     </Button>
                     <Button
                         title={t(($) => $.fit_view)}
-                        className="btn btn-square btn-neutral btn-sm"
+                        className="btn btn-square btn-neutral btn-sm tooltip-bottom"
                         onClick={() => {
                             graphRef.current?.centerGraph();
                             graphRef.current?.fitNodesInView();
@@ -109,7 +109,7 @@ const Controls = memo(
                     </Button>
                     <Button
                         title={t(($) => $.zoom_in)}
-                        className="btn btn-square btn-neutral btn-sm"
+                        className="btn btn-square btn-neutral btn-sm tooltip-bottom"
                         onClick={() => {
                             graphRef.current?.zoomIn();
                         }}
@@ -118,7 +118,7 @@ const Controls = memo(
                     </Button>
                     <Button
                         title={t(($) => $.zoom_out)}
-                        className="btn btn-square btn-neutral btn-sm"
+                        className="btn btn-square btn-neutral btn-sm tooltip-bottom"
                         onClick={() => {
                             graphRef.current?.zoomOut();
                         }}
@@ -126,7 +126,7 @@ const Controls = memo(
                         <FontAwesomeIcon icon={faMinusSquare} />
                     </Button>
                     <Button<boolean>
-                        className={`btn btn-square btn-neutral btn-sm ${showParents ? "" : "btn-outline"}`}
+                        className={`btn btn-square btn-neutral btn-sm tooltip-bottom ${showParents ? "" : "btn-outline"}`}
                         item={!showParents}
                         onClick={setShowParents}
                         title={t(($) => $.parent)}
@@ -137,7 +137,7 @@ const Controls = memo(
                         />
                     </Button>
                     <Button<boolean>
-                        className={`btn btn-square btn-neutral btn-sm ${showChildren ? "" : "btn-outline"}`}
+                        className={`btn btn-square btn-neutral btn-sm tooltip-bottom ${showChildren ? "" : "btn-outline"}`}
                         item={!showChildren}
                         onClick={setShowChildren}
                         title={t(($) => $.child)}
@@ -148,7 +148,7 @@ const Controls = memo(
                         />
                     </Button>
                     <Button<boolean>
-                        className={`btn btn-square btn-neutral btn-sm ${showSiblings ? "" : "btn-outline"}`}
+                        className={`btn btn-square btn-neutral btn-sm tooltip-bottom ${showSiblings ? "" : "btn-outline"}`}
                         item={!showSiblings}
                         onClick={setShowSiblings}
                         title={t(($) => $.sibling)}
@@ -159,14 +159,14 @@ const Controls = memo(
                         />
                     </Button>
                     <Button<boolean>
-                        className={`btn btn-square btn-neutral btn-sm ${config.showIcons ? "" : "btn-outline"}`}
+                        className={`btn btn-square btn-neutral btn-sm tooltip-bottom ${config.showIcons ? "" : "btn-outline"}`}
                         item={!config.showIcons}
                         onClick={(value) => setConfig((prev) => ({ ...prev, showIcons: value }))}
                         title={t(($) => $.icons)}
                     >
                         <FontAwesomeIcon icon={faIcons} />
                     </Button>
-                    <select className="select select-sm w-36" title={t(($) => $.find_node)} defaultValue="" onChange={findNode}>
+                    <select className="select select-sm w-36" defaultValue="" onChange={findNode}>
                         <option value="">{t(($) => $.find_node)}</option>
                         {nodeOptions}
                     </select>
@@ -174,7 +174,6 @@ const Controls = memo(
                 <div className="absolute z-9 top-0 right-0 p-1 flex flex-row flex-wrap gap-1 items-start justify-end">
                     <select
                         className="select select-sm w-36"
-                        title={t(($) => $.layout_type)}
                         value={config.layoutType}
                         onChange={(event) => event.target.value && setConfig((prev) => ({ ...prev, layoutType: event.target.value as LayoutTypes }))}
                     >
@@ -191,7 +190,6 @@ const Controls = memo(
                     </select>
                     <select
                         className="select select-sm w-36"
-                        title={t(($) => $.label_type)}
                         value={config.labelType}
                         onChange={(event) =>
                             event.target.value && setConfig((prev) => ({ ...prev, labelType: event.target.value as LabelVisibilityType }))
@@ -232,7 +230,7 @@ const Controls = memo(
                 <div className="absolute z-9 bottom-0 right-0 p-1 flex flex-row flex-wrap gap-1 items-end justify-end">
                     <Button
                         title={t(($) => $.scroll_to_top, { ns: "common" })}
-                        className="btn btn-primary btn-square ml-auto"
+                        className="btn btn-primary btn-square ml-auto tooltip-left"
                         onClick={() => {
                             window.scrollTo(0, 0);
                         }}

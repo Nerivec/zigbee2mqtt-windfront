@@ -261,7 +261,7 @@ export default function OtaPage() {
                     <>
                         <ModelLink device={device} />
                         <div>
-                            <span className="badge badge-sm badge-ghost" title={t(($) => $.manufacturer, { ns: "zigbee" })}>
+                            <span className="badge badge-sm badge-ghost tooltip tooltip-bottom" data-tip={t(($) => $.manufacturer, { ns: "zigbee" })}>
                                 <VendorLink device={device} />
                             </span>
                         </div>
@@ -288,7 +288,10 @@ export default function OtaPage() {
                         <OtaLink device={device} />
                         {device.date_code && (
                             <div>
-                                <span className="badge badge-sm badge-ghost" title={t(($) => $.firmware_build_date, { ns: "zigbee" })}>
+                                <span
+                                    className="badge badge-sm badge-ghost tooltip tooltip-bottom"
+                                    data-tip={t(($) => $.firmware_build_date, { ns: "zigbee" })}
+                                >
                                     {device.date_code}
                                 </span>
                             </div>

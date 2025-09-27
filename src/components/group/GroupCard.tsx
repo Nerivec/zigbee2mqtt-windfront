@@ -33,16 +33,6 @@ const GroupCard = ({ sourceIdx, group, endpoint, removeFromGroup }: GroupCardPro
                         )}
                     </div>
                 </div>
-                {/* <div className="text-sm w-full p-2 max-h-125 overflow-y-auto" style={{ scrollbarWidth: "thin" }}>
-                    {group.members.map((member) => (
-                        <div key={`${member.ieee_address}-${member.endpoint}`} className="flex flex-row items-center gap-1 mb-2">
-                            <div className="grow-1">{member.ieee_address}</div>
-                            <div className="shrink-1" title={t("endpoint", {ns: "zigbee"})}>
-                                {member.endpoint}
-                            </div>
-                        </div>
-                    ))}
-                </div> */}
             </div>
             <div className="flex flex-row flex-wrap gap-1 mx-2 mb-2 justify-around items-center">
                 <div className="badge badge-soft badge-ghost cursor-default me-2 tooltip" data-tip={t(($) => $.group_members)}>
