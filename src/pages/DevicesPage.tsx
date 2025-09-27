@@ -410,7 +410,7 @@ export default function DevicesPage(): JSX.Element {
                 <TableSearch {...table} />
             </NavBarContent>
 
-            <div className="mb-3">
+            <div className="mb-5">
                 <Table id="all-devices" {...table} />
             </div>
         </>

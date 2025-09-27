@@ -5,10 +5,10 @@ import TableHeader from "./TableHeader.js";
 
 const tableComponents: TableComponents<Row<unknown>, unknown> = {
     Table: ({ style, context, ...props }) => (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto overflow-y-hidden">
             <table
                 {...props}
-                className="table table-sm mb-3 min-w-full"
+                className="table table-sm mb-5 min-w-full"
                 style={{
                     ...style,
                     tableLayout: "fixed",

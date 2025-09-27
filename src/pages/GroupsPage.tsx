@@ -272,7 +272,7 @@ export default function GroupsPage() {
                 </fieldset>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-5">
                 <Table id="all-groups" {...table} />
             </div>
         </>

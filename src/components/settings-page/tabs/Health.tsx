@@ -335,7 +335,9 @@ export default function Health({ sourceIdx }: HealthProps) {
                 <TableSearch {...table} />
             </div>
 
-            <Table id="health-devices" {...table} />
+            <div className="mb-5">
+                <Table id="health-devices" {...table} />
+            </div>
         </>
     );
 }

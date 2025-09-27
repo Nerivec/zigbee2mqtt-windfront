@@ -236,7 +236,7 @@ export default function TouchlinkPage() {
                 </fieldset>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-5">
                 <Table id="touchlink-devices" {...table} />
             </div>
         </>

@@ -414,7 +414,7 @@ export default function OtaPage() {
                 <TableSearch table={table} resetFilters={resetFilters} globalFilter={globalFilter} columnFilters={columnFilters} />
             </NavBarContent>
 
-            <div className="mb-3">
+            <div className="mb-5">
                 <div className="flex flex-row flex-wrap gap-2 px-2 pb-3">
                     <ConfirmButton<"bridge/request/device/ota_update/check">
                         className="btn btn-outline btn-error btn-sm join-item"
