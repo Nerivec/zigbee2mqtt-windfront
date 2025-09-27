@@ -178,7 +178,9 @@
         "toggle_dropdown": "Basculer le menu déroulant",
         "touchlink": "Touchlink",
         "websocket_status": "Statut WebSocket",
-        "transaction_prefix": "Préfixe de transaction"
+        "transaction_prefix": "Préfixe de transaction",
+        "frontend_settings": "Paramètres de l'interface",
+        "contribute": "Contribuer"
     },
     "ota": {
         "check": "Vérifier les mises à jour",
@@ -209,13 +211,11 @@
         "blocklist": "Liste noire",
         "revision": "Révision",
         "coordinator": "Coordinateur",
-        "donate": "Faire un don",
-        "donation_text": "Ici, vous pouvez nous remercier pour tout le travail accompli. N'hésitez pas à dire quelque chose de gentil aussi ;)",
         "download_state": "Télécharger l'état",
         "experimental": "Expérimental",
         "external_converters": "Convertisseurs externes",
         "frontend": "Interface",
-        "frontend_version": "Version du frontend",
+        "frontend_version": "Version de l'interface",
         "main": "Principal",
         "mqtt": "MQTT",
         "ota": "Mises à jour OTA",
@@ -233,7 +233,6 @@
         "add_install_code": "Ajouter un code d'installation",
         "install_code": "Code d'installation",
         "homeassistant": "Intégration Home Assistant",
-        "translation_prompt": "Vous pouvez aider à la traduction sur",
         "zigbee_herdsman_converters_version": "Version de zigbee-herdsman-converters",
         "zigbee_herdsman_version": "Version de zigbee-herdsman",
         "localise_images": "Localiser les images des appareils",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Nom de l'appareil dans Home Assistant",
         "definitions-group-qos": "Level QoS pour messages MQTT de ce groupe",
         "definitions-group-off_state": "Contrôle la publication de l'état OFF/FERMÉ pour un groupe: 'all_members_off' = publier OFF/CLOSE quand tous les membres sont OFF/CLOSE ; 'last_member_state' = publier OFF dès qu'un membre passe à OFF"
+    },
+    "contribute": {
+        "donation_text": "Ici, vous pouvez nous remercier pour tout le travail accompli. N'hésitez pas à laisser un mot gentil ;)",
+        "development": "Développement",
+        "contributing": "Ici, vous trouverez des informations pour contribuer à ce projet",
+        "translation": "Traduction"
     }
 }

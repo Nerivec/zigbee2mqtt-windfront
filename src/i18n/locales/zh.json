@@ -178,7 +178,9 @@
         "toggle_dropdown": "切換下拉",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket 狀態",
-        "transaction_prefix": "交易前綴"
+        "transaction_prefix": "交易前綴",
+        "frontend_settings": "前端設定",
+        "contribute": "參與貢獻"
     },
     "ota": {
         "check": "檢查更新",
@@ -209,8 +211,6 @@
         "blocklist": "封鎖清單",
         "revision": "修訂",
         "coordinator": "協調器",
-        "donate": "捐助",
-        "donation_text": "可在此感謝我們，也歡迎鼓勵 ;)",
         "download_state": "下載狀態",
         "experimental": "實驗性",
         "external_converters": "外部轉換器",
@@ -233,7 +233,6 @@
         "add_install_code": "新增安裝碼",
         "install_code": "安裝碼",
         "homeassistant": "Home Assistant 整合",
-        "translation_prompt": "協助翻譯：",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters 版本",
         "zigbee_herdsman_version": "zigbee-herdsman 版本",
         "localise_images": "在地化裝置圖",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Home Assistant 名稱",
         "definitions-group-qos": "群組 QoS",
         "definitions-group-off_state": "群組 OFF/CLOSE 發布時機"
+    },
+    "contribute": {
+        "donation_text": "歡迎在此感謝我們的付出，也歡迎留下鼓勵的話語；)",
+        "development": "開發",
+        "contributing": "在這裡可以找到如何貢獻此專案的資訊",
+        "translation": "翻譯"
     }
 }

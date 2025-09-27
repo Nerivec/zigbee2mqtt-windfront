@@ -178,7 +178,9 @@
         "toggle_dropdown": "Växla meny",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket-status",
-        "transaction_prefix": "Transaktionsprefix"
+        "transaction_prefix": "Transaktionsprefix",
+        "frontend_settings": "Frontend-inställningar",
+        "contribute": "Bidra"
     },
     "ota": {
         "check": "Sök efter uppdateringar",
@@ -209,8 +211,6 @@
         "blocklist": "Blocklista",
         "revision": "Revision",
         "coordinator": "Koordinator",
-        "donate": "Donera",
-        "donation_text": "Här kan du tacka för arbetet. Ett vänligt ord skadar inte ;)",
         "download_state": "Ladda ner state",
         "experimental": "Experimentellt",
         "external_converters": "Externa konvertrar",
@@ -233,7 +233,6 @@
         "add_install_code": "Lägg till installationskod",
         "install_code": "Installationskod",
         "homeassistant": "Home Assistant-integration",
-        "translation_prompt": "Du kan hjälpa till att översätta på",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters version",
         "zigbee_herdsman_version": "zigbee-herdsman version",
         "localise_images": "Lokalisera enhetsbilder",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Namn i Home Assistant",
         "definitions-group-qos": "Grupp QoS",
         "definitions-group-off_state": "När publicera OFF/CLOSE för grupp"
+    },
+    "contribute": {
+        "donation_text": "Här kan du tacka oss för allt arbete. Ett vänligt ord uppskattas också ;)",
+        "development": "Utveckling",
+        "contributing": "Här hittar du information om hur du kan bidra till projektet",
+        "translation": "Översättning"
     }
 }

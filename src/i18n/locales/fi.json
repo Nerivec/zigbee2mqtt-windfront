@@ -178,7 +178,9 @@
         "toggle_dropdown": "Avaa/Sulje valikko",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket-tila",
-        "transaction_prefix": "Tapahtumaetuliite"
+        "transaction_prefix": "Tapahtuman etuliite",
+        "frontend_settings": "Käyttöliittymän asetukset",
+        "contribute": "Osallistu"
     },
     "ota": {
         "check": "Tarkista päivitykset",
@@ -209,8 +211,6 @@
         "blocklist": "Estolista",
         "revision": "Revisio",
         "coordinator": "Koordinaattori",
-        "donate": "Lahjoita",
-        "donation_text": "Kiitos työstä – myös ystävällinen sana : )",
         "download_state": "Lataa tila",
         "experimental": "Kokeellinen",
         "external_converters": "Ulkoiset muuntimet",
@@ -233,7 +233,6 @@
         "add_install_code": "Lisää install-koodi",
         "install_code": "Install-koodi",
         "homeassistant": "Home Assistant -integraatio",
-        "translation_prompt": "Auta käännöksessä:",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters versio",
         "zigbee_herdsman_version": "zigbee-herdsman versio",
         "localise_images": "Lokaloi laitekuvat",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Nimi Home Assistantissa",
         "definitions-group-qos": "Ryhmän QoS",
         "definitions-group-off_state": "Milloin julkaista OFF/CLOSE"
+    },
+    "contribute": {
+        "donation_text": "Täällä voit kiittää meitä tehdystä työstä. Myös ystävälliset sanat ovat tervetulleita ;)",
+        "development": "Kehitys",
+        "contributing": "Täältä löydät tiedot, miten voit osallistua tähän projektiin",
+        "translation": "Käännös"
     }
 }

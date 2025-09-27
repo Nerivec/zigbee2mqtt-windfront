@@ -178,7 +178,9 @@
         "toggle_dropdown": "Veksle meny",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket-status",
-        "transaction_prefix": "Transaksjonsprefiks"
+        "transaction_prefix": "Transaksjonsprefiks",
+        "frontend_settings": "Frontend-innstillinger",
+        "contribute": "Bidra"
     },
     "ota": {
         "check": "Søk etter oppdateringer",
@@ -209,8 +211,6 @@
         "blocklist": "Blokkeringsliste",
         "revision": "Revisjon",
         "coordinator": "Koordinator",
-        "donate": "Doner",
-        "donation_text": "Si takk her – et vennlig ord også ;)",
         "download_state": "Last ned tilstand",
         "experimental": "Eksperimentelt",
         "external_converters": "Eksterne konvertere",
@@ -233,7 +233,6 @@
         "add_install_code": "Legg til install-kode",
         "install_code": "Install-kode",
         "homeassistant": "Home Assistant-integrasjon",
-        "translation_prompt": "Hjelp å oversette på",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters versjon",
         "zigbee_herdsman_version": "zigbee-herdsman versjon",
         "localise_images": "Lokaliser enhetsbilder",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Navn i Home Assistant",
         "definitions-group-qos": "QoS gruppe",
         "definitions-group-off_state": "Når publisere OFF/CLOSE"
+    },
+    "contribute": {
+        "donation_text": "Her kan du takke oss for arbeidet. Et vennlig ord settes også pris på ;)",
+        "development": "Utvikling",
+        "contributing": "Her finner du informasjon om hvordan du kan bidra til dette prosjektet",
+        "translation": "Oversettelse"
     }
 }

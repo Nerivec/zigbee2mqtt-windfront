@@ -178,7 +178,9 @@
         "toggle_dropdown": "Txandakatu menua",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket egoera",
-        "transaction_prefix": "Transakzio aurrizkia"
+        "transaction_prefix": "Transakzio aurrizkia",
+        "frontend_settings": "Frontend-aren ezarpenak",
+        "contribute": "Lagundu"
     },
     "ota": {
         "check": "Egiaztatu eguneratzeak",
@@ -209,8 +211,6 @@
         "blocklist": "Blokeo zerrenda",
         "revision": "Berrikuspena",
         "coordinator": "Koordinatzailea",
-        "donate": "Dohaintza",
-        "donation_text": "Eskerrak eman ditzakezu hemen; hitz on bat ere ongi.",
         "download_state": "Deskargatu egoera",
         "experimental": "Esperimentala",
         "external_converters": "Kanpo bihurtzaileak",
@@ -233,7 +233,6 @@
         "add_install_code": "Gehitu instalazio kodea",
         "install_code": "Instalazio kodea",
         "homeassistant": "Home Assistant integrazioa",
-        "translation_prompt": "Lagundu itzulpenean:",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters bertsioa",
         "zigbee_herdsman_version": "zigbee-herdsman bertsioa",
         "localise_images": "Lokalizatu irudiak",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "HA izena",
         "definitions-group-qos": "Talde QoS",
         "definitions-group-off_state": "Noiz OFF/CLOSE"
+    },
+    "contribute": {
+        "donation_text": "Hemen eskertu diezagukezu egindako lana. Hitz goxoa ere beti ongi etorria da ;)",
+        "development": "Garapena",
+        "contributing": "Hemen aurkituko duzu proiektu honetan nola lagundu",
+        "translation": "Itzulpena"
     }
 }

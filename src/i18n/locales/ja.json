@@ -178,7 +178,9 @@
         "toggle_dropdown": "メニュー切替",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket 状態",
-        "transaction_prefix": "トランザクション接頭辞"
+        "transaction_prefix": "トランザクション接頭辞",
+        "frontend_settings": "フロントエンド設定",
+        "contribute": "貢献する"
     },
     "ota": {
         "check": "更新を確認",
@@ -209,8 +211,6 @@
         "blocklist": "ブロックリスト",
         "revision": "リビジョン",
         "coordinator": "コーディネータ",
-        "donate": "寄付",
-        "donation_text": "ここで私たちに感謝できます。温かい言葉も歓迎です ;)",
         "download_state": "状態ダウンロード",
         "experimental": "実験的",
         "external_converters": "外部コンバータ",
@@ -233,7 +233,6 @@
         "add_install_code": "インストールコード追加",
         "install_code": "インストールコード",
         "homeassistant": "Home Assistant 連携",
-        "translation_prompt": "翻訳に協力できます:",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters 版",
         "zigbee_herdsman_version": "zigbee-herdsman 版",
         "localise_images": "デバイス画像ローカライズ",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Home Assistant におけるデバイス名",
         "definitions-group-qos": "このグループの MQTT メッセージの QoS レベル",
         "definitions-group-off_state": "グループの状態を OFF または CLOSE として公開するタイミングを制御します。'all_members_off': 全メンバーが OFF/CLOSE 状態のときのみ OFF/CLOSE を公開します。'last_member_state': いずれかのメンバーが OFF へ変化した時点で OFF を公開します。"
+    },
+    "contribute": {
+        "donation_text": "ここで私たちの取り組みに感謝の気持ちを伝えられます。あたたかい言葉もぜひ ;)",
+        "development": "開発",
+        "contributing": "このプロジェクトに貢献する方法の情報はこちら",
+        "translation": "翻訳"
     }
 }

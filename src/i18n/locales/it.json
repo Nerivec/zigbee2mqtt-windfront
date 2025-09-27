@@ -178,7 +178,9 @@
         "toggle_dropdown": "Apri/chiudi menu",
         "touchlink": "Touchlink",
         "websocket_status": "Stato WebSocket",
-        "transaction_prefix": "Prefisso transazione"
+        "transaction_prefix": "Prefisso della transazione",
+        "frontend_settings": "Impostazioni frontend",
+        "contribute": "Contribuisci"
     },
     "ota": {
         "check": "Cerca nuovi aggiornamenti",
@@ -209,8 +211,6 @@
         "blocklist": "Blocklist",
         "revision": "Revisione",
         "coordinator": "Coordinatore",
-        "donate": "Dona",
-        "donation_text": "Qui puoi ringraziarci per il lavoro. Anche un complimento è gradito ;)",
         "download_state": "Scarica stato",
         "experimental": "Sperimentale",
         "external_converters": "Convertitori esterni",
@@ -233,7 +233,6 @@
         "add_install_code": "Aggiungi codice installazione",
         "install_code": "Codice installazione",
         "homeassistant": "Integrazione Home Assistant",
-        "translation_prompt": "Puoi aiutare nella traduzione su",
         "zigbee_herdsman_converters_version": "Versione zigbee-herdsman-converters",
         "zigbee_herdsman_version": "Versione zigbee-herdsman",
         "localise_images": "Localizza immagini dispositivi",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Nome in Home Assistant",
         "definitions-group-qos": "QoS gruppo",
         "definitions-group-off_state": "Quando pubblicare stato OFF/CLOSE gruppo"
+    },
+    "contribute": {
+        "donation_text": "Qui puoi ringraziarci per tutto il lavoro svolto. Non esitare a lasciare anche un commento gentile ;)",
+        "development": "Sviluppo",
+        "contributing": "Qui trovi le informazioni per contribuire a questo progetto",
+        "translation": "Traduzione"
     }
 }

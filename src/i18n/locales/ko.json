@@ -178,7 +178,9 @@
         "toggle_dropdown": "드롭다운 전환",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket 상태",
-        "transaction_prefix": "트랜잭션 접두사"
+        "transaction_prefix": "트랜잭션 접두사",
+        "frontend_settings": "프런트엔드 설정",
+        "contribute": "기여하기"
     },
     "ota": {
         "check": "새 업데이트 확인",
@@ -209,8 +211,6 @@
         "blocklist": "차단 목록",
         "revision": "리비전",
         "coordinator": "코디네이터",
-        "donate": "기부",
-        "donation_text": "작업에 감사하실 수 있습니다. 따뜻한 코멘트도 좋습니다 ;)",
         "download_state": "상태 다운로드",
         "experimental": "실험적",
         "external_converters": "외부 컨버터",
@@ -233,7 +233,6 @@
         "add_install_code": "설치 코드 추가",
         "install_code": "설치 코드",
         "homeassistant": "Home Assistant 통합",
-        "translation_prompt": "번역을 도울 수 있는 곳:",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters 버전",
         "zigbee_herdsman_version": "zigbee-herdsman 버전",
         "localise_images": "디바이스 이미지 지역화",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Home Assistant 내 이름",
         "definitions-group-qos": "이 그룹 MQTT QoS",
         "definitions-group-off_state": "OFF/CLOSE 발행 시점 제어"
+    },
+    "contribute": {
+        "donation_text": "여기에서 우리의 노력에 감사의 마음을 전할 수 있습니다. 따뜻한 한마디도 환영합니다 ;)",
+        "development": "개발",
+        "contributing": "이 프로젝트에 기여하는 방법은 여기에서 확인하세요",
+        "translation": "번역"
     }
 }

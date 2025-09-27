@@ -178,7 +178,9 @@
         "toggle_dropdown": "Alterna menú",
         "touchlink": "Touchlink",
         "websocket_status": "Estat WebSocket",
-        "transaction_prefix": "Prefix transacció"
+        "transaction_prefix": "Prefix de transacció",
+        "frontend_settings": "Configuració del frontend",
+        "contribute": "Contribueix"
     },
     "ota": {
         "check": "Cerca actualitzacions",
@@ -209,8 +211,6 @@
         "blocklist": "Llista bloqueig",
         "revision": "Revisió",
         "coordinator": "Coordinador",
-        "donate": "Donar",
-        "donation_text": "Pots agrair-nos aquí. També una paraula amable ;)",
         "download_state": "Descarrega estat",
         "experimental": "Experimental",
         "external_converters": "Convertidors externs",
@@ -233,7 +233,6 @@
         "add_install_code": "Afegeix codi instal·lació",
         "install_code": "Codi instal·lació",
         "homeassistant": "Integració Home Assistant",
-        "translation_prompt": "Ajuda a traduir a",
         "zigbee_herdsman_converters_version": "Versió zigbee-herdsman-converters",
         "zigbee_herdsman_version": "Versió zigbee-herdsman",
         "localise_images": "Localitza imatges",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Nom Home Assistant",
         "definitions-group-qos": "QoS grup",
         "definitions-group-off_state": "Quan publicar OFF/CLOSE"
+    },
+    "contribute": {
+        "donation_text": "Aquí pots agrair-nos tota la feina. No dubtis a dir també alguna cosa bonica ;)",
+        "development": "Desenvolupament",
+        "contributing": "Aquí trobaràs informació per contribuir a aquest projecte",
+        "translation": "Traducció"
     }
 }

@@ -178,7 +178,9 @@
         "toggle_dropdown": "Menüyü aç/kapat",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket durumu",
-        "transaction_prefix": "İşlem öneki"
+        "transaction_prefix": "İşlem öneki",
+        "frontend_settings": "Önyüz ayarları",
+        "contribute": "Katkıda bulun"
     },
     "ota": {
         "check": "Güncellemeleri denetle",
@@ -209,8 +211,6 @@
         "blocklist": "Engel listesi",
         "revision": "Revizyon",
         "coordinator": "Koordinatör",
-        "donate": "Bağış",
-        "donation_text": "Çalışma için burada teşekkür edebilirsiniz. Güzel söz de olur ;)",
         "download_state": "Durumu indir",
         "experimental": "Deneysel",
         "external_converters": "Harici dönüştürücüler",
@@ -233,7 +233,6 @@
         "add_install_code": "Kurulum kodu ekle",
         "install_code": "Kurulum kodu",
         "homeassistant": "Home Assistant entegrasyonu",
-        "translation_prompt": "Çevirmeye yardım edin:",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters sürüm",
         "zigbee_herdsman_version": "zigbee-herdsman sürüm",
         "localise_images": "Cihaz görsellerini yerelleştir",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Home Assistant içindeki ad",
         "definitions-group-qos": "Grup QoS",
         "definitions-group-off_state": "Grup OFF/CLOSE yayınlama zamanı"
+    },
+    "contribute": {
+        "donation_text": "Burada emeğimiz için bize teşekkür edebilirsiniz. Güzel sözleriniz de bizi mutlu eder ;)",
+        "development": "Geliştirme",
+        "contributing": "Bu projeye nasıl katkıda bulunabileceğinize dair bilgileri burada bulabilirsiniz",
+        "translation": "Çeviri"
     }
 }

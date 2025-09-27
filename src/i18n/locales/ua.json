@@ -178,7 +178,9 @@
         "toggle_dropdown": "Перемкнути меню",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket статус",
-        "transaction_prefix": "Префікс транзакції"
+        "transaction_prefix": "Префікс транзакції",
+        "frontend_settings": "Налаштування інтерфейсу",
+        "contribute": "Долучитися"
     },
     "ota": {
         "check": "Перевірити оновлення",
@@ -209,8 +211,6 @@
         "blocklist": "Блок-лист",
         "revision": "Ревізія",
         "coordinator": "Координатор",
-        "donate": "Підтримати",
-        "donation_text": "Можете подякувати тут. Добре слово теж ;)",
         "download_state": "Завантажити стан",
         "experimental": "Експериментальне",
         "external_converters": "Зовнішні конвертери",
@@ -233,7 +233,6 @@
         "add_install_code": "Додати install code",
         "install_code": "Install code",
         "homeassistant": "Інтеграція Home Assistant",
-        "translation_prompt": "Допоможіть з перекладом на",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters версія",
         "zigbee_herdsman_version": "zigbee-herdsman версія",
         "localise_images": "Локалізувати зображення",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Назва в HA",
         "definitions-group-qos": "QoS групи",
         "definitions-group-off_state": "Коли OFF/CLOSE"
+    },
+    "contribute": {
+        "donation_text": "Тут ви можете подякувати нам за виконану роботу. Приємні слова теж вітаються ;)",
+        "development": "Розробка",
+        "contributing": "Тут знайдете інформацію, як долучитися до цього проєкту",
+        "translation": "Переклад"
     }
 }

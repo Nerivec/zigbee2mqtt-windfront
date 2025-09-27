@@ -178,7 +178,9 @@
         "toggle_dropdown": "Превключи меню",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket статус",
-        "transaction_prefix": "Префикс транзакция"
+        "transaction_prefix": "Префикс транзакция",
+        "frontend_settings": "Настройки на интерфейса",
+        "contribute": "Допринасяне"
     },
     "ota": {
         "check": "Проверка за обновления",
@@ -209,8 +211,6 @@
         "blocklist": "Blocklist",
         "revision": "Ревизия",
         "coordinator": "Координатор",
-        "donate": "Дарение",
-        "donation_text": "Можете да ни благодарите тук. Добра дума също помага ;)",
         "download_state": "Изтегли състояние",
         "experimental": "Експериментални",
         "external_converters": "Външни конвертори",
@@ -233,7 +233,6 @@
         "add_install_code": "Добави install code",
         "install_code": "Install code",
         "homeassistant": "Home Assistant интеграция",
-        "translation_prompt": "Можете да помогнете с превода на",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters версия",
         "zigbee_herdsman_version": "zigbee-herdsman версия",
         "localise_images": "Локализирай изображения",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Име Home Assistant",
         "definitions-group-qos": "QoS група",
         "definitions-group-off_state": "Кога OFF/CLOSE"
+    },
+    "contribute": {
+        "donation_text": "Тук можете да ни благодарите за труда ни. Не се колебайте да кажете и нещо приятно ;)",
+        "development": "Разработка",
+        "contributing": "Тук ще намерите информация как да допринесете за този проект",
+        "translation": "Превод"
     }
 }

@@ -178,7 +178,9 @@
         "toggle_dropdown": "Přepnout menu",
         "touchlink": "Touchlink",
         "websocket_status": "Stav WebSocket",
-        "transaction_prefix": "Prefix transakce"
+        "transaction_prefix": "Předpona transakce",
+        "frontend_settings": "Nastavení rozhraní",
+        "contribute": "Přispět"
     },
     "ota": {
         "check": "Zkontrolovat aktualizace",
@@ -209,8 +211,6 @@
         "blocklist": "Blocklist",
         "revision": "Revize",
         "coordinator": "Koordinátor",
-        "donate": "Darovat",
-        "donation_text": "Můžete poděkovat, i milé slovo ;)",
         "download_state": "Stáhnout stav",
         "experimental": "Experimentální",
         "external_converters": "Externí převodníky",
@@ -233,7 +233,6 @@
         "add_install_code": "Přidat install code",
         "install_code": "Install code",
         "homeassistant": "Integrace Home Assistant",
-        "translation_prompt": "Pomozte překládat na",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters verze",
         "zigbee_herdsman_version": "zigbee-herdsman verze",
         "localise_images": "Lokalizovat obrázky",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Název HA",
         "definitions-group-qos": "QoS skupina",
         "definitions-group-off_state": "Kdy OFF/CLOSE"
+    },
+    "contribute": {
+        "donation_text": "Zde nám můžete poděkovat za naši práci. Nebojte se přidat i milé slovo ;)",
+        "development": "Vývoj",
+        "contributing": "Zde najdete informace, jak přispět do tohoto projektu",
+        "translation": "Překlad"
     }
 }

@@ -178,7 +178,9 @@
         "toggle_dropdown": "Dropdown umschalten",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket-Status",
-        "transaction_prefix": "Transaktionspräfix"
+        "transaction_prefix": "Transaktionspräfix",
+        "frontend_settings": "Frontend-Einstellungen",
+        "contribute": "Mitwirken"
     },
     "ota": {
         "check": "Nach neuen Updates suchen",
@@ -209,8 +211,6 @@
         "blocklist": "Blockliste",
         "revision": "Revision",
         "coordinator": "Koordinator",
-        "donate": "Spenden",
-        "donation_text": "Hier können Sie uns für die ganze Arbeit danken. Etwas Nettes sagen schadet auch nicht ;)",
         "download_state": "Status herunterladen",
         "experimental": "Experimentell",
         "external_converters": "Externe Converter",
@@ -233,7 +233,6 @@
         "add_install_code": "Installationscode hinzufügen",
         "install_code": "Installationscode",
         "homeassistant": "Home Assistant Integration",
-        "translation_prompt": "Sie können bei der Übersetzung helfen unter",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters Version",
         "zigbee_herdsman_version": "zigbee-herdsman Version",
         "localise_images": "Gerätebilder lokalisieren",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Gerätename in Home Assistant",
         "definitions-group-qos": "QoS-Level für MQTT-Nachrichten dieser Gruppe",
         "definitions-group-off_state": "Steuerung wann OFF/CLOSE für eine Gruppe veröffentlicht wird"
+    },
+    "contribute": {
+        "donation_text": "Hier können Sie sich für unsere Arbeit bedanken. Ein nettes Wort freut uns ebenfalls ;)",
+        "development": "Entwicklung",
+        "contributing": "Hier finden Sie Informationen, wie Sie zu diesem Projekt beitragen können",
+        "translation": "Übersetzung"
     }
 }

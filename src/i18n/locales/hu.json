@@ -178,7 +178,9 @@
         "toggle_dropdown": "Menü váltása",
         "touchlink": "Touchlink",
         "websocket_status": "WebSocket státusz",
-        "transaction_prefix": "Tranzakció előtag"
+        "transaction_prefix": "Tranzakció előtag",
+        "frontend_settings": "Előfelület beállításai",
+        "contribute": "Közreműködés"
     },
     "ota": {
         "check": "Frissítések keresése",
@@ -209,8 +211,6 @@
         "blocklist": "Tiltólista",
         "revision": "Revizió",
         "coordinator": "Koordinátor",
-        "donate": "Adomány",
-        "donation_text": "Itt megköszönheted. Egy kedves szó is jól esik ;)",
         "download_state": "Állapot letöltése",
         "experimental": "Kísérleti",
         "external_converters": "Külső konverterek",
@@ -233,7 +233,6 @@
         "add_install_code": "Install kód hozzáadása",
         "install_code": "Install kód",
         "homeassistant": "Home Assistant integráció",
-        "translation_prompt": "Segíts a fordításban:",
         "zigbee_herdsman_converters_version": "zigbee-herdsman-converters verzió",
         "zigbee_herdsman_version": "zigbee-herdsman verzió",
         "localise_images": "Eszközképek lokalizálása",
@@ -536,5 +535,11 @@
         "definitions-device-homeassistant-name": "Név Home Assistant",
         "definitions-group-qos": "Csoport QoS",
         "definitions-group-off_state": "Csoport OFF/CLOSE publikálás ideje"
+    },
+    "contribute": {
+        "donation_text": "Itt megköszönheted a munkánkat. Egy kedves szó is mindig jól esik ;)",
+        "development": "Fejlesztés",
+        "contributing": "Itt találsz információt, hogyan tudsz hozzájárulni ehhez a projekthez",
+        "translation": "Fordítás"
     }
 }
