@@ -171,6 +171,16 @@ export default function Dashboard() {
                 },
             },
             {
+                id: "availability",
+                header: t(($) => $.availability, { ns: "availability" }),
+                accessorFn: ({ deviceAvailability }) => t(($) => $[deviceAvailability], { ns: "availability" }),
+                filterFn: "equals",
+                meta: {
+                    filterVariant: "select",
+                    showFacetedOccurrences: true,
+                },
+            },
+            {
                 id: "type",
                 header: t(($) => $.type, { ns: "zigbee" }),
                 accessorFn: ({ device }) => t(($) => $[device.type], { ns: "zigbee" }),

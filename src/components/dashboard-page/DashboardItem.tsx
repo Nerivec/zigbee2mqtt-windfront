@@ -30,7 +30,7 @@ const DashboardItem = ({
 
     return (
         <div
-            className={`mb-3 card card-border bg-base-200 rounded-box shadow-md ${deviceAvailability === "offline" ? "border-error/50" : "border-base-300"}`}
+            className={`mb-3 card bg-base-200 rounded-box shadow-md ${deviceAvailability === "disabled" ? "card-dash border-warning/40" : deviceAvailability === "offline" ? "card-border border-error/50" : "card-border border-base-300"}`}
         >
             <DeviceCard
                 features={features}
@@ -44,7 +44,7 @@ const DashboardItem = ({
                 <div className="join join-horizontal">
                     <Button<void>
                         onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
-                        className="btn btn-outline btn-error btn-square btn-sm join-item"
+                        className="btn btn-outline btn-error btn-square btn-sm join-item tooltip-left"
                         title={t(($) => $.remove_device)}
                     >
                         <FontAwesomeIcon icon={faTrash} />
