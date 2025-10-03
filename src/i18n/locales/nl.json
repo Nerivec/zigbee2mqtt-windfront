@@ -288,7 +288,7 @@
         "select_scan_source": "Selecteer scanningsbron"
     },
     "values": {
-        "clear": "leegmaken",
+        "clear": "leeg",
         "closed": "gesloten",
         "false": "onwaar",
         "not_supported": "niet ondersteund",
@@ -341,8 +341,8 @@
         "network_address_dec": "Netwerkadres dec",
         "none": "Geen",
         "pic": "Afbeelding",
-        "power": "Vermogen",
-        "power_level": "vermogensniveau",
+        "power": "Energiebron",
+        "power_level": "energieniveau",
         "reconfigure": "Herconfigureren",
         "remove_device": "Apparaat verwijderen",
         "rename_device": "Apparaat hernoemen",
