@@ -38,7 +38,7 @@ http {
         ''      close;
     }
 
-    resolver 127.0.0.11 ipv6=off;
+    resolver $NGINX_LOCAL_RESOLVERS ipv6=off;
 
     server {
         listen       80;
