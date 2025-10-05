@@ -1,0 +1,1 @@
+resolver $NGINX_LOCAL_RESOLVERS ipv6=off;
