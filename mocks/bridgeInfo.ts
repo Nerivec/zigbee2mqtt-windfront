@@ -889,7 +889,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                             ],
                             title: "Pan ID",
                             requiresRestart: true,
-                            description: "ZigBee pan ID, changing requires re-pairing all devices!",
+                            description: "Zigbee pan ID, changing requires re-pairing all devices!",
                             default: 6754,
                         },
                         ext_pan_id: {
@@ -916,7 +916,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                             minimum: 11,
                             maximum: 26,
                             default: 11,
-                            title: "ZigBee channel",
+                            title: "Zigbee channel",
                             requiresRestart: true,
                             description:
                                 "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)",
