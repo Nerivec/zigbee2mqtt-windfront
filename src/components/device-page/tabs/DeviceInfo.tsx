@@ -241,11 +241,11 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             </Link>
                         </span>
                     )}
-                    {/* {device.definition?.source === "external" && ( */}
+                    {device.definition?.source === "external" && (
                         <span className="badge animate-bounce">
                             <SubmitConverterLink device={device} />
                         </span>
-                    {/* )} */}
+                    )}
                     <span className="badge opacity-70" title={device.interview_state}>
                         {t(($) => $.interview_state)}: {deviceInterviewState}
                     </span>
