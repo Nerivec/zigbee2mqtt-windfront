@@ -53,7 +53,13 @@ const SubmitConverterLink = memo(({ device }: { device: Device }) => {
     const githubUrlParams = {
         labels: "enhancement",
         title: `[External Converter] ${device.model_id} from ${device.manufacturer}`,
-        body: `<!-- MAKE SURE THIS IS NOT ALREADY POSTED ${ZHC_NEW_GITHUB_ISSUE_URL.slice(0, -4)} -->
+        body: `<!--
+
+IMPORTANT: Read before submitting this isuse:
+- Make sure this is not already posted ${ZHC_NEW_GITHUB_ISSUE_URL.slice(0, -4)}
+- Preferably, instead of submitting this issue try to create a PR by clicking the Edit button on the manufacturer file: https://github.com/Koenkk/zigbee-herdsman-converters/tree/master/src/devices
+
+-->
 
 This is my external converter for \`${device.model_id}\` from \`${device.manufacturer}\`
 software_build_id: \`${device.software_build_id}\`
