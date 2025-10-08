@@ -130,8 +130,9 @@ const propertyToField = (
                     defaultValue={(value as string) ?? ""}
                     // Prevent password managers from auto-filling fields
                     autoComplete="off"
-                    data-bwignore 
+                    data-bwignore="true"
                     data-lpignore="true"
+                    data-1p-ignore="true"
                 />
             );
         }
