@@ -63,7 +63,7 @@ export default function FeatureWrapper({
             </div>
             <div className="list-col-wrap flex flex-col gap-2">{children}</div>
             {isReadable && (
-                <Button<FeatureWithAnySubFeatures> item={feature} onClick={onSyncClick} className="btn btn-xs btn-square btn-primary">
+                <Button<FeatureWithAnySubFeatures> item={feature} onClick={onSyncClick} className="btn btn-xs btn-square btn-primary btn-soft">
                     <FontAwesomeIcon icon={faSync} />
                 </Button>
             )}
