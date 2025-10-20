@@ -140,7 +140,7 @@ const propertyToField = (
                     // autofill on the "password" field alone prevents related fields (such as user and key)
                     // from being auto-filled by password managers (tested with Bitwarden).
                     // https://github.com/Nerivec/zigbee2mqtt-windfront/issues/277
-                    {...(key === "password" ? DISABLE_AUTO_FILL_PROPS : {})}
+                    {...(key === "password" ? DISABLE_AUTO_FILL_PROPS : undefined)}
                 />
             );
         }
