@@ -16,6 +16,13 @@ type SettingsListProps = {
     namespace: string;
 };
 
+const DISABLE_AUTO_FILL_PROPS = {
+    autoComplete: "off",
+    "data-bwignore": "true",
+    "data-lpignore": "true",
+    "data-1p-ignore": "true",
+};
+
 const propertyToField = (
     key: string,
     property: JSONSchema7,
@@ -128,6 +135,12 @@ const propertyToField = (
                     onBlur={(e) => !e.target.validationMessage && set({ [key]: e.target.value === "" ? null : e.target.value })}
                     required={required}
                     defaultValue={(value as string) ?? ""}
+                    // Disable browser/password-manager autofill to avoid
+                    // accidental population of settings (e.g. the MQTT password). Disabling
+                    // autofill on the "password" field alone prevents related fields (such as user and key)
+                    // from being auto-filled by password managers (tested with Bitwarden).
+                    // https://github.com/Nerivec/zigbee2mqtt-windfront/issues/277
+                    {...(key === "password" ? DISABLE_AUTO_FILL_PROPS : undefined)}
                 />
             );
         }
