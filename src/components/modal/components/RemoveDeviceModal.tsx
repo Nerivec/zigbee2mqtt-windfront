@@ -26,7 +26,7 @@ export const RemoveDeviceModal = NiceModal.create(({ sourceIdx, device, removeDe
     const onRemoveClick = useCallback(async () => {
         modal.remove();
         await removeDevice(sourceIdx, device.ieee_address, removeParams.force, removeParams.block);
-    }, [sourceIdx, modal.remove, removeDevice, device.ieee_address, removeParams]);
+    }, [sourceIdx, modal, removeDevice, device.ieee_address, removeParams]);
 
     useEffect(() => {
         const close = (e: KeyboardEvent) => {

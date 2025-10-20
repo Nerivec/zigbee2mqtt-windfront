@@ -55,7 +55,7 @@ const LanguageSwitcher = memo(() => {
         }
 
         return languages;
-    }, [currentLanguage, i18n.changeLanguage, i18n.options.resources]);
+    }, [currentLanguage, i18n, i18n.options.resources]);
 
     return (
         <DialogDropdown buttonChildren={currentLanguage} buttonStyle="btn-outline btn-primary">
