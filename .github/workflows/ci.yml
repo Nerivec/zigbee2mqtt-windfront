@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 env:
   REGISTRY: ghcr.io
@@ -26,8 +27,11 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version-file: "package.json"
+          node-version: 24
           registry-url: "https://registry.npmjs.org"
+
+      - name: Update NPM
+        run: npm install -g npm@latest
 
       - run: npm ci
 
@@ -107,8 +111,6 @@ jobs:
       - name: Publish package to npmjs.org
         if: startsWith(github.ref, 'refs/tags/') && github.event_name == 'push'
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Add tarball dist to release assets
         if: startsWith(github.ref, 'refs/tags/') && github.event_name == 'push'
