@@ -22,7 +22,7 @@ import ModelLink from "../../value-decorators/ModelLink.js";
 import PowerSource from "../../value-decorators/PowerSource.js";
 import VendorLink from "../../value-decorators/VendorLink.js";
 
-type ReportProblemLinkProps = {
+type LinkProps = {
     sourceIdx: number;
     device: Device;
 };
@@ -48,35 +48,20 @@ const endpointsReplacer = (key: string, value: unknown) => {
     return value;
 };
 
-const SubmitConverterLink = memo(({ device }: { device: Device }) => {
+const SubmitConverterLink = memo(({ sourceIdx, device }: LinkProps) => {
     const { t } = useTranslation("zigbee");
+    const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const githubUrlParams = {
-        labels: "enhancement",
-        title: `[External Converter] ${device.model_id} from ${device.manufacturer}`,
-        body: `<!--
-
-IMPORTANT: Read before submitting this isuse:
-- Make sure this is not already posted ${ZHC_NEW_GITHUB_ISSUE_URL.slice(0, -4)}
-- Preferably, instead of submitting this issue try to create a PR by clicking the Edit button on the manufacturer file: https://github.com/Koenkk/zigbee-herdsman-converters/tree/master/src/devices
-
--->
-
-This is my external converter for \`${device.model_id}\` from \`${device.manufacturer}\`
+        template: "external_converter.yaml",
+        title: `[External Converter]: ${device.model_id} from ${device.manufacturer}`,
+        z2m_version: `${bridgeInfo.version} (${bridgeInfo.commit})`,
+        notes: `
 software_build_id: \`${device.software_build_id}\`
 date_code: \`${device.date_code}\`
 endpoints:
 \`\`\`json
 ${JSON.stringify(device.endpoints, endpointsReplacer)}
-\`\`\`
-
-### What works / what doesn't?
-
-### Converter
-
-\`\`\`js
-<!-- REPLACE THIS LINE WITH YOUR EXTERNAL CONVERTER'S CODE -->
-\`\`\`
-`,
+\`\`\``,
     };
 
     return (
@@ -91,30 +76,20 @@ ${JSON.stringify(device.endpoints, endpointsReplacer)}
     );
 });
 
-const ReportProblemLink = memo(({ sourceIdx, device }: ReportProblemLinkProps) => {
+const ReportProblemLink = memo(({ sourceIdx, device }: LinkProps) => {
     const { t } = useTranslation("zigbee");
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const bridgeHealth = useAppStore(useShallow((state) => state.bridgeHealth[sourceIdx]));
     const githubUrlParams = {
-        labels: "problem",
+        template: "problem_report.yaml",
         title: `[${device.model_id} / ${device.manufacturer}] ???`,
-        body: `<!-- MAKE SURE THIS IS NOT ALREADY POSTED ${Z2M_NEW_GITHUB_ISSUE_URL.slice(0, -4)} -->
-
-### What happened?
-
-### What did you expect to happen?
-
-### How to reproduce it (minimal and precise)
-
-### Debug logs
-
-### Details
-os: \`${bridgeInfo.os.version}\`
+        z2m_version: `${bridgeInfo.version} (${bridgeInfo.commit})`,
+        adapter_fwversion: JSON.stringify(bridgeInfo.coordinator.meta),
+        adapter: bridgeInfo.coordinator.type,
+        setup: `os: \`${bridgeInfo.os.version}\`
 node: \`${bridgeInfo.os.node_version}\`
-zigbee2mqtt: \`${bridgeInfo.version}\` (\`${bridgeInfo.commit}\`)
-zigbee-herdsman: \`${bridgeInfo.zigbee_herdsman.version}\`
-zigbee-herdsman-converters: \`${bridgeInfo.zigbee_herdsman_converters.version}\`
-adapter: \`${bridgeInfo.coordinator.type}\` \`${JSON.stringify(bridgeInfo.coordinator.meta)}\`
+ha: \`${bridgeInfo.config.homeassistant.enabled}\``,
+        notes: `
 #### Device
 software_build_id: \`${device.software_build_id}\`
 date_code: \`${device.date_code}\`
@@ -125,10 +100,13 @@ ${JSON.stringify(device.endpoints)}
     };
 
     if (bridgeHealth.response_time > 0) {
-        githubUrlParams.body += `
+        githubUrlParams.notes += `
 ##### Health
 time: \`${new Date(bridgeHealth.response_time)}\`
-process.uptime_sec: \`${bridgeHealth.process.uptime_sec}\`
+os.load_average: \`${bridgeHealth.os.load_average.join(", ")}\`
+os.memory_percent: \`${bridgeHealth.os.memory_percent}\`
+process.memory_percent: \`${bridgeHealth.process.memory_percent}\`
+process.uptime_sec: \`${Math.round(bridgeHealth.process.uptime_sec)}\`
 \`\`\`json
 ${JSON.stringify(bridgeHealth.devices[device.ieee_address] ?? {})}
 \`\`\`
@@ -243,7 +221,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     )}
                     {device.definition?.source === "external" && (
                         <span className="badge animate-bounce">
-                            <SubmitConverterLink device={device} />
+                            <SubmitConverterLink sourceIdx={sourceIdx} device={device} />
                         </span>
                     )}
                     <span className="badge opacity-70" title={device.interview_state}>
