@@ -14,7 +14,9 @@ type ListEditorProps = {
 };
 
 const ListEditor = memo(({ onChange, value, feature, parentFeatures, lengthMin, lengthMax }: ListEditorProps) => {
-    const [currentValue, setCurrentValue] = useState<unknown[]>(lengthMin !== undefined && lengthMin > 0 ? Array(lengthMin) : []);
+    const [currentValue, setCurrentValue] = useState<unknown[]>(
+        lengthMin !== undefined && lengthMin > 0 ? Array(lengthMin).fill(feature.type === "composite" ? {} : "") : [],
+    );
     const [canAdd, setCanAdd] = useState(false);
     const [canRemove, setCanRemove] = useState(false);
 
@@ -23,9 +25,9 @@ const ListEditor = memo(({ onChange, value, feature, parentFeatures, lengthMin, 
     }, [value]);
 
     useEffect(() => {
-        setCanAdd(lengthMax !== undefined && lengthMax > 0 ? value.length < lengthMax : true);
-        setCanRemove(lengthMin !== undefined && lengthMin > 0 ? value.length > lengthMin : true);
-    }, [value, lengthMin, lengthMax]);
+        setCanAdd(lengthMax !== undefined && lengthMax > 0 ? currentValue.length < lengthMax : true);
+        setCanRemove(lengthMin !== undefined && lengthMin > 0 ? currentValue.length > lengthMin : true);
+    }, [currentValue, lengthMin, lengthMax]);
 
     const onItemChange = useCallback(
         (itemValue: unknown, itemIndex: number) => {
