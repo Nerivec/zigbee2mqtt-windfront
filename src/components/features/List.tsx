@@ -69,10 +69,17 @@ const List = memo((props: Props) => {
     if (access & FeatureAccessMode.SET) {
         return (
             <>
-                <ListEditor feature={itemType} parentFeatures={[...parentFeatures, feature]} onChange={onEditorChange} value={currentValue} />
+                <ListEditor
+                    feature={itemType}
+                    parentFeatures={[...parentFeatures, feature]}
+                    onChange={onEditorChange}
+                    value={currentValue}
+                    lengthMin={feature.length_min}
+                    lengthMax={feature.length_max}
+                />
                 {isRoot && (
                     <div>
-                        <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply} disabled={currentValue.length === 0}>
+                        <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply}>
                             {t(($) => $.apply)}
                         </Button>
                     </div>
