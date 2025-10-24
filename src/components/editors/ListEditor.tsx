@@ -1,38 +1,34 @@
 import { memo, useCallback, useEffect, useState } from "react";
-import type { BasicFeature, Device, DeviceState, FeatureWithAnySubFeatures, FeatureWithSubFeatures } from "../../types.js";
+import type { BasicFeature, Device, FeatureWithAnySubFeatures, FeatureWithSubFeatures } from "../../types.js";
 import Button from "../Button.js";
 import Feature from "../features/Feature.js";
 import FeatureWrapper from "../features/FeatureWrapper.js";
 
 type ListEditorProps = {
-    value: unknown[];
-    onChange(value: unknown[]): void;
+    // biome-ignore lint/suspicious/noExplicitAny: tmp
+    value: any[];
+    // biome-ignore lint/suspicious/noExplicitAny: tmp
+    onChange(value: any[]): void;
     feature: BasicFeature | FeatureWithSubFeatures;
     parentFeatures: FeatureWithAnySubFeatures[];
-    lengthMin?: number;
-    lengthMax?: number;
 };
 
-const ListEditor = memo(({ onChange, value, feature, parentFeatures, lengthMin, lengthMax }: ListEditorProps) => {
-    const [currentValue, setCurrentValue] = useState<unknown[]>(lengthMin !== undefined && lengthMin > 0 ? Array(lengthMin) : []);
-    const [canAdd, setCanAdd] = useState(false);
-    const [canRemove, setCanRemove] = useState(false);
+const ListEditor = memo((props: ListEditorProps) => {
+    const { onChange, value, feature, parentFeatures } = props;
+    // biome-ignore lint/suspicious/noExplicitAny: tmp
+    const [currentValue, setCurrentValue] = useState<any[]>(value);
 
     useEffect(() => {
         setCurrentValue(value);
     }, [value]);
 
-    useEffect(() => {
-        setCanAdd(lengthMax !== undefined && lengthMax > 0 ? value.length < lengthMax : true);
-        setCanRemove(lengthMin !== undefined && lengthMin > 0 ? value.length > lengthMin : true);
-    }, [value, lengthMin, lengthMax]);
-
     const onItemChange = useCallback(
-        (itemValue: unknown, itemIndex: number) => {
+        // biome-ignore lint/suspicious/noExplicitAny: tmp
+        (itemValue: any, itemIndex: number) => {
             const newListValue = Array.from(currentValue);
 
             if (typeof itemValue === "object" && itemValue != null) {
-                itemValue = { ...(currentValue[itemIndex] as object), ...itemValue };
+                itemValue = { ...currentValue[itemIndex], ...itemValue };
             }
 
             newListValue[itemIndex] = itemValue ?? "";
@@ -43,7 +39,7 @@ const ListEditor = memo(({ onChange, value, feature, parentFeatures, lengthMin, 
         [currentValue, onChange],
     );
 
-    const removeItem = useCallback(
+    const handleRemoveClick = useCallback(
         (itemIndex: number) => {
             const newListValue = Array.from(currentValue);
 
@@ -54,11 +50,11 @@ const ListEditor = memo(({ onChange, value, feature, parentFeatures, lengthMin, 
         [currentValue, onChange],
     );
 
-    const addItem = useCallback(() => setCurrentValue((prev) => [...prev, feature.type === "composite" ? {} : ""]), [feature.type]);
+    const handleAddClick = useCallback(() => setCurrentValue((prev) => [...prev, feature.type === "composite" ? {} : ""]), [feature.type]);
 
     return currentValue.length === 0 ? (
         <div className="flex flex-row flex-wrap gap-2">
-            <Button<void> className="btn btn-success col-1" onClick={addItem}>
+            <Button<void> className="btn btn-success col-1" onClick={handleAddClick}>
                 +
             </Button>
         </div>
@@ -69,19 +65,17 @@ const ListEditor = memo(({ onChange, value, feature, parentFeatures, lengthMin, 
                 <Feature
                     feature={feature as FeatureWithSubFeatures}
                     device={{} as Device}
-                    deviceState={itemValue as DeviceState}
+                    deviceState={itemValue}
                     onChange={(value) => onItemChange(value, itemIndex)}
                     featureWrapperClass={FeatureWrapper}
                     parentFeatures={parentFeatures}
                 />
                 <div className="flex flex-row flex-wrap gap-1">
-                    {canRemove && (
-                        <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square join-item" onClick={removeItem}>
-                            -
-                        </Button>
-                    )}
-                    {canAdd && (
-                        <Button<void> className="btn btn-sm btn-success btn-square join-item" onClick={addItem}>
+                    <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square join-item" onClick={handleRemoveClick}>
+                        -
+                    </Button>
+                    {currentValue.length - 1 === itemIndex && (
+                        <Button<void> className="btn btn-sm btn-success btn-square join-item" onClick={handleAddClick}>
                             +
                         </Button>
                     )}

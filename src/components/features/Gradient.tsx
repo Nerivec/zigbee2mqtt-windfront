@@ -20,7 +20,7 @@ export const Gradient = memo((props: GradientProps) => {
     const [canRemove, setCanRemove] = useState(false);
 
     useEffect(() => {
-        if (deviceValue && Array.isArray(deviceValue)) {
+        if (deviceValue && Array.isArray(deviceValue) && deviceValue.length > 0) {
             setColors(deviceValue);
         }
     }, [deviceValue]);
@@ -68,7 +68,7 @@ export const Gradient = memo((props: GradientProps) => {
                         minimal={minimal}
                     />
                     {canRemove && (
-                        <Button<number> item={idx} className="btn btn-sm btn-error" onClick={removeColor}>
+                        <Button<void> className="btn btn-sm btn-error" onClick={() => removeColor(idx)}>
                             -
                         </Button>
                     )}
