@@ -58,8 +58,6 @@ export const NEW_GITHUB_ISSUE_URL = "https://github.com/Nerivec/zigbee2mqtt-wind
 
 export const Z2M_NEW_GITHUB_ISSUE_URL = "https://github.com/Koenkk/zigbee2mqtt/issues/new";
 
-export const ZHC_NEW_GITHUB_ISSUE_URL = "https://github.com/Koenkk/zigbee-herdsman-converters/issues/new";
-
 export const Z2M_COMMIT_URL = "https://github.com/Koenkk/zigbee2mqtt/commit/";
 
 export const RELEASE_TAG_URL = "https://github.com/Nerivec/zigbee2mqtt-windfront/releases/tag/v";
