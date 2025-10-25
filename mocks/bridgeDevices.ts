@@ -196,6 +196,8 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                             value_max: 255,
                             value_min: 0,
                         },
+                        length_min: 1,
+                        length_max: 3,
                     },
                     {
                         access: 7,

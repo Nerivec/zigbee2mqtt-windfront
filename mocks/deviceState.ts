@@ -5,6 +5,7 @@ export const DEVICE_STATES: Message<DeviceState>[] = [
         payload: {
             action: "",
             last_seen: "2022-04-15T16:33:53+08:00",
+            options: ["a", "b"],
             update: {
                 installed_version: 192,
                 latest_version: 192,
