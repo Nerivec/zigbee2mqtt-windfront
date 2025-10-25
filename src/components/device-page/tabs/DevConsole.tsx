@@ -26,30 +26,19 @@ interface DevConsoleProps {
 
 const RequestSupportLink = memo(({ sourceIdx, device, externalDefinition }: RequestSupportLinkProps) => {
     const { t } = useTranslation("zigbee");
-    const zhcVersion = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].zigbee_herdsman_converters.version));
+    const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const githubUrlParams = {
-        labels: "new device support",
-        title: `[New device support] ${device.model_id} from ${device.manufacturer}`,
-        body: `<!-- MAKE SURE THIS IS NOT ALREADY POSTED ${Z2M_NEW_GITHUB_ISSUE_URL.slice(0, -4)} -->
-
-### Link
-
-### What does/doesn't work with the external definition?
-
-### Details
-zigbee-herdsman-converters: \`${zhcVersion}\`
+        template: "new_device_support.yaml",
+        title: `[New device support]: ${device.model_id} from ${device.manufacturer}`,
+        z2m_version: `${bridgeInfo.version} (${bridgeInfo.commit})`,
+        notes: `
 software_build_id: \`${device.software_build_id}\`
 date_code: \`${device.date_code}\`
 endpoints:
 \`\`\`json
 ${JSON.stringify(device.endpoints)}
-\`\`\`
-
-### External definition:
-\`\`\`ts
-${externalDefinition}
-\`\`\`
-`,
+\`\`\``,
+        external_definition: externalDefinition,
     };
 
     return (

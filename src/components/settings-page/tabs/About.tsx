@@ -26,38 +26,25 @@ const ReportProblemLink = memo(({ sourceIdx }: ReportProblemLinkProps) => {
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const bridgeHealth = useAppStore(useShallow((state) => state.bridgeHealth[sourceIdx]));
     const githubUrlParams = {
-        labels: "problem",
-        title: "???",
-        body: `<!-- MAKE SURE THIS IS NOT ALREADY POSTED ${Z2M_NEW_GITHUB_ISSUE_URL.slice(0, -4)} -->
-
-### What happened?
-
-### What did you expect to happen?
-
-### How to reproduce it (minimal and precise)
-
-### Debug logs
-
-### Details
-os: \`${bridgeInfo.os.version}\`
+        template: "problem_report.yaml",
+        z2m_version: `${bridgeInfo.version} (${bridgeInfo.commit})`,
+        adapter_fwversion: JSON.stringify(bridgeInfo.coordinator.meta),
+        adapter: bridgeInfo.coordinator.type,
+        setup: `os: \`${bridgeInfo.os.version}\`
 node: \`${bridgeInfo.os.node_version}\`
-homeassistant: \`${bridgeInfo.config.homeassistant.enabled}\`
-zigbee2mqtt: \`${bridgeInfo.version}\` (\`${bridgeInfo.commit}\`)
-zigbee-herdsman: \`${bridgeInfo.zigbee_herdsman.version}\`
-zigbee-herdsman-converters: \`${bridgeInfo.zigbee_herdsman_converters.version}\`
-adapter: \`${bridgeInfo.coordinator.type}\` \`${JSON.stringify(bridgeInfo.coordinator.meta)}\``,
-    };
-
-    if (bridgeHealth.response_time > 0) {
-        githubUrlParams.body += `
+ha: \`${bridgeInfo.config.homeassistant.enabled}\``,
+        notes:
+            bridgeHealth.response_time > 0
+                ? `
 #### Last health check
 time: \`${new Date(bridgeHealth.response_time)}\`
 os.load_average: \`${bridgeHealth.os.load_average.join(", ")}\`
 os.memory_percent: \`${bridgeHealth.os.memory_percent}\`
 process.memory_percent: \`${bridgeHealth.process.memory_percent}\`
 process.uptime_sec: \`${Math.round(bridgeHealth.process.uptime_sec)}\`
-`;
-    }
+`
+                : "",
+    };
 
     return (
         <Link
