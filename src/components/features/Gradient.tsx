@@ -3,9 +3,11 @@ import { useTranslation } from "react-i18next";
 import type { GradientFeature } from "../../types.js";
 import Button from "../Button.js";
 import ColorEditor from "../editors/ColorEditor.js";
-import type { BaseFeatureProps } from "./index.js";
+import { type BaseFeatureProps, clampList } from "./index.js";
 
 type GradientProps = BaseFeatureProps<GradientFeature>;
+
+const buildDefaultArray = (min: number): string[] => (min > 0 ? Array(min).fill("#ffffff") : []);
 
 export const Gradient = memo((props: GradientProps) => {
     const {
@@ -15,15 +17,17 @@ export const Gradient = memo((props: GradientProps) => {
         deviceValue,
     } = props;
     const { t } = useTranslation("common");
-    const [colors, setColors] = useState<string[]>(length_min > 0 ? Array(length_min).fill("#ffffff") : []);
+    const [colors, setColors] = useState<string[]>(buildDefaultArray(length_min));
     const [canAdd, setCanAdd] = useState(false);
     const [canRemove, setCanRemove] = useState(false);
 
     useEffect(() => {
-        if (deviceValue && Array.isArray(deviceValue) && deviceValue.length > 0) {
-            setColors(deviceValue);
+        if (deviceValue && Array.isArray(deviceValue)) {
+            setColors(clampList(deviceValue, length_min, length_max, (min) => buildDefaultArray(min)));
+        } else {
+            setColors(buildDefaultArray(length_min));
         }
-    }, [deviceValue]);
+    }, [deviceValue, length_min, length_max]);
 
     useEffect(() => {
         setCanAdd(colors.length < length_max);
@@ -55,7 +59,7 @@ export const Gradient = memo((props: GradientProps) => {
     const onGradientApply = useCallback(() => onChange({ [property ?? "gradient"]: colors }), [colors, property, onChange]);
 
     return (
-        <div className="flex flex-col gap-2">
+        <>
             {colors.map((color, idx) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: not much data
                 <div key={`${color}-${idx}`} className="flex flex-row flex-wrap gap-2 items-center">
@@ -68,7 +72,7 @@ export const Gradient = memo((props: GradientProps) => {
                         minimal={minimal}
                     />
                     {canRemove && (
-                        <Button<void> className="btn btn-sm btn-error" onClick={() => removeColor(idx)}>
+                        <Button<number> item={idx} className="btn btn-sm btn-error" onClick={removeColor}>
                             -
                         </Button>
                     )}
@@ -86,6 +90,6 @@ export const Gradient = memo((props: GradientProps) => {
                     {t(($) => $.apply)}
                 </Button>
             </div>
-        </div>
+        </>
     );
 });
