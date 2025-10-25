@@ -676,3 +676,21 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
 
 export const getFeatureKey = (feature: FeatureWithAnySubFeatures) =>
     `${feature.type}-${feature.name}-${feature.label}-${feature.property}-${feature.access}-${feature.category}-${feature.endpoint}`;
+
+export function clampList<T>(list: T[], min: number | undefined, max: number | undefined, buildDefault: (min: number) => T[]) {
+    if (min !== undefined && list.length < min) {
+        const resizedValue = buildDefault(min);
+
+        for (let i = 0; i < list.length; i++) {
+            resizedValue[i] = list[i];
+        }
+
+        return resizedValue;
+    }
+
+    if (max !== undefined && list.length > max) {
+        return list.slice(0, max);
+    }
+
+    return list;
+}
