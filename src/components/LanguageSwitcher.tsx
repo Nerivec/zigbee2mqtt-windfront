@@ -5,10 +5,10 @@ import DialogDropdown from "./DialogDropdown.js";
 const LOCALES_NAMES_MAP = {
     bg: "Български",
     ca: "Català",
-    "zh-CN": "简体中文",
     cs: "Česky",
     da: "Dansk",
     de: "Deutsch",
+    en: "English",
     es: "Español",
     eu: "Euskera",
     fi: "Suomi",
@@ -25,9 +25,10 @@ const LOCALES_NAMES_MAP = {
     sk: "Slovenčina",
     sv: "Svenska",
     tr: "Türkçe",
-    zh: "繁體中文",
     ua: "Українська",
-    en: "English",
+    vi: "Tiếng Việt",
+    zh: "繁體中文",
+    "zh-CN": "简体中文",
 };
 
 const LanguageSwitcher = memo(() => {
