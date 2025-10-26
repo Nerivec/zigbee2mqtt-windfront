@@ -23,6 +23,7 @@ import timeRu from "timeago.js/lib/lang/ru.js";
 import timeSv from "timeago.js/lib/lang/sv.js";
 import timeTr from "timeago.js/lib/lang/tr.js";
 import timeUa from "timeago.js/lib/lang/uk.js";
+import timeVi from "timeago.js/lib/lang/vi.js";
 import timeZhCn from "timeago.js/lib/lang/zh_CN.js";
 import timeZh from "timeago.js/lib/lang/zh_TW.js";
 import bgTranslations from "./locales/bg.json" with { type: "json" };
@@ -47,6 +48,7 @@ import ruTranslations from "./locales/ru.json" with { type: "json" };
 import svTranslations from "./locales/sv.json" with { type: "json" };
 import trTranslations from "./locales/tr.json" with { type: "json" };
 import uaTranslations from "./locales/ua.json" with { type: "json" };
+import viTranslations from "./locales/vi.json" with { type: "json" };
 import zhTranslations from "./locales/zh.json" with { type: "json" };
 import zhCnTranslations from "./locales/zh-CN.json" with { type: "json" };
 
@@ -71,6 +73,7 @@ register("ru", timeRu);
 register("sv", timeSv);
 register("tr", timeTr);
 register("ua", timeUa);
+register("vi", timeVi);
 register("zh", timeZh);
 register("zh-CN", timeZhCn);
 
@@ -97,6 +100,7 @@ const resources = {
     sv: svTranslations as ResourceLanguage,
     tr: trTranslations as ResourceLanguage,
     ua: uaTranslations as ResourceLanguage,
+    vi: viTranslations as ResourceLanguage,
     zh: zhTranslations as ResourceLanguage,
     "zh-CN": zhCnTranslations as ResourceLanguage,
 } as const;
