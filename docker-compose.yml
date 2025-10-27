@@ -9,6 +9,8 @@ services:
     networks:
       - network
     environment:
+      - NGINX_ENTRYPOINT_LOCAL_RESOLVERS=true
+      # - NGINX_LOCAL_RESOLVERS=127.0.0.11
       - Z2M_API_URLS=localhost:5173/api,localhost:8080/api
       - Z2M_API_NAMES=Instance one,Instance two
       # - USE_PROXY=true
