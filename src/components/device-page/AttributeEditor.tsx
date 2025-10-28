@@ -101,7 +101,7 @@ const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDe
     const selectedAttributes = useMemo(
         () =>
             attributes.length > 0 && (
-                <fieldset className="fieldset gap-2 p-3 rounded-box shadow-md">
+                <fieldset className="fieldset gap-2 p-3 bg-base-200 rounded-box shadow-md border border-base-300">
                     {attributes.map(({ attribute, value = "", definition }) => (
                         <div key={attribute} className="join join-horizontal min-w-xs">
                             <label className="input join-item">

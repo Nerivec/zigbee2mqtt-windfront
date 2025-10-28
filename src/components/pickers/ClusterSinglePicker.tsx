@@ -54,7 +54,7 @@ const ClusterSinglePicker = memo((props: ClusterSinglePickerProps) => {
             value={value}
             onChange={(e) => onChange(e.target.value)}
             disabled={disabled}
-            className="select validator max-w-48"
+            className="select validator w-48"
             {...rest}
         >
             <option value="" disabled>

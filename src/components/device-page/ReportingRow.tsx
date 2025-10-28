@@ -129,7 +129,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     value={stateRule.minimum_report_interval}
                     onChange={onReportNumberChange}
                     required
-                    className="input validator max-w-48"
+                    className="input validator w-48"
                 />
                 <InputField
                     name="maximum_report_interval"
@@ -138,7 +138,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     value={stateRule.maximum_report_interval}
                     onChange={onReportNumberChange}
                     required
-                    className="input validator max-w-48"
+                    className="input validator w-48"
                 />
                 <InputField
                     name="reportable_change"
@@ -147,9 +147,9 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     value={stateRule.reportable_change}
                     onChange={onReportNumberChange}
                     required
-                    className="input validator max-w-48"
+                    className="input validator w-48"
                 />
-                <fieldset className="fieldset">
+                <fieldset className="fieldset ml-auto">
                     <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
                     <div className="join join-horizontal">
                         <Button<NiceReportingRule>

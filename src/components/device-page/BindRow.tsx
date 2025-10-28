@@ -183,7 +183,9 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                         value={stateRule.target.endpoint}
                         onChange={onDestinationEndpointChange}
                     />
-                ) : null}
+                ) : (
+                    <div className="w-32" />
+                )}
                 <div className="grow w-128">
                     <ClusterMultiPicker
                         label={t(($) => $.clusters)}
