@@ -9,7 +9,7 @@ export const isValidForDashboard = (expose: BasicFeature | FeatureWithSubFeature
 
     if (expose.name) {
         // specific blacklisting (already shown some other way)
-        if (expose.name === "linkquality" || expose.name === "battery" || expose.name === "voltage") {
+        if (expose.name === "linkquality" || expose.name === "battery" || (expose.name === "voltage" && expose.category === "diagnostic")) {
             return false;
         }
     }

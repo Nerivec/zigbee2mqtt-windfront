@@ -895,6 +895,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                         property: "voltage",
                         type: "numeric",
                         unit: "mV",
+                        category: "diagnostic",
                     },
                     {
                         access: 1,
@@ -1107,6 +1108,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                         property: "voltage",
                         type: "numeric",
                         unit: "mV",
+                        category: "diagnostic",
                     },
                     {
                         access: 1,
@@ -1201,6 +1203,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                         property: "voltage",
                         type: "numeric",
                         unit: "mV",
+                        category: "diagnostic",
                     },
                     {
                         access: 1,
@@ -1303,6 +1306,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                         property: "voltage",
                         type: "numeric",
                         unit: "mV",
+                        category: "diagnostic",
                     },
                     {
                         access: 1,
@@ -1373,6 +1377,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                         property: "voltage",
                         type: "numeric",
                         unit: "mV",
+                        category: "diagnostic",
                     },
                     {
                         access: 1,
@@ -1458,6 +1463,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                         property: "voltage",
                         type: "numeric",
                         unit: "mV",
+                        category: "diagnostic",
                     },
                     {
                         access: 1,
@@ -1585,6 +1591,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                         property: "voltage",
                         type: "numeric",
                         unit: "mV",
+                        category: "diagnostic",
                     },
                     {
                         access: 1,
