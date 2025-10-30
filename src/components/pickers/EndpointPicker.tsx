@@ -9,8 +9,7 @@ interface EndpointPickerProps extends Omit<SelectHTMLAttributes<HTMLSelectElemen
     values: Set<string | number>;
 }
 
-const EndpointPicker = memo((props: EndpointPickerProps) => {
-    const { value, values, disabled, onChange, label, ...rest } = props;
+const EndpointPicker = memo(({ value, values, disabled, onChange, label, ...rest }: EndpointPickerProps) => {
     const { t } = useTranslation("common");
     const hasOnlyOneEP = values.size === 1;
 
@@ -34,7 +33,7 @@ const EndpointPicker = memo((props: EndpointPickerProps) => {
             label={label}
             value={value ?? ""}
             onChange={(e) => onChange(e.target.value)}
-            title={hasOnlyOneEP ? t(($) => $.the_only_endpoint) : ""}
+            title={hasOnlyOneEP ? t(($) => $.the_only_endpoint) : `${value}`}
             disabled={(value && hasOnlyOneEP) || disabled}
             className="select validator w-32"
             {...rest}

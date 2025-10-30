@@ -9,8 +9,7 @@ export interface ClusterSinglePickerProps extends Omit<SelectFieldProps, "onChan
     onChange(cluster: string): void;
 }
 
-const ClusterSinglePicker = memo((props: ClusterSinglePickerProps) => {
-    const { clusters, onChange, value, label, disabled, ...rest } = props;
+const ClusterSinglePicker = memo(({ clusters, onChange, value, label, disabled, ...rest }: ClusterSinglePickerProps) => {
     const { t } = useTranslation(["zigbee", "common"]);
 
     const options = useMemo(() => {
@@ -52,6 +51,7 @@ const ClusterSinglePicker = memo((props: ClusterSinglePickerProps) => {
             name="attribute_picker"
             label={label}
             value={value}
+            title={value}
             onChange={(e) => onChange(e.target.value)}
             disabled={disabled}
             className="select validator w-48"

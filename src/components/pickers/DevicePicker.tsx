@@ -1,4 +1,4 @@
-import { type ChangeEvent, type JSX, memo, type SelectHTMLAttributes, useMemo } from "react";
+import { type ChangeEvent, type JSX, memo, type SelectHTMLAttributes, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { AppState } from "../../store.js";
 import type { Device, Group } from "../../types.js";
@@ -14,6 +14,19 @@ interface DevicePickerProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>
 
 const DevicePicker = memo(({ devices, value, label, onChange, groups = [], ...rest }: DevicePickerProps) => {
     const { t } = useTranslation("common");
+    const [selectedName, setSelectedName] = useState<string>("");
+
+    useEffect(() => {
+        if (typeof value === "string") {
+            const device = devices.find((device) => device.ieee_address === value);
+
+            setSelectedName(device?.friendly_name ?? "");
+        } else {
+            const group = groups.find((g) => value === g.id);
+
+            setSelectedName(group?.friendly_name ?? "");
+        }
+    }, [value, devices, groups]);
 
     const onSelectHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
         const { value: selectedValue } = e.target;
@@ -60,7 +73,15 @@ const DevicePicker = memo(({ devices, value, label, onChange, groups = [], ...re
     }, [devices, groups, t]);
 
     return (
-        <SelectField name="device_picker" label={label} value={value} onChange={onSelectHandler} className="select validator w-64" {...rest}>
+        <SelectField
+            name="device_picker"
+            label={label}
+            value={value}
+            title={selectedName}
+            onChange={onSelectHandler}
+            className="select validator w-64"
+            {...rest}
+        >
             <option value="" disabled>
                 {t(($) => $.select_device)}
             </option>
