@@ -20,6 +20,7 @@ import timeNl from "timeago.js/lib/lang/nl.js";
 import timePl from "timeago.js/lib/lang/pl.js";
 import timePtBr from "timeago.js/lib/lang/pt_BR.js";
 import timeRu from "timeago.js/lib/lang/ru.js";
+import timeSk from "timeago.js/lib/lang/sk.js";
 import timeSv from "timeago.js/lib/lang/sv.js";
 import timeTr from "timeago.js/lib/lang/tr.js";
 import timeUa from "timeago.js/lib/lang/uk.js";
@@ -44,6 +45,7 @@ import noTranslations from "./locales/no.json" with { type: "json" };
 import plTranslations from "./locales/pl.json" with { type: "json" };
 import ptbrTranslations from "./locales/ptbr.json" with { type: "json" };
 import ruTranslations from "./locales/ru.json" with { type: "json" };
+import skTranslations from "./locales/sk.json" with { type: "json" };
 import svTranslations from "./locales/sv.json" with { type: "json" };
 import trTranslations from "./locales/tr.json" with { type: "json" };
 import uaTranslations from "./locales/ua.json" with { type: "json" };
@@ -68,6 +70,7 @@ register("no", timeNo);
 register("pl", timePl);
 register("ptbr", timePtBr);
 register("ru", timeRu);
+register("sk", timeSk);
 register("sv", timeSv);
 register("tr", timeTr);
 register("ua", timeUa);
@@ -94,6 +97,7 @@ const resources = {
     pl: plTranslations as ResourceLanguage,
     ptbr: ptbrTranslations as ResourceLanguage,
     ru: ruTranslations as ResourceLanguage,
+    sk: skTranslations as ResourceLanguage,
     sv: svTranslations as ResourceLanguage,
     tr: trTranslations as ResourceLanguage,
     ua: uaTranslations as ResourceLanguage,
