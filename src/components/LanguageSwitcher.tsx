@@ -22,6 +22,7 @@ const LOCALES_NAMES_MAP = {
     pl: "Polski",
     ptbr: "Brazilian Portuguese",
     ru: "Русский",
+    sk: "Slovenčina",
     sv: "Svenska",
     tr: "Türkçe",
     zh: "繁體中文",
