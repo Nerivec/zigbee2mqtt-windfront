@@ -1,0 +1,1 @@
+import{r,j as n}from"./index-BFQ_Rrcw.js";const m=r.memo(({obj:e,lines:s})=>{const t=JSON.stringify(e,null,4),a=s??Math.max(10,(t.match(/\n/g)||"").length+1);return n.jsx("textarea",{className:"textarea w-full",readOnly:!0,rows:a,value:t})});export{m as J};

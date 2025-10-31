@@ -1,0 +1,1 @@
+import{s as e,ac as t,j as o,F as a,K as r}from"./index-BFQ_Rrcw.js";function i({children:s}){return e.get(t,!1)?null:o.jsxs("div",{className:"alert alert-info alert-soft mb-2",role:"alert",children:[o.jsx(a,{icon:r,size:"2xl"}),s]})}export{i as I};
