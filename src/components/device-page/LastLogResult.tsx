@@ -7,7 +7,7 @@ export type LastLogResultProps = {
 };
 
 const LastLogResult = memo(({ message }: LastLogResultProps) => (
-    <div className="mockup-code w-full">
+    <div className="mockup-code w-full before:content-none">
         <pre data-prefix="~" className={LOG_LEVELS_CMAP[message.level]}>
             <code>
                 [{message.timestamp}] {message.message}
