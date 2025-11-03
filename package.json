@@ -42,7 +42,7 @@
         "@fortawesome/fontawesome-svg-core": "^7.1.0",
         "@fortawesome/free-solid-svg-icons": "^7.1.0",
         "@fortawesome/react-fontawesome": "^3.1.0",
-        "@storybook/addon-a11y": "^9.1.16",
+        "@storybook/addon-a11y": "^10.0.2",
         "@storybook/addon-docs": "^9.1.16",
         "@storybook/react-vite": "^9.1.16",
         "@tailwindcss/vite": "^4.1.16",
