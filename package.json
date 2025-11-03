@@ -44,7 +44,7 @@
         "@fortawesome/react-fontawesome": "^3.1.0",
         "@storybook/addon-a11y": "^9.1.16",
         "@storybook/addon-docs": "^9.1.16",
-        "@storybook/react-vite": "^9.1.16",
+        "@storybook/react-vite": "^10.0.2",
         "@tailwindcss/vite": "^4.1.16",
         "@tanstack/react-table": "^8.21.3",
         "@types/file-saver": "^2.0.7",
