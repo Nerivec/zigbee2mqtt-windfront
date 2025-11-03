@@ -579,7 +579,7 @@ const getTemperatureIcon = (temperature: number | undefined, unit: TemperatureUn
 export const getLinkQualityIcon = (linkQuality: number | undefined): [IconDefinition, className: string] => {
     let className = "";
 
-    if (linkQuality !== null && linkQuality !== undefined) {
+    if (linkQuality != null) {
         if (linkQuality < 75) {
             className = "text-error";
         } else if (linkQuality < 125) {
