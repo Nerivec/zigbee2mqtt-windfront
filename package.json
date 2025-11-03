@@ -43,7 +43,7 @@
         "@fortawesome/free-solid-svg-icons": "^7.1.0",
         "@fortawesome/react-fontawesome": "^3.1.0",
         "@storybook/addon-a11y": "^9.1.16",
-        "@storybook/addon-docs": "^9.1.16",
+        "@storybook/addon-docs": "^10.0.2",
         "@storybook/react-vite": "^9.1.16",
         "@tailwindcss/vite": "^4.1.16",
         "@tanstack/react-table": "^8.21.3",
