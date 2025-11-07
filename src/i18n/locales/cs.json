@@ -488,7 +488,7 @@
         "frontend-ssl_key": "Cesta k tajnému SSL klíči pro HTTPS. Aby bylo HTTPS aktivní, musí být nastavena i položka 'ssl_cert'.",
         "frontend-base_url": "Základní URL cesta pro frontend. Pokud je rozhraní hostováno pod podadresářem (např. http://localhost:8080/z2m), nastavte tuto hodnotu na '/z2m'.",
         "frontend-notification_filter": "Skryje oznámení frontendu, která odpovídají zadanému regulárnímu (regex) výrazu. Příklad: 'z2m: Failed to ping.*'",
-        "frontend-disable_ui_serving": "Pokud je zapnuto, Zigbee2MQTT nebude poskytovat samotné webové rozhraní, pouze WebSocket. Vhodné, pokud si UI hostujete samostatně.",        
+        "frontend-disable_ui_serving": "Pokud je zapnuto, Zigbee2MQTT nebude poskytovat samotné webové rozhraní, pouze WebSocket. Vhodné, pokud si UI hostujete samostatně.",
         "advanced-log_rotation": "Povolit rotaci logů (automatické mazání starých záznamů)",
         "advanced-log_console_json": "Zapisovat logy do konzole ve formátu JSON",
         "advanced-log_symlink_current": "Vytvořit symbolický odkaz na aktuální log v adresáři s logy",
