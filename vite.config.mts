@@ -29,6 +29,10 @@ export default defineConfig(async ({ command, mode }) => {
         test: {
             dir: "test",
             environment: "jsdom",
+            typecheck: {
+                enabled: true,
+            },
+            mockReset: true,
             onConsoleLog() {
                 return false;
             },
