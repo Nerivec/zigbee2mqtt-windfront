@@ -35,7 +35,7 @@ const LastSeen = memo(({ lastSeen, config }: LastSeenProps): JSX.Element => {
     const lastSeenDate = getLastSeenDate(lastSeen, config);
 
     return lastSeenDate ? (
-        <span title={lastSeenDate.toLocaleString()}>
+        <span className="tooltip tooltip-bottom" data-tip={lastSeenDate.toLocaleString()}>
             <TimeAgo datetime={lastSeenDate} locale={i18n.language} />
         </span>
     ) : (

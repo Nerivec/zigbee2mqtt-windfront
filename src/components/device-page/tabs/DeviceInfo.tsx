@@ -224,7 +224,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             <SubmitConverterLink sourceIdx={sourceIdx} device={device} />
                         </span>
                     )}
-                    <span className="badge opacity-70" title={device.interview_state}>
+                    <span className="badge opacity-70 tooltip tooltip-bottom" data-tip={device.interview_state}>
                         {t(($) => $.interview_state)}: {deviceInterviewState}
                     </span>
                 </div>
@@ -235,10 +235,10 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
                     <div className="stat">
                         <div className="stat-title">{device.type}</div>
-                        <div className="stat-value text-xl" title={t(($) => $.ieee_address)}>
+                        <div className="stat-value text-xl tooltip tooltip-bottom" data-tip={t(($) => $.ieee_address)}>
                             {device.ieee_address}
                         </div>
-                        <div className="stat-value text-xl" title={t(($) => $.network_address_hex)}>
+                        <div className="stat-value text-xl tooltip tooltip-bottom" data-tip={t(($) => $.network_address_hex)}>
                             {toHex(device.network_address)}
                         </div>
                         <div className="stat-desc">
