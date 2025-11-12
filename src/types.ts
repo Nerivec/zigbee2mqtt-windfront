@@ -45,6 +45,8 @@ export type LogMessage = Zigbee2MQTTAPI["bridge/logging"] & { timestamp: string 
 
 export type AvailabilityState = Zigbee2MQTTAPI["{friendlyName}/availability"];
 
+export type DeviceAvailability = AvailabilityState["state"] | "disabled";
+
 export type ClusterDefinition = RecursiveMutable<
     Zigbee2MQTTAPI["bridge/definitions"]["clusters"][keyof Zigbee2MQTTAPI["bridge/definitions"]["clusters"]]
 >;
