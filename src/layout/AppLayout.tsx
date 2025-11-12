@@ -134,9 +134,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                                 ))}
                             </ul>
 
-                            <div className={`menu w-full p-2 gap-2 ${sidebarCollapsed ? "hidden lg:hidden" : ""}`}>
-                                <PermitJoinButton />
-                            </div>
+                            <PermitJoinButton sidebarCollapsed={sidebarCollapsed} />
 
                             <div className={`menu w-full p-2 gap-2 flex-row justify-center p-2 gap-2 ${sidebarCollapsed ? "hidden lg:hidden" : ""}`}>
                                 <LanguageSwitcher />
@@ -144,7 +142,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                             </div>
 
                             <ul className={`menu w-full p-2 gap-2 ${sidebarCollapsed ? "hidden lg:hidden" : ""}`}>
-                                <li className="">
+                                <li>
                                     <NavLink to="/contribute" className="btn btn-sm btn-outline btn-secondary" onClick={onSidebarLinkClick}>
                                         <FontAwesomeIcon icon={faHeart} />
                                         {t(($) => $.contribute)}
