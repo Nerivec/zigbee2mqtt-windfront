@@ -1,4 +1,4 @@
-import { type ChangeEvent, type JSX, memo, type SelectHTMLAttributes, useCallback, useMemo } from "react";
+import { type ChangeEvent, memo, type SelectHTMLAttributes, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import type { AppState } from "../../store.js";
 import type { Group } from "../../types.js";
@@ -25,19 +25,17 @@ const GroupPicker = memo(({ groups, value, label, onChange, ...rest }: GroupPick
         [groups, onChange],
     );
 
-    const options = useMemo(() => {
-        const options: JSX.Element[] = [];
-
-        for (const group of groups) {
-            options.push(
-                <option key={group.id} value={group.id}>
-                    {group.friendly_name}
-                </option>,
-            );
-        }
-
-        return options;
-    }, [groups]);
+    const options = useMemo(
+        () =>
+            groups
+                .map((group) => (
+                    <option key={group.friendly_name} value={group.id}>
+                        {group.friendly_name}
+                    </option>
+                ))
+                .sort((elA, elB) => elA.key!.localeCompare(elB.key!)),
+        [groups],
+    );
 
     return (
         <SelectField name="group_picker" label={label} value={value} onChange={onSelectHandler} {...rest}>

@@ -42,18 +42,22 @@ const DevicePicker = memo(({ devices, value, label, onChange, groups = [], ...re
 
     const options = useMemo(() => {
         const options: JSX.Element[] = [];
-        const devicesOptions = devices.map((device) => (
-            <option title={device.definition?.description} key={device.ieee_address} value={device.ieee_address}>
-                {device.friendly_name} {device.definition?.model ? `(${device.definition?.model})` : ""}
-            </option>
-        ));
+        const devicesOptions = devices
+            .map((device) => (
+                <option title={device.definition?.description} key={device.friendly_name} value={device.ieee_address}>
+                    {device.friendly_name} {device.definition?.model ? `(${device.definition?.model})` : ""}
+                </option>
+            ))
+            .sort((elA, elB) => elA.key!.localeCompare(elB.key!));
 
         if (groups?.length) {
-            const groupOptions = groups.map((group) => (
-                <option key={group.id} value={group.id}>
-                    {group.friendly_name}
-                </option>
-            ));
+            const groupOptions = groups
+                .map((group) => (
+                    <option key={group.friendly_name} value={group.id}>
+                        {group.friendly_name}
+                    </option>
+                ))
+                .sort((elA, elB) => elA.key!.localeCompare(elB.key!));
 
             options.push(
                 <optgroup key="Groups" label={t(($) => $.groups)}>
