@@ -39,6 +39,7 @@
     "devDependencies": {
         "@biomejs/biome": "^2.3.5",
         "@ebay/nice-modal-react": "^1.2.13",
+        "@floating-ui/react": "^0.27.16",
         "@fortawesome/fontawesome-svg-core": "^7.1.0",
         "@fortawesome/free-solid-svg-icons": "^7.1.0",
         "@fortawesome/react-fontawesome": "^3.1.0",

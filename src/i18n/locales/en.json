@@ -77,7 +77,14 @@
         "feature_name": "Feature name",
         "state": "State",
         "scroll_to_top": "Scroll to top",
-        "notifications": "Notifications"
+        "notifications": "Notifications",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while"
     },
     "devicePage": {
         "about": "About",
@@ -103,7 +110,6 @@
         "group_id": "Group ID",
         "group_members": "Group members",
         "group_scenes": "Group scenes",
-        "scenes": "Scenes",
         "rename_group": "Rename group",
         "remove_from_group": "Remove from group"
     },
@@ -180,7 +186,8 @@
         "websocket_status": "WebSocket status",
         "transaction_prefix": "Transaction prefix",
         "frontend_settings": "Frontend settings",
-        "contribute": "Contribute"
+        "contribute": "Contribute",
+        "home": "Home"
     },
     "ota": {
         "check": "Check for new updates",
@@ -379,7 +386,9 @@
         "Coordinator": "Coordinator",
         "power_source": "Power source",
         "battery_low": "Battery low",
-        "battery_level": "Battery level"
+        "battery_level": "Battery level",
+        "scenes": "Scenes",
+        "low_lqi": "Low LQI"
     },
     "scene": {
         "manage_scenes_header": "Manage scenes",

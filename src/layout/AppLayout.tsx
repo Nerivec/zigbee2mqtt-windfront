@@ -6,6 +6,7 @@ import {
     faDisplay,
     faHeart,
     faHexagonNodes,
+    faHouseChimneyUser,
     faList,
     faMobileVibrate,
     faPlug,
@@ -44,6 +45,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
 
     const links = useMemo(
         () => [
+            { to: "/", icon: faHouseChimneyUser, title: t(($) => $.home) },
             { to: "/dashboard", icon: faTableColumns, title: t(($) => $.dashboard) },
             { to: "/devices", icon: faPlug, title: t(($) => $.devices) },
             { to: "/groups", icon: faTableCellsLarge, title: t(($) => $.groups) },

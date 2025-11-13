@@ -22,7 +22,7 @@ const GroupCard = ({ sourceIdx, group, endpoint, removeFromGroup }: GroupCardPro
             <div className="card-body p-3">
                 <div className="flex flex-row items-center gap-3 w-full">
                     <div className="min-w-0">
-                        <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover">
+                        <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover font-semibold">
                             #{group.id} - {group.friendly_name}
                             {endpoint ? ` (${t(($) => $.endpoint, { ns: "zigbee" })}: ${endpoint})` : ""}
                         </Link>
