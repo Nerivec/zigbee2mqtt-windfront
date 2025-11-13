@@ -79,12 +79,15 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                 <div className="drawer-content">
                     <div className="drawer drawer-end w-auto">
                         <input id="notifications-drawer" type="checkbox" className="drawer-toggle" />
-                        <div className="drawer-content">
-                            <NavBar
-                                setSidebarCollapsed={setSidebarCollapsed}
-                                showNotifications={showNotifications}
-                                setShowNotifications={setShowNotifications}
-                            />
+                        <div className="drawer-content flex flex-col min-h-screen">
+                            <header className="sticky top-0 z-5">
+                                <NavBar
+                                    setSidebarCollapsed={setSidebarCollapsed}
+                                    showNotifications={showNotifications}
+                                    setShowNotifications={setShowNotifications}
+                                />
+                            </header>
+                            <main className="pt-2 px-2 flex-1 min-h-0 [scrollbar-gutter:stable]">{children}</main>
                         </div>
                         <div className="drawer-side">
                             <label
@@ -96,7 +99,6 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                             <aside className="bg-base-100 min-h-screen w-80">{showNotifications && <Notifications />}</aside>
                         </div>
                     </div>
-                    <main className="pt-2 px-2 grow [scrollbar-gutter:stable]">{children}</main>
                 </div>
                 <div className="drawer-side lg:overflow-visible!">
                     <label
