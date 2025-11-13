@@ -8,9 +8,10 @@ import GroupScenesTile from "../components/group/GroupScenesTile.js";
 import Activity from "../components/home-page/Activity.js";
 import DevicePeek from "../components/home-page/DevicePeek.js";
 import Hero from "../components/home-page/Hero.js";
+import { QuickFilter } from "../components/home-page/index.js";
 import { useColumnCount } from "../hooks/useColumnCount.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
-import { HOME_SHOW_ACTIVITY_KEY, HOME_SHOW_GROUP_SCENES_KEY } from "../localStoreConsts.js";
+import { HOME_QUICK_FILTER_KEY, HOME_SHOW_ACTIVITY_KEY, HOME_SHOW_GROUP_SCENES_KEY } from "../localStoreConsts.js";
 import { API_URLS, useAppStore } from "../store.js";
 import type { Device, DeviceAvailability, DeviceState, Group, LastSeenConfig } from "../types.js";
 import { getLastSeenEpoch } from "../utils.js";
@@ -39,6 +40,7 @@ export type HomePageDeviceData = {
 export interface HomePageData {
     counters: HomePageDataCounters;
     deviceData: HomePageDeviceData[];
+    filteredDeviceData: HomePageDeviceData[];
 }
 
 export interface HomePageActivityEntry {
@@ -67,9 +69,18 @@ export default function HomePage(): JSX.Element {
     const availability = useAppStore((state) => state.availability);
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const columnCount = useColumnCount();
+    const [quickFilter, setQuickFilter] = useState<readonly [QuickFilter, unknown] | null>(store2.get(HOME_QUICK_FILTER_KEY, null));
     const [showActivity, setShowActivity] = useState<boolean>(store2.get(HOME_SHOW_ACTIVITY_KEY, true));
     const [showGroupScenes, setShowGroupScenes] = useState<boolean>(store2.get(HOME_SHOW_GROUP_SCENES_KEY, true));
     const [selection, setSelection] = useState<HomePageSelection | undefined>(undefined);
+
+    useEffect(() => {
+        if (quickFilter == null) {
+            store2.remove(HOME_QUICK_FILTER_KEY);
+        } else {
+            store2.set(HOME_QUICK_FILTER_KEY, quickFilter);
+        }
+    }, [quickFilter]);
 
     useEffect(() => {
         store2.set(HOME_SHOW_ACTIVITY_KEY, showActivity);
@@ -159,6 +170,41 @@ export default function HomePage(): JSX.Element {
 
         deviceData.sort((dA, dB) => dA.device.friendly_name.localeCompare(dB.device.friendly_name));
 
+        let filteredDeviceData: HomePageData["deviceData"] = [];
+
+        if (quickFilter != null) {
+            switch (quickFilter[0]) {
+                case QuickFilter.Availability: {
+                    filteredDeviceData = deviceData.filter((d) => d.deviceAvailability === quickFilter[1]);
+                    break;
+                }
+                case QuickFilter.Type: {
+                    filteredDeviceData = deviceData.filter((d) => d.device.type === quickFilter[1]);
+                    break;
+                }
+                case QuickFilter.Lqi: {
+                    filteredDeviceData = deviceData.filter(
+                        (d) => typeof d.deviceState.linkquality === "number" && d.deviceState.linkquality < (quickFilter[1] as number),
+                    );
+                    break;
+                }
+                case QuickFilter.LastSeen: {
+                    filteredDeviceData = deviceData.filter((d) => {
+                        const lastSeenTs = getLastSeenEpoch(d.deviceState.last_seen, d.lastSeenConfig) ?? 0;
+
+                        if (lastSeenTs === undefined) {
+                            return false;
+                        }
+
+                        return lastSeenTs < Date.now() - (quickFilter[1] as number);
+                    });
+                    break;
+                }
+            }
+        } else {
+            filteredDeviceData = deviceData;
+        }
+
         return {
             counters: {
                 totalDevices,
@@ -172,8 +218,9 @@ export default function HomePage(): JSX.Element {
                 lowLqiDevices,
             },
             deviceData,
+            filteredDeviceData,
         };
-    }, [devices, deviceStates, bridgeInfo, availability, readyState, handleTileClick]);
+    }, [devices, deviceStates, bridgeInfo, availability, readyState, quickFilter, handleTileClick]);
 
     const [recentActivityEntries, oldestActivityEntries] = useMemo(() => {
         const entries: HomePageActivityEntry[] = [];
@@ -184,11 +231,11 @@ export default function HomePage(): JSX.Element {
         }
 
         for (const d of data.deviceData) {
-            if (d.lastSeenConfig === "disable") {
+            const lastSeenTs = getLastSeenEpoch(d.deviceState.last_seen, d.lastSeenConfig);
+
+            if (lastSeenTs === undefined) {
                 continue;
             }
-
-            const lastSeenTs = getLastSeenEpoch(d.deviceState.last_seen, d.lastSeenConfig) ?? 0;
 
             entries.push({
                 sourceIdx: d.sourceIdx,
@@ -247,7 +294,7 @@ export default function HomePage(): JSX.Element {
             </NavBarContent>
 
             <div className="flex flex-col mb-5">
-                <Hero {...data.counters} lastActivity={recentActivityEntries[0]} />
+                <Hero {...data.counters} lastActivity={recentActivityEntries[0]} setQuickFilter={setQuickFilter} quickFilter={quickFilter} />
 
                 <div className="grid lg:grid-cols-2">
                     {recentActivityEntries.length > 0 && <Activity entries={recentActivityEntries} recent />}
@@ -257,7 +304,7 @@ export default function HomePage(): JSX.Element {
                 <div className="divider m-0 mb-1" />
 
                 {groupScenesData.length > 0 && (
-                    <section className="pb-3 flex flex-row flex-wrap justify-center gap-2">
+                    <section className="mb-4 flex flex-row flex-wrap justify-center gap-2">
                         {groupScenesData.map((data) => (
                             <GroupScenesTile key={data.group.id} {...data} />
                         ))}
@@ -265,9 +312,10 @@ export default function HomePage(): JSX.Element {
                 )}
 
                 <VirtuosoMasonry
+                    key={`device-tiles-${quickFilter?.[0]}-${quickFilter?.[1]}`}
                     useWindowScroll
                     columnCount={columnCount}
-                    data={data.deviceData}
+                    data={data.filteredDeviceData}
                     ItemContent={DeviceTile}
                     className="gap-2 select-none"
                 />

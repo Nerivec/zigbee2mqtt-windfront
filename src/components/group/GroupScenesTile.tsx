@@ -23,7 +23,7 @@ const GroupScenesTile = memo(({ sourceIdx, group }: GroupScenesTileProps) => {
 
     return (
         <article className="card bg-base-200 rounded-box shadow-md">
-            <div className="card-body p-2">
+            <div className="card-body p-3">
                 <div className="flex flex-row items-center gap-3 w-full">
                     <div className="min-w-0">
                         <div className="truncate">
@@ -37,13 +37,13 @@ const GroupScenesTile = memo(({ sourceIdx, group }: GroupScenesTileProps) => {
                         </span>
                     </div>
                 </div>
-            </div>
-            <div className="flex flex-row flex-wrap gap-1 mx-2 mb-2 justify-around items-center">
-                {group.scenes.map((scene) => (
-                    <Button<number> key={scene.id} className="btn btn-outline btn-primary btn-sm" onClick={onSceneClick} item={scene.id}>
-                        {scene.name}
-                    </Button>
-                ))}
+                <div className="flex flex-row flex-wrap gap-1 justify-around items-center">
+                    {group.scenes.map((scene) => (
+                        <Button<number> key={scene.id} className="btn btn-outline btn-primary btn-sm" onClick={onSceneClick} item={scene.id}>
+                            {scene.name}
+                        </Button>
+                    ))}
+                </div>
             </div>
         </article>
     );

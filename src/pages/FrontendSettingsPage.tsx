@@ -9,6 +9,7 @@ import {
     AUTH_FLAG_KEY,
     AUTH_TOKEN_KEY,
     HIDE_STATIC_INFO_ALERTS,
+    HOME_QUICK_FILTER_KEY,
     HOME_SHOW_ACTIVITY_KEY,
     HOME_SHOW_GROUP_SCENES_KEY,
     I18NEXTLNG_KEY,
@@ -64,6 +65,7 @@ export default function FrontendSettingsPage() {
         store2.remove(PERMIT_JOIN_TIME_KEY);
         store2.remove(MAX_ON_SCREEN_NOTIFICATIONS_KEY);
         store2.remove(HIDE_STATIC_INFO_ALERTS);
+        store2.remove(HOME_QUICK_FILTER_KEY);
         store2.remove(HOME_SHOW_ACTIVITY_KEY);
         store2.remove(HOME_SHOW_GROUP_SCENES_KEY);
         store2.remove(NETWORK_RAW_DISPLAY_TYPE_KEY);
