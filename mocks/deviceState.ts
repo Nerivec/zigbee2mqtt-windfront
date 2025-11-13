@@ -274,6 +274,6 @@ export const DEVICE_STATES: Message<DeviceState>[] = [
             window_detection: "OFF",
             window_open_mode: "OFF",
         },
-        topic: "0x00123456789abcde",
+        topic: "Bosch thermostat",
     },
 ];
