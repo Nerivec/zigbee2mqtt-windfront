@@ -15,7 +15,7 @@ export const TABLE_COLUMNS_KEY = "table-columns";
 export const TABLE_SORTING_KEY = "table-sorting";
 
 //-- Home
-export const HOME_SHOW_RECENT_ACTIVITY_KEY = "home-show-recent-activity-key";
+export const HOME_SHOW_ACTIVITY_KEY = "home-show-activity-key";
 export const HOME_SHOW_GROUP_SCENES_KEY = "home-show-group-scenes-key";
 
 //-- Network

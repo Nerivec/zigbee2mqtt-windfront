@@ -1,20 +1,21 @@
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import type { HomePageRecentActivityEntry } from "../../pages/HomePage.js";
+import type { HomePageActivityEntry } from "../../pages/HomePage.js";
 import LastSeen from "../value-decorators/LastSeen.js";
 
-export interface RecentActivityProps {
-    entries: HomePageRecentActivityEntry[];
+export interface ActivityProps {
+    entries: HomePageActivityEntry[];
+    recent: boolean;
 }
 
-const RecentActivity = memo(({ entries }: RecentActivityProps) => {
+const Activity = memo(({ entries, recent }: ActivityProps) => {
     const { t } = useTranslation(["common", "availability"]);
 
     return (
         <section className="card bg-base-100">
             <div className="card-body py-3">
-                <h2 className="card-title">{t(($) => $.recent_activity)}</h2>
+                <h2 className="card-title">{t(($) => (recent ? $.recent_activity : $.oldest_activity))}</h2>
                 <ul className="list bg-base-100">
                     {entries.map((entry) => (
                         <li key={entry.device.friendly_name} className="list-row items-center p-2 min-w-0">
@@ -41,4 +42,4 @@ const RecentActivity = memo(({ entries }: RecentActivityProps) => {
     );
 });
 
-export default RecentActivity;
+export default Activity;

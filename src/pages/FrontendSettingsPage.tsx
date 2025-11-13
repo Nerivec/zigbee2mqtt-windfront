@@ -9,8 +9,8 @@ import {
     AUTH_FLAG_KEY,
     AUTH_TOKEN_KEY,
     HIDE_STATIC_INFO_ALERTS,
+    HOME_SHOW_ACTIVITY_KEY,
     HOME_SHOW_GROUP_SCENES_KEY,
-    HOME_SHOW_RECENT_ACTIVITY_KEY,
     I18NEXTLNG_KEY,
     MAX_ON_SCREEN_NOTIFICATIONS_KEY,
     MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY,
@@ -29,7 +29,7 @@ export default function FrontendSettingsPage() {
     const [permitJoinTime, setPermitJoinTime] = useState<number>(store2.get(PERMIT_JOIN_TIME_KEY, 254));
     const [maxOnScreenNotifications, setMaxOnScreenNotifications] = useState<number>(store2.get(MAX_ON_SCREEN_NOTIFICATIONS_KEY, 3));
     const [hideStaticInfoAlerts, setHideStaticInfoAlerts] = useState<boolean>(store2.get(HIDE_STATIC_INFO_ALERTS, false));
-    const [homeShowRecentActivity, setHomeShowRecentActivity] = useState<boolean>(store2.get(HOME_SHOW_RECENT_ACTIVITY_KEY, true));
+    const [homeShowActivity, setHomeShowActivity] = useState<boolean>(store2.get(HOME_SHOW_ACTIVITY_KEY, true));
     const [homeShowGroupScenes, setHomeShowGroupScenes] = useState<boolean>(store2.get(HOME_SHOW_GROUP_SCENES_KEY, true));
     const [miShowSourceName, setMiShowSourceName] = useState<boolean>(store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
 
@@ -46,8 +46,8 @@ export default function FrontendSettingsPage() {
     }, [hideStaticInfoAlerts]);
 
     useEffect(() => {
-        store2.set(HOME_SHOW_RECENT_ACTIVITY_KEY, homeShowRecentActivity);
-    }, [homeShowRecentActivity]);
+        store2.set(HOME_SHOW_ACTIVITY_KEY, homeShowActivity);
+    }, [homeShowActivity]);
 
     useEffect(() => {
         store2.set(HOME_SHOW_GROUP_SCENES_KEY, homeShowGroupScenes);
@@ -64,7 +64,7 @@ export default function FrontendSettingsPage() {
         store2.remove(PERMIT_JOIN_TIME_KEY);
         store2.remove(MAX_ON_SCREEN_NOTIFICATIONS_KEY);
         store2.remove(HIDE_STATIC_INFO_ALERTS);
-        store2.remove(HOME_SHOW_RECENT_ACTIVITY_KEY);
+        store2.remove(HOME_SHOW_ACTIVITY_KEY);
         store2.remove(HOME_SHOW_GROUP_SCENES_KEY);
         store2.remove(NETWORK_RAW_DISPLAY_TYPE_KEY);
         store2.remove(NETWORK_MAP_CONFIG_KEY);
@@ -167,10 +167,10 @@ export default function FrontendSettingsPage() {
             <h2 className="text-lg mt-2">{t(($) => $.home, { ns: "navbar" })}</h2>
             <div className="flex flex-row flex-wrap gap-4">
                 <CheckboxField
-                    name="show_recent_activity"
-                    label={`${t(($) => $.show, { ns: "common" })}: ${t(($) => $.recent_activity, { ns: "common" })}`}
-                    onChange={(event) => setHomeShowRecentActivity(event.target.checked)}
-                    defaultChecked={homeShowRecentActivity}
+                    name="show_activity"
+                    label={`${t(($) => $.show, { ns: "common" })}: ${t(($) => $.activity, { ns: "common" })}`}
+                    onChange={(event) => setHomeShowActivity(event.target.checked)}
+                    defaultChecked={homeShowActivity}
                 />
                 <CheckboxField
                     name="show_group_scenes"

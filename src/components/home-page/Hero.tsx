@@ -4,12 +4,12 @@ import { memo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router";
 import store2 from "store2";
-import type { HomePageDataCounters, HomePageRecentActivityEntry } from "../../pages/HomePage.js";
+import type { HomePageActivityEntry, HomePageDataCounters } from "../../pages/HomePage.js";
 import Button from "../Button.js";
 import LastSeen from "../value-decorators/LastSeen.js";
 
 export interface HeroProps extends HomePageDataCounters {
-    lastActivity: HomePageRecentActivityEntry | undefined;
+    lastActivity: HomePageActivityEntry | undefined;
 }
 
 const SEARCH_AVAILABILITY_OFFLINE = [{ id: "availability", value: "Offline" }];
@@ -46,8 +46,8 @@ const Hero = memo(
             <section className="card bg-base-100 w-full">
                 <div className="card-body py-3">
                     <h2 className="card-title">{t(($) => $.overview)}</h2>
-                    <div className="flex flex-row flex-wrap gap-y-3">
-                        <div className="flex flex-row w-48 px-3 py-1 gap-4 border-dashed border-e border-current/25 last:border-e-0">
+                    <div className="flex flex-row flex-wrap justify-center gap-y-3">
+                        <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center justify-center border-dashed border-e border-current/25 last:border-e-0">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.instances)}</div>
                                 <div className={`font-semibold text-xl ${onlineInstances === totalInstances ? "" : "text-error"}`}>
@@ -59,21 +59,21 @@ const Hero = memo(
                                     </div>
                                 )}
                             </div>
-                            <div className="self-center ml-auto text-primary">
+                            <div className="self-center text-primary">
                                 <Link to="/settings/0/health" className="tooltip tooltip-bottom" data-tip={t(($) => $.health, { ns: "settings" })}>
                                     <FontAwesomeIcon icon={faHeartPulse} size="xl" />
                                 </Link>
                             </div>
                         </div>
                         {lastActivity !== undefined && (
-                            <div className="flex flex-row w-48 px-3 py-1 gap-4 border-dashed border-e border-current/25 last:border-e-0">
-                                <div>
+                            <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
+                                <div className="min-w-0">
                                     <div className="text-sm text-base-content/70">{t(($) => $.last_activity)}</div>
-                                    <div className="font-semibold text-xl">
+                                    <div className="font-semibold text-xl truncate">
                                         <LastSeen lastSeen={lastActivity.lastSeen} config={lastActivity.lastSeenConfig} />
                                     </div>
                                 </div>
-                                <div className="self-center ml-auto text-primary">
+                                <div className="self-center text-primary">
                                     <Button
                                         className="link tooltip tooltip-bottom"
                                         data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.not_seen_in_a_while)}`}
@@ -85,7 +85,7 @@ const Hero = memo(
                                 </div>
                             </div>
                         )}
-                        <div className="flex flex-row w-48 px-3 py-1 gap-4 border-dashed border-e border-current/25 last:border-e-0">
+                        <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.devices)}</div>
                                 <div className="font-semibold text-xl">
@@ -107,7 +107,7 @@ const Hero = memo(
                                     </div>
                                 )}
                             </div>
-                            <div className="self-center ml-auto text-primary">
+                            <div className="self-center text-primary">
                                 <Button
                                     className="link tooltip tooltip-bottom"
                                     data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.offline, { ns: "availability" })}`}
@@ -121,12 +121,12 @@ const Hero = memo(
                                 </Button>
                             </div>
                         </div>
-                        <div className="flex flex-row w-48 px-3 py-1 gap-4 border-dashed border-e border-current/25 last:border-e-0">
+                        <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.Router, { ns: "zigbee" })}</div>
                                 <div className="font-semibold text-xl">{routers}</div>
                             </div>
-                            <div className="self-center ml-auto text-primary">
+                            <div className="self-center text-primary">
                                 <Button
                                     className="link tooltip tooltip-bottom"
                                     data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.Router, { ns: "zigbee" })}`}
@@ -137,12 +137,12 @@ const Hero = memo(
                                 </Button>
                             </div>
                         </div>
-                        <div className="flex flex-row w-48 px-3 py-1 gap-4 border-dashed border-e border-current/25 last:border-e-0">
+                        <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.EndDevice, { ns: "zigbee" })}</div>
                                 <div className="font-semibold text-xl">{endDevices}</div>
                             </div>
-                            <div className="self-center ml-auto text-primary">
+                            <div className="self-center text-primary">
                                 <Button
                                     className="link tooltip tooltip-bottom"
                                     data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.EndDevice, { ns: "zigbee" })}`}
@@ -154,14 +154,14 @@ const Hero = memo(
                             </div>
                         </div>
                         {gpDevices > 0 && (
-                            <div className="flex flex-row w-48 px-3 py-1 gap-4 border-dashed border-e border-current/25 last:border-e-0">
+                            <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
                                 <div>
                                     <div className="text-sm text-base-content/70">
                                         {t(($) => $.Router, { ns: "zigbee" })} - {t(($) => $.GreenPower, { ns: "zigbee" })}
                                     </div>
                                 </div>
                                 <div className="font-semibold text-xl">{gpDevices}</div>
-                                <div className="self-center ml-auto text-primary">
+                                <div className="self-center text-primary">
                                     <Button
                                         className="link tooltip tooltip-bottom"
                                         data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.GreenPower, { ns: "zigbee" })}`}
@@ -174,13 +174,13 @@ const Hero = memo(
                             </div>
                         )}
                         {lowLqiDevices > 0 && (
-                            <div className="flex flex-row w-48 px-3 py-1 gap-4 border-dashed border-e border-current/25 last:border-e-0">
+                            <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
                                 <div>
                                     <div className="text-sm text-base-content/70">{t(($) => $.low_lqi, { ns: "zigbee" })}</div>
                                     <div className="font-semibold text-xl text-error">{lowLqiDevices}</div>
                                     <div className="text-xs text-base-content/50">{"< 50"}</div>
                                 </div>
-                                <div className="self-center ml-auto text-primary">
+                                <div className="self-center text-primary">
                                     <Button
                                         className="link tooltip tooltip-bottom"
                                         data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.low_lqi, { ns: "zigbee" })}`}

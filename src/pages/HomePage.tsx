@@ -5,12 +5,12 @@ import store2 from "store2";
 import Button from "../components/Button.js";
 import DeviceTile from "../components/device/DeviceTile.js";
 import GroupScenesTile from "../components/group/GroupScenesTile.js";
+import Activity from "../components/home-page/Activity.js";
 import DevicePeek from "../components/home-page/DevicePeek.js";
 import Hero from "../components/home-page/Hero.js";
-import RecentActivity from "../components/home-page/RecentActivity.js";
 import { useColumnCount } from "../hooks/useColumnCount.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
-import { HOME_SHOW_GROUP_SCENES_KEY, HOME_SHOW_RECENT_ACTIVITY_KEY } from "../localStoreConsts.js";
+import { HOME_SHOW_ACTIVITY_KEY, HOME_SHOW_GROUP_SCENES_KEY } from "../localStoreConsts.js";
 import { API_URLS, useAppStore } from "../store.js";
 import type { Device, DeviceAvailability, DeviceState, Group, LastSeenConfig } from "../types.js";
 import { getLastSeenEpoch } from "../utils.js";
@@ -41,7 +41,7 @@ export interface HomePageData {
     deviceData: HomePageDeviceData[];
 }
 
-export interface HomePageRecentActivityEntry {
+export interface HomePageActivityEntry {
     sourceIdx: number;
     device: Device;
     lastSeenTs: number;
@@ -67,13 +67,13 @@ export default function HomePage(): JSX.Element {
     const availability = useAppStore((state) => state.availability);
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const columnCount = useColumnCount();
-    const [showRecentActivity, setShowRecentActivity] = useState<boolean>(store2.get(HOME_SHOW_RECENT_ACTIVITY_KEY, true));
+    const [showActivity, setShowActivity] = useState<boolean>(store2.get(HOME_SHOW_ACTIVITY_KEY, true));
     const [showGroupScenes, setShowGroupScenes] = useState<boolean>(store2.get(HOME_SHOW_GROUP_SCENES_KEY, true));
     const [selection, setSelection] = useState<HomePageSelection | undefined>(undefined);
 
     useEffect(() => {
-        store2.set(HOME_SHOW_RECENT_ACTIVITY_KEY, showRecentActivity);
-    }, [showRecentActivity]);
+        store2.set(HOME_SHOW_ACTIVITY_KEY, showActivity);
+    }, [showActivity]);
 
     useEffect(() => {
         store2.set(HOME_SHOW_GROUP_SCENES_KEY, showGroupScenes);
@@ -175,12 +175,12 @@ export default function HomePage(): JSX.Element {
         };
     }, [devices, deviceStates, bridgeInfo, availability, readyState, handleTileClick]);
 
-    const recentActivityEntries = useMemo(() => {
-        const entries: HomePageRecentActivityEntry[] = [];
+    const [recentActivityEntries, oldestActivityEntries] = useMemo(() => {
+        const entries: HomePageActivityEntry[] = [];
 
         // avoid unnecessary computing, will hide automatically since 0 length
-        if (!showRecentActivity) {
-            return entries;
+        if (!showActivity) {
+            return [entries, entries];
         }
 
         for (const d of data.deviceData) {
@@ -200,8 +200,10 @@ export default function HomePage(): JSX.Element {
             });
         }
 
-        return entries.sort((a, b) => b.lastSeenTs - a.lastSeenTs).slice(0, 10);
-    }, [showRecentActivity, data.deviceData]);
+        entries.sort((a, b) => b.lastSeenTs - a.lastSeenTs);
+
+        return [entries.slice(0, 10), entries.slice(-10).reverse()];
+    }, [showActivity, data.deviceData]);
 
     const groupScenesData = useMemo(() => {
         const elements: HomePageGroupWithScenesEntry[] = [];
@@ -229,9 +231,9 @@ export default function HomePage(): JSX.Element {
             <NavBarContent>
                 <span className="text-sm">{t(($) => $.show)}: </span>
                 <Button<boolean>
-                    className={`btn btn-outline btn-sm ${showRecentActivity ? "btn-active" : ""}`}
-                    onClick={setShowRecentActivity}
-                    item={!showRecentActivity}
+                    className={`btn btn-outline btn-sm ${showActivity ? "btn-active" : ""}`}
+                    onClick={setShowActivity}
+                    item={!showActivity}
                 >
                     {t(($) => $.recent_activity)}
                 </Button>
@@ -247,7 +249,10 @@ export default function HomePage(): JSX.Element {
             <div className="flex flex-col mb-5">
                 <Hero {...data.counters} lastActivity={recentActivityEntries[0]} />
 
-                {recentActivityEntries.length > 0 && <RecentActivity entries={recentActivityEntries} />}
+                <div className="grid lg:grid-cols-2">
+                    {recentActivityEntries.length > 0 && <Activity entries={recentActivityEntries} recent />}
+                    {oldestActivityEntries.length > 0 && <Activity entries={oldestActivityEntries} recent={false} />}
+                </div>
 
                 <div className="divider m-0 mb-1" />
 
