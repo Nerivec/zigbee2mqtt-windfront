@@ -273,6 +273,8 @@ export default function HomePage(): JSX.Element {
         return elements;
     }, [showGroupScenes, groups]);
 
+    const maxActivityRows = Math.min(10, data.counters.totalDevices);
+
     return (
         <>
             <NavBarContent>
@@ -297,8 +299,8 @@ export default function HomePage(): JSX.Element {
                 <Hero {...data.counters} lastActivity={recentActivityEntries[0]} setQuickFilter={setQuickFilter} quickFilter={quickFilter} />
 
                 <div className="grid lg:grid-cols-2">
-                    {recentActivityEntries.length > 0 && <Activity entries={recentActivityEntries} recent />}
-                    {oldestActivityEntries.length > 0 && <Activity entries={oldestActivityEntries} recent={false} />}
+                    {recentActivityEntries.length > 0 && <Activity entries={recentActivityEntries} recent maxRows={maxActivityRows} />}
+                    {oldestActivityEntries.length > 0 && <Activity entries={oldestActivityEntries} recent={false} maxRows={maxActivityRows} />}
                 </div>
 
                 <div className="divider m-0 mb-1" />
