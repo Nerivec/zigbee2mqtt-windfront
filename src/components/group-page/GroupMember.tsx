@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { type AppState, useAppStore } from "../../store.js";
-import type { AvailabilityState } from "../../types.js";
+import type { DeviceAvailability } from "../../types.js";
 import ConfirmButton from "../ConfirmButton.js";
 import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
 import DeviceCard from "../device/DeviceCard.js";
@@ -14,7 +14,7 @@ export type GroupMemberProps = {
         sourceIdx: number;
         device: AppState["devices"][number][number];
         deviceState: AppState["deviceStates"][number][string];
-        deviceAvailability: AvailabilityState["state"] | "disabled";
+        deviceAvailability: DeviceAvailability;
         groupMember: AppState["groups"][number][number]["members"][number];
         lastSeenConfig: AppState["bridgeInfo"][number]["config"]["advanced"]["last_seen"];
         removeDeviceFromGroup(deviceIeee: string, endpoint: number): Promise<void>;

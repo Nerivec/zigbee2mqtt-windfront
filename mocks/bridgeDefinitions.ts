@@ -5737,6 +5737,784 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     manufacturerCode: 4476,
                 },
             },
+            "0x00123456789abcde": {
+                hvacThermostat: {
+                    ID: 513,
+                    attributes: {
+                        SinopeAuxCycleOutput: {
+                            ID: 1028,
+                            manufacturerCode: 4508,
+                            type: 33,
+                        },
+                        SinopeBacklight: {
+                            ID: 1026,
+                            manufacturerCode: 4508,
+                            type: 48,
+                        },
+                        SinopeMainCycleOutput: {
+                            ID: 1025,
+                            manufacturerCode: 4508,
+                            type: 33,
+                        },
+                        SinopeOccupancy: {
+                            ID: 1024,
+                            manufacturerCode: 4508,
+                            type: 48,
+                        },
+                        StelproOutdoorTemp: {
+                            ID: 16385,
+                            type: 41,
+                        },
+                        StelproSystemMode: {
+                            ID: 16412,
+                            type: 48,
+                        },
+                        absMaxCoolSetpointLimit: {
+                            ID: 6,
+                            type: 41,
+                        },
+                        absMaxHeatSetpointLimit: {
+                            ID: 4,
+                            type: 41,
+                        },
+                        absMinCoolSetpointLimit: {
+                            ID: 5,
+                            type: 41,
+                        },
+                        absMinHeatSetpointLimit: {
+                            ID: 3,
+                            type: 41,
+                        },
+                        acCapacity: {
+                            ID: 65,
+                            type: 33,
+                        },
+                        acCapacityFormat: {
+                            ID: 71,
+                            type: 48,
+                        },
+                        acCollTemp: {
+                            ID: 70,
+                            type: 41,
+                        },
+                        acConpressorType: {
+                            ID: 67,
+                            type: 48,
+                        },
+                        acErrorCode: {
+                            ID: 68,
+                            type: 27,
+                        },
+                        acLouverPosition: {
+                            ID: 69,
+                            type: 48,
+                        },
+                        acRefrigerantType: {
+                            ID: 66,
+                            type: 48,
+                        },
+                        acType: {
+                            ID: 64,
+                            type: 48,
+                        },
+                        alarmMask: {
+                            ID: 29,
+                            type: 24,
+                        },
+                        automaticValveAdapt: {
+                            ID: 20496,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        boostHeating: {
+                            ID: 16451,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        cableSensorMode: {
+                            ID: 16482,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        cableSensorTemperature: {
+                            ID: 16466,
+                            manufacturerCode: 4617,
+                            type: 41,
+                        },
+                        ctrlSeqeOfOper: {
+                            ID: 27,
+                            type: 48,
+                        },
+                        danfossAdaptionRunControl: {
+                            ID: 16460,
+                            manufacturerCode: 4678,
+                            type: 48,
+                        },
+                        danfossAdaptionRunSettings: {
+                            ID: 16462,
+                            manufacturerCode: 4678,
+                            type: 24,
+                        },
+                        danfossAdaptionRunStatus: {
+                            ID: 16461,
+                            manufacturerCode: 4678,
+                            type: 24,
+                        },
+                        danfossAlgorithmScaleFactor: {
+                            ID: 16416,
+                            manufacturerCode: 4678,
+                            type: 32,
+                        },
+                        danfossDayOfWeek: {
+                            ID: 16400,
+                            manufacturerCode: 4678,
+                            type: 48,
+                        },
+                        danfossExternalMeasuredRoomSensor: {
+                            ID: 16405,
+                            manufacturerCode: 4678,
+                            type: 41,
+                        },
+                        danfossFloorMaxSetpoint: {
+                            ID: 16674,
+                            manufacturerCode: 4678,
+                            type: 41,
+                        },
+                        danfossFloorMinSetpoint: {
+                            ID: 16673,
+                            manufacturerCode: 4678,
+                            type: 41,
+                        },
+                        danfossHeatAvailable: {
+                            ID: 16432,
+                            manufacturerCode: 4678,
+                            type: 16,
+                        },
+                        danfossHeatRequired: {
+                            ID: 16433,
+                            manufacturerCode: 4678,
+                            type: 16,
+                        },
+                        danfossIcon2PreHeat: {
+                            ID: 16689,
+                            manufacturerCode: 4678,
+                            type: 48,
+                        },
+                        danfossIcon2PreHeatStatus: {
+                            ID: 16719,
+                            manufacturerCode: 4678,
+                            type: 48,
+                        },
+                        danfossLoadBalancingEnable: {
+                            ID: 16434,
+                            manufacturerCode: 4678,
+                            type: 16,
+                        },
+                        danfossLoadEstimate: {
+                            ID: 16458,
+                            manufacturerCode: 4678,
+                            type: 41,
+                        },
+                        danfossLoadRoomMean: {
+                            ID: 16448,
+                            manufacturerCode: 4678,
+                            type: 41,
+                        },
+                        danfossMountedModeActive: {
+                            ID: 16402,
+                            manufacturerCode: 4678,
+                            type: 16,
+                        },
+                        danfossMountedModeControl: {
+                            ID: 16403,
+                            manufacturerCode: 4678,
+                            type: 16,
+                        },
+                        danfossOutputStatus: {
+                            ID: 16656,
+                            manufacturerCode: 4678,
+                            type: 48,
+                        },
+                        danfossPreheatStatus: {
+                            ID: 16463,
+                            manufacturerCode: 4678,
+                            type: 16,
+                        },
+                        danfossPreheatTime: {
+                            ID: 16464,
+                            manufacturerCode: 4678,
+                            type: 35,
+                        },
+                        danfossRadiatorCovered: {
+                            ID: 16406,
+                            manufacturerCode: 4678,
+                            type: 16,
+                        },
+                        danfossRegulationSetpointOffset: {
+                            ID: 16459,
+                            manufacturerCode: 4678,
+                            type: 40,
+                        },
+                        danfossRoomFloorSensorMode: {
+                            ID: 16672,
+                            manufacturerCode: 4678,
+                            type: 48,
+                        },
+                        danfossRoomStatusCode: {
+                            ID: 16640,
+                            manufacturerCode: 4678,
+                            type: 25,
+                        },
+                        danfossScheduleTypeUsed: {
+                            ID: 16688,
+                            manufacturerCode: 4678,
+                            type: 48,
+                        },
+                        danfossThermostatOrientation: {
+                            ID: 16404,
+                            manufacturerCode: 4678,
+                            type: 16,
+                        },
+                        danfossTriggerTime: {
+                            ID: 16401,
+                            manufacturerCode: 4678,
+                            type: 33,
+                        },
+                        danfossWindowOpenExternal: {
+                            ID: 16387,
+                            manufacturerCode: 4678,
+                            type: 16,
+                        },
+                        danfossWindowOpenFeatureEnable: {
+                            ID: 16465,
+                            manufacturerCode: 4678,
+                            type: 16,
+                        },
+                        danfossWindowOpenInternal: {
+                            ID: 16384,
+                            manufacturerCode: 4678,
+                            type: 48,
+                        },
+                        elkoCalibration: {
+                            ID: 1047,
+                            type: 40,
+                        },
+                        elkoChildLock: {
+                            ID: 1043,
+                            type: 16,
+                        },
+                        elkoDateTime: {
+                            ID: 1031,
+                            type: 65,
+                        },
+                        elkoDisplayText: {
+                            ID: 1026,
+                            type: 66,
+                        },
+                        elkoExternalTemp: {
+                            ID: 1033,
+                            type: 41,
+                        },
+                        elkoFrostGuard: {
+                            ID: 1042,
+                            type: 16,
+                        },
+                        elkoLastMessageId: {
+                            ID: 1048,
+                            type: 32,
+                        },
+                        elkoLastMessageStatus: {
+                            ID: 1049,
+                            type: 32,
+                        },
+                        elkoLoad: {
+                            ID: 1025,
+                            type: 33,
+                        },
+                        elkoMaxFloorTemp: {
+                            ID: 1044,
+                            type: 32,
+                        },
+                        elkoMeanPower: {
+                            ID: 1032,
+                            type: 33,
+                        },
+                        elkoNightSwitching: {
+                            ID: 1041,
+                            type: 16,
+                        },
+                        elkoPowerStatus: {
+                            ID: 1030,
+                            type: 16,
+                        },
+                        elkoRegulatorMode: {
+                            ID: 1029,
+                            type: 16,
+                        },
+                        elkoRegulatorTime: {
+                            ID: 1028,
+                            type: 32,
+                        },
+                        elkoRelayState: {
+                            ID: 1045,
+                            type: 16,
+                        },
+                        elkoSensor: {
+                            ID: 1027,
+                            type: 48,
+                        },
+                        elkoVersion: {
+                            ID: 1046,
+                            type: 65,
+                        },
+                        errorState: {
+                            ID: 20480,
+                            manufacturerCode: 4617,
+                            type: 24,
+                        },
+                        fourNoksHysteresisHigh: {
+                            ID: 257,
+                            manufacturerCode: 4209,
+                            type: 33,
+                        },
+                        fourNoksHysteresisLow: {
+                            ID: 258,
+                            manufacturerCode: 4209,
+                            type: 33,
+                        },
+                        heaterType: {
+                            ID: 16483,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        heatingDemand: {
+                            ID: 16416,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        localTemp: {
+                            ID: 0,
+                            type: 41,
+                        },
+                        localTemperatureCalibration: {
+                            ID: 16,
+                            type: 40,
+                        },
+                        maxCoolSetpointLimit: {
+                            ID: 24,
+                            type: 41,
+                        },
+                        maxHeatSetpointLimit: {
+                            ID: 22,
+                            type: 41,
+                        },
+                        minCoolSetpointLimit: {
+                            ID: 23,
+                            type: 41,
+                        },
+                        minHeatSetpointLimit: {
+                            ID: 21,
+                            type: 41,
+                        },
+                        minSetpointDeadBand: {
+                            ID: 25,
+                            type: 40,
+                        },
+                        numberOfDailyTrans: {
+                            ID: 34,
+                            type: 32,
+                        },
+                        numberOfWeeklyTrans: {
+                            ID: 33,
+                            type: 32,
+                        },
+                        occupancy: {
+                            ID: 2,
+                            type: 24,
+                        },
+                        occupiedCoolingSetpoint: {
+                            ID: 17,
+                            type: 41,
+                        },
+                        occupiedHeatingSetpoint: {
+                            ID: 18,
+                            type: 41,
+                        },
+                        operatingMode: {
+                            ID: 16391,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        outdoorTemp: {
+                            ID: 1,
+                            type: 41,
+                        },
+                        pICoolingDemand: {
+                            ID: 7,
+                            type: 32,
+                        },
+                        pIHeatingDemand: {
+                            ID: 8,
+                            type: 32,
+                        },
+                        programingOperMode: {
+                            ID: 37,
+                            type: 24,
+                        },
+                        remoteSensing: {
+                            ID: 26,
+                            type: 24,
+                        },
+                        remoteTemperature: {
+                            ID: 16448,
+                            manufacturerCode: 4617,
+                            type: 41,
+                        },
+                        runningMode: {
+                            ID: 30,
+                            type: 48,
+                        },
+                        runningState: {
+                            ID: 41,
+                            type: 25,
+                        },
+                        schneiderWiserSpecific: {
+                            ID: 57616,
+                            manufacturerCode: 4190,
+                            type: 48,
+                        },
+                        setpointChangeAmount: {
+                            ID: 49,
+                            type: 41,
+                        },
+                        setpointChangeSource: {
+                            ID: 48,
+                            type: 48,
+                        },
+                        setpointChangeSourceTimeStamp: {
+                            ID: 50,
+                            type: 226,
+                        },
+                        startOfWeek: {
+                            ID: 32,
+                            type: 48,
+                        },
+                        systemMode: {
+                            ID: 28,
+                            type: 48,
+                        },
+                        systemTypeConfig: {
+                            ID: 9,
+                            type: 24,
+                        },
+                        tempSetpointHold: {
+                            ID: 35,
+                            type: 48,
+                        },
+                        tempSetpointHoldDuration: {
+                            ID: 36,
+                            type: 33,
+                        },
+                        unknownAttribute0: {
+                            ID: 16421,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        unknownAttribute1: {
+                            ID: 16449,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        unknownAttribute2: {
+                            ID: 16481,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        unoccupiedCoolingSetpoint: {
+                            ID: 19,
+                            type: 41,
+                        },
+                        unoccupiedHeatingSetpoint: {
+                            ID: 20,
+                            type: 41,
+                        },
+                        valveAdaptStatus: {
+                            ID: 16418,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        valveType: {
+                            ID: 16480,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        viessmannAssemblyMode: {
+                            ID: 16402,
+                            manufacturerCode: 4641,
+                            type: 16,
+                        },
+                        viessmannWindowOpenForce: {
+                            ID: 16387,
+                            manufacturerCode: 4641,
+                            type: 16,
+                        },
+                        viessmannWindowOpenInternal: {
+                            ID: 16384,
+                            manufacturerCode: 4641,
+                            type: 48,
+                        },
+                        windowOpenMode: {
+                            ID: 16450,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                    },
+                    commands: {
+                        calibrateValve: {
+                            ID: 65,
+                            parameters: [],
+                        },
+                        clearWeeklySchedule: {
+                            ID: 3,
+                            parameters: [],
+                        },
+                        danfossSetpointCommand: {
+                            ID: 64,
+                            parameters: [
+                                {
+                                    name: "setpointType",
+                                    type: 48,
+                                },
+                                {
+                                    name: "setpoint",
+                                    type: 41,
+                                },
+                            ],
+                        },
+                        getRelayStatusLog: {
+                            ID: 4,
+                            parameters: [],
+                            response: 1,
+                        },
+                        getWeeklySchedule: {
+                            ID: 2,
+                            parameters: [
+                                {
+                                    name: "daystoreturn",
+                                    type: 32,
+                                },
+                                {
+                                    name: "modetoreturn",
+                                    type: 32,
+                                },
+                            ],
+                            response: 0,
+                        },
+                        plugwiseCalibrateValve: {
+                            ID: 160,
+                            parameters: [],
+                        },
+                        schneiderWiserThermostatBoost: {
+                            ID: 128,
+                            parameters: [
+                                {
+                                    name: "command",
+                                    type: 48,
+                                },
+                                {
+                                    name: "enable",
+                                    type: 48,
+                                },
+                                {
+                                    name: "temperature",
+                                    type: 33,
+                                },
+                                {
+                                    name: "duration",
+                                    type: 33,
+                                },
+                            ],
+                        },
+                        setWeeklySchedule: {
+                            ID: 1,
+                            parameters: [
+                                {
+                                    name: "numoftrans",
+                                    type: 32,
+                                },
+                                {
+                                    name: "dayofweek",
+                                    type: 32,
+                                },
+                                {
+                                    name: "mode",
+                                    type: 32,
+                                },
+                                {
+                                    name: "transitions",
+                                    type: 1007,
+                                },
+                            ],
+                        },
+                        setpointRaiseLower: {
+                            ID: 0,
+                            parameters: [
+                                {
+                                    name: "mode",
+                                    type: 32,
+                                },
+                                {
+                                    name: "amount",
+                                    type: 40,
+                                },
+                            ],
+                        },
+                        wiserSmartCalibrateValve: {
+                            ID: 226,
+                            parameters: [],
+                        },
+                        wiserSmartSetFipMode: {
+                            ID: 225,
+                            parameters: [
+                                {
+                                    name: "zonemode",
+                                    type: 32,
+                                },
+                                {
+                                    name: "fipmode",
+                                    type: 48,
+                                },
+                                {
+                                    name: "reserved",
+                                    type: 32,
+                                },
+                            ],
+                        },
+                        wiserSmartSetSetpoint: {
+                            ID: 224,
+                            parameters: [
+                                {
+                                    name: "operatingmode",
+                                    type: 32,
+                                },
+                                {
+                                    name: "zonemode",
+                                    type: 32,
+                                },
+                                {
+                                    name: "setpoint",
+                                    type: 41,
+                                },
+                                {
+                                    name: "reserved",
+                                    type: 32,
+                                },
+                            ],
+                        },
+                    },
+                    commandsResponse: {
+                        getRelayStatusLogRsp: {
+                            ID: 1,
+                            parameters: [
+                                {
+                                    name: "timeofday",
+                                    type: 33,
+                                },
+                                {
+                                    name: "relaystatus",
+                                    type: 33,
+                                },
+                                {
+                                    name: "localtemp",
+                                    type: 33,
+                                },
+                                {
+                                    name: "humidity",
+                                    type: 32,
+                                },
+                                {
+                                    name: "setpoint",
+                                    type: 33,
+                                },
+                                {
+                                    name: "unreadentries",
+                                    type: 33,
+                                },
+                            ],
+                        },
+                        getWeeklyScheduleRsp: {
+                            ID: 0,
+                            parameters: [
+                                {
+                                    name: "numoftrans",
+                                    type: 32,
+                                },
+                                {
+                                    name: "dayofweek",
+                                    type: 32,
+                                },
+                                {
+                                    name: "mode",
+                                    type: 32,
+                                },
+                                {
+                                    name: "transitions",
+                                    type: 1007,
+                                },
+                            ],
+                        },
+                    },
+                },
+                hvacUserInterfaceCfg: {
+                    ID: 516,
+                    attributes: {
+                        activityLed: {
+                            ID: 16435,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        danfossViewingDirection: {
+                            ID: 16384,
+                            manufacturerCode: 4678,
+                            type: 48,
+                        },
+                        displayBrightness: {
+                            ID: 16443,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        displayOrientation: {
+                            ID: 16395,
+                            manufacturerCode: 4617,
+                            type: 32,
+                        },
+                        displaySwitchOnDuration: {
+                            ID: 16442,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        displayedTemperature: {
+                            ID: 16441,
+                            manufacturerCode: 4617,
+                            type: 48,
+                        },
+                        keypadLockout: {
+                            ID: 1,
+                            type: 48,
+                        },
+                        programmingVisibility: {
+                            ID: 2,
+                            type: 48,
+                        },
+                        tempDisplayMode: {
+                            ID: 0,
+                            type: 48,
+                        },
+                    },
+                    commands: {},
+                    commandsResponse: {},
+                },
+            },
         },
     },
     topic: "bridge/definitions",

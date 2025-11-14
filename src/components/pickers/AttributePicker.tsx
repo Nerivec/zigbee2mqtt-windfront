@@ -6,6 +6,8 @@ import { useAppStore } from "../../store.js";
 import type { AttributeDefinition, Device } from "../../types.js";
 import SelectField from "../form-fields/SelectField.js";
 
+type BridgeDefinitions = Zigbee2MQTTAPI["bridge/definitions"];
+
 interface AttributePickerProps extends Omit<InputHTMLAttributes<HTMLSelectElement>, "onChange"> {
     sourceIdx: number;
     cluster: string;
@@ -18,17 +20,9 @@ const AttributePicker = memo(({ sourceIdx, cluster, device, onChange, label, ...
     const bridgeDefinitions = useAppStore(useShallow((state) => state.bridgeDefinitions[sourceIdx]));
     const { t } = useTranslation("zigbee");
 
-    // retrieve cluster attributes, priority to ZH, then device custom if any
+    // retrieve cluster attributes, priority to device custom if any, then ZH
     const clusterAttributes = useMemo(() => {
-        const stdCluster: Zigbee2MQTTAPI["bridge/definitions"]["clusters"][keyof Zigbee2MQTTAPI["bridge/definitions"]["clusters"]] | undefined =
-            bridgeDefinitions.clusters[cluster];
-
-        if (stdCluster) {
-            return stdCluster.attributes;
-        }
-
-        const deviceCustomClusters: Zigbee2MQTTAPI["bridge/definitions"]["custom_clusters"][string] | undefined =
-            bridgeDefinitions.custom_clusters[device.ieee_address];
+        const deviceCustomClusters: BridgeDefinitions["custom_clusters"][string] | undefined = bridgeDefinitions.custom_clusters[device.ieee_address];
 
         if (deviceCustomClusters) {
             const customClusters = deviceCustomClusters[cluster];
@@ -36,6 +30,12 @@ const AttributePicker = memo(({ sourceIdx, cluster, device, onChange, label, ...
             if (customClusters) {
                 return customClusters.attributes;
             }
+        }
+
+        const stdCluster: BridgeDefinitions["clusters"][keyof BridgeDefinitions["clusters"]] | undefined = bridgeDefinitions.clusters[cluster];
+
+        if (stdCluster) {
+            return stdCluster.attributes;
         }
 
         return [];

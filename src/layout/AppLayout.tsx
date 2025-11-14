@@ -6,6 +6,7 @@ import {
     faDisplay,
     faHeart,
     faHexagonNodes,
+    faHouseChimneyUser,
     faList,
     faMobileVibrate,
     faPlug,
@@ -44,6 +45,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
 
     const links = useMemo(
         () => [
+            { to: "/", icon: faHouseChimneyUser, title: t(($) => $.home) },
             { to: "/dashboard", icon: faTableColumns, title: t(($) => $.dashboard) },
             { to: "/devices", icon: faPlug, title: t(($) => $.devices) },
             { to: "/groups", icon: faTableCellsLarge, title: t(($) => $.groups) },
@@ -77,12 +79,15 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                 <div className="drawer-content">
                     <div className="drawer drawer-end w-auto">
                         <input id="notifications-drawer" type="checkbox" className="drawer-toggle" />
-                        <div className="drawer-content">
-                            <NavBar
-                                setSidebarCollapsed={setSidebarCollapsed}
-                                showNotifications={showNotifications}
-                                setShowNotifications={setShowNotifications}
-                            />
+                        <div className="drawer-content flex flex-col min-h-screen">
+                            <header className="sticky top-0 z-5">
+                                <NavBar
+                                    setSidebarCollapsed={setSidebarCollapsed}
+                                    showNotifications={showNotifications}
+                                    setShowNotifications={setShowNotifications}
+                                />
+                            </header>
+                            <main className="pt-2 px-2 flex-1 min-h-0 [scrollbar-gutter:stable]">{children}</main>
                         </div>
                         <div className="drawer-side">
                             <label
@@ -94,7 +99,6 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                             <aside className="bg-base-100 min-h-screen w-80">{showNotifications && <Notifications />}</aside>
                         </div>
                     </div>
-                    <main className="pt-2 px-2 grow [scrollbar-gutter:stable]">{children}</main>
                 </div>
                 <div className="drawer-side lg:overflow-visible!">
                     <label
@@ -134,9 +138,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                                 ))}
                             </ul>
 
-                            <div className={`menu w-full p-2 gap-2 ${sidebarCollapsed ? "hidden lg:hidden" : ""}`}>
-                                <PermitJoinButton />
-                            </div>
+                            <PermitJoinButton sidebarCollapsed={sidebarCollapsed} />
 
                             <div className={`menu w-full p-2 gap-2 flex-row justify-center p-2 gap-2 ${sidebarCollapsed ? "hidden lg:hidden" : ""}`}>
                                 <LanguageSwitcher />
@@ -144,7 +146,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                             </div>
 
                             <ul className={`menu w-full p-2 gap-2 ${sidebarCollapsed ? "hidden lg:hidden" : ""}`}>
-                                <li className="">
+                                <li>
                                     <NavLink to="/contribute" className="btn btn-sm btn-outline btn-secondary" onClick={onSidebarLinkClick}>
                                         <FontAwesomeIcon icon={faHeart} />
                                         {t(($) => $.contribute)}

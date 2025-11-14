@@ -1,7 +1,7 @@
 import { type JSX, memo } from "react";
 import { useTranslation } from "react-i18next";
-import { format } from "timeago.js";
 import type { LastSeenConfig } from "../../types.js";
+import TimeAgo from "./TimeAgo.js";
 
 type LastSeenProps = {
     lastSeen: unknown;
@@ -34,7 +34,13 @@ const LastSeen = memo(({ lastSeen, config }: LastSeenProps): JSX.Element => {
     const { i18n } = useTranslation();
     const lastSeenDate = getLastSeenDate(lastSeen, config);
 
-    return lastSeenDate ? <span title={lastSeenDate.toLocaleString()}>{format(lastSeenDate, i18n.language)}</span> : <span>N/A</span>;
+    return lastSeenDate ? (
+        <span>
+            <TimeAgo datetime={lastSeenDate} locale={i18n.language} />
+        </span>
+    ) : (
+        <span>N/A</span>
+    );
 });
 
 export default LastSeen;

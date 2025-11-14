@@ -51,7 +51,7 @@ const SourceDot = memo(({ idx, autoHide, alwaysShowName, alwaysHideName, nameCla
     }
 
     return (
-        <span title={`${idx} | ${API_NAMES[idx]}`}>
+        <span className="tooltip tooltip-bottom" data-tip={`${idx} | ${API_NAMES[idx]}`}>
             <FontAwesomeIcon icon={CONNECTION_STATUS[readyState]} style={{ color: DOT_COLORS[idx] }} {...rest} />
             {showName && <span className={`ms-1 ${nameClassName ?? ""}`}>{API_NAMES[idx]}</span>}
             {showName && namePostfix}

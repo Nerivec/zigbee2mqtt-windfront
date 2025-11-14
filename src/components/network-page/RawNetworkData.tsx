@@ -83,7 +83,10 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                                     </span>
                                 )}
                                 {node.failed && node.failed.length > 0 && (
-                                    <span className="badge badge-ghost" title={`${t(($) => $.failed, { ns: "common" })}: ${node.failed}`}>
+                                    <span
+                                        className="badge badge-ghost tooltip tooltip-bottom"
+                                        data-tip={`${t(($) => $.failed, { ns: "common" })}: ${node.failed}`}
+                                    >
                                         <FontAwesomeIcon icon={faExclamationTriangle} className="text-error" beatFade />
                                     </span>
                                 )}
@@ -94,10 +97,18 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                         </li>
                         <li>
                             <Link to={nodeLink} className="link link-hover">
-                                <span title={t(($) => $.ieee_address, { ns: "zigbee" })}>{node.ieeeAddr}</span>
-                                <span title={t(($) => $.network_address_hex, { ns: "zigbee" })} className="justify-self-end">
-                                    {toHex(node.networkAddress, 4)} |{" "}
-                                    <span title={t(($) => $.network_address_dec, { ns: "zigbee" })}>{node.networkAddress}</span>
+                                <span data-tip={t(($) => $.ieee_address, { ns: "zigbee" })} className="tooltip tooltip-bottom">
+                                    {node.ieeeAddr}
+                                </span>
+                                <span
+                                    data-tip={t(($) => $.network_address_hex, { ns: "zigbee" })}
+                                    className="justify-self-end tooltip tooltip-bottom"
+                                >
+                                    {toHex(node.networkAddress, 4)}
+                                </span>
+                                |
+                                <span data-tip={t(($) => $.network_address_dec, { ns: "zigbee" })} className="tooltip tooltip-bottom">
+                                    {node.networkAddress}
                                 </span>
                             </Link>
                         </li>

@@ -1,7 +1,8 @@
 ---
-description: 'daisyui guide'
+description: daisyUI 5
 applyTo: '**/*.tsx, **/*.css, **/*.html'
 ---
+
 # daisyUI 5
 daisyUI 5 is a CSS library for Tailwind CSS 4
 daisyUI 5 provides class names for common UI components
@@ -40,7 +41,7 @@ daisyUI 5 provides class names for common UI components
 10. don't add `bg-base-100 text-base-content` to body unless it's necessary
 11. For design decisions, use Refactoring UI book best practices
 
-daisyUI 5 class names are one of the following categories. these type names are only for reference and are not used in the actual code
+daisyUI 5 class names are one of the following categories. These type names are only for reference and are not used in the actual code
 - `component`: the required component class
 - `part`: a child part of a component
 - `style`: sets a specific style to component or part
@@ -50,6 +51,7 @@ daisyUI 5 class names are one of the following categories. these type names are 
 - `placement`: sets a specific placement to component or part
 - `direction`: sets a specific direction to component or part
 - `modifier`: modifies the component or part in a specific way
+- `variant`: prefixes for utility classes that conditionally apply styles. syntax is `variant:utility-class`
 
 ## Config
 daisyUI 5 config docs: https://daisyui.com/docs/config/
@@ -462,7 +464,7 @@ Collapse is used for showing and hiding content
 - Can also be a details/summary tag
 
 ### countdown
-Countdown gives you a transition effect when you change a number between 0 to 99
+Countdown gives you a transition effect when you change a number between 0 to 999
 
 [countdown docs](https://daisyui.com/components/countdown/)
 
@@ -477,7 +479,7 @@ Countdown gives you a transition effect when you change a number between 0 to 99
 ```
 
 #### Rules
-- The `--value` CSS variable and text must be a number between 0 and 99
+- The `--value` CSS variable and text must be a number between 0 and 999
 - you need to change the span text and the `--value` CSS variable using JS
 - you need to add `aria-live="polite"` and `aria-label="{number}"` so screen readers can properly read changes
 
@@ -560,6 +562,7 @@ Drawer is a grid layout that can show/hide a sidebar on the left or right side o
 - part: `drawer-toggle`, `drawer-content`, `drawer-side`, `drawer-overlay`
 - placement: `drawer-end`
 - modifier: `drawer-open`
+- variant: `is-drawer-open:`, `is-drawer-close:`
 
 #### Syntax
 ```html
@@ -576,6 +579,68 @@ and {SIDEBAR} can be a menu like:
   <li><a>Item 1</a></li>
   <li><a>Item 2</a></li>
 </ul>
+```
+To open/close the drawer, use a label that points to the `drawer-toggle` input:
+```html
+<label for="my-drawer" class="btn drawer-button">Open/close drawer</label>
+```
+Example: This sidebar is always visible on large screen, can be toggled on small screen:
+```html
+<div class="drawer lg:drawer-open">
+  <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col items-center justify-center">
+    <!-- Page content here -->
+    <label for="my-drawer-3" class="btn drawer-button lg:hidden">
+      Open drawer
+    </label>
+  </div>
+  <div class="drawer-side">
+    <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul class="menu bg-base-200 min-h-full w-80 p-4">
+      <!-- Sidebar content here -->
+      <li><button>Sidebar Item 1</button></li>
+      <li><button>Sidebar Item 2</button></li>
+    </ul>
+  </div>
+</div>
+```
+
+Example: This sidebar is always visible. When it's close we only see iocns, when it's open we see icons and text
+```html
+<div class="drawer lg:drawer-open">
+  <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content">
+    <!-- Page content here -->
+  </div>
+  <div class="drawer-side is-drawer-close:overflow-visible">
+    <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
+    <div class="is-drawer-close:w-14 is-drawer-open:w-64 bg-base-200 flex flex-col items-start min-h-full">
+      <!-- Sidebar content here -->
+      <ul class="menu w-full grow">
+        <!-- list item -->
+        <li>
+          <button class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
+            🏠
+            <span class="is-drawer-close:hidden">Homepage</span>
+          </button>
+        </li>
+        <!-- list item -->
+        <li>
+          <button class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
+            ⚙️
+            <span class="is-drawer-close:hidden">Settings</span>
+          </button>
+        </li>
+      </ul>
+      <!-- button to open/close drawer -->
+      <div class="m-2 is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Open">
+        <label for="my-drawer-4" class="btn btn-ghost btn-circle drawer-button is-drawer-open:rotate-y-180">
+          ↔️
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
 ```
 
 #### Rules
@@ -595,7 +660,7 @@ Dropdown can open a menu or any other element when the button is clicked
 - component: `dropdown`
 - part: `dropdown-content`
 - placement: `dropdown-start`, `dropdown-center`, `dropdown-end`, `dropdown-top`, `dropdown-bottom`, `dropdown-left`, `dropdown-right`
-- modifier: `dropdown-hover`, `dropdown-open`
+- modifier: `dropdown-hover`, `dropdown-open`, `dropdown-close`
 
 #### Syntax
 Using details and summary
@@ -616,7 +681,7 @@ Using CSS focus
 ```html
 <div class="dropdown">
   <div tabindex="0" role="button">Button</div>
-  <ul tabindex="0" class="dropdown-content">{CONTENT}</ul>
+  <ul tabindex="-1" class="dropdown-content">{CONTENT}</ul>
 </div>
 ```
 
@@ -840,10 +905,44 @@ Hero is a component for displaying a large box or image with a title and descrip
 - Use `hero-overlay` inside the hero to overlay the background image with a color
 - Content can contain a figure
 
+### hover-3d
+Hover 3D is a wrapper component that adds a 3D hover effect to its content. When we hover over the component, it tilts and rotates based on the mouse position, creating an interactive 3D effect. 
+
+`hover-3d` works by placing 8 hover zones on top of the content. Each zone detects mouse movement and applies a slight rotation to the content based on the mouse position within that zone. The combined effect of all 8 zones creates a smooth and responsive 3D tilt effect as the user moves their mouse over the component.
+
+Only use non-interactive content inside the `hover-3d` wrapper. If you want to make the entire card clickable, use a link for the whole `hover-3d` component instead of putting interactive elements like buttons or links inside it.
+
+[hover-3d docs](https://daisyui.com/components/hover-3d/)
+
+#### Class names
+- component: `hover-3d`
+
+#### Syntax
+```html
+<div class="hover-3d my-12 mx-2">
+  <figure class="max-w-100 rounded-2xl">
+    <img src="https://img.daisyui.com/images/stock/creditcard.webp" alt="Tailwind CSS 3D card" />
+  </figure>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+
+#### Rules
+- hover-3d can be a `<div>` or a `<a>`
+- hover-3d must have exactly 9 direct children where the first child is the main content and the other 8 children are empty `<div>`s for hover zones
+- content inside hover-3d should be non-interactive (no buttons, links, inputs, etc)
+
 ### hover-gallery
 Hover Gallery is container of images. The first image is visible be default and when we hover it horizontally, other images show up. Hover Gallery is useful for product cards in ecommerce sites, portfoilios or in image galleries. Hover Gallery can include up to 10 images.
 
-[indicator docs](https://daisyui.com/components/hover-gallery/)
+[hover-gallery docs](https://daisyui.com/components/hover-gallery/)
 
 #### Class names
 - component: `hover-gallery`
@@ -1369,10 +1468,15 @@ Skeleton is a component that can be used to show a loading state
 
 #### Class names
 - component: `skeleton`
+- modifier: `skeleton-text`
 
 #### Syntax
 ```html
 <div class="skeleton"></div>
+```
+Example with text skeleton:
+```html
+<div class="skeleton skeleton-text">Loading data...</div>
 ```
 
 #### Rules
@@ -1559,6 +1663,74 @@ Table can be used to show a list of data in a table format
 - {MODIFIER} is optional and can have one of each modifier/size class names
 - The `overflow-x-auto` class is added to the wrapper div to make the table horizontally scrollable on smaller screens
 
+### text-rotate
+Text Rotate can show up to 6 lines of text, one at a time, with a an infinite loop animation. Duration is 10 seconds by default. The animation will pause on hover.
+
+[textarea docs](https://daisyui.com/components/text-rotate/)
+
+#### Class Names:
+- Component: `text-rotate`
+
+#### Syntax
+```html
+<span class="text-rotate">
+  <span>
+    <span>Word 1</span>
+    <span>Word 2</span>
+    <span>Word 3</span>
+    <span>Word 4</span>
+    <span>Word 5</span>
+    <span>Word 6</span>
+  </span>
+</span>
+```
+Example:
+Big font size, horizontally centered
+```html
+<span class="text-rotate max-md:text-3xl text-7xl font-title">
+  <span class="justify-items-center">
+    <span>DESIGN</span>
+    <span>DEVELOP</span>
+    <span>DEPLOY</span>
+    <span>SCALE</span>
+    <span>MAINTAIN</span>
+    <span>REPEAT</span>
+  </span>
+</span>
+```
+Rotating words in a sentence, different colors for each word
+```html
+<span>
+  Providing AI Agents for 
+  <span class="text-rotate">
+    <span>
+      <span class="bg-teal-400 text-teal-800 px-2">Designers</span>
+      <span class="bg-red-400 text-red-800 px-2">Developers</span>
+      <span class="bg-blue-400 text-blue-800 px-2">Managers</span>
+    </span>
+  </span>
+</span>
+```
+Custom line height in case you have a tall font or need more vertical spacing between lines
+```html
+<span class="text-rotate max-md:text-3xl text-7xl font-title leading-[2]">
+  <span class="justify-items-center">
+    <span>📐 DESIGN</span>
+    <span>⌨️ DEVELOP</span>
+    <span>🌎 DEPLOY</span>
+    <span>🌱 SCALE</span>
+    <span>🔧 MAINTAIN</span>
+    <span>♻️ REPEAT</span>
+  </span>
+</span>
+```
+
+#### Rules
+- `text-rotate` must have one span or div inside it that contains 2 to 6 spans/divs for each line of text
+- Total duration of the loop is 10000 milliseconds by default
+- You can set custom duration using `duration-{value}` utility class, where value is in milliseconds (e.g. `duration-12000` for 12 seconds)
+
+
 ### textarea
 Textarea allows users to enter text in multiple lines
 
@@ -1675,6 +1847,3 @@ Validator class changes the color of form elements to error or success based on 
 #### Rules
 - Use with `input`, `select`, `textarea`
 
-## Notes
-- Get the latest version of this file at https://daisyui.com/llms.txt
-- Compatible with daisyUI 5.1
