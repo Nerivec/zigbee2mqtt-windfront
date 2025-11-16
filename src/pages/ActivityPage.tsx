@@ -52,7 +52,7 @@ export default function ActivityPage(): JSX.Element {
         <>
             <NavBarContent>
                 <div className="join">
-                    <label className="input input-sm w-64 join-item">
+                    <label className="input input-sm join-item">
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                         <DebouncedInput
                             onChange={setSearchTerm}
@@ -71,8 +71,8 @@ export default function ActivityPage(): JSX.Element {
                         <FontAwesomeIcon icon={faClose} />
                     </Button>
                 </div>
-                <div className="join">
-                    <label className="input input-sm w-64 join-item">
+                <div className="join me-1">
+                    <label className="input input-sm join-item">
                         <FontAwesomeIcon icon={faMarker} />
                         <DebouncedInput
                             onChange={setHighlightValue}
