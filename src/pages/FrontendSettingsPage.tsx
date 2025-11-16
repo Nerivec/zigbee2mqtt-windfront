@@ -170,7 +170,7 @@ export default function FrontendSettingsPage() {
             <div className="flex flex-row flex-wrap gap-4">
                 <CheckboxField
                     name="show_activity"
-                    label={`${t(($) => $.show, { ns: "common" })}: ${t(($) => $.activity, { ns: "common" })}`}
+                    label={`${t(($) => $.show, { ns: "common" })}: ${t(($) => $.activity, { ns: "navbar" })}`}
                     onChange={(event) => setHomeShowActivity(event.target.checked)}
                     defaultChecked={homeShowActivity}
                 />

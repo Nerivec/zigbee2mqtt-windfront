@@ -46,7 +46,7 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
                             <span
                                 className={`dropdown-item${selectedRouter[0] === sourceIdx && selectedRouter[1]?.ieee_address === device.ieee_address ? " menu-active" : ""}`}
                             >
-                                <SourceDot idx={sourceIdx} autoHide namePostfix=" - " />
+                                <SourceDot idx={sourceIdx} autoHide namePostfix=" – " />
                                 {device.friendly_name}
                             </span>
                         </li>,
@@ -70,7 +70,7 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
                     }}
                 >
                     <span className={`dropdown-item${selectedRouter[0] === sourceIdx && selectedRouter[1] === undefined ? " menu-active" : ""}`}>
-                        <SourceDot idx={sourceIdx} autoHide namePostfix=" - " />
+                        <SourceDot idx={sourceIdx} autoHide namePostfix=" – " />
                         {t(($) => $.all)}
                     </span>
                 </li>,

@@ -130,8 +130,10 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     const deviceStates = useAppStore(useShallow((state) => state.deviceStates[sourceIdx]));
     const bridgeConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config));
     const availability = useAppStore(useShallow((state) => state.availability[sourceIdx]));
+    const recentActivity = useAppStore(useShallow((state) => state.recentActivity[sourceIdx]));
     const homeassistantEnabled = bridgeConfig.homeassistant.enabled;
-    const deviceState = useMemo(() => deviceStates[device.friendly_name] ?? {}, [device.friendly_name, deviceStates]);
+    const deviceState = deviceStates[device.friendly_name];
+    const deviceRecentActivity = recentActivity[device.friendly_name];
 
     const setDeviceDescription = useCallback(
         async (id: string, description: string): Promise<void> => {
@@ -233,11 +235,15 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <DeviceControlUpdateDesc device={device} setDeviceDescription={setDeviceDescription} />
                 </div>
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
-                    <div className="stat">
+                    <div className="stat px-3">
                         <div className="stat-title">{device.type}</div>
                         <div className="stat-value text-xl tooltip tooltip-bottom" data-tip={t(($) => $.ieee_address)}>
                             {device.ieee_address}
                         </div>
+                        <div className="stat-desc text-base-content/0">-</div>
+                    </div>
+                    <div className="stat px-3">
+                        <div className="stat-title">{t(($) => $.network_address)}</div>
                         <div className="stat-value text-xl tooltip tooltip-bottom" data-tip={t(($) => $.network_address_hex)}>
                             {toHex(device.network_address)}
                         </div>
@@ -245,7 +251,47 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             {t(($) => $.network_address_dec)}: {device.network_address}
                         </div>
                     </div>
-                    <div className="stat">
+                    <div className="stat px-3">
+                        <div className="stat-title">{t(($) => $.power)}</div>
+                        <div className="stat-value text-xl">
+                            <PowerSource
+                                showLevel={true}
+                                device={device}
+                                batteryPercent={deviceState.battery as number}
+                                batteryState={deviceState.battery_state as string}
+                                batteryLow={deviceState.battery_low as boolean}
+                            />
+                        </div>
+                        <div className="stat-desc">
+                            {device.type === "GreenPower" ? "GreenPower" : t(($) => $[snakeCase(device.power_source)] || $.unknown)}
+                        </div>
+                    </div>
+                </div>
+                <div className="stats stats-vertical lg:stats-horizontal shadow">
+                    <div className="stat px-3">
+                        <div className="stat-title">{t(($) => $.zigbee_model)}</div>
+                        <div className="stat-value text-xl">{device.model_id}</div>
+                        <div className="stat-desc">
+                            {device.manufacturer} ({definitionDescription})
+                        </div>
+                    </div>
+                    <div className="stat px-3">
+                        <div className="stat-title">{t(($) => $.model)}</div>
+                        <div className="stat-value text-xl">
+                            <ModelLink device={device} />
+                        </div>
+                        <div className="stat-desc">
+                            <VendorLink device={device} />
+                        </div>
+                    </div>
+                    <div className="stat px-3">
+                        <div className="stat-title">{t(($) => $.firmware_id)}</div>
+                        <div className="stat-value text-xl">{device.software_build_id || t(($) => $.unknown)}</div>
+                        <div className="stat-desc">{device.date_code || t(($) => $.unknown)}</div>
+                    </div>
+                </div>
+                <div className="stats stats-vertical lg:stats-horizontal shadow">
+                    <div className="stat px-3">
                         <div className="stat-title">{t(($) => $.last_seen)}</div>
                         <div className="stat-value text-xl">
                             <LastSeen config={bridgeConfig.advanced.last_seen} lastSeen={deviceState.last_seen} />
@@ -261,56 +307,27 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             />
                         </div>
                     </div>
-                    <div className="stat">
-                        <div className="stat-title">{t(($) => $.power)}</div>
-                        <div className="stat-value text-xl">
-                            <PowerSource
-                                showLevel={true}
-                                device={device}
-                                batteryPercent={deviceState.battery as number}
-                                batteryState={deviceState.battery_state as string}
-                                batteryLow={deviceState.battery_low as boolean}
-                            />
+                    {deviceRecentActivity && (
+                        <div className="stat px-3 min-w-0">
+                            <div className="stat-title">{t(($) => $.recent_activity, { ns: "common" })}</div>
+                            <div className="stat-value text-xl truncate">
+                                <SourceDot idx={sourceIdx} autoHide />
+                                {deviceRecentActivity.desc}
+                            </div>
+                            <div className="stat-desc">{new Date(deviceRecentActivity.timestamp).toLocaleString()}</div>
                         </div>
-                        <div className="stat-desc">
-                            {device.type === "GreenPower" ? "GreenPower" : t(($) => $[snakeCase(device.power_source)] || $.unknown)}
-                        </div>
-                    </div>
-                    {
-                        <div className="stat">
-                            <div className="stat-title">{t(($) => $.firmware_id)}</div>
-                            <div className="stat-value text-xl">{device.software_build_id || t(($) => $.unknown)}</div>
-                            <div className="stat-desc">{device.date_code || t(($) => $.unknown)}</div>
-                        </div>
-                    }
+                    )}
                 </div>
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
-                    <div className="stat">
-                        <div className="stat-title">{t(($) => $.zigbee_model)}</div>
-                        <div className="stat-value text-xl">{device.model_id}</div>
-                        <div className="stat-desc">
-                            {device.manufacturer} ({definitionDescription})
-                        </div>
-                    </div>
-                    <div className="stat">
-                        <div className="stat-title">{t(($) => $.model)}</div>
-                        <div className="stat-value text-xl">
-                            <ModelLink device={device} />
-                        </div>
-                        <div className="stat-desc">
-                            <VendorLink device={device} />
-                        </div>
-                    </div>
-                </div>
-                <div className="stats stats-vertical lg:stats-horizontal shadow">
-                    <div className="stat">
+                    <div className="stat px-3">
                         <div className="stat-title">MQTT</div>
                         <div className="stat-value text-xl">
                             {bridgeConfig.mqtt.base_topic}/{device.friendly_name}
                         </div>
+                        <div className="stat-desc text-base-content/0">-</div>
                     </div>
                     {MULTI_INSTANCE && (
-                        <div className="stat">
+                        <div className="stat px-3">
                             <div className="stat-title">{t(($) => $.source, { ns: "common" })}</div>
                             <div className="stat-value text-xl">
                                 <SourceDot idx={sourceIdx} alwaysShowName />

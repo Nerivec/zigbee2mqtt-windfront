@@ -12,9 +12,8 @@ import { QuickFilter } from "../components/home-page/index.js";
 import { useColumnCount } from "../hooks/useColumnCount.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
 import { HOME_QUICK_FILTER_KEY, HOME_SHOW_ACTIVITY_KEY, HOME_SHOW_GROUP_SCENES_KEY } from "../localStoreConsts.js";
-import { API_URLS, useAppStore } from "../store.js";
+import { API_URLS, RECENT_ACTIVITY_FEED_LIMIT, useAppStore } from "../store.js";
 import type { Device, DeviceAvailability, DeviceState, Group, LastSeenConfig } from "../types.js";
-import { getLastSeenEpoch } from "../utils.js";
 
 export type HomePageDataCounters = {
     totalDevices: number;
@@ -41,15 +40,6 @@ export interface HomePageData {
     counters: HomePageDataCounters;
     deviceData: HomePageDeviceData[];
     filteredDeviceData: HomePageDeviceData[];
-}
-
-export interface HomePageActivityEntry {
-    sourceIdx: number;
-    device: Device;
-    lastSeenTs: number;
-    lastSeen: unknown;
-    lastSeenConfig: LastSeenConfig;
-    availability: DeviceAvailability;
 }
 
 export interface HomePageGroupWithScenesEntry {
@@ -188,18 +178,6 @@ export default function HomePage(): JSX.Element {
                     );
                     break;
                 }
-                case QuickFilter.LastSeen: {
-                    filteredDeviceData = deviceData.filter((d) => {
-                        const lastSeenTs = getLastSeenEpoch(d.deviceState.last_seen, d.lastSeenConfig) ?? 0;
-
-                        if (lastSeenTs === undefined) {
-                            return false;
-                        }
-
-                        return lastSeenTs < Date.now() - (quickFilter[1] as number);
-                    });
-                    break;
-                }
             }
         } else {
             filteredDeviceData = deviceData;
@@ -222,36 +200,6 @@ export default function HomePage(): JSX.Element {
         };
     }, [devices, deviceStates, bridgeInfo, availability, readyState, quickFilter, handleTileClick]);
 
-    const [recentActivityEntries, oldestActivityEntries] = useMemo(() => {
-        const entries: HomePageActivityEntry[] = [];
-
-        // avoid unnecessary computing, will hide automatically since 0 length
-        if (!showActivity) {
-            return [entries, entries];
-        }
-
-        for (const d of data.deviceData) {
-            const lastSeenTs = getLastSeenEpoch(d.deviceState.last_seen, d.lastSeenConfig);
-
-            if (lastSeenTs === undefined) {
-                continue;
-            }
-
-            entries.push({
-                sourceIdx: d.sourceIdx,
-                device: d.device,
-                lastSeenTs,
-                lastSeen: d.deviceState.last_seen,
-                lastSeenConfig: d.lastSeenConfig,
-                availability: d.deviceAvailability,
-            });
-        }
-
-        entries.sort((a, b) => b.lastSeenTs - a.lastSeenTs);
-
-        return [entries.slice(0, 10), entries.slice(-10).reverse()];
-    }, [showActivity, data.deviceData]);
-
     const groupScenesData = useMemo(() => {
         const elements: HomePageGroupWithScenesEntry[] = [];
 
@@ -273,7 +221,7 @@ export default function HomePage(): JSX.Element {
         return elements;
     }, [showGroupScenes, groups]);
 
-    const maxActivityRows = Math.min(10, data.counters.totalDevices);
+    const maxActivityRows = Math.min(RECENT_ACTIVITY_FEED_LIMIT, data.counters.totalDevices);
 
     return (
         <>
@@ -296,12 +244,9 @@ export default function HomePage(): JSX.Element {
             </NavBarContent>
 
             <div className="flex flex-col mb-5">
-                <Hero {...data.counters} lastActivity={recentActivityEntries[0]} setQuickFilter={setQuickFilter} quickFilter={quickFilter} />
+                <Hero {...data.counters} setQuickFilter={setQuickFilter} quickFilter={quickFilter} />
 
-                <div className="grid lg:grid-cols-2">
-                    {recentActivityEntries.length > 0 && <Activity entries={recentActivityEntries} recent maxRows={maxActivityRows} />}
-                    {oldestActivityEntries.length > 0 && <Activity entries={oldestActivityEntries} recent={false} maxRows={maxActivityRows} />}
-                </div>
+                {showActivity && <Activity devices={devices} maxRows={maxActivityRows} />}
 
                 <div className="divider m-0 mb-1" />
 

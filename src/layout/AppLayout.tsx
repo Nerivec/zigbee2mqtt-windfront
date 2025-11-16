@@ -12,6 +12,7 @@ import {
     faPlug,
     faTableCellsLarge,
     faTableColumns,
+    faWaveSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, memo, useEffect, useMemo, useRef, useState } from "react";
@@ -53,6 +54,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
             { to: "/touchlink", icon: faMobileVibrate, title: t(($) => $.touchlink) },
             { to: "/network", icon: faHexagonNodes, title: t(($) => $.network) },
             { to: "/logs", icon: faList, title: t(($) => $.logs) },
+            { to: "/activity", icon: faWaveSquare, title: t(($) => $.activity) },
             { to: "/settings", icon: faCogs, title: t(($) => $.settings) },
             { to: "/frontend-settings", icon: faDisplay, title: t(($) => $.frontend_settings) },
         ],

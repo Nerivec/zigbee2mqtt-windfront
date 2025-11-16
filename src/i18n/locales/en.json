@@ -80,7 +80,6 @@
         "notifications": "Notifications",
         "instances": "Instances",
         "overview": "Overview",
-        "activity": "Activity",
         "recent_activity": "Recent activity",
         "oldest_activity": "Oldest activity",
         "last_activity": "Last activity",
@@ -189,7 +188,8 @@
         "transaction_prefix": "Transaction prefix",
         "frontend_settings": "Frontend settings",
         "contribute": "Contribute",
-        "home": "Home"
+        "home": "Home",
+        "activity": "Activity"
     },
     "ota": {
         "check": "Check for new updates",

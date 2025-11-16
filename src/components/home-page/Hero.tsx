@@ -1,15 +1,13 @@
-import { faAnglesDown, faBattery, faHeartPulse, faHourglassEnd, faLeaf, faPlug, faSignal, faSlash } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesDown, faBattery, faHeartPulse, faLeaf, faPlug, faSignal, faSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, type SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import type { HomePageActivityEntry, HomePageDataCounters } from "../../pages/HomePage.js";
+import type { HomePageDataCounters } from "../../pages/HomePage.js";
 import Button from "../Button.js";
-import LastSeen from "../value-decorators/LastSeen.js";
 import { QuickFilter } from "./index.js";
 
 export interface HeroProps extends HomePageDataCounters {
-    lastActivity: HomePageActivityEntry | undefined;
     setQuickFilter: (value: SetStateAction<readonly [QuickFilter, unknown] | null>) => void;
     quickFilter: readonly [QuickFilter, unknown] | null;
 }
@@ -19,7 +17,6 @@ const SEARCH_TYPE_ROUTER = [QuickFilter.Type, "Router"] as const;
 const SEARCH_TYPE_END_DEVICE = [QuickFilter.Type, "EndDevice"] as const;
 const SEARCH_TYPE_GREENPOWER = [QuickFilter.Type, "GreenPower"] as const;
 const SEARCH_LQI_LOW = [QuickFilter.Lqi, 50] as const;
-const SEARCH_LAST_SEEN_4H = [QuickFilter.LastSeen, 4 * 60 * 60 * 1000] as const;
 
 const Hero = memo(
     ({
@@ -32,7 +29,6 @@ const Hero = memo(
         endDevices,
         gpDevices,
         lowLqiDevices,
-        lastActivity,
         setQuickFilter,
         quickFilter,
     }: HeroProps) => {
@@ -75,26 +71,6 @@ const Hero = memo(
                                 </Link>
                             </div>
                         </div>
-                        {lastActivity !== undefined && (
-                            <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
-                                <div className="min-w-0">
-                                    <div className="text-sm text-base-content/70">{t(($) => $.last_activity)}</div>
-                                    <div className="font-semibold text-xl truncate">
-                                        <LastSeen lastSeen={lastActivity.lastSeen} config={lastActivity.lastSeenConfig} />
-                                    </div>
-                                </div>
-                                <div className="self-center">
-                                    <Button
-                                        className={`link tooltip tooltip-bottom ${quickFilter?.[0] === SEARCH_LAST_SEEN_4H[0] ? "text-accent" : "text-primary"}`}
-                                        data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.not_seen_in_a_while)}`}
-                                        onClick={onFilterClick}
-                                        item={SEARCH_LAST_SEEN_4H}
-                                    >
-                                        <FontAwesomeIcon icon={faHourglassEnd} size="xl" />
-                                    </Button>
-                                </div>
-                            </div>
-                        )}
                         <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.devices)}</div>
