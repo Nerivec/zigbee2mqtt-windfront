@@ -39,7 +39,7 @@ export default defineConfig(async ({ command, mode }) => {
             },
             coverage: {
                 enabled: false,
-                include: ["src/**/**.{ts,tsx}"],
+                include: ["src/**/*.{ts,tsx}"],
                 clean: true,
                 cleanOnRerun: true,
                 reportsDirectory: "coverage",
