@@ -113,7 +113,7 @@ export default function ActivityPage(): JSX.Element {
                                         {entry.device.friendly_name}
                                     </Link>
                                 </div>
-                                <div className="text-xs uppercase font-semibold min-w-0">
+                                <div className="text-xs font-semibold min-w-0">
                                     <p className="text-xs text-base-content/70 truncate">
                                         [{new Date(entry.activity.timestamp).toLocaleString()}] {entry.activity.desc}
                                     </p>

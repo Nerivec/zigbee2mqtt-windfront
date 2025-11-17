@@ -33,7 +33,7 @@ const Activity = memo(({ devices, maxRows }: ActivityProps) => {
                                 key={`${entry.friendlyName}-${entry.sourceIdx}-${entry.activity}`}
                                 className="flex flex-row gap-1 items-center w-full px-1 rounded-field hover:bg-base-200"
                             >
-                                <div className="text-xs uppercase font-semibold opacity-60 min-w-0">
+                                <div className="text-xs font-semibold opacity-60 min-w-0">
                                     <SourceDot idx={entry.sourceIdx} autoHide namePostfix=" –" className="me-1" />
                                     {ieeeAddress ? (
                                         <Link
@@ -58,7 +58,7 @@ const Activity = memo(({ devices, maxRows }: ActivityProps) => {
                     {placeholderRows.map((_v, i) => (
                         /** biome-ignore lint/suspicious/noArrayIndexKey: placeholders */
                         <li key={`placeholder-${i}`} className="flex flex-row gap-3 items-center">
-                            <div className="skeleton w-full font-semibold text-xs text-base-content/0">-</div>
+                            <div className="w-full font-semibold text-xs text-base-content/0">-</div>
                         </li>
                     ))}
                 </ul>
