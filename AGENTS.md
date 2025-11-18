@@ -283,7 +283,7 @@ GitHub Actions workflow (`.github/workflows/ci.yml`):
 
 1. **Code Quality Checks:**
    - `npm run check:ci` - Biome linting/formatting
-   - `npm run typecheck` - TypeScript validation
+   - `npm run typecheck` - TypeScript validation (shortcut for `tsc --noEmit`)
    
 2. **Build:**
    - `npm run build` - Production build
