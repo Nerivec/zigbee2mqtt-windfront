@@ -4,6 +4,7 @@ import { memo, type SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { HomePageDataCounters } from "../../pages/HomePage.js";
+import { MULTI_INSTANCE } from "../../store.js";
 import Button from "../Button.js";
 import { QuickFilter } from "./index.js";
 
@@ -49,28 +50,30 @@ const Hero = memo(
                 <div className="card-body py-3">
                     <h2 className="card-title">{t(($) => $.overview)}</h2>
                     <div className="flex flex-row flex-wrap justify-center gap-y-3">
-                        <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center justify-center border-dashed border-e border-current/25 last:border-e-0">
-                            <div>
-                                <div className="text-sm text-base-content/70">{t(($) => $.instances)}</div>
-                                <div className={`font-semibold text-xl ${onlineInstances === totalInstances ? "" : "text-error"}`}>
-                                    {onlineInstances} / {totalInstances}
-                                </div>
-                                {totalInstances > 0 && (
-                                    <div className="text-xs text-base-content/50">
-                                        {Math.round((onlineInstances / totalInstances) * 100)}% {t(($) => $.online, { ns: "availability" })}
+                        {MULTI_INSTANCE ? (
+                            <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center justify-center border-dashed border-e border-current/25 last:border-e-0">
+                                <div>
+                                    <div className="text-sm text-base-content/70">{t(($) => $.instances)}</div>
+                                    <div className={`font-semibold text-xl ${onlineInstances === totalInstances ? "" : "text-error"}`}>
+                                        {onlineInstances} / {totalInstances}
                                     </div>
-                                )}
+                                    {totalInstances > 0 && (
+                                        <div className="text-xs text-base-content/50">
+                                            {Math.round((onlineInstances / totalInstances) * 100)}% {t(($) => $.online, { ns: "availability" })}
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="self-center">
+                                    <Link
+                                        to="/settings/0/health"
+                                        className="link text-primary tooltip tooltip-bottom"
+                                        data-tip={t(($) => $.health, { ns: "settings" })}
+                                    >
+                                        <FontAwesomeIcon icon={faHeartPulse} size="xl" />
+                                    </Link>
+                                </div>
                             </div>
-                            <div className="self-center">
-                                <Link
-                                    to="/settings/0/health"
-                                    className="link text-primary tooltip tooltip-bottom"
-                                    data-tip={t(($) => $.health, { ns: "settings" })}
-                                >
-                                    <FontAwesomeIcon icon={faHeartPulse} size="xl" />
-                                </Link>
-                            </div>
-                        </div>
+                        ) : null}
                         <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.devices)}</div>
