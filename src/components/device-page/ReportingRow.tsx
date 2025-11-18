@@ -126,7 +126,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     name="minimum_report_interval"
                     label={t(($) => $.min_rep_interval)}
                     type="number"
-                    value={stateRule.minimum_report_interval}
+                    value={stateRule.minimum_report_interval ?? ""}
                     onChange={onReportNumberChange}
                     required
                     className="input validator w-48"
@@ -135,7 +135,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     name="maximum_report_interval"
                     label={t(($) => $.max_rep_interval)}
                     type="number"
-                    value={stateRule.maximum_report_interval}
+                    value={stateRule.maximum_report_interval ?? ""}
                     onChange={onReportNumberChange}
                     required
                     className="input validator w-48"
@@ -144,7 +144,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     name="reportable_change"
                     label={t(($) => $.min_rep_change)}
                     type="number"
-                    value={stateRule.reportable_change}
+                    value={stateRule.reportable_change ?? ""}
                     onChange={onReportNumberChange}
                     required
                     className="input validator w-48"

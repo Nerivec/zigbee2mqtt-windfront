@@ -622,7 +622,7 @@ npm ci                    # Clean install dependencies
 npm start                 # Dev server with mocks (port 5173)
 npm run build             # Production build
 npm run preview           # Preview production build
-npm run typecheck         # TypeScript validation
+npm run typecheck         # TypeScript validation (shortcut for `tsc --noEmit`)
 npm run check             # Auto-fix formatting/linting
 npm run check:ci          # Validate without fixing
 npm run test              # Run tests

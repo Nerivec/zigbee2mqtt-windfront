@@ -1,4 +1,5 @@
 import type { DeviceState } from "../../types.js";
+import Duration from "../value-decorators/Duration.js";
 
 type UpdatingProps = {
     label: string;
@@ -8,19 +9,11 @@ type UpdatingProps = {
 
 const OtaUpdating = ({ label, remaining, progress }: UpdatingProps) => {
     if (remaining && remaining > 0) {
-        const hours = Math.floor(remaining / 3600);
-        const minutes = Math.floor(remaining / 60) % 60;
-        const seconds = Math.floor(remaining % 60);
-        const showHours = hours > 0;
-        const showMinutes = minutes > 0;
-
         return (
             <>
                 <progress className="progress" value={progress} max="100" />
                 <div>
-                    {label} {showHours ? `${hours}:` : ""}
-                    {showMinutes ? `${minutes.toString().padStart(2, "0")}:` : ""}
-                    {seconds.toString().padStart(2, "0")}
+                    {label} <Duration durationSec={remaining} />
                 </div>
             </>
         );

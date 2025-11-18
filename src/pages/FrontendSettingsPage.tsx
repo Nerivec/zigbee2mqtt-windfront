@@ -4,13 +4,14 @@ import store2 from "store2";
 import ConfirmButton from "../components/ConfirmButton.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import NumberField from "../components/form-fields/NumberField.js";
-import SelectField from "../components/form-fields/SelectField.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
 import {
     AUTH_FLAG_KEY,
     AUTH_TOKEN_KEY,
     HIDE_STATIC_INFO_ALERTS,
-    HOMEPAGE_KEY,
+    HOME_QUICK_FILTER_KEY,
+    HOME_SHOW_ACTIVITY_KEY,
+    HOME_SHOW_GROUP_SCENES_KEY,
     I18NEXTLNG_KEY,
     MAX_ON_SCREEN_NOTIFICATIONS_KEY,
     MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY,
@@ -26,15 +27,12 @@ import { MULTI_INSTANCE } from "../store.js";
 
 export default function FrontendSettingsPage() {
     const { t } = useTranslation(["settings", "navbar", "network", "common"]);
-    const [homepage, setHomepage] = useState<string>(store2.get(HOMEPAGE_KEY, "devices"));
     const [permitJoinTime, setPermitJoinTime] = useState<number>(store2.get(PERMIT_JOIN_TIME_KEY, 254));
     const [maxOnScreenNotifications, setMaxOnScreenNotifications] = useState<number>(store2.get(MAX_ON_SCREEN_NOTIFICATIONS_KEY, 3));
     const [hideStaticInfoAlerts, setHideStaticInfoAlerts] = useState<boolean>(store2.get(HIDE_STATIC_INFO_ALERTS, false));
+    const [homeShowActivity, setHomeShowActivity] = useState<boolean>(store2.get(HOME_SHOW_ACTIVITY_KEY, true));
+    const [homeShowGroupScenes, setHomeShowGroupScenes] = useState<boolean>(store2.get(HOME_SHOW_GROUP_SCENES_KEY, true));
     const [miShowSourceName, setMiShowSourceName] = useState<boolean>(store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
-
-    useEffect(() => {
-        store2.set(HOMEPAGE_KEY, homepage);
-    }, [homepage]);
 
     useEffect(() => {
         store2.set(PERMIT_JOIN_TIME_KEY, permitJoinTime);
@@ -49,6 +47,14 @@ export default function FrontendSettingsPage() {
     }, [hideStaticInfoAlerts]);
 
     useEffect(() => {
+        store2.set(HOME_SHOW_ACTIVITY_KEY, homeShowActivity);
+    }, [homeShowActivity]);
+
+    useEffect(() => {
+        store2.set(HOME_SHOW_GROUP_SCENES_KEY, homeShowGroupScenes);
+    }, [homeShowGroupScenes]);
+
+    useEffect(() => {
         store2.set(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, miShowSourceName);
     }, [miShowSourceName]);
 
@@ -56,10 +62,12 @@ export default function FrontendSettingsPage() {
         const keys = store2.keys();
 
         store2.remove(THEME_KEY);
-        store2.remove(HOMEPAGE_KEY);
         store2.remove(PERMIT_JOIN_TIME_KEY);
         store2.remove(MAX_ON_SCREEN_NOTIFICATIONS_KEY);
         store2.remove(HIDE_STATIC_INFO_ALERTS);
+        store2.remove(HOME_QUICK_FILTER_KEY);
+        store2.remove(HOME_SHOW_ACTIVITY_KEY);
+        store2.remove(HOME_SHOW_GROUP_SCENES_KEY);
         store2.remove(NETWORK_RAW_DISPLAY_TYPE_KEY);
         store2.remove(NETWORK_MAP_CONFIG_KEY);
         store2.remove(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY);
@@ -129,16 +137,6 @@ export default function FrontendSettingsPage() {
             <div className="alert alert-info alert-vertical sm:alert-horizontal">{t(($) => $.frontend_notice)}</div>
 
             <div className="flex flex-row flex-wrap gap-4 mt-3">
-                <SelectField
-                    name="homepage"
-                    label={t(($) => $.homepage)}
-                    onChange={(e) => !e.target.validationMessage && setHomepage(e.target.value)}
-                    value={homepage}
-                    required
-                >
-                    <option value="devices">{t(($) => $.devices, { ns: "navbar" })}</option>
-                    <option value="dashboard">{t(($) => $.dashboard, { ns: "navbar" })}</option>
-                </SelectField>
                 <NumberField
                     type="number"
                     name="permit_join_time"
@@ -166,6 +164,21 @@ export default function FrontendSettingsPage() {
                     label={t(($) => $.hide_static_info_alerts, { ns: "common" })}
                     onChange={(event) => setHideStaticInfoAlerts(event.target.checked)}
                     defaultChecked={hideStaticInfoAlerts}
+                />
+            </div>
+            <h2 className="text-lg mt-2">{t(($) => $.home, { ns: "navbar" })}</h2>
+            <div className="flex flex-row flex-wrap gap-4">
+                <CheckboxField
+                    name="show_activity"
+                    label={`${t(($) => $.show, { ns: "common" })}: ${t(($) => $.activity, { ns: "navbar" })}`}
+                    onChange={(event) => setHomeShowActivity(event.target.checked)}
+                    defaultChecked={homeShowActivity}
+                />
+                <CheckboxField
+                    name="show_group_scenes"
+                    label={`${t(($) => $.show, { ns: "common" })}: ${t(($) => $.group_scenes, { ns: "common" })}`}
+                    onChange={(event) => setHomeShowGroupScenes(event.target.checked)}
+                    defaultChecked={homeShowGroupScenes}
                 />
             </div>
             {MULTI_INSTANCE && (

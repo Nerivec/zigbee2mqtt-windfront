@@ -22,6 +22,7 @@ const GroupPage = lazy(async () => await import("./pages/GroupPage.js"));
 const OtaPage = lazy(async () => await import("./pages/OtaPage.js"));
 const TouchlinkPage = lazy(async () => await import("./pages/TouchlinkPage.js"));
 const LogsPage = lazy(async () => await import("./pages/LogsPage.js"));
+const ActivityPage = lazy(async () => await import("./pages/ActivityPage.js"));
 const SettingsPage = lazy(async () => await import("./pages/SettingsPage.js"));
 const FrontendSettingsPage = lazy(async () => await import("./pages/FrontendSettingsPage.js"));
 const ContributePage = lazy(async () => await import("./pages/ContributePage.js"));
@@ -59,6 +60,7 @@ function App() {
                         <Route path="/ota" element={<OtaPage />} />
                         <Route path="/network/:sourceIdx?" element={<NetworkPage />} />
                         <Route path="/logs/:sourceIdx?" element={<LogsPage />} />
+                        <Route path="/activity" element={<ActivityPage />} />
                         <Route path="/settings/:sourceIdx?/:tab?/:subTab?" element={<SettingsPage />} />
                         <Route path="/frontend-settings" element={<FrontendSettingsPage />} />
                         <Route path="/contribute" element={<ContributePage />} />

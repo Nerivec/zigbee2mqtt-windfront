@@ -13,6 +13,10 @@ import DialogDropdown from "./DialogDropdown.js";
 import SourceDot from "./SourceDot.js";
 import Countdown from "./value-decorators/Countdown.js";
 
+type PermitJoinButtonProps = {
+    sidebarCollapsed: boolean;
+};
+
 type PermitJoinDropdownProps = {
     selectedRouter: [number, Device | undefined];
     setSelectedRouter: ReturnType<typeof useState<[number, Device | undefined]>>[1];
@@ -42,7 +46,7 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
                             <span
                                 className={`dropdown-item${selectedRouter[0] === sourceIdx && selectedRouter[1]?.ieee_address === device.ieee_address ? " menu-active" : ""}`}
                             >
-                                <SourceDot idx={sourceIdx} autoHide namePostfix=" - " />
+                                <SourceDot idx={sourceIdx} autoHide namePostfix=" – " />
                                 {device.friendly_name}
                             </span>
                         </li>,
@@ -66,7 +70,7 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
                     }}
                 >
                     <span className={`dropdown-item${selectedRouter[0] === sourceIdx && selectedRouter[1] === undefined ? " menu-active" : ""}`}>
-                        <SourceDot idx={sourceIdx} autoHide namePostfix=" - " />
+                        <SourceDot idx={sourceIdx} autoHide namePostfix=" – " />
                         {t(($) => $.all)}
                     </span>
                 </li>,
@@ -90,7 +94,7 @@ const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJo
     );
 });
 
-const PermitJoinButton = memo(() => {
+const PermitJoinButton = memo(({ sidebarCollapsed }: PermitJoinButtonProps) => {
     const { t } = useTranslation("navbar");
     const [selectedRouter, setSelectedRouter] = useState<[number, Device | undefined]>([0, undefined]);
     const [permitClickedSourceIdx, setPermitClickedSourceIdx] = useState(0);
@@ -112,23 +116,37 @@ const PermitJoinButton = memo(() => {
         [permitJoin, permitJoinEnd],
     );
 
-    return (
-        <div className="indicator w-full mb-4">
-            <div className="join join-horizontal w-full">
-                <Button<void> onClick={onPermitJoinClick} className="btn btn-outline btn-primary join-item flex-1 min-w-0">
-                    <FontAwesomeIcon icon={faTowerBroadcast} className={permitJoin ? "text-success" : "text-error"} />
-                    <span className="truncate">{permitJoin ? t(($) => $.disable_join) : t(($) => $.permit_join)}</span>
-                    {permitJoin && permitJoinTimer}
+    return sidebarCollapsed ? (
+        <ul className="menu w-full p-2 gap-2">
+            <li className="w-full">
+                <Button<void>
+                    onClick={onPermitJoinClick}
+                    className="btn btn-outline btn-primary grid leading-none py-2.5 lg:tooltip lg:tooltip-right !w-full"
+                    data-tip={`${permitJoin ? t(($) => $.disable_join) : t(($) => $.permit_join)}: ${selectedRouter[1] ? selectedRouter[1].friendly_name : t(($) => $.all)}`}
+                >
+                    <FontAwesomeIcon icon={faTowerBroadcast} className={permitJoin ? "text-success" : "text-error"} beat={permitJoin} />
                 </Button>
+            </li>
+        </ul>
+    ) : (
+        <div className="menu w-full p-2 gap-2">
+            <div className="indicator w-full mb-4">
+                <div className="join join-horizontal w-full">
+                    <Button<void> onClick={onPermitJoinClick} className="btn btn-outline btn-primary join-item flex-1 min-w-0">
+                        <FontAwesomeIcon icon={faTowerBroadcast} className={permitJoin ? "text-success" : "text-error"} />
+                        <span className="truncate">{permitJoin ? t(($) => $.disable_join) : t(($) => $.permit_join)}</span>
+                        {permitJoin && permitJoinTimer}
+                    </Button>
 
-                {!permitJoin && <PermitJoinDropdown selectedRouter={selectedRouter} setSelectedRouter={setSelectedRouter} />}
-            </div>
-            <div
-                className="indicator-item indicator-bottom indicator-center badge badge-sm badge-primary opacity-95 min-w-0 pointer-events-none"
-                style={{ "--indicator-y": "65%" } as CSSProperties}
-            >
-                <SourceDot idx={selectedRouter[0]} autoHide alwaysHideName />
-                <span className="truncate">{selectedRouter[1]?.friendly_name ?? t(($) => $.all)}</span>
+                    {!permitJoin && <PermitJoinDropdown selectedRouter={selectedRouter} setSelectedRouter={setSelectedRouter} />}
+                </div>
+                <div
+                    className="indicator-item indicator-bottom indicator-center badge badge-sm badge-primary opacity-95 min-w-0 pointer-events-none"
+                    style={{ "--indicator-y": "65%" } as CSSProperties}
+                >
+                    <SourceDot idx={selectedRouter[0]} autoHide alwaysHideName />
+                    <span className="truncate">{selectedRouter[1]?.friendly_name ?? t(($) => $.all)}</span>
+                </div>
             </div>
         </div>
     );
