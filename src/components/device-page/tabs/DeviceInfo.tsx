@@ -132,7 +132,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     const availability = useAppStore(useShallow((state) => state.availability[sourceIdx]));
     const recentActivity = useAppStore(useShallow((state) => state.recentActivity[sourceIdx]));
     const homeassistantEnabled = bridgeConfig.homeassistant.enabled;
-    const deviceState = deviceStates[device.friendly_name];
+    const deviceState = deviceStates[device.friendly_name] ?? {};
     const deviceRecentActivity = recentActivity[device.friendly_name];
 
     const setDeviceDescription = useCallback(

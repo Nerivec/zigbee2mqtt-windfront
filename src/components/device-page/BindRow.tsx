@@ -5,40 +5,31 @@ import { useTranslation } from "react-i18next";
 import type { AppState } from "../../store.js";
 import type { Device, Group } from "../../types.js";
 import { getEndpoints, isDevice } from "../../utils.js";
-import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
+import type { Action, BindingRule } from "../binding/index.js";
+import ConfirmButton from "../ConfirmButton.js";
 import ClusterMultiPicker from "../pickers/ClusterMultiPicker.js";
 import DevicePicker from "../pickers/DevicePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
-import type { NiceBindingRule } from "./tabs/Bind.js";
 
 interface BindRowProps {
     sourceIdx: number;
     devices: AppState["devices"][number];
-    rule: NiceBindingRule;
+    rule: BindingRule;
     groups: Group[];
     device: Device;
+    onApply(args: [Action, BindingRule]): Promise<void>;
+    showDivider: boolean;
+    hideActions?: boolean;
 }
 
-const getTarget = (rule: NiceBindingRule, devices: AppState["devices"][number], groups: Group[]): Device | Group | undefined => {
-    const { target } = rule;
-
-    return target.type === "group" ? groups.find((g) => g.id === target.id) : devices.find((device) => device.ieee_address === target.ieee_address);
-};
-
-type Action = "Bind" | "Unbind";
-
-const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps) => {
+const BindRow = memo(({ devices, groups, device, rule, onApply, showDivider, hideActions = false }: BindRowProps) => {
     const [stateRule, setStateRule] = useState(rule);
     const { t } = useTranslation(["common", "zigbee"]);
 
     useEffect(() => {
         setStateRule(rule);
     }, [rule]);
-
-    const onSourceEndpointChange = useCallback((endpoint: string | number): void => {
-        setStateRule((prev) => ({ ...prev, source: { ...prev.source, endpoint } }));
-    }, []);
 
     const onDestinationChange = useCallback((destination?: Device | Group): void => {
         if (!destination) {
@@ -65,55 +56,13 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
         setStateRule((prev) => ({ ...prev, clusters }));
     }, []);
 
-    const onBindOrUnBindClick = useCallback(
-        async (action: Action): Promise<void> => {
-            let to: string | number = "";
-            let toEndpoint: string | number | undefined;
-            const { target } = stateRule;
+    const target = useMemo(() => {
+        const { target } = stateRule;
 
-            if (target.type === "group") {
-                const targetGroup = groups.find((group) => group.id === target.id);
-
-                if (targetGroup) {
-                    to = targetGroup.id;
-                } else {
-                    console.error("Target group does not exist:", target.id);
-                    return;
-                }
-            } else if (target.type === "endpoint") {
-                const targetDevice = devices.find((device) => device.ieee_address === target.ieee_address);
-
-                if (targetDevice) {
-                    to = targetDevice.ieee_address;
-
-                    if (targetDevice.type !== "Coordinator") {
-                        toEndpoint = target.endpoint;
-                    }
-                } else {
-                    console.error("Target device does not exist:", target.ieee_address);
-                    return;
-                }
-            }
-
-            const bindParams = {
-                from: device.ieee_address,
-                from_endpoint: stateRule.source.endpoint,
-                to,
-                to_endpoint: toEndpoint,
-                clusters: stateRule.clusters,
-            };
-
-            if (action === "Bind") {
-                await sendMessage(sourceIdx, "bridge/request/device/bind", bindParams);
-            } else {
-                await sendMessage(sourceIdx, "bridge/request/device/unbind", bindParams);
-            }
-        },
-        [sourceIdx, device, stateRule, devices, groups],
-    );
-
-    const sourceEndpoints = useMemo(() => getEndpoints(device), [device]);
-    const target = getTarget(stateRule, devices, groups);
+        return target.type === "group"
+            ? groups.find((g) => g.id === target.id)
+            : devices.find((device) => device.ieee_address === target.ieee_address);
+    }, [stateRule, devices, groups]);
     const destinationEndpoints = useMemo(() => getEndpoints(target), [target]);
 
     const possibleClusters = useMemo(() => {
@@ -158,14 +107,6 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
     return (
         <>
             <div className="flex flex-row flex-wrap gap-2">
-                <EndpointPicker
-                    label={t(($) => $.source_endpoint)}
-                    disabled={!stateRule.isNew}
-                    values={sourceEndpoints}
-                    value={stateRule.source.endpoint}
-                    onChange={onSourceEndpointChange}
-                    required
-                />
                 <DevicePicker
                     label={t(($) => $.destination)}
                     disabled={!stateRule.isNew}
@@ -194,33 +135,39 @@ const BindRow = memo(({ sourceIdx, devices, groups, device, rule }: BindRowProps
                         onChange={onClustersChange}
                     />
                 </div>
-                <fieldset className="fieldset">
-                    <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
-                    <div className="join join-horizontal">
-                        <Button<Action>
-                            item={"Bind"}
-                            disabled={!isValidRule}
-                            title={t(($) => $.bind)}
-                            className="btn btn-primary btn-outline join-item"
-                            onClick={onBindOrUnBindClick}
-                        >
-                            <FontAwesomeIcon icon={faLink} />
-                            {t(($) => $.bind)}&nbsp;
-                        </Button>
-                        <Button<Action>
-                            item={"Unbind"}
-                            disabled={stateRule.isNew || !isValidRule}
-                            title={t(($) => $.unbind)}
-                            className="btn btn-error btn-outline join-item"
-                            onClick={onBindOrUnBindClick}
-                        >
-                            <FontAwesomeIcon icon={faUnlink} />
-                            &nbsp;{t(($) => $.unbind)}
-                        </Button>
-                    </div>
-                </fieldset>
+                {!hideActions ? (
+                    <fieldset className="fieldset ml-auto">
+                        <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
+                        <div className="join join-horizontal">
+                            <Button<[Action, BindingRule]>
+                                item={["Bind", stateRule]}
+                                disabled={!isValidRule}
+                                title={t(($) => $.bind)}
+                                className="btn btn-primary btn-outline join-item"
+                                onClick={onApply}
+                            >
+                                <FontAwesomeIcon icon={faLink} />
+                                {t(($) => $.bind)}&nbsp;
+                            </Button>
+                            {!stateRule.isNew ? (
+                                <ConfirmButton<[Action, BindingRule]>
+                                    item={["Unbind", stateRule]}
+                                    disabled={stateRule.isNew || !isValidRule}
+                                    title={t(($) => $.unbind)}
+                                    className="btn btn-error btn-outline join-item"
+                                    onClick={onApply}
+                                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                                >
+                                    <FontAwesomeIcon icon={faUnlink} />
+                                    &nbsp;{t(($) => $.unbind)}
+                                </ConfirmButton>
+                            ) : null}
+                        </div>
+                    </fieldset>
+                ) : null}
             </div>
-            <div className="divider my-1" />
+            {showDivider ? <div className="divider my-0" /> : null}
         </>
     );
 });

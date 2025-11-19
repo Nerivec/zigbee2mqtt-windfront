@@ -85,7 +85,10 @@
         "last_activity": "Last activity",
         "group_scenes": "Group scenes",
         "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while"
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "Remove",
+        "add": "Add",
+        "edit": "Edit"
     },
     "devicePage": {
         "about": "About",
@@ -189,7 +192,9 @@
         "frontend_settings": "Frontend settings",
         "contribute": "Contribute",
         "home": "Home",
-        "activity": "Activity"
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "Check for new updates",
@@ -351,7 +356,7 @@
         "none": "None",
         "pic": "Pic",
         "power": "Power",
-        "power_level": "power level",
+        "power_level": "Power level",
         "reconfigure": "Reconfigure",
         "remove_device": "Remove device",
         "rename_device": "Rename device",
@@ -398,9 +403,7 @@
         "scene_id": "Scene ID",
         "recall": "Recall",
         "store": "Store",
-        "remove": "Remove",
         "remove_all": "Remove all",
-        "add": "Add",
         "select_scene": "Select Scene",
         "scene_name": "Scene Name"
     },

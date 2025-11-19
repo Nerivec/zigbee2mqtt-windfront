@@ -1,36 +1,34 @@
+import { faBan, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Device } from "../../types.js";
-import { getEndpoints } from "../../utils.js";
 import Button from "../Button.js";
 import ConfirmButton from "../ConfirmButton.js";
 import InputField from "../form-fields/InputField.js";
 import AttributePicker from "../pickers/AttributePicker.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
-import EndpointPicker from "../pickers/EndpointPicker.js";
 import type { ClusterGroup } from "../pickers/index.js";
-import type { NiceReportingRule } from "./tabs/Reporting.js";
+import type { ReportingRule } from "../reporting/index.js";
 
 interface ReportingRowProps {
     sourceIdx: number;
-    rule: NiceReportingRule;
+    rule: ReportingRule;
     device: Device;
-    onApply(rule: NiceReportingRule): void;
+    onApply(rule: ReportingRule): void;
+    showDivider: boolean;
+    hideActions?: boolean;
 }
 
 const REQUIRED_RULE_FIELDS = ["maximum_report_interval", "minimum_report_interval", "reportable_change", "endpoint", "cluster", "attribute"] as const;
 
-const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowProps) => {
+const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hideActions = false }: ReportingRowProps) => {
     const [stateRule, setStateRule] = useState(rule);
     const { t } = useTranslation(["zigbee", "common"]);
 
     useEffect(() => {
         setStateRule(rule);
     }, [rule]);
-
-    const onSourceEndpointChange = useCallback((endpoint: string): void => {
-        setStateRule((prev) => ({ ...prev, endpoint }));
-    }, []);
 
     const onClusterChange = useCallback((cluster: string): void => {
         setStateRule((prev) => ({ ...prev, cluster }));
@@ -52,8 +50,6 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
     const onDisableRuleClick = useCallback((): void => {
         onApply({ ...stateRule, maximum_report_interval: 0xffff });
     }, [stateRule, onApply]);
-
-    const sourceEndpoints = useMemo(() => getEndpoints(device), [device]);
 
     const clusters = useMemo((): ClusterGroup[] => {
         const possibleClusters = new Set<string>();
@@ -96,14 +92,6 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
     return (
         <>
             <div className="flex flex-row flex-wrap gap-2">
-                <EndpointPicker
-                    label={t(($) => $.endpoint)}
-                    disabled={!rule.isNew}
-                    values={sourceEndpoints}
-                    value={stateRule.endpoint}
-                    onChange={onSourceEndpointChange}
-                    required
-                />
                 <ClusterSinglePicker
                     label={t(($) => $.cluster)}
                     disabled={!stateRule.endpoint}
@@ -149,33 +137,37 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply }: ReportingRowPro
                     required
                     className="input validator w-48"
                 />
-                <fieldset className="fieldset ml-auto">
-                    <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
-                    <div className="join join-horizontal">
-                        <Button<NiceReportingRule>
-                            title={t(($) => $.apply, { ns: "common" })}
-                            className="btn btn-primary btn-outline join-item"
-                            item={stateRule}
-                            onClick={onApply}
-                            disabled={!isValidRule}
-                        >
-                            {t(($) => $.apply, { ns: "common" })}
-                        </Button>
-                        {!stateRule.isNew ? (
-                            <ConfirmButton<void>
-                                title={t(($) => $.disable, { ns: "common" })}
-                                className="btn btn-error btn-outline join-item"
-                                onClick={onDisableRuleClick}
-                                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
-                                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                {!hideActions ? (
+                    <fieldset className="fieldset ml-auto">
+                        <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
+                        <div className="join join-horizontal">
+                            <Button<ReportingRule>
+                                title={t(($) => $.apply, { ns: "common" })}
+                                className="btn btn-primary btn-outline join-item"
+                                item={stateRule}
+                                onClick={onApply}
+                                disabled={!isValidRule}
                             >
-                                {t(($) => $.disable, { ns: "common" })}
-                            </ConfirmButton>
-                        ) : null}
-                    </div>
-                </fieldset>
+                                <FontAwesomeIcon icon={faCheck} />
+                                {t(($) => $.apply, { ns: "common" })}
+                            </Button>
+                            {!stateRule.isNew ? (
+                                <ConfirmButton<void>
+                                    title={t(($) => $.disable, { ns: "common" })}
+                                    className="btn btn-error btn-outline join-item"
+                                    onClick={onDisableRuleClick}
+                                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                                >
+                                    <FontAwesomeIcon icon={faBan} />
+                                    {t(($) => $.disable, { ns: "common" })}
+                                </ConfirmButton>
+                            ) : null}
+                        </div>
+                    </fieldset>
+                ) : null}
             </div>
-            <div className="divider my-1" />
+            {showDivider ? <div className="divider my-0" /> : null}
         </>
     );
 });
