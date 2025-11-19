@@ -59,7 +59,7 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
     );
 
     return (
-        <section className="card bg-base-200 shadow-sm">
+        <section className="card bg-base-100 card-border border-base-200 shadow-sm">
             <div className="card-body p-3">
                 <div className="card-title flex flex-wrap gap-2 items-center justify-between">
                     {t(($) => $.endpoint)} {endpointId}
@@ -95,7 +95,9 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
                         >
                             <div className="card-body p-3">
                                 <div className="flex items-center justify-between">
-                                    <h4 className="card-title">{t(($) => $.add, { ns: "common" })}</h4>
+                                    <h4 className="card-title">
+                                        {t(($) => $.add, { ns: "common" })}: {t(($) => $.endpoint)} {endpointId}
+                                    </h4>
                                     <Button onClick={() => setIsAddOpen(false)} className="btn btn-ghost btn-sm">
                                         <FontAwesomeIcon icon={faClose} />
                                     </Button>
