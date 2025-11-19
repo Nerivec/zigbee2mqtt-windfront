@@ -137,7 +137,7 @@ export default function ReportingPage(): JSX.Element {
                         </div>
                         {/* min-w-0 serves to properly truncate content */}
                         <div className="flex-grow flex flex-col min-w-0">
-                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover truncate">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/reporting`} className="link link-hover truncate">
                                 {device.friendly_name}
                             </Link>
                             {device.description && (
