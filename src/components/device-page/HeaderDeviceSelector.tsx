@@ -38,7 +38,7 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
                 elements.push(
                     <li key={`${device.friendly_name}-${device.ieee_address}-${sourceIdx}`}>
                         <Link to={`/device/${sourceIdx}/${device.ieee_address}/${tab}`} onClick={() => setSearchTerm("")} className="dropdown-item">
-                            {<SourceDot idx={sourceIdx} autoHide namePostfix=" - " />} {device.friendly_name}
+                            <SourceDot idx={sourceIdx} autoHide namePostfix=" – " /> {device.friendly_name}
                         </Link>
                     </li>,
                 );

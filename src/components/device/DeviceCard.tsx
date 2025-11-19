@@ -84,7 +84,7 @@ const DeviceCard = memo(
                                     {device.description}
                                 </div>
                             )}
-                            <div className="text-xs opacity-50" title={t(($) => $.last_seen)}>
+                            <div className="text-xs opacity-50">
                                 <LastSeen lastSeen={deviceState.last_seen} config={lastSeenConfig} />
                             </div>
                             {!hideSourceDot && (

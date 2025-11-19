@@ -4,7 +4,6 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { format } from "timeago.js";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
 import { CONNECTION_STATUS, LOAD_AVERAGE_DOCS_URL } from "../../../consts.js";
@@ -17,6 +16,8 @@ import InfoAlert from "../../InfoAlert.js";
 import SourceDot from "../../SourceDot.js";
 import Table from "../../table/Table.js";
 import TableSearch from "../../table/TableSearch.js";
+import Duration from "../../value-decorators/Duration.js";
+import TimeAgo from "../../value-decorators/TimeAgo.js";
 
 type HealthProps = { sourceIdx: number };
 
@@ -191,7 +192,6 @@ export default function Health({ sourceIdx }: HealthProps) {
     }
 
     const bridgeResponseTime = new Date(bridgeHealth.response_time);
-    const processStartTime = new Date(Date.now() - bridgeHealth.process.uptime_sec * 1000);
     const wsLastMessageTime = new Date(webSocketMetrics.lastMessageTs);
 
     return (
@@ -206,7 +206,7 @@ export default function Health({ sourceIdx }: HealthProps) {
                 <div className="collapse-content">
                     <div className="flex flex-col gap-3 items-center mb-2 w-full">
                         <p className="text-sm" title={bridgeResponseTime.toLocaleString()}>
-                            {t(($) => $.last_check)}: {format(bridgeResponseTime, i18n.language)}
+                            {t(($) => $.last_check)}: <TimeAgo datetime={bridgeResponseTime} locale={i18n.language} />
                         </p>
                         <div className="stats stats-vertical lg:stats-horizontal shadow">
                             <div className="stat place-items-center">
@@ -236,8 +236,9 @@ export default function Health({ sourceIdx }: HealthProps) {
                             </div>
                             <div className="stat place-items-center">
                                 <div className="stat-title">{t(($) => $.uptime)}</div>
-                                <div className="stat-value text-lg">{format(processStartTime, i18n.language)}</div>
-                                <div className="stat-desc">{processStartTime.toLocaleString()}</div>
+                                <div className="stat-value text-lg">
+                                    <Duration durationSec={bridgeHealth.process.uptime_sec} />
+                                </div>
                             </div>
                             <div className="stat place-items-center">
                                 <div className="stat-title">{t(($) => $.ram_usage)}</div>
@@ -301,7 +302,9 @@ export default function Health({ sourceIdx }: HealthProps) {
                         <div className="stats stats-vertical lg:stats-horizontal shadow">
                             <div className="stat place-items-center">
                                 <div className="stat-title">{t(($) => $.last_message)}</div>
-                                <div className="stat-value text-lg">{format(wsLastMessageTime, i18n.language)}</div>
+                                <div className="stat-value text-lg">
+                                    <TimeAgo datetime={wsLastMessageTime} locale={i18n.language} />
+                                </div>
                                 <div className="stat-desc">{wsLastMessageTime.toLocaleString()}</div>
                             </div>
                             <div className="stat place-items-center">

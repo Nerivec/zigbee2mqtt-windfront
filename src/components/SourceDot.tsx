@@ -8,6 +8,7 @@ import { API_NAMES, MULTI_INSTANCE, useAppStore } from "../store.js";
 
 type SourceDotProps = Omit<FontAwesomeIconProps, "icon" | "style" | "title"> & {
     idx: number;
+    className?: string;
     /** automatically skip rendering when only 1 source present */
     autoHide?: boolean;
     /** alwaysHideName takes precedence */
@@ -42,7 +43,7 @@ const DOT_COLORS = [
     "#BE0032",
 ];
 
-const SourceDot = memo(({ idx, autoHide, alwaysShowName, alwaysHideName, nameClassName, namePostfix, ...rest }: SourceDotProps) => {
+const SourceDot = memo(({ idx, className, autoHide, alwaysShowName, alwaysHideName, nameClassName, namePostfix, ...rest }: SourceDotProps) => {
     const readyState = useAppStore(useShallow((state) => state.readyStates[idx]));
     const showName = !alwaysHideName && (alwaysShowName || store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
 
@@ -51,7 +52,7 @@ const SourceDot = memo(({ idx, autoHide, alwaysShowName, alwaysHideName, nameCla
     }
 
     return (
-        <span title={`${idx} | ${API_NAMES[idx]}`}>
+        <span className={`tooltip tooltip-bottom ${className ?? ""}`} data-tip={`${idx} | ${API_NAMES[idx]}`}>
             <FontAwesomeIcon icon={CONNECTION_STATUS[readyState]} style={{ color: DOT_COLORS[idx] }} {...rest} />
             {showName && <span className={`ms-1 ${nameClassName ?? ""}`}>{API_NAMES[idx]}</span>}
             {showName && namePostfix}

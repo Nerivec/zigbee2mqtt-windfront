@@ -11,7 +11,7 @@ import { useColumnCount } from "../hooks/useColumnCount.js";
 import { useTable } from "../hooks/useTable.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
-import type { AvailabilityState, Device, DeviceState, FeatureWithAnySubFeatures, LastSeenConfig } from "../types.js";
+import type { Device, DeviceAvailability, DeviceState, FeatureWithAnySubFeatures, LastSeenConfig } from "../types.js";
 import { getLastSeenEpoch, toHex } from "../utils.js";
 import { sendMessage } from "../websocket/WebSocketManager.js";
 
@@ -19,7 +19,7 @@ export interface DashboardTableData {
     sourceIdx: number;
     device: Device;
     deviceState: DeviceState;
-    deviceAvailability: AvailabilityState["state"] | "disabled";
+    deviceAvailability: DeviceAvailability;
     batteryLow: boolean | undefined;
     features: FeatureWithAnySubFeatures[];
     featureTypes: string[]; // for filtering purposes

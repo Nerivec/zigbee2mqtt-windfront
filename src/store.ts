@@ -7,6 +7,8 @@ import { Z2M_API_NAMES, Z2M_API_URLS } from "./envs.js";
 import type { AvailabilityState, Device, FeatureWithAnySubFeatures, LogMessage, Message, RecursiveMutable, Toast, TouchlinkDevice } from "./types.js";
 import { parseAndCloneExpose } from "./utils.js";
 
+export const RECENT_ACTIVITY_FEED_LIMIT = 10;
+
 export interface WebSocketMetrics {
     messagesSent: number;
     bytesSent: number;
@@ -17,6 +19,19 @@ export interface WebSocketMetrics {
     reconnects: number;
     lastMessageTs: number;
     pendingRequests: number;
+}
+
+export interface RecentActivityEntry {
+    timestamp: number;
+    desc: string;
+}
+
+export interface RecentActivityFeedEntry {
+    sourceIdx: number;
+    friendlyName: string;
+    ieeeAddress: string;
+    activity: string;
+    time: string;
 }
 
 export interface AppState {
@@ -45,6 +60,8 @@ export interface AppState {
     preparingBackup: Record<number, boolean>;
     /** base64 */
     backup: Record<number, string>;
+    recentActivity: Record<number, Record<string, RecentActivityEntry>>;
+    recentActivityFeed: RecentActivityFeedEntry[];
 
     //-- WebSocket
     /** idx is API_URLS/source idx */
@@ -141,6 +158,8 @@ const makeInitialState = (): AppState => {
     const networkMapIsLoading: AppState["networkMapIsLoading"] = {};
     const preparingBackup: AppState["preparingBackup"] = {};
     const backup: AppState["backup"] = {};
+    const recentActivity: AppState["recentActivity"] = {};
+    const recentActivityFeed: AppState["recentActivityFeed"] = [];
     const authRequired: AppState["authRequired"] = [];
     const readyStates: AppState["readyStates"] = [];
     const webSocketMetrics: AppState["webSocketMetrics"] = {};
@@ -308,6 +327,7 @@ const makeInitialState = (): AppState => {
         networkMapIsLoading[idx] = false;
         preparingBackup[idx] = false;
         backup[idx] = "";
+        recentActivity[idx] = {};
         authRequired[idx] = false;
         readyStates[idx] = WebSocket.CLOSED;
         webSocketMetrics[idx] = {
@@ -347,6 +367,8 @@ const makeInitialState = (): AppState => {
         networkMapIsLoading,
         preparingBackup,
         backup,
+        recentActivity,
+        recentActivityFeed,
         logsLimit: 100,
         notificationsAlert: [false, false],
         toasts: [],
@@ -355,6 +377,8 @@ const makeInitialState = (): AppState => {
         webSocketMetrics,
     };
 };
+
+let init = true;
 
 export const useAppStore = create<AppState & AppActions>((set, _get, store) => ({
     ...makeInitialState(),
@@ -539,12 +563,56 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
             }
 
             const newDeviceStates: AppState["deviceStates"][number] = { ...state.deviceStates[sourceIdx] };
+            const activityUpdates = new Map<string, RecentActivityEntry>();
+            const lastEntryIdx = new Map<string, number>();
+            const feedEntries: RecentActivityFeedEntry[] = [];
+            const now = new Date();
+            const nowMs = now.getTime();
+            const nowStr = now.toLocaleString();
 
-            for (const { topic, payload } of newEntries) {
-                newDeviceStates[topic] = { ...newDeviceStates[topic], ...payload };
+            for (let idx = 0; idx < newEntries.length; idx++) {
+                lastEntryIdx.set(newEntries[idx].topic, idx);
             }
 
-            return { deviceStates: { ...state.deviceStates, [sourceIdx]: newDeviceStates } };
+            for (let idx = 0; idx < newEntries.length; idx++) {
+                const { topic, payload } = newEntries[idx];
+
+                const mergedPayload = { ...newDeviceStates[topic], ...payload };
+                newDeviceStates[topic] = mergedPayload;
+
+                if (lastEntryIdx.get(topic) !== idx) {
+                    continue;
+                }
+
+                const changes = diffDeviceStatePayload(state.deviceStates[sourceIdx][topic], mergedPayload);
+
+                if (changes.length === 0) {
+                    continue;
+                }
+
+                const desc = changes.join(", ");
+
+                activityUpdates.set(topic, { timestamp: nowMs, desc });
+                feedEntries.push({
+                    sourceIdx,
+                    friendlyName: topic,
+                    ieeeAddress: "",
+                    activity: desc,
+                    time: nowStr,
+                });
+            }
+
+            const recentActivity = mergeRecentActivityEntries(sourceIdx, state.recentActivity, activityUpdates);
+
+            return recentActivity
+                ? {
+                      deviceStates: { ...state.deviceStates, [sourceIdx]: newDeviceStates },
+                      recentActivity,
+                      recentActivityFeed: prependRecentActivityFeedEntries(state.recentActivityFeed, feedEntries),
+                  }
+                : {
+                      deviceStates: { ...state.deviceStates, [sourceIdx]: newDeviceStates },
+                  };
         }),
     resetDeviceState: (sourceIdx, friendlyName) =>
         set((state) => {
@@ -585,6 +653,19 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
         set((state) => {
             const newDeviceDashboardFeatures: AppState["deviceDashboardFeatures"][number] = {};
             const newDeviceScenesFeatures: AppState["deviceScenesFeatures"][number] = {};
+            const activityUpdates = new Map<string, RecentActivityEntry>();
+            const prevDevices = state.devices[sourceIdx];
+            const prevByFriendlyName = new Map<string, Device>();
+            const feedEntries: RecentActivityFeedEntry[] = [];
+            const now = new Date();
+            const nowMs = now.getTime();
+            const nowStr = now.toLocaleString();
+
+            for (let idx = 0; idx < prevDevices.length; idx++) {
+                const prevDevice = prevDevices[idx];
+
+                prevByFriendlyName.set(prevDevice.friendly_name, prevDevice);
+            }
 
             for (const device of devices) {
                 if (device.disabled || !device.definition || device.definition.exposes.length === 0) {
@@ -609,13 +690,88 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
 
                 newDeviceDashboardFeatures[device.ieee_address] = dashboardExposes;
                 newDeviceScenesFeatures[device.ieee_address] = scenesExposes;
+
+                if (init) {
+                    // ignore activity on first trigger to avoid "Device joined" everywhere
+                    continue;
+                }
+
+                const prevDevice = prevByFriendlyName.get(device.friendly_name);
+
+                if (prevDevice === undefined) {
+                    const desc = "Device joined";
+
+                    activityUpdates.set(device.friendly_name, { timestamp: nowMs, desc });
+                    feedEntries.push({
+                        sourceIdx,
+                        friendlyName: device.friendly_name,
+                        ieeeAddress: device.ieee_address,
+                        activity: desc,
+                        time: nowStr,
+                    });
+
+                    continue;
+                }
+
+                if (prevDevice.friendly_name !== device.friendly_name) {
+                    const desc = formatChange("Friendly name", prevDevice.friendly_name, device.friendly_name);
+
+                    activityUpdates.set(device.friendly_name, { timestamp: nowMs, desc });
+                    feedEntries.push({
+                        sourceIdx,
+                        friendlyName: device.friendly_name,
+                        ieeeAddress: device.ieee_address,
+                        activity: desc,
+                        time: nowStr,
+                    });
+                } else if (prevDevice.network_address !== device.network_address) {
+                    const desc = formatChange("Network address", prevDevice.network_address, device.network_address);
+
+                    activityUpdates.set(device.friendly_name, { timestamp: nowMs, desc });
+                    feedEntries.push({
+                        sourceIdx,
+                        friendlyName: device.friendly_name,
+                        ieeeAddress: device.ieee_address,
+                        activity: desc,
+                        time: nowStr,
+                    });
+                }
+
+                prevByFriendlyName.delete(device.friendly_name);
             }
 
-            return {
-                devices: { ...state.devices, [sourceIdx]: devices },
-                deviceDashboardFeatures: { ...state.deviceDashboardFeatures, [sourceIdx]: newDeviceDashboardFeatures },
-                deviceScenesFeatures: { ...state.deviceScenesFeatures, [sourceIdx]: newDeviceScenesFeatures },
-            };
+            for (const [friendlyName, prevDevice] of prevByFriendlyName) {
+                const desc = "Device left";
+
+                activityUpdates.set(friendlyName, { timestamp: nowMs, desc });
+                feedEntries.push({
+                    sourceIdx,
+                    friendlyName: friendlyName,
+                    ieeeAddress: prevDevice.ieee_address,
+                    activity: desc,
+                    time: nowStr,
+                });
+            }
+
+            const recentActivity = mergeRecentActivityEntries(sourceIdx, state.recentActivity, activityUpdates);
+
+            if (init) {
+                init = false;
+            }
+
+            return recentActivity
+                ? {
+                      devices: { ...state.devices, [sourceIdx]: devices },
+                      deviceDashboardFeatures: { ...state.deviceDashboardFeatures, [sourceIdx]: newDeviceDashboardFeatures },
+                      deviceScenesFeatures: { ...state.deviceScenesFeatures, [sourceIdx]: newDeviceScenesFeatures },
+                      recentActivity,
+                      recentActivityFeed: prependRecentActivityFeedEntries(state.recentActivityFeed, feedEntries),
+                  }
+                : {
+                      devices: { ...state.devices, [sourceIdx]: devices },
+                      deviceDashboardFeatures: { ...state.deviceDashboardFeatures, [sourceIdx]: newDeviceDashboardFeatures },
+                      deviceScenesFeatures: { ...state.deviceScenesFeatures, [sourceIdx]: newDeviceScenesFeatures },
+                  };
         }),
     setGroups: (sourceIdx, groups) => set((state) => ({ groups: { ...state.groups, [sourceIdx]: groups } })),
 
@@ -722,3 +878,145 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
         set(store.getInitialState());
     },
 }));
+
+const VALUE_PLACEHOLDER = "∅";
+
+const isPlainObject = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
+
+const areArraysEqual = (a: unknown, b: unknown): boolean => {
+    if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) {
+        return false;
+    }
+
+    for (let idx = 0; idx < a.length; idx++) {
+        if (!Object.is(a[idx], b[idx])) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+const formatValue = (value: unknown): string => {
+    if (value === undefined) {
+        return VALUE_PLACEHOLDER;
+    }
+
+    if (value === null) {
+        return "null";
+    }
+
+    if (typeof value === "object") {
+        try {
+            return JSON.stringify(value);
+        } catch {
+            return "ERR";
+        }
+    }
+
+    return String(value);
+};
+
+const formatChange = (label: string, prevValue: unknown, nextValue: unknown): string =>
+    `${label}: ${formatValue(prevValue)} → ${formatValue(nextValue)}`;
+
+const appendValueChangesForKey = (label: string, prevValue: unknown, nextValue: unknown, changes: string[], depth: number): void => {
+    if (Array.isArray(prevValue) || Array.isArray(nextValue)) {
+        if (!areArraysEqual(prevValue, nextValue)) {
+            changes.push(formatChange(label, prevValue, nextValue));
+        }
+
+        return;
+    }
+
+    const prevIsPlainObject = isPlainObject(prevValue);
+    const nextIsPlainObject = isPlainObject(nextValue);
+
+    if (prevIsPlainObject || nextIsPlainObject) {
+        if (depth >= 1) {
+            if (!Object.is(prevValue, nextValue)) {
+                changes.push(formatChange(label, prevValue, nextValue));
+            }
+
+            return;
+        }
+
+        const prevRecord = prevIsPlainObject ? prevValue : {};
+        const nextRecord = nextIsPlainObject ? nextValue : {};
+        const nestedKeys = new Set([...Object.keys(prevRecord), ...Object.keys(nextRecord)]);
+
+        for (const nestedKey of nestedKeys) {
+            appendValueChangesForKey(`${label}.${nestedKey}`, prevRecord[nestedKey], nextRecord[nestedKey], changes, depth + 1);
+        }
+
+        return;
+    }
+
+    if (!Object.is(prevValue, nextValue)) {
+        changes.push(formatChange(label, prevValue, nextValue));
+    }
+};
+
+const diffDeviceStatePayload = (prev: Zigbee2MQTTAPI["{friendlyName}"] | undefined, next: Zigbee2MQTTAPI["{friendlyName}"] | undefined): string[] => {
+    if (prev === undefined) {
+        return [];
+    }
+
+    if (next === undefined) {
+        return ["Cleared state"];
+    }
+
+    const changes: string[] = [];
+    const keys = new Set([...Object.keys(prev), ...Object.keys(next)]);
+
+    keys.delete("last_seen"); // "duplication" in feed with dated activity string
+
+    for (const key of keys) {
+        appendValueChangesForKey(key, prev[key], next[key], changes, 0);
+    }
+
+    return changes;
+};
+
+const mergeRecentActivityEntries = (
+    sourceIdx: number,
+    prevRecentActivity: AppState["recentActivity"],
+    updates: Map<string, RecentActivityEntry>,
+): AppState["recentActivity"] | undefined => {
+    if (updates.size === 0) {
+        return undefined;
+    }
+
+    const sourceActivity = { ...prevRecentActivity[sourceIdx] };
+    let changed = false;
+
+    for (const [friendlyName, activity] of updates) {
+        if (activity !== undefined && sourceActivity[friendlyName] !== activity) {
+            sourceActivity[friendlyName] = activity;
+            changed = true;
+        }
+    }
+
+    if (!changed) {
+        return undefined;
+    }
+
+    return { ...prevRecentActivity, [sourceIdx]: sourceActivity };
+};
+
+const prependRecentActivityFeedEntries = (
+    currentFeed: RecentActivityFeedEntry[],
+    newEntries: RecentActivityFeedEntry[],
+): RecentActivityFeedEntry[] => {
+    if (newEntries.length === 0) {
+        return currentFeed;
+    }
+
+    const merged = [...newEntries, ...currentFeed];
+
+    if (merged.length > RECENT_ACTIVITY_FEED_LIMIT) {
+        merged.length = RECENT_ACTIVITY_FEED_LIMIT;
+    }
+
+    return merged;
+};

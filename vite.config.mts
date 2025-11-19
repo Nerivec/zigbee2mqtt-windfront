@@ -27,6 +27,7 @@ export default defineConfig(async ({ command, mode }) => {
             },
         },
         test: {
+            root: ".",
             dir: "test",
             environment: "jsdom",
             typecheck: {
@@ -38,7 +39,7 @@ export default defineConfig(async ({ command, mode }) => {
             },
             coverage: {
                 enabled: false,
-                include: ["src/**.{ts,tsx}"],
+                include: ["src/**/*.{ts,tsx}"],
                 clean: true,
                 cleanOnRerun: true,
                 reportsDirectory: "coverage",

@@ -61,7 +61,7 @@ const EnumEditor = memo((props: EnumProps) => {
                     <Button<ValueWithLabelOrPrimitive>
                         key={primitive ? v : v.name}
                         className={`btn btn-outline btn-primary btn-sm join-item${current ? " btn-active" : ""}`}
-                        onClick={(item) => onChange(item)}
+                        onClick={onChange}
                         item={primitive ? v : v.value}
                         title={primitive ? `${v}` : v.description}
                     >
