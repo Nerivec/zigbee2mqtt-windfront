@@ -1,4 +1,4 @@
-import type { Device } from "../../types.js";
+import type { Device, Group } from "../../types.js";
 
 export type BindingRuleTargetGroup = {
     type: "group";
@@ -94,4 +94,55 @@ export const aggregateBindingsByEndpoints = (device: Device): BindingEndpoint[] 
     }
 
     return byEndpoints;
+};
+
+export const findPossibleClusters = (rule: BindingRule, deviceEndpoints: Device["endpoints"], target?: Device | Group) => {
+    const clusters: Set<string> = new Set(rule.clusters);
+    const srcEndpoint = deviceEndpoints[rule.source.endpoint];
+    const dstEndpoint =
+        rule.target.type === "endpoint" && rule.target.endpoint != null ? (target as Device | undefined)?.endpoints[rule.target.endpoint] : undefined;
+    const allClustersValid = rule.target.type === "group" || (target as Device | undefined)?.type === "Coordinator";
+
+    if (srcEndpoint && (dstEndpoint || allClustersValid)) {
+        for (const cluster of [...srcEndpoint.clusters.input, ...srcEndpoint.clusters.output]) {
+            if (allClustersValid) {
+                clusters.add(cluster);
+            } else {
+                const supportedInputOutput = srcEndpoint.clusters.input.includes(cluster) && dstEndpoint?.clusters.output.includes(cluster);
+                const supportedOutputInput = srcEndpoint.clusters.output.includes(cluster) && dstEndpoint?.clusters.input.includes(cluster);
+
+                if (supportedInputOutput || supportedOutputInput || allClustersValid) {
+                    clusters.add(cluster);
+                }
+            }
+        }
+    }
+
+    return clusters;
+};
+
+export const isValidBindingRule = (rule: BindingRule): boolean => {
+    if (rule.source.endpoint === undefined || rule.source.endpoint === "" || Number.isNaN(rule.source.endpoint)) {
+        return false;
+    }
+
+    if (!Array.isArray(rule.clusters) || rule.clusters.length === 0) {
+        return false;
+    }
+
+    if (rule.target.type === "endpoint") {
+        if (!rule.target.ieee_address) {
+            return false;
+        }
+
+        if (rule.target.endpoint === undefined || rule.target.endpoint === "" || Number.isNaN(rule.target.endpoint)) {
+            return false;
+        }
+    } else if (rule.target.type === "group") {
+        if (rule.target.id === undefined || Number.isNaN(rule.target.id)) {
+            return false;
+        }
+    }
+
+    return true;
 };

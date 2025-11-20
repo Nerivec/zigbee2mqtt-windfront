@@ -6,7 +6,7 @@ import type { AppState } from "../../store.js";
 import type { Device, Group } from "../../types.js";
 import { getEndpoints, isDevice } from "../../utils.js";
 import Button from "../Button.js";
-import type { Action, BindingRule } from "../binding/index.js";
+import { type Action, type BindingRule, findPossibleClusters, isValidBindingRule } from "../binding/index.js";
 import ConfirmButton from "../ConfirmButton.js";
 import ClusterMultiPicker from "../pickers/ClusterMultiPicker.js";
 import DevicePicker from "../pickers/DevicePicker.js";
@@ -64,45 +64,8 @@ const BindRow = memo(({ devices, groups, device, rule, onApply, showDivider, hid
             : devices.find((device) => device.ieee_address === target.ieee_address);
     }, [stateRule, devices, groups]);
     const destinationEndpoints = useMemo(() => getEndpoints(target), [target]);
-
-    const possibleClusters = useMemo(() => {
-        const clusters: Set<string> = new Set(stateRule.clusters);
-        const srcEndpoint = device.endpoints[stateRule.source.endpoint];
-        const dstEndpoint =
-            stateRule.target.type === "endpoint" && stateRule.target.endpoint != null
-                ? (target as Device | undefined)?.endpoints[stateRule.target.endpoint]
-                : undefined;
-        const allClustersValid = stateRule.target.type === "group" || (target as Device | undefined)?.type === "Coordinator";
-
-        if (srcEndpoint && (dstEndpoint || allClustersValid)) {
-            for (const cluster of [...srcEndpoint.clusters.input, ...srcEndpoint.clusters.output]) {
-                if (allClustersValid) {
-                    clusters.add(cluster);
-                } else {
-                    const supportedInputOutput = srcEndpoint.clusters.input.includes(cluster) && dstEndpoint?.clusters.output.includes(cluster);
-                    const supportedOutputInput = srcEndpoint.clusters.output.includes(cluster) && dstEndpoint?.clusters.input.includes(cluster);
-
-                    if (supportedInputOutput || supportedOutputInput || allClustersValid) {
-                        clusters.add(cluster);
-                    }
-                }
-            }
-        }
-
-        return clusters;
-    }, [device.endpoints, stateRule, target]);
-
-    const isValidRule = useMemo(() => {
-        let valid = false;
-
-        if (stateRule.target.type === "endpoint") {
-            valid = !!(stateRule.source.endpoint && stateRule.target.ieee_address && stateRule.target.endpoint && stateRule.clusters.length > 0);
-        } else if (stateRule.target.type === "group") {
-            valid = !!(stateRule.source.endpoint && stateRule.target.id && stateRule.clusters.length > 0);
-        }
-
-        return valid;
-    }, [stateRule]);
+    const possibleClusters = useMemo(() => findPossibleClusters(stateRule, device.endpoints, target), [device.endpoints, stateRule, target]);
+    const isValidRule = useMemo(() => isValidBindingRule(stateRule), [stateRule]);
 
     return (
         <>

@@ -9,7 +9,7 @@ import InputField from "../form-fields/InputField.js";
 import AttributePicker from "../pickers/AttributePicker.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
 import type { ClusterGroup } from "../pickers/index.js";
-import type { ReportingRule } from "../reporting/index.js";
+import { isValidReportingRule, type ReportingRule } from "../reporting/index.js";
 
 interface ReportingRowProps {
     sourceIdx: number;
@@ -19,8 +19,6 @@ interface ReportingRowProps {
     showDivider: boolean;
     hideUnbind?: boolean;
 }
-
-const REQUIRED_RULE_FIELDS = ["maximum_report_interval", "minimum_report_interval", "reportable_change", "endpoint", "cluster", "attribute"] as const;
 
 const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hideUnbind = false }: ReportingRowProps) => {
     const [stateRule, setStateRule] = useState(rule);
@@ -39,11 +37,9 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hide
     }, []);
 
     const onReportNumberChange = useCallback((event: ChangeEvent<HTMLInputElement>): void => {
-        const { name, valueAsNumber } = event.target;
-
         setStateRule((prev) => ({
             ...prev,
-            [name as "minimum_report_interval" | "maximum_report_interval" | "reportable_change"]: valueAsNumber,
+            [event.target.name as "minimum_report_interval" | "maximum_report_interval" | "reportable_change"]: event.target.valueAsNumber,
         }));
     }, []);
 
@@ -85,9 +81,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hide
         ];
     }, [device.endpoints, stateRule.endpoint, stateRule.cluster]);
 
-    const isValidRule = useMemo(() => {
-        return REQUIRED_RULE_FIELDS.every((field) => stateRule[field] !== undefined && stateRule[field] !== "");
-    }, [stateRule]);
+    const isValidRule = useMemo(() => isValidReportingRule(stateRule), [stateRule]);
 
     return (
         <>

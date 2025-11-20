@@ -35,3 +35,31 @@ export const aggregateReporting = (device: Device): ReportingEndpoint[] => {
 
     return byEndpoints;
 };
+
+export const isValidReportingRule = (rule: ReportingRule): boolean => {
+    if (rule.endpoint === undefined || rule.endpoint === "") {
+        return false;
+    }
+
+    if (rule.cluster === undefined || rule.cluster === "") {
+        return false;
+    }
+
+    if (rule.attribute === undefined || rule.attribute === "") {
+        return false;
+    }
+
+    if (rule.minimum_report_interval === undefined || Number.isNaN(rule.minimum_report_interval)) {
+        return false;
+    }
+
+    if (rule.maximum_report_interval === undefined || Number.isNaN(rule.maximum_report_interval)) {
+        return false;
+    }
+
+    if (rule.reportable_change === undefined || Number.isNaN(rule.reportable_change)) {
+        return false;
+    }
+
+    return true;
+};
