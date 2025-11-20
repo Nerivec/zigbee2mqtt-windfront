@@ -118,6 +118,8 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hide
                     onChange={onReportNumberChange}
                     required
                     className="input validator w-48"
+                    min={0}
+                    max={0xffff}
                 />
                 <InputField
                     name="maximum_report_interval"
@@ -127,6 +129,8 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hide
                     onChange={onReportNumberChange}
                     required
                     className="input validator w-48"
+                    min={0}
+                    max={0xffff}
                 />
                 <InputField
                     name="reportable_change"

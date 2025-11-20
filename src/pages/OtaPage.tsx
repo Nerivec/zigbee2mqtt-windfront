@@ -417,7 +417,7 @@ export default function OtaPage() {
             <div className="mb-5">
                 <div className="flex flex-row flex-wrap gap-2 px-2 pb-3">
                     <ConfirmButton<"bridge/request/device/ota_update/check">
-                        className="btn btn-outline btn-error btn-sm join-item"
+                        className="btn btn-outline btn-error btn-sm"
                         item="bridge/request/device/ota_update/check"
                         onClick={actOnFilteredSelected}
                         title={t(($) => $.check_selected)}
@@ -428,7 +428,7 @@ export default function OtaPage() {
                         {`${t(($) => $.check_selected)} (${rowSelectionCount})`}
                     </ConfirmButton>
                     <ConfirmButton<"bridge/request/device/ota_update/update">
-                        className="btn btn-outline btn-error btn-sm join-item"
+                        className="btn btn-outline btn-error btn-sm"
                         item="bridge/request/device/ota_update/update"
                         onClick={actOnFilteredSelected}
                         title={t(($) => $.update_selected)}
@@ -439,7 +439,7 @@ export default function OtaPage() {
                         {`${t(($) => $.update_selected)} (${rowSelectionCount})`}
                     </ConfirmButton>
                     <ConfirmButton<"bridge/request/device/ota_update/schedule">
-                        className="btn btn-outline btn-error btn-sm join-item"
+                        className="btn btn-outline btn-error btn-sm"
                         item="bridge/request/device/ota_update/schedule"
                         onClick={actOnFilteredSelected}
                         title={t(($) => $.schedule_selected)}
@@ -450,7 +450,7 @@ export default function OtaPage() {
                         {`${t(($) => $.schedule_selected)} (${rowSelectionCount})`}
                     </ConfirmButton>
                     <ConfirmButton<"bridge/request/device/ota_update/unschedule">
-                        className="btn btn-outline btn-error btn-sm join-item"
+                        className="btn btn-outline btn-error btn-sm"
                         item="bridge/request/device/ota_update/unschedule"
                         onClick={actOnFilteredSelected}
                         title={t(($) => $.unschedule_selected)}

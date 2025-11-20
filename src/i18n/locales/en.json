@@ -88,7 +88,9 @@
         "not_seen_in_a_while": "Not seen in a while",
         "remove": "Remove",
         "add": "Add",
-        "edit": "Edit"
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected"
     },
     "devicePage": {
         "about": "About",

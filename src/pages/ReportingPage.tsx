@@ -1,7 +1,7 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { faBan, faPenToSquare, faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
 import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
@@ -10,7 +10,9 @@ import ConfirmButton from "../components/ConfirmButton.js";
 import DeviceImage from "../components/device/DeviceImage.js";
 import ReportingRow from "../components/device-page/ReportingRow.js";
 import SelectField from "../components/form-fields/SelectField.js";
+import { ReportingBatchEditModal } from "../components/modal/components/ReportingBatchEditModal.js";
 import { ReportingRuleModal } from "../components/modal/components/ReportingRuleModal.js";
+import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
 import DevicePicker from "../components/pickers/DevicePicker.js";
 import EndpointPicker from "../components/pickers/EndpointPicker.js";
 import { makeDefaultReporting, type ReportingRule } from "../components/reporting/index.js";
@@ -37,6 +39,12 @@ export default function ReportingPage(): JSX.Element {
     const [newRuleDevice, setNewRuleDevice] = useState<Device | null>(null);
     const [newRuleEndpoint, setNewRuleEndpoint] = useState<string>("");
     const [newRuleDraft, setNewRuleDraft] = useState<ReportingRule | null>(null);
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
+    useEffect(() => {
+        setRowSelection({});
+    }, [devices]);
 
     const data = useMemo<ReportingTableData[]>(() => {
         const rows: ReportingTableData[] = [];
@@ -60,6 +68,46 @@ export default function ReportingPage(): JSX.Element {
         return rows;
     }, [devices]);
 
+    const rowSelectionCount = useMemo(() => Object.keys(rowSelection).length, [rowSelection]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: can't dep table
+    const actOnFilteredSelected = useCallback(
+        async ([minRepInterval, maxRepInterval, repChange, disable]: [
+            number | undefined,
+            number | undefined,
+            number | undefined,
+            boolean | undefined,
+        ]) => {
+            const promises: Promise<void>[] = [];
+
+            for (const row of table.table.getFilteredRowModel().rows) {
+                if (row.getIsSelected()) {
+                    const { sourceIdx, device, rule } = row.original;
+
+                    promises.push(
+                        sendMessage(sourceIdx, "bridge/request/device/configure_reporting", {
+                            id: device.ieee_address,
+                            endpoint: rule.endpoint,
+                            cluster: rule.cluster,
+                            attribute: rule.attribute,
+                            minimum_report_interval: minRepInterval ?? rule.minimum_report_interval,
+                            maximum_report_interval: disable ? 0xffff : (maxRepInterval ?? rule.maximum_report_interval),
+                            reportable_change: repChange ?? rule.reportable_change,
+                            option: {},
+                        }),
+                    );
+                }
+            }
+
+            setRowSelection({});
+
+            if (promises.length > 0) {
+                await Promise.allSettled(promises);
+            }
+        },
+        [],
+    );
+
     useEffect(() => {
         if (newRuleDevice && newRuleEndpoint) {
             setNewRuleDraft(makeDefaultReporting(newRuleDevice.ieee_address, newRuleEndpoint));
@@ -71,16 +119,9 @@ export default function ReportingPage(): JSX.Element {
     const availableEndpoints = useMemo(() => getEndpoints(newRuleDevice), [newRuleDevice]);
 
     const applyRule = useCallback(async (sourceIdx: number, device: Device, rule: ReportingRule): Promise<void> => {
-        const { cluster, endpoint, attribute, minimum_report_interval, maximum_report_interval, reportable_change } = rule;
-
         await sendMessage(sourceIdx, "bridge/request/device/configure_reporting", {
             id: device.ieee_address,
-            endpoint,
-            cluster,
-            attribute,
-            minimum_report_interval,
-            maximum_report_interval,
-            reportable_change,
+            ...rule,
             option: {},
         });
     }, []);
@@ -101,6 +142,30 @@ export default function ReportingPage(): JSX.Element {
 
     const columns = useMemo<ColumnDef<ReportingTableData, unknown>[]>(
         () => [
+            {
+                id: "select",
+                size: 45,
+                header: ({ table }) => (
+                    <IndeterminateCheckbox
+                        checked={table.getIsAllRowsSelected()}
+                        indeterminate={table.getIsSomeRowsSelected()}
+                        onChange={table.getToggleAllRowsSelectedHandler()}
+                    />
+                ),
+                accessorFn: () => "",
+                cell: ({ row }) => (
+                    <input
+                        type="checkbox"
+                        className="checkbox"
+                        checked={row.getIsSelected()}
+                        disabled={!row.getCanSelect()}
+                        onChange={row.getToggleSelectedHandler()}
+                    />
+                ),
+                enableGlobalFilter: false,
+                enableColumnFilter: false,
+                enableSorting: false,
+            },
             {
                 id: "source",
                 size: 60,
@@ -253,6 +318,8 @@ export default function ReportingPage(): JSX.Element {
             { id: "friendly_name", desc: false },
             { id: "endpoint", desc: false },
         ],
+        rowSelection,
+        onRowSelectionChange: setRowSelection,
     });
 
     return (
@@ -313,6 +380,34 @@ export default function ReportingPage(): JSX.Element {
                         showDivider={false}
                     />
                 ) : null}
+            </div>
+
+            <div className="mb-5">
+                <div className="flex flex-row flex-wrap gap-2 px-2 pb-3">
+                    <Button<void>
+                        className="btn btn-outline btn-error btn-sm"
+                        title={t(($) => $.edit_selected, { ns: "common" })}
+                        onClick={async () =>
+                            await NiceModal.show(ReportingBatchEditModal, {
+                                onApply: actOnFilteredSelected,
+                            })
+                        }
+                        disabled={rowSelectionCount === 0}
+                    >
+                        {`${t(($) => $.edit_selected, { ns: "common" })} (${rowSelectionCount})`}
+                    </Button>
+                    <ConfirmButton
+                        item={[undefined, undefined, undefined, true /* disable */]}
+                        className="btn btn-outline btn-error btn-sm"
+                        onClick={actOnFilteredSelected}
+                        title={t(($) => $.disable_selected, { ns: "common" })}
+                        disabled={rowSelectionCount === 0}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                    >
+                        {`${t(($) => $.disable_selected, { ns: "common" })} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                </div>
             </div>
 
             <div className="mb-5">
