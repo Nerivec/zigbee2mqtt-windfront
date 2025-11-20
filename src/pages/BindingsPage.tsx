@@ -1,7 +1,7 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { faPenToSquare, faServer, faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
 import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
@@ -12,6 +12,7 @@ import {
     type BindingRule,
     type BindingRuleTargetDevice,
     type BindingRuleTargetGroup,
+    getRuleDst,
     makeDefaultBinding,
 } from "../components/binding/index.js";
 import ConfirmButton from "../components/ConfirmButton.js";
@@ -19,6 +20,8 @@ import DeviceImage from "../components/device/DeviceImage.js";
 import BindRow from "../components/device-page/BindRow.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import { BindingRuleModal } from "../components/modal/components/BindingRuleModal.js";
+import { BindingsBatchEditModal } from "../components/modal/components/BindingsBatchEditModal.js";
+import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
 import DevicePicker from "../components/pickers/DevicePicker.js";
 import EndpointPicker from "../components/pickers/EndpointPicker.js";
 import SourceDot from "../components/SourceDot.js";
@@ -31,7 +34,7 @@ import type { Device } from "../types.js";
 import { getEndpoints } from "../utils.js";
 import { sendMessage } from "../websocket/WebSocketManager.js";
 
-type BindingTableData = {
+export type BindingTableData = {
     sourceIdx: number;
     device: Device;
     rule: BindingRule;
@@ -45,6 +48,12 @@ export default function BindingsPage(): JSX.Element {
     const [newRuleDevice, setNewRuleDevice] = useState<Device | null>(null);
     const [newRuleSourceEndpoint, setNewRuleSourceEndpoint] = useState<string>("");
     const [newRuleDraft, setNewRuleDraft] = useState<BindingRule | null>(null);
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
+    useEffect(() => {
+        setRowSelection({});
+    }, [devices]);
 
     const data = useMemo<BindingTableData[]>(() => {
         const rows: BindingTableData[] = [];
@@ -66,6 +75,38 @@ export default function BindingsPage(): JSX.Element {
         return rows;
     }, [devices]);
 
+    const rowSelectionCount = useMemo(() => Object.keys(rowSelection).length, [rowSelection]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: can't dep table
+    const actOnFilteredSelected = useCallback(
+        async ([unbind, clusters]: [boolean | undefined, string[] | undefined]) => {
+            const promises: Promise<void>[] = [];
+
+            for (const row of table.table.getFilteredRowModel().rows) {
+                if (row.getIsSelected()) {
+                    const { sourceIdx, rule } = row.original;
+
+                    promises.push(
+                        sendMessage(sourceIdx, unbind ? "bridge/request/device/unbind" : "bridge/request/device/bind", {
+                            from: rule.source.ieee_address,
+                            from_endpoint: rule.source.endpoint,
+                            to: rule.target.type === "group" ? rule.target.id : rule.target.ieee_address,
+                            to_endpoint: rule.target.type === "endpoint" ? rule.target.endpoint : undefined,
+                            clusters: clusters ?? rule.clusters,
+                        }),
+                    );
+                }
+            }
+
+            setRowSelection({});
+
+            if (promises.length > 0) {
+                await Promise.allSettled(promises);
+            }
+        },
+        [devices, groups],
+    );
+
     const availableSourceEndpoints = useMemo(() => getEndpoints(newRuleDevice), [newRuleDevice]);
 
     useEffect(() => {
@@ -78,41 +119,17 @@ export default function BindingsPage(): JSX.Element {
 
     const applyRule = useCallback(
         async (sourceIdx: number, action: Action, stateRule: BindingRule): Promise<void> => {
-            const sourceDevices = devices[sourceIdx] ?? [];
-            const sourceGroups = groups[sourceIdx] ?? [];
-            let to: string | number = "";
-            let toEndpoint: string | number | undefined;
-            const { target } = stateRule;
+            const dst = getRuleDst(stateRule.target, devices[sourceIdx], groups[sourceIdx]);
 
-            if (target.type === "group") {
-                const targetGroup = sourceGroups.find((group) => group.id === target.id);
-
-                if (!targetGroup) {
-                    console.error("Target group does not exist:", target.id);
-                    return;
-                }
-
-                to = targetGroup.id;
-            } else {
-                const targetDevice = sourceDevices.find((device) => device.ieee_address === target.ieee_address);
-
-                if (!targetDevice) {
-                    console.error("Target device does not exist:", target.ieee_address);
-                    return;
-                }
-
-                to = targetDevice.ieee_address;
-
-                if (targetDevice.type !== "Coordinator") {
-                    toEndpoint = target.endpoint;
-                }
+            if (!dst) {
+                return;
             }
 
             const payload = {
                 from: stateRule.source.ieee_address,
                 from_endpoint: stateRule.source.endpoint,
-                to,
-                to_endpoint: toEndpoint,
+                to: dst.to,
+                to_endpoint: dst.toEndpoint,
                 clusters: stateRule.clusters,
             };
 
@@ -141,6 +158,30 @@ export default function BindingsPage(): JSX.Element {
 
     const columns = useMemo<ColumnDef<BindingTableData, unknown>[]>(
         () => [
+            {
+                id: "select",
+                size: 45,
+                header: ({ table }) => (
+                    <IndeterminateCheckbox
+                        checked={table.getIsAllRowsSelected()}
+                        indeterminate={table.getIsSomeRowsSelected()}
+                        onChange={table.getToggleAllRowsSelectedHandler()}
+                    />
+                ),
+                accessorFn: () => "",
+                cell: ({ row }) => (
+                    <input
+                        type="checkbox"
+                        className="checkbox"
+                        checked={row.getIsSelected()}
+                        disabled={!row.getCanSelect()}
+                        onChange={row.getToggleSelectedHandler()}
+                    />
+                ),
+                enableGlobalFilter: false,
+                enableColumnFilter: false,
+                enableSorting: false,
+            },
             {
                 id: "source",
                 size: 60,
@@ -312,6 +353,8 @@ export default function BindingsPage(): JSX.Element {
             { id: "friendly_name", desc: false },
             { id: "source_endpoint", desc: false },
         ],
+        rowSelection,
+        onRowSelectionChange: setRowSelection,
     });
 
     return (
@@ -374,6 +417,36 @@ export default function BindingsPage(): JSX.Element {
                         showDivider={false}
                     />
                 ) : null}
+            </div>
+
+            <div className="mb-5">
+                <div className="flex flex-row flex-wrap gap-2 px-2 pb-3">
+                    <Button<void>
+                        className="btn btn-outline btn-error btn-sm"
+                        title={t(($) => $.edit_selected, { ns: "common" })}
+                        onClick={async () =>
+                            await NiceModal.show(BindingsBatchEditModal, {
+                                devices,
+                                selectedRows: table.table.getFilteredRowModel().rows.filter((r) => r.getIsSelected()),
+                                onApply: actOnFilteredSelected,
+                            })
+                        }
+                        disabled={rowSelectionCount === 0}
+                    >
+                        {`${t(($) => $.edit_selected, { ns: "common" })} (${rowSelectionCount})`}
+                    </Button>
+                    <ConfirmButton
+                        item={[true, undefined]}
+                        className="btn btn-outline btn-error btn-sm"
+                        onClick={actOnFilteredSelected}
+                        title={t(($) => $.disable_selected, { ns: "common" })}
+                        disabled={rowSelectionCount === 0}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                    >
+                        {`${t(($) => $.disable_selected, { ns: "common" })} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                </div>
             </div>
 
             <div className="mb-5">

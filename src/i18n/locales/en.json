@@ -90,7 +90,8 @@
         "add": "Add",
         "edit": "Edit",
         "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected"
+        "disable_selected": "Disable selected",
+        "mismatching_types": "Mismatching types"
     },
     "devicePage": {
         "about": "About",

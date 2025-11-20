@@ -121,6 +121,32 @@ export const findPossibleClusters = (rule: BindingRule, deviceEndpoints: Device[
     return clusters;
 };
 
+export const getRuleDst = (
+    target: BindingRule["target"],
+    devices: Device[],
+    groups: Group[],
+): { to: string | number; toEndpoint?: string | number } | undefined => {
+    if (target.type === "group") {
+        const targetGroup = groups.find((group) => group.id === target.id);
+
+        if (!targetGroup) {
+            console.error("Target group does not exist:", target.id);
+            return;
+        }
+
+        return { to: targetGroup.id };
+    }
+
+    const targetDevice = devices.find((device) => device.ieee_address === target.ieee_address);
+
+    if (!targetDevice) {
+        console.error("Target device does not exist:", target.ieee_address);
+        return;
+    }
+
+    return { to: targetDevice.ieee_address, toEndpoint: targetDevice.type !== "Coordinator" ? target.endpoint : undefined };
+};
+
 export const isValidBindingRule = (rule: BindingRule): boolean => {
     if (rule.source.endpoint === undefined || rule.source.endpoint === "" || Number.isNaN(rule.source.endpoint)) {
         return false;

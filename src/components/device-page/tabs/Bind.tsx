@@ -8,7 +8,14 @@ import { type AppState, useAppStore } from "../../../store.js";
 import type { Device, Group } from "../../../types.js";
 import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import Button from "../../Button.js";
-import { type Action, aggregateBindingsByEndpoints, type BindingEndpoint, type BindingRule, makeDefaultBinding } from "../../binding/index.js";
+import {
+    type Action,
+    aggregateBindingsByEndpoints,
+    type BindingEndpoint,
+    type BindingRule,
+    getRuleDst,
+    makeDefaultBinding,
+} from "../../binding/index.js";
 import BindRow from "../BindRow.js";
 
 interface BindProps {
@@ -138,39 +145,17 @@ export default function Bind({ sourceIdx, device }: BindProps): JSX.Element {
 
     const onBindOrUnBindClick = useCallback(
         async ([action, stateRule]: [Action, BindingRule]): Promise<void> => {
-            let to: string | number = "";
-            let toEndpoint: string | number | undefined;
-            const { target } = stateRule;
+            const dst = getRuleDst(stateRule.target, devices, groups);
 
-            if (target.type === "group") {
-                const targetGroup = groups.find((group) => group.id === target.id);
-
-                if (targetGroup) {
-                    to = targetGroup.id;
-                } else {
-                    console.error("Target group does not exist:", target.id);
-                    return;
-                }
-            } else if (target.type === "endpoint") {
-                const targetDevice = devices.find((device) => device.ieee_address === target.ieee_address);
-
-                if (targetDevice) {
-                    to = targetDevice.ieee_address;
-
-                    if (targetDevice.type !== "Coordinator") {
-                        toEndpoint = target.endpoint;
-                    }
-                } else {
-                    console.error("Target device does not exist:", target.ieee_address);
-                    return;
-                }
+            if (!dst) {
+                return;
             }
 
             const bindParams = {
                 from: device.ieee_address,
                 from_endpoint: stateRule.source.endpoint,
-                to,
-                to_endpoint: toEndpoint,
+                to: dst.to,
+                to_endpoint: dst.toEndpoint,
                 clusters: stateRule.clusters,
             };
 
