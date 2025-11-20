@@ -36,6 +36,30 @@ export const aggregateReporting = (device: Device): ReportingEndpoint[] => {
     return byEndpoints;
 };
 
+export const isValidReportingRuleEdit = (
+    minRepInterval: number | undefined,
+    maxRepInterval: number | undefined,
+    repChange: number | undefined,
+): boolean => {
+    if (minRepInterval === undefined || Number.isNaN(minRepInterval)) {
+        return false;
+    }
+
+    if (maxRepInterval === undefined || Number.isNaN(maxRepInterval)) {
+        return false;
+    }
+
+    if (repChange === undefined || Number.isNaN(repChange)) {
+        return false;
+    }
+
+    if (minRepInterval > maxRepInterval) {
+        return false;
+    }
+
+    return true;
+};
+
 export const isValidReportingRule = (rule: ReportingRule): boolean => {
     if (rule.endpoint === undefined || rule.endpoint === "") {
         return false;
@@ -49,17 +73,5 @@ export const isValidReportingRule = (rule: ReportingRule): boolean => {
         return false;
     }
 
-    if (rule.minimum_report_interval === undefined || Number.isNaN(rule.minimum_report_interval)) {
-        return false;
-    }
-
-    if (rule.maximum_report_interval === undefined || Number.isNaN(rule.maximum_report_interval)) {
-        return false;
-    }
-
-    if (rule.reportable_change === undefined || Number.isNaN(rule.reportable_change)) {
-        return false;
-    }
-
-    return true;
+    return isValidReportingRuleEdit(rule.minimum_report_interval, rule.maximum_report_interval, rule.reportable_change);
 };

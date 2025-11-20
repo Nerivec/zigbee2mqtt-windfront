@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import type { BindingTableData } from "../../../pages/BindingsPage.js";
 import type { Device } from "../../../types.js";
 import Button from "../../Button.js";
-import { findPossibleClusters } from "../../binding/index.js";
+import { findPossibleClusters, isValidBindingRuleEdit } from "../../binding/index.js";
 import ClusterMultiPicker from "../../pickers/ClusterMultiPicker.js";
 import Modal from "../Modal.js";
 
@@ -18,7 +18,7 @@ type BindingsBatchEditModalProps = {
 export const BindingsBatchEditModal = NiceModal.create(({ devices, selectedRows, onApply }: BindingsBatchEditModalProps): JSX.Element => {
     const modal = useModal();
     const { t } = useTranslation(["zigbee", "common", "devicePage"]);
-    const [clusters, setClusters] = useState<string[] | undefined>([]);
+    const [clusters, setClusters] = useState<string[]>([]);
 
     const handleApply = useCallback(async (): Promise<void> => {
         if (Array.isArray(clusters) && clusters.length > 0) {
@@ -73,6 +73,8 @@ export const BindingsBatchEditModal = NiceModal.create(({ devices, selectedRows,
         return selectedRows.some((r) => r.original.rule.target.type !== firstType);
     }, [selectedRows]);
 
+    const isValidRule = useMemo(() => isValidBindingRuleEdit(clusters), [clusters]);
+
     if (mismatchingRows) {
         return (
             <Modal
@@ -98,7 +100,12 @@ export const BindingsBatchEditModal = NiceModal.create(({ devices, selectedRows,
                     <Button className="btn btn-neutral" onClick={modal.remove}>
                         {t(($) => $.cancel, { ns: "common" })}
                     </Button>
-                    <Button<void> title={t(($) => $.apply, { ns: "common" })} className="btn btn-primary ms-1" onClick={handleApply}>
+                    <Button<void>
+                        title={t(($) => $.apply, { ns: "common" })}
+                        className="btn btn-primary ms-1"
+                        onClick={handleApply}
+                        disabled={!isValidRule}
+                    >
                         {t(($) => $.apply, { ns: "common" })}
                     </Button>
                 </>

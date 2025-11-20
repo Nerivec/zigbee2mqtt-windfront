@@ -1,8 +1,9 @@
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { type JSX, useCallback, useEffect, useState } from "react";
+import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../../Button.js";
 import InputField from "../../form-fields/InputField.js";
+import { isValidReportingRuleEdit } from "../../reporting/index.js";
 import Modal from "../Modal.js";
 
 type ReportingBatchEditModalProps = {
@@ -17,10 +18,8 @@ export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingB
     const [repChange, setRepChange] = useState<number | "">("");
 
     const handleApply = useCallback(async (): Promise<void> => {
-        if (minRepInterval !== "" && maxRepInterval !== "" && repChange !== "" && minRepInterval <= maxRepInterval) {
-            await onApply([minRepInterval, maxRepInterval, repChange, false]);
-            modal.remove();
-        }
+        await onApply([minRepInterval as number, maxRepInterval as number, repChange as number, false]);
+        modal.remove();
     }, [onApply, modal, minRepInterval, maxRepInterval, repChange]);
 
     useEffect(() => {
@@ -36,6 +35,14 @@ export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingB
         return () => window.removeEventListener("keydown", close);
     }, [modal]);
 
+    const isValidRule = useMemo(() => {
+        if (minRepInterval === "" || maxRepInterval === "" || repChange === "") {
+            return false;
+        }
+
+        return isValidReportingRuleEdit(minRepInterval, maxRepInterval, repChange);
+    }, [minRepInterval, maxRepInterval, repChange]);
+
     return (
         <Modal
             isOpen={modal.visible}
@@ -45,7 +52,12 @@ export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingB
                     <Button className="btn btn-neutral" onClick={modal.remove}>
                         {t(($) => $.cancel, { ns: "common" })}
                     </Button>
-                    <Button<void> title={t(($) => $.apply, { ns: "common" })} className="btn btn-primary ms-1" onClick={handleApply}>
+                    <Button<void>
+                        title={t(($) => $.apply, { ns: "common" })}
+                        className="btn btn-primary ms-1"
+                        onClick={handleApply}
+                        disabled={!isValidRule}
+                    >
                         {t(($) => $.apply, { ns: "common" })}
                     </Button>
                 </>
@@ -56,7 +68,7 @@ export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingB
                 label={t(($) => $.min_rep_interval)}
                 type="number"
                 defaultValue={minRepInterval ?? ""}
-                onChange={(e) => !e.target.validationMessage && !!e.target.value && setMinRepInterval(e.target.valueAsNumber)}
+                onChange={(e) => setMinRepInterval(e.target.value ? e.target.valueAsNumber : "")}
                 required
                 className="input validator"
                 min={0}
@@ -67,7 +79,7 @@ export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingB
                 label={t(($) => $.max_rep_interval)}
                 type="number"
                 defaultValue={maxRepInterval ?? ""}
-                onChange={(e) => !e.target.validationMessage && !!e.target.value && setMaxRepInterval(e.target.valueAsNumber)}
+                onChange={(e) => setMaxRepInterval(e.target.value ? e.target.valueAsNumber : "")}
                 required
                 className="input validator"
                 min={0}
@@ -78,7 +90,7 @@ export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingB
                 label={t(($) => $.min_rep_change)}
                 type="number"
                 defaultValue={repChange ?? ""}
-                onChange={(e) => !e.target.validationMessage && !!e.target.value && setRepChange(e.target.valueAsNumber)}
+                onChange={(e) => setRepChange(e.target.value ? e.target.valueAsNumber : "")}
                 required
                 className="input validator"
             />

@@ -114,7 +114,7 @@ const BindRow = memo(({ devices, groups, device, rule, onApply, showDivider, hid
                         {!hideUnbind && !stateRule.isNew ? (
                             <ConfirmButton<[Action, BindingRule]>
                                 item={["Unbind", stateRule]}
-                                disabled={stateRule.isNew || !isValidRule}
+                                disabled={!isValidRule}
                                 title={t(($) => $.unbind)}
                                 className="btn btn-error btn-outline join-item"
                                 onClick={onApply}

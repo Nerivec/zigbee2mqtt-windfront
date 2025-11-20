@@ -151,6 +151,7 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hide
                         {!hideUnbind && !stateRule.isNew ? (
                             <ConfirmButton<void>
                                 title={t(($) => $.disable, { ns: "common" })}
+                                disabled={!isValidRule}
                                 className="btn btn-error btn-outline join-item"
                                 onClick={onDisableRuleClick}
                                 modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}

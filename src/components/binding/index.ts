@@ -147,12 +147,16 @@ export const getRuleDst = (
     return { to: targetDevice.ieee_address, toEndpoint: targetDevice.type !== "Coordinator" ? target.endpoint : undefined };
 };
 
-export const isValidBindingRule = (rule: BindingRule): boolean => {
-    if (rule.source.endpoint === undefined || rule.source.endpoint === "" || Number.isNaN(rule.source.endpoint)) {
+export const isValidBindingRuleEdit = (clusters: string[] | undefined): boolean => {
+    if (!Array.isArray(clusters) || clusters.length === 0) {
         return false;
     }
 
-    if (!Array.isArray(rule.clusters) || rule.clusters.length === 0) {
+    return true;
+};
+
+export const isValidBindingRule = (rule: BindingRule): boolean => {
+    if (rule.source.endpoint === undefined || rule.source.endpoint === "" || Number.isNaN(rule.source.endpoint)) {
         return false;
     }
 
@@ -170,5 +174,5 @@ export const isValidBindingRule = (rule: BindingRule): boolean => {
         }
     }
 
-    return true;
+    return isValidBindingRuleEdit(rule.clusters);
 };
