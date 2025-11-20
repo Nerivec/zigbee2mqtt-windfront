@@ -46,30 +46,9 @@ export const BindingRuleModal = NiceModal.create(({ sourceIdx, device, devices, 
             isOpen={modal.visible}
             title={`${t(($) => $.bind, { ns: "devicePage" })}: ${device.friendly_name} (${rule.source.endpoint})`}
             footer={
-                <>
-                    <Button className="btn btn-neutral" onClick={modal.remove}>
-                        {t(($) => $.cancel)}
-                    </Button>
-                    {!rule.isNew ? (
-                        <Button<[Action, BindingRule]>
-                            item={["Unbind", rule]}
-                            disabled={rule.isNew}
-                            title={t(($) => $.unbind)}
-                            className="btn btn-error ms-1"
-                            onClick={handleApply}
-                        >
-                            {t(($) => $.unbind)}
-                        </Button>
-                    ) : null}
-                    <Button<[Action, BindingRule]>
-                        item={["Bind", rule]}
-                        title={t(($) => $.bind)}
-                        className="btn btn-primary ms-1"
-                        onClick={handleApply}
-                    >
-                        {t(($) => $.bind)}&nbsp;
-                    </Button>
-                </>
+                <Button className="btn btn-neutral" onClick={modal.remove}>
+                    {t(($) => $.cancel)}
+                </Button>
             }
         >
             <BindRow
@@ -80,7 +59,7 @@ export const BindingRuleModal = NiceModal.create(({ sourceIdx, device, devices, 
                 rule={rule}
                 onApply={handleApply}
                 showDivider={false}
-                hideActions
+                hideUnbind
             />
         </Modal>
     );

@@ -17,12 +17,12 @@ interface ReportingRowProps {
     device: Device;
     onApply(rule: ReportingRule): void;
     showDivider: boolean;
-    hideActions?: boolean;
+    hideUnbind?: boolean;
 }
 
 const REQUIRED_RULE_FIELDS = ["maximum_report_interval", "minimum_report_interval", "reportable_change", "endpoint", "cluster", "attribute"] as const;
 
-const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hideActions = false }: ReportingRowProps) => {
+const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hideUnbind = false }: ReportingRowProps) => {
     const [stateRule, setStateRule] = useState(rule);
     const { t } = useTranslation(["zigbee", "common"]);
 
@@ -141,35 +141,33 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hide
                     required
                     className="input validator w-48"
                 />
-                {!hideActions ? (
-                    <fieldset className="fieldset ml-auto">
-                        <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
-                        <div className="join join-horizontal">
-                            <Button<ReportingRule>
-                                title={t(($) => $.apply, { ns: "common" })}
-                                className="btn btn-primary btn-outline join-item"
-                                item={stateRule}
-                                onClick={onApply}
-                                disabled={!isValidRule}
+                <fieldset className="fieldset ml-auto">
+                    <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
+                    <div className="join join-horizontal">
+                        <Button<ReportingRule>
+                            title={t(($) => $.apply, { ns: "common" })}
+                            className="btn btn-primary btn-outline join-item"
+                            item={stateRule}
+                            onClick={onApply}
+                            disabled={!isValidRule}
+                        >
+                            <FontAwesomeIcon icon={faCheck} />
+                            {t(($) => $.apply, { ns: "common" })}
+                        </Button>
+                        {!hideUnbind && !stateRule.isNew ? (
+                            <ConfirmButton<void>
+                                title={t(($) => $.disable, { ns: "common" })}
+                                className="btn btn-error btn-outline join-item"
+                                onClick={onDisableRuleClick}
+                                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                             >
-                                <FontAwesomeIcon icon={faCheck} />
-                                {t(($) => $.apply, { ns: "common" })}
-                            </Button>
-                            {!stateRule.isNew ? (
-                                <ConfirmButton<void>
-                                    title={t(($) => $.disable, { ns: "common" })}
-                                    className="btn btn-error btn-outline join-item"
-                                    onClick={onDisableRuleClick}
-                                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
-                                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
-                                >
-                                    <FontAwesomeIcon icon={faBan} />
-                                    {t(($) => $.disable, { ns: "common" })}
-                                </ConfirmButton>
-                            ) : null}
-                        </div>
-                    </fieldset>
-                ) : null}
+                                <FontAwesomeIcon icon={faBan} />
+                                {t(($) => $.disable, { ns: "common" })}
+                            </ConfirmButton>
+                        ) : null}
+                    </div>
+                </fieldset>
             </div>
             {showDivider ? <div className="divider my-0" /> : null}
         </>

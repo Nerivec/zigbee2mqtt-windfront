@@ -44,27 +44,12 @@ export const ReportingRuleModal = NiceModal.create(({ sourceIdx, device, rule, o
             isOpen={modal.visible}
             title={`${t(($) => $.reporting, { ns: "devicePage" })}: ${device.friendly_name} (${rule.endpoint})`}
             footer={
-                <>
-                    <Button className="btn btn-neutral" onClick={modal.remove}>
-                        {t(($) => $.cancel)}
-                    </Button>
-                    {!rule.isNew ? (
-                        <Button<ReportingRule>
-                            title={t(($) => $.disable)}
-                            className="btn btn-error ms-1"
-                            item={{ ...rule, maximum_report_interval: 0xffff }}
-                            onClick={handleApply}
-                        >
-                            {t(($) => $.disable)}
-                        </Button>
-                    ) : null}
-                    <Button<ReportingRule> title={t(($) => $.apply)} className="btn btn-primary ms-1" item={rule} onClick={handleApply}>
-                        {t(($) => $.apply)}
-                    </Button>
-                </>
+                <Button className="btn btn-neutral" onClick={modal.remove}>
+                    {t(($) => $.cancel)}
+                </Button>
             }
         >
-            <ReportingRow sourceIdx={sourceIdx} device={device} rule={rule} onApply={handleApply} showDivider={false} hideActions />
+            <ReportingRow sourceIdx={sourceIdx} device={device} rule={rule} onApply={handleApply} showDivider={false} hideUnbind />
         </Modal>
     );
 });
