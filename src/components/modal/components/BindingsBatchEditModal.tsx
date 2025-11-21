@@ -79,7 +79,7 @@ export const BindingsBatchEditModal = NiceModal.create(({ devices, selectedRows,
         return (
             <Modal
                 isOpen={modal.visible}
-                title={t(($) => $.reporting, { ns: "devicePage" })}
+                title={t(($) => $.bind, { ns: "devicePage" })}
                 footer={
                     <Button className="btn btn-neutral" onClick={modal.remove}>
                         {t(($) => $.cancel, { ns: "common" })}
@@ -94,7 +94,7 @@ export const BindingsBatchEditModal = NiceModal.create(({ devices, selectedRows,
     return (
         <Modal
             isOpen={modal.visible}
-            title={t(($) => $.reporting, { ns: "devicePage" })}
+            title={t(($) => $.bind, { ns: "devicePage" })}
             footer={
                 <>
                     <Button className="btn btn-neutral" onClick={modal.remove}>

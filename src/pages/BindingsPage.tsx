@@ -1,5 +1,5 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { faPenToSquare, faServer, faUnlink } from "@fortawesome/free-solid-svg-icons";
+import { faLink, faServer, faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
 import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
@@ -309,7 +309,7 @@ export default function BindingsPage(): JSX.Element {
                     <div className="join join-horizontal">
                         <Button<void>
                             className="btn btn-sm btn-square btn-outline btn-primary join-item"
-                            title={t(($) => $.edit, { ns: "common" })}
+                            title={t(($) => $.bind, { ns: "common" })}
                             onClick={async () =>
                                 await NiceModal.show(BindingRuleModal, {
                                     sourceIdx,
@@ -321,7 +321,7 @@ export default function BindingsPage(): JSX.Element {
                                 })
                             }
                         >
-                            <FontAwesomeIcon icon={faPenToSquare} />
+                            <FontAwesomeIcon icon={faLink} />
                         </Button>
                         {!rule.isNew ? (
                             <ConfirmButton<void>
@@ -423,7 +423,7 @@ export default function BindingsPage(): JSX.Element {
                 <div className="flex flex-row flex-wrap gap-2 px-2 pb-3">
                     <Button<void>
                         className="btn btn-outline btn-error btn-sm"
-                        title={t(($) => $.edit_selected, { ns: "common" })}
+                        title={t(($) => $.bind_selected, { ns: "common" })}
                         onClick={async () =>
                             await NiceModal.show(BindingsBatchEditModal, {
                                 devices,
@@ -433,7 +433,7 @@ export default function BindingsPage(): JSX.Element {
                         }
                         disabled={rowSelectionCount === 0}
                     >
-                        {`${t(($) => $.edit_selected, { ns: "common" })} (${rowSelectionCount})`}
+                        {`${t(($) => $.bind_selected, { ns: "common" })} (${rowSelectionCount})`}
                     </Button>
                     <ConfirmButton
                         item={[true, undefined]}

@@ -91,6 +91,7 @@
         "edit": "Edit",
         "edit_selected": "Edit selected",
         "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
         "unbind_selected": "Unbind selected",
         "mismatching_types": "Mismatching types"
     },
