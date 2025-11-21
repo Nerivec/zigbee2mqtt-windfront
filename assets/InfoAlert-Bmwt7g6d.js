@@ -1,0 +1,1 @@
+import{l as t,at as e,j as o,F as a,a0 as r}from"./index-C4AO15gr.js";function i({children:s}){return t.get(e,!1)?null:o.jsxs("div",{className:"alert alert-info alert-soft mb-2",role:"alert",children:[o.jsx(a,{icon:r,size:"2xl"}),s]})}export{i as I};
