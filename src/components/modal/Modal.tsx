@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 type ModalProps = {
     isOpen: boolean;
     title: string;
-    footer: JSX.Element;
+    footer?: JSX.Element;
 };
 
 export default function Modal({ isOpen, children, title, footer }: PropsWithChildren<ModalProps>) {

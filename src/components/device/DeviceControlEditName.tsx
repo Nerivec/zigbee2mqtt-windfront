@@ -19,7 +19,7 @@ const DeviceControlEditName = memo(({ sourceIdx, name, homeassistantEnabled, sty
 
     return (
         <Button<undefined>
-            className={`btn ${style} tooltip`}
+            className={`btn ${style}`}
             onClick={async () =>
                 await NiceModal.show(RenameDeviceModal, {
                     sourceIdx,
@@ -28,7 +28,7 @@ const DeviceControlEditName = memo(({ sourceIdx, name, homeassistantEnabled, sty
                     homeassistantEnabled,
                 })
             }
-            data-tip={t(($) => $.rename_device)}
+            title={t(($) => $.rename_device)}
         >
             <FontAwesomeIcon icon={faEdit} />
         </Button>

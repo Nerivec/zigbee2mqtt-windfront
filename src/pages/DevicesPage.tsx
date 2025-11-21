@@ -116,10 +116,7 @@ export default function DevicesPage(): JSX.Element {
                     },
                 }) => <SourceDot idx={sourceIdx} nameClassName="hidden md:inline-block" />,
                 filterFn: "equals",
-                meta: {
-                    filterVariant: "select",
-                    showFacetedOccurrences: true,
-                },
+                meta: { filterVariant: "select", showFacetedOccurrences: true },
             },
             {
                 id: "friendly_name",
@@ -153,10 +150,7 @@ export default function DevicesPage(): JSX.Element {
                 ),
                 sortingFn: (rowA, rowB) => rowA.original.device.friendly_name.localeCompare(rowB.original.device.friendly_name),
                 filterFn: "includesString",
-                meta: {
-                    filterVariant: "text",
-                    textFaceted: true,
-                },
+                meta: { filterVariant: "text", textFaceted: true },
             },
             {
                 id: "ieee_address",
@@ -186,9 +180,7 @@ export default function DevicesPage(): JSX.Element {
                 ),
                 sortingFn: (rowA, rowB) => rowA.original.device.ieee_address.localeCompare(rowB.original.device.ieee_address),
                 filterFn: "includesString",
-                meta: {
-                    filterVariant: "text",
-                },
+                meta: { filterVariant: "text" },
             },
             {
                 id: "model",
@@ -211,11 +203,7 @@ export default function DevicesPage(): JSX.Element {
                     </>
                 ),
                 filterFn: "includesString",
-                meta: {
-                    filterVariant: "text",
-                    textFaceted: true,
-                    showFacetedOccurrences: true,
-                },
+                meta: { filterVariant: "text", textFaceted: true, showFacetedOccurrences: true },
             },
             {
                 id: "type",
@@ -228,10 +216,7 @@ export default function DevicesPage(): JSX.Element {
                     },
                 }) => t(($) => $[device.type]),
                 filterFn: "equals",
-                meta: {
-                    filterVariant: "select",
-                    showFacetedOccurrences: true,
-                },
+                meta: { filterVariant: "select", showFacetedOccurrences: true },
             },
             {
                 id: "lqi",
@@ -244,9 +229,7 @@ export default function DevicesPage(): JSX.Element {
                     },
                 }) => <Lqi value={state.linkquality as number | undefined} />,
                 filterFn: "inNumberRange",
-                meta: {
-                    filterVariant: "range",
-                },
+                meta: { filterVariant: "range" },
             },
             {
                 id: "last_seen",
@@ -273,10 +256,7 @@ export default function DevicesPage(): JSX.Element {
                 },
                 enableGlobalFilter: false,
                 filterFn: "inNumberRange",
-                meta: {
-                    filterVariant: "range",
-                    tooltip: t(($) => $.last_seen_filter_info, { ns: "common" }),
-                },
+                meta: { filterVariant: "range", tooltip: t(($) => $.last_seen_filter_info, { ns: "common" }) },
             },
             {
                 id: "availability",
@@ -309,10 +289,7 @@ export default function DevicesPage(): JSX.Element {
                     );
                 },
                 filterFn: "equals",
-                meta: {
-                    filterVariant: "select",
-                    showFacetedOccurrences: true,
-                },
+                meta: { filterVariant: "select", showFacetedOccurrences: true },
             },
             {
                 id: "power_source",
@@ -320,10 +297,7 @@ export default function DevicesPage(): JSX.Element {
                 header: t(($) => $.power_source),
                 accessorFn: ({ device }) => device.power_source,
                 filterFn: "equals",
-                meta: {
-                    filterVariant: "select",
-                    showFacetedOccurrences: true,
-                },
+                meta: { filterVariant: "select", showFacetedOccurrences: true },
             },
             {
                 id: "battery_level",
@@ -336,9 +310,7 @@ export default function DevicesPage(): JSX.Element {
                     },
                 }) => (state.battery == null ? "N/A" : <span className={batteryLow ? "text-error" : undefined}>{String(state.battery)}%</span>),
                 filterFn: "inNumberRange",
-                meta: {
-                    filterVariant: "range",
-                },
+                meta: { filterVariant: "range" },
             },
             {
                 id: "battery_low",
@@ -351,9 +323,7 @@ export default function DevicesPage(): JSX.Element {
                     },
                 }) => (batteryLow === undefined ? "N/A" : <span className={batteryLow ? "text-error" : undefined}>{String(batteryLow)}</span>),
                 filterFn: "equals",
-                meta: {
-                    filterVariant: "boolean",
-                },
+                meta: { filterVariant: "boolean" },
             },
             {
                 // allows including/excluding with string+select
@@ -362,9 +332,7 @@ export default function DevicesPage(): JSX.Element {
                 header: t(($) => $.disabled, { ns: "common" }),
                 accessorFn: ({ device }) => `${Boolean(device.disabled)}`,
                 filterFn: "equals",
-                meta: {
-                    filterVariant: "select",
-                },
+                meta: { filterVariant: "select" },
             },
             {
                 id: "actions",

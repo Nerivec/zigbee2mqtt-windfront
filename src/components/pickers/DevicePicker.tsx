@@ -83,7 +83,7 @@ const DevicePicker = memo(({ devices, value, label, onChange, groups = [], ...re
             value={value}
             title={selectedName}
             onChange={onSelectHandler}
-            className="select validator w-64"
+            className="select validator w-96"
             {...rest}
         >
             <option value="" disabled>

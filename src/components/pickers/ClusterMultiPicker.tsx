@@ -4,7 +4,7 @@ export interface ClusterMultiPickerProps extends Omit<DetailedHTMLProps<InputHTM
     label?: string;
     clusters: Set<string>;
     value: string[];
-    onChange(clusters: string[] | undefined): void;
+    onChange(clusters: string[]): void;
 }
 
 const ClusterMultiPicker = memo((props: ClusterMultiPickerProps) => {

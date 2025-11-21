@@ -86,7 +86,7 @@ export function isGroup(entity: Device | Group): entity is Group {
     return "members" in entity;
 }
 
-export const getEndpoints = (entity?: Device | Group): Set<string | number> => {
+export const getEndpoints = (entity?: Device | Group | null): Set<string | number> => {
     const endpoints = new Set<string | number>();
 
     if (!entity) {

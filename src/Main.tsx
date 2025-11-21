@@ -19,6 +19,8 @@ const DashboardPage = lazy(async () => await import("./pages/Dashboard.js"));
 const NetworkPage = lazy(async () => await import("./pages/NetworkPage.js"));
 const GroupsPage = lazy(async () => await import("./pages/GroupsPage.js"));
 const GroupPage = lazy(async () => await import("./pages/GroupPage.js"));
+const ReportingPage = lazy(async () => await import("./pages/ReportingPage.js"));
+const BindingsPage = lazy(async () => await import("./pages/BindingsPage.js"));
 const OtaPage = lazy(async () => await import("./pages/OtaPage.js"));
 const TouchlinkPage = lazy(async () => await import("./pages/TouchlinkPage.js"));
 const LogsPage = lazy(async () => await import("./pages/LogsPage.js"));
@@ -56,8 +58,10 @@ function App() {
                         <Route path="/device/:sourceIdx/:deviceId/:tab?" element={<DevicePage />} />
                         <Route path="/groups" element={<GroupsPage />} />
                         <Route path="/group/:sourceIdx/:groupId/:tab?" element={<GroupPage />} />
-                        <Route path="/touchlink" element={<TouchlinkPage />} />
+                        <Route path="/reporting" element={<ReportingPage />} />
+                        <Route path="/bindings" element={<BindingsPage />} />
                         <Route path="/ota" element={<OtaPage />} />
+                        <Route path="/touchlink" element={<TouchlinkPage />} />
                         <Route path="/network/:sourceIdx?" element={<NetworkPage />} />
                         <Route path="/logs/:sourceIdx?" element={<LogsPage />} />
                         <Route path="/activity" element={<ActivityPage />} />

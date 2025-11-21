@@ -80,11 +80,11 @@ const RecallRemove = memo(({ sourceIdx, target }: RecallRemoveProps) => {
                     disabled={sceneIsNotSelected}
                     onClick={onRemoveClick}
                     className="btn btn-error join-item flex-1"
-                    title={t(($) => $.remove)}
+                    title={t(($) => $.remove, { ns: "common" })}
                     modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
                     modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                 >
-                    {t(($) => $.remove)}
+                    {t(($) => $.remove, { ns: "common" })}
                 </ConfirmButton>
                 <ConfirmButton
                     onClick={onRemoveAllClick}
