@@ -238,6 +238,15 @@ export default function ReportingPage(): JSX.Element {
                 minSize: 150,
                 header: t(($) => $.attribute),
                 accessorFn: ({ rule }) => rule.attribute,
+                cell: ({
+                    row: {
+                        original: { rule },
+                    },
+                }) => (
+                    <div className="min-w-0" title={`${rule.attribute}`}>
+                        <div className="truncate">{rule.attribute}</div>
+                    </div>
+                ),
                 filterFn: "includesString",
                 meta: { filterVariant: "text", textFaceted: true },
             },
