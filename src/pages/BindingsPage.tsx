@@ -439,12 +439,12 @@ export default function BindingsPage(): JSX.Element {
                         item={[true, undefined]}
                         className="btn btn-outline btn-error btn-sm"
                         onClick={actOnFilteredSelected}
-                        title={t(($) => $.disable_selected, { ns: "common" })}
+                        title={t(($) => $.unbind_selected, { ns: "common" })}
                         disabled={rowSelectionCount === 0}
                         modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
                         modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                     >
-                        {`${t(($) => $.disable_selected, { ns: "common" })} (${rowSelectionCount})`}
+                        {`${t(($) => $.unbind_selected, { ns: "common" })} (${rowSelectionCount})`}
                     </ConfirmButton>
                 </div>
             </div>
