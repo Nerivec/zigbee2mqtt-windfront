@@ -19,7 +19,7 @@ type AddSceneProps = {
     deviceState: DeviceState;
 };
 
-const AddScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
+const AddUpdateScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
     const { t } = useTranslation("scene");
     const [sceneId, setSceneId] = useState<number>(0);
     const [sceneName, setSceneName] = useState<string>("");
