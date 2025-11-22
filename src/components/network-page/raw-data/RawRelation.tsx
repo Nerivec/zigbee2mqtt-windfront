@@ -42,7 +42,7 @@ const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlight
                     </div>
                     <div className="grow">{device.friendly_name}</div>
                     <span className="badge badge-ghost">
-                        <Lqi value={relation.linkquality} />
+                        <Lqi value={relation.lqi} />
                     </span>
                     <span className="badge badge-ghost" title={t(($) => $.depth)}>
                         <FontAwesomeIcon icon={faRoute} />
@@ -67,10 +67,9 @@ const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlight
                             </li>
                             <ul>
                                 {relation.routes.map((route) => (
-                                    <li key={`${relation.source.ieeeAddr}-${route.destinationAddress}-${route.nextHop}-${route.status}`}>
+                                    <li key={`${relation.source.ieeeAddr}-${route.destinationAddress}-${route.nextHopAddress}-${route.status}`}>
                                         <span>
                                             ➥ {toHex(route.destinationAddress)} : {route.status}
-                                            {/** XXX: Z2M currently removes non-ACTIVE status */}
                                         </span>
                                     </li>
                                 ))}

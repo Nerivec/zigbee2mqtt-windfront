@@ -176,8 +176,8 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                     !bestSibling ||
                     // XXX: add exception when depth===255 (non-value)?
                     link.depth < bestSibling.depth ||
-                    link.linkquality > bestSibling.linkquality ||
-                    (bestSibling.linkquality === link.linkquality && link.depth < bestSibling.depth)
+                    link.lqi > bestSibling.lqi ||
+                    (bestSibling.lqi === link.lqi && link.depth < bestSibling.depth)
                 ) {
                     bestSiblings.set(link.source.ieeeAddr, link);
                 }
@@ -223,7 +223,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
             computedEdges.push({
                 id: `${link.source.ieeeAddr}-${link.target.ieeeAddr}-${link.relationship}`,
                 data: link,
-                label: oppositeLink ? `${link.linkquality} / ${oppositeLink.linkquality ?? "?"}` : `${link.linkquality}`,
+                label: oppositeLink ? `${link.lqi} / ${oppositeLink.lqi ?? "?"}` : `${link.lqi}`,
                 size: link.relationship === ZigbeeRelationship.NoneOfTheAbove ? 0.5 : 1,
                 labelVisible: true,
                 source: link.source.ieeeAddr,
