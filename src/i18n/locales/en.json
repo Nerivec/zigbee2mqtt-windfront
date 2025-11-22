@@ -408,9 +408,11 @@
         "scene_id": "Scene ID",
         "recall": "Recall",
         "store": "Store",
+        "update": "Update",
         "remove_all": "Remove all",
         "select_scene": "Select Scene",
-        "scene_name": "Scene Name"
+        "scene_name": "Scene Name",
+        "update_scene": "Update Scene"
     },
     "stats": {
         "byType": "By device type",
