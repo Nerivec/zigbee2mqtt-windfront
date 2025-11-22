@@ -412,7 +412,8 @@
         "remove_all": "Remove all",
         "select_scene": "Select Scene",
         "scene_name": "Scene Name",
-        "update_scene": "Update Scene"
+        "update_scene": "Update Scene",
+        "add_scene": "Add Scene"
     },
     "stats": {
         "byType": "By device type",

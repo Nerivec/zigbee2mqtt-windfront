@@ -148,7 +148,7 @@ const AddUpdateScene = ({ sourceIdx, target, deviceState }: AddSceneProps) => {
                 )}
             </div>
             {sceneInput.action === "add" ? (
-                <Button disabled={!isValidSceneId} onClick={onStoreClick} className="btn btn-primary">
+                <Button disabled={!isValidSceneId} onClick={onStoreClick} className="btn btn-primary tooltip" data-tip={t(($) => $.add_scene)}>
                     {t(($) => $.add, { ns: "common" })}
                 </Button>
             ) : (
