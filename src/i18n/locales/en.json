@@ -305,7 +305,10 @@
         "remove_all": "Remove all",
         "scene_id": "Scene ID",
         "scene_name": "Scene Name",
-        "store": "Store"
+        "update": "Update",
+        "select_scene": "Select Scene",
+        "update_scene": "Update Scene",
+        "add_scene": "Add Scene"
     },
     "settings": {
         "about": "About",

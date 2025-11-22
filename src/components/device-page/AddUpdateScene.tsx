@@ -1,17 +1,20 @@
-import { memo, useCallback, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
-import { useShallow } from "zustand/react/shallow";
-import { useAppStore } from "../../store.js";
-import type { Device, DeviceState, Group } from "../../types.js";
-import { isDevice } from "../../utils.js";
-import { sendMessage } from "../../websocket/WebSocketManager.js";
-import Button from "../Button.js";
-import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
-import Feature from "../features/Feature.js";
-import { getFeatureKey } from "../features";
-import InputField from "../form-fields/InputField.js";
-import { getScenes } from "./index.js";
+import {type ChangeEvent, useCallback, useMemo, useState} from "react";
+import {useTranslation} from "react-i18next";
+import type {Zigbee2MQTTAPI} from "zigbee2mqtt";
+import {useShallow} from "zustand/react/shallow";
+import {useAppStore} from "../../store";
+import type {Device, DeviceState, Group} from "../../types";
+import {isDevice} from "../../utils";
+import {sendMessage} from "../../websocket/WebSocketManager";
+import Button from "../Button";
+import ConfirmButton from "../ConfirmButton";
+import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper";
+import {getFeatureKey} from "../features";
+import Feature from "../features/Feature";
+import InputField from "../form-fields/InputField";
+import {getScenes} from "./index";
+
+const DEFAULT_SCENE_ID = 0;
 
 type AddSceneProps = {
     sourceIdx: number;
@@ -19,13 +22,22 @@ type AddSceneProps = {
     deviceState: DeviceState;
 };
 
-const AddUpdateScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) => {
-    const { t } = useTranslation("scene");
-    const [sceneId, setSceneId] = useState<number>(0);
-    const [sceneName, setSceneName] = useState<string>("");
+const AddUpdateScene = ({sourceIdx, target, deviceState}: AddSceneProps) => {
+    const {t} = useTranslation("scene");
+
     const scenes = useMemo(() => getScenes(target), [target]);
+
+    const [sceneId, setSceneId] = useState<number>(DEFAULT_SCENE_ID);
+    const [name, setName] = useState("");
+
+    const existingScene = useMemo(() => scenes.find((scene) => scene.id === sceneId), [scenes, sceneId]);
+
+    const action = existingScene ? "update" : "add";
+    const effectiveName = name || existingScene?.name || "";
+    const isValidSceneId = sceneId >= 0 && sceneId <= 255;
+
     const scenesFeatures = useAppStore(
-        useShallow((state) => (isDevice(target) ? (state.deviceScenesFeatures[sourceIdx][target.ieee_address] ?? []) : [])),
+        useShallow((state) => (isDevice(target) ? (state.deviceScenesFeatures[sourceIdx]?.[target.ieee_address] ?? []) : [])),
     );
 
     const onCompositeChange = useCallback(
@@ -41,19 +53,24 @@ const AddUpdateScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) 
     );
 
     const onStoreClick = useCallback(async () => {
-        const payload: Zigbee2MQTTAPI["{friendlyNameOrId}/set"][string] = { ID: sceneId, name: sceneName || `Scene ${sceneId}` };
+        const payload: Zigbee2MQTTAPI["{friendlyNameOrId}/set"][string] = {
+            ID: sceneId,
+            name: effectiveName || `Scene ${sceneId}`,
+        };
 
         await sendMessage<"{friendlyNameOrId}/set">(
             sourceIdx,
             // @ts-expect-error templated API endpoint
             `${target.friendly_name}/set`, // TODO: swap to ID/ieee_address
-            { scene_store: payload },
+            {scene_store: payload},
         );
-    }, [sourceIdx, target, sceneId, sceneName]);
+    }, [sourceIdx, target, sceneId, effectiveName]);
 
-    const isValidSceneId = useMemo(() => {
-        return sceneId >= 0 && sceneId <= 255 && !scenes.find((s) => s.id === sceneId);
-    }, [sceneId, scenes]);
+    const handleOnSceneIdInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSceneId(e.target.valueAsNumber || DEFAULT_SCENE_ID);
+        setName("");
+    };
+
 
     return (
         <>
@@ -64,7 +81,7 @@ const AddUpdateScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) 
                     label={t(($) => $.scene_id)}
                     type="number"
                     value={sceneId}
-                    onChange={(e) => !!e.target.value && setSceneId(e.target.valueAsNumber)}
+                    onChange={handleOnSceneIdInputChange}
                     min={0}
                     max={255}
                     required
@@ -73,9 +90,9 @@ const AddUpdateScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) 
                     name="scene_name"
                     label={t(($) => $.scene_name)}
                     type="text"
-                    value={sceneName}
+                    value={effectiveName}
                     placeholder={`Scene ${sceneId}`}
-                    onChange={(e) => setSceneName(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                     required
                 />
                 {scenesFeatures.length > 0 && (
@@ -97,11 +114,25 @@ const AddUpdateScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) 
                     </div>
                 )}
             </div>
-            <Button disabled={!isValidSceneId} onClick={onStoreClick} className="btn btn-primary">
-                {t(($) => $.store)}
-            </Button>
+            {action === "add" ? (
+                <Button disabled={!isValidSceneId} onClick={onStoreClick} className="btn btn-primary"
+                        title={t(($) => $.add_scene)}>
+                    {t(($) => $.add, {ns: "common"})}
+                </Button>
+            ) : (
+                <ConfirmButton
+                    disabled={!isValidSceneId}
+                    onClick={onStoreClick}
+                    className="btn btn-primary"
+                    title={t(($) => $.update_scene)}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt, {ns: "common"})}
+                    modalCancelLabel={t(($) => $.cancel, {ns: "common"})}
+                >
+                    {t(($) => $.update)}
+                </ConfirmButton>
+            )}
         </>
     );
-});
+};
 
 export default AddUpdateScene;
