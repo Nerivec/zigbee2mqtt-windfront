@@ -9,7 +9,7 @@ import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
 import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
 import Feature from "../features/Feature.js";
-import { getFeatureKey } from "../features/index.js";
+import { getFeatureKey } from "../features";
 import InputField from "../form-fields/InputField.js";
 import { getScenes } from "./index.js";
 
@@ -104,4 +104,4 @@ const AddUpdateScene = memo(({ sourceIdx, target, deviceState }: AddSceneProps) 
     );
 });
 
-export default AddScene;
+export default AddUpdateScene;
