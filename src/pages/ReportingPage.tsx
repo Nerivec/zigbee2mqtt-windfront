@@ -85,7 +85,7 @@ export default function ReportingPage(): JSX.Element {
                     const { sourceIdx, device, rule } = row.original;
 
                     promises.push(
-                        sendMessage(sourceIdx, "bridge/request/device/configure_reporting", {
+                        sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
                             id: device.ieee_address,
                             endpoint: rule.endpoint,
                             cluster: rule.cluster,
@@ -119,7 +119,7 @@ export default function ReportingPage(): JSX.Element {
     const availableEndpoints = useMemo(() => getEndpoints(newRuleDevice), [newRuleDevice]);
 
     const applyRule = useCallback(async (sourceIdx: number, device: Device, rule: ReportingRule): Promise<void> => {
-        await sendMessage(sourceIdx, "bridge/request/device/configure_reporting", {
+        await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
             id: device.ieee_address,
             ...rule,
             option: {},

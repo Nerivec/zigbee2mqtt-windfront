@@ -124,7 +124,7 @@ export default function Reporting({ sourceIdx, device }: ReportingProps): JSX.El
         async (rule: ReportingRule): Promise<void> => {
             const { cluster, endpoint, attribute, minimum_report_interval, maximum_report_interval, reportable_change } = rule;
 
-            await sendMessage(sourceIdx, "bridge/request/device/configure_reporting", {
+            await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
                 id: device.ieee_address,
                 endpoint,
                 cluster,

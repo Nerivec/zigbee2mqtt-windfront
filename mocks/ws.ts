@@ -138,10 +138,10 @@ export function startServer() {
 
                                 (response.payload.data.value as Zigbee2MQTTNetworkMap).links[0].routes.push(
                                     ...[
-                                        { destinationAddress: 0x1234, nextHop: 14567, status: "ACTIVE" },
-                                        { destinationAddress: 0x5678, nextHop: 14567, status: "DISCOVERY_UNDERWAY" },
-                                        { destinationAddress: 0x2345, nextHop: 14567, status: "DISCOVERY_FAILED" },
-                                        { destinationAddress: 0x7890, nextHop: 14567, status: "INACTIVE" },
+                                        { destinationAddress: 0x1234, nextHopAddress: 14567, status: "ACTIVE" },
+                                        { destinationAddress: 0x5678, nextHopAddress: 14567, status: "DISCOVERY_UNDERWAY" },
+                                        { destinationAddress: 0x2345, nextHopAddress: 14567, status: "DISCOVERY_FAILED" },
+                                        { destinationAddress: 0x7890, nextHopAddress: 14567, status: "INACTIVE" },
                                     ],
                                 );
                             }
