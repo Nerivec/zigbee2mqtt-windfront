@@ -304,7 +304,9 @@
         "identify": "Identify",
         "factory_reset": "Factory reset",
         "scan_source": "Scan source",
-        "select_scan_source": "Select scan source"
+        "select_scan_source": "Select scan source",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "Clear",
@@ -400,7 +402,8 @@
         "battery_low": "Battery low",
         "battery_level": "Battery level",
         "scenes": "Scenes",
-        "low_lqi": "Low LQI"
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID"
     },
     "scene": {
         "manage_scenes_header": "Manage scenes",

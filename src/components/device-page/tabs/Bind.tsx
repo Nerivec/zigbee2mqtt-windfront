@@ -43,7 +43,7 @@ const BindingEndpointSection = memo(({ endpointId, rules, devices, groups, sourc
         open: isAddOpen,
         onOpenChange: setIsAddOpen,
         placement: "bottom-end",
-        middleware: [offset(8), shift({ padding: 16 }), arrow({ element: arrowRef })],
+        middleware: [offset(8), shift({ padding: 16, crossAxis: true }), arrow({ element: arrowRef })],
     });
     const click = useClick(context, { event: "click" });
     const dismiss = useDismiss(context);

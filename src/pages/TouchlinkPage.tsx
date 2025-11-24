@@ -1,10 +1,12 @@
-import { faBroom, faCircleNotch, faExclamationTriangle, faMagnifyingGlassPlus, faServer } from "@fortawesome/free-solid-svg-icons";
+import { faBroom, faCircleNotch, faExclamationTriangle, faMagnifyingGlassPlus, faServer, faTools } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import Button from "../components/Button.js";
+import FloatingCardButton from "../components/FloatingCardButton.js";
+import InputField from "../components/form-fields/InputField.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
@@ -25,6 +27,7 @@ type TouchlinkTableData = {
 
 export default function TouchlinkPage() {
     const { t } = useTranslation(["touchlink", "common", "zigbee"]);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const touchlinkDevices = useAppStore((state) => state.touchlinkDevices);
     const devices = useAppStore((state) => state.devices);
     const touchlinkIdentifyInProgress = useAppStore((state) => state.touchlinkIdentifyInProgress);
@@ -34,6 +37,13 @@ export default function TouchlinkPage() {
     const setTouchlinkResetInProgress = useAppStore((state) => state.setTouchlinkResetInProgress);
     const setTouchlinkScan = useAppStore((state) => state.setTouchlinkScan);
     const [scanIdx, setScanIdx] = useState(0);
+    const [hueExtPanId, setHueExtPanId] = useState<string>("");
+    const [hueSerialNumbers, setHueSerialNumbers] = useState<number[]>([]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
+    useEffect(() => {
+        setHueExtPanId(bridgeInfo[scanIdx].network.extended_pan_id);
+    }, [scanIdx]);
 
     const data = useMemo((): TouchlinkTableData[] => {
         const renderDevices: TouchlinkTableData[] = [];
@@ -78,6 +88,26 @@ export default function TouchlinkPage() {
         },
         [setTouchlinkResetInProgress],
     );
+
+    const onHueResetApply = useCallback(async () => {
+        await sendMessage(scanIdx, "bridge/request/action", {
+            action: "hue_factory_reset",
+            params: {
+                // 0x-format
+                extended_pan_id: hueExtPanId,
+                serial_numbers: hueSerialNumbers,
+            },
+        });
+        setHueSerialNumbers([]);
+    }, [scanIdx, hueExtPanId, hueSerialNumbers]);
+
+    const isHueResetValid = useMemo(() => {
+        if (hueExtPanId != null && /^0x[a-f0-9]{16}$/.test(hueExtPanId) && Array.isArray(hueSerialNumbers) && hueSerialNumbers.length > 0) {
+            return hueSerialNumbers.every((sn) => Number.isInteger(sn));
+        }
+
+        return false;
+    }, [hueExtPanId, hueSerialNumbers]);
 
     const columns = useMemo<ColumnDef<TouchlinkTableData, unknown>[]>(
         () => [
@@ -233,6 +263,41 @@ export default function TouchlinkPage() {
                         <FontAwesomeIcon icon={faMagnifyingGlassPlus} />
                         {t(($) => $.scan)}
                     </Button>
+                </fieldset>
+                <fieldset className="fieldset self-end ml-auto">
+                    <FloatingCardButton
+                        placement="bottom-end"
+                        canApply={isHueResetValid}
+                        onApply={onHueResetApply}
+                        buttonClassName={"btn btn-outline btn-error"}
+                        buttonIcon={faTools}
+                        buttonTitle={t(($) => $.hue_reset)}
+                        title={t(($) => $.hue_reset)}
+                    >
+                        <InputField
+                            name="extended_pan_id"
+                            label={t(($) => $.extended_pan_id, { ns: "zigbee" })}
+                            type="text"
+                            defaultValue={hueExtPanId}
+                            onChange={(e) => !e.target.validationMessage && setHueExtPanId(e.target.value)}
+                            required
+                        />
+                        <InputField
+                            name="serial_numbers"
+                            label={t(($) => $.serial_numbers_csv)}
+                            type="text"
+                            onChange={(e) =>
+                                !e.target.validationMessage &&
+                                setHueSerialNumbers(
+                                    e.target.value
+                                        .replaceAll(" ", "")
+                                        .split(",")
+                                        .map((v) => Number.parseInt(v, 10)),
+                                )
+                            }
+                            required
+                        />
+                    </FloatingCardButton>
                 </fieldset>
             </div>
 

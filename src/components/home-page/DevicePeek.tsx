@@ -44,9 +44,7 @@ const DevicePeek = memo(({ selection: { anchor, sourceIdx, device }, onClose }: 
             // flip({ fallbackAxisSideDirection: "end", fallbackPlacements: ["left", "top", "bottom"], padding: 16 }),
             autoPlacement({ padding: 16, crossAxis: true }),
             shift({ padding: 16, crossAxis: true }),
-            arrow({
-                element: arrowRef,
-            }),
+            arrow({ element: arrowRef }),
         ],
     });
     const role = useRole(context);
