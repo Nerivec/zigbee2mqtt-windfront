@@ -95,7 +95,8 @@
         "unbind_selected": "選択項目のバインド解除",
         "mismatching_types": "種類が一致しません",
         "sync": "同期",
-        "clear_self_as_source": "自分をソースから外す"
+        "clear_self_as_source": "自分をソースから外す",
+        "sync_reporting": "同期レポート"
     },
     "devicePage": {
         "about": "概要",

@@ -95,7 +95,8 @@
         "unbind_selected": "解绑所选",
         "mismatching_types": "类型不匹配",
         "sync": "同步",
-        "clear_self_as_source": "清除自己作为来源"
+        "clear_self_as_source": "清除自己作为来源",
+        "sync_reporting": "同步上报"
     },
     "devicePage": {
         "about": "关于",

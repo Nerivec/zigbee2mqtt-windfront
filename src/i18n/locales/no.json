@@ -94,8 +94,9 @@
         "bind_selected": "Koble valgte",
         "unbind_selected": "Koble fra valgte",
         "mismatching_types": "Ulike typer",
-        "sync": "Synkroniser",
-        "clear_self_as_source": "Fjern deg selv som kilde"
+        "sync": "Synk.",
+        "clear_self_as_source": "Fjern deg selv som kilde",
+        "sync_reporting": "Synk. rapportering"
     },
     "devicePage": {
         "about": "Om",

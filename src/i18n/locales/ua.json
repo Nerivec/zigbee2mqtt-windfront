@@ -94,8 +94,9 @@
         "bind_selected": "Прив'язати вибране",
         "unbind_selected": "Відв'язати вибране",
         "mismatching_types": "Невідповідні типи",
-        "sync": "Синхронізувати",
-        "clear_self_as_source": "Прибрати себе як джерело"
+        "sync": "Синхр.",
+        "clear_self_as_source": "Прибрати себе як джерело",
+        "sync_reporting": "Синхр. звітність"
     },
     "devicePage": {
         "about": "Про",

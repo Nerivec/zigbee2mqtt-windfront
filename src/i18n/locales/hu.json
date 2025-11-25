@@ -94,8 +94,9 @@
         "bind_selected": "Kijelöltek összekapcsolása",
         "unbind_selected": "Kijelöltek szétkapcsolása",
         "mismatching_types": "Nem egyező típusok",
-        "sync": "Szinkronizálás",
-        "clear_self_as_source": "Távolítsd el magad forrásként"
+        "sync": "Szinkr.",
+        "clear_self_as_source": "Távolítsd el magad forrásként",
+        "sync_reporting": "Szinkr. jelentés"
     },
     "devicePage": {
         "about": "Névjegy",

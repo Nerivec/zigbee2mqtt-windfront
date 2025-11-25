@@ -94,8 +94,9 @@
         "bind_selected": "선택 항목 바인드",
         "unbind_selected": "선택 항목 바인드 해제",
         "mismatching_types": "형식이 일치하지 않음",
-        "sync": "동기화",
-        "clear_self_as_source": "자신을 소스에서 제거"
+        "sync": "동기",
+        "clear_self_as_source": "자신을 소스에서 제거",
+        "sync_reporting": "동기 리포팅"
     },
     "devicePage": {
         "about": "정보",

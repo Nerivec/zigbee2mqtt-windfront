@@ -94,8 +94,9 @@
         "bind_selected": "Vincular selecionados",
         "unbind_selected": "Desvincular selecionados",
         "mismatching_types": "Tipos incompatíveis",
-        "sync": "Sincronizar",
-        "clear_self_as_source": "Remover a si mesmo como fonte"
+        "sync": "Sincron.",
+        "clear_self_as_source": "Remover a si mesmo como fonte",
+        "sync_reporting": "Sincron. relatórios"
     },
     "devicePage": {
         "about": "Sobre",

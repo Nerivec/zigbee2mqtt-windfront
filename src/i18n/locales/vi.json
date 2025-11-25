@@ -94,8 +94,9 @@
         "bind_selected": "Liên kết mục đã chọn",
         "unbind_selected": "Hủy liên kết đã chọn",
         "mismatching_types": "Kiểu không khớp",
-        "sync": "Đồng bộ",
-        "clear_self_as_source": "Xóa bản thân làm nguồn"
+        "sync": "Đ.bộ",
+        "clear_self_as_source": "Xóa bản thân làm nguồn",
+        "sync_reporting": "Đ.bộ báo cáo"
     },
     "devicePage": {
         "about": "Giới thiệu",

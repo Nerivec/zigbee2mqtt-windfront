@@ -94,8 +94,9 @@
         "bind_selected": "Selectie koppelen",
         "unbind_selected": "Selectie ontkoppelen",
         "mismatching_types": "Niet-overeenkomende typen",
-        "sync": "Synchroniseren",
-        "clear_self_as_source": "Verwijder jezelf als bron"
+        "sync": "Synchr.",
+        "clear_self_as_source": "Verwijder jezelf als bron",
+        "sync_reporting": "Synchr. rapportage"
     },
     "devicePage": {
         "about": "Over",

@@ -94,8 +94,9 @@
         "bind_selected": "Collega selezionati",
         "unbind_selected": "Scollega selezionati",
         "mismatching_types": "Tipi non corrispondenti",
-        "sync": "Sincronizza",
-        "clear_self_as_source": "Rimuovi te stesso come sorgente"
+        "sync": "Sincron.",
+        "clear_self_as_source": "Rimuovi te stesso come sorgente",
+        "sync_reporting": "Sincron. rapporti"
     },
     "devicePage": {
         "about": "Informazioni",

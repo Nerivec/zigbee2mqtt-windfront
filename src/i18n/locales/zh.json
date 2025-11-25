@@ -95,7 +95,8 @@
         "unbind_selected": "取消綁定所選",
         "mismatching_types": "類型不相符",
         "sync": "同步",
-        "clear_self_as_source": "清除自己作為來源"
+        "clear_self_as_source": "清除自己作為來源",
+        "sync_reporting": "同步回報"
     },
     "devicePage": {
         "about": "關於",

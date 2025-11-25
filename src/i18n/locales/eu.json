@@ -94,8 +94,9 @@
         "bind_selected": "Lotu hautatuak",
         "unbind_selected": "Askatu hautatuak",
         "mismatching_types": "Mota ez datorrenak",
-        "sync": "Sinkronizatu",
-        "clear_self_as_source": "Kendu zeure burua iturri gisa"
+        "sync": "Sinkron.",
+        "clear_self_as_source": "Kendu zeure burua iturri gisa",
+        "sync_reporting": "Sinkron. txostenak"
     },
     "devicePage": {
         "about": "Honi buruz",

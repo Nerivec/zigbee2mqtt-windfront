@@ -94,8 +94,9 @@
         "bind_selected": "Svázat vybrané",
         "unbind_selected": "Zrušit svázání vybraných",
         "mismatching_types": "Nesouhlasící typy",
-        "sync": "Synchronizace",
-        "clear_self_as_source": "Odebrat sebe jako zdroj"
+        "sync": "Synchron.",
+        "clear_self_as_source": "Odebrat sebe jako zdroj",
+        "sync_reporting": "Synchron. reportování"
     },
     "devicePage": {
         "about": "O zařízení",

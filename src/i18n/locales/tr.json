@@ -94,8 +94,9 @@
         "bind_selected": "Seçileni bağla",
         "unbind_selected": "Seçileni çöz",
         "mismatching_types": "Eşleşmeyen türler",
-        "sync": "Senkronize et",
-        "clear_self_as_source": "Kendini kaynak olarak kaldır"
+        "sync": "Senk.",
+        "clear_self_as_source": "Kendini kaynak olarak kaldır",
+        "sync_reporting": "Senk. raporlama"
     },
     "devicePage": {
         "about": "Hakkında",

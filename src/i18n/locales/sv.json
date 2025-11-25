@@ -94,8 +94,9 @@
         "bind_selected": "Binda valda",
         "unbind_selected": "Koppla från valda",
         "mismatching_types": "Typer matchar inte",
-        "sync": "Synkronisera",
-        "clear_self_as_source": "Ta bort dig själv som källa"
+        "sync": "Synk.",
+        "clear_self_as_source": "Ta bort dig själv som källa",
+        "sync_reporting": "Synk. rapportering"
     },
     "devicePage": {
         "about": "Om",

@@ -94,8 +94,9 @@
         "bind_selected": "Привязать выбранные",
         "unbind_selected": "Отвязать выбранные",
         "mismatching_types": "Несовпадающие типы",
-        "sync": "Синхронизировать",
-        "clear_self_as_source": "Убрать себя как источник"
+        "sync": "Синхр.",
+        "clear_self_as_source": "Убрать себя как источник",
+        "sync_reporting": "Синхр. отчётность"
     },
     "devicePage": {
         "about": "Информация",

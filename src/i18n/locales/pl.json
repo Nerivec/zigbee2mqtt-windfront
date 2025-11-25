@@ -94,8 +94,9 @@
         "bind_selected": "Powiąż zaznaczone",
         "unbind_selected": "Rozłącz zaznaczone",
         "mismatching_types": "Niedopasowane typy",
-        "sync": "Synchronizuj",
-        "clear_self_as_source": "Usuń siebie jako źródło"
+        "sync": "Synchron.",
+        "clear_self_as_source": "Usuń siebie jako źródło",
+        "sync_reporting": "Synchron. raporty"
     },
     "devicePage": {
         "about": "O z2m",

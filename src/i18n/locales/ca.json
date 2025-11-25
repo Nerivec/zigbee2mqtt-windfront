@@ -94,8 +94,9 @@
         "bind_selected": "Vincula els seleccionats",
         "unbind_selected": "Desvincula els seleccionats",
         "mismatching_types": "Tipus no coincidents",
-        "sync": "Sincronitza",
-        "clear_self_as_source": "Esborra't com a origen"
+        "sync": "Sincron.",
+        "clear_self_as_source": "Esborra't com a origen",
+        "sync_reporting": "Sincron. informes"
     },
     "devicePage": {
         "about": "Quant a",

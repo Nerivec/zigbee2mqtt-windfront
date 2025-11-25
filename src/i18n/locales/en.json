@@ -95,7 +95,8 @@
         "unbind_selected": "Unbind selected",
         "mismatching_types": "Mismatching types",
         "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "clear_self_as_source": "Clear self as source",
+        "sync_reporting": "Sync reporting"
     },
     "devicePage": {
         "about": "About",

@@ -94,8 +94,9 @@
         "bind_selected": "Свържи избраните",
         "unbind_selected": "Разкачи избраните",
         "mismatching_types": "Несъвпадащи типове",
-        "sync": "Синхронизиране",
-        "clear_self_as_source": "Премахни себе си като източник"
+        "sync": "Синхр.",
+        "clear_self_as_source": "Премахни себе си като източник",
+        "sync_reporting": "Синхр. отчитане"
     },
     "devicePage": {
         "about": "Относно",

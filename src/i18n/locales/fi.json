@@ -94,8 +94,9 @@
         "bind_selected": "Sido valitut",
         "unbind_selected": "Pura valittujen sidonta",
         "mismatching_types": "Yhteensopimattomat tyypit",
-        "sync": "Synkronoi",
-        "clear_self_as_source": "Poista itsesi lähteenä"
+        "sync": "Synk.",
+        "clear_self_as_source": "Poista itsesi lähteenä",
+        "sync_reporting": "Synk. raportointi"
     },
     "devicePage": {
         "about": "Tietoja",
