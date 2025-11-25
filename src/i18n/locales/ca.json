@@ -78,24 +78,24 @@
         "state": "Estat",
         "scroll_to_top": "Amunt",
         "notifications": "Notificacions",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Instàncies",
+        "overview": "Vista general",
+        "recent_activity": "Activitat recent",
+        "oldest_activity": "Activitat més antiga",
+        "last_activity": "Darrera activitat",
+        "group_scenes": "Escenes del grup",
+        "quick_search": "Cerca ràpida",
+        "not_seen_in_a_while": "Fa temps que no es veu",
         "remove": "Elimina",
         "add": "Afegeix",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Edita",
+        "edit_selected": "Edita els seleccionats",
+        "disable_selected": "Desactiva els seleccionats",
+        "bind_selected": "Vincula els seleccionats",
+        "unbind_selected": "Desvincula els seleccionats",
+        "mismatching_types": "Tipus no coincidents",
+        "sync": "Sincronitza",
+        "clear_self_as_source": "Esborra't com a origen"
     },
     "devicePage": {
         "about": "Quant a",
@@ -198,10 +198,10 @@
         "transaction_prefix": "Prefix de transacció",
         "frontend_settings": "Configuració del frontend",
         "contribute": "Contribueix",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Inici",
+        "activity": "Activitat",
+        "reporting": "Informes",
+        "bindings": "Vincles"
     },
     "ota": {
         "check": "Cerca actualitzacions",
@@ -305,10 +305,10 @@
         "scan": "Escanejar",
         "identify": "Identificar",
         "factory_reset": "Restablir fàbrica",
-        "scan_source": "Font escaneig",
-        "select_scan_source": "Selecciona font",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "scan_source": "Origen de l'escaneig",
+        "select_scan_source": "Selecciona l'origen de l'escaneig",
+        "hue_reset": "Restabliment Hue",
+        "serial_numbers_csv": "Números de sèrie (CSV)"
     },
     "values": {
         "clear": "neteja",
@@ -404,10 +404,10 @@
         "battery_low": "Bateria baixa",
         "battery_level": "Nivell de bateria",
         "scenes": "Escenes",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "LQI baix",
+        "extended_pan_id": "PAN ID ampliat",
+        "rx_on_when_idle": "RX ON en repòs",
+        "permit_joining": "Permet unir-se"
     },
     "scene": {
         "manage_scenes_header": "Gestiona escenes",
@@ -455,8 +455,8 @@
         "codespace_info": "Github Codespace disponible",
         "show_definition": "Mostra definició",
         "hide_definition": "Amaga definició",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "Acció",
+        "actions": "Accions"
     },
     "contribute": {
         "donation_text": "Aquí pots agrair-nos tota la feina. No dubtis a dir també alguna cosa bonica ;)",

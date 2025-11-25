@@ -78,24 +78,24 @@
         "state": "Állapot",
         "scroll_to_top": "Vissza fel",
         "notifications": "Értesítések",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Példányok",
+        "overview": "Áttekintés",
+        "recent_activity": "Legutóbbi aktivitás",
+        "oldest_activity": "Legrégebbi aktivitás",
+        "last_activity": "Utolsó aktivitás",
+        "group_scenes": "Csoportjelenetek",
+        "quick_search": "Gyorskeresés",
+        "not_seen_in_a_while": "Régóta nem látható",
         "remove": "Eltávolítás",
         "add": "Hozzáadás",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Szerkesztés",
+        "edit_selected": "Kijelöltek szerkesztése",
+        "disable_selected": "Kijelöltek letiltása",
+        "bind_selected": "Kijelöltek összekapcsolása",
+        "unbind_selected": "Kijelöltek szétkapcsolása",
+        "mismatching_types": "Nem egyező típusok",
+        "sync": "Szinkronizálás",
+        "clear_self_as_source": "Távolítsd el magad forrásként"
     },
     "devicePage": {
         "about": "Névjegy",
@@ -198,10 +198,10 @@
         "transaction_prefix": "Tranzakció előtag",
         "frontend_settings": "Előfelület beállításai",
         "contribute": "Közreműködés",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Kezdőlap",
+        "activity": "Aktivitás",
+        "reporting": "Jelentések",
+        "bindings": "Kapcsolások"
     },
     "ota": {
         "check": "Frissítések keresése",
@@ -307,8 +307,8 @@
         "factory_reset": "Gyári visszaállítás",
         "scan_source": "Forrás",
         "select_scan_source": "Forrás kiválasztása",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Hue visszaállítás",
+        "serial_numbers_csv": "Sorozatszámok (CSV)"
     },
     "values": {
         "clear": "törlés",
@@ -404,10 +404,10 @@
         "battery_low": "Alacsony töltöttség",
         "battery_level": "Akkumulátorszint",
         "scenes": "Jelenetek",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "Alacsony LQI",
+        "extended_pan_id": "Kiterjesztett PAN ID",
+        "rx_on_when_idle": "RX bekapcsolva üresjáratban",
+        "permit_joining": "Csatlakozás engedélyezése"
     },
     "scene": {
         "manage_scenes_header": "Jelenetek kezelése",
@@ -453,10 +453,10 @@
         "create_new_converter": "Új konverter",
         "select_converter_to_edit": "Válassz konvertert",
         "codespace_info": "Github Codespace elérhető fejlesztéshez",
-        "show_definition": "Definíció megjelenítés",
-        "hide_definition": "Definíció elrejtés",
-        "action": "Action",
-        "actions": "Actions"
+        "show_definition": "Definíció megjelenítése",
+        "hide_definition": "Definíció elrejtése",
+        "action": "Művelet",
+        "actions": "Műveletek"
     },
     "contribute": {
         "donation_text": "Itt megköszönheted a munkánkat. Egy kedves szó is mindig jól esik ;)",

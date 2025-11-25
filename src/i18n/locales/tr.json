@@ -78,24 +78,24 @@
         "state": "Durum",
         "scroll_to_top": "En üste git",
         "notifications": "Bildirimler",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Örnekler",
+        "overview": "Genel bakış",
+        "recent_activity": "Son etkinlik",
+        "oldest_activity": "En eski etkinlik",
+        "last_activity": "Son faaliyet",
+        "group_scenes": "Grup sahneleri",
+        "quick_search": "Hızlı arama",
+        "not_seen_in_a_while": "Uzun süredir görülmedi",
         "remove": "Sil",
         "add": "Ekle",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Düzenle",
+        "edit_selected": "Seçileni düzenle",
+        "disable_selected": "Seçileni devre dışı bırak",
+        "bind_selected": "Seçileni bağla",
+        "unbind_selected": "Seçileni çöz",
+        "mismatching_types": "Eşleşmeyen türler",
+        "sync": "Senkronize et",
+        "clear_self_as_source": "Kendini kaynak olarak kaldır"
     },
     "devicePage": {
         "about": "Hakkında",
@@ -198,10 +198,10 @@
         "transaction_prefix": "İşlem öneki",
         "frontend_settings": "Önyüz ayarları",
         "contribute": "Katkıda bulun",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Ana sayfa",
+        "activity": "Aktivite",
+        "reporting": "Raporlama",
+        "bindings": "Bağlantılar"
     },
     "ota": {
         "check": "Güncellemeleri denetle",
@@ -307,8 +307,8 @@
         "factory_reset": "Fabrika sıfırlama",
         "scan_source": "Tarama kaynağı",
         "select_scan_source": "Kaynak seç",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Hue sıfırlama",
+        "serial_numbers_csv": "Seri numaraları (CSV)"
     },
     "values": {
         "clear": "temizle",
@@ -404,10 +404,10 @@
         "battery_low": "Düşük pil",
         "battery_level": "Pil seviyesi",
         "scenes": "Sahneler",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "Düşük LQI",
+        "extended_pan_id": "Genişletilmiş PAN ID",
+        "rx_on_when_idle": "Boştayken RX açık",
+        "permit_joining": "Katılıma izin ver"
     },
     "scene": {
         "manage_scenes_header": "Sahneleri yönet",
@@ -455,8 +455,8 @@
         "codespace_info": "Geliştirme desteği için Github Codespace var",
         "show_definition": "Tanımı göster",
         "hide_definition": "Tanımı gizle",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "Eylem",
+        "actions": "Eylemler"
     },
     "contribute": {
         "donation_text": "Burada emeğimiz için bize teşekkür edebilirsiniz. Güzel sözleriniz de bizi mutlu eder ;)",

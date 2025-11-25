@@ -78,24 +78,24 @@
         "state": "状态",
         "scroll_to_top": "回到顶部",
         "notifications": "通知",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "实例",
+        "overview": "概览",
+        "recent_activity": "最新活动",
+        "oldest_activity": "最早活动",
+        "last_activity": "最后活动",
+        "group_scenes": "分组场景",
+        "quick_search": "快速搜索",
+        "not_seen_in_a_while": "长时间未见",
         "remove": "删除",
         "add": "添加",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "编辑",
+        "edit_selected": "编辑所选",
+        "disable_selected": "禁用所选",
+        "bind_selected": "绑定所选",
+        "unbind_selected": "解绑所选",
+        "mismatching_types": "类型不匹配",
+        "sync": "同步",
+        "clear_self_as_source": "清除自己作为来源"
     },
     "devicePage": {
         "about": "关于",
@@ -198,10 +198,10 @@
         "transaction_prefix": "事务前缀",
         "frontend_settings": "前端设置",
         "contribute": "贡献",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "首页",
+        "activity": "活动",
+        "reporting": "报表",
+        "bindings": "绑定"
     },
     "ota": {
         "check": "检查更新",
@@ -307,8 +307,8 @@
         "factory_reset": "出厂重置",
         "scan_source": "扫描源",
         "select_scan_source": "选择扫描源",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Hue 重置",
+        "serial_numbers_csv": "序列号 (CSV)"
     },
     "values": {
         "clear": "清除",
@@ -404,10 +404,10 @@
         "battery_low": "电量低",
         "battery_level": "电池电量",
         "scenes": "场景",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "低 LQI",
+        "extended_pan_id": "扩展 PAN ID",
+        "rx_on_when_idle": "空闲时 RX 开启",
+        "permit_joining": "允许接入"
     },
     "scene": {
         "manage_scenes_header": "管理场景",
@@ -455,8 +455,8 @@
         "codespace_info": "提供 Github Codespace 支持开发",
         "show_definition": "显示定义",
         "hide_definition": "隐藏定义",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "操作",
+        "actions": "操作集"
     },
     "contribute": {
         "donation_text": "欢迎在此对我们的付出表示感谢，也欢迎留下鼓励的话语；)",

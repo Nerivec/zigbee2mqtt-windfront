@@ -78,24 +78,24 @@
         "state": "Състояние",
         "scroll_to_top": "Горе",
         "notifications": "Известия",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Инстанции",
+        "overview": "Преглед",
+        "recent_activity": "Скорошна активност",
+        "oldest_activity": "Най-стара активност",
+        "last_activity": "Последна активност",
+        "group_scenes": "Сцени на групата",
+        "quick_search": "Бързо търсене",
+        "not_seen_in_a_while": "Не е виждан отдавна",
         "remove": "Премахни",
         "add": "Добави",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Редактиране",
+        "edit_selected": "Редактирай избраните",
+        "disable_selected": "Деактивирай избраните",
+        "bind_selected": "Свържи избраните",
+        "unbind_selected": "Разкачи избраните",
+        "mismatching_types": "Несъвпадащи типове",
+        "sync": "Синхронизиране",
+        "clear_self_as_source": "Премахни себе си като източник"
     },
     "devicePage": {
         "about": "Относно",
@@ -198,10 +198,10 @@
         "transaction_prefix": "Префикс транзакция",
         "frontend_settings": "Настройки на интерфейса",
         "contribute": "Допринасяне",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Начало",
+        "activity": "Активност",
+        "reporting": "Отчитане",
+        "bindings": "Свързвания"
     },
     "ota": {
         "check": "Проверка за обновления",
@@ -307,8 +307,8 @@
         "factory_reset": "Фабрично нулиране",
         "scan_source": "Източник",
         "select_scan_source": "Изберете източник",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Нулиране на Hue",
+        "serial_numbers_csv": "Серийни номера (CSV)"
     },
     "values": {
         "clear": "изчистване",
@@ -404,10 +404,10 @@
         "battery_low": "Ниска батерия",
         "battery_level": "Ниво на батерията",
         "scenes": "Сцени",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "Нисък LQI",
+        "extended_pan_id": "Разширен PAN ID",
+        "rx_on_when_idle": "RX ON при бездействие",
+        "permit_joining": "Разреши присъединяване"
     },
     "scene": {
         "manage_scenes_header": "Управление на сцени",
@@ -455,8 +455,8 @@
         "codespace_info": "Github Codespace наличен за помощ",
         "show_definition": "Покажи дефиниция",
         "hide_definition": "Скрий дефиниция",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "Действие",
+        "actions": "Действия"
     },
     "contribute": {
         "donation_text": "Тук можете да ни благодарите за труда ни. Не се колебайте да кажете и нещо приятно ;)",

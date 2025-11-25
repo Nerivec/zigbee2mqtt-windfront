@@ -78,24 +78,24 @@
         "state": "Tilstand",
         "scroll_to_top": "Til topp",
         "notifications": "Varsler",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Instanser",
+        "overview": "Oversikt",
+        "recent_activity": "Nyeste aktivitet",
+        "oldest_activity": "Eldste aktivitet",
+        "last_activity": "Siste aktivitet",
+        "group_scenes": "Gruppescener",
+        "quick_search": "Hurtigsøk",
+        "not_seen_in_a_while": "Ikke sett på en stund",
         "remove": "Fjern",
         "add": "Legg til",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Rediger",
+        "edit_selected": "Rediger valgte",
+        "disable_selected": "Deaktiver valgte",
+        "bind_selected": "Koble valgte",
+        "unbind_selected": "Koble fra valgte",
+        "mismatching_types": "Ulike typer",
+        "sync": "Synkroniser",
+        "clear_self_as_source": "Fjern deg selv som kilde"
     },
     "devicePage": {
         "about": "Om",
@@ -198,10 +198,10 @@
         "transaction_prefix": "Transaksjonsprefiks",
         "frontend_settings": "Frontend-innstillinger",
         "contribute": "Bidra",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Hjem",
+        "activity": "Aktivitet",
+        "reporting": "Rapportering",
+        "bindings": "Bindinger"
     },
     "ota": {
         "check": "Søk etter oppdateringer",
@@ -307,8 +307,8 @@
         "factory_reset": "Fabrikkreset",
         "scan_source": "Skann-kilde",
         "select_scan_source": "Velg kilde",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Hue-reset",
+        "serial_numbers_csv": "Serienumre (CSV)"
     },
     "values": {
         "clear": "tøm",
@@ -404,10 +404,10 @@
         "battery_low": "Lavt batteri",
         "battery_level": "Batterinivå",
         "scenes": "Scener",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "Lav LQI",
+        "extended_pan_id": "Utvidet PAN-ID",
+        "rx_on_when_idle": "RX på i hvile",
+        "permit_joining": "Tillat tilkobling"
     },
     "scene": {
         "manage_scenes_header": "Administrer scener",
@@ -455,8 +455,8 @@
         "codespace_info": "Github Codespace tilgjengelig",
         "show_definition": "Vis definisjon",
         "hide_definition": "Skjul definisjon",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "Handling",
+        "actions": "Handlinger"
     },
     "contribute": {
         "donation_text": "Her kan du takke oss for arbeidet. Et vennlig ord settes også pris på ;)",

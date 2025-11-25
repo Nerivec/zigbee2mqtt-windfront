@@ -78,24 +78,24 @@
         "state": "Status",
         "scroll_to_top": "Nach oben scrollen",
         "notifications": "Benachrichtigungen",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Instanzen",
+        "overview": "Übersicht",
+        "recent_activity": "Aktuelle Aktivität",
+        "oldest_activity": "Älteste Aktivität",
+        "last_activity": "Letzte Aktivität",
+        "group_scenes": "Gruppenszenen",
+        "quick_search": "Schnellsuche",
+        "not_seen_in_a_while": "Längere Zeit nicht gesehen",
         "remove": "Entfernen",
         "add": "Hinzufügen",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Bearbeiten",
+        "edit_selected": "Auswahl bearbeiten",
+        "disable_selected": "Auswahl deaktivieren",
+        "bind_selected": "Auswahl verknüpfen",
+        "unbind_selected": "Auswahl lösen",
+        "mismatching_types": "Nicht übereinstimmende Typen",
+        "sync": "Synchronisieren",
+        "clear_self_as_source": "Dich selbst als Quelle entfernen"
     },
     "devicePage": {
         "about": "Info",
@@ -198,10 +198,10 @@
         "transaction_prefix": "Transaktionspräfix",
         "frontend_settings": "Frontend-Einstellungen",
         "contribute": "Mitwirken",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Startseite",
+        "activity": "Aktivität",
+        "reporting": "Berichte",
+        "bindings": "Bindungen"
     },
     "ota": {
         "check": "Nach neuen Updates suchen",
@@ -307,8 +307,8 @@
         "factory_reset": "Werksreset",
         "scan_source": "Scanquelle",
         "select_scan_source": "Scanquelle auswählen",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Hue-Reset",
+        "serial_numbers_csv": "Seriennummern (CSV)"
     },
     "values": {
         "clear": "frei",
@@ -404,10 +404,10 @@
         "battery_low": "Batterie schwach",
         "battery_level": "Batteriezustand",
         "scenes": "Szenen",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "Niedriges LQI",
+        "extended_pan_id": "Erweitertes PAN-ID",
+        "rx_on_when_idle": "RX EIN im Leerlauf",
+        "permit_joining": "Beitritt erlauben"
     },
     "scene": {
         "manage_scenes_header": "Szenen verwalten",
@@ -455,8 +455,8 @@
         "codespace_info": "Ein Github Codespace steht zur Entwicklungsunterstützung bereit",
         "show_definition": "Definition anzeigen",
         "hide_definition": "Definition verbergen",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "Aktion",
+        "actions": "Aktionen"
     },
     "contribute": {
         "donation_text": "Hier können Sie sich für unsere Arbeit bedanken. Ein nettes Wort freut uns ebenfalls ;)",

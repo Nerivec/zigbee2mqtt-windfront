@@ -78,24 +78,24 @@
         "state": "状態",
         "scroll_to_top": "トップへ",
         "notifications": "通知",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "インスタンス",
+        "overview": "概要",
+        "recent_activity": "最近のアクティビティ",
+        "oldest_activity": "最も古いアクティビティ",
+        "last_activity": "最新のアクティビティ",
+        "group_scenes": "グループシーン",
+        "quick_search": "クイック検索",
+        "not_seen_in_a_while": "しばらく検出なし",
         "remove": "削除",
         "add": "追加",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "編集",
+        "edit_selected": "選択項目を編集",
+        "disable_selected": "選択項目を無効化",
+        "bind_selected": "選択項目をバインド",
+        "unbind_selected": "選択項目のバインド解除",
+        "mismatching_types": "種類が一致しません",
+        "sync": "同期",
+        "clear_self_as_source": "自分をソースから外す"
     },
     "devicePage": {
         "about": "概要",
@@ -198,10 +198,10 @@
         "transaction_prefix": "トランザクション接頭辞",
         "frontend_settings": "フロントエンド設定",
         "contribute": "貢献する",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "ホーム",
+        "activity": "アクティビティ",
+        "reporting": "レポート",
+        "bindings": "バインド"
     },
     "ota": {
         "check": "更新を確認",
@@ -307,8 +307,8 @@
         "factory_reset": "初期化",
         "scan_source": "スキャン元",
         "select_scan_source": "スキャン元選択",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Hueリセット",
+        "serial_numbers_csv": "シリアル番号 (CSV)"
     },
     "values": {
         "clear": "クリア",
@@ -404,10 +404,10 @@
         "battery_low": "バッテリー低下",
         "battery_level": "バッテリー残量",
         "scenes": "シーン",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "低LQI",
+        "extended_pan_id": "拡張PAN ID",
+        "rx_on_when_idle": "アイドル時にRXオン",
+        "permit_joining": "参加を許可"
     },
     "scene": {
         "manage_scenes_header": "シーン管理",
@@ -455,8 +455,8 @@
         "codespace_info": "開発支援の Github Codespace 利用可能",
         "show_definition": "定義表示",
         "hide_definition": "定義非表示",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "アクション",
+        "actions": "アクション"
     },
     "contribute": {
         "donation_text": "ここで私たちの取り組みに感謝の気持ちを伝えられます。あたたかい言葉もぜひ ;)",

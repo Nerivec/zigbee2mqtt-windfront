@@ -78,24 +78,24 @@
         "state": "Стан",
         "scroll_to_top": "Вгору",
         "notifications": "Сповіщення",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Екземпляри",
+        "overview": "Огляд",
+        "recent_activity": "Нещодавня активність",
+        "oldest_activity": "Найдавніша активність",
+        "last_activity": "Остання активність",
+        "group_scenes": "Сцени групи",
+        "quick_search": "Швидкий пошук",
+        "not_seen_in_a_while": "Давно не видно",
         "remove": "Видалити",
         "add": "Додати",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Редагувати",
+        "edit_selected": "Редагувати вибране",
+        "disable_selected": "Вимкнути вибране",
+        "bind_selected": "Прив'язати вибране",
+        "unbind_selected": "Відв'язати вибране",
+        "mismatching_types": "Невідповідні типи",
+        "sync": "Синхронізувати",
+        "clear_self_as_source": "Прибрати себе як джерело"
     },
     "devicePage": {
         "about": "Про",
@@ -198,10 +198,10 @@
         "transaction_prefix": "Префікс транзакції",
         "frontend_settings": "Налаштування інтерфейсу",
         "contribute": "Долучитися",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Головна",
+        "activity": "Активність",
+        "reporting": "Звітність",
+        "bindings": "Прив'язки"
     },
     "ota": {
         "check": "Перевірити оновлення",
@@ -307,8 +307,8 @@
         "factory_reset": "Скидання до заводських",
         "scan_source": "Джерело скану",
         "select_scan_source": "Виберіть джерело",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Скидання Hue",
+        "serial_numbers_csv": "Серійні номери (CSV)"
     },
     "values": {
         "clear": "очистити",
@@ -404,10 +404,10 @@
         "battery_low": "Низький заряд батареї",
         "battery_level": "Рівень батареї",
         "scenes": "Сцени",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "Низький LQI",
+        "extended_pan_id": "Розширений PAN ID",
+        "rx_on_when_idle": "RX увімкнено в простої",
+        "permit_joining": "Дозволити приєднання"
     },
     "scene": {
         "manage_scenes_header": "Керування сценами",
@@ -455,8 +455,8 @@
         "codespace_info": "Доступний Github Codespace",
         "show_definition": "Показати визначення",
         "hide_definition": "Сховати визначення",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "Дія",
+        "actions": "Дії"
     },
     "contribute": {
         "donation_text": "Тут ви можете подякувати нам за виконану роботу. Приємні слова теж вітаються ;)",

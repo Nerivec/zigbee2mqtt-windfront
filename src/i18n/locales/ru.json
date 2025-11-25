@@ -78,24 +78,24 @@
         "state": "Состояние",
         "scroll_to_top": "Наверх",
         "notifications": "Уведомления",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Экземпляры",
+        "overview": "Обзор",
+        "recent_activity": "Недавняя активность",
+        "oldest_activity": "Самая ранняя активность",
+        "last_activity": "Последнее действие",
+        "group_scenes": "Сцены групп",
+        "quick_search": "Быстрый поиск",
+        "not_seen_in_a_while": "Давно не появлялось",
         "remove": "Удалить",
         "add": "Добавить",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Редактировать",
+        "edit_selected": "Редактировать выбранные",
+        "disable_selected": "Отключить выбранные",
+        "bind_selected": "Привязать выбранные",
+        "unbind_selected": "Отвязать выбранные",
+        "mismatching_types": "Несовпадающие типы",
+        "sync": "Синхронизировать",
+        "clear_self_as_source": "Убрать себя как источник"
     },
     "devicePage": {
         "about": "Информация",
@@ -198,10 +198,10 @@
         "transaction_prefix": "Префикс транзакции",
         "frontend_settings": "Настройки интерфейса",
         "contribute": "Внести вклад",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Главная",
+        "activity": "Активность",
+        "reporting": "Отчётность",
+        "bindings": "Привязки"
     },
     "ota": {
         "check": "Проверить обновления",
@@ -307,8 +307,8 @@
         "factory_reset": "Сброс к заводским",
         "scan_source": "Источник сканирования",
         "select_scan_source": "Выберите источник",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Сброс Hue",
+        "serial_numbers_csv": "Серийные номера (CSV)"
     },
     "values": {
         "clear": "очистить",
@@ -404,10 +404,10 @@
         "battery_low": "Низкий заряд батареи",
         "battery_level": "Уровень заряда батареи",
         "scenes": "Сцены",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "Низкий LQI",
+        "extended_pan_id": "Расширенный PAN ID",
+        "rx_on_when_idle": "RX включён в простое",
+        "permit_joining": "Разрешить присоединение"
     },
     "scene": {
         "manage_scenes_header": "Управление сценами",
@@ -455,8 +455,8 @@
         "codespace_info": "Github Codespace доступен для помощи разработке",
         "show_definition": "Показать определение",
         "hide_definition": "Скрыть определение",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "Действие",
+        "actions": "Действия"
     },
     "contribute": {
         "donation_text": "Здесь вы можете поблагодарить нас за проделанную работу. Добрые слова тоже приветствуются ;)",

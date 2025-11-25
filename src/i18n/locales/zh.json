@@ -78,24 +78,24 @@
         "state": "狀態",
         "scroll_to_top": "回到頂端",
         "notifications": "通知",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "實例",
+        "overview": "概覽",
+        "recent_activity": "最近活動",
+        "oldest_activity": "最早活動",
+        "last_activity": "最後活動",
+        "group_scenes": "群組場景",
+        "quick_search": "快速搜尋",
+        "not_seen_in_a_while": "許久未見",
         "remove": "移除",
         "add": "新增",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "編輯",
+        "edit_selected": "編輯所選",
+        "disable_selected": "停用所選",
+        "bind_selected": "綁定所選",
+        "unbind_selected": "取消綁定所選",
+        "mismatching_types": "類型不相符",
+        "sync": "同步",
+        "clear_self_as_source": "清除自己作為來源"
     },
     "devicePage": {
         "about": "關於",
@@ -198,10 +198,10 @@
         "transaction_prefix": "交易前綴",
         "frontend_settings": "前端設定",
         "contribute": "參與貢獻",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "首頁",
+        "activity": "活動",
+        "reporting": "報告",
+        "bindings": "綁定"
     },
     "ota": {
         "check": "檢查更新",
@@ -307,8 +307,8 @@
         "factory_reset": "恢復出廠",
         "scan_source": "掃描來源",
         "select_scan_source": "選擇掃描來源",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Hue 重設",
+        "serial_numbers_csv": "序號 (CSV)"
     },
     "values": {
         "clear": "清除",
@@ -404,10 +404,10 @@
         "battery_low": "電量低",
         "battery_level": "電池電量",
         "scenes": "情境",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "低 LQI",
+        "extended_pan_id": "延伸 PAN ID",
+        "rx_on_when_idle": "閒置時 RX 開啟",
+        "permit_joining": "允許接入"
     },
     "scene": {
         "manage_scenes_header": "管理情境",
@@ -455,8 +455,8 @@
         "codespace_info": "可使用 Github Codespace 協助開發",
         "show_definition": "顯示定義",
         "hide_definition": "隱藏定義",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "動作",
+        "actions": "動作"
     },
     "contribute": {
         "donation_text": "歡迎在此感謝我們的付出，也歡迎留下鼓勵的話語；)",

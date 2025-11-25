@@ -78,24 +78,24 @@
         "state": "Status",
         "scroll_to_top": "Till toppen",
         "notifications": "Aviseringar",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Instanser",
+        "overview": "Översikt",
+        "recent_activity": "Senaste aktivitet",
+        "oldest_activity": "Äldsta aktivitet",
+        "last_activity": "Sista aktivitet",
+        "group_scenes": "Gruppscener",
+        "quick_search": "Snabbsökning",
+        "not_seen_in_a_while": "Inte sedd på länge",
         "remove": "Ta bort",
         "add": "Lägg till",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Redigera",
+        "edit_selected": "Redigera valda",
+        "disable_selected": "Inaktivera valda",
+        "bind_selected": "Binda valda",
+        "unbind_selected": "Koppla från valda",
+        "mismatching_types": "Typer matchar inte",
+        "sync": "Synkronisera",
+        "clear_self_as_source": "Ta bort dig själv som källa"
     },
     "devicePage": {
         "about": "Om",
@@ -198,10 +198,10 @@
         "transaction_prefix": "Transaktionsprefix",
         "frontend_settings": "Frontend-inställningar",
         "contribute": "Bidra",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Hem",
+        "activity": "Aktivitet",
+        "reporting": "Rapportering",
+        "bindings": "Bindningar"
     },
     "ota": {
         "check": "Sök efter uppdateringar",
@@ -307,8 +307,8 @@
         "factory_reset": "Fabriksåterställ",
         "scan_source": "Skanningskälla",
         "select_scan_source": "Välj källa",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Hue-återställning",
+        "serial_numbers_csv": "Serienummer (CSV)"
     },
     "values": {
         "clear": "rensa",
@@ -404,10 +404,10 @@
         "battery_low": "Låg batterinivå",
         "battery_level": "Batterinivå",
         "scenes": "Scener",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "Låg LQI",
+        "extended_pan_id": "Utökat PAN-ID",
+        "rx_on_when_idle": "RX på vid inaktivitet",
+        "permit_joining": "Tillåt anslutning"
     },
     "scene": {
         "manage_scenes_header": "Hantera scener",
@@ -455,8 +455,8 @@
         "codespace_info": "Github Codespace finns för utvecklingsstöd",
         "show_definition": "Visa definition",
         "hide_definition": "Dölj definition",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "Åtgärd",
+        "actions": "Åtgärder"
     },
     "contribute": {
         "donation_text": "Här kan du tacka oss för allt arbete. Ett vänligt ord uppskattas också ;)",

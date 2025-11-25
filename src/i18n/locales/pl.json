@@ -78,24 +78,24 @@
         "state": "Stan",
         "scroll_to_top": "Do góry",
         "notifications": "Powiadomienia",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Instancje",
+        "overview": "Przegląd",
+        "recent_activity": "Ostatnia aktywność",
+        "oldest_activity": "Najstarsza aktywność",
+        "last_activity": "Najnowsza aktywność",
+        "group_scenes": "Sceny grupy",
+        "quick_search": "Szybkie wyszukiwanie",
+        "not_seen_in_a_while": "Dawno niewidoczne",
         "remove": "Usuń",
         "add": "Dodaj",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Edytuj",
+        "edit_selected": "Edytuj zaznaczone",
+        "disable_selected": "Wyłącz zaznaczone",
+        "bind_selected": "Powiąż zaznaczone",
+        "unbind_selected": "Rozłącz zaznaczone",
+        "mismatching_types": "Niedopasowane typy",
+        "sync": "Synchronizuj",
+        "clear_self_as_source": "Usuń siebie jako źródło"
     },
     "devicePage": {
         "about": "O z2m",
@@ -198,10 +198,10 @@
         "transaction_prefix": "Przedrostek transakcji",
         "frontend_settings": "Ustawienia interfejsu",
         "contribute": "Współpraca",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Strona główna",
+        "activity": "Aktywność",
+        "reporting": "Raporty",
+        "bindings": "Powiązania"
     },
     "ota": {
         "check": "Sprawdź aktualizacje",
@@ -307,8 +307,8 @@
         "factory_reset": "Reset fabryczny",
         "scan_source": "Źródło skanu",
         "select_scan_source": "Wybierz źródło",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Reset Hue",
+        "serial_numbers_csv": "Numery seryjne (CSV)"
     },
     "values": {
         "clear": "nie wykryto",
@@ -404,10 +404,10 @@
         "battery_low": "Niski poziom baterii",
         "battery_level": "Poziom baterii",
         "scenes": "Sceny",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "Niskie LQI",
+        "extended_pan_id": "Rozszerzone PAN ID",
+        "rx_on_when_idle": "RX włączone w bezczynności",
+        "permit_joining": "Zezwól na dołączenie"
     },
     "scene": {
         "manage_scenes_header": "Zarządzaj scenami",
@@ -455,8 +455,8 @@
         "codespace_info": "Dostępny Github Codespace do wsparcia rozwoju",
         "show_definition": "Pokaż definicję",
         "hide_definition": "Ukryj definicję",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "Akcja",
+        "actions": "Akcje"
     },
     "contribute": {
         "donation_text": "Tutaj możesz podziękować za naszą pracę. Miłe słowo też mile widziane ;)",

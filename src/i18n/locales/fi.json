@@ -78,24 +78,24 @@
         "state": "Tila",
         "scroll_to_top": "Ylös",
         "notifications": "Ilmoitukset",
-        "instances": "Instances",
-        "overview": "Overview",
-        "recent_activity": "Recent activity",
-        "oldest_activity": "Oldest activity",
-        "last_activity": "Last activity",
-        "group_scenes": "Group scenes",
-        "quick_search": "Quick search",
-        "not_seen_in_a_while": "Not seen in a while",
+        "instances": "Instanssit",
+        "overview": "Yleisnäkymä",
+        "recent_activity": "Viimeisin toiminta",
+        "oldest_activity": "Vanhin toiminta",
+        "last_activity": "Viimeinen toiminta",
+        "group_scenes": "Ryhmän skenaariot",
+        "quick_search": "Pikahaku",
+        "not_seen_in_a_while": "Ei nähty hetkeen",
         "remove": "Poista",
         "add": "Lisää",
-        "edit": "Edit",
-        "edit_selected": "Edit selected",
-        "disable_selected": "Disable selected",
-        "bind_selected": "Bind selected",
-        "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types",
-        "sync": "Sync",
-        "clear_self_as_source": "Clear self as source"
+        "edit": "Muokkaa",
+        "edit_selected": "Muokkaa valittuja",
+        "disable_selected": "Poista valitut käytöstä",
+        "bind_selected": "Sido valitut",
+        "unbind_selected": "Pura valittujen sidonta",
+        "mismatching_types": "Yhteensopimattomat tyypit",
+        "sync": "Synkronoi",
+        "clear_self_as_source": "Poista itsesi lähteenä"
     },
     "devicePage": {
         "about": "Tietoja",
@@ -198,10 +198,10 @@
         "transaction_prefix": "Tapahtuman etuliite",
         "frontend_settings": "Käyttöliittymän asetukset",
         "contribute": "Osallistu",
-        "home": "Home",
-        "activity": "Activity",
-        "reporting": "Reporting",
-        "bindings": "Bindings"
+        "home": "Etusivu",
+        "activity": "Toiminta",
+        "reporting": "Raportointi",
+        "bindings": "Sidonnat"
     },
     "ota": {
         "check": "Tarkista päivitykset",
@@ -307,8 +307,8 @@
         "factory_reset": "Tehdasasetukset",
         "scan_source": "Skannauksen lähde",
         "select_scan_source": "Valitse lähde",
-        "hue_reset": "Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "hue_reset": "Hue-nollaus",
+        "serial_numbers_csv": "Sarjanumerot (CSV)"
     },
     "values": {
         "clear": "tyhjennä",
@@ -404,10 +404,10 @@
         "battery_low": "Akku vähissä",
         "battery_level": "Akun varaus",
         "scenes": "Skenaariot",
-        "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID",
-        "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "low_lqi": "Matala LQI",
+        "extended_pan_id": "Laajennettu PAN ID",
+        "rx_on_when_idle": "RX päällä joutilaana",
+        "permit_joining": "Salli liittyminen"
     },
     "scene": {
         "manage_scenes_header": "Hallinnoi skenaarioita",
@@ -455,8 +455,8 @@
         "codespace_info": "Github Codespace käytettävissä kehitykseen",
         "show_definition": "Näytä määritelmä",
         "hide_definition": "Piilota määritelmä",
-        "action": "Action",
-        "actions": "Actions"
+        "action": "Toiminto",
+        "actions": "Toiminnot"
     },
     "contribute": {
         "donation_text": "Täällä voit kiittää meitä tehdystä työstä. Myös ystävälliset sanat ovat tervetulleita ;)",
