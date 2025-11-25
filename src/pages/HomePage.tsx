@@ -18,7 +18,9 @@ import type { Device, DeviceAvailability, DeviceState, Group, LastSeenConfig } f
 export type HomePageDataCounters = {
     totalDevices: number;
     onlineDevices: number;
+    maybeOnlineDevices: number;
     disabledDevices: number;
+    anyAvailabilityEnabled: boolean;
     totalInstances: number;
     onlineInstances: number;
     routers: number;
@@ -90,6 +92,7 @@ export default function HomePage(): JSX.Element {
         const deviceData: HomePageData["deviceData"] = [];
         let totalDevices = 0;
         let onlineDevices = 0;
+        let maybeOnlineDevices = 0;
         let disabledDevices = 0;
         let totalInstances = 0;
         let onlineInstances = 0;
@@ -97,6 +100,7 @@ export default function HomePage(): JSX.Element {
         let endDevices = 0;
         let gpDevices = 0;
         let lowLqiDevices = 0;
+        let anyAvailabilityEnabled = 0;
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             totalInstances += 1;
@@ -106,6 +110,10 @@ export default function HomePage(): JSX.Element {
 
             const lastSeenConfig = bridgeInfo[sourceIdx].config.advanced.last_seen;
             const availabilityEnabled = bridgeInfo[sourceIdx].config.availability.enabled;
+
+            if (availabilityEnabled) {
+                anyAvailabilityEnabled += 1;
+            }
 
             for (const device of devices[sourceIdx]) {
                 if (device.type === "Coordinator") {
@@ -138,6 +146,9 @@ export default function HomePage(): JSX.Element {
 
                     if (deviceAvailability === "online") {
                         onlineDevices += 1;
+                    } else if (deviceAvailability === "disabled") {
+                        onlineDevices += 1;
+                        maybeOnlineDevices += 1;
                     }
                 } else {
                     disabledDevices += 1;
@@ -164,6 +175,10 @@ export default function HomePage(): JSX.Element {
 
         if (quickFilter != null) {
             switch (quickFilter[0]) {
+                case QuickFilter.Disabled: {
+                    filteredDeviceData = deviceData.filter((d) => d.device.disabled === quickFilter[1]);
+                    break;
+                }
                 case QuickFilter.Availability: {
                     filteredDeviceData = deviceData.filter((d) => d.deviceAvailability === quickFilter[1]);
                     break;
@@ -187,7 +202,9 @@ export default function HomePage(): JSX.Element {
             counters: {
                 totalDevices,
                 onlineDevices,
+                maybeOnlineDevices,
                 disabledDevices,
+                anyAvailabilityEnabled: anyAvailabilityEnabled > 0,
                 totalInstances,
                 onlineInstances,
                 routers,
