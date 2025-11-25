@@ -403,7 +403,9 @@
         "battery_level": "Battery level",
         "scenes": "Scenes",
         "low_lqi": "Low LQI",
-        "extended_pan_id": "Extended PAN ID"
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Manage scenes",
