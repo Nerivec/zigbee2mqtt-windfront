@@ -77,7 +77,25 @@
         "feature_name": "Název funkce",
         "state": "Stav",
         "scroll_to_top": "Posunout nahoru",
-        "notifications": "Upozornění"
+        "notifications": "Upozornění",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "oldest_activity": "Oldest activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "Odstranit",
+        "add": "Přidat",
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
+        "unbind_selected": "Unbind selected",
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source"
     },
     "devicePage": {
         "about": "O zařízení",
@@ -103,7 +121,6 @@
         "group_id": "ID skupiny",
         "group_members": "Členové skupiny",
         "group_scenes": "Scény skupiny",
-        "scenes": "Scény",
         "rename_group": "Přejmenovat skupinu",
         "remove_from_group": "Odebrat ze skupiny"
     },
@@ -180,7 +197,11 @@
         "websocket_status": "Stav připojení (WebSocket)",
         "transaction_prefix": "Předpona identifikátoru transakce",
         "frontend_settings": "Nastavení rozhraní",
-        "contribute": "Přispět"
+        "contribute": "Přispět",
+        "home": "Home",
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "Zkontrolovat aktualizace",
@@ -285,7 +306,9 @@
         "identify": "Identifikovat",
         "factory_reset": "Tovární reset",
         "scan_source": "Zdroj hledání",
-        "select_scan_source": "Vyberte zdroj hledání"
+        "select_scan_source": "Vyberte zdroj hledání",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "Klid/Bez poplachu",
@@ -379,7 +402,12 @@
         "Coordinator": "Koordinátor",
         "power_source": "Zdroj napájení",
         "battery_low": "Slabá baterie",
-        "battery_level": "Úroveň baterie"
+        "battery_level": "Úroveň baterie",
+        "scenes": "Scény",
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Správa scén",
@@ -387,9 +415,7 @@
         "scene_id": "ID scény",
         "recall": "Vyvolat",
         "store": "Uložit",
-        "remove": "Odstranit",
         "remove_all": "Odstranit vše",
-        "add": "Přidat",
         "select_scene": "Vyberte scénu",
         "scene_name": "Název scény"
     },
@@ -428,7 +454,9 @@
         "select_converter_to_edit": "Vybrat převodník k úpravě",
         "codespace_info": "Pro vývoj je k dispozici GitHub Codespace",
         "show_definition": "Zobrazit definici",
-        "hide_definition": "Skrýt definici"
+        "hide_definition": "Skrýt definici",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Tady nám můžete poděkovat za veškerou práci. A klidně k tomu připojte i pár milých slov 😉",

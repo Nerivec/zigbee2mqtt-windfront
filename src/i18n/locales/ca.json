@@ -77,7 +77,25 @@
         "feature_name": "Nom de la característica",
         "state": "Estat",
         "scroll_to_top": "Amunt",
-        "notifications": "Notificacions"
+        "notifications": "Notificacions",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "oldest_activity": "Oldest activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "Elimina",
+        "add": "Afegeix",
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
+        "unbind_selected": "Unbind selected",
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source"
     },
     "devicePage": {
         "about": "Quant a",
@@ -103,7 +121,6 @@
         "group_id": "ID grup",
         "group_members": "Membres del grup",
         "group_scenes": "Escenes del grup",
-        "scenes": "Escenes",
         "rename_group": "Reanomena grup",
         "remove_from_group": "Treu del grup"
     },
@@ -180,7 +197,11 @@
         "websocket_status": "Estat WebSocket",
         "transaction_prefix": "Prefix de transacció",
         "frontend_settings": "Configuració del frontend",
-        "contribute": "Contribueix"
+        "contribute": "Contribueix",
+        "home": "Home",
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "Cerca actualitzacions",
@@ -285,7 +306,9 @@
         "identify": "Identificar",
         "factory_reset": "Restablir fàbrica",
         "scan_source": "Font escaneig",
-        "select_scan_source": "Selecciona font"
+        "select_scan_source": "Selecciona font",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "neteja",
@@ -379,7 +402,12 @@
         "Coordinator": "Coordinador",
         "power_source": "Font d'alimentació",
         "battery_low": "Bateria baixa",
-        "battery_level": "Nivell de bateria"
+        "battery_level": "Nivell de bateria",
+        "scenes": "Escenes",
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Gestiona escenes",
@@ -387,9 +415,7 @@
         "scene_id": "ID escena",
         "recall": "Recupera",
         "store": "Desa",
-        "remove": "Elimina",
         "remove_all": "Elimina totes",
-        "add": "Afegeix",
         "select_scene": "Selecciona escena",
         "scene_name": "Nom escena"
     },
@@ -428,7 +454,9 @@
         "select_converter_to_edit": "Selecciona convertidor",
         "codespace_info": "Github Codespace disponible",
         "show_definition": "Mostra definició",
-        "hide_definition": "Amaga definició"
+        "hide_definition": "Amaga definició",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Aquí pots agrair-nos tota la feina. No dubtis a dir també alguna cosa bonica ;)",

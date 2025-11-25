@@ -77,7 +77,25 @@
         "feature_name": "Özellik adı",
         "state": "Durum",
         "scroll_to_top": "En üste git",
-        "notifications": "Bildirimler"
+        "notifications": "Bildirimler",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "oldest_activity": "Oldest activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "Sil",
+        "add": "Ekle",
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
+        "unbind_selected": "Unbind selected",
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source"
     },
     "devicePage": {
         "about": "Hakkında",
@@ -103,7 +121,6 @@
         "group_id": "Grup ID",
         "group_members": "Grup üyeleri",
         "group_scenes": "Grup sahneleri",
-        "scenes": "Sahneler",
         "rename_group": "Grubu yeniden adlandır",
         "remove_from_group": "Gruptan çıkar"
     },
@@ -180,7 +197,11 @@
         "websocket_status": "WebSocket durumu",
         "transaction_prefix": "İşlem öneki",
         "frontend_settings": "Önyüz ayarları",
-        "contribute": "Katkıda bulun"
+        "contribute": "Katkıda bulun",
+        "home": "Home",
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "Güncellemeleri denetle",
@@ -285,7 +306,9 @@
         "identify": "Tanımla",
         "factory_reset": "Fabrika sıfırlama",
         "scan_source": "Tarama kaynağı",
-        "select_scan_source": "Kaynak seç"
+        "select_scan_source": "Kaynak seç",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "temizle",
@@ -379,7 +402,12 @@
         "Coordinator": "Koordinatör",
         "power_source": "Güç kaynağı",
         "battery_low": "Düşük pil",
-        "battery_level": "Pil seviyesi"
+        "battery_level": "Pil seviyesi",
+        "scenes": "Sahneler",
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Sahneleri yönet",
@@ -387,9 +415,7 @@
         "scene_id": "Sahne ID",
         "recall": "Çağır",
         "store": "Kaydet",
-        "remove": "Sil",
         "remove_all": "Hepsini sil",
-        "add": "Ekle",
         "select_scene": "Sahne seç",
         "scene_name": "Sahne adı"
     },
@@ -428,7 +454,9 @@
         "select_converter_to_edit": "Düzenlenecek dönüştürücü seç",
         "codespace_info": "Geliştirme desteği için Github Codespace var",
         "show_definition": "Tanımı göster",
-        "hide_definition": "Tanımı gizle"
+        "hide_definition": "Tanımı gizle",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Burada emeğimiz için bize teşekkür edebilirsiniz. Güzel sözleriniz de bizi mutlu eder ;)",

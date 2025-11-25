@@ -77,7 +77,25 @@
         "feature_name": "Назва функції",
         "state": "Стан",
         "scroll_to_top": "Вгору",
-        "notifications": "Сповіщення"
+        "notifications": "Сповіщення",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "oldest_activity": "Oldest activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "Видалити",
+        "add": "Додати",
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
+        "unbind_selected": "Unbind selected",
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source"
     },
     "devicePage": {
         "about": "Про",
@@ -103,7 +121,6 @@
         "group_id": "ID групи",
         "group_members": "Члени групи",
         "group_scenes": "Сцени групи",
-        "scenes": "Сцени",
         "rename_group": "Перейменувати групу",
         "remove_from_group": "Вилучити з групи"
     },
@@ -180,7 +197,11 @@
         "websocket_status": "WebSocket статус",
         "transaction_prefix": "Префікс транзакції",
         "frontend_settings": "Налаштування інтерфейсу",
-        "contribute": "Долучитися"
+        "contribute": "Долучитися",
+        "home": "Home",
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "Перевірити оновлення",
@@ -285,7 +306,9 @@
         "identify": "Ідентифікувати",
         "factory_reset": "Скидання до заводських",
         "scan_source": "Джерело скану",
-        "select_scan_source": "Виберіть джерело"
+        "select_scan_source": "Виберіть джерело",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "очистити",
@@ -379,7 +402,12 @@
         "Coordinator": "Координатор",
         "power_source": "Джерело живлення",
         "battery_low": "Низький заряд батареї",
-        "battery_level": "Рівень батареї"
+        "battery_level": "Рівень батареї",
+        "scenes": "Сцени",
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Керування сценами",
@@ -387,9 +415,7 @@
         "scene_id": "ID сцени",
         "recall": "Викликати",
         "store": "Зберегти",
-        "remove": "Видалити",
         "remove_all": "Видалити всі",
-        "add": "Додати",
         "select_scene": "Виберіть сцену",
         "scene_name": "Назва сцени"
     },
@@ -428,7 +454,9 @@
         "select_converter_to_edit": "Виберіть конвертер",
         "codespace_info": "Доступний Github Codespace",
         "show_definition": "Показати визначення",
-        "hide_definition": "Сховати визначення"
+        "hide_definition": "Сховати визначення",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Тут ви можете подякувати нам за виконану роботу. Приємні слова теж вітаються ;)",

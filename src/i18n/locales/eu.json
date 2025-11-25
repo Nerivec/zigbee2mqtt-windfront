@@ -77,7 +77,25 @@
         "feature_name": "Eginbide izena",
         "state": "Egoera",
         "scroll_to_top": "Gora",
-        "notifications": "Jakinarazpenak"
+        "notifications": "Jakinarazpenak",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "oldest_activity": "Oldest activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "Kendu",
+        "add": "Gehitu",
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
+        "unbind_selected": "Unbind selected",
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source"
     },
     "devicePage": {
         "about": "Honi buruz",
@@ -103,7 +121,6 @@
         "group_id": "Talde ID",
         "group_members": "Talde kideak",
         "group_scenes": "Talde eszenak",
-        "scenes": "Eszenak",
         "rename_group": "Aldatu talde izena",
         "remove_from_group": "Kendu taldetik"
     },
@@ -180,7 +197,11 @@
         "websocket_status": "WebSocket egoera",
         "transaction_prefix": "Transakzio aurrizkia",
         "frontend_settings": "Frontend-aren ezarpenak",
-        "contribute": "Lagundu"
+        "contribute": "Lagundu",
+        "home": "Home",
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "Egiaztatu eguneratzeak",
@@ -285,7 +306,9 @@
         "identify": "Identifikatu",
         "factory_reset": "Fabrika berrezarri",
         "scan_source": "Iturburu eskaneoa",
-        "select_scan_source": "Hautatu iturburua"
+        "select_scan_source": "Hautatu iturburua",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "garbitu",
@@ -379,7 +402,12 @@
         "Coordinator": "Koordinatzailea",
         "power_source": "Energia iturria",
         "battery_low": "Bateria baxua",
-        "battery_level": "Bateriaren maila"
+        "battery_level": "Bateriaren maila",
+        "scenes": "Eszenak",
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Kudeatu eszenak",
@@ -387,9 +415,7 @@
         "scene_id": "Eszena ID",
         "recall": "Berreskuratu",
         "store": "Gorde",
-        "remove": "Kendu",
         "remove_all": "Kendu denak",
-        "add": "Gehitu",
         "select_scene": "Hautatu eszena",
         "scene_name": "Eszena izena"
     },
@@ -428,7 +454,9 @@
         "select_converter_to_edit": "Hautatu bihurtzailea",
         "codespace_info": "Github Codespace prest",
         "show_definition": "Erakutsi definizioa",
-        "hide_definition": "Ezkutatu definizioa"
+        "hide_definition": "Ezkutatu definizioa",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Hemen eskertu diezagukezu egindako lana. Hitz goxoa ere beti ongi etorria da ;)",

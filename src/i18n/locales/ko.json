@@ -77,7 +77,25 @@
         "feature_name": "기능 이름",
         "state": "상태",
         "scroll_to_top": "맨 위로",
-        "notifications": "알림"
+        "notifications": "알림",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "oldest_activity": "Oldest activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "삭제",
+        "add": "추가",
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
+        "unbind_selected": "Unbind selected",
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source"
     },
     "devicePage": {
         "about": "정보",
@@ -103,7 +121,6 @@
         "group_id": "그룹 ID",
         "group_members": "그룹 멤버",
         "group_scenes": "그룹 씬",
-        "scenes": "씬",
         "rename_group": "그룹 이름 변경",
         "remove_from_group": "그룹에서 제거"
     },
@@ -180,7 +197,11 @@
         "websocket_status": "WebSocket 상태",
         "transaction_prefix": "트랜잭션 접두사",
         "frontend_settings": "프런트엔드 설정",
-        "contribute": "기여하기"
+        "contribute": "기여하기",
+        "home": "Home",
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "새 업데이트 확인",
@@ -285,7 +306,9 @@
         "identify": "식별",
         "factory_reset": "공장 초기화",
         "scan_source": "검색 소스",
-        "select_scan_source": "검색 소스 선택"
+        "select_scan_source": "검색 소스 선택",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "지우기",
@@ -379,7 +402,12 @@
         "Coordinator": "코디네이터",
         "power_source": "전원",
         "battery_low": "배터리 부족",
-        "battery_level": "배터리 잔량"
+        "battery_level": "배터리 잔량",
+        "scenes": "씬",
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "씬 관리",
@@ -387,9 +415,7 @@
         "scene_id": "씬 ID",
         "recall": "불러오기",
         "store": "저장",
-        "remove": "삭제",
         "remove_all": "모두 삭제",
-        "add": "추가",
         "select_scene": "씬 선택",
         "scene_name": "씬 이름"
     },
@@ -428,7 +454,9 @@
         "select_converter_to_edit": "편집할 컨버터 선택",
         "codespace_info": "개발 지원용 Github Codespace 사용 가능",
         "show_definition": "정의 표시",
-        "hide_definition": "정의 숨기기"
+        "hide_definition": "정의 숨기기",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "여기에서 우리의 노력에 감사의 마음을 전할 수 있습니다. 따뜻한 한마디도 환영합니다 ;)",

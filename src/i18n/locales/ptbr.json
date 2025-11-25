@@ -77,7 +77,25 @@
         "feature_name": "Nome do recurso",
         "state": "Estado",
         "scroll_to_top": "Ir ao topo",
-        "notifications": "Notificações"
+        "notifications": "Notificações",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "oldest_activity": "Oldest activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "Remover",
+        "add": "Adicionar",
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
+        "unbind_selected": "Unbind selected",
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source"
     },
     "devicePage": {
         "about": "Sobre",
@@ -103,7 +121,6 @@
         "group_id": "ID do grupo",
         "group_members": "Membros do grupo",
         "group_scenes": "Cenas do grupo",
-        "scenes": "Cenas",
         "rename_group": "Renomear grupo",
         "remove_from_group": "Remover do grupo"
     },
@@ -180,7 +197,11 @@
         "websocket_status": "Status WebSocket",
         "transaction_prefix": "Prefixo de transação",
         "frontend_settings": "Configurações do frontend",
-        "contribute": "Contribuir"
+        "contribute": "Contribuir",
+        "home": "Home",
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "Verificar novas atualizações",
@@ -285,7 +306,9 @@
         "identify": "Identificar",
         "factory_reset": "Reset de fábrica",
         "scan_source": "Origem da varredura",
-        "select_scan_source": "Selecionar origem"
+        "select_scan_source": "Selecionar origem",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "limpar",
@@ -379,7 +402,12 @@
         "Coordinator": "Coordenador",
         "power_source": "Fonte de energia",
         "battery_low": "Bateria fraca",
-        "battery_level": "Nível da bateria"
+        "battery_level": "Nível da bateria",
+        "scenes": "Cenas",
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Gerenciar cenas",
@@ -387,9 +415,7 @@
         "scene_id": "ID da cena",
         "recall": "Chamar",
         "store": "Armazenar",
-        "remove": "Remover",
         "remove_all": "Remover todas",
-        "add": "Adicionar",
         "select_scene": "Selecionar cena",
         "scene_name": "Nome da cena"
     },
@@ -428,7 +454,9 @@
         "select_converter_to_edit": "Selecionar conversor",
         "codespace_info": "Github Codespace disponível para desenvolvimento",
         "show_definition": "Mostrar definição",
-        "hide_definition": "Ocultar definição"
+        "hide_definition": "Ocultar definição",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Aqui você pode agradecer por todo o nosso trabalho. Não hesite em deixar também uma mensagem gentil ;)",

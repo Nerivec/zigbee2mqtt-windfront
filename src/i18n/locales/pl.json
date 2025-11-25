@@ -77,7 +77,25 @@
         "feature_name": "Nazwa cechy",
         "state": "Stan",
         "scroll_to_top": "Do góry",
-        "notifications": "Powiadomienia"
+        "notifications": "Powiadomienia",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "oldest_activity": "Oldest activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "Usuń",
+        "add": "Dodaj",
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
+        "unbind_selected": "Unbind selected",
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source"
     },
     "devicePage": {
         "about": "O z2m",
@@ -103,7 +121,6 @@
         "group_id": "ID grupy",
         "group_members": "Członkowie grupy",
         "group_scenes": "Sceny grupy",
-        "scenes": "Sceny",
         "rename_group": "Zmień nazwę grupy",
         "remove_from_group": "Usuń z grupy"
     },
@@ -180,7 +197,11 @@
         "websocket_status": "Status WebSocket",
         "transaction_prefix": "Przedrostek transakcji",
         "frontend_settings": "Ustawienia interfejsu",
-        "contribute": "Współpraca"
+        "contribute": "Współpraca",
+        "home": "Home",
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "Sprawdź aktualizacje",
@@ -285,7 +306,9 @@
         "identify": "Identyfikuj",
         "factory_reset": "Reset fabryczny",
         "scan_source": "Źródło skanu",
-        "select_scan_source": "Wybierz źródło"
+        "select_scan_source": "Wybierz źródło",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "nie wykryto",
@@ -379,7 +402,12 @@
         "Coordinator": "Koordynator",
         "power_source": "Źródło zasilania",
         "battery_low": "Niski poziom baterii",
-        "battery_level": "Poziom baterii"
+        "battery_level": "Poziom baterii",
+        "scenes": "Sceny",
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Zarządzaj scenami",
@@ -387,9 +415,7 @@
         "scene_id": "ID sceny",
         "recall": "Przywołaj",
         "store": "Zapisz",
-        "remove": "Usuń",
         "remove_all": "Usuń wszystkie",
-        "add": "Dodaj",
         "select_scene": "Wybierz scenę",
         "scene_name": "Nazwa sceny"
     },
@@ -428,7 +454,9 @@
         "select_converter_to_edit": "Wybierz konwerter do edycji",
         "codespace_info": "Dostępny Github Codespace do wsparcia rozwoju",
         "show_definition": "Pokaż definicję",
-        "hide_definition": "Ukryj definicję"
+        "hide_definition": "Ukryj definicję",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Tutaj możesz podziękować za naszą pracę. Miłe słowo też mile widziane ;)",

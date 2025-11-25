@@ -77,7 +77,25 @@
         "feature_name": "Funktionsnamn",
         "state": "Status",
         "scroll_to_top": "Till toppen",
-        "notifications": "Aviseringar"
+        "notifications": "Aviseringar",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "oldest_activity": "Oldest activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "Ta bort",
+        "add": "Lägg till",
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
+        "unbind_selected": "Unbind selected",
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source"
     },
     "devicePage": {
         "about": "Om",
@@ -103,7 +121,6 @@
         "group_id": "Grupp-ID",
         "group_members": "Gruppmedlemmar",
         "group_scenes": "Gruppscener",
-        "scenes": "Scener",
         "rename_group": "Byt gruppnamn",
         "remove_from_group": "Ta bort från grupp"
     },
@@ -180,7 +197,11 @@
         "websocket_status": "WebSocket-status",
         "transaction_prefix": "Transaktionsprefix",
         "frontend_settings": "Frontend-inställningar",
-        "contribute": "Bidra"
+        "contribute": "Bidra",
+        "home": "Home",
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "Sök efter uppdateringar",
@@ -285,7 +306,9 @@
         "identify": "Identifiera",
         "factory_reset": "Fabriksåterställ",
         "scan_source": "Skanningskälla",
-        "select_scan_source": "Välj källa"
+        "select_scan_source": "Välj källa",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "rensa",
@@ -379,7 +402,12 @@
         "Coordinator": "Koordinator",
         "power_source": "Strömkälla",
         "battery_low": "Låg batterinivå",
-        "battery_level": "Batterinivå"
+        "battery_level": "Batterinivå",
+        "scenes": "Scener",
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Hantera scener",
@@ -387,9 +415,7 @@
         "scene_id": "Scen-ID",
         "recall": "Återkalla",
         "store": "Spara",
-        "remove": "Ta bort",
         "remove_all": "Ta bort alla",
-        "add": "Lägg till",
         "select_scene": "Välj scen",
         "scene_name": "Scennamn"
     },
@@ -428,7 +454,9 @@
         "select_converter_to_edit": "Välj konverterare att redigera",
         "codespace_info": "Github Codespace finns för utvecklingsstöd",
         "show_definition": "Visa definition",
-        "hide_definition": "Dölj definition"
+        "hide_definition": "Dölj definition",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Här kan du tacka oss för allt arbete. Ett vänligt ord uppskattas också ;)",

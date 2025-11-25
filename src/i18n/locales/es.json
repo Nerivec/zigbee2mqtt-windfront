@@ -77,7 +77,25 @@
         "feature_name": "Nombre de la función",
         "state": "Estado",
         "scroll_to_top": "Ir arriba",
-        "notifications": "Notificaciones"
+        "notifications": "Notificaciones",
+        "instances": "Instances",
+        "overview": "Overview",
+        "recent_activity": "Recent activity",
+        "oldest_activity": "Oldest activity",
+        "last_activity": "Last activity",
+        "group_scenes": "Group scenes",
+        "quick_search": "Quick search",
+        "not_seen_in_a_while": "Not seen in a while",
+        "remove": "Eliminar",
+        "add": "Agregar",
+        "edit": "Edit",
+        "edit_selected": "Edit selected",
+        "disable_selected": "Disable selected",
+        "bind_selected": "Bind selected",
+        "unbind_selected": "Unbind selected",
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source"
     },
     "devicePage": {
         "about": "Acerca de",
@@ -103,7 +121,6 @@
         "group_id": "ID de grupo",
         "group_members": "Miembros del grupo",
         "group_scenes": "Escenas del grupo",
-        "scenes": "Escenas",
         "rename_group": "Renombrar grupo",
         "remove_from_group": "Quitar del grupo"
     },
@@ -180,7 +197,11 @@
         "websocket_status": "Estado WebSocket",
         "transaction_prefix": "Prefijo de transacción",
         "frontend_settings": "Configuración del frontend",
-        "contribute": "Contribuir"
+        "contribute": "Contribuir",
+        "home": "Home",
+        "activity": "Activity",
+        "reporting": "Reporting",
+        "bindings": "Bindings"
     },
     "ota": {
         "check": "Buscar nuevas actualizaciones",
@@ -285,7 +306,9 @@
         "identify": "Identificar",
         "factory_reset": "Restablecer fábrica",
         "scan_source": "Fuente de escaneo",
-        "select_scan_source": "Seleccionar fuente de escaneo"
+        "select_scan_source": "Seleccionar fuente de escaneo",
+        "hue_reset": "Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "limpiar",
@@ -379,7 +402,12 @@
         "Coordinator": "Coordinador",
         "power_source": "Fuente de alimentación",
         "battery_low": "Batería baja",
-        "battery_level": "Nivel de batería"
+        "battery_level": "Nivel de batería",
+        "scenes": "Escenas",
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Gestionar escenas",
@@ -387,9 +415,7 @@
         "scene_id": "ID de escena",
         "recall": "Recordar",
         "store": "Guardar",
-        "remove": "Eliminar",
         "remove_all": "Eliminar todas",
-        "add": "Agregar",
         "select_scene": "Seleccionar escena",
         "scene_name": "Nombre de la escena"
     },
@@ -428,7 +454,9 @@
         "select_converter_to_edit": "Seleccione convertidor a editar",
         "codespace_info": "Un Codespace de Github está disponible para ayudar con el desarrollo",
         "show_definition": "Mostrar definición",
-        "hide_definition": "Ocultar definición"
+        "hide_definition": "Ocultar definición",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Aquí puedes agradecernos todo el trabajo. No dudes en decir también algo amable ;)",
