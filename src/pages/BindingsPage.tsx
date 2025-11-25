@@ -125,7 +125,7 @@ export default function BindingsPage(): JSX.Element {
                 promises.push(
                     sendMessage(sourceIdx, "bridge/request/device/binds/clear", {
                         target: device.ieee_address,
-                        ieeeList: [all ? "0xffffffffffffffff" : (device.ieee_address as `0x${string}`)],
+                        ieee_list: [all ? "0xffffffffffffffff" : (device.ieee_address as `0x${string}`)],
                     }),
                 );
             }

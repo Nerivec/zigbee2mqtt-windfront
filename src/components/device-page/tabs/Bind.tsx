@@ -171,7 +171,7 @@ export default function Bind({ sourceIdx, device }: BindProps): JSX.Element {
     );
 
     const onClear = useCallback(async ([sourceIdx, target, ieeeList]: [number, string, `0x${string}`[]]) => {
-        await sendMessage(sourceIdx, "bridge/request/device/binds/clear", { target, ieeeList });
+        await sendMessage(sourceIdx, "bridge/request/device/binds/clear", { target, ieee_list: ieeeList });
     }, []);
 
     return (
