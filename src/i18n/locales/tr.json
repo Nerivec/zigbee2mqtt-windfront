@@ -308,7 +308,7 @@
         "factory_reset": "Fabrika sıfırlama",
         "scan_source": "Tarama kaynağı",
         "select_scan_source": "Kaynak seç",
-        "hue_reset": "Hue sıfırlama",
+        "philips_hue_reset": "Philips Hue sıfırlama",
         "serial_numbers_csv": "Seri numaraları (CSV)"
     },
     "values": {

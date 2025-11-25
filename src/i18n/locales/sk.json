@@ -308,7 +308,7 @@
         "factory_reset": "Obnovenie továrenských nastavení",
         "scan_source": "Zdroj skenovania",
         "select_scan_source": "Vybrať zdroj skenovania",
-        "hue_reset": "Reset Hue",
+        "philips_hue_reset": "Reset Hue",
         "serial_numbers_csv": "Sériové čísla (CSV)"
     },
     "values": {

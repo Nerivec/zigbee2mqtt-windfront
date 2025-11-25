@@ -308,7 +308,7 @@
         "factory_reset": "出厂重置",
         "scan_source": "扫描源",
         "select_scan_source": "选择扫描源",
-        "hue_reset": "Hue 重置",
+        "philips_hue_reset": "Philips Hue 重置",
         "serial_numbers_csv": "序列号 (CSV)"
     },
     "values": {

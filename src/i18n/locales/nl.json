@@ -308,7 +308,7 @@
         "factory_reset": "Fabrieksreset",
         "scan_source": "Scanningsbron",
         "select_scan_source": "Selecteer scanningsbron",
-        "hue_reset": "Hue-reset",
+        "philips_hue_reset": "Philips Hue-reset",
         "serial_numbers_csv": "Serienummers (CSV)"
     },
     "values": {

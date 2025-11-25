@@ -308,7 +308,7 @@
         "factory_reset": "Tehdasasetukset",
         "scan_source": "Skannauksen lähde",
         "select_scan_source": "Valitse lähde",
-        "hue_reset": "Hue-nollaus",
+        "philips_hue_reset": "Philips Hue-nollaus",
         "serial_numbers_csv": "Sarjanumerot (CSV)"
     },
     "values": {

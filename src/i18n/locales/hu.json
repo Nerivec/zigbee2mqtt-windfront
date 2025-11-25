@@ -308,7 +308,7 @@
         "factory_reset": "Gyári visszaállítás",
         "scan_source": "Forrás",
         "select_scan_source": "Forrás kiválasztása",
-        "hue_reset": "Hue visszaállítás",
+        "philips_hue_reset": "Philips Hue visszaállítás",
         "serial_numbers_csv": "Sorozatszámok (CSV)"
     },
     "values": {

@@ -308,7 +308,7 @@
         "factory_reset": "Скидання до заводських",
         "scan_source": "Джерело скану",
         "select_scan_source": "Виберіть джерело",
-        "hue_reset": "Скидання Hue",
+        "philips_hue_reset": "Скидання Hue",
         "serial_numbers_csv": "Серійні номери (CSV)"
     },
     "values": {

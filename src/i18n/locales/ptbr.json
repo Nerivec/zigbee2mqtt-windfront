@@ -308,7 +308,7 @@
         "factory_reset": "Reset de fábrica",
         "scan_source": "Origem da varredura",
         "select_scan_source": "Selecionar origem",
-        "hue_reset": "Reset do Hue",
+        "philips_hue_reset": "Reset do Hue",
         "serial_numbers_csv": "Números de série (CSV)"
     },
     "values": {

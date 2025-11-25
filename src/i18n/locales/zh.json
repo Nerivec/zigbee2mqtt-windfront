@@ -308,7 +308,7 @@
         "factory_reset": "恢復出廠",
         "scan_source": "掃描來源",
         "select_scan_source": "選擇掃描來源",
-        "hue_reset": "Hue 重設",
+        "philips_hue_reset": "Philips Hue 重設",
         "serial_numbers_csv": "序號 (CSV)"
     },
     "values": {

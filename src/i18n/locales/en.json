@@ -308,7 +308,7 @@
         "factory_reset": "Factory reset",
         "scan_source": "Scan source",
         "select_scan_source": "Select scan source",
-        "hue_reset": "Hue reset",
+        "philips_hue_reset": "Philips Hue reset",
         "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {

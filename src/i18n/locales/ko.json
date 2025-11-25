@@ -308,7 +308,7 @@
         "factory_reset": "공장 초기화",
         "scan_source": "검색 소스",
         "select_scan_source": "검색 소스 선택",
-        "hue_reset": "Hue 초기화",
+        "philips_hue_reset": "Philips Hue 초기화",
         "serial_numbers_csv": "일련번호 (CSV)"
     },
     "values": {

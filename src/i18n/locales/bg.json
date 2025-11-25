@@ -308,7 +308,7 @@
         "factory_reset": "Фабрично нулиране",
         "scan_source": "Източник",
         "select_scan_source": "Изберете източник",
-        "hue_reset": "Нулиране на Hue",
+        "philips_hue_reset": "Нулиране на Hue",
         "serial_numbers_csv": "Серийни номера (CSV)"
     },
     "values": {

@@ -271,8 +271,8 @@ export default function TouchlinkPage() {
                         onApply={onHueResetApply}
                         buttonClassName={"btn btn-outline btn-error"}
                         buttonIcon={faTools}
-                        buttonTitle={t(($) => $.hue_reset)}
-                        title={t(($) => $.hue_reset)}
+                        buttonTitle={t(($) => $.philips_hue_reset)}
+                        title={t(($) => $.philips_hue_reset)}
                     >
                         <InputField
                             name="extended_pan_id"

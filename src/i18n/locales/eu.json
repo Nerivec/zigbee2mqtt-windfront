@@ -308,7 +308,7 @@
         "factory_reset": "Fabrika berrezarri",
         "scan_source": "Eskaneatzeko iturburua",
         "select_scan_source": "Hautatu iturburua",
-        "hue_reset": "Hue berrezarri",
+        "philips_hue_reset": "Philips Hue berrezarri",
         "serial_numbers_csv": "Serie zenbakiak (CSV)"
     },
     "values": {

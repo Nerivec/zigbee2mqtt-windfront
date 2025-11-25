@@ -308,7 +308,7 @@
         "factory_reset": "Restablir fàbrica",
         "scan_source": "Origen de l'escaneig",
         "select_scan_source": "Selecciona l'origen de l'escaneig",
-        "hue_reset": "Restabliment Hue",
+        "philips_hue_reset": "Restabliment Hue",
         "serial_numbers_csv": "Números de sèrie (CSV)"
     },
     "values": {

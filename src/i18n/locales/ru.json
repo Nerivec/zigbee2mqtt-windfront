@@ -308,7 +308,7 @@
         "factory_reset": "Сброс к заводским",
         "scan_source": "Источник сканирования",
         "select_scan_source": "Выберите источник",
-        "hue_reset": "Сброс Hue",
+        "philips_hue_reset": "Сброс Hue",
         "serial_numbers_csv": "Серийные номера (CSV)"
     },
     "values": {

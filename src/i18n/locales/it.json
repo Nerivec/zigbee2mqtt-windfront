@@ -308,7 +308,7 @@
         "factory_reset": "Ripristino fabbrica",
         "scan_source": "Sorgente scansione",
         "select_scan_source": "Seleziona la sorgente",
-        "hue_reset": "Ripristino Hue",
+        "philips_hue_reset": "Ripristino Hue",
         "serial_numbers_csv": "Numeri di serie (CSV)"
     },
     "values": {

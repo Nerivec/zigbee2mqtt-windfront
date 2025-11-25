@@ -308,7 +308,7 @@
         "factory_reset": "Đặt lại xuống xưởng",
         "scan_source": "Nguồn quét",
         "select_scan_source": "Chọn nguồn quét",
-        "hue_reset": "Đặt lại Hue",
+        "philips_hue_reset": "Đặt lại Hue",
         "serial_numbers_csv": "Số serial (CSV)"
     },
     "values": {

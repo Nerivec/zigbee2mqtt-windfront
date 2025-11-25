@@ -308,7 +308,7 @@
         "factory_reset": "Fabrikkreset",
         "scan_source": "Skann-kilde",
         "select_scan_source": "Velg kilde",
-        "hue_reset": "Hue-reset",
+        "philips_hue_reset": "Philips Hue-reset",
         "serial_numbers_csv": "Serienumre (CSV)"
     },
     "values": {

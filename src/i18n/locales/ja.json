@@ -308,7 +308,7 @@
         "factory_reset": "初期化",
         "scan_source": "スキャン元",
         "select_scan_source": "スキャン元選択",
-        "hue_reset": "Hueリセット",
+        "philips_hue_reset": "Philips Hueリセット",
         "serial_numbers_csv": "シリアル番号 (CSV)"
     },
     "values": {
