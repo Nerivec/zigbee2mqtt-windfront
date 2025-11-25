@@ -38,12 +38,24 @@ export default function TouchlinkPage() {
     const setTouchlinkScan = useAppStore((state) => state.setTouchlinkScan);
     const [scanIdx, setScanIdx] = useState(0);
     const [hueExtPanId, setHueExtPanId] = useState<string>("");
+    const [hueSerialNumbersRaw, setHueSerialNumbersRaw] = useState<string>("");
     const [hueSerialNumbers, setHueSerialNumbers] = useState<number[]>([]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
-        setHueExtPanId(bridgeInfo[scanIdx].network.extended_pan_id);
+        setHueExtPanId(bridgeInfo[scanIdx].network?.extended_pan_id ?? "");
     }, [scanIdx]);
+
+    useEffect(() => {
+        setHueSerialNumbers(
+            hueSerialNumbersRaw
+                ? hueSerialNumbersRaw
+                      .replaceAll(" ", "")
+                      .split(",")
+                      .map((v) => Number.parseInt(v, v.startsWith("0x") ? 16 : 10))
+                : [],
+        );
+    }, [hueSerialNumbersRaw]);
 
     const data = useMemo((): TouchlinkTableData[] => {
         const renderDevices: TouchlinkTableData[] = [];
@@ -98,11 +110,11 @@ export default function TouchlinkPage() {
                 serial_numbers: hueSerialNumbers,
             },
         });
-        setHueSerialNumbers([]);
+        setHueSerialNumbersRaw("");
     }, [scanIdx, hueExtPanId, hueSerialNumbers]);
 
     const isHueResetValid = useMemo(() => {
-        if (hueExtPanId != null && /^0x[a-f0-9]{16}$/.test(hueExtPanId) && Array.isArray(hueSerialNumbers) && hueSerialNumbers.length > 0) {
+        if ((!hueExtPanId || /^0x[a-f0-9]{16}$/.test(hueExtPanId)) && Array.isArray(hueSerialNumbers) && hueSerialNumbers.length > 0) {
             return hueSerialNumbers.every((sn) => Number.isInteger(sn));
         }
 
@@ -274,28 +286,37 @@ export default function TouchlinkPage() {
                         buttonTitle={t(($) => $.philips_hue_reset)}
                         title={t(($) => $.philips_hue_reset)}
                     >
+                        {MULTI_INSTANCE && (
+                            <SelectField
+                                name="scan_idx_picker"
+                                label={t(($) => $.source, { ns: "common" })}
+                                value={scanIdx}
+                                onChange={(e) => !e.target.validationMessage && !!e.target.value && setScanIdx(Number.parseInt(e.target.value, 10))}
+                                className="select"
+                            >
+                                <option value="" disabled>
+                                    {t(($) => $.source, { ns: "common" })}
+                                </option>
+                                {API_NAMES.map((name, idx) => (
+                                    <option key={name} value={idx}>
+                                        {name}
+                                    </option>
+                                ))}
+                            </SelectField>
+                        )}
                         <InputField
                             name="extended_pan_id"
                             label={t(($) => $.extended_pan_id, { ns: "zigbee" })}
                             type="text"
-                            defaultValue={hueExtPanId}
+                            value={hueExtPanId}
                             onChange={(e) => !e.target.validationMessage && setHueExtPanId(e.target.value)}
-                            required
                         />
                         <InputField
                             name="serial_numbers"
                             label={t(($) => $.serial_numbers_csv)}
                             type="text"
-                            onChange={(e) =>
-                                !e.target.validationMessage &&
-                                setHueSerialNumbers(
-                                    e.target.value
-                                        .replaceAll(" ", "")
-                                        .split(",")
-                                        .map((v) => Number.parseInt(v, v.startsWith("0x") ? 16 : 10)),
-                                )
-                            }
-                            required
+                            value={hueSerialNumbersRaw}
+                            onChange={(e) => !e.target.validationMessage && setHueSerialNumbersRaw(e.target.value)}
                         />
                     </FloatingCardButton>
                 </fieldset>
