@@ -312,6 +312,7 @@ const makeInitialState = (): AppState => {
             // @ts-expect-error unloaded
             clusters: {},
             custom_clusters: {},
+            actions: [],
         };
         availability[idx] = {};
         generatedExternalDefinitions[idx] = {};

@@ -438,57 +438,21 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 ID: 258,
                 attributes: {
                     accelerationTimeLift: { ID: 21, type: 33 },
-                    calibrationMode: {
-                        ID: 61442,
-                        manufacturerCode: 4129,
-                        type: 48,
-                    },
+                    calibrationMode: { ID: 61442, manufacturerCode: 4129, type: 48 },
                     configStatus: { ID: 7, type: 24 },
                     currentPositionLiftCm: { ID: 3, type: 33 },
                     currentPositionLiftPercentage: { ID: 8, type: 32 },
                     currentPositionTiltDdegree: { ID: 4, type: 33 },
                     currentPositionTiltPercentage: { ID: 9, type: 32 },
                     decelerationTimeLift: { ID: 22, type: 33 },
-                    elkoDriveCloseDuration: {
-                        ID: 57344,
-                        manufacturerCode: 4727,
-                        type: 33,
-                    },
-                    elkoLiftDriveDownTime: {
-                        ID: 57365,
-                        manufacturerCode: 4727,
-                        type: 33,
-                    },
-                    elkoLiftDriveUpTime: {
-                        ID: 57364,
-                        manufacturerCode: 4727,
-                        type: 33,
-                    },
-                    elkoProtectionSensor: {
-                        ID: 57363,
-                        manufacturerCode: 4727,
-                        type: 24,
-                    },
-                    elkoProtectionStatus: {
-                        ID: 57360,
-                        manufacturerCode: 4727,
-                        type: 24,
-                    },
-                    elkoSunProtectionIlluminanceThreshold: {
-                        ID: 57362,
-                        manufacturerCode: 4727,
-                        type: 33,
-                    },
-                    elkoTiltOpenCloseAndStepTime: {
-                        ID: 57366,
-                        manufacturerCode: 4727,
-                        type: 33,
-                    },
-                    elkoTiltPositionPercentageAfterMoveToLevel: {
-                        ID: 57367,
-                        manufacturerCode: 4727,
-                        type: 32,
-                    },
+                    elkoDriveCloseDuration: { ID: 57344, manufacturerCode: 4727, type: 33 },
+                    elkoLiftDriveDownTime: { ID: 57365, manufacturerCode: 4727, type: 33 },
+                    elkoLiftDriveUpTime: { ID: 57364, manufacturerCode: 4727, type: 33 },
+                    elkoProtectionSensor: { ID: 57363, manufacturerCode: 4727, type: 24 },
+                    elkoProtectionStatus: { ID: 57360, manufacturerCode: 4727, type: 24 },
+                    elkoSunProtectionIlluminanceThreshold: { ID: 57362, manufacturerCode: 4727, type: 33 },
+                    elkoTiltOpenCloseAndStepTime: { ID: 57366, manufacturerCode: 4727, type: 33 },
+                    elkoTiltPositionPercentageAfterMoveToLevel: { ID: 57367, manufacturerCode: 4727, type: 32 },
                     installedClosedLimitLiftCm: { ID: 17, type: 33 },
                     installedClosedLimitTiltDdegree: { ID: 19, type: 33 },
                     installedOpenLimitLiftCm: { ID: 16, type: 33 },
@@ -496,26 +460,16 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     intermediateSetpointsLift: { ID: 24, type: 65 },
                     intermediateSetpointsTilt: { ID: 25, type: 65 },
                     moesCalibrationTime: { ID: 61443, type: 33 },
+                    nikoCalibrationTimeDown: { ID: 64706, manufacturerCode: 4703, type: 33 },
+                    nikoCalibrationTimeUp: { ID: 64705, manufacturerCode: 4703, type: 33 },
                     numOfActuationsLift: { ID: 5, type: 33 },
                     numOfActuationsTilt: { ID: 6, type: 33 },
                     operationalStatus: { ID: 10, type: 24 },
                     physicalClosedLimitLiftCm: { ID: 1, type: 33 },
                     physicalClosedLimitTiltDdegree: { ID: 2, type: 33 },
-                    stepPositionLift: {
-                        ID: 61441,
-                        manufacturerCode: 4129,
-                        type: 48,
-                    },
-                    stepPositionTilt: {
-                        ID: 61444,
-                        manufacturerCode: 4129,
-                        type: 48,
-                    },
-                    targetPositionTiltPercentage: {
-                        ID: 61443,
-                        manufacturerCode: 4129,
-                        type: 48,
-                    },
+                    stepPositionLift: { ID: 61441, manufacturerCode: 4129, type: 48 },
+                    stepPositionTilt: { ID: 61444, manufacturerCode: 4129, type: 48 },
+                    targetPositionTiltPercentage: { ID: 61443, manufacturerCode: 4129, type: 48 },
                     tuyaCalibration: { ID: 61441, type: 48 },
                     tuyaMotorReversal: { ID: 61442, type: 48 },
                     tuyaMovingState: { ID: 61440, type: 48 },
@@ -553,18 +507,6 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 },
                 commandsResponse: {},
             },
-            develcoSpecificAirQuality: {
-                ID: 64515,
-                attributes: {
-                    maxMeasuredValue: { ID: 2, type: 33 },
-                    measuredValue: { ID: 0, type: 33 },
-                    minMeasuredValue: { ID: 1, type: 33 },
-                    resolution: { ID: 3, type: 33 },
-                },
-                commands: {},
-                commandsResponse: {},
-                manufacturerCode: 4117,
-            },
             elkoOccupancySettingClusterServer: {
                 ID: 65305,
                 attributes: {
@@ -593,7 +535,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             genAlarms: {
                 ID: 9,
-                attributes: { alarmCount: { ID: 0, type: 33 } },
+                attributes: {
+                    alarmCount: { ID: 0, type: 33 },
+                },
                 commands: {
                     getAlarm: { ID: 2, parameters: [] },
                     publishEventLog: { ID: 4, parameters: [] },
@@ -686,34 +630,21 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     appProfileVersion: { ID: 8, type: 48 },
                     appVersion: { ID: 1, type: 32 },
                     dateCode: { ID: 6, type: 66 },
-                    develcoLedControl: {
-                        ID: 33024,
-                        manufacturerCode: 4117,
-                        type: 24,
-                    },
-                    develcoPrimaryHwVersion: {
-                        ID: 32800,
-                        manufacturerCode: 4117,
-                        type: 65,
-                    },
-                    develcoPrimarySwVersion: {
-                        ID: 32768,
-                        manufacturerCode: 4117,
-                        type: 65,
-                    },
                     deviceEnabled: { ID: 18, type: 16 },
                     disableLocalConfig: { ID: 20, type: 24 },
+                    genericDeviceType: { ID: 9, type: 48 },
                     hwVersion: { ID: 3, type: 32 },
                     locationDesc: { ID: 16, type: 66 },
                     manufacturerName: { ID: 4, type: 66 },
+                    manufacturerVersionDetails: { ID: 12, type: 66 },
                     modelId: { ID: 5, type: 66 },
                     physicalEnv: { ID: 17, type: 48 },
                     powerSource: { ID: 7, type: 48 },
-                    schneiderMeterRadioPower: {
-                        ID: 57856,
-                        manufacturerCode: 4190,
-                        type: 40,
-                    },
+                    productCode: { ID: 10, type: 65 },
+                    productLabel: { ID: 14, type: 66 },
+                    productUrl: { ID: 11, type: 66 },
+                    schneiderMeterRadioPower: { ID: 57856, manufacturerCode: 4190, type: 40 },
+                    serialNumber: { ID: 13, type: 66 },
                     stackVersion: { ID: 2, type: 32 },
                     swBuildId: { ID: 16384, type: 66 },
                     zclVersion: { ID: 0, type: 32 },
@@ -875,7 +806,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             genGroups: {
                 ID: 4,
-                attributes: { nameSupport: { ID: 0, type: 24 } },
+                attributes: {
+                    nameSupport: { ID: 0, type: 24 },
+                },
                 commands: {
                     add: {
                         ID: 0,
@@ -910,7 +843,11 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                         response: 3,
                     },
                     removeAll: { ID: 4, parameters: [] },
-                    view: { ID: 1, parameters: [{ name: "groupid", type: 33 }] },
+                    view: {
+                        ID: 1,
+                        parameters: [{ name: "groupid", type: 33 }],
+                        response: 1,
+                    },
                 },
                 commandsResponse: {
                     addRsp: {
@@ -988,11 +925,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 attributes: {
                     currentLevel: { ID: 0, type: 32 },
                     defaultMoveRate: { ID: 20, type: 33 },
-                    elkoStartUpCurrentLevel: {
-                        ID: 16384,
-                        manufacturerCode: 4727,
-                        type: 32,
-                    },
+                    elkoStartUpCurrentLevel: { ID: 16384, manufacturerCode: 4727, type: 32 },
                     maxLevel: { ID: 3, type: 32 },
                     minLevel: { ID: 2, type: 32 },
                     offTransitionTime: { ID: 19, type: 33 },
@@ -1112,28 +1045,12 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             genOnOff: {
                 ID: 6,
                 attributes: {
-                    elkoOnTimeReload: {
-                        ID: 57345,
-                        manufacturerCode: 4727,
-                        type: 35,
-                    },
-                    elkoOnTimeReloadOptions: {
-                        ID: 57346,
-                        manufacturerCode: 4727,
-                        type: 24,
-                    },
-                    elkoPreWarningTime: {
-                        ID: 57344,
-                        manufacturerCode: 4727,
-                        type: 33,
-                    },
+                    elkoOnTimeReload: { ID: 57345, manufacturerCode: 4727, type: 35 },
+                    elkoOnTimeReloadOptions: { ID: 57346, manufacturerCode: 4727, type: 24 },
+                    elkoPreWarningTime: { ID: 57344, manufacturerCode: 4727, type: 33 },
                     globalSceneCtrl: { ID: 16384, type: 16 },
                     moesStartUpOnOff: { ID: 32770, type: 48 },
-                    nodonTransitionTime: {
-                        ID: 1,
-                        manufacturerCode: 4747,
-                        type: 33,
-                    },
+                    nodonTransitionTime: { ID: 1, manufacturerCode: 4747, type: 33 },
                     offWaitTime: { ID: 16386, type: 33 },
                     onOff: { ID: 0, type: 16 },
                     onTime: { ID: 16385, type: 33 },
@@ -1211,6 +1128,32 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "fileVersion", type: 35 },
                             { name: "fileOffset", type: 35 },
                             { name: "maximumDataSize", type: 32 },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 1,
+                                        param: "fieldControl",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "requestNodeIeeeAddress",
+                                type: 240,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 2,
+                                        param: "fieldControl",
+                                        type: "bitMaskSet",
+                                    },
+                                    {
+                                        type: "minimumRemainingBufferBytes",
+                                        value: 2,
+                                    },
+                                ],
+                                name: "minimumBlockPeriod",
+                                type: 33,
+                            },
                         ],
                         response: 5,
                     },
@@ -1225,8 +1168,30 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "maximumDataSize", type: 32 },
                             { name: "pageSize", type: 33 },
                             { name: "responseSpacing", type: 33 },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 1,
+                                        param: "fieldControl",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "requestNodeIeeeAddress",
+                                type: 240,
+                            },
                         ],
                         response: 5,
+                    },
+                    queryDeviceSpecificFileRequest: {
+                        ID: 8,
+                        parameters: [
+                            { name: "eui64", type: 240 },
+                            { name: "manufacturerCode", type: 33 },
+                            { name: "imageType", type: 33 },
+                            { name: "fileVersion", type: 35 },
+                            { name: "zigbeeStackVersion", type: 33 },
+                        ],
+                        response: 9,
                     },
                     queryNextImageRequest: {
                         ID: 1,
@@ -1235,6 +1200,17 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "manufacturerCode", type: 33 },
                             { name: "imageType", type: 33 },
                             { name: "fileVersion", type: 35 },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 1,
+                                        param: "fieldControl",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "hardwareVersion",
+                                type: 33,
+                            },
                         ],
                         response: 2,
                     },
@@ -1254,12 +1230,105 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                         ID: 5,
                         parameters: [
                             { name: "status", type: 32 },
-                            { name: "manufacturerCode", type: 33 },
-                            { name: "imageType", type: 33 },
-                            { name: "fileVersion", type: 35 },
-                            { name: "fileOffset", type: 35 },
-                            { name: "dataSize", type: 32 },
-                            { name: "data", type: 1008 },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "manufacturerCode",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "imageType",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "fileVersion",
+                                type: 35,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "fileOffset",
+                                type: 35,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "dataSize",
+                                type: 32,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "data",
+                                type: 1008,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 151,
+                                    },
+                                ],
+                                name: "currentTime",
+                                type: 35,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 151,
+                                    },
+                                ],
+                                name: "requestTime",
+                                type: 35,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 151,
+                                    },
+                                ],
+                                name: "minimumBlockPeriod",
+                                type: 33,
+                            },
                         ],
                     },
                     imageNotify: {
@@ -1267,6 +1336,89 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                         parameters: [
                             { name: "payloadType", type: 32 },
                             { name: "queryJitter", type: 32 },
+                            {
+                                conditions: [
+                                    {
+                                        field: "payloadType",
+                                        type: "fieldGT",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "manufacturerCode",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "payloadType",
+                                        type: "fieldGT",
+                                        value: 1,
+                                    },
+                                ],
+                                name: "imageType",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "payloadType",
+                                        type: "fieldGT",
+                                        value: 2,
+                                    },
+                                ],
+                                name: "fileVersion",
+                                type: 35,
+                            },
+                        ],
+                    },
+                    queryDeviceSpecificFileResponse: {
+                        ID: 9,
+                        parameters: [
+                            { name: "status", type: 32 },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "manufacturerCode",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "imageType",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "fileVersion",
+                                type: 35,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "imageSize",
+                                type: 35,
+                            },
                         ],
                     },
                     queryNextImageResponse: {
@@ -1274,22 +1426,46 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                         parameters: [
                             { name: "status", type: 32 },
                             {
-                                conditions: [{ type: "statusEquals", value: 0 }],
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
                                 name: "manufacturerCode",
                                 type: 33,
                             },
                             {
-                                conditions: [{ type: "statusEquals", value: 0 }],
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
                                 name: "imageType",
                                 type: 33,
                             },
                             {
-                                conditions: [{ type: "statusEquals", value: 0 }],
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
                                 name: "fileVersion",
                                 type: 35,
                             },
                             {
-                                conditions: [{ type: "statusEquals", value: 0 }],
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
                                 name: "imageSize",
                                 type: 35,
                             },
@@ -1336,7 +1512,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                         parameters: [{ name: "newShortPollInterval", type: 33 }],
                     },
                 },
-                commandsResponse: { checkin: { ID: 0, parameters: [] } },
+                commandsResponse: {
+                    checkin: { ID: 0, parameters: [] },
+                },
             },
             genPowerCfg: {
                 ID: 1,
@@ -1378,7 +1556,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     coordinate3: { ID: 18, type: 41 },
                     method: { ID: 1, type: 48 },
                     numOfDevices: { ID: 4, type: 32 },
-                    numRSSIMeasurements: { ID: 23, type: 33 },
+                    numRSSIMeasurements: { ID: 23, type: 32 },
                     pathLossExponent: { ID: 20, type: 33 },
                     power: { ID: 19, type: 41 },
                     qualityMeasure: { ID: 3, type: 32 },
@@ -1386,17 +1564,56 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     type: { ID: 0, type: 8 },
                 },
                 commands: {
-                    getData: {
-                        ID: 3,
+                    anchorNodeAnnounce: {
+                        ID: 6,
                         parameters: [
-                            { name: "getdatainfo", type: 32 },
-                            { name: "numrsp", type: 32 },
-                            { name: "targetaddr", type: 240 },
+                            { name: "anchorNodeAddr", type: 240 },
+                            { name: "x", type: 41 },
+                            { name: "y", type: 41 },
+                            { name: "z", type: 41 },
                         ],
                     },
-                    getDevCfg: {
+                    getDeviceConfig: {
                         ID: 2,
-                        parameters: [{ name: "targetaddr", type: 240 }],
+                        parameters: [{ name: "targetAddr", type: 240 }],
+                    },
+                    getLocationData: {
+                        ID: 3,
+                        parameters: [
+                            { name: "info", type: 24 },
+                            { name: "numResponses", type: 32 },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 4,
+                                        param: "info",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "targetAddr",
+                                type: 240,
+                            },
+                        ],
+                    },
+                    rssiResponse: {
+                        ID: 4,
+                        parameters: [
+                            { name: "replyingDevice", type: 240 },
+                            { name: "x", type: 41 },
+                            { name: "y", type: 41 },
+                            { name: "z", type: 41 },
+                            { name: "rssi", type: 40 },
+                            { name: "numRssiMeasurements", type: 32 },
+                        ],
+                    },
+                    sendPings: {
+                        ID: 5,
+                        parameters: [
+                            { name: "targetAddr", type: 240 },
+                            { name: "numRssiMeasurements", type: 32 },
+                            { name: "calcPeriod", type: 33 },
+                        ],
                     },
                     setAbsolute: {
                         ID: 0,
@@ -1405,76 +1622,305 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "coord2", type: 41 },
                             { name: "coord3", type: 41 },
                             { name: "power", type: 41 },
-                            { name: "pathlossexponent", type: 33 },
+                            { name: "pathLossExponent", type: 33 },
                         ],
                     },
-                    setDevCfg: {
+                    setDeviceConfig: {
                         ID: 1,
                         parameters: [
                             { name: "power", type: 41 },
-                            { name: "pathlossexponent", type: 33 },
-                            { name: "calperiod", type: 33 },
-                            { name: "numrssimeasurements", type: 32 },
-                            { name: "reportingperiod", type: 33 },
+                            { name: "pathLossExponent", type: 33 },
+                            { name: "calcPeriod", type: 33 },
+                            { name: "numRssiMeasurements", type: 32 },
+                            { name: "reportingPeriod", type: 33 },
                         ],
                     },
                 },
                 commandsResponse: {
-                    compactDataNotif: {
+                    compactLocationDataNotification: {
                         ID: 3,
                         parameters: [
-                            { name: "locationtype", type: 32 },
+                            { name: "type", type: 8 },
                             { name: "coord1", type: 41 },
                             { name: "coord2", type: 41 },
-                            { name: "coord3", type: 41 },
-                            { name: "qualitymeasure", type: 32 },
-                            { name: "locationage", type: 33 },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 2,
+                                        param: "type",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "coord3",
+                                type: 41,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 1,
+                                        param: "type",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "qualityMeasure",
+                                type: 32,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 1,
+                                        param: "type",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "age",
+                                type: 33,
+                            },
                         ],
                     },
-                    dataNotif: {
-                        ID: 2,
-                        parameters: [
-                            { name: "locationtype", type: 32 },
-                            { name: "coord1", type: 41 },
-                            { name: "coord2", type: 41 },
-                            { name: "coord3", type: 41 },
-                            { name: "power", type: 41 },
-                            { name: "pathlossexp", type: 33 },
-                            { name: "locationmethod", type: 32 },
-                            { name: "qualitymeasure", type: 32 },
-                            { name: "locationage", type: 33 },
-                        ],
-                    },
-                    dataRsp: {
-                        ID: 1,
-                        parameters: [
-                            { name: "status", type: 32 },
-                            { name: "locationtype", type: 32 },
-                            { name: "coord1", type: 41 },
-                            { name: "coord2", type: 41 },
-                            { name: "coord3", type: 41 },
-                            { name: "power", type: 41 },
-                            { name: "pathlossexp", type: 33 },
-                            { name: "locationmethod", type: 32 },
-                            { name: "qualitymeasure", type: 32 },
-                            { name: "locationage", type: 33 },
-                        ],
-                    },
-                    devCfgRsp: {
+                    deviceConfigResponse: {
                         ID: 0,
                         parameters: [
-                            { name: "status", type: 32 },
-                            { name: "power", type: 41 },
-                            { name: "pathlossexp", type: 33 },
-                            { name: "calperiod", type: 33 },
-                            { name: "numrssimeasurements", type: 32 },
-                            { name: "reportingperiod", type: 33 },
+                            { name: "status", type: 48 },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "power",
+                                type: 41,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "pathLossExponent",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "calcPeriod",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "numRssiMeasurements",
+                                type: 32,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "reportingPeriod",
+                                type: 33,
+                            },
                         ],
+                    },
+                    locationDataNotification: {
+                        ID: 2,
+                        parameters: [
+                            { name: "type", type: 8 },
+                            { name: "coord1", type: 41 },
+                            { name: "coord2", type: 41 },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 2,
+                                        param: "type",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "coord3",
+                                type: 41,
+                            },
+                            { name: "power", type: 41 },
+                            { name: "pathLossExponent", type: 33 },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 1,
+                                        param: "type",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "method",
+                                type: 48,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 1,
+                                        param: "type",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "qualityMeasure",
+                                type: 32,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 1,
+                                        param: "type",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "age",
+                                type: 33,
+                            },
+                        ],
+                    },
+                    locationDataResponse: {
+                        ID: 1,
+                        parameters: [
+                            { name: "status", type: 48 },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "type",
+                                type: 8,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "coord1",
+                                type: 41,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "coord2",
+                                type: 41,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "coord3",
+                                type: 41,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "power",
+                                type: 41,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "pathLossExponent",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "method",
+                                type: 48,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "qualityMeasure",
+                                type: 32,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "age",
+                                type: 33,
+                            },
+                        ],
+                    },
+                    reportRssiMeasurements: {
+                        ID: 6,
+                        parameters: [
+                            { name: "measuringDeviceAddr", type: 240 },
+                            { name: "numNeighbors", type: 32 },
+                        ],
+                    },
+                    requestOwnLocation: {
+                        ID: 7,
+                        parameters: [{ name: "blindNodeAddr", type: 240 }],
                     },
                     rssiPing: {
                         ID: 4,
-                        parameters: [{ name: "locationtype", type: 32 }],
+                        parameters: [{ name: "type", type: 8 }],
                     },
+                    rssiRequest: { ID: 5, parameters: [] },
                 },
             },
             genScenes: {
@@ -1603,16 +2049,53 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "sceneidfrom", type: 32 },
                         ],
                     },
-                    enhancedAddRsp: { ID: 64, parameters: [] },
+                    enhancedAddRsp: {
+                        ID: 64,
+                        parameters: [
+                            { name: "status", type: 32 },
+                            { name: "groupId", type: 33 },
+                            { name: "sceneId", type: 32 },
+                        ],
+                    },
                     enhancedViewRsp: {
                         ID: 65,
                         parameters: [
                             { name: "status", type: 32 },
                             { name: "groupid", type: 33 },
                             { name: "sceneid", type: 32 },
-                            { name: "transtime", type: 33 },
-                            { name: "scenename", type: 66 },
-                            { name: "extensionfieldsets", type: 1006 },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "transtime",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "scenename",
+                                type: 66,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "extensionfieldsets",
+                                type: 1006,
+                            },
                         ],
                     },
                     getSceneMembershipRsp: {
@@ -1621,8 +2104,28 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "status", type: 32 },
                             { name: "capacity", type: 32 },
                             { name: "groupid", type: 33 },
-                            { name: "scenecount", type: 32 },
-                            { name: "scenelist", type: 1001 },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "scenecount",
+                                type: 32,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "scenelist",
+                                type: 1001,
+                            },
                         ],
                     },
                     removeAllRsp: {
@@ -1654,9 +2157,39 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "status", type: 32 },
                             { name: "groupid", type: 33 },
                             { name: "sceneid", type: 32 },
-                            { name: "transtime", type: 33 },
-                            { name: "scenename", type: 66 },
-                            { name: "extensionfieldsets", type: 1006 },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "transtime",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "scenename",
+                                type: 66,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "status",
+                                        type: "fieldEquals",
+                                        value: 0,
+                                    },
+                                ],
+                                name: "extensionfieldsets",
+                                type: 1006,
+                            },
                         ],
                     },
                 },
@@ -1685,7 +2218,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     commissioningNotification: {
                         ID: 4,
                         parameters: [
-                            { name: "options", type: 33 },
+                            { name: "options", type: 25 },
                             {
                                 conditions: [
                                     {
@@ -1728,23 +2261,63 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "frameCounter", type: 35 },
                             { name: "commandID", type: 32 },
                             { name: "payloadSize", type: 32 },
-                            { name: "commandFrame", type: 1009 },
                             {
-                                conditions: [{ mask: 2048, param: "options", type: "bitMaskSet" }],
+                                conditions: [
+                                    {
+                                        mask: 48,
+                                        param: "options",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                    {
+                                        mask: 512,
+                                        param: "options",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "commandFrame",
+                                type: 1009,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 2048,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
                                 name: "gppNwkAddr",
                                 type: 33,
                             },
                             {
-                                conditions: [{ mask: 2048, param: "options", type: "bitMaskSet" }],
-                                name: "gppGddLink",
-                                type: 32,
+                                conditions: [
+                                    {
+                                        mask: 2048,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "gppGpdLink",
+                                type: 24,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 512,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "mic",
+                                type: 35,
                             },
                         ],
                     },
                     notification: {
                         ID: 0,
                         parameters: [
-                            { name: "options", type: 33 },
+                            { name: "options", type: 25 },
                             {
                                 conditions: [
                                     {
@@ -1787,16 +2360,39 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "frameCounter", type: 35 },
                             { name: "commandID", type: 32 },
                             { name: "payloadSize", type: 32 },
-                            { name: "commandFrame", type: 1009 },
                             {
-                                conditions: [{ mask: 16384, param: "options", type: "bitMaskSet" }],
+                                conditions: [
+                                    {
+                                        mask: 192,
+                                        param: "options",
+                                        reversed: true,
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "commandFrame",
+                                type: 1009,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 16384,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
                                 name: "gppNwkAddr",
                                 type: 33,
                             },
                             {
-                                conditions: [{ mask: 16384, param: "options", type: "bitMaskSet" }],
-                                name: "gppGddLink",
-                                type: 32,
+                                conditions: [
+                                    {
+                                        mask: 16384,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "gppGpdLink",
+                                type: 24,
                             },
                         ],
                     },
@@ -1805,14 +2401,35 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     commisioningMode: {
                         ID: 2,
                         parameters: [
-                            { name: "options", type: 32 },
-                            { name: "commisioningWindow", type: 33 },
+                            { name: "options", type: 24 },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 2,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "commisioningWindow",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 16,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "channel",
+                                type: 32,
+                            },
                         ],
                     },
                     pairing: {
                         ID: 1,
                         parameters: [
-                            { name: "options", type: 34 },
+                            { name: "options", type: 26 },
                             {
                                 conditions: [
                                     {
@@ -1931,19 +2548,59 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                                 type: 33,
                             },
                             {
-                                conditions: [{ mask: 8, param: "options", type: "bitMaskSet" }],
+                                conditions: [
+                                    {
+                                        mask: 8,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
                                 name: "deviceID",
                                 type: 32,
                             },
                             {
-                                conditions: [{ mask: 16384, param: "options", type: "bitMaskSet" }],
+                                conditions: [
+                                    {
+                                        mask: 16384,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
                                 name: "frameCounter",
                                 type: 35,
                             },
                             {
-                                conditions: [{ mask: 32768, param: "options", type: "bitMaskSet" }],
+                                conditions: [
+                                    {
+                                        mask: 32768,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
                                 name: "gpdKey",
                                 type: 241,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 65536,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "assignedAlias",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        mask: 131072,
+                                        param: "options",
+                                        type: "bitMaskSet",
+                                    },
+                                ],
+                                name: "groupcastRadius",
+                                type: 32,
                             },
                         ],
                     },
@@ -1952,7 +2609,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                         parameters: [
                             { name: "options", type: 32 },
                             { name: "tempMaster", type: 33 },
-                            { name: "tempMasterTx", type: 32 },
+                            { name: "tempMasterTx", type: 24 },
                             {
                                 conditions: [
                                     {
@@ -2001,7 +2658,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             haApplianceEventsAlerts: {
                 ID: 2818,
                 attributes: {},
-                commands: { getAlerts: { ID: 0, parameters: [] } },
+                commands: {
+                    getAlerts: { ID: 0, parameters: [] },
+                },
                 commandsResponse: {
                     alertsNotification: {
                         ID: 1,
@@ -2052,7 +2711,10 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     logQueueMaxSize: { ID: 1, type: 32 },
                 },
                 commands: {
-                    log: { ID: 0, parameters: [{ name: "logid", type: 35 }] },
+                    log: {
+                        ID: 0,
+                        parameters: [{ name: "logid", type: 35 }],
+                    },
                     logQueue: { ID: 1, parameters: [] },
                 },
                 commandsResponse: {
@@ -2104,21 +2766,12 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     apsUnauthorizedKey: { ID: 276, type: 33 },
                     averageMacRetryPerApsMessageSent: { ID: 283, type: 33 },
                     childMoved: { ID: 273, type: 33 },
-                    danfossMultimasterRole: {
-                        ID: 16897,
-                        manufacturerCode: 4678,
-                        type: 48,
-                    },
-                    danfossSystemStatusCode: {
-                        ID: 16384,
-                        manufacturerCode: 4678,
-                        type: 25,
-                    },
-                    danfossSystemStatusWater: {
-                        ID: 16896,
-                        manufacturerCode: 4678,
-                        type: 48,
-                    },
+                    danfossHeatSupplyRequest: { ID: 16433, manufacturerCode: 4678, type: 48 },
+                    danfossIconApplication: { ID: 16912, manufacturerCode: 4678, type: 48 },
+                    danfossIconForcedHeatingCooling: { ID: 16928, manufacturerCode: 4678, type: 48 },
+                    danfossMultimasterRole: { ID: 16897, manufacturerCode: 4678, type: 48 },
+                    danfossSystemStatusCode: { ID: 16384, manufacturerCode: 4678, type: 25 },
+                    danfossSystemStatusWater: { ID: 16896, manufacturerCode: 4678, type: 48 },
                     joinIndication: { ID: 272, type: 33 },
                     lastMessageLqi: { ID: 284, type: 32 },
                     lastMessageRssi: { ID: 285, type: 40 },
@@ -2140,21 +2793,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     phyToMacQueueLimitReached: { ID: 281, type: 33 },
                     relayedUcast: { ID: 280, type: 33 },
                     routeDiscInitiated: { ID: 268, type: 33 },
-                    schneiderCommunicationQuality: {
-                        ID: 16384,
-                        manufacturerCode: 4190,
-                        type: 32,
-                    },
-                    schneiderDiagnosticRegister1: {
-                        ID: 65282,
-                        manufacturerCode: 4190,
-                        type: 35,
-                    },
-                    schneiderMeterStatus: {
-                        ID: 65281,
-                        manufacturerCode: 4190,
-                        type: 35,
-                    },
+                    schneiderCommunicationQuality: { ID: 16384, manufacturerCode: 4190, type: 32 },
+                    schneiderDiagnosticRegister1: { ID: 65282, manufacturerCode: 4190, type: 35 },
+                    schneiderMeterStatus: { ID: 65281, manufacturerCode: 4190, type: 35 },
                 },
                 commands: {},
                 commandsResponse: {},
@@ -2288,111 +2929,27 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     rmsVoltageSwellPeriod: { ID: 1303, type: 33 },
                     rmsVoltageSwellPeriodPhB: { ID: 2327, type: 33 },
                     rmsVoltageSwellPeriodPhC: { ID: 2583, type: 33 },
-                    schneiderActivePowerDemandPhase1: {
-                        ID: 17673,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderActivePowerDemandPhase2: {
-                        ID: 18697,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderActivePowerDemandPhase3: {
-                        ID: 18953,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderActivePowerDemandTotal: {
-                        ID: 17152,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderApparentPowerDemandPhase1: {
-                        ID: 17675,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderApparentPowerDemandPhase2: {
-                        ID: 18699,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderApparentPowerDemandPhase3: {
-                        ID: 18955,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderApparentPowerDemandTotal: {
-                        ID: 17176,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderCurrentSensorMultiplier: {
-                        ID: 19968,
-                        manufacturerCode: 4190,
-                        type: 32,
-                    },
-                    schneiderDemandDateTime: {
-                        ID: 17184,
-                        manufacturerCode: 4190,
-                        type: 226,
-                    },
-                    schneiderDemandIntervalDuration: {
-                        ID: 17177,
-                        manufacturerCode: 4190,
-                        type: 34,
-                    },
-                    schneiderDemandIntervalMaximalCurrentI1: {
-                        ID: 17683,
-                        manufacturerCode: 4190,
-                        type: 33,
-                    },
-                    schneiderDemandIntervalMaximalCurrentI2: {
-                        ID: 18707,
-                        manufacturerCode: 4190,
-                        type: 33,
-                    },
-                    schneiderDemandIntervalMaximalCurrentI3: {
-                        ID: 18963,
-                        manufacturerCode: 4190,
-                        type: 33,
-                    },
-                    schneiderDemandIntervalMinimalVoltageL1: {
-                        ID: 17680,
-                        manufacturerCode: 4190,
-                        type: 33,
-                    },
-                    schneiderDemandIntervalMinimalVoltageL2: {
-                        ID: 18704,
-                        manufacturerCode: 4190,
-                        type: 33,
-                    },
-                    schneiderDemandIntervalMinimalVoltageL3: {
-                        ID: 18960,
-                        manufacturerCode: 4190,
-                        type: 33,
-                    },
-                    schneiderReactivePowerDemandPhase1: {
-                        ID: 17674,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderReactivePowerDemandPhase2: {
-                        ID: 18698,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderReactivePowerDemandPhase3: {
-                        ID: 18954,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
-                    schneiderReactivePowerDemandTotal: {
-                        ID: 17155,
-                        manufacturerCode: 4190,
-                        type: 43,
-                    },
+                    schneiderActivePowerDemandPhase1: { ID: 17673, manufacturerCode: 4190, type: 43 },
+                    schneiderActivePowerDemandPhase2: { ID: 18697, manufacturerCode: 4190, type: 43 },
+                    schneiderActivePowerDemandPhase3: { ID: 18953, manufacturerCode: 4190, type: 43 },
+                    schneiderActivePowerDemandTotal: { ID: 17152, manufacturerCode: 4190, type: 43 },
+                    schneiderApparentPowerDemandPhase1: { ID: 17675, manufacturerCode: 4190, type: 43 },
+                    schneiderApparentPowerDemandPhase2: { ID: 18699, manufacturerCode: 4190, type: 43 },
+                    schneiderApparentPowerDemandPhase3: { ID: 18955, manufacturerCode: 4190, type: 43 },
+                    schneiderApparentPowerDemandTotal: { ID: 17176, manufacturerCode: 4190, type: 43 },
+                    schneiderCurrentSensorMultiplier: { ID: 19968, manufacturerCode: 4190, type: 32 },
+                    schneiderDemandDateTime: { ID: 17184, manufacturerCode: 4190, type: 226 },
+                    schneiderDemandIntervalDuration: { ID: 17177, manufacturerCode: 4190, type: 34 },
+                    schneiderDemandIntervalMaximalCurrentI1: { ID: 17683, manufacturerCode: 4190, type: 33 },
+                    schneiderDemandIntervalMaximalCurrentI2: { ID: 18707, manufacturerCode: 4190, type: 33 },
+                    schneiderDemandIntervalMaximalCurrentI3: { ID: 18963, manufacturerCode: 4190, type: 33 },
+                    schneiderDemandIntervalMinimalVoltageL1: { ID: 17680, manufacturerCode: 4190, type: 33 },
+                    schneiderDemandIntervalMinimalVoltageL2: { ID: 18704, manufacturerCode: 4190, type: 33 },
+                    schneiderDemandIntervalMinimalVoltageL3: { ID: 18960, manufacturerCode: 4190, type: 33 },
+                    schneiderReactivePowerDemandPhase1: { ID: 17674, manufacturerCode: 4190, type: 43 },
+                    schneiderReactivePowerDemandPhase2: { ID: 18698, manufacturerCode: 4190, type: 43 },
+                    schneiderReactivePowerDemandPhase3: { ID: 18954, manufacturerCode: 4190, type: 43 },
+                    schneiderReactivePowerDemandTotal: { ID: 17155, manufacturerCode: 4190, type: 43 },
                     totalActivePower: { ID: 772, type: 43 },
                     totalApparentPower: { ID: 774, type: 35 },
                     totalReactivePower: { ID: 773, type: 43 },
@@ -2450,119 +3007,6 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 },
                 commands: {},
                 commandsResponse: {},
-            },
-            heimanSpecificAirQuality: {
-                ID: 64641,
-                attributes: {
-                    alarmEnable: { ID: 61450, type: 33 },
-                    aqiMeasuredValue: { ID: 61445, type: 33 },
-                    batteryState: { ID: 61442, type: 32 },
-                    humidityMeasuredMax: { ID: 61448, type: 33 },
-                    humidityMeasuredMin: { ID: 61449, type: 33 },
-                    language: { ID: 61440, type: 32 },
-                    pm10measuredValue: { ID: 61443, type: 33 },
-                    temperatureMeasuredMax: { ID: 61446, type: 41 },
-                    temperatureMeasuredMin: { ID: 61447, type: 41 },
-                    tvocMeasuredValue: { ID: 61444, type: 33 },
-                    unitOfMeasure: { ID: 61441, type: 32 },
-                },
-                commands: {
-                    getTime: { ID: 285, parameters: [] },
-                    setLanguage: {
-                        ID: 283,
-                        parameters: [{ name: "languageCode", type: 32 }],
-                    },
-                    setUnitOfTemperature: {
-                        ID: 284,
-                        parameters: [{ name: "unitsCode", type: 32 }],
-                    },
-                },
-                commandsResponse: {},
-                manufacturerCode: 4619,
-            },
-            heimanSpecificFormaldehydeMeasurement: {
-                ID: 1067,
-                attributes: {
-                    measuredMaxValue: { ID: 2, type: 33 },
-                    measuredMinValue: { ID: 1, type: 33 },
-                    measuredTolerance: { ID: 3, type: 33 },
-                    measuredValue: { ID: 0, type: 33 },
-                },
-                commands: {},
-                commandsResponse: {},
-                manufacturerCode: 4619,
-            },
-            heimanSpecificInfraRedRemote: {
-                ID: 64642,
-                attributes: {},
-                commands: {
-                    createId: {
-                        ID: 244,
-                        parameters: [{ name: "modelType", type: 32 }],
-                    },
-                    deleteKey: {
-                        ID: 243,
-                        parameters: [
-                            { name: "id", type: 32 },
-                            { name: "keyCode", type: 32 },
-                        ],
-                    },
-                    getIdAndKeyCodeList: { ID: 246, parameters: [] },
-                    sendKey: {
-                        ID: 240,
-                        parameters: [
-                            { name: "id", type: 32 },
-                            { name: "keyCode", type: 32 },
-                        ],
-                    },
-                    studyKey: {
-                        ID: 241,
-                        parameters: [
-                            { name: "id", type: 32 },
-                            { name: "keyCode", type: 32 },
-                        ],
-                    },
-                },
-                commandsResponse: {
-                    createIdRsp: {
-                        ID: 245,
-                        parameters: [
-                            { name: "id", type: 32 },
-                            { name: "modelType", type: 32 },
-                        ],
-                    },
-                    getIdAndKeyCodeListRsp: {
-                        ID: 247,
-                        parameters: [
-                            { name: "packetsTotal", type: 32 },
-                            { name: "packetNumber", type: 32 },
-                            { name: "packetLength", type: 32 },
-                            { name: "learnedDevicesList", type: 1001 },
-                        ],
-                    },
-                    studyKeyRsp: {
-                        ID: 242,
-                        parameters: [
-                            { name: "id", type: 32 },
-                            { name: "keyCode", type: 32 },
-                            { name: "result", type: 32 },
-                        ],
-                    },
-                },
-                manufacturerCode: 4619,
-            },
-            heimanSpecificScenes: {
-                ID: 64640,
-                attributes: {},
-                commands: {
-                    atHome: { ID: 241, parameters: [] },
-                    cinema: { ID: 240, parameters: [] },
-                    goOut: { ID: 243, parameters: [] },
-                    repast: { ID: 244, parameters: [] },
-                    sleep: { ID: 242, parameters: [] },
-                },
-                commandsResponse: {},
-                manufacturerCode: 4619,
             },
             hvacDehumidificationCtrl: {
                 ID: 515,
@@ -2622,17 +3066,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             hvacThermostat: {
                 ID: 513,
                 attributes: {
-                    SinopeAuxCycleOutput: {
-                        ID: 1028,
-                        manufacturerCode: 4508,
-                        type: 33,
-                    },
+                    SinopeAuxCycleOutput: { ID: 1028, manufacturerCode: 4508, type: 33 },
                     SinopeBacklight: { ID: 1026, manufacturerCode: 4508, type: 48 },
-                    SinopeMainCycleOutput: {
-                        ID: 1025,
-                        manufacturerCode: 4508,
-                        type: 33,
-                    },
+                    SinopeMainCycleOutput: { ID: 1025, manufacturerCode: 4508, type: 33 },
                     SinopeOccupancy: { ID: 1024, manufacturerCode: 4508, type: 48 },
                     StelproOutdoorTemp: { ID: 16385, type: 41 },
                     StelproSystemMode: { ID: 16412, type: 48 },
@@ -2650,141 +3086,36 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     acType: { ID: 64, type: 48 },
                     alarmMask: { ID: 29, type: 24 },
                     ctrlSeqeOfOper: { ID: 27, type: 48 },
-                    danfossAdaptionRunControl: {
-                        ID: 16460,
-                        manufacturerCode: 4678,
-                        type: 48,
-                    },
-                    danfossAdaptionRunSettings: {
-                        ID: 16462,
-                        manufacturerCode: 4678,
-                        type: 24,
-                    },
-                    danfossAdaptionRunStatus: {
-                        ID: 16461,
-                        manufacturerCode: 4678,
-                        type: 24,
-                    },
-                    danfossAlgorithmScaleFactor: {
-                        ID: 16416,
-                        manufacturerCode: 4678,
-                        type: 32,
-                    },
-                    danfossDayOfWeek: {
-                        ID: 16400,
-                        manufacturerCode: 4678,
-                        type: 48,
-                    },
-                    danfossExternalMeasuredRoomSensor: {
-                        ID: 16405,
-                        manufacturerCode: 4678,
-                        type: 41,
-                    },
-                    danfossFloorMaxSetpoint: {
-                        ID: 16674,
-                        manufacturerCode: 4678,
-                        type: 41,
-                    },
-                    danfossFloorMinSetpoint: {
-                        ID: 16673,
-                        manufacturerCode: 4678,
-                        type: 41,
-                    },
-                    danfossHeatAvailable: {
-                        ID: 16432,
-                        manufacturerCode: 4678,
-                        type: 16,
-                    },
-                    danfossHeatRequired: {
-                        ID: 16433,
-                        manufacturerCode: 4678,
-                        type: 16,
-                    },
-                    danfossLoadBalancingEnable: {
-                        ID: 16434,
-                        manufacturerCode: 4678,
-                        type: 16,
-                    },
-                    danfossLoadEstimate: {
-                        ID: 16458,
-                        manufacturerCode: 4678,
-                        type: 41,
-                    },
-                    danfossLoadRoomMean: {
-                        ID: 16448,
-                        manufacturerCode: 4678,
-                        type: 41,
-                    },
-                    danfossMountedModeActive: {
-                        ID: 16402,
-                        manufacturerCode: 4678,
-                        type: 16,
-                    },
-                    danfossMountedModeControl: {
-                        ID: 16403,
-                        manufacturerCode: 4678,
-                        type: 16,
-                    },
-                    danfossOutputStatus: {
-                        ID: 16656,
-                        manufacturerCode: 4678,
-                        type: 48,
-                    },
-                    danfossPreheatStatus: {
-                        ID: 16463,
-                        manufacturerCode: 4678,
-                        type: 16,
-                    },
-                    danfossPreheatTime: {
-                        ID: 16464,
-                        manufacturerCode: 4678,
-                        type: 35,
-                    },
-                    danfossRadiatorCovered: {
-                        ID: 16406,
-                        manufacturerCode: 4678,
-                        type: 16,
-                    },
-                    danfossRegulationSetpointOffset: {
-                        ID: 16459,
-                        manufacturerCode: 4678,
-                        type: 40,
-                    },
-                    danfossRoomFloorSensorMode: {
-                        ID: 16672,
-                        manufacturerCode: 4678,
-                        type: 48,
-                    },
-                    danfossRoomStatusCode: {
-                        ID: 16640,
-                        manufacturerCode: 4678,
-                        type: 25,
-                    },
-                    danfossThermostatOrientation: {
-                        ID: 16404,
-                        manufacturerCode: 4678,
-                        type: 16,
-                    },
-                    danfossTriggerTime: {
-                        ID: 16401,
-                        manufacturerCode: 4678,
-                        type: 33,
-                    },
-                    danfossWindowOpenExternal: {
-                        ID: 16387,
-                        manufacturerCode: 4678,
-                        type: 16,
-                    },
-                    danfossWindowOpenFeatureEnable: {
-                        ID: 16465,
-                        manufacturerCode: 4678,
-                        type: 16,
-                    },
-                    danfossWindowOpenInternal: {
-                        ID: 16384,
-                        manufacturerCode: 4678,
-                        type: 48,
-                    },
+                    danfossAdaptionRunControl: { ID: 16460, manufacturerCode: 4678, type: 48 },
+                    danfossAdaptionRunSettings: { ID: 16462, manufacturerCode: 4678, type: 24 },
+                    danfossAdaptionRunStatus: { ID: 16461, manufacturerCode: 4678, type: 24 },
+                    danfossAlgorithmScaleFactor: { ID: 16416, manufacturerCode: 4678, type: 32 },
+                    danfossDayOfWeek: { ID: 16400, manufacturerCode: 4678, type: 48 },
+                    danfossExternalMeasuredRoomSensor: { ID: 16405, manufacturerCode: 4678, type: 41 },
+                    danfossFloorMaxSetpoint: { ID: 16674, manufacturerCode: 4678, type: 41 },
+                    danfossFloorMinSetpoint: { ID: 16673, manufacturerCode: 4678, type: 41 },
+                    danfossHeatAvailable: { ID: 16432, manufacturerCode: 4678, type: 16 },
+                    danfossHeatRequired: { ID: 16433, manufacturerCode: 4678, type: 16 },
+                    danfossIcon2PreHeat: { ID: 16689, manufacturerCode: 4678, type: 48 },
+                    danfossIcon2PreHeatStatus: { ID: 16719, manufacturerCode: 4678, type: 48 },
+                    danfossLoadBalancingEnable: { ID: 16434, manufacturerCode: 4678, type: 16 },
+                    danfossLoadEstimate: { ID: 16458, manufacturerCode: 4678, type: 41 },
+                    danfossLoadRoomMean: { ID: 16448, manufacturerCode: 4678, type: 41 },
+                    danfossMountedModeActive: { ID: 16402, manufacturerCode: 4678, type: 16 },
+                    danfossMountedModeControl: { ID: 16403, manufacturerCode: 4678, type: 16 },
+                    danfossOutputStatus: { ID: 16656, manufacturerCode: 4678, type: 48 },
+                    danfossPreheatStatus: { ID: 16463, manufacturerCode: 4678, type: 16 },
+                    danfossPreheatTime: { ID: 16464, manufacturerCode: 4678, type: 35 },
+                    danfossRadiatorCovered: { ID: 16406, manufacturerCode: 4678, type: 16 },
+                    danfossRegulationSetpointOffset: { ID: 16459, manufacturerCode: 4678, type: 40 },
+                    danfossRoomFloorSensorMode: { ID: 16672, manufacturerCode: 4678, type: 48 },
+                    danfossRoomStatusCode: { ID: 16640, manufacturerCode: 4678, type: 25 },
+                    danfossScheduleTypeUsed: { ID: 16688, manufacturerCode: 4678, type: 48 },
+                    danfossThermostatOrientation: { ID: 16404, manufacturerCode: 4678, type: 16 },
+                    danfossTriggerTime: { ID: 16401, manufacturerCode: 4678, type: 33 },
+                    danfossWindowOpenExternal: { ID: 16387, manufacturerCode: 4678, type: 16 },
+                    danfossWindowOpenFeatureEnable: { ID: 16465, manufacturerCode: 4678, type: 16 },
+                    danfossWindowOpenInternal: { ID: 16384, manufacturerCode: 4678, type: 48 },
                     elkoCalibration: { ID: 1047, type: 40 },
                     elkoChildLock: { ID: 1043, type: 16 },
                     elkoDateTime: { ID: 1031, type: 65 },
@@ -2803,16 +3134,8 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     elkoRelayState: { ID: 1045, type: 16 },
                     elkoSensor: { ID: 1027, type: 48 },
                     elkoVersion: { ID: 1046, type: 65 },
-                    fourNoksHysteresisHigh: {
-                        ID: 257,
-                        manufacturerCode: 4209,
-                        type: 33,
-                    },
-                    fourNoksHysteresisLow: {
-                        ID: 258,
-                        manufacturerCode: 4209,
-                        type: 33,
-                    },
+                    fourNoksHysteresisHigh: { ID: 257, manufacturerCode: 4209, type: 33 },
+                    fourNoksHysteresisLow: { ID: 258, manufacturerCode: 4209, type: 33 },
                     localTemp: { ID: 0, type: 41 },
                     localTemperatureCalibration: { ID: 16, type: 40 },
                     maxCoolSetpointLimit: { ID: 24, type: 41 },
@@ -2832,11 +3155,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     remoteSensing: { ID: 26, type: 24 },
                     runningMode: { ID: 30, type: 48 },
                     runningState: { ID: 41, type: 25 },
-                    schneiderWiserSpecific: {
-                        ID: 57616,
-                        manufacturerCode: 4190,
-                        type: 48,
-                    },
+                    schneiderWiserSpecific: { ID: 57616, manufacturerCode: 4190, type: 48 },
                     setpointChangeAmount: { ID: 49, type: 41 },
                     setpointChangeSource: { ID: 48, type: 48 },
                     setpointChangeSourceTimeStamp: { ID: 50, type: 226 },
@@ -2847,24 +3166,11 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     tempSetpointHoldDuration: { ID: 36, type: 33 },
                     unoccupiedCoolingSetpoint: { ID: 19, type: 41 },
                     unoccupiedHeatingSetpoint: { ID: 20, type: 41 },
-                    viessmannAssemblyMode: {
-                        ID: 16402,
-                        manufacturerCode: 4641,
-                        type: 16,
-                    },
-                    viessmannWindowOpenForce: {
-                        ID: 16387,
-                        manufacturerCode: 4641,
-                        type: 16,
-                    },
-                    viessmannWindowOpenInternal: {
-                        ID: 16384,
-                        manufacturerCode: 4641,
-                        type: 48,
-                    },
+                    viessmannAssemblyMode: { ID: 16402, manufacturerCode: 4641, type: 16 },
+                    viessmannWindowOpenForce: { ID: 16387, manufacturerCode: 4641, type: 16 },
+                    viessmannWindowOpenInternal: { ID: 16384, manufacturerCode: 4641, type: 48 },
                 },
                 commands: {
-                    boschCalibrateValve: { ID: 65, parameters: [] },
                     clearWeeklySchedule: { ID: 3, parameters: [] },
                     danfossSetpointCommand: {
                         ID: 64,
@@ -2873,13 +3179,14 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "setpoint", type: 41 },
                         ],
                     },
-                    getRelayStatusLog: { ID: 4, parameters: [] },
+                    getRelayStatusLog: { ID: 4, parameters: [], response: 1 },
                     getWeeklySchedule: {
                         ID: 2,
                         parameters: [
                             { name: "daystoreturn", type: 32 },
                             { name: "modetoreturn", type: 32 },
                         ],
+                        response: 0,
                     },
                     plugwiseCalibrateValve: { ID: 160, parameters: [] },
                     schneiderWiserThermostatBoost: {
@@ -2952,11 +3259,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             hvacUserInterfaceCfg: {
                 ID: 516,
                 attributes: {
-                    danfossViewingDirection: {
-                        ID: 16384,
-                        manufacturerCode: 4678,
-                        type: 48,
-                    },
+                    danfossViewingDirection: { ID: 16384, manufacturerCode: 4678, type: 48 },
                     keypadLockout: { ID: 1, type: 48 },
                     programmingVisibility: { ID: 2, type: 48 },
                     tempDisplayMode: { ID: 0, type: 48 },
@@ -3017,11 +3320,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 attributes: {
                     ballastFactorAdjustment: { ID: 21, type: 32 },
                     ballastStatus: { ID: 2, type: 24 },
-                    elkoControlMode: {
-                        ID: 57344,
-                        manufacturerCode: 4727,
-                        type: 48,
-                    },
+                    elkoControlMode: { ID: 57344, manufacturerCode: 4727, type: 48 },
                     intrinsicBallastFactor: { ID: 20, type: 32 },
                     lampAlarmMode: { ID: 52, type: 24 },
                     lampBurnHours: { ID: 51, type: 34 },
@@ -3036,11 +3335,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     physicalMinLevel: { ID: 0, type: 32 },
                     powerOnFadeTime: { ID: 19, type: 33 },
                     powerOnLevel: { ID: 18, type: 32 },
-                    wiserControlMode: {
-                        ID: 57344,
-                        manufacturerCode: 4190,
-                        type: 48,
-                    },
+                    wiserControlMode: { ID: 57344, manufacturerCode: 4190, type: 48 },
                 },
                 commands: {},
                 commandsResponse: {},
@@ -3098,8 +3393,8 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     primary6Y: { ID: 41, type: 33 },
                     remainingTime: { ID: 2, type: 33 },
                     startUpColorTemperature: { ID: 16400, type: 33 },
-                    tuyaBrightness: { ID: 61441, type: 33 },
-                    tuyaRgbMode: { ID: 61440, type: 33 },
+                    tuyaBrightness: { ID: 61441, type: 32 },
+                    tuyaRgbMode: { ID: 61440, type: 32 },
                     whitePointX: { ID: 48, type: 33 },
                     whitePointY: { ID: 49, type: 33 },
                 },
@@ -3298,6 +3593,10 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                         ID: 240,
                         parameters: [{ name: "enable", type: 32 }],
                     },
+                    tuyaSetMinimumBrightness: {
+                        ID: 224,
+                        parameters: [{ name: "minimum", type: 33 }],
+                    },
                 },
                 commandsResponse: {},
             },
@@ -3324,7 +3623,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     wwahParentClassificationEnabled: { ID: 8, type: 16 },
                     wwahRejoinEnabled: { ID: 11, type: 16 },
                 },
-                commands: { clearBindingTable: { ID: 10, parameters: [] } },
+                commands: {
+                    clearBindingTable: { ID: 10, parameters: [] },
+                },
                 commandsResponse: {},
                 manufacturerCode: 4631,
             },
@@ -3426,107 +3727,11 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     },
                 },
             },
-            manuSpecificBosch: {
-                ID: 57344,
-                attributes: { sensitivity: { ID: 16387, type: 33 } },
-                commands: { initiateTestMode: { ID: 0, parameters: [] } },
-                commandsResponse: {},
-                manufacturerCode: 4617,
-            },
-            manuSpecificBosch10: {
-                ID: 64672,
-                attributes: {
-                    calibrationClosingTime: { ID: 3, type: 35 },
-                    calibrationOpeningTime: { ID: 2, type: 35 },
-                    childLock: { ID: 8, type: 16 },
-                    deviceMode: { ID: 0, type: 48 },
-                    motorState: { ID: 19, type: 48 },
-                    switchType: { ID: 1, type: 48 },
-                },
-                commands: {},
-                commandsResponse: {},
-                manufacturerCode: 4617,
-            },
-            manuSpecificBosch11: {
-                ID: 64684,
-                attributes: { alarmOnMotion: { ID: 3, type: 16 } },
-                commands: {},
-                commandsResponse: {},
-                manufacturerCode: 4617,
-            },
-            manuSpecificBosch3: {
-                ID: 57346,
-                attributes: {
-                    airpurity: { ID: 16387, type: 33 },
-                    battery: { ID: 16390, type: 33 },
-                    humidity: { ID: 16384, type: 33 },
-                    illuminance_lux: { ID: 16389, type: 33 },
-                    pressure: { ID: 16393, type: 33 },
-                    temperature: { ID: 16388, type: 41 },
-                    unknown1: { ID: 16385, type: 33 },
-                    unknown2: { ID: 16386, type: 33 },
-                    unknown3: { ID: 16391, type: 33 },
-                    unknown4: { ID: 16392, type: 33 },
-                    unknown6: { ID: 16394, type: 33 },
-                    unknown7: { ID: 16395, type: 33 },
-                    unknown8: { ID: 16396, type: 33 },
-                },
-                commands: {},
-                commandsResponse: {},
-                manufacturerCode: 4617,
-            },
-            manuSpecificBosch5: {
-                ID: 57348,
-                attributes: {
-                    pre_alarm: { ID: 16385, type: 24 },
-                    unknown_attribute: { ID: 16384, type: 24 },
-                },
-                commands: {},
-                commandsResponse: {},
-                manufacturerCode: 4617,
-            },
-            manuSpecificBosch7: {
-                ID: 57350,
-                attributes: {
-                    heartbeat: { ID: 20485, type: 24 },
-                    unknown1: { ID: 20483, type: 40 },
-                    unknown2: { ID: 20484, type: 32 },
-                },
-                commands: { pairingCompleted: { ID: 1, parameters: [] } },
-                commandsResponse: {},
-                manufacturerCode: 4617,
-            },
-            manuSpecificBosch8: {
-                ID: 57351,
-                attributes: { alarm_status: { ID: 20480, type: 27 } },
-                commands: {
-                    burglarAlarm: {
-                        ID: 1,
-                        parameters: [{ name: "data", type: 32 }],
-                    },
-                },
-                commandsResponse: {},
-                manufacturerCode: 4617,
-            },
-            manuSpecificBosch9: {
-                ID: 64673,
-                attributes: {},
-                commands: {
-                    confirmButtonPressed: {
-                        ID: 16,
-                        parameters: [{ name: "data", type: 1008 }],
-                    },
-                    pairingCompleted: {
-                        ID: 18,
-                        parameters: [{ name: "data", type: 1008 }],
-                    },
-                },
-                commandsResponse: {},
-                manufacturerCode: 4617,
-            },
             manuSpecificCentraliteHumidity: {
                 ID: 64581,
-                attributes: { measuredValue: { ID: 0, type: 33 } },
+                attributes: {
+                    measuredValue: { ID: 0, type: 33 },
+                },
                 commands: {},
                 commandsResponse: {},
                 manufacturerCode: 4174,
@@ -3534,7 +3739,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             manuSpecificClusterAduroSmart: {
                 ID: 64716,
                 attributes: {},
-                commands: { cmd0: { ID: 0, parameters: [] } },
+                commands: {
+                    cmd0: { ID: 0, parameters: [] },
+                },
                 commandsResponse: {},
             },
             manuSpecificDoorman: {
@@ -3559,137 +3766,6 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     },
                 },
                 commandsResponse: {},
-            },
-            manuSpecificIkeaAirPurifier: {
-                ID: 64637,
-                attributes: {
-                    childLock: { ID: 5, type: 16 },
-                    controlPanelLight: { ID: 3, type: 16 },
-                    deviceRunTime: { ID: 8, type: 35 },
-                    fanMode: { ID: 6, type: 32 },
-                    fanSpeed: { ID: 7, type: 32 },
-                    filterLifeTime: { ID: 2, type: 35 },
-                    filterRunTime: { ID: 0, type: 35 },
-                    particulateMatter25Measurement: { ID: 4, type: 33 },
-                    replaceFilter: { ID: 1, type: 32 },
-                },
-                commands: {},
-                commandsResponse: {},
-                manufacturerCode: 4476,
-            },
-            manuSpecificInovelli: {
-                ID: 64561,
-                attributes: {
-                    activeEnergyReports: { ID: 20, type: 33 },
-                    activePowerReports: { ID: 18, type: 32 },
-                    autoTimerOff: { ID: 12, type: 33 },
-                    auxSwitchUniqueScenes: { ID: 123, type: 16 },
-                    bindingOffToOnSyncLevel: { ID: 125, type: 16 },
-                    breezeMode: { ID: 129, type: 35 },
-                    brightnessLevelForDoubleTapDown: { ID: 56, type: 32 },
-                    brightnessLevelForDoubleTapUp: { ID: 55, type: 32 },
-                    buttonDelay: { ID: 50, type: 32 },
-                    defaultLed1ColorWhenOff: { ID: 61, type: 32 },
-                    defaultLed1ColorWhenOn: { ID: 60, type: 32 },
-                    defaultLed1IntensityWhenOff: { ID: 63, type: 32 },
-                    defaultLed1IntensityWhenOn: { ID: 62, type: 32 },
-                    defaultLed2ColorWhenOff: { ID: 66, type: 32 },
-                    defaultLed2ColorWhenOn: { ID: 65, type: 32 },
-                    defaultLed2IntensityWhenOff: { ID: 68, type: 32 },
-                    defaultLed2IntensityWhenOn: { ID: 67, type: 32 },
-                    defaultLed3ColorWhenOff: { ID: 71, type: 32 },
-                    defaultLed3ColorWhenOn: { ID: 70, type: 32 },
-                    defaultLed3IntensityWhenOff: { ID: 73, type: 32 },
-                    defaultLed3IntensityWhenOn: { ID: 72, type: 32 },
-                    defaultLed4ColorWhenOff: { ID: 76, type: 32 },
-                    defaultLed4ColorWhenOn: { ID: 75, type: 32 },
-                    defaultLed4IntensityWhenOff: { ID: 78, type: 32 },
-                    defaultLed4IntensityWhenOn: { ID: 77, type: 32 },
-                    defaultLed5ColorWhenOff: { ID: 81, type: 32 },
-                    defaultLed5ColorWhenOn: { ID: 80, type: 32 },
-                    defaultLed5IntensityWhenOff: { ID: 83, type: 32 },
-                    defaultLed5IntensityWhenOn: { ID: 82, type: 32 },
-                    defaultLed6ColorWhenOff: { ID: 86, type: 32 },
-                    defaultLed6ColorWhenOn: { ID: 85, type: 32 },
-                    defaultLed6IntensityWhenOff: { ID: 88, type: 32 },
-                    defaultLed6IntensityWhenOn: { ID: 87, type: 32 },
-                    defaultLed7ColorWhenOff: { ID: 91, type: 32 },
-                    defaultLed7ColorWhenOn: { ID: 90, type: 32 },
-                    defaultLed7IntensityWhenOff: { ID: 93, type: 32 },
-                    defaultLed7IntensityWhenOn: { ID: 92, type: 32 },
-                    defaultLevelLocal: { ID: 13, type: 32 },
-                    defaultLevelRemote: { ID: 14, type: 32 },
-                    deviceBindNumber: { ID: 51, type: 32 },
-                    dimmingSpeedDownLocal: { ID: 6, type: 32 },
-                    dimmingSpeedDownRemote: { ID: 5, type: 32 },
-                    dimmingSpeedUpLocal: { ID: 2, type: 32 },
-                    dimmingSpeedUpRemote: { ID: 1, type: 32 },
-                    doubleTapClearNotifications: { ID: 262, type: 16 },
-                    doubleTapDownToParam56: { ID: 54, type: 16 },
-                    doubleTapUpToParam55: { ID: 53, type: 16 },
-                    fanControlMode: { ID: 130, type: 32 },
-                    fanLedLevelType: { ID: 263, type: 32 },
-                    fanTimerMode: { ID: 121, type: 32 },
-                    firmwareUpdateInProgressIndicator: { ID: 260, type: 16 },
-                    highLevelForFanControlMode: { ID: 133, type: 32 },
-                    higherOutputInNonNeutral: { ID: 25, type: 16 },
-                    internalTemperature: { ID: 32, type: 32 },
-                    invertSwitch: { ID: 11, type: 16 },
-                    ledBarScaling: { ID: 100, type: 16 },
-                    ledColorForFanControlMode: { ID: 134, type: 32 },
-                    ledColorWhenOff: { ID: 96, type: 32 },
-                    ledColorWhenOn: { ID: 95, type: 32 },
-                    ledIntensityWhenOff: { ID: 98, type: 32 },
-                    ledIntensityWhenOn: { ID: 97, type: 32 },
-                    loadLevelIndicatorTimeout: { ID: 17, type: 32 },
-                    localProtection: { ID: 256, type: 16 },
-                    lowLevelForFanControlMode: { ID: 131, type: 32 },
-                    maximumLevel: { ID: 10, type: 32 },
-                    mediumLevelForFanControlMode: { ID: 132, type: 32 },
-                    minimumLevel: { ID: 9, type: 32 },
-                    nonNeutralAuxLowGear: { ID: 31, type: 32 },
-                    nonNeutralAuxMediumGear: { ID: 30, type: 32 },
-                    onOffLedMode: { ID: 259, type: 16 },
-                    outputMode: { ID: 258, type: 16 },
-                    overheat: { ID: 33, type: 16 },
-                    periodicPowerAndEnergyReports: { ID: 19, type: 33 },
-                    powerType: { ID: 21, type: 16 },
-                    quickStartLevel: { ID: 24, type: 32 },
-                    quickStartTime: { ID: 23, type: 32 },
-                    rampRateOffToOnLocal: { ID: 4, type: 32 },
-                    rampRateOffToOnRemote: { ID: 3, type: 32 },
-                    rampRateOnToOffLocal: { ID: 8, type: 32 },
-                    rampRateOnToOffRemote: { ID: 7, type: 32 },
-                    relayClick: { ID: 261, type: 16 },
-                    remoteProtection: { ID: 257, type: 16 },
-                    singleTapBehavior: { ID: 120, type: 32 },
-                    smartBulbMode: { ID: 52, type: 16 },
-                    stateAfterPowerRestored: { ID: 15, type: 32 },
-                    switchType: { ID: 22, type: 32 },
-                },
-                commands: {
-                    individualLedEffect: {
-                        ID: 3,
-                        parameters: [
-                            { name: "led", type: 32 },
-                            { name: "effect", type: 32 },
-                            { name: "color", type: 32 },
-                            { name: "level", type: 32 },
-                            { name: "duration", type: 32 },
-                        ],
-                    },
-                    ledEffect: {
-                        ID: 1,
-                        parameters: [
-                            { name: "effect", type: 32 },
-                            { name: "color", type: 32 },
-                            { name: "level", type: 32 },
-                            { name: "duration", type: 32 },
-                        ],
-                    },
-                },
-                commandsResponse: {},
-                manufacturerCode: 4655,
             },
             manuSpecificLegrandDevices: {
                 ID: 64513,
@@ -3737,34 +3813,6 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 commandsResponse: {},
                 manufacturerCode: 4447,
             },
-            manuSpecificNiko1: {
-                ID: 64512,
-                attributes: {
-                    outletChildLock: { ID: 257, type: 32 },
-                    outletLedColor: { ID: 256, type: 34 },
-                    outletLedState: { ID: 260, type: 32 },
-                    switchOperationMode: { ID: 0, type: 48 },
-                },
-                commands: {},
-                commandsResponse: {},
-                manufacturerCode: 4703,
-            },
-            manuSpecificNiko2: {
-                ID: 64513,
-                attributes: { switchAction: { ID: 2, type: 32 } },
-                commands: {},
-                commandsResponse: {},
-                manufacturerCode: 4703,
-            },
-            manuSpecificNodOnPilotWire: {
-                ID: 64512,
-                attributes: { mode: { ID: 0, type: 32 } },
-                commands: {
-                    setMode: { ID: 0, parameters: [{ name: "mode", type: 32 }] },
-                },
-                commandsResponse: {},
-                manufacturerCode: 4747,
-            },
             manuSpecificOsram: {
                 ID: 64527,
                 attributes: {},
@@ -3778,7 +3826,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             manuSpecificPhilips: {
                 ID: 64512,
-                attributes: { config: { ID: 49, type: 25 } },
+                attributes: {
+                    config: { ID: 49, type: 25 },
+                },
                 commands: {},
                 commandsResponse: {
                     hueNotification: {
@@ -3789,7 +3839,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "type", type: 32 },
                             { name: "unknown2", type: 32 },
                             { name: "time", type: 32 },
-                            { name: "unknown2", type: 32 },
+                            { name: "unknown3", type: 32 },
                         ],
                     },
                 },
@@ -3797,7 +3847,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             manuSpecificPhilips2: {
                 ID: 64515,
-                attributes: { state: { ID: 2, type: 65 } },
+                attributes: {
+                    state: { ID: 2, type: 65 },
+                },
                 commands: {
                     multiColor: {
                         ID: 0,
@@ -3809,7 +3861,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             manuSpecificProfalux1: {
                 ID: 64545,
-                attributes: { motorCoverType: { ID: 0, type: 32 } },
+                attributes: {
+                    motorCoverType: { ID: 0, type: 32 },
+                },
                 commands: {},
                 commandsResponse: {},
                 manufacturerCode: 4368,
@@ -3854,7 +3908,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             manuSpecificSiglisZigfred: {
                 ID: 64578,
-                attributes: { buttonEvent: { ID: 8, type: 35 } },
+                attributes: {
+                    buttonEvent: { ID: 8, type: 35 },
+                },
                 commands: {
                     siglisZigfredButtonEvent: {
                         ID: 2,
@@ -3990,6 +4046,10 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "dpValues", type: 1011 },
                         ],
                     },
+                    tuyaWeatherSync: {
+                        ID: 97,
+                        parameters: [{ name: "payload", type: 1008 }],
+                    },
                 },
                 commandsResponse: {
                     activeStatusReport: {
@@ -4056,10 +4116,13 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "version", type: 32 },
                         ],
                     },
+                    tuyaWeatherRequest: {
+                        ID: 96,
+                        parameters: [{ name: "payload", type: 1008 }],
+                    },
                 },
             },
-            // biome-ignore lint/style/useNamingConvention: mock
-            manuSpecificTuya_2: {
+            manuSpecificTuya2: {
                 ID: 57346,
                 attributes: {
                     alarm_humidity: { ID: 53263, type: 48 },
@@ -4073,8 +4136,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 commands: {},
                 commandsResponse: {},
             },
-            // biome-ignore lint/style/useNamingConvention: mock
-            manuSpecificTuya_3: {
+            manuSpecificTuya3: {
                 ID: 57345,
                 attributes: {
                     powerOnBehavior: { ID: 53264, type: 48 },
@@ -4106,22 +4168,169 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 commands: {},
                 commandsResponse: {},
             },
+            msBromate: {
+                ID: 1048,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msBromodichloromethane: {
+                ID: 1061,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msBromoform: {
+                ID: 1062,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
             msCO2: {
                 ID: 1037,
                 attributes: {
                     maxMeasuredValue: { ID: 2, type: 57 },
                     measuredValue: { ID: 0, type: 57 },
                     minMeasuredValue: { ID: 1, type: 57 },
-                    sprutCO2AutoCalibration: {
-                        ID: 26113,
-                        manufacturerCode: 26214,
-                        type: 16,
-                    },
-                    sprutCO2Calibration: {
-                        ID: 26112,
-                        manufacturerCode: 26214,
-                        type: 16,
-                    },
+                    sprutCO2AutoCalibration: { ID: 26113, manufacturerCode: 26214, type: 16 },
+                    sprutCO2Calibration: { ID: 26112, manufacturerCode: 26214, type: 16 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msCarbonMonoxide: {
+                ID: 1036,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msChloramines: {
+                ID: 1049,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msChlorine: {
+                ID: 1050,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msChlorodibromomethane: {
+                ID: 1063,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msChloroform: {
+                ID: 1064,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msCopper: {
+                ID: 1057,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msDissolvedOxygen: {
+                ID: 1047,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msElectricalConductivity: {
+                ID: 1034,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 33 },
+                    measuredValue: { ID: 0, type: 33 },
+                    minMeasuredValue: { ID: 1, type: 33 },
+                    tolerance: { ID: 3, type: 33 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msEthylene: {
+                ID: 1038,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msEthyleneOxide: {
+                ID: 1039,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msFecalColiformAndEColi: {
+                ID: 1051,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
                 },
                 commands: {},
                 commandsResponse: {},
@@ -4137,16 +4346,60 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 commands: {},
                 commandsResponse: {},
             },
-            msIkeaVocIndexMeasurement: {
-                ID: 64638,
+            msFluoride: {
+                ID: 1052,
                 attributes: {
-                    measuredMaxValue: { ID: 2, type: 57 },
-                    measuredMinValue: { ID: 1, type: 57 },
+                    maxMeasuredValue: { ID: 2, type: 57 },
                     measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
                 },
                 commands: {},
                 commandsResponse: {},
-                manufacturerCode: 4476,
+            },
+            msFormaldehyde: {
+                ID: 1067,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msHaloaceticAcids: {
+                ID: 1053,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msHydrogen: {
+                ID: 1040,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msHydrogenSulfide: {
+                ID: 1041,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
             },
             msIlluminanceLevelSensing: {
                 ID: 1025,
@@ -4170,51 +4423,104 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 commands: {},
                 commandsResponse: {},
             },
+            msLead: {
+                ID: 1058,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msLeafWetness: {
+                ID: 1031,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 33 },
+                    measuredValue: { ID: 0, type: 33 },
+                    minMeasuredValue: { ID: 1, type: 33 },
+                    tolerance: { ID: 3, type: 33 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msManganese: {
+                ID: 1059,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msNitricOxide: {
+                ID: 1042,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msNitrogenDioxide: {
+                ID: 1043,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
             msOccupancySensing: {
                 ID: 1030,
                 attributes: {
                     contactOToUDelay: { ID: 48, type: 33 },
                     contactUToODelay: { ID: 49, type: 33 },
                     contactUToOThreshold: { ID: 50, type: 32 },
-                    elkoForceOffTimeout: {
-                        ID: 57346,
-                        manufacturerCode: 4727,
-                        type: 33,
-                    },
-                    elkoOccupancyDfltOperationMode: {
-                        ID: 57344,
-                        manufacturerCode: 4727,
-                        type: 48,
-                    },
-                    elkoOccupancyOperationMode: {
-                        ID: 57345,
-                        manufacturerCode: 4727,
-                        type: 48,
-                    },
-                    elkoOccupancySensitivity: {
-                        ID: 57347,
-                        manufacturerCode: 4727,
-                        type: 32,
-                    },
+                    elkoForceOffTimeout: { ID: 57346, manufacturerCode: 4727, type: 33 },
+                    elkoOccupancyDfltOperationMode: { ID: 57344, manufacturerCode: 4727, type: 48 },
+                    elkoOccupancyOperationMode: { ID: 57345, manufacturerCode: 4727, type: 48 },
+                    elkoOccupancySensitivity: { ID: 57347, manufacturerCode: 4727, type: 32 },
                     occupancy: { ID: 0, type: 24 },
                     occupancySensorType: { ID: 1, type: 48 },
                     occupancySensorTypeBitmap: { ID: 2, type: 24 },
                     pirOToUDelay: { ID: 16, type: 33 },
                     pirUToODelay: { ID: 17, type: 33 },
                     pirUToOThreshold: { ID: 18, type: 32 },
-                    sprutOccupancyLevel: {
-                        ID: 26112,
-                        manufacturerCode: 26214,
-                        type: 33,
-                    },
-                    sprutOccupancySensitivity: {
-                        ID: 26113,
-                        manufacturerCode: 26214,
-                        type: 33,
-                    },
+                    sprutOccupancyLevel: { ID: 26112, manufacturerCode: 26214, type: 33 },
+                    sprutOccupancySensitivity: { ID: 26113, manufacturerCode: 26214, type: 33 },
                     ultrasonicOToUDelay: { ID: 32, type: 33 },
                     ultrasonicUToODelay: { ID: 33, type: 33 },
                     ultrasonicUToOThreshold: { ID: 34, type: 32 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msOxygen: {
+                ID: 1044,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msOzone: {
+                ID: 1045,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
                 },
                 commands: {},
                 commandsResponse: {},
@@ -4247,6 +4553,17 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 commands: {},
                 commandsResponse: {},
             },
+            msSodium: {
+                ID: 1065,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
             msSoilMoisture: {
                 ID: 1032,
                 attributes: {
@@ -4254,6 +4571,28 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     measuredValue: { ID: 0, type: 33 },
                     minMeasuredValue: { ID: 1, type: 33 },
                     tolerance: { ID: 3, type: 33 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msSulfate: {
+                ID: 1060,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msSulfurDioxide: {
+                ID: 1046,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
                 },
                 commands: {},
                 commandsResponse: {},
@@ -4266,11 +4605,51 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     minAbsoluteChange: { ID: 17, type: 255 },
                     minMeasuredValue: { ID: 1, type: 41 },
                     minPercentChange: { ID: 16, type: 255 },
-                    sprutTemperatureOffset: {
-                        ID: 26112,
-                        manufacturerCode: 26214,
-                        type: 41,
-                    },
+                    sprutTemperatureOffset: { ID: 26112, manufacturerCode: 26214, type: 41 },
+                    tolerance: { ID: 3, type: 33 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msTotalColiformBacteria: {
+                ID: 1055,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msTotalTrihalomethanes: {
+                ID: 1054,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msTurbidity: {
+                ID: 1056,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    minMeasuredValue: { ID: 1, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            msWindSpeed: {
+                ID: 1035,
+                attributes: {
+                    maxMeasuredValue: { ID: 2, type: 33 },
+                    measuredValue: { ID: 0, type: 33 },
+                    minMeasuredValue: { ID: 1, type: 33 },
                     tolerance: { ID: 3, type: 33 },
                 },
                 commands: {},
@@ -4287,14 +4666,18 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             neighborCleaning: {
                 ID: 35,
-                attributes: { neighborCleaningTimeout: { ID: 0, type: 33 } },
+                attributes: {
+                    neighborCleaningTimeout: { ID: 0, type: 33 },
+                },
                 commands: {},
                 commandsResponse: {},
             },
             owonClearMetering: {
                 ID: 65504,
                 attributes: {},
-                commands: { owonClearMeasurementData: { ID: 0, parameters: [] } },
+                commands: {
+                    owonClearMeasurementData: { ID: 0, parameters: [] },
+                },
                 commandsResponse: {},
                 manufacturerCode: 4412,
             },
@@ -4561,7 +4944,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             piIso7818ProtocolTunnel: {
                 ID: 1557,
-                attributes: { status: { ID: 0, type: 32 } },
+                attributes: {
+                    status: { ID: 0, type: 32 },
+                },
                 commands: {},
                 commandsResponse: {},
             },
@@ -4656,20 +5041,44 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 commands: {},
                 commandsResponse: {},
             },
+            pm10Measurement: {
+                ID: 1069,
+                attributes: {
+                    measuredMaxValue: { ID: 2, type: 57 },
+                    measuredMinValue: { ID: 1, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
+            pm1Measurement: {
+                ID: 1068,
+                attributes: {
+                    measuredMaxValue: { ID: 2, type: 57 },
+                    measuredMinValue: { ID: 1, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
+                },
+                commands: {},
+                commandsResponse: {},
+            },
             pm25Measurement: {
                 ID: 1066,
                 attributes: {
-                    measuredMaxValue: { ID: 2, type: 33 },
-                    measuredMinValue: { ID: 1, type: 33 },
-                    measuredTolerance: { ID: 3, type: 33 },
-                    measuredValue: { ID: 0, type: 33 },
+                    measuredMaxValue: { ID: 2, type: 57 },
+                    measuredMinValue: { ID: 1, type: 57 },
+                    measuredValue: { ID: 0, type: 57 },
+                    tolerance: { ID: 3, type: 57 },
                 },
                 commands: {},
                 commandsResponse: {},
             },
             schneiderSpecificPilotMode: {
                 ID: 65315,
-                attributes: { pilotMode: { ID: 49, type: 48 } },
+                attributes: {
+                    pilotMode: { ID: 49, type: 48 },
+                },
                 commands: {},
                 commandsResponse: {},
                 manufacturerCode: 4190,
@@ -4682,8 +5091,6 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     activeRegisterTierReceived: { ID: 33, type: 48 },
                     billToDate: { ID: 2560, type: 35 },
                     billToDateTimeStamp: { ID: 2561, type: 226 },
-                    calendarNotificationFlags: { ID: 3, type: 27 },
-                    changeReportingProfile: { ID: 256, type: 255 },
                     controlTempreature: { ID: 25, type: 42 },
                     curMonthMaxEnergyCarrDemand: { ID: 1043, type: 42 },
                     curMonthMinEnergyCarrDemand: { ID: 1044, type: 42 },
@@ -4753,22 +5160,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     demandIntegrationPeriod: { ID: 1538, type: 32 },
                     demandLimit: { ID: 1537, type: 34 },
                     demandLimitArmDuration: { ID: 1540, type: 33 },
-                    develcoCurrentSummation: {
-                        ID: 769,
-                        manufacturerCode: 4117,
-                        type: 37,
-                    },
-                    develcoInterfaceMode: {
-                        ID: 770,
-                        manufacturerCode: 4117,
-                        type: 49,
-                    },
-                    develcoPulseConfiguration: {
-                        ID: 768,
-                        manufacturerCode: 4117,
-                        type: 33,
-                    },
-                    deviceManagementFlags: { ID: 5, type: 27 },
+                    develcoCurrentSummation: { ID: 769, manufacturerCode: 4117, type: 37 },
+                    develcoInterfaceMode: { ID: 770, manufacturerCode: 4117, type: 49 },
+                    develcoPulseConfiguration: { ID: 768, manufacturerCode: 4117, type: 33 },
                     dftSumm: { ID: 4, type: 37 },
                     divisor: { ID: 770, type: 34 },
                     electricityAlarmMask: { ID: 2049, type: 27 },
@@ -4795,160 +5189,45 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     meteringDeviceType: { ID: 774, type: 24 },
                     moduleSerialNumber: { ID: 782, type: 65 },
                     multiplier: { ID: 769, type: 34 },
-                    notificationControlFlags: { ID: 0, type: 27 },
-                    notificationFlags: { ID: 1, type: 27 },
                     numberOfDemandSubintervals: { ID: 1539, type: 32 },
                     operatingTariffLevel: { ID: 783, type: 65 },
                     outletTempreature: { ID: 24, type: 42 },
-                    owonAccumulativeEnergyThreshold: {
-                        ID: 20486,
-                        manufacturerCode: 4412,
-                        type: 32,
-                    },
+                    owonAccumulativeEnergyThreshold: { ID: 20486, manufacturerCode: 4412, type: 32 },
                     owonCurrentSum: { ID: 12547, manufacturerCode: 4412, type: 34 },
                     owonFrequency: { ID: 20485, manufacturerCode: 4412, type: 32 },
                     owonL1Energy: { ID: 16384, manufacturerCode: 4412, type: 37 },
-                    owonL1PhaseCurrent: {
-                        ID: 12544,
-                        manufacturerCode: 4412,
-                        type: 34,
-                    },
-                    owonL1PhasePower: {
-                        ID: 8192,
-                        manufacturerCode: 4412,
-                        type: 42,
-                    },
-                    owonL1PhaseReactivePower: {
-                        ID: 8448,
-                        manufacturerCode: 4412,
-                        type: 42,
-                    },
-                    owonL1PhaseVoltage: {
-                        ID: 12288,
-                        manufacturerCode: 4412,
-                        type: 34,
-                    },
-                    owonL1PowerFactor: {
-                        ID: 16644,
-                        manufacturerCode: 4412,
-                        type: 40,
-                    },
-                    owonL1ReactiveEnergy: {
-                        ID: 16640,
-                        manufacturerCode: 4412,
-                        type: 37,
-                    },
+                    owonL1PhaseCurrent: { ID: 12544, manufacturerCode: 4412, type: 34 },
+                    owonL1PhasePower: { ID: 8192, manufacturerCode: 4412, type: 42 },
+                    owonL1PhaseReactivePower: { ID: 8448, manufacturerCode: 4412, type: 42 },
+                    owonL1PhaseVoltage: { ID: 12288, manufacturerCode: 4412, type: 34 },
+                    owonL1PowerFactor: { ID: 16644, manufacturerCode: 4412, type: 40 },
+                    owonL1ReactiveEnergy: { ID: 16640, manufacturerCode: 4412, type: 37 },
                     owonL2Energy: { ID: 16385, manufacturerCode: 4412, type: 37 },
-                    owonL2PhaseCurrent: {
-                        ID: 12545,
-                        manufacturerCode: 4412,
-                        type: 34,
-                    },
-                    owonL2PhasePower: {
-                        ID: 8193,
-                        manufacturerCode: 4412,
-                        type: 42,
-                    },
-                    owonL2PhaseReactivePower: {
-                        ID: 8449,
-                        manufacturerCode: 4412,
-                        type: 42,
-                    },
-                    owonL2PhaseVoltage: {
-                        ID: 12289,
-                        manufacturerCode: 4412,
-                        type: 34,
-                    },
-                    owonL2PowerFactor: {
-                        ID: 16645,
-                        manufacturerCode: 4412,
-                        type: 40,
-                    },
-                    owonL2ReactiveEnergy: {
-                        ID: 16641,
-                        manufacturerCode: 4412,
-                        type: 37,
-                    },
+                    owonL2PhaseCurrent: { ID: 12545, manufacturerCode: 4412, type: 34 },
+                    owonL2PhasePower: { ID: 8193, manufacturerCode: 4412, type: 42 },
+                    owonL2PhaseReactivePower: { ID: 8449, manufacturerCode: 4412, type: 42 },
+                    owonL2PhaseVoltage: { ID: 12289, manufacturerCode: 4412, type: 34 },
+                    owonL2PowerFactor: { ID: 16645, manufacturerCode: 4412, type: 40 },
+                    owonL2ReactiveEnergy: { ID: 16641, manufacturerCode: 4412, type: 37 },
                     owonL3Energy: { ID: 16386, manufacturerCode: 4412, type: 37 },
-                    owonL3PhaseCurrent: {
-                        ID: 12546,
-                        manufacturerCode: 4412,
-                        type: 34,
-                    },
-                    owonL3PhasePower: {
-                        ID: 8194,
-                        manufacturerCode: 4412,
-                        type: 42,
-                    },
-                    owonL3PhaseReactivePower: {
-                        ID: 8450,
-                        manufacturerCode: 4412,
-                        type: 42,
-                    },
-                    owonL3PhaseVoltage: {
-                        ID: 12290,
-                        manufacturerCode: 4412,
-                        type: 34,
-                    },
-                    owonL3PowerFactor: {
-                        ID: 16646,
-                        manufacturerCode: 4412,
-                        type: 40,
-                    },
-                    owonL3ReactiveEnergy: {
-                        ID: 16642,
-                        manufacturerCode: 4412,
-                        type: 37,
-                    },
-                    owonLastHistoricalRecordTime: {
-                        ID: 20480,
-                        manufacturerCode: 4412,
-                        type: 35,
-                    },
-                    owonLeakageCurrent: {
-                        ID: 12548,
-                        manufacturerCode: 4412,
-                        type: 34,
-                    },
-                    owonMaximumReportCycle: {
-                        ID: 20483,
-                        manufacturerCode: 4412,
-                        type: 35,
-                    },
-                    owonMinimumReportCycle: {
-                        ID: 20482,
-                        manufacturerCode: 4412,
-                        type: 35,
-                    },
-                    owonOldestHistoricalRecordTime: {
-                        ID: 20481,
-                        manufacturerCode: 4412,
-                        type: 35,
-                    },
-                    owonPercentChangeInPower: {
-                        ID: 20487,
-                        manufacturerCode: 4412,
-                        type: 32,
-                    },
-                    owonReactiveEnergySum: {
-                        ID: 16643,
-                        manufacturerCode: 4412,
-                        type: 37,
-                    },
-                    owonReactivePowerSum: {
-                        ID: 8451,
-                        manufacturerCode: 4412,
-                        type: 42,
-                    },
+                    owonL3PhaseCurrent: { ID: 12546, manufacturerCode: 4412, type: 34 },
+                    owonL3PhasePower: { ID: 8194, manufacturerCode: 4412, type: 42 },
+                    owonL3PhaseReactivePower: { ID: 8450, manufacturerCode: 4412, type: 42 },
+                    owonL3PhaseVoltage: { ID: 12290, manufacturerCode: 4412, type: 34 },
+                    owonL3PowerFactor: { ID: 16646, manufacturerCode: 4412, type: 40 },
+                    owonL3ReactiveEnergy: { ID: 16642, manufacturerCode: 4412, type: 37 },
+                    owonLastHistoricalRecordTime: { ID: 20480, manufacturerCode: 4412, type: 35 },
+                    owonLeakageCurrent: { ID: 12548, manufacturerCode: 4412, type: 34 },
+                    owonMaximumReportCycle: { ID: 20483, manufacturerCode: 4412, type: 35 },
+                    owonMinimumReportCycle: { ID: 20482, manufacturerCode: 4412, type: 35 },
+                    owonOldestHistoricalRecordTime: { ID: 20481, manufacturerCode: 4412, type: 35 },
+                    owonPercentChangeInPower: { ID: 20488, manufacturerCode: 4412, type: 32 },
+                    owonReactiveEnergySum: { ID: 16643, manufacturerCode: 4412, type: 37 },
+                    owonReactivePowerSum: { ID: 8451, manufacturerCode: 4412, type: 42 },
                     owonReportMap: { ID: 4096, manufacturerCode: 4412, type: 24 },
                     owonReportMode: { ID: 20487, manufacturerCode: 4412, type: 32 },
-                    owonSentHistoricalRecordState: {
-                        ID: 20484,
-                        manufacturerCode: 4412,
-                        type: 32,
-                    },
+                    owonSentHistoricalRecordState: { ID: 20484, manufacturerCode: 4412, type: 32 },
                     powerFactor: { ID: 6, type: 40 },
-                    prePayNotificationFlags: { ID: 4, type: 27 },
                     presetReadingTime: { ID: 17, type: 33 },
                     previousDayMaxDemand: { ID: 1038, type: 42 },
                     previousDayMaxPressure: { ID: 1035, type: 37 },
@@ -4956,172 +5235,43 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     previousdayConsumpDelivered: { ID: 1027, type: 34 },
                     previousdayConsumpReceived: { ID: 1028, type: 34 },
                     previousdayMaxEnergyCarrDemand: { ID: 1042, type: 42 },
-                    priceNotificationFlags: { ID: 2, type: 27 },
                     profileIntervalPeriod: { ID: 15, type: 48 },
                     projectedBill: { ID: 2562, type: 35 },
                     projectedBillTimeStamp: { ID: 2563, type: 226 },
                     readingSnapshotTime: { ID: 7, type: 226 },
                     remainingBattLife: { ID: 513, type: 32 },
-                    schneiderActiveEnergyDivisor: {
-                        ID: 17409,
-                        manufacturerCode: 4190,
-                        type: 34,
-                    },
-                    schneiderActiveEnergyL1Phase: {
-                        ID: 16643,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderActiveEnergyL2Phase: {
-                        ID: 16899,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderActiveEnergyL3Phase: {
-                        ID: 17155,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderActiveEnergyMultiplier: {
-                        ID: 17408,
-                        manufacturerCode: 4190,
-                        type: 34,
-                    },
-                    schneiderActiveEnergyTotal: {
-                        ID: 16400,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderApparentEnergyDivisor: {
-                        ID: 17413,
-                        manufacturerCode: 4190,
-                        type: 34,
-                    },
-                    schneiderApparentEnergyL1Phase: {
-                        ID: 16645,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderApparentEnergyL2Phase: {
-                        ID: 16901,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderApparentEnergyL3Phase: {
-                        ID: 17157,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderApparentEnergyMultiplier: {
-                        ID: 17412,
-                        manufacturerCode: 4190,
-                        type: 34,
-                    },
-                    schneiderApparentEnergyTotal: {
-                        ID: 16402,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderEnergyCountersReportingPeriod: {
-                        ID: 17920,
-                        manufacturerCode: 4190,
-                        type: 33,
-                    },
-                    schneiderEnergyResetDateTime: {
-                        ID: 17665,
-                        manufacturerCode: 4190,
-                        type: 226,
-                    },
-                    schneiderPartialActiveEnergyL1Phase: {
-                        ID: 16640,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialActiveEnergyL2Phase: {
-                        ID: 16896,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialActiveEnergyL3Phase: {
-                        ID: 17152,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialActiveEnergyTotal: {
-                        ID: 16404,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialApparentEnergyL1Phase: {
-                        ID: 16642,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialApparentEnergyL2Phase: {
-                        ID: 16898,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialApparentEnergyL3Phase: {
-                        ID: 17154,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialApparentEnergyTotal: {
-                        ID: 16406,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialReactiveEnergyL1Phase: {
-                        ID: 16641,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialReactiveEnergyL2Phase: {
-                        ID: 16897,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialReactiveEnergyL3Phase: {
-                        ID: 17153,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderPartialReactiveEnergyTotal: {
-                        ID: 16405,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderReactiveEnergyDivisor: {
-                        ID: 17411,
-                        manufacturerCode: 4190,
-                        type: 34,
-                    },
-                    schneiderReactiveEnergyL1Phase: {
-                        ID: 16644,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderReactiveEnergyL2Phase: {
-                        ID: 16900,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderReactiveEnergyL3Phase: {
-                        ID: 17156,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
-                    schneiderReactiveEnergyMultiplier: {
-                        ID: 17410,
-                        manufacturerCode: 4190,
-                        type: 34,
-                    },
-                    schneiderReactiveEnergyTotal: {
-                        ID: 16401,
-                        manufacturerCode: 4190,
-                        type: 45,
-                    },
+                    schneiderActiveEnergyDivisor: { ID: 17409, manufacturerCode: 4190, type: 34 },
+                    schneiderActiveEnergyL1Phase: { ID: 16643, manufacturerCode: 4190, type: 45 },
+                    schneiderActiveEnergyL2Phase: { ID: 16899, manufacturerCode: 4190, type: 45 },
+                    schneiderActiveEnergyL3Phase: { ID: 17155, manufacturerCode: 4190, type: 45 },
+                    schneiderActiveEnergyMultiplier: { ID: 17408, manufacturerCode: 4190, type: 34 },
+                    schneiderActiveEnergyTotal: { ID: 16400, manufacturerCode: 4190, type: 45 },
+                    schneiderApparentEnergyDivisor: { ID: 17413, manufacturerCode: 4190, type: 34 },
+                    schneiderApparentEnergyL1Phase: { ID: 16645, manufacturerCode: 4190, type: 45 },
+                    schneiderApparentEnergyL2Phase: { ID: 16901, manufacturerCode: 4190, type: 45 },
+                    schneiderApparentEnergyL3Phase: { ID: 17157, manufacturerCode: 4190, type: 45 },
+                    schneiderApparentEnergyMultiplier: { ID: 17412, manufacturerCode: 4190, type: 34 },
+                    schneiderApparentEnergyTotal: { ID: 16402, manufacturerCode: 4190, type: 45 },
+                    schneiderEnergyCountersReportingPeriod: { ID: 17920, manufacturerCode: 4190, type: 33 },
+                    schneiderEnergyResetDateTime: { ID: 17665, manufacturerCode: 4190, type: 226 },
+                    schneiderPartialActiveEnergyL1Phase: { ID: 16640, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialActiveEnergyL2Phase: { ID: 16896, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialActiveEnergyL3Phase: { ID: 17152, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialActiveEnergyTotal: { ID: 16404, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialApparentEnergyL1Phase: { ID: 16642, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialApparentEnergyL2Phase: { ID: 16898, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialApparentEnergyL3Phase: { ID: 17154, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialApparentEnergyTotal: { ID: 16406, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialReactiveEnergyL1Phase: { ID: 16641, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialReactiveEnergyL2Phase: { ID: 16897, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialReactiveEnergyL3Phase: { ID: 17153, manufacturerCode: 4190, type: 45 },
+                    schneiderPartialReactiveEnergyTotal: { ID: 16405, manufacturerCode: 4190, type: 45 },
+                    schneiderReactiveEnergyDivisor: { ID: 17411, manufacturerCode: 4190, type: 34 },
+                    schneiderReactiveEnergyL1Phase: { ID: 16644, manufacturerCode: 4190, type: 45 },
+                    schneiderReactiveEnergyL2Phase: { ID: 16900, manufacturerCode: 4190, type: 45 },
+                    schneiderReactiveEnergyL3Phase: { ID: 17156, manufacturerCode: 4190, type: 45 },
+                    schneiderReactiveEnergyMultiplier: { ID: 17410, manufacturerCode: 4190, type: 34 },
+                    schneiderReactiveEnergyTotal: { ID: 16401, manufacturerCode: 4190, type: 45 },
                     siteId: { ID: 775, type: 65 },
                     status: { ID: 512, type: 24 },
                     summaFormatting: { ID: 771, type: 24 },
@@ -5151,13 +5301,6 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     reqFastPollModeRsp: { ID: 3, parameters: [] },
                     reqMirrorRsp: { ID: 1, parameters: [] },
                 },
-            },
-            sprutDevice: {
-                ID: 26112,
-                attributes: { debug: { ID: 0, type: 16 } },
-                commands: {},
-                commandsResponse: {},
-                manufacturerCode: 26214,
             },
             sprutIrBlaster: {
                 ID: 26115,
@@ -5197,7 +5340,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             sprutVoc: {
                 ID: 26113,
-                attributes: { voc: { ID: 26112, type: 33 } },
+                attributes: {
+                    voc: { ID: 26112, type: 33 },
+                },
                 commands: {},
                 commandsResponse: {},
                 manufacturerCode: 26214,
@@ -5332,12 +5477,10 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             ssIasWd: {
                 ID: 1282,
-                attributes: { maxDuration: { ID: 0, type: 33 } },
+                attributes: {
+                    maxDuration: { ID: 0, type: 33 },
+                },
                 commands: {
-                    boschOutdoorSiren: {
-                        ID: 240,
-                        parameters: [{ name: "data", type: 32 }],
-                    },
                     squawk: {
                         ID: 1,
                         parameters: [{ name: "squawkinfo", type: 32 }],
@@ -5358,11 +5501,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 ID: 1280,
                 attributes: {
                     currentZoneSensitivityLevel: { ID: 19, type: 32 },
-                    develcoAlarmOffDelay: {
-                        ID: 32769,
-                        manufacturerCode: 4117,
-                        type: 33,
-                    },
+                    develcoAlarmOffDelay: { ID: 32769, manufacturerCode: 4117, type: 33 },
                     iasCieAddr: { ID: 16, type: 240 },
                     numZoneSensitivityLevelsSupported: { ID: 18, type: 32 },
                     zoneId: { ID: 17, type: 32 },
@@ -5371,14 +5510,6 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     zoneType: { ID: 1, type: 49 },
                 },
                 commands: {
-                    boschSmokeDetectorSiren: {
-                        ID: 128,
-                        parameters: [{ name: "data", type: 33 }],
-                    },
-                    boschTestTamper: {
-                        ID: 243,
-                        parameters: [{ name: "data", type: 32 }],
-                    },
                     enrollRsp: {
                         ID: 0,
                         parameters: [
@@ -5387,7 +5518,13 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                         ],
                     },
                     initNormalOpMode: { ID: 1, parameters: [] },
-                    initTestMode: { ID: 2, parameters: [] },
+                    initTestMode: {
+                        ID: 2,
+                        parameters: [
+                            { name: "testModeDuration", type: 32 },
+                            { name: "currentZoneSensitivityLevel", type: 32 },
+                        ],
+                    },
                 },
                 commandsResponse: {
                     enrollReq: {
@@ -5453,11 +5590,101 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 ID: 4096,
                 attributes: {},
                 commands: {
+                    deviceInformation: {
+                        ID: 2,
+                        parameters: [
+                            { name: "transactionID", type: 35 },
+                            { name: "startIndex", type: 32 },
+                        ],
+                        response: 3,
+                    },
+                    getEndpointList: {
+                        ID: 66,
+                        parameters: [{ name: "startIndex", type: 32 }],
+                        response: 66,
+                    },
+                    getGroupIdentifiers: {
+                        ID: 65,
+                        parameters: [{ name: "startIndex", type: 32 }],
+                        response: 65,
+                    },
                     identifyRequest: {
                         ID: 6,
                         parameters: [
                             { name: "transactionID", type: 35 },
                             { name: "duration", type: 33 },
+                        ],
+                    },
+                    networkJoinEndDevice: {
+                        ID: 20,
+                        parameters: [
+                            { name: "transactionID", type: 35 },
+                            { name: "extendedPANID", type: 240 },
+                            { name: "keyIndex", type: 32 },
+                            { name: "encryptedNetworkKey", type: 241 },
+                            { name: "networkUpdateID", type: 32 },
+                            { name: "logicalChannel", type: 32 },
+                            { name: "panID", type: 33 },
+                            { name: "nwkAddr", type: 33 },
+                            { name: "groupIDsBegin", type: 33 },
+                            { name: "groupIDsEnd", type: 33 },
+                            { name: "freeNwkAddrRangeBegin", type: 33 },
+                            { name: "freeNwkAddrRangeEnd", type: 33 },
+                            { name: "freeGroupIDRangeBegin", type: 33 },
+                            { name: "freeGroupIDRangeEnd", type: 33 },
+                        ],
+                        response: 21,
+                    },
+                    networkJoinRouter: {
+                        ID: 18,
+                        parameters: [
+                            { name: "transactionID", type: 35 },
+                            { name: "extendedPANID", type: 240 },
+                            { name: "keyIndex", type: 32 },
+                            { name: "encryptedNetworkKey", type: 241 },
+                            { name: "networkUpdateID", type: 32 },
+                            { name: "logicalChannel", type: 32 },
+                            { name: "panID", type: 33 },
+                            { name: "nwkAddr", type: 33 },
+                            { name: "groupIDsBegin", type: 33 },
+                            { name: "groupIDsEnd", type: 33 },
+                            { name: "freeNwkAddrRangeBegin", type: 33 },
+                            { name: "freeNwkAddrRangeEnd", type: 33 },
+                            { name: "freeGroupIDRangeBegin", type: 33 },
+                            { name: "freeGroupIDRangeEnd", type: 33 },
+                        ],
+                        response: 19,
+                    },
+                    networkStart: {
+                        ID: 16,
+                        parameters: [
+                            { name: "transactionID", type: 35 },
+                            { name: "extendedPANID", type: 240 },
+                            { name: "keyIndex", type: 32 },
+                            { name: "encryptedNetworkKey", type: 241 },
+                            { name: "logicalChannel", type: 32 },
+                            { name: "panID", type: 33 },
+                            { name: "nwkAddr", type: 33 },
+                            { name: "groupIDsBegin", type: 33 },
+                            { name: "groupIDsEnd", type: 33 },
+                            { name: "freeNwkAddrRangeBegin", type: 33 },
+                            { name: "freeNwkAddrRangeEnd", type: 33 },
+                            { name: "freeGroupIDRangeBegin", type: 33 },
+                            { name: "freeGroupIDRangeEnd", type: 33 },
+                            { name: "initiatorIEEE", type: 240 },
+                            { name: "initiatorNwkAddr", type: 33 },
+                        ],
+                        response: 17,
+                    },
+                    networkUpdate: {
+                        ID: 22,
+                        parameters: [
+                            { name: "transactionID", type: 35 },
+                            { name: "extendedPANID", type: 240 },
+                            { name: "networkUpdateID", type: 32 },
+                            { name: "logicalChannel", type: 32 },
+                            { name: "panID", type: 33 },
+                            { name: "nwkAddr", type: 33 },
                         ],
                     },
                     resetToFactoryNew: {
@@ -5475,6 +5702,67 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     },
                 },
                 commandsResponse: {
+                    deviceInformation: {
+                        ID: 3,
+                        parameters: [
+                            { name: "transactionID", type: 35 },
+                            { name: "numberOfSubDevices", type: 32 },
+                            { name: "startIndex", type: 32 },
+                            { name: "deviceInfoCount", type: 32 },
+                        ],
+                    },
+                    endpointInformation: {
+                        ID: 64,
+                        parameters: [
+                            { name: "ieeeAddress", type: 240 },
+                            { name: "networkAddress", type: 33 },
+                            { name: "endpointID", type: 32 },
+                            { name: "profileID", type: 33 },
+                            { name: "deviceID", type: 33 },
+                            { name: "version", type: 32 },
+                        ],
+                    },
+                    getEndpointList: {
+                        ID: 66,
+                        parameters: [
+                            { name: "total", type: 32 },
+                            { name: "startIndex", type: 32 },
+                            { name: "count", type: 32 },
+                        ],
+                    },
+                    getGroupIdentifiers: {
+                        ID: 65,
+                        parameters: [
+                            { name: "total", type: 32 },
+                            { name: "startIndex", type: 32 },
+                            { name: "count", type: 32 },
+                        ],
+                    },
+                    networkJoinEndDevice: {
+                        ID: 21,
+                        parameters: [
+                            { name: "transactionID", type: 35 },
+                            { name: "status", type: 48 },
+                        ],
+                    },
+                    networkJoinRouter: {
+                        ID: 19,
+                        parameters: [
+                            { name: "transactionID", type: 35 },
+                            { name: "status", type: 48 },
+                        ],
+                    },
+                    networkStart: {
+                        ID: 17,
+                        parameters: [
+                            { name: "transactionID", type: 35 },
+                            { name: "status", type: 48 },
+                            { name: "extendedPANID", type: 240 },
+                            { name: "networkUpdateID", type: 32 },
+                            { name: "logicalChannel", type: 32 },
+                            { name: "panID", type: 33 },
+                        ],
+                    },
                     scanResponse: {
                         ID: 1,
                         parameters: [
@@ -5491,6 +5779,61 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                             { name: "networkAddress", type: 33 },
                             { name: "numberOfSubDevices", type: 32 },
                             { name: "totalGroupIdentifiers", type: 32 },
+                            {
+                                conditions: [
+                                    {
+                                        field: "numberOfSubDevices",
+                                        type: "fieldEquals",
+                                        value: 1,
+                                    },
+                                ],
+                                name: "endpointID",
+                                type: 32,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "numberOfSubDevices",
+                                        type: "fieldEquals",
+                                        value: 1,
+                                    },
+                                ],
+                                name: "profileID",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "numberOfSubDevices",
+                                        type: "fieldEquals",
+                                        value: 1,
+                                    },
+                                ],
+                                name: "deviceID",
+                                type: 33,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "numberOfSubDevices",
+                                        type: "fieldEquals",
+                                        value: 1,
+                                    },
+                                ],
+                                name: "version",
+                                type: 32,
+                            },
+                            {
+                                conditions: [
+                                    {
+                                        field: "numberOfSubDevices",
+                                        type: "fieldEquals",
+                                        value: 1,
+                                    },
+                                ],
+                                name: "groupIDCount",
+                                type: 32,
+                            },
                         ],
                     },
                 },
@@ -5499,11 +5842,26 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 ID: 64640,
                 attributes: {},
                 commands: {
-                    action1: { ID: 1, parameters: [{ name: "data", type: 32 }] },
-                    action2: { ID: 2, parameters: [{ name: "data", type: 32 }] },
-                    action3: { ID: 3, parameters: [{ name: "data", type: 32 }] },
-                    action4: { ID: 4, parameters: [{ name: "data", type: 32 }] },
-                    action6: { ID: 6, parameters: [{ name: "data", type: 32 }] },
+                    action1: {
+                        ID: 1,
+                        parameters: [{ name: "data", type: 32 }],
+                    },
+                    action2: {
+                        ID: 2,
+                        parameters: [{ name: "data", type: 32 }],
+                    },
+                    action3: {
+                        ID: 3,
+                        parameters: [{ name: "data", type: 32 }],
+                    },
+                    action4: {
+                        ID: 4,
+                        parameters: [{ name: "data", type: 32 }],
+                    },
+                    action6: {
+                        ID: 6,
+                        parameters: [{ name: "data", type: 32 }],
+                    },
                 },
                 commandsResponse: {},
                 manufacturerCode: 4476,
@@ -5512,19 +5870,55 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 ID: 1796,
                 attributes: {},
                 commands: {
+                    closeTunnel: {
+                        ID: 1,
+                        parameters: [{ name: "tunnelId", type: 33 }],
+                    },
+                    requestTunnel: {
+                        ID: 0,
+                        parameters: [
+                            { name: "protocolId", type: 48 },
+                            { name: "manufCode", type: 33 },
+                            { name: "flowControl", type: 16 },
+                            { name: "mtuSize", type: 33 },
+                        ],
+                        response: 0,
+                    },
                     transferData: {
                         ID: 2,
                         parameters: [
-                            { name: "tunnelID", type: 33 },
+                            { name: "tunnelId", type: 33 },
                             { name: "data", type: 1008 },
+                        ],
+                    },
+                    transferDataError: {
+                        ID: 3,
+                        parameters: [
+                            { name: "tunnelId", type: 33 },
+                            { name: "status", type: 32 },
                         ],
                     },
                 },
                 commandsResponse: {
+                    requestTunnelResp: {
+                        ID: 0,
+                        parameters: [
+                            { name: "tunnelId", type: 33 },
+                            { name: "tunnelStatus", type: 32 },
+                            { name: "mtuSize", type: 33 },
+                        ],
+                    },
+                    transferDataErrorResp: {
+                        ID: 2,
+                        parameters: [
+                            { name: "tunnelId", type: 33 },
+                            { name: "status", type: 32 },
+                        ],
+                    },
                     transferDataResp: {
                         ID: 1,
                         parameters: [
-                            { name: "tunnelID", type: 33 },
+                            { name: "tunnelId", type: 33 },
                             { name: "data", type: 1008 },
                         ],
                     },
@@ -5532,7 +5926,9 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
             },
             wiserDeviceInfo: {
                 ID: 65027,
-                attributes: { deviceInfo: { ID: 32, type: 66 } },
+                attributes: {
+                    deviceInfo: { ID: 32, type: 66 },
+                },
                 commands: {},
                 commandsResponse: {},
             },
@@ -6516,6 +6912,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 },
             },
         },
+        actions: ["raw", "hue_factory_reset"],
     },
     topic: "bridge/definitions",
 };

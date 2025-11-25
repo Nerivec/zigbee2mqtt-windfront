@@ -454,7 +454,9 @@
         "select_converter_to_edit": "Select converter to edit",
         "codespace_info": "A Github Codespace is available to help in development",
         "show_definition": "Show definition",
-        "hide_definition": "Hide definition"
+        "hide_definition": "Hide definition",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Here you can thank us for all the hard work. Don't hesitate to say something nice as well ;)",
