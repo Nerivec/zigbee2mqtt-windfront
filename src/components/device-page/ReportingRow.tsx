@@ -1,4 +1,4 @@
-import { faBan, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsRotate, faBan, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,11 +16,12 @@ interface ReportingRowProps {
     rule: ReportingRule;
     device: Device;
     onApply(rule: ReportingRule): void;
+    onSync?: ([sourceIdx, id, endpoint, cluster, attribute]: [number, string, number, string, string]) => Promise<void>;
     showDivider: boolean;
     hideUnbind?: boolean;
 }
 
-const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hideUnbind = false }: ReportingRowProps) => {
+const ReportingRow = memo(({ sourceIdx, rule, device, onApply, onSync, showDivider, hideUnbind = false }: ReportingRowProps) => {
     const [stateRule, setStateRule] = useState(rule);
     const { t } = useTranslation(["zigbee", "common"]);
 
@@ -148,6 +149,19 @@ const ReportingRow = memo(({ sourceIdx, rule, device, onApply, showDivider, hide
                             <FontAwesomeIcon icon={faCheck} />
                             {t(($) => $.apply, { ns: "common" })}
                         </Button>
+                        {onSync !== undefined && !stateRule.isNew ? (
+                            <ConfirmButton
+                                className="btn btn-outline btn-accent join-item"
+                                item={[sourceIdx, device.ieee_address, rule.endpoint, rule.cluster, rule.attribute]}
+                                onClick={onSync}
+                                title={t(($) => $.sync, { ns: "common" })}
+                                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                            >
+                                <FontAwesomeIcon icon={faArrowsRotate} />
+                                {t(($) => $.sync, { ns: "common" })}
+                            </ConfirmButton>
+                        ) : null}
                         {!hideUnbind && !stateRule.isNew ? (
                             <ConfirmButton<void>
                                 title={t(($) => $.disable, { ns: "common" })}

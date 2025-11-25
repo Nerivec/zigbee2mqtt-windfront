@@ -93,7 +93,8 @@
         "disable_selected": "Disable selected",
         "bind_selected": "Bind selected",
         "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types"
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync"
     },
     "devicePage": {
         "about": "About",

@@ -58,6 +58,15 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
         [onApply],
     );
 
+    const onSync = useCallback(async ([sourceIdx, id, endpoint, cluster, attribute]: [number, string, number, string, string]) => {
+        await sendMessage(sourceIdx, "bridge/request/device/reporting/read", {
+            id,
+            endpoint,
+            cluster,
+            configs: [{ attribute }],
+        });
+    }, []);
+
     return (
         <section className="card bg-base-100 card-border border-base-200 shadow-sm">
             <div className="card-body p-3">
@@ -77,6 +86,7 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
                             rule={rule}
                             device={device}
                             onApply={handleApply}
+                            onSync={onSync}
                             showDivider={index < rules.length - 1}
                         />
                     ))

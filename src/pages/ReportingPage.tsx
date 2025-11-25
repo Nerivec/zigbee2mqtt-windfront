@@ -1,5 +1,5 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { faBan, faPenToSquare, faServer } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsRotate, faBan, faPenToSquare, faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
 import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
@@ -139,6 +139,15 @@ export default function ReportingPage(): JSX.Element {
         },
         [applyRule, newRuleSourceIdx, newRuleDevice],
     );
+
+    const onRowSync = useCallback(async ([sourceIdx, id, endpoint, cluster, attribute]: [number, string, number, string, string]) => {
+        await sendMessage(sourceIdx, "bridge/request/device/reporting/read", {
+            id,
+            endpoint,
+            cluster,
+            configs: [{ attribute }],
+        });
+    }, []);
 
     const columns = useMemo<ColumnDef<ReportingTableData, unknown>[]>(
         () => [
@@ -297,17 +306,25 @@ export default function ReportingPage(): JSX.Element {
                         >
                             <FontAwesomeIcon icon={faPenToSquare} />
                         </Button>
-                        {!rule.isNew ? (
-                            <ConfirmButton<void>
-                                title={t(($) => $.disable, { ns: "common" })}
-                                className="btn btn-sm btn-square btn-error btn-outline join-item"
-                                onClick={async () => await applyRule(sourceIdx, device, { ...rule, maximum_report_interval: 0xffff })}
-                                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
-                                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
-                            >
-                                <FontAwesomeIcon icon={faBan} />
-                            </ConfirmButton>
-                        ) : null}
+                        <ConfirmButton
+                            className="btn btn-sm btn-square btn-outline btn-accent join-item"
+                            item={[sourceIdx, device.ieee_address, rule.endpoint, rule.cluster, rule.attribute]}
+                            onClick={onRowSync}
+                            title={t(($) => $.sync, { ns: "common" })}
+                            modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                            modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                        >
+                            <FontAwesomeIcon icon={faArrowsRotate} />
+                        </ConfirmButton>
+                        <ConfirmButton<void>
+                            title={t(($) => $.disable, { ns: "common" })}
+                            className="btn btn-sm btn-square btn-error btn-outline join-item"
+                            onClick={async () => await applyRule(sourceIdx, device, { ...rule, maximum_report_interval: 0xffff })}
+                            modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                            modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                        >
+                            <FontAwesomeIcon icon={faBan} />
+                        </ConfirmButton>
                     </div>
                 ),
                 enableSorting: false,
@@ -315,7 +332,7 @@ export default function ReportingPage(): JSX.Element {
                 enableGlobalFilter: false,
             },
         ],
-        [applyRule, t],
+        [applyRule, onRowSync, t],
     );
 
     const table = useTable({
