@@ -292,7 +292,7 @@ export default function TouchlinkPage() {
                                     e.target.value
                                         .replaceAll(" ", "")
                                         .split(",")
-                                        .map((v) => Number.parseInt(v, 10)),
+                                        .map((v) => Number.parseInt(v, v.startsWith("0x") ? 16 : 10)),
                                 )
                             }
                             required
