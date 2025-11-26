@@ -6912,7 +6912,7 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                 },
             },
         },
-        actions: ["raw", "hue_factory_reset"],
+        actions: ["raw", "philips_hue_factory_reset"],
     },
     topic: "bridge/definitions",
 };

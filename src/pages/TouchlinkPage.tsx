@@ -103,7 +103,7 @@ export default function TouchlinkPage() {
 
     const onHueResetApply = useCallback(async () => {
         await sendMessage(scanIdx, "bridge/request/action", {
-            action: "hue_factory_reset",
+            action: "philips_hue_factory_reset",
             params: {
                 // 0x-format
                 extended_pan_id: hueExtPanId,
