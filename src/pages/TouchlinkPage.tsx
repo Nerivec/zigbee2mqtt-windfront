@@ -26,7 +26,7 @@ type TouchlinkTableData = {
 };
 
 export default function TouchlinkPage() {
-    const { t } = useTranslation(["touchlink", "common", "zigbee"]);
+    const { t } = useTranslation(["touchlink", "common", "zigbee", "settings"]);
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const touchlinkDevices = useAppStore((state) => state.touchlinkDevices);
     const devices = useAppStore((state) => state.devices);
@@ -305,19 +305,25 @@ export default function TouchlinkPage() {
                             </SelectField>
                         )}
                         <InputField
-                            name="extended_pan_id"
-                            label={t(($) => $.extended_pan_id, { ns: "zigbee" })}
-                            type="text"
-                            value={hueExtPanId}
-                            onChange={(e) => !e.target.validationMessage && setHueExtPanId(e.target.value)}
-                        />
-                        <InputField
                             name="serial_numbers"
                             label={t(($) => $.serial_numbers_csv)}
                             type="text"
                             value={hueSerialNumbersRaw}
                             onChange={(e) => !e.target.validationMessage && setHueSerialNumbersRaw(e.target.value)}
                         />
+                        <div className="collapse collapse-arrow">
+                            <input type="checkbox" />
+                            <div className="collapse-title font-semibold px-0">{t(($) => $.advanced, { ns: "settings" })}</div>
+                            <div className="collapse-content text-sm pb-2 px-2">
+                                <InputField
+                                    name="extended_pan_id"
+                                    label={t(($) => $.extended_pan_id, { ns: "zigbee" })}
+                                    type="text"
+                                    value={hueExtPanId}
+                                    onChange={(e) => !e.target.validationMessage && setHueExtPanId(e.target.value)}
+                                />
+                            </div>
+                        </div>
                     </FloatingCardButton>
                 </fieldset>
             </div>
