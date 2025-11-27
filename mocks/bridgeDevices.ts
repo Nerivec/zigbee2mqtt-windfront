@@ -1540,7 +1540,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                     configured_reportings: [
                         {
                             cluster: "genBasic",
-                            attribute: "currentFileVersion",
+                            attribute: "zclVersion",
                             maximum_report_interval: 35,
                             minimum_report_interval: 3000,
                             reportable_change: 3,

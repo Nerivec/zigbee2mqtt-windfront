@@ -15,10 +15,10 @@ export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingB
     const { t } = useTranslation(["zigbee", "common", "devicePage"]);
     const [minRepInterval, setMinRepInterval] = useState<number | "">("");
     const [maxRepInterval, setMaxRepInterval] = useState<number | "">("");
-    const [repChange, setRepChange] = useState<number | "">("");
+    const [repChange, setRepChange] = useState<number | null>(null);
 
     const handleApply = useCallback(async (): Promise<void> => {
-        await onApply([minRepInterval as number, maxRepInterval as number, repChange as number, false]);
+        await onApply([minRepInterval as number, maxRepInterval as number, repChange ?? 0, false]);
         modal.remove();
     }, [onApply, modal, minRepInterval, maxRepInterval, repChange]);
 
@@ -35,13 +35,10 @@ export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingB
         return () => window.removeEventListener("keydown", close);
     }, [modal]);
 
-    const isValidRule = useMemo(() => {
-        if (minRepInterval === "" || maxRepInterval === "" || repChange === "") {
-            return false;
-        }
-
-        return isValidReportingRuleEdit(minRepInterval, maxRepInterval, repChange);
-    }, [minRepInterval, maxRepInterval, repChange]);
+    const isValidRule = useMemo(
+        () => isValidReportingRuleEdit(minRepInterval, maxRepInterval, repChange),
+        [minRepInterval, maxRepInterval, repChange],
+    );
 
     return (
         <Modal
@@ -90,8 +87,7 @@ export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingB
                 label={t(($) => $.min_rep_change)}
                 type="number"
                 defaultValue={repChange ?? ""}
-                onChange={(e) => setRepChange(e.target.value ? e.target.valueAsNumber : "")}
-                required
+                onChange={(e) => setRepChange(e.target.value ? e.target.valueAsNumber : null)}
                 className="input validator"
             />
         </Modal>
