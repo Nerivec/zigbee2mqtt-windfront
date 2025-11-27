@@ -1,0 +1,1 @@
+import{aO as u}from"./index-DvPcNtN4.js";import{b as C}from"./_createCompounder-Cpit22M8.js";var e,r;function i(){if(r)return e;r=1;var a=C(),s=a(function(o,n,t){return o+(t?"_":"")+n.toLowerCase()});return e=s,e}var m=i();const k=u(m);export{k as s};
