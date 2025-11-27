@@ -309,7 +309,8 @@
         "scan_source": "Scanningsbron",
         "select_scan_source": "Selecteer scanningsbron",
         "philips_hue_reset": "Philips Hue-reset",
-        "serial_numbers_csv": "Serienummers (CSV)"
+        "serial_numbers": "Serienummers",
+        "serial_numbers_info": "Komma-gescheiden waarden. Voeg voor elk de `0x`-prefix toe aan het serienummer op het apparaat (bijv. schrijf `3A745C` als `0x3A745C`) of converteer het eerst naar decimale vorm."
     },
     "values": {
         "clear": "leeg",

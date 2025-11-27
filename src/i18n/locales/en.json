@@ -309,7 +309,8 @@
         "scan_source": "Scan source",
         "select_scan_source": "Select scan source",
         "philips_hue_reset": "Philips Hue reset",
-        "serial_numbers_csv": "Serial numbers (CSV)"
+        "serial_numbers": "Serial numbers",
+        "serial_numbers_info": "Comma-separated values. For each, append `0x` to the serial number written on the device (e.g. write `3A745C` as `0x3A745C`) or convert to decimal form first."
     },
     "values": {
         "clear": "Clear",

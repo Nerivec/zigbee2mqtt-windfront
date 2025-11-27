@@ -309,7 +309,8 @@
         "scan_source": "Tarama kaynağı",
         "select_scan_source": "Kaynak seç",
         "philips_hue_reset": "Philips Hue sıfırlama",
-        "serial_numbers_csv": "Seri numaraları (CSV)"
+        "serial_numbers": "Seri numaraları",
+        "serial_numbers_info": "Virgülle ayrılmış değerler. Her biri için, cihazın üzerindeki seri numarasının başına `0x` ekleyin (örneğin `3A745C` değerini `0x3A745C` olarak yazın) veya önce ondalık biçime dönüştürün."
     },
     "values": {
         "clear": "temizle",

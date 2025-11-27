@@ -309,7 +309,8 @@
         "scan_source": "スキャン元",
         "select_scan_source": "スキャン元選択",
         "philips_hue_reset": "Philips Hueリセット",
-        "serial_numbers_csv": "シリアル番号 (CSV)"
+        "serial_numbers": "シリアル番号",
+        "serial_numbers_info": "カンマ区切りの値です。各値について、デバイスに記載されたシリアル番号に `0x` を付けてください（例: `3A745C` を `0x3A745C` と書く）、または先に10進数に変換してください。"
     },
     "values": {
         "clear": "クリア",

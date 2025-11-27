@@ -309,7 +309,8 @@
         "scan_source": "Nguồn quét",
         "select_scan_source": "Chọn nguồn quét",
         "philips_hue_reset": "Đặt lại Hue",
-        "serial_numbers_csv": "Số serial (CSV)"
+        "serial_numbers": "Số serial",
+        "serial_numbers_info": "Các giá trị được phân tách bằng dấu phẩy. Với từng giá trị, hãy thêm tiền tố `0x` vào số sê-ri ghi trên thiết bị (ví dụ viết `3A745C` thành `0x3A745C`) hoặc chuyển nó sang dạng thập phân trước."
     },
     "values": {
         "clear": "Xóa",

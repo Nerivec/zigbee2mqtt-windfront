@@ -306,7 +306,8 @@ export default function TouchlinkPage() {
                         )}
                         <InputField
                             name="serial_numbers"
-                            label={t(($) => $.serial_numbers_csv)}
+                            label={t(($) => $.serial_numbers)}
+                            detail={t(($) => $.serial_numbers_info)}
                             type="text"
                             value={hueSerialNumbersRaw}
                             onChange={(e) => !e.target.validationMessage && setHueSerialNumbersRaw(e.target.value)}

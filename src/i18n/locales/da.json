@@ -309,7 +309,8 @@
         "scan_source": "Scan-kilde",
         "select_scan_source": "Vælg kilde",
         "philips_hue_reset": "Philips Hue-nulstilling",
-        "serial_numbers_csv": "Serienumre (CSV)"
+        "serial_numbers": "Serienumre",
+        "serial_numbers_info": "Kommaseparerede værdier. For hver skal du føje `0x` til serienummeret, der står på enheden (f.eks. skriv `3A745C` som `0x3A745C`), eller konverter det først til decimalformat."
     },
     "values": {
         "clear": "ryd",

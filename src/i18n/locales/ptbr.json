@@ -309,7 +309,8 @@
         "scan_source": "Origem da varredura",
         "select_scan_source": "Selecionar origem",
         "philips_hue_reset": "Reset do Hue",
-        "serial_numbers_csv": "Números de série (CSV)"
+        "serial_numbers": "Números de série",
+        "serial_numbers_info": "Valores separados por vírgula. Para cada um, adicione `0x` ao número de série escrito no dispositivo (por exemplo, escreva `3A745C` como `0x3A745C`) ou converta primeiro para formato decimal."
     },
     "values": {
         "clear": "limpar",

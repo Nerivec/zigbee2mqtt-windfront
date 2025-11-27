@@ -309,7 +309,8 @@
         "scan_source": "검색 소스",
         "select_scan_source": "검색 소스 선택",
         "philips_hue_reset": "Philips Hue 초기화",
-        "serial_numbers_csv": "일련번호 (CSV)"
+        "serial_numbers": "일련번호",
+        "serial_numbers_info": "쉼표로 구분된 값입니다. 각 값에 대해 기기에 적힌 시리얼 번호 앞에 `0x`를 붙이거나(예: `3A745C` → `0x3A745C`) 먼저 10진수로 변환하세요."
     },
     "values": {
         "clear": "지우기",
