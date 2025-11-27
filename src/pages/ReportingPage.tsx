@@ -15,24 +15,26 @@ import { ReportingRuleModal } from "../components/modal/components/ReportingRule
 import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
 import DevicePicker from "../components/pickers/DevicePicker.js";
 import EndpointPicker from "../components/pickers/EndpointPicker.js";
-import { makeDefaultReporting, type ReportingRule } from "../components/reporting/index.js";
+import { getClusterAttribute, isAnalogDataType, makeDefaultReporting, type ReportingRule } from "../components/reporting/index.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import TableSearch from "../components/table/TableSearch.js";
 import { useTable } from "../hooks/useTable.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
-import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, type AppState, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { Device } from "../types.js";
 import { getEndpoints } from "../utils.js";
 import { sendMessage } from "../websocket/WebSocketManager.js";
 
-type ReportingTableData = {
+export type ReportingTableData = {
     sourceIdx: number;
     device: Device;
     rule: ReportingRule;
+    bridgeDefinitions: AppState["bridgeDefinitions"][number];
 };
 
 export default function ReportingPage(): JSX.Element {
+    const allBridgeDefinitions = useAppStore((state) => state.bridgeDefinitions);
     const devices = useAppStore((state) => state.devices);
     const { t } = useTranslation(["zigbee", "common"]);
     const [newRuleSourceIdx, setNewRuleSourceIdx] = useState(0);
@@ -59,6 +61,7 @@ export default function ReportingPage(): JSX.Element {
                             sourceIdx,
                             device,
                             rule: { ...reporting, endpoint: endpointId },
+                            bridgeDefinitions: allBridgeDefinitions[sourceIdx],
                         });
                     }
                 }
@@ -66,7 +69,7 @@ export default function ReportingPage(): JSX.Element {
         }
 
         return rows;
-    }, [devices]);
+    }, [devices, allBridgeDefinitions]);
 
     const rowSelectionCount = useMemo(() => Object.keys(rowSelection).length, [rowSelection]);
 
@@ -82,7 +85,10 @@ export default function ReportingPage(): JSX.Element {
 
             for (const row of table.table.getFilteredRowModel().rows) {
                 if (row.getIsSelected()) {
-                    const { sourceIdx, device, rule } = row.original;
+                    const { sourceIdx, device, rule, bridgeDefinitions } = row.original;
+                    const attrDef = getClusterAttribute(bridgeDefinitions, device.ieee_address, rule.cluster, rule.attribute);
+                    // default to consider analog if can't find attribute definition
+                    const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
 
                     promises.push(
                         sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
@@ -90,9 +96,16 @@ export default function ReportingPage(): JSX.Element {
                             endpoint: rule.endpoint,
                             cluster: rule.cluster,
                             attribute: rule.attribute,
-                            minimum_report_interval: minRepInterval ?? rule.minimum_report_interval,
-                            maximum_report_interval: disable ? 0xffff : (maxRepInterval ?? rule.maximum_report_interval),
-                            reportable_change: repChange ?? rule.reportable_change,
+                            minimum_report_interval: minRepInterval === undefined ? rule.minimum_report_interval : minRepInterval,
+                            maximum_report_interval: disable ? 0xffff : maxRepInterval === undefined ? rule.maximum_report_interval : maxRepInterval,
+                            // @ts-expect-error TODO: bad Z2M API, change to optional param and don't pass at all
+                            reportable_change: isAnalogAttribute
+                                ? disable
+                                    ? 0
+                                    : repChange === undefined
+                                      ? rule.reportable_change
+                                      : repChange
+                                : undefined,
                             option: {},
                         }),
                     );
@@ -118,13 +131,27 @@ export default function ReportingPage(): JSX.Element {
 
     const availableEndpoints = useMemo(() => getEndpoints(newRuleDevice), [newRuleDevice]);
 
-    const applyRule = useCallback(async (sourceIdx: number, device: Device, rule: ReportingRule): Promise<void> => {
-        await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
-            id: device.ieee_address,
-            ...rule,
-            option: {},
-        });
-    }, []);
+    const applyRule = useCallback(
+        async (sourceIdx: number, device: Device, rule: ReportingRule): Promise<void> => {
+            const { cluster, endpoint, attribute, minimum_report_interval, maximum_report_interval, reportable_change } = rule;
+            const attrDef = getClusterAttribute(allBridgeDefinitions[sourceIdx], device.ieee_address, cluster, attribute);
+            // default to consider analog if can't find attribute definition
+            const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+
+            await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
+                id: device.ieee_address,
+                endpoint,
+                cluster,
+                attribute,
+                minimum_report_interval,
+                maximum_report_interval,
+                // @ts-expect-error TODO: bad Z2M API, change to optional param and don't pass at all
+                reportable_change: isAnalogAttribute ? reportable_change : undefined,
+                option: {},
+            });
+        },
+        [allBridgeDefinitions],
+    );
 
     const applyNewRule = useCallback(
         async (rule: ReportingRule): Promise<void> => {
@@ -288,7 +315,7 @@ export default function ReportingPage(): JSX.Element {
                 size: 110,
                 cell: ({
                     row: {
-                        original: { sourceIdx, device, rule },
+                        original: { sourceIdx, device, rule, bridgeDefinitions },
                     },
                 }) => (
                     <div className="join join-horizontal">
@@ -300,7 +327,8 @@ export default function ReportingPage(): JSX.Element {
                                     sourceIdx,
                                     device,
                                     rule,
-                                    onApply: async (updatedRule) => await applyRule(sourceIdx, device, updatedRule),
+                                    bridgeDefinitions,
+                                    onApply: applyRule,
                                 })
                             }
                         >
@@ -316,10 +344,28 @@ export default function ReportingPage(): JSX.Element {
                         >
                             <FontAwesomeIcon icon={faArrowsRotate} />
                         </ConfirmButton>
+                        {/* <ConfirmButton<void>
+                            title={t(($) => $.default, { ns: "common" })}
+                            className="btn btn-sm btn-square btn-warning btn-outline join-item"
+                            onClick={async () =>
+                                await applyRule(sourceIdx, device, {
+                                    ...rule,
+                                    minimum_report_interval: 0xffff,
+                                    maximum_report_interval: 0x0000,
+                                    reportable_change: 0,
+                                })
+                            }
+                            modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                            modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                        >
+                            <FontAwesomeIcon icon={faArrowRotateLeft} />
+                        </ConfirmButton> */}
                         <ConfirmButton<void>
                             title={t(($) => $.disable, { ns: "common" })}
                             className="btn btn-sm btn-square btn-error btn-outline join-item"
-                            onClick={async () => await applyRule(sourceIdx, device, { ...rule, maximum_report_interval: 0xffff })}
+                            onClick={async () =>
+                                await applyRule(sourceIdx, device, { ...rule, maximum_report_interval: 0xffff, reportable_change: 0 })
+                            }
                             modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
                             modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                         >
@@ -400,8 +446,9 @@ export default function ReportingPage(): JSX.Element {
                 {newRuleDevice && newRuleDraft ? (
                     <ReportingRow
                         sourceIdx={newRuleSourceIdx}
-                        device={newRuleDevice}
                         rule={newRuleDraft}
+                        bridgeDefinitions={allBridgeDefinitions[newRuleSourceIdx]}
+                        device={newRuleDevice}
                         onApply={applyNewRule}
                         showDivider={false}
                     />
@@ -422,6 +469,17 @@ export default function ReportingPage(): JSX.Element {
                     >
                         {`${t(($) => $.edit_selected, { ns: "common" })} (${rowSelectionCount})`}
                     </Button>
+                    {/* <ConfirmButton
+                        item={[0xffff, 0x0000, 0, false]}
+                        className="btn btn-outline btn-warning btn-sm"
+                        onClick={actOnFilteredSelected}
+                        title={t(($) => $.reset_selected, { ns: "common" })}
+                        disabled={rowSelectionCount === 0}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                    >
+                        {`${t(($) => $.reset_selected, { ns: "common" })} (${rowSelectionCount})`}
+                    </ConfirmButton> */}
                     <ConfirmButton
                         item={[undefined, undefined, undefined, true /* disable */]}
                         className="btn btn-outline btn-error btn-sm"
