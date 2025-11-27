@@ -51,7 +51,7 @@ const ReportingRow = memo(
                 ...prev,
                 [event.target.name as "minimum_report_interval" | "maximum_report_interval" | "reportable_change"]: event.target.value
                     ? event.target.valueAsNumber
-                    : null,
+                    : "",
             }));
         }, []);
 
@@ -144,8 +144,14 @@ const ReportingRow = memo(
                             value={stateRule.reportable_change ?? ""}
                             onChange={onReportNumberChange}
                             className="input validator w-48"
+                            required
                         />
-                    ) : null}
+                    ) : (
+                        <fieldset className="fieldset">
+                            <legend className="fieldset-legend">{t(($) => $.min_rep_change)}</legend>
+                            <p className="label w-48">N/A</p>
+                        </fieldset>
+                    )}
                     <fieldset className="fieldset ml-auto">
                         <legend className="fieldset-legend">{t(($) => $.actions)}</legend>
                         <div className="join join-horizontal">

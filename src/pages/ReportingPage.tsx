@@ -5,6 +5,7 @@ import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
 import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import Button from "../components/Button.js";
 import ConfirmButton from "../components/ConfirmButton.js";
 import DeviceImage from "../components/device/DeviceImage.js";
@@ -31,6 +32,7 @@ export type ReportingTableData = {
     device: Device;
     rule: ReportingRule;
     bridgeDefinitions: AppState["bridgeDefinitions"][number];
+    isAnalogAttribute: boolean;
 };
 
 export default function ReportingPage(): JSX.Element {
@@ -52,16 +54,22 @@ export default function ReportingPage(): JSX.Element {
         const rows: ReportingTableData[] = [];
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
+            const bridgeDefinitions = allBridgeDefinitions[sourceIdx];
+
             for (const device of devices[sourceIdx]) {
                 for (const endpointId in device.endpoints) {
                     const endpoint = device.endpoints[endpointId];
 
                     for (const reporting of endpoint.configured_reportings) {
+                        const attrDef = getClusterAttribute(bridgeDefinitions, device.ieee_address, reporting.cluster, reporting.attribute);
+                        const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+
                         rows.push({
                             sourceIdx,
                             device,
                             rule: { ...reporting, endpoint: endpointId },
-                            bridgeDefinitions: allBridgeDefinitions[sourceIdx],
+                            bridgeDefinitions,
+                            isAnalogAttribute,
                         });
                     }
                 }
@@ -89,26 +97,21 @@ export default function ReportingPage(): JSX.Element {
                     const attrDef = getClusterAttribute(bridgeDefinitions, device.ieee_address, rule.cluster, rule.attribute);
                     // default to consider analog if can't find attribute definition
                     const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+                    const payload: Zigbee2MQTTAPI["bridge/request/device/reporting/configure"] = {
+                        id: device.ieee_address,
+                        endpoint: rule.endpoint,
+                        cluster: rule.cluster,
+                        attribute: rule.attribute,
+                        minimum_report_interval: minRepInterval === undefined ? rule.minimum_report_interval : minRepInterval,
+                        maximum_report_interval: disable ? 0xffff : maxRepInterval === undefined ? rule.maximum_report_interval : maxRepInterval,
+                        option: {}, // TODO: check this
+                    };
 
-                    promises.push(
-                        sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
-                            id: device.ieee_address,
-                            endpoint: rule.endpoint,
-                            cluster: rule.cluster,
-                            attribute: rule.attribute,
-                            minimum_report_interval: minRepInterval === undefined ? rule.minimum_report_interval : minRepInterval,
-                            maximum_report_interval: disable ? 0xffff : maxRepInterval === undefined ? rule.maximum_report_interval : maxRepInterval,
-                            // @ts-expect-error TODO: bad Z2M API, change to optional param and don't pass at all
-                            reportable_change: isAnalogAttribute
-                                ? disable
-                                    ? 0
-                                    : repChange === undefined
-                                      ? rule.reportable_change
-                                      : repChange
-                                : undefined,
-                            option: {},
-                        }),
-                    );
+                    if (isAnalogAttribute) {
+                        payload.reportable_change = disable ? 0 : repChange === undefined ? rule.reportable_change : repChange;
+                    }
+
+                    promises.push(sendMessage(sourceIdx, "bridge/request/device/reporting/configure", payload));
                 }
             }
 
@@ -131,27 +134,24 @@ export default function ReportingPage(): JSX.Element {
 
     const availableEndpoints = useMemo(() => getEndpoints(newRuleDevice), [newRuleDevice]);
 
-    const applyRule = useCallback(
-        async (sourceIdx: number, device: Device, rule: ReportingRule): Promise<void> => {
-            const { cluster, endpoint, attribute, minimum_report_interval, maximum_report_interval, reportable_change } = rule;
-            const attrDef = getClusterAttribute(allBridgeDefinitions[sourceIdx], device.ieee_address, cluster, attribute);
-            // default to consider analog if can't find attribute definition
-            const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+    const applyRule = useCallback(async (sourceIdx: number, device: Device, rule: ReportingRule, isAnalogAttribute: boolean): Promise<void> => {
+        const { cluster, endpoint, attribute, minimum_report_interval, maximum_report_interval, reportable_change } = rule;
+        const payload: Zigbee2MQTTAPI["bridge/request/device/reporting/configure"] = {
+            id: device.ieee_address,
+            endpoint,
+            cluster,
+            attribute,
+            minimum_report_interval,
+            maximum_report_interval,
+            option: {}, // TODO: check this
+        };
 
-            await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
-                id: device.ieee_address,
-                endpoint,
-                cluster,
-                attribute,
-                minimum_report_interval,
-                maximum_report_interval,
-                // @ts-expect-error TODO: bad Z2M API, change to optional param and don't pass at all
-                reportable_change: isAnalogAttribute ? reportable_change : undefined,
-                option: {},
-            });
-        },
-        [allBridgeDefinitions],
-    );
+        if (isAnalogAttribute) {
+            payload.reportable_change = reportable_change;
+        }
+
+        await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", payload);
+    }, []);
 
     const applyNewRule = useCallback(
         async (rule: ReportingRule): Promise<void> => {
@@ -159,12 +159,16 @@ export default function ReportingPage(): JSX.Element {
                 return;
             }
 
-            await applyRule(newRuleSourceIdx, newRuleDevice, rule);
+            const attrDef = getClusterAttribute(allBridgeDefinitions[newRuleSourceIdx], newRuleDevice.ieee_address, rule.cluster, rule.attribute);
+            // default to consider analog if can't find attribute definition
+            const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+
+            await applyRule(newRuleSourceIdx, newRuleDevice, rule, isAnalogAttribute);
             setNewRuleSourceIdx(0);
             setNewRuleDevice(null);
             setNewRuleEndpoint("");
         },
-        [applyRule, newRuleSourceIdx, newRuleDevice],
+        [applyRule, newRuleSourceIdx, newRuleDevice, allBridgeDefinitions],
     );
 
     const onRowSync = useCallback(async ([sourceIdx, id, endpoint, cluster, attribute]: [number, string, number, string, string]) => {
@@ -306,7 +310,7 @@ export default function ReportingPage(): JSX.Element {
                 id: "min_rep_change",
                 size: 120,
                 header: t(($) => $.min_rep_change),
-                accessorFn: ({ rule }) => rule.reportable_change,
+                accessorFn: ({ rule, isAnalogAttribute }) => (isAnalogAttribute ? rule.reportable_change : "N/A"),
                 filterFn: "inNumberRange",
                 meta: { filterVariant: "range" },
             },
@@ -315,7 +319,7 @@ export default function ReportingPage(): JSX.Element {
                 size: 110,
                 cell: ({
                     row: {
-                        original: { sourceIdx, device, rule, bridgeDefinitions },
+                        original: { sourceIdx, device, rule, bridgeDefinitions, isAnalogAttribute },
                     },
                 }) => (
                     <div className="join join-horizontal">
@@ -328,6 +332,7 @@ export default function ReportingPage(): JSX.Element {
                                     device,
                                     rule,
                                     bridgeDefinitions,
+                                    isAnalogAttribute,
                                     onApply: applyRule,
                                 })
                             }
@@ -364,7 +369,12 @@ export default function ReportingPage(): JSX.Element {
                             title={t(($) => $.disable, { ns: "common" })}
                             className="btn btn-sm btn-square btn-error btn-outline join-item"
                             onClick={async () =>
-                                await applyRule(sourceIdx, device, { ...rule, maximum_report_interval: 0xffff, reportable_change: 0 })
+                                await applyRule(
+                                    sourceIdx,
+                                    device,
+                                    { ...rule, maximum_report_interval: 0xffff, reportable_change: 0 },
+                                    isAnalogAttribute,
+                                )
                             }
                             modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
                             modalCancelLabel={t(($) => $.cancel, { ns: "common" })}

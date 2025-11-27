@@ -3,6 +3,7 @@ import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
 import { type AppState, useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
@@ -10,7 +11,7 @@ import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import Button from "../../Button.js";
 import {
     aggregateReporting,
-    getClusterAttributes,
+    getClusterAttribute,
     isAnalogDataType,
     makeDefaultReporting,
     type ReportingEndpoint,
@@ -152,20 +153,24 @@ export default function Reporting({ sourceIdx, device }: ReportingProps): JSX.El
     const onApply = useCallback(
         async (rule: ReportingRule): Promise<void> => {
             const { cluster, endpoint, attribute, minimum_report_interval, maximum_report_interval, reportable_change } = rule;
-            const clusters = getClusterAttributes(bridgeDefinitions, device.ieee_address, cluster);
-            const isAnalogAttribute = isAnalogDataType(clusters[attribute]);
-
-            await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
+            const attrDef = getClusterAttribute(bridgeDefinitions, device.ieee_address, cluster, attribute);
+            // default to consider analog if can't find attribute definition
+            const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+            const payload: Zigbee2MQTTAPI["bridge/request/device/reporting/configure"] = {
                 id: device.ieee_address,
                 endpoint,
                 cluster,
                 attribute,
                 minimum_report_interval,
                 maximum_report_interval,
-                // @ts-expect-error TODO: bad Z2M API, change to optional param and don't pass at all
-                reportable_change: isAnalogAttribute ? reportable_change : undefined,
                 option: {}, // TODO: check this
-            });
+            };
+
+            if (isAnalogAttribute) {
+                payload.reportable_change = reportable_change;
+            }
+
+            await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", payload);
         },
         [sourceIdx, device.ieee_address, bridgeDefinitions],
     );

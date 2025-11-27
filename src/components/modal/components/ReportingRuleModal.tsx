@@ -12,21 +12,22 @@ type ReportingRuleModalProps = {
     sourceIdx: number;
     device: Device;
     rule: ReportingRule;
-    onApply(sourceIdx: number, device: Device, rule: ReportingRule): Promise<void>;
+    onApply(sourceIdx: number, device: Device, rule: ReportingRule, isAnalogAttribute: boolean): Promise<void>;
     bridgeDefinitions: AppState["bridgeDefinitions"][number];
+    isAnalogAttribute: boolean;
 };
 
 export const ReportingRuleModal = NiceModal.create(
-    ({ sourceIdx, device, rule, onApply, bridgeDefinitions }: ReportingRuleModalProps): JSX.Element => {
+    ({ sourceIdx, device, rule, onApply, bridgeDefinitions, isAnalogAttribute }: ReportingRuleModalProps): JSX.Element => {
         const modal = useModal();
         const { t } = useTranslation(["common", "devicePage"]);
 
         const handleApply = useCallback(
             async (updatedRule: ReportingRule): Promise<void> => {
-                await onApply(sourceIdx, device, updatedRule);
+                await onApply(sourceIdx, device, updatedRule, isAnalogAttribute);
                 modal.remove();
             },
-            [sourceIdx, device, onApply, modal],
+            [sourceIdx, device, isAnalogAttribute, onApply, modal],
         );
 
         useEffect(() => {
