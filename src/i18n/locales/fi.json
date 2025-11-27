@@ -77,7 +77,26 @@
         "feature_name": "Ominaisuuden nimi",
         "state": "Tila",
         "scroll_to_top": "Ylös",
-        "notifications": "Ilmoitukset"
+        "notifications": "Ilmoitukset",
+        "instances": "Instanssit",
+        "overview": "Yleisnäkymä",
+        "recent_activity": "Viimeisin toiminta",
+        "oldest_activity": "Vanhin toiminta",
+        "last_activity": "Viimeinen toiminta",
+        "group_scenes": "Ryhmän skenaariot",
+        "quick_search": "Pikahaku",
+        "not_seen_in_a_while": "Ei nähty hetkeen",
+        "remove": "Poista",
+        "add": "Lisää",
+        "edit": "Muokkaa",
+        "edit_selected": "Muokkaa valittuja",
+        "disable_selected": "Poista valitut käytöstä",
+        "bind_selected": "Sido valitut",
+        "unbind_selected": "Pura valittujen sidonta",
+        "mismatching_types": "Yhteensopimattomat tyypit",
+        "sync": "Synk.",
+        "clear_self_as_source": "Poista itsesi lähteenä",
+        "sync_reporting": "Synk. raportointi"
     },
     "devicePage": {
         "about": "Tietoja",
@@ -103,7 +122,6 @@
         "group_id": "Ryhmä-ID",
         "group_members": "Ryhmäjäsenet",
         "group_scenes": "Ryhmän skenaariot",
-        "scenes": "Skenaariot",
         "rename_group": "Nimeä ryhmä uudelleen",
         "remove_from_group": "Poista ryhmästä"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket-tila",
         "transaction_prefix": "Tapahtuman etuliite",
         "frontend_settings": "Käyttöliittymän asetukset",
-        "contribute": "Osallistu"
+        "contribute": "Osallistu",
+        "home": "Etusivu",
+        "activity": "Toiminta",
+        "reporting": "Raportointi",
+        "bindings": "Sidonnat"
     },
     "ota": {
         "check": "Tarkista päivitykset",
@@ -285,7 +307,9 @@
         "identify": "Tunnista",
         "factory_reset": "Tehdasasetukset",
         "scan_source": "Skannauksen lähde",
-        "select_scan_source": "Valitse lähde"
+        "select_scan_source": "Valitse lähde",
+        "philips_hue_reset": "Philips Hue-nollaus",
+        "serial_numbers_csv": "Sarjanumerot (CSV)"
     },
     "values": {
         "clear": "tyhjennä",
@@ -379,7 +403,12 @@
         "Coordinator": "Koordinaattori",
         "power_source": "Virtalähde",
         "battery_low": "Akku vähissä",
-        "battery_level": "Akun varaus"
+        "battery_level": "Akun varaus",
+        "scenes": "Skenaariot",
+        "low_lqi": "Matala LQI",
+        "extended_pan_id": "Laajennettu PAN ID",
+        "rx_on_when_idle": "RX päällä joutilaana",
+        "permit_joining": "Salli liittyminen"
     },
     "scene": {
         "manage_scenes_header": "Hallinnoi skenaarioita",
@@ -387,9 +416,7 @@
         "scene_id": "Skenaario-ID",
         "recall": "Palauta",
         "store": "Tallenna",
-        "remove": "Poista",
         "remove_all": "Poista kaikki",
-        "add": "Lisää",
         "select_scene": "Valitse skenaario",
         "scene_name": "Skenaarion nimi"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Valitse konvertteri",
         "codespace_info": "Github Codespace käytettävissä kehitykseen",
         "show_definition": "Näytä määritelmä",
-        "hide_definition": "Piilota määritelmä"
+        "hide_definition": "Piilota määritelmä",
+        "action": "Toiminto",
+        "actions": "Toiminnot"
     },
     "contribute": {
         "donation_text": "Täällä voit kiittää meitä tehdystä työstä. Myös ystävälliset sanat ovat tervetulleita ;)",

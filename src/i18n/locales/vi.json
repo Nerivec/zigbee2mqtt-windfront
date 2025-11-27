@@ -77,7 +77,26 @@
         "feature_name": "Tên tính năng",
         "state": "Trạng thái",
         "scroll_to_top": "Cuộn lên đầu",
-        "notifications": "Thông báo"
+        "notifications": "Thông báo",
+        "instances": "Phiên bản",
+        "overview": "Tổng quan",
+        "recent_activity": "Hoạt động gần đây",
+        "oldest_activity": "Hoạt động lâu nhất",
+        "last_activity": "Hoạt động cuối",
+        "group_scenes": "Cảnh nhóm",
+        "quick_search": "Tìm nhanh",
+        "not_seen_in_a_while": "Lâu rồi không thấy",
+        "remove": "Xóa",
+        "add": "Thêm",
+        "edit": "Chỉnh sửa",
+        "edit_selected": "Chỉnh sửa mục đã chọn",
+        "disable_selected": "Tắt mục đã chọn",
+        "bind_selected": "Liên kết mục đã chọn",
+        "unbind_selected": "Hủy liên kết đã chọn",
+        "mismatching_types": "Kiểu không khớp",
+        "sync": "Đ.bộ",
+        "clear_self_as_source": "Xóa bản thân làm nguồn",
+        "sync_reporting": "Đ.bộ báo cáo"
     },
     "devicePage": {
         "about": "Giới thiệu",
@@ -103,7 +122,6 @@
         "group_id": "ID nhóm",
         "group_members": "Thành viên nhóm",
         "group_scenes": "Cảnh nhóm",
-        "scenes": "Cảnh",
         "rename_group": "Đổi tên nhóm",
         "remove_from_group": "Xóa khỏi nhóm"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "Trạng thái WebSocket",
         "transaction_prefix": "Tiền tố giao dịch",
         "frontend_settings": "Cài đặt frontend",
-        "contribute": "Đóng góp"
+        "contribute": "Đóng góp",
+        "home": "Trang chủ",
+        "activity": "Hoạt động",
+        "reporting": "Báo cáo",
+        "bindings": "Liên kết"
     },
     "ota": {
         "check": "Kiểm tra cập nhật mới",
@@ -285,7 +307,9 @@
         "identify": "Nhận dạng",
         "factory_reset": "Đặt lại xuống xưởng",
         "scan_source": "Nguồn quét",
-        "select_scan_source": "Chọn nguồn quét"
+        "select_scan_source": "Chọn nguồn quét",
+        "philips_hue_reset": "Đặt lại Hue",
+        "serial_numbers_csv": "Số serial (CSV)"
     },
     "values": {
         "clear": "Xóa",
@@ -379,7 +403,12 @@
         "Coordinator": "Coordinator",
         "power_source": "Nguồn điện",
         "battery_low": "Pin yếu",
-        "battery_level": "Mức pin"
+        "battery_level": "Mức pin",
+        "scenes": "Cảnh",
+        "low_lqi": "LQI thấp",
+        "extended_pan_id": "PAN ID mở rộng",
+        "rx_on_when_idle": "RX bật khi rảnh",
+        "permit_joining": "Cho phép tham gia"
     },
     "scene": {
         "manage_scenes_header": "Quản lý cảnh",
@@ -387,9 +416,7 @@
         "scene_id": "ID cảnh",
         "recall": "Gọi lại",
         "store": "Lưu trữ",
-        "remove": "Xóa",
         "remove_all": "Xóa tất cả",
-        "add": "Thêm",
         "select_scene": "Chọn cảnh",
         "scene_name": "Tên cảnh"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Chọn bộ chuyển đổi để chỉnh sửa",
         "codespace_info": "Github Codespace có sẵn để hỗ trợ phát triển",
         "show_definition": "Hiển thị định nghĩa",
-        "hide_definition": "Ẩn định nghĩa"
+        "hide_definition": "Ẩn định nghĩa",
+        "action": "Hành động",
+        "actions": "Các hành động"
     },
     "contribute": {
         "donation_text": "Tại đây bạn có thể cảm ơn chúng tôi vì tất cả công việc khó khăn. Đừng ngần ngại nói điều gì đó tốt đẹp ;)",

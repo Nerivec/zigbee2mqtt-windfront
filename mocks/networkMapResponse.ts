@@ -18,6 +18,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 14567,
                         target: { ieeeAddr: "0x00124b0022813501", networkAddress: 0 },
                         targetIeeeAddr: "0x00124b0022813501",
+                        deviceType: 0x02,
+                        rxOnWhenIdle: 0x00,
+                        permitJoining: 0x00,
                     },
                     {
                         depth: 1,
@@ -30,6 +33,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 19403,
                         target: { ieeeAddr: "0x00124b0022813501", networkAddress: 0 },
                         targetIeeeAddr: "0x00124b0022813501",
+                        deviceType: 0x02,
+                        rxOnWhenIdle: 0x00,
+                        permitJoining: 0x02,
                     },
                     {
                         depth: 1,
@@ -42,6 +48,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 27244,
                         target: { ieeeAddr: "0x00124b0022813501", networkAddress: 0 },
                         targetIeeeAddr: "0x00124b0022813501",
+                        deviceType: 0x02,
+                        rxOnWhenIdle: 0x00,
+                        permitJoining: 0x00,
                     },
                     {
                         depth: 1,
@@ -54,6 +63,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 35932,
                         target: { ieeeAddr: "0x00124b0022813501", networkAddress: 0 },
                         targetIeeeAddr: "0x00124b0022813501",
+                        deviceType: 0x02,
+                        rxOnWhenIdle: 0x00,
+                        permitJoining: 0x00,
                     },
                     {
                         depth: 1,
@@ -66,6 +78,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 38440,
                         target: { ieeeAddr: "0x00124b0022813501", networkAddress: 0 },
                         targetIeeeAddr: "0x00124b0022813501",
+                        deviceType: 0x03,
+                        rxOnWhenIdle: 0x00,
+                        permitJoining: 0x00,
                     },
                     {
                         depth: 255,
@@ -78,6 +93,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 33891,
                         target: { ieeeAddr: "0x00124b0022813501", networkAddress: 0 },
                         targetIeeeAddr: "0x00124b0022813501",
+                        deviceType: 0x01,
+                        rxOnWhenIdle: 0x01,
+                        permitJoining: 0x01,
                     },
                     {
                         depth: 255,
@@ -90,6 +108,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 38955,
                         target: { ieeeAddr: "0x00124b0022813501", networkAddress: 0 },
                         targetIeeeAddr: "0x00124b0022813501",
+                        deviceType: 0x01,
+                        rxOnWhenIdle: 0x01,
+                        permitJoining: 0x02,
                     },
                     {
                         depth: 255,
@@ -102,6 +123,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 17462,
                         target: { ieeeAddr: "0x00124b0022813501", networkAddress: 0 },
                         targetIeeeAddr: "0x00124b0022813501",
+                        deviceType: 0x01,
+                        rxOnWhenIdle: 0x02,
+                        permitJoining: 0x00,
                     },
                     {
                         depth: 0,
@@ -114,6 +138,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 0,
                         target: { ieeeAddr: "0x00124b001e73227f", networkAddress: 38955 },
                         targetIeeeAddr: "0x00124b001e73227f",
+                        deviceType: 0x00,
+                        rxOnWhenIdle: 0x01,
+                        permitJoining: 0x00,
                     },
                     {
                         depth: 2,
@@ -126,6 +153,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 20205,
                         target: { ieeeAddr: "0x00124b001e73227f", networkAddress: 38955 },
                         targetIeeeAddr: "0x00124b001e73227f",
+                        deviceType: 0x03,
+                        rxOnWhenIdle: 0x00,
+                        permitJoining: 0x00,
                     },
                     {
                         depth: 2,
@@ -138,6 +168,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 20681,
                         target: { ieeeAddr: "0x00124b001e73227f", networkAddress: 38955 },
                         targetIeeeAddr: "0x00124b001e73227f",
+                        deviceType: 0x02,
+                        rxOnWhenIdle: 0x02,
+                        permitJoining: 0x02,
                     },
                     {
                         depth: 2,
@@ -150,6 +183,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 17462,
                         target: { ieeeAddr: "0x00124b001e73227f", networkAddress: 38955 },
                         targetIeeeAddr: "0x00124b001e73227f",
+                        deviceType: 0x01,
+                        rxOnWhenIdle: 0x02,
+                        permitJoining: 0x00,
                     },
                     {
                         depth: 255,
@@ -162,6 +198,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 33891,
                         target: { ieeeAddr: "0x00124b001e73227f", networkAddress: 38955 },
                         targetIeeeAddr: "0x00124b001e73227f",
+                        deviceType: 0x01,
+                        rxOnWhenIdle: 0x01,
+                        permitJoining: 0x01,
                     },
                     {
                         depth: 0,
@@ -174,6 +213,9 @@ export const NETWORK_MAP_RESPONSE: ResponseMessage<"bridge/response/networkmap">
                         sourceNwkAddr: 38955,
                         target: { ieeeAddr: "0x0017880103d55d65", networkAddress: 17462 },
                         targetIeeeAddr: "0x0017880103d55d65",
+                        deviceType: 0x01,
+                        rxOnWhenIdle: 0x01,
+                        permitJoining: 0x02,
                     },
                 ],
                 nodes: [

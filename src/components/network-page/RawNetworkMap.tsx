@@ -248,7 +248,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     return (
         <>
             <Legend />
-            <div className="relative h-screen">
+            <div className="relative h-screen z-6">
                 <Controls
                     graphRef={graphRef}
                     config={config}

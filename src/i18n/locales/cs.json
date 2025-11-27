@@ -77,7 +77,26 @@
         "feature_name": "Název funkce",
         "state": "Stav",
         "scroll_to_top": "Posunout nahoru",
-        "notifications": "Upozornění"
+        "notifications": "Upozornění",
+        "instances": "Instance",
+        "overview": "Přehled",
+        "recent_activity": "Nedávná aktivita",
+        "oldest_activity": "Nejstarší aktivita",
+        "last_activity": "Poslední aktivita",
+        "group_scenes": "Scény skupiny",
+        "quick_search": "Rychlé hledání",
+        "not_seen_in_a_while": "Dlouho neviděno",
+        "remove": "Odstranit",
+        "add": "Přidat",
+        "edit": "Upravit",
+        "edit_selected": "Upravit vybrané",
+        "disable_selected": "Zakázat vybrané",
+        "bind_selected": "Svázat vybrané",
+        "unbind_selected": "Zrušit svázání vybraných",
+        "mismatching_types": "Nesouhlasící typy",
+        "sync": "Synchron.",
+        "clear_self_as_source": "Odebrat sebe jako zdroj",
+        "sync_reporting": "Synchron. reportování"
     },
     "devicePage": {
         "about": "O zařízení",
@@ -103,7 +122,6 @@
         "group_id": "ID skupiny",
         "group_members": "Členové skupiny",
         "group_scenes": "Scény skupiny",
-        "scenes": "Scény",
         "rename_group": "Přejmenovat skupinu",
         "remove_from_group": "Odebrat ze skupiny"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "Stav připojení (WebSocket)",
         "transaction_prefix": "Předpona identifikátoru transakce",
         "frontend_settings": "Nastavení rozhraní",
-        "contribute": "Přispět"
+        "contribute": "Přispět",
+        "home": "Domů",
+        "activity": "Aktivita",
+        "reporting": "Reporty",
+        "bindings": "Vazby"
     },
     "ota": {
         "check": "Zkontrolovat aktualizace",
@@ -285,7 +307,9 @@
         "identify": "Identifikovat",
         "factory_reset": "Tovární reset",
         "scan_source": "Zdroj hledání",
-        "select_scan_source": "Vyberte zdroj hledání"
+        "select_scan_source": "Vyberte zdroj hledání",
+        "philips_hue_reset": "Reset Hue",
+        "serial_numbers_csv": "Sériová čísla (CSV)"
     },
     "values": {
         "clear": "Klid/Bez poplachu",
@@ -379,7 +403,12 @@
         "Coordinator": "Koordinátor",
         "power_source": "Zdroj napájení",
         "battery_low": "Slabá baterie",
-        "battery_level": "Úroveň baterie"
+        "battery_level": "Úroveň baterie",
+        "scenes": "Scény",
+        "low_lqi": "Nízké LQI",
+        "extended_pan_id": "Rozšířené PAN ID",
+        "rx_on_when_idle": "RX zapnuto při nečinnosti",
+        "permit_joining": "Povolit připojení"
     },
     "scene": {
         "manage_scenes_header": "Správa scén",
@@ -387,9 +416,7 @@
         "scene_id": "ID scény",
         "recall": "Vyvolat",
         "store": "Uložit",
-        "remove": "Odstranit",
         "remove_all": "Odstranit vše",
-        "add": "Přidat",
         "select_scene": "Vyberte scénu",
         "scene_name": "Název scény"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Vybrat převodník k úpravě",
         "codespace_info": "Pro vývoj je k dispozici GitHub Codespace",
         "show_definition": "Zobrazit definici",
-        "hide_definition": "Skrýt definici"
+        "hide_definition": "Skrýt definici",
+        "action": "Akce",
+        "actions": "Akce"
     },
     "contribute": {
         "donation_text": "Tady nám můžete poděkovat za veškerou práci. A klidně k tomu připojte i pár milých slov 😉",

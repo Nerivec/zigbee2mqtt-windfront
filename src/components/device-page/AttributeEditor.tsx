@@ -2,9 +2,11 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, type JSX, memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import type { AttributeDefinition, Device, LogMessage } from "../../types.js";
 import { getEndpoints, getObjectFirstKey } from "../../utils.js";
 import Button from "../Button.js";
+import ConfirmButton from "../ConfirmButton.js";
 import InputField from "../form-fields/InputField.js";
 import AttributePicker from "../pickers/AttributePicker.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
@@ -14,8 +16,9 @@ import LastLogResult from "./LastLogResult.js";
 export interface AttributeEditorProps {
     sourceIdx: number;
     device: Device;
-    readDeviceAttributes(id: string, endpoint: string, cluster: string, attributes: string[], stateProperty?: string): Promise<void>;
-    writeDeviceAttributes(id: string, endpoint: string, cluster: string, attributes: AttributeInfo[]): Promise<void>;
+    read(endpoint: string, cluster: string, attributes: string[], stateProperty?: string): Promise<void>;
+    write(endpoint: string, cluster: string, attributes: AttributeInfo[]): Promise<void>;
+    readReporting(endpoint: string, cluster: string, configs: Zigbee2MQTTAPI["bridge/request/device/reporting/read"]["configs"]);
     lastLog: LogMessage | undefined;
 }
 
@@ -51,7 +54,7 @@ function AttributeValueInput({ value, onChange, attribute, definition, ...rest }
     );
 }
 
-const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDeviceAttributes, lastLog }: AttributeEditorProps) => {
+const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, lastLog }: AttributeEditorProps) => {
     const [endpoint, setEndpoint] = useState(getObjectFirstKey(device.endpoints) ?? "");
     const [cluster, setCluster] = useState("");
     const [attributes, setAttributes] = useState<AttributeInfo[]>([]);
@@ -85,26 +88,33 @@ const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDe
     }, []);
 
     const onReadClick = useCallback(async () => {
-        await readDeviceAttributes(
-            device.ieee_address,
+        await read(
             endpoint,
             cluster,
             attributes.map((info) => info.attribute),
             stateProperty,
         );
-    }, [device.ieee_address, endpoint, cluster, attributes, stateProperty, readDeviceAttributes]);
+    }, [endpoint, cluster, attributes, stateProperty, read]);
 
     const onWriteClick = useCallback(async () => {
-        await writeDeviceAttributes(device.ieee_address, endpoint, cluster, attributes);
-    }, [device.ieee_address, endpoint, cluster, attributes, writeDeviceAttributes]);
+        await write(endpoint, cluster, attributes);
+    }, [endpoint, cluster, attributes, write]);
+
+    const onReadReportingClick = useCallback(async () => {
+        await readReporting(
+            endpoint,
+            cluster,
+            attributes.map((info) => ({ attribute: info.attribute })),
+        );
+    }, [endpoint, cluster, attributes, readReporting]);
 
     const selectedAttributes = useMemo(
         () =>
             attributes.length > 0 && (
-                <fieldset className="fieldset gap-2 p-3 bg-base-200 rounded-box shadow-md border border-base-300">
+                <fieldset className="fieldset gap-2 p-3 bg-base-200 rounded-box shadow-md border border-base-300 w-full">
                     {attributes.map(({ attribute, value = "", definition }) => (
-                        <div key={attribute} className="join join-horizontal min-w-xs">
-                            <label className="input join-item">
+                        <div key={attribute} className="join join-horizontal min-w-xs w-full">
+                            <label className="input join-item grow">
                                 {attribute}
                                 <AttributeValueInput
                                     value={value}
@@ -188,17 +198,29 @@ const AttributeEditor = memo(({ sourceIdx, device, readDeviceAttributes, writeDe
                 />
             </div>
             {selectedAttributes}
-            <div className="join join-horizontal">
-                <Button<void>
+            <div className="flex flex-row flex-wrap justify-between gap-2">
+                <div className="join join-horizontal">
+                    <Button<void>
+                        disabled={disableButtons || attributes.some((attr) => !!attr.value)}
+                        className="btn btn-success join-item"
+                        onClick={onReadClick}
+                    >
+                        {t(($) => $.read)}
+                    </Button>
+                    <Button<void> disabled={disableButtons} className="btn btn-error join-item" onClick={onWriteClick}>
+                        {t(($) => $.write)}
+                    </Button>
+                </div>
+                <ConfirmButton<void>
                     disabled={disableButtons || attributes.some((attr) => !!attr.value)}
-                    className="btn btn-success join-item"
-                    onClick={onReadClick}
+                    className="btn btn-accent join-item"
+                    onClick={onReadReportingClick}
+                    title={t(($) => $.sync_reporting)}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt)}
+                    modalCancelLabel={t(($) => $.cancel)}
                 >
-                    {t(($) => $.read)}
-                </Button>
-                <Button<void> disabled={disableButtons} className="btn btn-error join-item" onClick={onWriteClick}>
-                    {t(($) => $.write)}
-                </Button>
+                    {t(($) => $.sync_reporting)}
+                </ConfirmButton>
             </div>
             {lastLog && <LastLogResult message={lastLog} />}
         </div>

@@ -77,7 +77,26 @@
         "feature_name": "Nom de la característica",
         "state": "Estat",
         "scroll_to_top": "Amunt",
-        "notifications": "Notificacions"
+        "notifications": "Notificacions",
+        "instances": "Instàncies",
+        "overview": "Vista general",
+        "recent_activity": "Activitat recent",
+        "oldest_activity": "Activitat més antiga",
+        "last_activity": "Darrera activitat",
+        "group_scenes": "Escenes del grup",
+        "quick_search": "Cerca ràpida",
+        "not_seen_in_a_while": "Fa temps que no es veu",
+        "remove": "Elimina",
+        "add": "Afegeix",
+        "edit": "Edita",
+        "edit_selected": "Edita els seleccionats",
+        "disable_selected": "Desactiva els seleccionats",
+        "bind_selected": "Vincula els seleccionats",
+        "unbind_selected": "Desvincula els seleccionats",
+        "mismatching_types": "Tipus no coincidents",
+        "sync": "Sincron.",
+        "clear_self_as_source": "Esborra't com a origen",
+        "sync_reporting": "Sincron. informes"
     },
     "devicePage": {
         "about": "Quant a",
@@ -103,7 +122,6 @@
         "group_id": "ID grup",
         "group_members": "Membres del grup",
         "group_scenes": "Escenes del grup",
-        "scenes": "Escenes",
         "rename_group": "Reanomena grup",
         "remove_from_group": "Treu del grup"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "Estat WebSocket",
         "transaction_prefix": "Prefix de transacció",
         "frontend_settings": "Configuració del frontend",
-        "contribute": "Contribueix"
+        "contribute": "Contribueix",
+        "home": "Inici",
+        "activity": "Activitat",
+        "reporting": "Informes",
+        "bindings": "Vincles"
     },
     "ota": {
         "check": "Cerca actualitzacions",
@@ -284,8 +306,10 @@
         "scan": "Escanejar",
         "identify": "Identificar",
         "factory_reset": "Restablir fàbrica",
-        "scan_source": "Font escaneig",
-        "select_scan_source": "Selecciona font"
+        "scan_source": "Origen de l'escaneig",
+        "select_scan_source": "Selecciona l'origen de l'escaneig",
+        "philips_hue_reset": "Restabliment Hue",
+        "serial_numbers_csv": "Números de sèrie (CSV)"
     },
     "values": {
         "clear": "neteja",
@@ -379,7 +403,12 @@
         "Coordinator": "Coordinador",
         "power_source": "Font d'alimentació",
         "battery_low": "Bateria baixa",
-        "battery_level": "Nivell de bateria"
+        "battery_level": "Nivell de bateria",
+        "scenes": "Escenes",
+        "low_lqi": "LQI baix",
+        "extended_pan_id": "PAN ID ampliat",
+        "rx_on_when_idle": "RX ON en repòs",
+        "permit_joining": "Permet unir-se"
     },
     "scene": {
         "manage_scenes_header": "Gestiona escenes",
@@ -387,9 +416,7 @@
         "scene_id": "ID escena",
         "recall": "Recupera",
         "store": "Desa",
-        "remove": "Elimina",
         "remove_all": "Elimina totes",
-        "add": "Afegeix",
         "select_scene": "Selecciona escena",
         "scene_name": "Nom escena"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Selecciona convertidor",
         "codespace_info": "Github Codespace disponible",
         "show_definition": "Mostra definició",
-        "hide_definition": "Amaga definició"
+        "hide_definition": "Amaga definició",
+        "action": "Acció",
+        "actions": "Accions"
     },
     "contribute": {
         "donation_text": "Aquí pots agrair-nos tota la feina. No dubtis a dir també alguna cosa bonica ;)",

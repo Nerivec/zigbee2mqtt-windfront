@@ -17,6 +17,25 @@ type RawRelationProps = DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLL
     setHighlightValue: (friendlyName: string) => void;
 };
 
+const DEVICE_TYPE_BIT = {
+    0: "Coordinator",
+    1: "Router",
+    2: "EndDevice",
+    3: "Unknown",
+};
+
+const RX_ON_WHEN_IDLE_BIT = {
+    0: "badge-error",
+    1: "badge-success",
+    2: "badge-neutral",
+};
+
+const PERMIT_JOINING_BIT = {
+    0: "badge-error",
+    1: "badge-success",
+    2: "badge-neutral",
+};
+
 const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlightValue, ...rest }: RawRelationProps) => {
     const { t } = useTranslation(["network", "common", "zigbee"]);
 
@@ -28,12 +47,7 @@ const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlight
     );
 
     return (
-        <li
-            key={relation.source.ieeeAddr}
-            title={`${t(($) => $.ieee_address, { ns: "zigbee" })}: ${device.ieee_address} | ${t(($) => $.network_address, { ns: "zigbee" })}: ${toHex(device.network_address, 4)} (${device.network_address})`}
-            className={highlighted ? "bg-accent text-accent-content rounded-sm" : undefined}
-            {...rest}
-        >
+        <li key={relation.source.ieeeAddr} className={highlighted ? "bg-accent text-accent-content rounded-sm" : undefined} {...rest}>
             <details>
                 <summary className="flex flex-row">
                     {/** biome-ignore lint/a11y/noStaticElementInteractions: special case */}
@@ -59,6 +73,19 @@ const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlight
                         <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
                             {t(($) => $.network_address, { ns: "zigbee" })}: {toHex(device.network_address, 4)} ({device.network_address})
                         </Link>
+                    </li>
+                    <li>
+                        <span className="cursor-default justify-between">
+                            <span className="badge badge-soft" title={t(($) => $.device_type, { ns: "zigbee" })}>
+                                {t(($) => $[DEVICE_TYPE_BIT[relation.deviceType]], { ns: "zigbee" })}
+                            </span>
+                            <span className={`badge badge-soft ${RX_ON_WHEN_IDLE_BIT[relation.rxOnWhenIdle]}`} title={`${relation.rxOnWhenIdle}`}>
+                                {t(($) => $.rx_on_when_idle, { ns: "zigbee" })}
+                            </span>
+                            <span className={`badge badge-soft ${PERMIT_JOINING_BIT[relation.permitJoining]}`} title={`${relation.permitJoining}`}>
+                                {t(($) => $.permit_joining, { ns: "zigbee" })}
+                            </span>
+                        </span>
                     </li>
                     {relation.routes.length > 0 && (
                         <>

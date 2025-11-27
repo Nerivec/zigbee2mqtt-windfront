@@ -77,7 +77,26 @@
         "feature_name": "Funktionsnamn",
         "state": "Status",
         "scroll_to_top": "Till toppen",
-        "notifications": "Aviseringar"
+        "notifications": "Aviseringar",
+        "instances": "Instanser",
+        "overview": "Översikt",
+        "recent_activity": "Senaste aktivitet",
+        "oldest_activity": "Äldsta aktivitet",
+        "last_activity": "Sista aktivitet",
+        "group_scenes": "Gruppscener",
+        "quick_search": "Snabbsökning",
+        "not_seen_in_a_while": "Inte sedd på länge",
+        "remove": "Ta bort",
+        "add": "Lägg till",
+        "edit": "Redigera",
+        "edit_selected": "Redigera valda",
+        "disable_selected": "Inaktivera valda",
+        "bind_selected": "Binda valda",
+        "unbind_selected": "Koppla från valda",
+        "mismatching_types": "Typer matchar inte",
+        "sync": "Synk.",
+        "clear_self_as_source": "Ta bort dig själv som källa",
+        "sync_reporting": "Synk. rapportering"
     },
     "devicePage": {
         "about": "Om",
@@ -103,7 +122,6 @@
         "group_id": "Grupp-ID",
         "group_members": "Gruppmedlemmar",
         "group_scenes": "Gruppscener",
-        "scenes": "Scener",
         "rename_group": "Byt gruppnamn",
         "remove_from_group": "Ta bort från grupp"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket-status",
         "transaction_prefix": "Transaktionsprefix",
         "frontend_settings": "Frontend-inställningar",
-        "contribute": "Bidra"
+        "contribute": "Bidra",
+        "home": "Hem",
+        "activity": "Aktivitet",
+        "reporting": "Rapportering",
+        "bindings": "Bindningar"
     },
     "ota": {
         "check": "Sök efter uppdateringar",
@@ -285,7 +307,9 @@
         "identify": "Identifiera",
         "factory_reset": "Fabriksåterställ",
         "scan_source": "Skanningskälla",
-        "select_scan_source": "Välj källa"
+        "select_scan_source": "Välj källa",
+        "philips_hue_reset": "Philips Hue-återställning",
+        "serial_numbers_csv": "Serienummer (CSV)"
     },
     "values": {
         "clear": "rensa",
@@ -379,7 +403,12 @@
         "Coordinator": "Koordinator",
         "power_source": "Strömkälla",
         "battery_low": "Låg batterinivå",
-        "battery_level": "Batterinivå"
+        "battery_level": "Batterinivå",
+        "scenes": "Scener",
+        "low_lqi": "Låg LQI",
+        "extended_pan_id": "Utökat PAN-ID",
+        "rx_on_when_idle": "RX på vid inaktivitet",
+        "permit_joining": "Tillåt anslutning"
     },
     "scene": {
         "manage_scenes_header": "Hantera scener",
@@ -387,9 +416,7 @@
         "scene_id": "Scen-ID",
         "recall": "Återkalla",
         "store": "Spara",
-        "remove": "Ta bort",
         "remove_all": "Ta bort alla",
-        "add": "Lägg till",
         "select_scene": "Välj scen",
         "scene_name": "Scennamn"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Välj konverterare att redigera",
         "codespace_info": "Github Codespace finns för utvecklingsstöd",
         "show_definition": "Visa definition",
-        "hide_definition": "Dölj definition"
+        "hide_definition": "Dölj definition",
+        "action": "Åtgärd",
+        "actions": "Åtgärder"
     },
     "contribute": {
         "donation_text": "Här kan du tacka oss för allt arbete. Ett vänligt ord uppskattas också ;)",

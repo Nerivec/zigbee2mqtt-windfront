@@ -93,7 +93,10 @@
         "disable_selected": "Disable selected",
         "bind_selected": "Bind selected",
         "unbind_selected": "Unbind selected",
-        "mismatching_types": "Mismatching types"
+        "mismatching_types": "Mismatching types",
+        "sync": "Sync",
+        "clear_self_as_source": "Clear self as source",
+        "sync_reporting": "Sync reporting"
     },
     "devicePage": {
         "about": "About",
@@ -304,7 +307,9 @@
         "identify": "Identify",
         "factory_reset": "Factory reset",
         "scan_source": "Scan source",
-        "select_scan_source": "Select scan source"
+        "select_scan_source": "Select scan source",
+        "philips_hue_reset": "Philips Hue reset",
+        "serial_numbers_csv": "Serial numbers (CSV)"
     },
     "values": {
         "clear": "Clear",
@@ -400,7 +405,10 @@
         "battery_low": "Battery low",
         "battery_level": "Battery level",
         "scenes": "Scenes",
-        "low_lqi": "Low LQI"
+        "low_lqi": "Low LQI",
+        "extended_pan_id": "Extended PAN ID",
+        "rx_on_when_idle": "RX ON when idle",
+        "permit_joining": "Permit joining"
     },
     "scene": {
         "manage_scenes_header": "Manage scenes",
@@ -447,7 +455,9 @@
         "select_converter_to_edit": "Select converter to edit",
         "codespace_info": "A Github Codespace is available to help in development",
         "show_definition": "Show definition",
-        "hide_definition": "Hide definition"
+        "hide_definition": "Hide definition",
+        "action": "Action",
+        "actions": "Actions"
     },
     "contribute": {
         "donation_text": "Here you can thank us for all the hard work. Don't hesitate to say something nice as well ;)",

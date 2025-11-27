@@ -77,7 +77,26 @@
         "feature_name": "Nazwa cechy",
         "state": "Stan",
         "scroll_to_top": "Do góry",
-        "notifications": "Powiadomienia"
+        "notifications": "Powiadomienia",
+        "instances": "Instancje",
+        "overview": "Przegląd",
+        "recent_activity": "Ostatnia aktywność",
+        "oldest_activity": "Najstarsza aktywność",
+        "last_activity": "Najnowsza aktywność",
+        "group_scenes": "Sceny grupy",
+        "quick_search": "Szybkie wyszukiwanie",
+        "not_seen_in_a_while": "Dawno niewidoczne",
+        "remove": "Usuń",
+        "add": "Dodaj",
+        "edit": "Edytuj",
+        "edit_selected": "Edytuj zaznaczone",
+        "disable_selected": "Wyłącz zaznaczone",
+        "bind_selected": "Powiąż zaznaczone",
+        "unbind_selected": "Rozłącz zaznaczone",
+        "mismatching_types": "Niedopasowane typy",
+        "sync": "Synchron.",
+        "clear_self_as_source": "Usuń siebie jako źródło",
+        "sync_reporting": "Synchron. raporty"
     },
     "devicePage": {
         "about": "O z2m",
@@ -103,7 +122,6 @@
         "group_id": "ID grupy",
         "group_members": "Członkowie grupy",
         "group_scenes": "Sceny grupy",
-        "scenes": "Sceny",
         "rename_group": "Zmień nazwę grupy",
         "remove_from_group": "Usuń z grupy"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "Status WebSocket",
         "transaction_prefix": "Przedrostek transakcji",
         "frontend_settings": "Ustawienia interfejsu",
-        "contribute": "Współpraca"
+        "contribute": "Współpraca",
+        "home": "Strona główna",
+        "activity": "Aktywność",
+        "reporting": "Raporty",
+        "bindings": "Powiązania"
     },
     "ota": {
         "check": "Sprawdź aktualizacje",
@@ -285,7 +307,9 @@
         "identify": "Identyfikuj",
         "factory_reset": "Reset fabryczny",
         "scan_source": "Źródło skanu",
-        "select_scan_source": "Wybierz źródło"
+        "select_scan_source": "Wybierz źródło",
+        "philips_hue_reset": "Reset Hue",
+        "serial_numbers_csv": "Numery seryjne (CSV)"
     },
     "values": {
         "clear": "nie wykryto",
@@ -379,7 +403,12 @@
         "Coordinator": "Koordynator",
         "power_source": "Źródło zasilania",
         "battery_low": "Niski poziom baterii",
-        "battery_level": "Poziom baterii"
+        "battery_level": "Poziom baterii",
+        "scenes": "Sceny",
+        "low_lqi": "Niskie LQI",
+        "extended_pan_id": "Rozszerzone PAN ID",
+        "rx_on_when_idle": "RX włączone w bezczynności",
+        "permit_joining": "Zezwól na dołączenie"
     },
     "scene": {
         "manage_scenes_header": "Zarządzaj scenami",
@@ -387,9 +416,7 @@
         "scene_id": "ID sceny",
         "recall": "Przywołaj",
         "store": "Zapisz",
-        "remove": "Usuń",
         "remove_all": "Usuń wszystkie",
-        "add": "Dodaj",
         "select_scene": "Wybierz scenę",
         "scene_name": "Nazwa sceny"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Wybierz konwerter do edycji",
         "codespace_info": "Dostępny Github Codespace do wsparcia rozwoju",
         "show_definition": "Pokaż definicję",
-        "hide_definition": "Ukryj definicję"
+        "hide_definition": "Ukryj definicję",
+        "action": "Akcja",
+        "actions": "Akcje"
     },
     "contribute": {
         "donation_text": "Tutaj możesz podziękować za naszą pracę. Miłe słowo też mile widziane ;)",

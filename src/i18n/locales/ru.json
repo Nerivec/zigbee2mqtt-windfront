@@ -77,7 +77,26 @@
         "feature_name": "Название функции",
         "state": "Состояние",
         "scroll_to_top": "Наверх",
-        "notifications": "Уведомления"
+        "notifications": "Уведомления",
+        "instances": "Экземпляры",
+        "overview": "Обзор",
+        "recent_activity": "Недавняя активность",
+        "oldest_activity": "Самая ранняя активность",
+        "last_activity": "Последнее действие",
+        "group_scenes": "Сцены групп",
+        "quick_search": "Быстрый поиск",
+        "not_seen_in_a_while": "Давно не появлялось",
+        "remove": "Удалить",
+        "add": "Добавить",
+        "edit": "Редактировать",
+        "edit_selected": "Редактировать выбранные",
+        "disable_selected": "Отключить выбранные",
+        "bind_selected": "Привязать выбранные",
+        "unbind_selected": "Отвязать выбранные",
+        "mismatching_types": "Несовпадающие типы",
+        "sync": "Синхр.",
+        "clear_self_as_source": "Убрать себя как источник",
+        "sync_reporting": "Синхр. отчётность"
     },
     "devicePage": {
         "about": "Информация",
@@ -103,7 +122,6 @@
         "group_id": "ID группы",
         "group_members": "Члены группы",
         "group_scenes": "Сцены группы",
-        "scenes": "Сцены",
         "rename_group": "Переименовать группу",
         "remove_from_group": "Удалить из группы"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket статус",
         "transaction_prefix": "Префикс транзакции",
         "frontend_settings": "Настройки интерфейса",
-        "contribute": "Внести вклад"
+        "contribute": "Внести вклад",
+        "home": "Главная",
+        "activity": "Активность",
+        "reporting": "Отчётность",
+        "bindings": "Привязки"
     },
     "ota": {
         "check": "Проверить обновления",
@@ -285,7 +307,9 @@
         "identify": "Идентифицировать",
         "factory_reset": "Сброс к заводским",
         "scan_source": "Источник сканирования",
-        "select_scan_source": "Выберите источник"
+        "select_scan_source": "Выберите источник",
+        "philips_hue_reset": "Сброс Hue",
+        "serial_numbers_csv": "Серийные номера (CSV)"
     },
     "values": {
         "clear": "очистить",
@@ -379,7 +403,12 @@
         "Coordinator": "Координатор",
         "power_source": "Источник питания",
         "battery_low": "Низкий заряд батареи",
-        "battery_level": "Уровень заряда батареи"
+        "battery_level": "Уровень заряда батареи",
+        "scenes": "Сцены",
+        "low_lqi": "Низкий LQI",
+        "extended_pan_id": "Расширенный PAN ID",
+        "rx_on_when_idle": "RX включён в простое",
+        "permit_joining": "Разрешить присоединение"
     },
     "scene": {
         "manage_scenes_header": "Управление сценами",
@@ -387,9 +416,7 @@
         "scene_id": "ID сцены",
         "recall": "Вызвать",
         "store": "Сохранить",
-        "remove": "Удалить",
         "remove_all": "Удалить все",
-        "add": "Добавить",
         "select_scene": "Выберите сцену",
         "scene_name": "Название сцены"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Выберите конвертер",
         "codespace_info": "Github Codespace доступен для помощи разработке",
         "show_definition": "Показать определение",
-        "hide_definition": "Скрыть определение"
+        "hide_definition": "Скрыть определение",
+        "action": "Действие",
+        "actions": "Действия"
     },
     "contribute": {
         "donation_text": "Здесь вы можете поблагодарить нас за проделанную работу. Добрые слова тоже приветствуются ;)",

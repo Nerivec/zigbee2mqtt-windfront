@@ -77,7 +77,26 @@
         "feature_name": "Názov funkcie",
         "state": "Stav",
         "scroll_to_top": "Prejsť na začiatok",
-        "notifications": "Oznámenia"
+        "notifications": "Oznámenia",
+        "instances": "Inštancie",
+        "overview": "Prehľad",
+        "recent_activity": "Nedávna aktivita",
+        "oldest_activity": "Najstaršia aktivita",
+        "last_activity": "Posledná aktivita",
+        "group_scenes": "Skupinové scény",
+        "quick_search": "Rýchle vyhľadávanie",
+        "not_seen_in_a_while": "Dlho nevidené",
+        "remove": "Odstrániť",
+        "add": "Pridať",
+        "edit": "Upraviť",
+        "edit_selected": "Upraviť vybrané",
+        "disable_selected": "Deaktivovať vybrané",
+        "bind_selected": "Previazať vybrané",
+        "unbind_selected": "Zrušiť previazané",
+        "mismatching_types": "Nezhodné typy",
+        "sync": "Synchron.",
+        "clear_self_as_source": "Odstrániť seba ako zdroj",
+        "sync_reporting": "Synchron. hlásenia"
     },
     "devicePage": {
         "about": "O zariadení",
@@ -103,7 +122,6 @@
         "group_id": "ID skupiny",
         "group_members": "Členovia skupiny",
         "group_scenes": "Skupinové scény",
-        "scenes": "Scény",
         "rename_group": "Premenovať skupinu",
         "remove_from_group": "Odstrániť zo skupiny"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "Stav WebSocket",
         "transaction_prefix": "Predpona transakcie",
         "frontend_settings": "Nastavenia používateľského rozhrania",
-        "contribute": "Prispieť"
+        "contribute": "Prispieť",
+        "home": "Domov",
+        "activity": "Aktivita",
+        "reporting": "Reporty",
+        "bindings": "Previazania"
     },
     "ota": {
         "check": "Skontrolovať nové aktualizácie",
@@ -285,7 +307,9 @@
         "identify": "Identifikovať",
         "factory_reset": "Obnovenie továrenských nastavení",
         "scan_source": "Zdroj skenovania",
-        "select_scan_source": "Vybrať zdroj skenovania"
+        "select_scan_source": "Vybrať zdroj skenovania",
+        "philips_hue_reset": "Reset Hue",
+        "serial_numbers_csv": "Sériové čísla (CSV)"
     },
     "values": {
         "clear": "Prázdne",
@@ -379,7 +403,12 @@
         "Coordinator": "Koordinátor",
         "power_source": "Zdroj napájania",
         "battery_low": "Slabá batéria",
-        "battery_level": "Úroveň batérie"
+        "battery_level": "Úroveň batérie",
+        "scenes": "Scény",
+        "low_lqi": "Nízke LQI",
+        "extended_pan_id": "Rozšírené PAN ID",
+        "rx_on_when_idle": "RX zapnuté v nečinnosti",
+        "permit_joining": "Povoliť pripojenie"
     },
     "scene": {
         "manage_scenes_header": "Spravovať scény",
@@ -387,9 +416,7 @@
         "scene_id": "ID scény",
         "recall": "Recall",
         "store": "Uložiť",
-        "remove": "Odstrániť",
         "remove_all": "Odstrániť všetky",
-        "add": "Pridať",
         "select_scene": "Vybrať scénu",
         "scene_name": "Názov scény"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Vyberte konvertor na úpravu",
         "codespace_info": "K dispozícii je Github Codespace, ktorý vám pomôže pri vývoji",
         "show_definition": "Zobraziť definíciu",
-        "hide_definition": "Skryť definíciu"
+        "hide_definition": "Skryť definíciu",
+        "action": "Akcia",
+        "actions": "Akcie"
     },
     "contribute": {
         "donation_text": "Tu sa nám môžete poďakovať za všetku tvrdú prácu. Neváhajte napísať aj niečo milé ;)",

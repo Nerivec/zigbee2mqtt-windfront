@@ -1,12 +1,10 @@
 import { type ChangeEvent, type InputHTMLAttributes, type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../store.js";
 import type { AttributeDefinition, Device } from "../../types.js";
 import SelectField from "../form-fields/SelectField.js";
-
-type BridgeDefinitions = Zigbee2MQTTAPI["bridge/definitions"];
+import { getClusterAttributes } from "../reporting/index.js";
 
 interface AttributePickerProps extends Omit<InputHTMLAttributes<HTMLSelectElement>, "onChange"> {
     sourceIdx: number;
@@ -21,25 +19,10 @@ const AttributePicker = memo(({ sourceIdx, cluster, device, onChange, label, ...
     const { t } = useTranslation("zigbee");
 
     // retrieve cluster attributes, priority to device custom if any, then ZH
-    const clusterAttributes = useMemo(() => {
-        const deviceCustomClusters: BridgeDefinitions["custom_clusters"][string] | undefined = bridgeDefinitions.custom_clusters[device.ieee_address];
-
-        if (deviceCustomClusters) {
-            const customClusters = deviceCustomClusters[cluster];
-
-            if (customClusters) {
-                return customClusters.attributes;
-            }
-        }
-
-        const stdCluster: BridgeDefinitions["clusters"][keyof BridgeDefinitions["clusters"]] | undefined = bridgeDefinitions.clusters[cluster];
-
-        if (stdCluster) {
-            return stdCluster.attributes;
-        }
-
-        return [];
-    }, [bridgeDefinitions, device.ieee_address, cluster]);
+    const clusterAttributes = useMemo(
+        () => getClusterAttributes(bridgeDefinitions, device.ieee_address, cluster),
+        [bridgeDefinitions, device.ieee_address, cluster],
+    );
 
     const options = useMemo(() => {
         const attrs: JSX.Element[] = [];

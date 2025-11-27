@@ -12,7 +12,7 @@ import SelectField from "../../form-fields/SelectField.js";
 import TextareaField from "../../form-fields/TextareaField.js";
 import InfoAlert from "../../InfoAlert.js";
 
-export type TabName = "mqtt" | "external_converters" | "external_extensions";
+export type TabName = "mqtt" | "external_converters" | "external_extensions" | "actions";
 
 type DevConsoleProps = { sourceIdx: number; tab: TabName };
 
@@ -302,6 +302,78 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
     );
 };
 
+const ActionsTab = ({ sourceIdx }: DevConsoleTabProps) => {
+    const { t } = useTranslation(["devConsole", "common"]);
+    const actions = useAppStore(useShallow((state) => state.bridgeDefinitions[sourceIdx].actions ?? []));
+    const [action, setAction] = useState("raw");
+    const [jsonPayload, setJsonPayload] = useState("{}");
+
+    const canSend = useMemo(() => {
+        if (!action) {
+            return false;
+        }
+
+        // allow empty strings
+        if (jsonPayload !== "") {
+            try {
+                const parsedPayload = JSON.parse(jsonPayload);
+
+                if (typeof parsedPayload !== "object" || Array.isArray(parsedPayload)) {
+                    return false;
+                }
+            } catch {
+                return false;
+            }
+        }
+
+        return true;
+    }, [action, jsonPayload]);
+
+    const onSelectChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+        if (event.target.value) {
+            setAction(event.target.value);
+        }
+    }, []);
+
+    const onSend = useCallback(async () => {
+        await sendMessage(sourceIdx, "bridge/request/action", {
+            action,
+            params: jsonPayload === "" ? jsonPayload : JSON.parse(jsonPayload),
+        });
+    }, [sourceIdx, action, jsonPayload]);
+
+    return (
+        <>
+            <h2 className="text-lg mb-2">{t(($) => $.actions)}</h2>
+            <InfoAlert>
+                <a href={MQTT_TOPICS_DOCS_URL} target="_blank" rel="noreferrer" className="link link-hover">
+                    {t(($) => $.read_the_docs_info, { ns: "common" })}
+                </a>
+            </InfoAlert>
+            <SelectField name="action" label={t(($) => $.action)} onChange={onSelectChange} value={action}>
+                {actions.map((a) => (
+                    <option value={a} key={a}>
+                        {a}
+                    </option>
+                ))}
+            </SelectField>
+            <TextareaField
+                name="payload"
+                label={t(($) => $.payload, { ns: "common" })}
+                rows={5}
+                value={jsonPayload}
+                onChange={(e) => setJsonPayload(e.target.value)}
+                className="textarea validator w-full"
+            />
+            <div className="join join-horizontal mt-2">
+                <Button<void> onClick={onSend} disabled={!canSend} className="btn btn-success">
+                    {t(($) => $.send, { ns: "common" })}
+                </Button>
+            </div>
+        </>
+    );
+};
+
 function renderTab(sourceIdx: number, tab: TabName) {
     switch (tab) {
         case "mqtt":
@@ -310,6 +382,8 @@ function renderTab(sourceIdx: number, tab: TabName) {
             return <ExternalConverterTab sourceIdx={sourceIdx} />;
         case "external_extensions":
             return <ExternalExtensionTab sourceIdx={sourceIdx} />;
+        case "actions":
+            return <ActionsTab sourceIdx={sourceIdx} />;
     }
 }
 
@@ -328,6 +402,9 @@ export default function DevConsole({ sourceIdx, tab }: DevConsoleProps) {
             </NavLink>
             <NavLink to={`/settings/${sourceIdx}/dev-console/external_extensions`} className={isTabActive}>
                 {t(($) => $.external_extensions)}
+            </NavLink>
+            <NavLink to={`/settings/${sourceIdx}/dev-console/actions`} className={isTabActive}>
+                {t(($) => $.actions)}
             </NavLink>
             <div className="tab-content block h-full bg-base-100 p-3">{renderTab(sourceIdx, tab)}</div>
         </div>

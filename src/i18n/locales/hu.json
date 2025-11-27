@@ -77,7 +77,26 @@
         "feature_name": "Funkció neve",
         "state": "Állapot",
         "scroll_to_top": "Vissza fel",
-        "notifications": "Értesítések"
+        "notifications": "Értesítések",
+        "instances": "Példányok",
+        "overview": "Áttekintés",
+        "recent_activity": "Legutóbbi aktivitás",
+        "oldest_activity": "Legrégebbi aktivitás",
+        "last_activity": "Utolsó aktivitás",
+        "group_scenes": "Csoportjelenetek",
+        "quick_search": "Gyorskeresés",
+        "not_seen_in_a_while": "Régóta nem látható",
+        "remove": "Eltávolítás",
+        "add": "Hozzáadás",
+        "edit": "Szerkesztés",
+        "edit_selected": "Kijelöltek szerkesztése",
+        "disable_selected": "Kijelöltek letiltása",
+        "bind_selected": "Kijelöltek összekapcsolása",
+        "unbind_selected": "Kijelöltek szétkapcsolása",
+        "mismatching_types": "Nem egyező típusok",
+        "sync": "Szinkr.",
+        "clear_self_as_source": "Távolítsd el magad forrásként",
+        "sync_reporting": "Szinkr. jelentés"
     },
     "devicePage": {
         "about": "Névjegy",
@@ -103,7 +122,6 @@
         "group_id": "Csoport ID",
         "group_members": "Csoporttagok",
         "group_scenes": "Csoport jelenetek",
-        "scenes": "Jelenetek",
         "rename_group": "Csoport átnevezése",
         "remove_from_group": "Eltávolítás csoportból"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket státusz",
         "transaction_prefix": "Tranzakció előtag",
         "frontend_settings": "Előfelület beállításai",
-        "contribute": "Közreműködés"
+        "contribute": "Közreműködés",
+        "home": "Kezdőlap",
+        "activity": "Aktivitás",
+        "reporting": "Jelentések",
+        "bindings": "Kapcsolások"
     },
     "ota": {
         "check": "Frissítések keresése",
@@ -285,7 +307,9 @@
         "identify": "Azonosítás",
         "factory_reset": "Gyári visszaállítás",
         "scan_source": "Forrás",
-        "select_scan_source": "Forrás kiválasztása"
+        "select_scan_source": "Forrás kiválasztása",
+        "philips_hue_reset": "Philips Hue visszaállítás",
+        "serial_numbers_csv": "Sorozatszámok (CSV)"
     },
     "values": {
         "clear": "törlés",
@@ -379,7 +403,12 @@
         "Coordinator": "Koordinátor",
         "power_source": "Tápegység",
         "battery_low": "Alacsony töltöttség",
-        "battery_level": "Akkumulátorszint"
+        "battery_level": "Akkumulátorszint",
+        "scenes": "Jelenetek",
+        "low_lqi": "Alacsony LQI",
+        "extended_pan_id": "Kiterjesztett PAN ID",
+        "rx_on_when_idle": "RX bekapcsolva üresjáratban",
+        "permit_joining": "Csatlakozás engedélyezése"
     },
     "scene": {
         "manage_scenes_header": "Jelenetek kezelése",
@@ -387,9 +416,7 @@
         "scene_id": "Jelenet ID",
         "recall": "Visszahívás",
         "store": "Tárolás",
-        "remove": "Eltávolítás",
         "remove_all": "Összes eltávolítása",
-        "add": "Hozzáadás",
         "select_scene": "Válassz jelenetet",
         "scene_name": "Jelenet név"
     },
@@ -427,8 +454,10 @@
         "create_new_converter": "Új konverter",
         "select_converter_to_edit": "Válassz konvertert",
         "codespace_info": "Github Codespace elérhető fejlesztéshez",
-        "show_definition": "Definíció megjelenítés",
-        "hide_definition": "Definíció elrejtés"
+        "show_definition": "Definíció megjelenítése",
+        "hide_definition": "Definíció elrejtése",
+        "action": "Művelet",
+        "actions": "Műveletek"
     },
     "contribute": {
         "donation_text": "Itt megköszönheted a munkánkat. Egy kedves szó is mindig jól esik ;)",

@@ -25,7 +25,7 @@ const ContextMenu = memo(({ data, onCollapse, isCollapsed, canCollapse, onClose 
     }
 
     return (
-        <div className="card bg-base-100 shadow-sm">
+        <div className="card bg-base-100 card-border border-base-300 shadow-md">
             <div className="card-body">
                 <h2 className="card-title">{data.friendlyName}</h2>
                 <span>{data.type}</span>

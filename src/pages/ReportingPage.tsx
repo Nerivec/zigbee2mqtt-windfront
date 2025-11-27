@@ -1,10 +1,11 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { faBan, faPenToSquare, faServer } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsRotate, faBan, faPenToSquare, faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
 import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import Button from "../components/Button.js";
 import ConfirmButton from "../components/ConfirmButton.js";
 import DeviceImage from "../components/device/DeviceImage.js";
@@ -15,24 +16,27 @@ import { ReportingRuleModal } from "../components/modal/components/ReportingRule
 import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
 import DevicePicker from "../components/pickers/DevicePicker.js";
 import EndpointPicker from "../components/pickers/EndpointPicker.js";
-import { makeDefaultReporting, type ReportingRule } from "../components/reporting/index.js";
+import { getClusterAttribute, isAnalogDataType, makeDefaultReporting, type ReportingRule } from "../components/reporting/index.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import TableSearch from "../components/table/TableSearch.js";
 import { useTable } from "../hooks/useTable.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
-import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, type AppState, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { Device } from "../types.js";
 import { getEndpoints } from "../utils.js";
 import { sendMessage } from "../websocket/WebSocketManager.js";
 
-type ReportingTableData = {
+export type ReportingTableData = {
     sourceIdx: number;
     device: Device;
     rule: ReportingRule;
+    bridgeDefinitions: AppState["bridgeDefinitions"][number];
+    isAnalogAttribute: boolean;
 };
 
 export default function ReportingPage(): JSX.Element {
+    const allBridgeDefinitions = useAppStore((state) => state.bridgeDefinitions);
     const devices = useAppStore((state) => state.devices);
     const { t } = useTranslation(["zigbee", "common"]);
     const [newRuleSourceIdx, setNewRuleSourceIdx] = useState(0);
@@ -50,15 +54,22 @@ export default function ReportingPage(): JSX.Element {
         const rows: ReportingTableData[] = [];
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
+            const bridgeDefinitions = allBridgeDefinitions[sourceIdx];
+
             for (const device of devices[sourceIdx]) {
                 for (const endpointId in device.endpoints) {
                     const endpoint = device.endpoints[endpointId];
 
                     for (const reporting of endpoint.configured_reportings) {
+                        const attrDef = getClusterAttribute(bridgeDefinitions, device.ieee_address, reporting.cluster, reporting.attribute);
+                        const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+
                         rows.push({
                             sourceIdx,
                             device,
                             rule: { ...reporting, endpoint: endpointId },
+                            bridgeDefinitions,
+                            isAnalogAttribute,
                         });
                     }
                 }
@@ -66,7 +77,7 @@ export default function ReportingPage(): JSX.Element {
         }
 
         return rows;
-    }, [devices]);
+    }, [devices, allBridgeDefinitions]);
 
     const rowSelectionCount = useMemo(() => Object.keys(rowSelection).length, [rowSelection]);
 
@@ -82,20 +93,25 @@ export default function ReportingPage(): JSX.Element {
 
             for (const row of table.table.getFilteredRowModel().rows) {
                 if (row.getIsSelected()) {
-                    const { sourceIdx, device, rule } = row.original;
+                    const { sourceIdx, device, rule, bridgeDefinitions } = row.original;
+                    const attrDef = getClusterAttribute(bridgeDefinitions, device.ieee_address, rule.cluster, rule.attribute);
+                    // default to consider analog if can't find attribute definition
+                    const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+                    const payload: Zigbee2MQTTAPI["bridge/request/device/reporting/configure"] = {
+                        id: device.ieee_address,
+                        endpoint: rule.endpoint,
+                        cluster: rule.cluster,
+                        attribute: rule.attribute,
+                        minimum_report_interval: minRepInterval === undefined ? rule.minimum_report_interval : minRepInterval,
+                        maximum_report_interval: disable ? 0xffff : maxRepInterval === undefined ? rule.maximum_report_interval : maxRepInterval,
+                        option: {}, // TODO: check this
+                    };
 
-                    promises.push(
-                        sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
-                            id: device.ieee_address,
-                            endpoint: rule.endpoint,
-                            cluster: rule.cluster,
-                            attribute: rule.attribute,
-                            minimum_report_interval: minRepInterval ?? rule.minimum_report_interval,
-                            maximum_report_interval: disable ? 0xffff : (maxRepInterval ?? rule.maximum_report_interval),
-                            reportable_change: repChange ?? rule.reportable_change,
-                            option: {},
-                        }),
-                    );
+                    if (isAnalogAttribute) {
+                        payload.reportable_change = disable ? 0 : repChange === undefined ? rule.reportable_change : repChange;
+                    }
+
+                    promises.push(sendMessage(sourceIdx, "bridge/request/device/reporting/configure", payload));
                 }
             }
 
@@ -118,12 +134,23 @@ export default function ReportingPage(): JSX.Element {
 
     const availableEndpoints = useMemo(() => getEndpoints(newRuleDevice), [newRuleDevice]);
 
-    const applyRule = useCallback(async (sourceIdx: number, device: Device, rule: ReportingRule): Promise<void> => {
-        await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
+    const applyRule = useCallback(async (sourceIdx: number, device: Device, rule: ReportingRule, isAnalogAttribute: boolean): Promise<void> => {
+        const { cluster, endpoint, attribute, minimum_report_interval, maximum_report_interval, reportable_change } = rule;
+        const payload: Zigbee2MQTTAPI["bridge/request/device/reporting/configure"] = {
             id: device.ieee_address,
-            ...rule,
-            option: {},
-        });
+            endpoint,
+            cluster,
+            attribute,
+            minimum_report_interval,
+            maximum_report_interval,
+            option: {}, // TODO: check this
+        };
+
+        if (isAnalogAttribute) {
+            payload.reportable_change = reportable_change;
+        }
+
+        await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", payload);
     }, []);
 
     const applyNewRule = useCallback(
@@ -132,13 +159,26 @@ export default function ReportingPage(): JSX.Element {
                 return;
             }
 
-            await applyRule(newRuleSourceIdx, newRuleDevice, rule);
+            const attrDef = getClusterAttribute(allBridgeDefinitions[newRuleSourceIdx], newRuleDevice.ieee_address, rule.cluster, rule.attribute);
+            // default to consider analog if can't find attribute definition
+            const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+
+            await applyRule(newRuleSourceIdx, newRuleDevice, rule, isAnalogAttribute);
             setNewRuleSourceIdx(0);
             setNewRuleDevice(null);
             setNewRuleEndpoint("");
         },
-        [applyRule, newRuleSourceIdx, newRuleDevice],
+        [applyRule, newRuleSourceIdx, newRuleDevice, allBridgeDefinitions],
     );
+
+    const onRowSync = useCallback(async ([sourceIdx, id, endpoint, cluster, attribute]: [number, string, number, string, string]) => {
+        await sendMessage(sourceIdx, "bridge/request/device/reporting/read", {
+            id,
+            endpoint,
+            cluster,
+            configs: [{ attribute }],
+        });
+    }, []);
 
     const columns = useMemo<ColumnDef<ReportingTableData, unknown>[]>(
         () => [
@@ -270,7 +310,7 @@ export default function ReportingPage(): JSX.Element {
                 id: "min_rep_change",
                 size: 120,
                 header: t(($) => $.min_rep_change),
-                accessorFn: ({ rule }) => rule.reportable_change,
+                accessorFn: ({ rule, isAnalogAttribute }) => (isAnalogAttribute ? rule.reportable_change : "N/A"),
                 filterFn: "inNumberRange",
                 meta: { filterVariant: "range" },
             },
@@ -279,7 +319,7 @@ export default function ReportingPage(): JSX.Element {
                 size: 110,
                 cell: ({
                     row: {
-                        original: { sourceIdx, device, rule },
+                        original: { sourceIdx, device, rule, bridgeDefinitions, isAnalogAttribute },
                     },
                 }) => (
                     <div className="join join-horizontal">
@@ -291,23 +331,56 @@ export default function ReportingPage(): JSX.Element {
                                     sourceIdx,
                                     device,
                                     rule,
-                                    onApply: async (updatedRule) => await applyRule(sourceIdx, device, updatedRule),
+                                    bridgeDefinitions,
+                                    isAnalogAttribute,
+                                    onApply: applyRule,
                                 })
                             }
                         >
                             <FontAwesomeIcon icon={faPenToSquare} />
                         </Button>
-                        {!rule.isNew ? (
-                            <ConfirmButton<void>
-                                title={t(($) => $.disable, { ns: "common" })}
-                                className="btn btn-sm btn-square btn-error btn-outline join-item"
-                                onClick={async () => await applyRule(sourceIdx, device, { ...rule, maximum_report_interval: 0xffff })}
-                                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
-                                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
-                            >
-                                <FontAwesomeIcon icon={faBan} />
-                            </ConfirmButton>
-                        ) : null}
+                        <ConfirmButton
+                            className="btn btn-sm btn-square btn-outline btn-accent join-item"
+                            item={[sourceIdx, device.ieee_address, rule.endpoint, rule.cluster, rule.attribute]}
+                            onClick={onRowSync}
+                            title={t(($) => $.sync, { ns: "common" })}
+                            modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                            modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                        >
+                            <FontAwesomeIcon icon={faArrowsRotate} />
+                        </ConfirmButton>
+                        {/* <ConfirmButton<void>
+                            title={t(($) => $.default, { ns: "common" })}
+                            className="btn btn-sm btn-square btn-warning btn-outline join-item"
+                            onClick={async () =>
+                                await applyRule(sourceIdx, device, {
+                                    ...rule,
+                                    minimum_report_interval: 0xffff,
+                                    maximum_report_interval: 0x0000,
+                                    reportable_change: 0,
+                                })
+                            }
+                            modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                            modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                        >
+                            <FontAwesomeIcon icon={faArrowRotateLeft} />
+                        </ConfirmButton> */}
+                        <ConfirmButton<void>
+                            title={t(($) => $.disable, { ns: "common" })}
+                            className="btn btn-sm btn-square btn-error btn-outline join-item"
+                            onClick={async () =>
+                                await applyRule(
+                                    sourceIdx,
+                                    device,
+                                    { ...rule, maximum_report_interval: 0xffff, reportable_change: 0 },
+                                    isAnalogAttribute,
+                                )
+                            }
+                            modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                            modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                        >
+                            <FontAwesomeIcon icon={faBan} />
+                        </ConfirmButton>
                     </div>
                 ),
                 enableSorting: false,
@@ -315,7 +388,7 @@ export default function ReportingPage(): JSX.Element {
                 enableGlobalFilter: false,
             },
         ],
-        [applyRule, t],
+        [applyRule, onRowSync, t],
     );
 
     const table = useTable({
@@ -383,8 +456,9 @@ export default function ReportingPage(): JSX.Element {
                 {newRuleDevice && newRuleDraft ? (
                     <ReportingRow
                         sourceIdx={newRuleSourceIdx}
-                        device={newRuleDevice}
                         rule={newRuleDraft}
+                        bridgeDefinitions={allBridgeDefinitions[newRuleSourceIdx]}
+                        device={newRuleDevice}
                         onApply={applyNewRule}
                         showDivider={false}
                     />
@@ -405,6 +479,17 @@ export default function ReportingPage(): JSX.Element {
                     >
                         {`${t(($) => $.edit_selected, { ns: "common" })} (${rowSelectionCount})`}
                     </Button>
+                    {/* <ConfirmButton
+                        item={[0xffff, 0x0000, 0, false]}
+                        className="btn btn-outline btn-warning btn-sm"
+                        onClick={actOnFilteredSelected}
+                        title={t(($) => $.reset_selected, { ns: "common" })}
+                        disabled={rowSelectionCount === 0}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                    >
+                        {`${t(($) => $.reset_selected, { ns: "common" })} (${rowSelectionCount})`}
+                    </ConfirmButton> */}
                     <ConfirmButton
                         item={[undefined, undefined, undefined, true /* disable */]}
                         className="btn btn-outline btn-error btn-sm"

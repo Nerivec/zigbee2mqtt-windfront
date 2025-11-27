@@ -1,4 +1,4 @@
-import { faAnglesDown, faBattery, faHeartPulse, faLeaf, faPlug, faSignal, faSlash } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesDown, faBan, faBattery, faHeartPulse, faLeaf, faPlug, faSignal, faSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, type SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -13,6 +13,7 @@ export interface HeroProps extends HomePageDataCounters {
     quickFilter: readonly [QuickFilter, unknown] | null;
 }
 
+const SEARCH_DISABLED = [QuickFilter.Disabled, true] as const;
 const SEARCH_AVAILABILITY_OFFLINE = [QuickFilter.Availability, "offline"] as const;
 const SEARCH_TYPE_ROUTER = [QuickFilter.Type, "Router"] as const;
 const SEARCH_TYPE_END_DEVICE = [QuickFilter.Type, "EndDevice"] as const;
@@ -23,7 +24,9 @@ const Hero = memo(
     ({
         totalDevices,
         onlineDevices,
+        maybeOnlineDevices,
         disabledDevices,
+        anyAvailabilityEnabled,
         totalInstances,
         onlineInstances,
         routers,
@@ -77,42 +80,55 @@ const Hero = memo(
                         <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.devices)}</div>
-                                <div className="font-semibold text-xl">
-                                    <span className={onlineDevices === totalDevices ? undefined : "text-error"}>
-                                        {onlineDevices} / {totalDevices}
+                                <div className="font-semibold text-xl">{totalDevices}</div>
+                                {disabledDevices > 0 && (
+                                    <span className="text-sm text-xs text-base-content/50">
+                                        +{disabledDevices} {t(($) => $.disabled)}
                                     </span>
-                                    {disabledDevices > 0 && (
-                                        <>
-                                            {" "}
-                                            <span className="text-sm text-base-content/75 tooltip tooltip-bottom" data-tip={t(($) => $.disabled)}>
-                                                (+{disabledDevices})
-                                            </span>
-                                        </>
-                                    )}
-                                </div>
-                                {totalDevices > 0 && (
-                                    <div className="text-xs text-base-content/50">
-                                        {Math.round((onlineDevices / totalDevices) * 100)}% {t(($) => $.online, { ns: "availability" })}
-                                    </div>
                                 )}
                             </div>
                             <div className="self-center">
                                 <Button
-                                    className={`link tooltip tooltip-bottom ${quickFilter?.[0] === SEARCH_AVAILABILITY_OFFLINE[0] ? "text-accent" : "text-primary"}`}
-                                    data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.offline, { ns: "availability" })}`}
+                                    className={`link tooltip tooltip-bottom ${quickFilter?.[0] === SEARCH_DISABLED[0] ? "text-accent/80" : "text-primary/80"}`}
+                                    data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.disabled, { ns: "common" })}`}
                                     onClick={onFilterClick}
-                                    item={SEARCH_AVAILABILITY_OFFLINE}
+                                    item={SEARCH_DISABLED}
                                 >
-                                    <span className="fa-layers fa-xl">
-                                        <FontAwesomeIcon
-                                            icon={faSignal}
-                                            className={`${quickFilter?.[0] === SEARCH_AVAILABILITY_OFFLINE[0] ? "text-accent/60" : "text-primary/60"}`}
-                                        />
-                                        <FontAwesomeIcon icon={faSlash} transform="shrink-5 down-2 right-1" />
-                                    </span>
+                                    <FontAwesomeIcon icon={faBan} size="xl" />
                                 </Button>
                             </div>
                         </div>
+                        {anyAvailabilityEnabled ? (
+                            <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
+                                <div>
+                                    <div className="text-sm text-base-content/70">{t(($) => $.online, { ns: "availability" })}</div>
+                                    <div className="font-semibold text-xl">
+                                        <span className={onlineDevices === totalDevices ? undefined : "text-error"}>{onlineDevices}</span>
+                                    </div>
+                                    {maybeOnlineDevices > 0 && disabledDevices > 0 && (
+                                        <span className="text-sm text-xs text-base-content/50">
+                                            +{maybeOnlineDevices} {t(($) => $.unknown, { ns: "zigbee" })}
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="self-center">
+                                    <Button
+                                        className={`link tooltip tooltip-bottom ${quickFilter?.[0] === SEARCH_AVAILABILITY_OFFLINE[0] ? "text-accent" : "text-primary"}`}
+                                        data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.offline, { ns: "availability" })}`}
+                                        onClick={onFilterClick}
+                                        item={SEARCH_AVAILABILITY_OFFLINE}
+                                    >
+                                        <span className="fa-layers fa-xl">
+                                            <FontAwesomeIcon
+                                                icon={faSignal}
+                                                className={`${quickFilter?.[0] === SEARCH_AVAILABILITY_OFFLINE[0] ? "text-accent/70" : "text-primary/70"}`}
+                                            />
+                                            <FontAwesomeIcon icon={faSlash} transform="shrink-5 down-2 right-1" />
+                                        </span>
+                                    </Button>
+                                </div>
+                            </div>
+                        ) : null}
                         <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-e border-current/25 last:border-e-0">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.Router, { ns: "zigbee" })}</div>
@@ -120,7 +136,7 @@ const Hero = memo(
                             </div>
                             <div className="self-center">
                                 <Button
-                                    className={`link tooltip tooltip-bottom ${quickFilter?.[0] === SEARCH_TYPE_ROUTER[0] && quickFilter[1] === SEARCH_TYPE_ROUTER[1] ? "text-accent" : "text-primary"}`}
+                                    className={`link tooltip tooltip-bottom ${quickFilter?.[0] === SEARCH_TYPE_ROUTER[0] && quickFilter[1] === SEARCH_TYPE_ROUTER[1] ? "text-accent/80" : "text-primary/80"}`}
                                     data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.Router, { ns: "zigbee" })}`}
                                     onClick={onFilterClick}
                                     item={SEARCH_TYPE_ROUTER}
@@ -136,7 +152,7 @@ const Hero = memo(
                             </div>
                             <div className="self-center">
                                 <Button
-                                    className={`link tooltip tooltip-bottom ${quickFilter?.[0] === SEARCH_TYPE_END_DEVICE[0] && quickFilter[1] === SEARCH_TYPE_END_DEVICE[1] ? "text-accent" : "text-primary"}`}
+                                    className={`link tooltip tooltip-bottom ${quickFilter?.[0] === SEARCH_TYPE_END_DEVICE[0] && quickFilter[1] === SEARCH_TYPE_END_DEVICE[1] ? "text-accent/80" : "text-primary/80"}`}
                                     data-tip={`${t(($) => $.quick_search)}: ${t(($) => $.EndDevice, { ns: "zigbee" })}`}
                                     onClick={onFilterClick}
                                     item={SEARCH_TYPE_END_DEVICE}
@@ -182,7 +198,7 @@ const Hero = memo(
                                         <span className="fa-layers fa-xl">
                                             <FontAwesomeIcon
                                                 icon={faSignal}
-                                                className={`${quickFilter?.[0] === SEARCH_LQI_LOW[0] ? "text-accent/60" : "text-primary/60"}`}
+                                                className={`${quickFilter?.[0] === SEARCH_LQI_LOW[0] ? "text-accent/70" : "text-primary/70"}`}
                                             />
                                             <FontAwesomeIcon icon={faAnglesDown} transform="shrink-4 down-2" />
                                         </span>

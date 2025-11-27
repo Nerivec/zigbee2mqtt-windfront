@@ -77,7 +77,26 @@
         "feature_name": "Funksjonsnavn",
         "state": "Tilstand",
         "scroll_to_top": "Til topp",
-        "notifications": "Varsler"
+        "notifications": "Varsler",
+        "instances": "Instanser",
+        "overview": "Oversikt",
+        "recent_activity": "Nyeste aktivitet",
+        "oldest_activity": "Eldste aktivitet",
+        "last_activity": "Siste aktivitet",
+        "group_scenes": "Gruppescener",
+        "quick_search": "Hurtigsøk",
+        "not_seen_in_a_while": "Ikke sett på en stund",
+        "remove": "Fjern",
+        "add": "Legg til",
+        "edit": "Rediger",
+        "edit_selected": "Rediger valgte",
+        "disable_selected": "Deaktiver valgte",
+        "bind_selected": "Koble valgte",
+        "unbind_selected": "Koble fra valgte",
+        "mismatching_types": "Ulike typer",
+        "sync": "Synk.",
+        "clear_self_as_source": "Fjern deg selv som kilde",
+        "sync_reporting": "Synk. rapportering"
     },
     "devicePage": {
         "about": "Om",
@@ -103,7 +122,6 @@
         "group_id": "Gruppe-ID",
         "group_members": "Gruppemedlemmer",
         "group_scenes": "Gruppescener",
-        "scenes": "Scener",
         "rename_group": "Gi gruppen nytt navn",
         "remove_from_group": "Fjern fra gruppe"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket-status",
         "transaction_prefix": "Transaksjonsprefiks",
         "frontend_settings": "Frontend-innstillinger",
-        "contribute": "Bidra"
+        "contribute": "Bidra",
+        "home": "Hjem",
+        "activity": "Aktivitet",
+        "reporting": "Rapportering",
+        "bindings": "Bindinger"
     },
     "ota": {
         "check": "Søk etter oppdateringer",
@@ -285,7 +307,9 @@
         "identify": "Identifiser",
         "factory_reset": "Fabrikkreset",
         "scan_source": "Skann-kilde",
-        "select_scan_source": "Velg kilde"
+        "select_scan_source": "Velg kilde",
+        "philips_hue_reset": "Philips Hue-reset",
+        "serial_numbers_csv": "Serienumre (CSV)"
     },
     "values": {
         "clear": "tøm",
@@ -379,7 +403,12 @@
         "Coordinator": "Koordinator",
         "power_source": "Strømkilde",
         "battery_low": "Lavt batteri",
-        "battery_level": "Batterinivå"
+        "battery_level": "Batterinivå",
+        "scenes": "Scener",
+        "low_lqi": "Lav LQI",
+        "extended_pan_id": "Utvidet PAN-ID",
+        "rx_on_when_idle": "RX på i hvile",
+        "permit_joining": "Tillat tilkobling"
     },
     "scene": {
         "manage_scenes_header": "Administrer scener",
@@ -387,9 +416,7 @@
         "scene_id": "Scene-ID",
         "recall": "Hent",
         "store": "Lagre",
-        "remove": "Fjern",
         "remove_all": "Fjern alle",
-        "add": "Legg til",
         "select_scene": "Velg scene",
         "scene_name": "Scenenavn"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Velg konverter",
         "codespace_info": "Github Codespace tilgjengelig",
         "show_definition": "Vis definisjon",
-        "hide_definition": "Skjul definisjon"
+        "hide_definition": "Skjul definisjon",
+        "action": "Handling",
+        "actions": "Handlinger"
     },
     "contribute": {
         "donation_text": "Her kan du takke oss for arbeidet. Et vennlig ord settes også pris på ;)",

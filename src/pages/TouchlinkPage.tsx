@@ -1,10 +1,12 @@
-import { faBroom, faCircleNotch, faExclamationTriangle, faMagnifyingGlassPlus, faServer } from "@fortawesome/free-solid-svg-icons";
+import { faBroom, faCircleNotch, faExclamationTriangle, faMagnifyingGlassPlus, faServer, faTools } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef } from "@tanstack/react-table";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import Button from "../components/Button.js";
+import FloatingCardButton from "../components/FloatingCardButton.js";
+import InputField from "../components/form-fields/InputField.js";
 import SelectField from "../components/form-fields/SelectField.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
@@ -24,7 +26,8 @@ type TouchlinkTableData = {
 };
 
 export default function TouchlinkPage() {
-    const { t } = useTranslation(["touchlink", "common", "zigbee"]);
+    const { t } = useTranslation(["touchlink", "common", "zigbee", "settings"]);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const touchlinkDevices = useAppStore((state) => state.touchlinkDevices);
     const devices = useAppStore((state) => state.devices);
     const touchlinkIdentifyInProgress = useAppStore((state) => state.touchlinkIdentifyInProgress);
@@ -34,6 +37,25 @@ export default function TouchlinkPage() {
     const setTouchlinkResetInProgress = useAppStore((state) => state.setTouchlinkResetInProgress);
     const setTouchlinkScan = useAppStore((state) => state.setTouchlinkScan);
     const [scanIdx, setScanIdx] = useState(0);
+    const [hueExtPanId, setHueExtPanId] = useState<string>("");
+    const [hueSerialNumbersRaw, setHueSerialNumbersRaw] = useState<string>("");
+    const [hueSerialNumbers, setHueSerialNumbers] = useState<number[]>([]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
+    useEffect(() => {
+        setHueExtPanId(bridgeInfo[scanIdx].network?.extended_pan_id ?? "");
+    }, [scanIdx]);
+
+    useEffect(() => {
+        setHueSerialNumbers(
+            hueSerialNumbersRaw
+                ? hueSerialNumbersRaw
+                      .replaceAll(" ", "")
+                      .split(",")
+                      .map((v) => Number.parseInt(v, v.startsWith("0x") ? 16 : 10))
+                : [],
+        );
+    }, [hueSerialNumbersRaw]);
 
     const data = useMemo((): TouchlinkTableData[] => {
         const renderDevices: TouchlinkTableData[] = [];
@@ -78,6 +100,26 @@ export default function TouchlinkPage() {
         },
         [setTouchlinkResetInProgress],
     );
+
+    const onHueResetApply = useCallback(async () => {
+        await sendMessage(scanIdx, "bridge/request/action", {
+            action: "philips_hue_factory_reset",
+            params: {
+                // 0x-format
+                extended_pan_id: hueExtPanId,
+                serial_numbers: hueSerialNumbers,
+            },
+        });
+        setHueSerialNumbersRaw("");
+    }, [scanIdx, hueExtPanId, hueSerialNumbers]);
+
+    const isHueResetValid = useMemo(() => {
+        if ((!hueExtPanId || /^0x[a-f0-9]{16}$/.test(hueExtPanId)) && Array.isArray(hueSerialNumbers) && hueSerialNumbers.length > 0) {
+            return hueSerialNumbers.every((sn) => Number.isInteger(sn));
+        }
+
+        return false;
+    }, [hueExtPanId, hueSerialNumbers]);
 
     const columns = useMemo<ColumnDef<TouchlinkTableData, unknown>[]>(
         () => [
@@ -233,6 +275,56 @@ export default function TouchlinkPage() {
                         <FontAwesomeIcon icon={faMagnifyingGlassPlus} />
                         {t(($) => $.scan)}
                     </Button>
+                </fieldset>
+                <fieldset className="fieldset self-end ml-auto">
+                    <FloatingCardButton
+                        placement="bottom-end"
+                        canApply={isHueResetValid}
+                        onApply={onHueResetApply}
+                        buttonClassName={"btn btn-outline btn-error"}
+                        buttonIcon={faTools}
+                        buttonTitle={t(($) => $.philips_hue_reset)}
+                        title={t(($) => $.philips_hue_reset)}
+                    >
+                        {MULTI_INSTANCE && (
+                            <SelectField
+                                name="scan_idx_picker"
+                                label={t(($) => $.source, { ns: "common" })}
+                                value={scanIdx}
+                                onChange={(e) => !e.target.validationMessage && !!e.target.value && setScanIdx(Number.parseInt(e.target.value, 10))}
+                                className="select"
+                            >
+                                <option value="" disabled>
+                                    {t(($) => $.source, { ns: "common" })}
+                                </option>
+                                {API_NAMES.map((name, idx) => (
+                                    <option key={name} value={idx}>
+                                        {name}
+                                    </option>
+                                ))}
+                            </SelectField>
+                        )}
+                        <InputField
+                            name="serial_numbers"
+                            label={t(($) => $.serial_numbers_csv)}
+                            type="text"
+                            value={hueSerialNumbersRaw}
+                            onChange={(e) => !e.target.validationMessage && setHueSerialNumbersRaw(e.target.value)}
+                        />
+                        <div className="collapse collapse-arrow">
+                            <input type="checkbox" />
+                            <div className="collapse-title font-semibold px-0">{t(($) => $.advanced, { ns: "settings" })}</div>
+                            <div className="collapse-content text-sm pb-2 px-2">
+                                <InputField
+                                    name="extended_pan_id"
+                                    label={t(($) => $.extended_pan_id, { ns: "zigbee" })}
+                                    type="text"
+                                    value={hueExtPanId}
+                                    onChange={(e) => !e.target.validationMessage && setHueExtPanId(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                    </FloatingCardButton>
                 </fieldset>
             </div>
 

@@ -107,6 +107,37 @@ export default function BindingsPage(): JSX.Element {
         [devices, groups],
     );
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: can't dep table
+    const clearOnFilteredSelected = useCallback(async (all: boolean) => {
+        const promises: Promise<void>[] = [];
+        // de-dupe
+        const targets = new Set<string>();
+
+        for (const row of table.table.getFilteredRowModel().rows) {
+            if (row.getIsSelected()) {
+                const { sourceIdx, device } = row.original;
+
+                if (targets.has(device.ieee_address)) {
+                    continue;
+                }
+
+                targets.add(device.ieee_address);
+                promises.push(
+                    sendMessage(sourceIdx, "bridge/request/device/binds/clear", {
+                        target: device.ieee_address,
+                        ieee_list: [all ? "0xffffffffffffffff" : (device.ieee_address as `0x${string}`)],
+                    }),
+                );
+            }
+        }
+
+        setRowSelection({});
+
+        if (promises.length > 0) {
+            await Promise.allSettled(promises);
+        }
+    }, []);
+
     const availableSourceEndpoints = useMemo(() => getEndpoints(newRuleDevice), [newRuleDevice]);
 
     useEffect(() => {
@@ -445,6 +476,28 @@ export default function BindingsPage(): JSX.Element {
                         modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                     >
                         {`${t(($) => $.unbind_selected, { ns: "common" })} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                    <ConfirmButton
+                        item={false}
+                        className="btn btn-outline btn-error btn-sm"
+                        onClick={clearOnFilteredSelected}
+                        title={t(($) => $.clear_self_as_source, { ns: "common" })}
+                        disabled={rowSelectionCount === 0}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                    >
+                        {`${t(($) => $.clear_self_as_source, { ns: "common" })} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                    <ConfirmButton
+                        item={true}
+                        className="btn btn-outline btn-error btn-sm"
+                        onClick={clearOnFilteredSelected}
+                        title={t(($) => $.clear_all, { ns: "common" })}
+                        disabled={rowSelectionCount === 0}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                    >
+                        {`${t(($) => $.clear_all, { ns: "common" })} (${rowSelectionCount})`}
                     </ConfirmButton>
                 </div>
             </div>

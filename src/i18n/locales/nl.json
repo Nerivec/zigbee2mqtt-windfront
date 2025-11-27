@@ -77,7 +77,26 @@
         "feature_name": "Functienaam",
         "state": "Status",
         "scroll_to_top": "Naar boven",
-        "notifications": "Meldingen"
+        "notifications": "Meldingen",
+        "instances": "Instanties",
+        "overview": "Overzicht",
+        "recent_activity": "Recente activiteit",
+        "oldest_activity": "Oudste activiteit",
+        "last_activity": "Laatste activiteit",
+        "group_scenes": "Groepsscènes",
+        "quick_search": "Snel zoeken",
+        "not_seen_in_a_while": "Al een tijd niet gezien",
+        "remove": "Verwijderen",
+        "add": "Toevoegen",
+        "edit": "Bewerken",
+        "edit_selected": "Selectie bewerken",
+        "disable_selected": "Selectie uitschakelen",
+        "bind_selected": "Selectie koppelen",
+        "unbind_selected": "Selectie ontkoppelen",
+        "mismatching_types": "Niet-overeenkomende typen",
+        "sync": "Synchr.",
+        "clear_self_as_source": "Verwijder jezelf als bron",
+        "sync_reporting": "Synchr. rapportage"
     },
     "devicePage": {
         "about": "Over",
@@ -103,7 +122,6 @@
         "group_id": "Groep-ID",
         "group_members": "Groepsleden",
         "group_scenes": "Groepsscènes",
-        "scenes": "Scènes",
         "rename_group": "Groep hernoemen",
         "remove_from_group": "Uit groep verwijderen"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket-status",
         "transaction_prefix": "Transactievoorvoegsel",
         "frontend_settings": "Frontend-instellingen",
-        "contribute": "Bijdragen"
+        "contribute": "Bijdragen",
+        "home": "Start",
+        "activity": "Activiteit",
+        "reporting": "Rapportage",
+        "bindings": "Koppelingen"
     },
     "ota": {
         "check": "Controleren op updates",
@@ -285,7 +307,9 @@
         "identify": "Identificeren",
         "factory_reset": "Fabrieksreset",
         "scan_source": "Scanningsbron",
-        "select_scan_source": "Selecteer scanningsbron"
+        "select_scan_source": "Selecteer scanningsbron",
+        "philips_hue_reset": "Philips Hue-reset",
+        "serial_numbers_csv": "Serienummers (CSV)"
     },
     "values": {
         "clear": "leeg",
@@ -379,7 +403,12 @@
         "Coordinator": "Coördinator",
         "power_source": "Stroombron",
         "battery_low": "Batterij bijna leeg",
-        "battery_level": "Batterijniveau"
+        "battery_level": "Batterijniveau",
+        "scenes": "Scènes",
+        "low_lqi": "Lage LQI",
+        "extended_pan_id": "Uitgebreide PAN-ID",
+        "rx_on_when_idle": "RX ingeschakeld in rust",
+        "permit_joining": "Toegang toestaan"
     },
     "scene": {
         "manage_scenes_header": "Scènes beheren",
@@ -387,9 +416,7 @@
         "scene_id": "Scène-ID",
         "recall": "Oproepen",
         "store": "Opslaan",
-        "remove": "Verwijderen",
         "remove_all": "Alles verwijderen",
-        "add": "Toevoegen",
         "select_scene": "Scène selecteren",
         "scene_name": "Scènenaam"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Selecteer converter om te bewerken",
         "codespace_info": "Een Github Codespace is beschikbaar ter ondersteuning",
         "show_definition": "Definitie tonen",
-        "hide_definition": "Definitie verbergen"
+        "hide_definition": "Definitie verbergen",
+        "action": "Actie",
+        "actions": "Acties"
     },
     "contribute": {
         "donation_text": "Hier kunt u ons bedanken voor al het werk. Een vriendelijk woord is ook welkom ;)",

@@ -77,7 +77,26 @@
         "feature_name": "Eginbide izena",
         "state": "Egoera",
         "scroll_to_top": "Gora",
-        "notifications": "Jakinarazpenak"
+        "notifications": "Jakinarazpenak",
+        "instances": "Instantziak",
+        "overview": "Ikuspegi orokorra",
+        "recent_activity": "Azken jarduera",
+        "oldest_activity": "Jarduera zaharrena",
+        "last_activity": "Azken ekintza",
+        "group_scenes": "Talde eszenak",
+        "quick_search": "Bilaketa azkarra",
+        "not_seen_in_a_while": "Aspaldian ikus gabe",
+        "remove": "Kendu",
+        "add": "Gehitu",
+        "edit": "Editatu",
+        "edit_selected": "Editatu hautatuak",
+        "disable_selected": "Desgaitu hautatuak",
+        "bind_selected": "Lotu hautatuak",
+        "unbind_selected": "Askatu hautatuak",
+        "mismatching_types": "Mota ez datorrenak",
+        "sync": "Sinkron.",
+        "clear_self_as_source": "Kendu zeure burua iturri gisa",
+        "sync_reporting": "Sinkron. txostenak"
     },
     "devicePage": {
         "about": "Honi buruz",
@@ -103,7 +122,6 @@
         "group_id": "Talde ID",
         "group_members": "Talde kideak",
         "group_scenes": "Talde eszenak",
-        "scenes": "Eszenak",
         "rename_group": "Aldatu talde izena",
         "remove_from_group": "Kendu taldetik"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket egoera",
         "transaction_prefix": "Transakzio aurrizkia",
         "frontend_settings": "Frontend-aren ezarpenak",
-        "contribute": "Lagundu"
+        "contribute": "Lagundu",
+        "home": "Hasiera",
+        "activity": "Jarduera",
+        "reporting": "Txostenak",
+        "bindings": "Loturak"
     },
     "ota": {
         "check": "Egiaztatu eguneratzeak",
@@ -284,8 +306,10 @@
         "scan": "Eskaneatu",
         "identify": "Identifikatu",
         "factory_reset": "Fabrika berrezarri",
-        "scan_source": "Iturburu eskaneoa",
-        "select_scan_source": "Hautatu iturburua"
+        "scan_source": "Eskaneatzeko iturburua",
+        "select_scan_source": "Hautatu iturburua",
+        "philips_hue_reset": "Philips Hue berrezarri",
+        "serial_numbers_csv": "Serie zenbakiak (CSV)"
     },
     "values": {
         "clear": "garbitu",
@@ -379,7 +403,12 @@
         "Coordinator": "Koordinatzailea",
         "power_source": "Energia iturria",
         "battery_low": "Bateria baxua",
-        "battery_level": "Bateriaren maila"
+        "battery_level": "Bateriaren maila",
+        "scenes": "Eszenak",
+        "low_lqi": "LQI baxua",
+        "extended_pan_id": "PAN ID hedatua",
+        "rx_on_when_idle": "RX aktibo geldi dagoenean",
+        "permit_joining": "Baimendu batzea"
     },
     "scene": {
         "manage_scenes_header": "Kudeatu eszenak",
@@ -387,9 +416,7 @@
         "scene_id": "Eszena ID",
         "recall": "Berreskuratu",
         "store": "Gorde",
-        "remove": "Kendu",
         "remove_all": "Kendu denak",
-        "add": "Gehitu",
         "select_scene": "Hautatu eszena",
         "scene_name": "Eszena izena"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Hautatu bihurtzailea",
         "codespace_info": "Github Codespace prest",
         "show_definition": "Erakutsi definizioa",
-        "hide_definition": "Ezkutatu definizioa"
+        "hide_definition": "Ezkutatu definizioa",
+        "action": "Ekintza",
+        "actions": "Ekintzak"
     },
     "contribute": {
         "donation_text": "Hemen eskertu diezagukezu egindako lana. Hitz goxoa ere beti ongi etorria da ;)",

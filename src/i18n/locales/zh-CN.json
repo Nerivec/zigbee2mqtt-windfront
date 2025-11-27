@@ -77,7 +77,26 @@
         "feature_name": "功能名称",
         "state": "状态",
         "scroll_to_top": "回到顶部",
-        "notifications": "通知"
+        "notifications": "通知",
+        "instances": "实例",
+        "overview": "概览",
+        "recent_activity": "最新活动",
+        "oldest_activity": "最早活动",
+        "last_activity": "最后活动",
+        "group_scenes": "分组场景",
+        "quick_search": "快速搜索",
+        "not_seen_in_a_while": "长时间未见",
+        "remove": "删除",
+        "add": "添加",
+        "edit": "编辑",
+        "edit_selected": "编辑所选",
+        "disable_selected": "禁用所选",
+        "bind_selected": "绑定所选",
+        "unbind_selected": "解绑所选",
+        "mismatching_types": "类型不匹配",
+        "sync": "同步",
+        "clear_self_as_source": "清除自己作为来源",
+        "sync_reporting": "同步上报"
     },
     "devicePage": {
         "about": "关于",
@@ -103,7 +122,6 @@
         "group_id": "分组 ID",
         "group_members": "分组成员",
         "group_scenes": "分组场景",
-        "scenes": "场景",
         "rename_group": "重命名分组",
         "remove_from_group": "从分组移除"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket 状态",
         "transaction_prefix": "事务前缀",
         "frontend_settings": "前端设置",
-        "contribute": "贡献"
+        "contribute": "贡献",
+        "home": "首页",
+        "activity": "活动",
+        "reporting": "报表",
+        "bindings": "绑定"
     },
     "ota": {
         "check": "检查更新",
@@ -285,7 +307,9 @@
         "identify": "识别",
         "factory_reset": "出厂重置",
         "scan_source": "扫描源",
-        "select_scan_source": "选择扫描源"
+        "select_scan_source": "选择扫描源",
+        "philips_hue_reset": "Philips Hue 重置",
+        "serial_numbers_csv": "序列号 (CSV)"
     },
     "values": {
         "clear": "清除",
@@ -379,7 +403,12 @@
         "Coordinator": "协调器",
         "power_source": "电源",
         "battery_low": "电量低",
-        "battery_level": "电池电量"
+        "battery_level": "电池电量",
+        "scenes": "场景",
+        "low_lqi": "低 LQI",
+        "extended_pan_id": "扩展 PAN ID",
+        "rx_on_when_idle": "空闲时 RX 开启",
+        "permit_joining": "允许接入"
     },
     "scene": {
         "manage_scenes_header": "管理场景",
@@ -387,9 +416,7 @@
         "scene_id": "场景 ID",
         "recall": "调用",
         "store": "存储",
-        "remove": "删除",
         "remove_all": "全部删除",
-        "add": "添加",
         "select_scene": "选择场景",
         "scene_name": "场景名称"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "选择转换器编辑",
         "codespace_info": "提供 Github Codespace 支持开发",
         "show_definition": "显示定义",
-        "hide_definition": "隐藏定义"
+        "hide_definition": "隐藏定义",
+        "action": "操作",
+        "actions": "操作集"
     },
     "contribute": {
         "donation_text": "欢迎在此对我们的付出表示感谢，也欢迎留下鼓励的话语；)",

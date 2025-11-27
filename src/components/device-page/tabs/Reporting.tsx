@@ -3,10 +3,20 @@ import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
+import { useShallow } from "zustand/react/shallow";
+import { type AppState, useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import Button from "../../Button.js";
-import { aggregateReporting, makeDefaultReporting, type ReportingEndpoint, type ReportingRule } from "../../reporting/index.js";
+import {
+    aggregateReporting,
+    getClusterAttribute,
+    isAnalogDataType,
+    makeDefaultReporting,
+    type ReportingEndpoint,
+    type ReportingRule,
+} from "../../reporting/index.js";
 import ReportingRow from "../ReportingRow.js";
 
 interface ReportingProps {
@@ -18,12 +28,13 @@ interface ReportingEndpointSectionProps extends ReportingEndpoint {
     device: Device;
     sourceIdx: number;
     onApply(rule: ReportingRule): Promise<void>;
+    bridgeDefinitions: AppState["bridgeDefinitions"][number];
 }
 
 const getRuleKey = (rule: ReportingRule): string =>
     `${rule.endpoint}-${rule.cluster}-${rule.attribute}-${rule.minimum_report_interval}-${rule.maximum_report_interval}`;
 
-const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, onApply }: ReportingEndpointSectionProps) => {
+const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, onApply, bridgeDefinitions }: ReportingEndpointSectionProps) => {
     const { t } = useTranslation(["zigbee", "common"]);
     const arrowRef = useRef(null);
     const [isAddOpen, setIsAddOpen] = useState(false);
@@ -32,7 +43,7 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
         open: isAddOpen,
         onOpenChange: setIsAddOpen,
         placement: "bottom-end",
-        middleware: [offset(8), shift({ padding: 16 }), arrow({ element: arrowRef })],
+        middleware: [offset(8), shift({ padding: 16, crossAxis: true }), arrow({ element: arrowRef })],
     });
     const click = useClick(context, { event: "click" });
     const dismiss = useDismiss(context);
@@ -58,6 +69,15 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
         [onApply],
     );
 
+    const onSync = useCallback(async ([sourceIdx, id, endpoint, cluster, attribute]: [number, string, number, string, string]) => {
+        await sendMessage(sourceIdx, "bridge/request/device/reporting/read", {
+            id,
+            endpoint,
+            cluster,
+            configs: [{ attribute }],
+        });
+    }, []);
+
     return (
         <section className="card bg-base-100 card-border border-base-200 shadow-sm">
             <div className="card-body p-3">
@@ -75,8 +95,10 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
                             key={getRuleKey(rule)}
                             sourceIdx={sourceIdx}
                             rule={rule}
+                            bridgeDefinitions={bridgeDefinitions}
                             device={device}
                             onApply={handleApply}
+                            onSync={onSync}
                             showDivider={index < rules.length - 1}
                         />
                     ))
@@ -102,7 +124,14 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
                                         <FontAwesomeIcon icon={faClose} />
                                     </Button>
                                 </div>
-                                <ReportingRow sourceIdx={sourceIdx} rule={draftRule} device={device} onApply={handleApply} showDivider={false} />
+                                <ReportingRow
+                                    sourceIdx={sourceIdx}
+                                    rule={draftRule}
+                                    bridgeDefinitions={bridgeDefinitions}
+                                    device={device}
+                                    onApply={handleApply}
+                                    showDivider={false}
+                                />
                             </div>
                             <FloatingArrow
                                 ref={arrowRef}
@@ -118,30 +147,45 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
 });
 
 export default function Reporting({ sourceIdx, device }: ReportingProps): JSX.Element {
+    const bridgeDefinitions = useAppStore(useShallow((state) => state.bridgeDefinitions[sourceIdx]));
     const reportingsByEndpoints = useMemo(() => aggregateReporting(device), [device]);
 
     const onApply = useCallback(
         async (rule: ReportingRule): Promise<void> => {
             const { cluster, endpoint, attribute, minimum_report_interval, maximum_report_interval, reportable_change } = rule;
-
-            await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", {
+            const attrDef = getClusterAttribute(bridgeDefinitions, device.ieee_address, cluster, attribute);
+            // default to consider analog if can't find attribute definition
+            const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+            const payload: Zigbee2MQTTAPI["bridge/request/device/reporting/configure"] = {
                 id: device.ieee_address,
                 endpoint,
                 cluster,
                 attribute,
                 minimum_report_interval,
                 maximum_report_interval,
-                reportable_change,
                 option: {}, // TODO: check this
-            });
+            };
+
+            if (isAnalogAttribute) {
+                payload.reportable_change = reportable_change;
+            }
+
+            await sendMessage(sourceIdx, "bridge/request/device/reporting/configure", payload);
         },
-        [sourceIdx, device.ieee_address],
+        [sourceIdx, device.ieee_address, bridgeDefinitions],
     );
 
     return (
         <div className="flex flex-col w-full gap-3">
             {reportingsByEndpoints.map((reportings) => (
-                <ReportingEndpointSection key={reportings.endpointId} {...reportings} device={device} sourceIdx={sourceIdx} onApply={onApply} />
+                <ReportingEndpointSection
+                    key={reportings.endpointId}
+                    {...reportings}
+                    device={device}
+                    sourceIdx={sourceIdx}
+                    onApply={onApply}
+                    bridgeDefinitions={bridgeDefinitions}
+                />
             ))}
         </div>
     );

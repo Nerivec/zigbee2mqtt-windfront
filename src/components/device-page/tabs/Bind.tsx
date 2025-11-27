@@ -1,5 +1,5 @@
 import { arrow, FloatingArrow, FloatingPortal, offset, shift, useClick, useDismiss, useFloating, useInteractions, useRole } from "@floating-ui/react";
-import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,6 +16,7 @@ import {
     getRuleDst,
     makeDefaultBinding,
 } from "../../binding/index.js";
+import ConfirmButton from "../../ConfirmButton.js";
 import BindRow from "../BindRow.js";
 
 interface BindProps {
@@ -43,7 +44,7 @@ const BindingEndpointSection = memo(({ endpointId, rules, devices, groups, sourc
         open: isAddOpen,
         onOpenChange: setIsAddOpen,
         placement: "bottom-end",
-        middleware: [offset(8), shift({ padding: 16 }), arrow({ element: arrowRef })],
+        middleware: [offset(8), shift({ padding: 16, crossAxis: true }), arrow({ element: arrowRef })],
     });
     const click = useClick(context, { event: "click" });
     const dismiss = useDismiss(context);
@@ -139,6 +140,7 @@ const BindingEndpointSection = memo(({ endpointId, rules, devices, groups, sourc
 });
 
 export default function Bind({ sourceIdx, device }: BindProps): JSX.Element {
+    const { t } = useTranslation("common");
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
     const groups = useAppStore(useShallow((state) => state.groups[sourceIdx]));
     const bindingsByEndpoints = useMemo(() => aggregateBindingsByEndpoints(device), [device]);
@@ -168,8 +170,36 @@ export default function Bind({ sourceIdx, device }: BindProps): JSX.Element {
         [sourceIdx, device, devices, groups],
     );
 
+    const onClear = useCallback(async ([sourceIdx, target, ieeeList]: [number, string, `0x${string}`[]]) => {
+        await sendMessage(sourceIdx, "bridge/request/device/binds/clear", { target, ieee_list: ieeeList });
+    }, []);
+
     return (
         <div className="flex flex-col w-full gap-3">
+            <div className="flex flex-row flex-wrap gap-3">
+                <ConfirmButton
+                    className="btn btn-outline btn-error join-item"
+                    item={[sourceIdx, device.ieee_address, [device.ieee_address]]}
+                    onClick={onClear}
+                    title={t(($) => $.clear_self_as_source)}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                >
+                    <FontAwesomeIcon icon={faTrashCan} />
+                    {t(($) => $.clear_self_as_source)}
+                </ConfirmButton>
+                <ConfirmButton
+                    className="btn btn-outline btn-error join-item"
+                    item={[sourceIdx, device.ieee_address, ["0xffffffffffffffff"]]}
+                    onClick={onClear}
+                    title={t(($) => $.clear_all)}
+                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                >
+                    <FontAwesomeIcon icon={faTrashCan} />
+                    {t(($) => $.clear_all)}
+                </ConfirmButton>
+            </div>
             {bindingsByEndpoints.map((bindings) => (
                 <BindingEndpointSection
                     key={bindings.endpointId}

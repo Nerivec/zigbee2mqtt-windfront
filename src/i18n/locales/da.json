@@ -77,7 +77,26 @@
         "feature_name": "Funktionsnavn",
         "state": "Status",
         "scroll_to_top": "Til top",
-        "notifications": "Notifikationer"
+        "notifications": "Notifikationer",
+        "instances": "Instanser",
+        "overview": "Oversigt",
+        "recent_activity": "Seneste aktivitet",
+        "oldest_activity": "Ældste aktivitet",
+        "last_activity": "Sidste aktivitet",
+        "group_scenes": "Gruppescener",
+        "quick_search": "Hurtigsøgning",
+        "not_seen_in_a_while": "Ikke set i et stykke tid",
+        "remove": "Fjern",
+        "add": "Tilføj",
+        "edit": "Redigér",
+        "edit_selected": "Redigér valgte",
+        "disable_selected": "Deaktivér valgte",
+        "bind_selected": "Bind valgte",
+        "unbind_selected": "Frigør valgte",
+        "mismatching_types": "Uoverensstemmende typer",
+        "sync": "Synk.",
+        "clear_self_as_source": "Fjern dig selv som kilde",
+        "sync_reporting": "Synk. rapportering"
     },
     "devicePage": {
         "about": "Om",
@@ -103,7 +122,6 @@
         "group_id": "Gruppe-ID",
         "group_members": "Gruppemedlemmer",
         "group_scenes": "Gruppescener",
-        "scenes": "Scener",
         "rename_group": "Omdøb gruppe",
         "remove_from_group": "Fjern fra gruppe"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket-status",
         "transaction_prefix": "Transaktionspræfiks",
         "frontend_settings": "Frontend-indstillinger",
-        "contribute": "Bidrag"
+        "contribute": "Bidrag",
+        "home": "Hjem",
+        "activity": "Aktivitet",
+        "reporting": "Rapportering",
+        "bindings": "Bindinger"
     },
     "ota": {
         "check": "Søg efter opdateringer",
@@ -285,7 +307,9 @@
         "identify": "Identificer",
         "factory_reset": "Fabriksnulstil",
         "scan_source": "Scan-kilde",
-        "select_scan_source": "Vælg kilde"
+        "select_scan_source": "Vælg kilde",
+        "philips_hue_reset": "Philips Hue-nulstilling",
+        "serial_numbers_csv": "Serienumre (CSV)"
     },
     "values": {
         "clear": "ryd",
@@ -379,7 +403,12 @@
         "Coordinator": "Koordinator",
         "power_source": "Strømkilde",
         "battery_low": "Lavt batteriniveau",
-        "battery_level": "Batteriniveau"
+        "battery_level": "Batteriniveau",
+        "scenes": "Scener",
+        "low_lqi": "Lav LQI",
+        "extended_pan_id": "Udvidet PAN-ID",
+        "rx_on_when_idle": "RX TIL i tomgang",
+        "permit_joining": "Tillad tilslutning"
     },
     "scene": {
         "manage_scenes_header": "Administrér scener",
@@ -387,9 +416,7 @@
         "scene_id": "Scene-ID",
         "recall": "Hent",
         "store": "Gem",
-        "remove": "Fjern",
         "remove_all": "Fjern alle",
-        "add": "Tilføj",
         "select_scene": "Vælg scene",
         "scene_name": "Scenenavn"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Vælg konverter",
         "codespace_info": "Github Codespace tilgængelig",
         "show_definition": "Vis definition",
-        "hide_definition": "Skjul definition"
+        "hide_definition": "Skjul definition",
+        "action": "Handling",
+        "actions": "Handlinger"
     },
     "contribute": {
         "donation_text": "Her kan du sige tak for alt arbejdet. En venlig kommentar er også velkommen ;)",

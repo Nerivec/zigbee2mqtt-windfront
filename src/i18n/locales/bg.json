@@ -77,7 +77,26 @@
         "feature_name": "Име на функция",
         "state": "Състояние",
         "scroll_to_top": "Горе",
-        "notifications": "Известия"
+        "notifications": "Известия",
+        "instances": "Инстанции",
+        "overview": "Преглед",
+        "recent_activity": "Скорошна активност",
+        "oldest_activity": "Най-стара активност",
+        "last_activity": "Последна активност",
+        "group_scenes": "Сцени на групата",
+        "quick_search": "Бързо търсене",
+        "not_seen_in_a_while": "Не е виждан отдавна",
+        "remove": "Премахни",
+        "add": "Добави",
+        "edit": "Редактиране",
+        "edit_selected": "Редактирай избраните",
+        "disable_selected": "Деактивирай избраните",
+        "bind_selected": "Свържи избраните",
+        "unbind_selected": "Разкачи избраните",
+        "mismatching_types": "Несъвпадащи типове",
+        "sync": "Синхр.",
+        "clear_self_as_source": "Премахни себе си като източник",
+        "sync_reporting": "Синхр. отчитане"
     },
     "devicePage": {
         "about": "Относно",
@@ -103,7 +122,6 @@
         "group_id": "ID на група",
         "group_members": "Членове на групата",
         "group_scenes": "Сцени на групата",
-        "scenes": "Сцени",
         "rename_group": "Преименуване на група",
         "remove_from_group": "Премахни от група"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket статус",
         "transaction_prefix": "Префикс транзакция",
         "frontend_settings": "Настройки на интерфейса",
-        "contribute": "Допринасяне"
+        "contribute": "Допринасяне",
+        "home": "Начало",
+        "activity": "Активност",
+        "reporting": "Отчитане",
+        "bindings": "Свързвания"
     },
     "ota": {
         "check": "Проверка за обновления",
@@ -285,7 +307,9 @@
         "identify": "Идентифициране",
         "factory_reset": "Фабрично нулиране",
         "scan_source": "Източник",
-        "select_scan_source": "Изберете източник"
+        "select_scan_source": "Изберете източник",
+        "philips_hue_reset": "Нулиране на Hue",
+        "serial_numbers_csv": "Серийни номера (CSV)"
     },
     "values": {
         "clear": "изчистване",
@@ -379,7 +403,12 @@
         "Coordinator": "Координатор",
         "power_source": "Източник на захранване",
         "battery_low": "Ниска батерия",
-        "battery_level": "Ниво на батерията"
+        "battery_level": "Ниво на батерията",
+        "scenes": "Сцени",
+        "low_lqi": "Нисък LQI",
+        "extended_pan_id": "Разширен PAN ID",
+        "rx_on_when_idle": "RX ON при бездействие",
+        "permit_joining": "Разреши присъединяване"
     },
     "scene": {
         "manage_scenes_header": "Управление на сцени",
@@ -387,9 +416,7 @@
         "scene_id": "ID на сцена",
         "recall": "Извикване",
         "store": "Съхрани",
-        "remove": "Премахни",
         "remove_all": "Премахни всички",
-        "add": "Добави",
         "select_scene": "Изберете сцена",
         "scene_name": "Име на сцена"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Изберете конвертор",
         "codespace_info": "Github Codespace наличен за помощ",
         "show_definition": "Покажи дефиниция",
-        "hide_definition": "Скрий дефиниция"
+        "hide_definition": "Скрий дефиниция",
+        "action": "Действие",
+        "actions": "Действия"
     },
     "contribute": {
         "donation_text": "Тук можете да ни благодарите за труда ни. Не се колебайте да кажете и нещо приятно ;)",

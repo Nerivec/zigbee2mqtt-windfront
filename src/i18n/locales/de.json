@@ -77,7 +77,26 @@
         "feature_name": "Funktionsname",
         "state": "Status",
         "scroll_to_top": "Nach oben scrollen",
-        "notifications": "Benachrichtigungen"
+        "notifications": "Benachrichtigungen",
+        "instances": "Instanzen",
+        "overview": "Übersicht",
+        "recent_activity": "Aktuelle Aktivität",
+        "oldest_activity": "Älteste Aktivität",
+        "last_activity": "Letzte Aktivität",
+        "group_scenes": "Gruppenszenen",
+        "quick_search": "Schnellsuche",
+        "not_seen_in_a_while": "Längere Zeit nicht gesehen",
+        "remove": "Entfernen",
+        "add": "Hinzufügen",
+        "edit": "Bearbeiten",
+        "edit_selected": "Auswahl bearbeiten",
+        "disable_selected": "Auswahl deaktivieren",
+        "bind_selected": "Auswahl verknüpfen",
+        "unbind_selected": "Auswahl lösen",
+        "mismatching_types": "Nicht übereinstimmende Typen",
+        "sync": "Synch.",
+        "clear_self_as_source": "Dich selbst als Quelle entfernen",
+        "sync_reporting": "Synch. Berichte"
     },
     "devicePage": {
         "about": "Info",
@@ -103,7 +122,6 @@
         "group_id": "Gruppen-ID",
         "group_members": "Gruppenmitglieder",
         "group_scenes": "Gruppenszenen",
-        "scenes": "Szenen",
         "rename_group": "Gruppe umbenennen",
         "remove_from_group": "Aus Gruppe entfernen"
     },
@@ -180,7 +198,11 @@
         "websocket_status": "WebSocket-Status",
         "transaction_prefix": "Transaktionspräfix",
         "frontend_settings": "Frontend-Einstellungen",
-        "contribute": "Mitwirken"
+        "contribute": "Mitwirken",
+        "home": "Startseite",
+        "activity": "Aktivität",
+        "reporting": "Berichte",
+        "bindings": "Bindungen"
     },
     "ota": {
         "check": "Nach neuen Updates suchen",
@@ -285,7 +307,9 @@
         "identify": "Identifizieren",
         "factory_reset": "Werksreset",
         "scan_source": "Scanquelle",
-        "select_scan_source": "Scanquelle auswählen"
+        "select_scan_source": "Scanquelle auswählen",
+        "philips_hue_reset": "Philips Hue-Reset",
+        "serial_numbers_csv": "Seriennummern (CSV)"
     },
     "values": {
         "clear": "frei",
@@ -379,7 +403,12 @@
         "Coordinator": "Koordinator",
         "power_source": "Stromquelle",
         "battery_low": "Batterie schwach",
-        "battery_level": "Batteriezustand"
+        "battery_level": "Batteriezustand",
+        "scenes": "Szenen",
+        "low_lqi": "Niedriges LQI",
+        "extended_pan_id": "Erweitertes PAN-ID",
+        "rx_on_when_idle": "RX EIN im Leerlauf",
+        "permit_joining": "Beitritt erlauben"
     },
     "scene": {
         "manage_scenes_header": "Szenen verwalten",
@@ -387,9 +416,7 @@
         "scene_id": "Szenen-ID",
         "recall": "Abrufen",
         "store": "Speichern",
-        "remove": "Entfernen",
         "remove_all": "Alle entfernen",
-        "add": "Hinzufügen",
         "select_scene": "Szene auswählen",
         "scene_name": "Szenenname"
     },
@@ -428,7 +455,9 @@
         "select_converter_to_edit": "Converter zum Bearbeiten auswählen",
         "codespace_info": "Ein Github Codespace steht zur Entwicklungsunterstützung bereit",
         "show_definition": "Definition anzeigen",
-        "hide_definition": "Definition verbergen"
+        "hide_definition": "Definition verbergen",
+        "action": "Aktion",
+        "actions": "Aktionen"
     },
     "contribute": {
         "donation_text": "Hier können Sie sich für unsere Arbeit bedanken. Ein nettes Wort freut uns ebenfalls ;)",

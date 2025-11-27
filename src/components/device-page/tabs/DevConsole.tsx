@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
 import { SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
 import { useAppStore } from "../../../store.js";
@@ -69,8 +70,8 @@ export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
         setExtDefLoading(false);
     }, [device]);
 
-    const readDeviceAttributes = useCallback(
-        async (ieee: string, endpoint: string, cluster: string, attributes: string[], stateProperty?: string) => {
+    const readAttributes = useCallback(
+        async (endpoint: string, cluster: string, attributes: string[], stateProperty?: string) => {
             const payload: { read: Record<string, unknown> } = { read: { cluster, attributes } };
 
             if (stateProperty) {
@@ -80,15 +81,15 @@ export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
             await sendMessage<"{friendlyNameOrId}/{endpoint}/set">(
                 sourceIdx,
                 // @ts-expect-error templated API endpoint
-                `${ieee}/${endpoint}/set`,
+                `${device.ieee_address}/${endpoint}/set`,
                 payload,
             );
         },
-        [sourceIdx],
+        [sourceIdx, device.ieee_address],
     );
 
-    const writeDeviceAttributes = useCallback(
-        async (ieee: string, endpoint: string, cluster: string, attributes: AttributeInfo[]) => {
+    const writeAttributes = useCallback(
+        async (endpoint: string, cluster: string, attributes: AttributeInfo[]) => {
             const payload: { write: Record<string, unknown> & { payload: Record<string, unknown> } } = { write: { cluster, payload: {} } };
 
             for (const attrInfo of attributes) {
@@ -98,11 +99,23 @@ export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
             await sendMessage<"{friendlyNameOrId}/{endpoint}/set">(
                 sourceIdx,
                 // @ts-expect-error templated API endpoint
-                `${ieee}/${endpoint}/set`,
+                `${device.ieee_address}/${endpoint}/set`,
                 payload,
             );
         },
-        [sourceIdx],
+        [sourceIdx, device.ieee_address],
+    );
+
+    const readAttributesReporting = useCallback(
+        async (endpoint: string, cluster: string, configs: Zigbee2MQTTAPI["bridge/request/device/reporting/read"]["configs"]) => {
+            await sendMessage(sourceIdx, "bridge/request/device/reporting/read", {
+                id: device.ieee_address,
+                endpoint,
+                cluster,
+                configs,
+            });
+        },
+        [sourceIdx, device.ieee_address],
     );
 
     const onGenerateExternalDefinitionClick = useCallback(async (): Promise<void> => {
@@ -168,8 +181,9 @@ export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
                 <AttributeEditor
                     sourceIdx={sourceIdx}
                     device={device}
-                    readDeviceAttributes={readDeviceAttributes}
-                    writeDeviceAttributes={writeDeviceAttributes}
+                    read={readAttributes}
+                    write={writeAttributes}
+                    readReporting={readAttributesReporting}
                     lastLog={lastAttributeLog}
                 />
                 <CommandExecutor sourceIdx={sourceIdx} device={device} lastLog={lastCommandLog} />
