@@ -108,7 +108,7 @@ export default function TouchlinkPage() {
 
     const isHueResetValid = useMemo(() => {
         if ((!hueExtPanId || /^0x[a-fA-F0-9]{16}$/.test(hueExtPanId)) && Array.isArray(hueSerialNumbers) && hueSerialNumbers.length > 0) {
-            return hueSerialNumbers.every((sn) => /^[a-fA-F0-9]{6}$/i.test(sn));
+            return hueSerialNumbers.every((sn) => /^[a-fA-F0-9]{6}$/.test(sn));
         }
 
         return false;
