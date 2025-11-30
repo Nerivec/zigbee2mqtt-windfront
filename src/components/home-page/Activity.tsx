@@ -20,7 +20,7 @@ const Activity = memo(({ devices, maxRows }: ActivityProps) => {
             <div className="card-body py-3">
                 <h2 className="card-title">{t(($) => $.recent_activity)}</h2>
                 <ul className={`grid grid-rows-${maxRows} gap-1 w-full`}>
-                    {recentActivityFeed.map((entry) => {
+                    {recentActivityFeed.map((entry, i) => {
                         let ieeeAddress: string | undefined = entry.ieeeAddress;
 
                         if (!ieeeAddress) {
@@ -30,7 +30,7 @@ const Activity = memo(({ devices, maxRows }: ActivityProps) => {
 
                         return (
                             <li
-                                key={`${entry.friendlyName}-${entry.sourceIdx}-${entry.activity}`}
+                                key={`${entry.friendlyName}-${entry.sourceIdx}-${entry.activity}-${entry.time}-${i}`}
                                 className="flex flex-row gap-1 items-center w-full px-1 rounded-field hover:bg-base-200"
                             >
                                 <div className="text-xs font-semibold opacity-60 min-w-0">
