@@ -309,8 +309,7 @@
         "scan_source": "Origen de l'escaneig",
         "select_scan_source": "Selecciona l'origen de l'escaneig",
         "philips_hue_reset": "Restabliment Hue",
-        "serial_numbers": "Números de sèrie",
-        "serial_numbers_info": "Valors separats per comes. Per a cadascun, afegiu `0x` al número de sèrie escrit al dispositiu (p. ex., escriviu `3A745C` com `0x3A745C`) o convertiu-lo primer a format decimal."
+        "serial_numbers": "Números de sèrie (CSV)"
     },
     "values": {
         "clear": "neteja",

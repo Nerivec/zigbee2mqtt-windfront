@@ -309,8 +309,7 @@
         "scan_source": "Skannauksen lähde",
         "select_scan_source": "Valitse lähde",
         "philips_hue_reset": "Philips Hue-nollaus",
-        "serial_numbers": "Sarjanumerot",
-        "serial_numbers_info": "Pilkulla erotetut arvot. Lisää jokaiseen laitteen kyljessä olevaan sarjanumeroon etuliite `0x` (esim. kirjoita `3A745C` muodossa `0x3A745C`) tai muunna se ensin desimaalimuotoon."
+        "serial_numbers": "Sarjanumerot (CSV)"
     },
     "values": {
         "clear": "tyhjennä",

@@ -309,8 +309,7 @@
         "scan_source": "Zdroj skenovania",
         "select_scan_source": "Vybrať zdroj skenovania",
         "philips_hue_reset": "Reset Hue",
-        "serial_numbers": "Sériové čísla",
-        "serial_numbers_info": "Hodnoty oddelené čiarkou. Ku každému sériovému číslu uvedenému na zariadení pridajte `0x` (napr. zapíšte `3A745C` ako `0x3A745C`) alebo ho najprv preveďte na desiatkový tvar."
+        "serial_numbers": "Sériové čísla (CSV)"
     },
     "values": {
         "clear": "Prázdne",

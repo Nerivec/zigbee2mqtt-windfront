@@ -309,8 +309,7 @@
         "scan_source": "Fuente de escaneo",
         "select_scan_source": "Seleccione la fuente",
         "philips_hue_reset": "Restablecer Hue",
-        "serial_numbers": "Números de serie",
-        "serial_numbers_info": "Valores separados por comas. Para cada uno, agrega `0x` al número de serie escrito en el dispositivo (p. ej., escribe `3A745C` como `0x3A745C`) o conviértelo primero a formato decimal."
+        "serial_numbers": "Números de serie (CSV)"
     },
     "values": {
         "clear": "limpiar",
