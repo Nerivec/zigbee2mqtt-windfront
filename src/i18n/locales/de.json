@@ -309,8 +309,7 @@
         "scan_source": "Scanquelle",
         "select_scan_source": "Scanquelle auswählen",
         "philips_hue_reset": "Philips Hue-Reset",
-        "serial_numbers": "Seriennummern",
-        "serial_numbers_info": "Kommagetrennte Werte. Hänge für jeden Wert `0x` an die auf dem Gerät angegebene Seriennummer an (z. B. `3A745C` als `0x3A745C`) oder wandle sie zuerst in Dezimalform um."
+        "serial_numbers": "Seriennummern (CSV)"
     },
     "values": {
         "clear": "frei",

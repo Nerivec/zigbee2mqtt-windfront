@@ -39,7 +39,7 @@ export default function TouchlinkPage() {
     const [scanIdx, setScanIdx] = useState(0);
     const [hueExtPanId, setHueExtPanId] = useState<string>("");
     const [hueSerialNumbersRaw, setHueSerialNumbersRaw] = useState<string>("");
-    const [hueSerialNumbers, setHueSerialNumbers] = useState<number[]>([]);
+    const [hueSerialNumbers, setHueSerialNumbers] = useState<string[]>([]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
@@ -47,14 +47,7 @@ export default function TouchlinkPage() {
     }, [scanIdx]);
 
     useEffect(() => {
-        setHueSerialNumbers(
-            hueSerialNumbersRaw
-                ? hueSerialNumbersRaw
-                      .replaceAll(" ", "")
-                      .split(",")
-                      .map((v) => Number.parseInt(v, v.startsWith("0x") ? 16 : 10))
-                : [],
-        );
+        setHueSerialNumbers(hueSerialNumbersRaw ? hueSerialNumbersRaw.replaceAll(" ", "").split(",") : []);
     }, [hueSerialNumbersRaw]);
 
     const data = useMemo((): TouchlinkTableData[] => {
@@ -114,8 +107,8 @@ export default function TouchlinkPage() {
     }, [scanIdx, hueExtPanId, hueSerialNumbers]);
 
     const isHueResetValid = useMemo(() => {
-        if ((!hueExtPanId || /^0x[a-f0-9]{16}$/.test(hueExtPanId)) && Array.isArray(hueSerialNumbers) && hueSerialNumbers.length > 0) {
-            return hueSerialNumbers.every((sn) => Number.isInteger(sn));
+        if ((!hueExtPanId || /^0x[a-fA-F0-9]{16}$/.test(hueExtPanId)) && Array.isArray(hueSerialNumbers) && hueSerialNumbers.length > 0) {
+            return hueSerialNumbers.every((sn) => /^[a-fA-F0-9]{6}$/i.test(sn));
         }
 
         return false;
@@ -307,7 +300,6 @@ export default function TouchlinkPage() {
                         <InputField
                             name="serial_numbers"
                             label={t(($) => $.serial_numbers)}
-                            detail={t(($) => $.serial_numbers_info)}
                             type="text"
                             value={hueSerialNumbersRaw}
                             onChange={(e) => !e.target.validationMessage && setHueSerialNumbersRaw(e.target.value)}

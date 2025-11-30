@@ -309,8 +309,7 @@
         "scan_source": "Source du scan",
         "select_scan_source": "Sélectionner la source",
         "philips_hue_reset": "Réinitialisation Hue",
-        "serial_numbers": "Numéros de série",
-        "serial_numbers_info": "Valeurs séparées par des virgules. Pour chacune, ajoutez `0x` au numéro de série inscrit sur l’appareil (par ex. écrire `3A745C` sous la forme `0x3A745C`) ou convertissez-le d’abord en décimal."
+        "serial_numbers": "Numéros de série (CSV)"
     },
     "values": {
         "clear": "Effacer",

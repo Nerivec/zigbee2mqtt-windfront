@@ -309,8 +309,7 @@
         "scan_source": "Źródło skanu",
         "select_scan_source": "Wybierz źródło",
         "philips_hue_reset": "Reset Hue",
-        "serial_numbers": "Numery seryjne",
-        "serial_numbers_info": "Wartości rozdzielone przecinkami. Do każdego numeru seryjnego podanego na urządzeniu dodaj przedrostek `0x` (np. zapisz `3A745C` jako `0x3A745C`) albo najpierw przekonwertuj go na zapis dziesiętny."
+        "serial_numbers": "Numery seryjne (CSV)"
     },
     "values": {
         "clear": "nie wykryto",

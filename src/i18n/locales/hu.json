@@ -309,8 +309,7 @@
         "scan_source": "Forrás",
         "select_scan_source": "Forrás kiválasztása",
         "philips_hue_reset": "Philips Hue visszaállítás",
-        "serial_numbers": "Sorozatszámok",
-        "serial_numbers_info": "Vesszővel elválasztott értékek. Mindegyiknél add hozzá a készüléken szereplő sorozatszámhoz a `0x` előtagot (pl. írd a `3A745C` értéket `0x3A745C` formában), vagy előbb konvertáld tizedes formátumba."
+        "serial_numbers": "Sorozatszámok (CSV)"
     },
     "values": {
         "clear": "törlés",

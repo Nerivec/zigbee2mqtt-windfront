@@ -309,8 +309,7 @@
         "scan_source": "扫描源",
         "select_scan_source": "选择扫描源",
         "philips_hue_reset": "Philips Hue 重置",
-        "serial_numbers": "序列号",
-        "serial_numbers_info": "逗号分隔的值。对每一项，在设备上标注的序列号前加上 `0x`（例如将 `3A745C` 写成 `0x3A745C`），或者先转换为十进制形式。"
+        "serial_numbers": "序列号 (CSV)"
     },
     "values": {
         "clear": "清除",

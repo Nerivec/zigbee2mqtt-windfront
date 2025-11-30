@@ -309,8 +309,7 @@
         "scan_source": "Eskaneatzeko iturburua",
         "select_scan_source": "Hautatu iturburua",
         "philips_hue_reset": "Philips Hue berrezarri",
-        "serial_numbers": "Serie zenbakiak",
-        "serial_numbers_info": "Komaz bereizitako balioak. Bakoitzean, gehitu `0x` gailuan idatzitako serie zenbakiari (adibidez, idatzi `3A745C` `0x3A745C` gisa) edo bihurtu lehenik hamartar formatura."
+        "serial_numbers": "Serie zenbakiak (CSV)"
     },
     "values": {
         "clear": "garbitu",
