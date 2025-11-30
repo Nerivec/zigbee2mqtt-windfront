@@ -1,6 +1,6 @@
 {
     "name": "zigbee2mqtt-windfront",
-    "version": "2.4.0",
+    "version": "2.4.1",
     "license": "GPL-3.0-or-later",
     "type": "module",
     "main": "./index.js",
@@ -37,15 +37,15 @@
         "build-storybook": "storybook build"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.3.7",
+        "@biomejs/biome": "^2.3.8",
         "@ebay/nice-modal-react": "^1.2.13",
         "@floating-ui/react": "^0.27.16",
         "@fortawesome/fontawesome-svg-core": "^7.1.0",
         "@fortawesome/free-solid-svg-icons": "^7.1.0",
-        "@fortawesome/react-fontawesome": "^3.1.0",
-        "@storybook/addon-a11y": "^10.0.8",
-        "@storybook/addon-docs": "^10.0.8",
-        "@storybook/react-vite": "^10.0.8",
+        "@fortawesome/react-fontawesome": "^3.1.1",
+        "@storybook/addon-a11y": "^10.1.2",
+        "@storybook/addon-docs": "^10.1.2",
+        "@storybook/react-vite": "^10.1.2",
         "@tailwindcss/vite": "^4.1.17",
         "@tanstack/react-table": "^8.21.3",
         "@types/file-saver": "^2.0.7",
@@ -73,7 +73,7 @@
         "react-virtuoso": "^4.15.0",
         "reagraph": "^4.30.7",
         "store2": "^2.14.4",
-        "storybook": "^10.0.7",
+        "storybook": "^10.1.2",
         "tailwindcss": "^4.1.4",
         "timeago.js": "^4.0.2",
         "typescript": "^5.9.3",
@@ -82,7 +82,7 @@
         "vitest": "^4.0.14",
         "ws": "^8.18.3",
         "zigbee2mqtt": "github:Koenkk/zigbee2mqtt#dev-types",
-        "zustand": "^5.0.8"
+        "zustand": "^5.0.9"
     },
     "sideEffects": [
         "*.css"
