@@ -13,6 +13,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                 elapsed: true,
                 ext_pan_id: [170, 187, 204, 221, 238, 255, 0, 0],
                 last_seen: "ISO_8601_local",
+                // last_seen: "disable",
                 log_console_json: false,
                 log_debug_namespace_ignore: "",
                 log_debug_to_mqtt_frontend: false,

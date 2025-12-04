@@ -245,7 +245,13 @@ export default function DevicesPage(): JSX.Element {
                     row: {
                         original: { sourceIdx, state },
                     },
-                }) => <LastSeen lastSeen={state.last_seen} config={bridgeInfo[sourceIdx].config.advanced.last_seen} />,
+                }) => (
+                    <LastSeen
+                        lastSeen={state.last_seen}
+                        config={bridgeInfo[sourceIdx].config.advanced.last_seen}
+                        fallback={t(($) => $.disabled, { ns: "common" })}
+                    />
+                ),
                 // don't want to compare by minute (`accessorFn`), as that creates visual mismatches with `<LastSeen />`
                 sortingFn: (rowA, rowB) => {
                     const a = getLastSeenEpoch(rowA.original.state.last_seen, bridgeInfo[rowA.original.sourceIdx].config.advanced.last_seen);

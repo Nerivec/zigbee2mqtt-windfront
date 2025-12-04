@@ -1,4 +1,4 @@
-import { type JSX, memo } from "react";
+import { memo, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import type { LastSeenConfig } from "../../types.js";
 import TimeAgo from "./TimeAgo.js";
@@ -6,6 +6,7 @@ import TimeAgo from "./TimeAgo.js";
 type LastSeenProps = {
     lastSeen: unknown;
     config: LastSeenConfig;
+    fallback?: ReactNode;
 };
 
 const getLastSeenDate = (lastSeen: unknown, lastSeenConfig: LastSeenConfig): Date | undefined => {
@@ -30,7 +31,7 @@ const getLastSeenDate = (lastSeen: unknown, lastSeenConfig: LastSeenConfig): Dat
     }
 };
 
-const LastSeen = memo(({ lastSeen, config }: LastSeenProps): JSX.Element => {
+const LastSeen = memo(({ lastSeen, config, fallback = null }: LastSeenProps) => {
     const { i18n } = useTranslation();
     const lastSeenDate = getLastSeenDate(lastSeen, config);
 
@@ -39,7 +40,7 @@ const LastSeen = memo(({ lastSeen, config }: LastSeenProps): JSX.Element => {
             <TimeAgo datetime={lastSeenDate} locale={i18n.language} />
         </span>
     ) : (
-        <span>N/A</span>
+        fallback
     );
 });
 

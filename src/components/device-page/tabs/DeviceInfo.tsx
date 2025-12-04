@@ -294,7 +294,11 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <div className="stat px-3">
                         <div className="stat-title">{t(($) => $.last_seen)}</div>
                         <div className="stat-value text-xl">
-                            <LastSeen config={bridgeConfig.advanced.last_seen} lastSeen={deviceState.last_seen} />
+                            <LastSeen
+                                config={bridgeConfig.advanced.last_seen}
+                                lastSeen={deviceState.last_seen}
+                                fallback={t(($) => $.disabled, { ns: "common" })}
+                            />
                         </div>
                         <div className="stat-desc">
                             {t(($) => $.availability, { ns: "availability" })}
