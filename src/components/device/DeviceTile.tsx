@@ -16,7 +16,7 @@ const DeviceTile = memo(({ sourceIdx, device, deviceState, deviceAvailability, l
 
     return (
         <article
-            className={`mb-2 card bg-base-200 rounded-box shadow-md ${deviceAvailability === "disabled" ? "card-dash border-warning/40" : deviceAvailability === "offline" ? "card-border border-error/50" : "card-border border-base-300"} cursor-pointer will-change-transform transition-transform hover:-translate-y-1`}
+            className={`mb-2 card h-[95px] bg-base-200 rounded-box shadow-md ${deviceAvailability === "disabled" ? "card-dash border-warning/40" : deviceAvailability === "offline" ? "card-border border-error/50" : "card-border border-base-300"} cursor-pointer will-change-transform transition-transform hover:-translate-y-1`}
             onClick={(event) => {
                 if ((event.target as HTMLElement).nodeName !== "A") {
                     onClick(sourceIdx, device, event.currentTarget);
