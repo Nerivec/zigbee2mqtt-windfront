@@ -378,7 +378,7 @@ const makeInitialState = (): AppState => {
     };
 };
 
-let init = true;
+const deviceActivityInitialized = new Set<number>();
 
 export const useAppStore = create<AppState & AppActions>((set, _get, store) => ({
     ...makeInitialState(),
@@ -660,6 +660,7 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
             const now = new Date();
             const nowMs = now.getTime();
             const nowStr = now.toLocaleString();
+            const skipActivityForSource = !deviceActivityInitialized.has(sourceIdx);
 
             for (let idx = 0; idx < prevDevices.length; idx++) {
                 const prevDevice = prevDevices[idx];
@@ -691,9 +692,8 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
                 newDeviceDashboardFeatures[device.ieee_address] = dashboardExposes;
                 newDeviceScenesFeatures[device.ieee_address] = scenesExposes;
 
-                if (init) {
+                if (skipActivityForSource) {
                     // ignore activity on first trigger to avoid "Device joined" everywhere
-                    // TODO: does not work very well for multi-instance
                     continue;
                 }
 
@@ -756,8 +756,8 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
 
             const recentActivity = mergeRecentActivityEntries(sourceIdx, state.recentActivity, activityUpdates);
 
-            if (init) {
-                init = false;
+            if (skipActivityForSource) {
+                deviceActivityInitialized.add(sourceIdx);
             }
 
             return recentActivity
@@ -876,6 +876,7 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
         }),
 
     reset: () => {
+        deviceActivityInitialized.clear();
         set(store.getInitialState());
     },
 }));
