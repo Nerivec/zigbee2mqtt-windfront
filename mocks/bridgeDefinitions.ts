@@ -6911,6 +6911,164 @@ export const BRIDGE_DEFINITION: Message<Zigbee2MQTTAPI["bridge/definitions"]> = 
                     commandsResponse: {},
                 },
             },
+            "0x2c1165fffeabe0ad": {
+                genBasic: {
+                    ID: 0,
+                    attributes: {
+                        alarmMask: {
+                            ID: 19,
+                            type: 24,
+                        },
+                        appProfileVersion: {
+                            ID: 8,
+                            type: 48,
+                        },
+                        appVersion: {
+                            ID: 1,
+                            type: 32,
+                        },
+                        componentSignature: {
+                            ID: 26118,
+                            manufacturerCode: 26214,
+                            type: 66,
+                        },
+                        componentVersion: {
+                            ID: 26117,
+                            manufacturerCode: 26214,
+                            type: 66,
+                        },
+                        dateCode: {
+                            ID: 6,
+                            type: 66,
+                        },
+                        deviceBootVersion: {
+                            ID: 26115,
+                            manufacturerCode: 26214,
+                            type: 66,
+                        },
+                        deviceEnabled: {
+                            ID: 18,
+                            type: 16,
+                        },
+                        deviceSignature: {
+                            ID: 26114,
+                            manufacturerCode: 26214,
+                            type: 66,
+                        },
+                        deviceVersion: {
+                            ID: 26113,
+                            manufacturerCode: 26214,
+                            type: 66,
+                        },
+                        disableLocalConfig: {
+                            ID: 20,
+                            type: 24,
+                        },
+                        genericDeviceType: {
+                            ID: 9,
+                            type: 48,
+                        },
+                        hwVersion: {
+                            ID: 3,
+                            type: 32,
+                        },
+                        locationDesc: {
+                            ID: 16,
+                            type: 66,
+                        },
+                        manufacturerName: {
+                            ID: 4,
+                            type: 66,
+                        },
+                        manufacturerVersionDetails: {
+                            ID: 12,
+                            type: 66,
+                        },
+                        modelId: {
+                            ID: 5,
+                            type: 66,
+                        },
+                        physicalEnv: {
+                            ID: 17,
+                            type: 48,
+                        },
+                        powerSource: {
+                            ID: 7,
+                            type: 48,
+                        },
+                        productCode: {
+                            ID: 10,
+                            type: 65,
+                        },
+                        productLabel: {
+                            ID: 14,
+                            type: 66,
+                        },
+                        productUrl: {
+                            ID: 11,
+                            type: 66,
+                        },
+                        schneiderMeterRadioPower: {
+                            ID: 57856,
+                            manufacturerCode: 4190,
+                            type: 40,
+                        },
+                        serialNumber: {
+                            ID: 13,
+                            type: 66,
+                        },
+                        stackVersion: {
+                            ID: 2,
+                            type: 32,
+                        },
+                        swBuildId: {
+                            ID: 16384,
+                            type: 66,
+                        },
+                        zclVersion: {
+                            ID: 0,
+                            type: 32,
+                        },
+                    },
+                    commands: {
+                        resetFactDefault: {
+                            ID: 0,
+                            parameters: [],
+                        },
+                        tuyaSetup: {
+                            ID: 240,
+                            parameters: [],
+                        },
+                    },
+                    commandsResponse: {},
+                },
+                sprutDevice: {
+                    ID: 26112,
+                    attributes: {
+                        UartBaudRate: {
+                            ID: 26113,
+                            type: 35,
+                        },
+                        isConnected: {
+                            ID: 26116,
+                            type: 16,
+                        },
+                    },
+                    commands: {
+                        debug: {
+                            ID: 103,
+                            parameters: [
+                                {
+                                    name: "data",
+                                    type: 32,
+                                },
+                            ],
+                        },
+                    },
+                    commandsResponse: {},
+                    manufacturerCode: 26214,
+                },
+            },
         },
         actions: ["raw", "philips_hue_factory_reset"],
     },

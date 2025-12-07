@@ -130,6 +130,9 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                 "0x00123456789abcde": {
                     friendly_name: "Bosch thermostat",
                 },
+                "0x2c1165fffeabe0ad": {
+                    friendly_name: "multi-sensor wiren",
+                },
             },
             frontend: {
                 package: "zigbee2mqtt-windfront",
