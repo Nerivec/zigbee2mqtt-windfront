@@ -127,7 +127,6 @@ export const API_URLS =
     (Z2M_API_URLS.startsWith("${")
         ? [`${window.location.host}${window.location.pathname}${window.location.pathname.endsWith("/") ? "" : "/"}api`] // env not replaced, use default
         : Z2M_API_URLS.split(",").map((u) => u.trim()));
-// VITE_ first (stripped accordingly during build)
 export const API_NAMES =
     import.meta.env.VITE_Z2M_API_NAMES?.split(",") ??
     (Z2M_API_NAMES.startsWith("${") ? API_URLS.map((_v, idx) => `${idx}`) : Z2M_API_NAMES.split(","));
@@ -694,6 +693,7 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
 
                 if (init) {
                     // ignore activity on first trigger to avoid "Device joined" everywhere
+                    // TODO: does not work very well for multi-instance
                     continue;
                 }
 

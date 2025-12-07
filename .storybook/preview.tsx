@@ -1,14 +1,13 @@
-import NiceModal from "@ebay/nice-modal-react";
 import type { Preview } from "@storybook/react-vite";
-import { I18nextProvider } from "react-i18next";
-import { MemoryRouter } from "react-router";
-import i18n from "../src/i18n/index.js";
+import { installStorybookMocks } from "./storybook-mocks.js";
 
 import "../src/styles/styles.global.css";
 
+installStorybookMocks();
+
 const preview: Preview = {
     parameters: {
-        layout: "centered",
+        layout: "fullscreen",
         controls: {
             matchers: {
                 color: /(background|color)$/i,
@@ -22,17 +21,6 @@ const preview: Preview = {
             test: "todo",
         },
     },
-    decorators: [
-        (Story) => (
-            <I18nextProvider i18n={i18n}>
-                <NiceModal.Provider>
-                    <MemoryRouter initialEntries={["/"]}>
-                        <Story />
-                    </MemoryRouter>
-                </NiceModal.Provider>
-            </I18nextProvider>
-        ),
-    ],
 };
 
 export default preview;
