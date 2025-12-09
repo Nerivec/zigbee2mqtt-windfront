@@ -665,6 +665,11 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
             for (let idx = 0; idx < prevDevices.length; idx++) {
                 const prevDevice = prevDevices[idx];
 
+                // skip coordinator
+                if (prevDevice.network_address === 0x0000) {
+                    continue;
+                }
+
                 prevByFriendlyName.set(prevDevice.friendly_name, prevDevice);
             }
 
