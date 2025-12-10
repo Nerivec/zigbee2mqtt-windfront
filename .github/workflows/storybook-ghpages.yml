@@ -23,10 +23,15 @@ jobs:
         with:
           node-version-file: "package.json"
 
-      - name: Publish storybook to GitHub Pages
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+      - run: npm ci
+
+      - run: npm run build-storybook
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          install_command: npm ci
-          build_command: npm run build-storybook
           path: storybook-static
-          checkout: false
+
+      - id: deploy
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
