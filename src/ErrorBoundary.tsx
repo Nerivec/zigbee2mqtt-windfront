@@ -56,6 +56,16 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         const { didCatch, error } = this.state;
 
         if (didCatch) {
+            if (typeof error?.message === "string" && error.message.includes("dynamically imported module")) {
+                // error has several variants:
+                // - error loading dynamically imported module
+                // - Failed to fetch dynamically imported module
+                // usually, a page refresh takes care of it (although can also be due to bad cache or HA background errors)
+                window.location.reload();
+
+                return null;
+            }
+
             const githubUrlParams = {
                 template: "bug_report.yaml",
                 stacktrace: [
