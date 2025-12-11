@@ -29,7 +29,7 @@ const GroupPicker = memo(({ groups, label, required, disabled, onChange }: Group
 
     const options = useMemo(
         (): BaseSelectOption[] =>
-            groups.map((group) => ({ value: `${group.id}`, label: group.friendly_name })).sort((elA, elB) => elA.label!.localeCompare(elB.label!)),
+            groups.map((group) => ({ value: `${group.id}`, label: group.friendly_name })).sort((elA, elB) => elA.label.localeCompare(elB.label)),
         [groups],
     );
 

@@ -39,12 +39,12 @@ const DevicePicker = memo(({ devices, value, label, detail, required, disabled, 
                 value: device.ieee_address,
                 label: `${device.friendly_name} ${device.definition?.model ? `(${device.definition?.model})` : ""}`,
             }))
-            .sort((elA, elB) => elA.label!.localeCompare(elB.label!));
+            .sort((elA, elB) => elA.label.localeCompare(elB.label));
 
         if (groups?.length) {
             const groupOptions: BaseSelectOption[] = groups
                 .map((group) => ({ value: `${group.id}`, label: group.friendly_name }))
-                .sort((elA, elB) => elA.label!.localeCompare(elB.label!));
+                .sort((elA, elB) => elA.label.localeCompare(elB.label));
 
             options.push({ label: t(($) => $.devices), options: devicesOptions });
             options.push({ label: t(($) => $.groups), options: groupOptions });

@@ -31,7 +31,7 @@ const ClusterSinglePicker = memo(({ clusters, onChange, value, label, disabled, 
                     allOptions.push(entry);
                 }
 
-                groupOptions.sort((elA, elB) => elA.label!.localeCompare(elB.label!));
+                groupOptions.sort((elA, elB) => elA.label.localeCompare(elB.label));
                 options.push({ label: t(($) => $[group.name]), options: groupOptions });
             }
         } else {
@@ -43,7 +43,7 @@ const ClusterSinglePicker = memo(({ clusters, onChange, value, label, disabled, 
                 allOptions.push(entry);
             }
 
-            groupOptions.sort((elA, elB) => elA.label!.localeCompare(elB.label!));
+            groupOptions.sort((elA, elB) => elA.label.localeCompare(elB.label));
             options.push({ label: t(($) => $.cluster), options: groupOptions });
         }
 

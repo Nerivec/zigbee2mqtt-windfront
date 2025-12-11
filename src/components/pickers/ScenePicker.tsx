@@ -17,7 +17,7 @@ const ScenePicker = memo(({ onSceneSelected, scenes = [], disabled }: ScenePicke
         (): BaseSelectOption[] =>
             scenes
                 .map((scene) => ({ value: `${scene.id}`, label: `${scene.id}: ${scene.name}` }))
-                .sort((elA, elB) => elA.label!.localeCompare(elB.label!)),
+                .sort((elA, elB) => elA.label.localeCompare(elB.label)),
         [scenes],
     );
 

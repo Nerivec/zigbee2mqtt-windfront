@@ -23,7 +23,7 @@ const ClusterMultiPicker = memo(({ clusters, onChange, label, value, disabled, r
             options.push({ label: cluster, value: cluster });
         }
 
-        options.sort((elA, elB) => elA.label!.localeCompare(elB.label!));
+        options.sort((elA, elB) => elA.label.localeCompare(elB.label));
 
         return options;
     }, [clusters]);
