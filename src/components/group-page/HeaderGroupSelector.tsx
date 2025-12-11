@@ -76,7 +76,7 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
             options={options}
             isSearchable
             onChange={onSelectHandler}
-            className="min-w-48 me-2"
+            className="min-w-48 sm:w-auto me-2"
             classNames={REACT_SELECT_DEFAULT_CLASSNAMES}
         />
     );

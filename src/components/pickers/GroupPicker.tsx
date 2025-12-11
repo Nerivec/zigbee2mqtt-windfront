@@ -49,7 +49,7 @@ const GroupPicker = memo(({ groups, label, required, disabled, onChange }: Group
                 isSearchable
                 isDisabled={disabled}
                 onChange={onSelectHandler}
-                className="min-w-96"
+                className="min-w-64"
                 classNames={REACT_SELECT_DEFAULT_CLASSNAMES}
             />
         </fieldset>
