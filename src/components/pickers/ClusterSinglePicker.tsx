@@ -1,67 +1,85 @@
-import { type JSX, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import SelectField, { type SelectFieldProps } from "../form-fields/SelectField.js";
+import Select, { type SingleValue } from "react-select";
+import { REACT_SELECT_DEFAULT_CLASSNAMES } from "../../consts.js";
+import type { BaseGroupedOption, BaseSelectOption } from "../../types.js";
 import type { ClusterGroup } from "./index.js";
 
-export interface ClusterSinglePickerProps extends Omit<SelectFieldProps, "onChange" | "name"> {
+export interface ClusterSinglePickerProps {
     clusters: Set<string> | ClusterGroup[];
     value: string;
+    label?: string;
+    required?: boolean;
+    disabled?: boolean;
     onChange(cluster: string): void;
 }
 
-const ClusterSinglePicker = memo(({ clusters, onChange, value, label, disabled, ...rest }: ClusterSinglePickerProps) => {
+const ClusterSinglePicker = memo(({ clusters, onChange, value, label, disabled, required }: ClusterSinglePickerProps) => {
     const { t } = useTranslation(["zigbee", "common"]);
 
-    const options = useMemo(() => {
-        const options: JSX.Element[] = [];
+    const [options, allOptions] = useMemo(() => {
+        const options: BaseGroupedOption[] = [];
+        const allOptions: BaseSelectOption[] = [];
 
         if (Array.isArray(clusters)) {
             for (const group of clusters) {
-                const groupOptions: JSX.Element[] = [];
+                const groupOptions: BaseSelectOption[] = [];
 
                 for (const cluster of group.clusters) {
-                    groupOptions.push(
-                        <option key={cluster} value={cluster}>
-                            {cluster}
-                        </option>,
-                    );
+                    const entry = { value: cluster, label: cluster };
+                    groupOptions.push(entry);
+                    allOptions.push(entry);
                 }
 
-                options.push(
-                    <optgroup key={group.name} label={t(($) => $[group.name])}>
-                        {groupOptions}
-                    </optgroup>,
-                );
+                groupOptions.sort((elA, elB) => elA.label!.localeCompare(elB.label!));
+                options.push({ label: t(($) => $[group.name]), options: groupOptions });
             }
         } else {
+            const groupOptions: BaseSelectOption[] = [];
+
             for (const cluster of clusters) {
-                options.push(
-                    <option key={cluster} value={cluster}>
-                        {cluster}
-                    </option>,
-                );
+                const entry = { value: cluster, label: cluster };
+                groupOptions.push(entry);
+                allOptions.push(entry);
             }
+
+            groupOptions.sort((elA, elB) => elA.label!.localeCompare(elB.label!));
+            options.push({ label: t(($) => $.cluster), options: groupOptions });
         }
 
-        return options;
+        return [options, allOptions];
     }, [clusters, t]);
 
+    const selected = useMemo<SingleValue<BaseSelectOption>>(
+        () => (value == null || value === "" ? null : (allOptions.find((o) => o.value === value) ?? null)),
+        [value, allOptions],
+    );
+
     return (
-        <SelectField
-            name="attribute_picker"
-            label={label}
-            value={value}
-            title={value}
-            onChange={(e) => onChange(e.target.value)}
-            disabled={disabled}
-            className="select validator w-48"
-            {...rest}
-        >
-            <option value="" disabled>
-                {t(($) => $.select_cluster)}
-            </option>
-            {options}
-        </SelectField>
+        <fieldset className="fieldset">
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {required ? " *" : ""}
+                </legend>
+            )}
+            <Select
+                unstyled
+                placeholder={t(($) => $.select_cluster)}
+                aria-label={label ?? t(($) => $.select_cluster)}
+                options={options}
+                value={selected}
+                isSearchable
+                isDisabled={disabled}
+                onChange={(option) => {
+                    if (option != null) {
+                        onChange(option.value);
+                    }
+                }}
+                className="min-w-64"
+                classNames={REACT_SELECT_DEFAULT_CLASSNAMES}
+            />
+        </fieldset>
     );
 });
 
