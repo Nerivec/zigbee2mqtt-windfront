@@ -33,7 +33,7 @@ const Activity = memo(({ devices, maxRows }: ActivityProps) => {
                                 key={`${entry.friendlyName}-${entry.sourceIdx}-${entry.activity}-${entry.time}-${i}`}
                                 className="flex flex-row gap-1 items-center w-full px-1 rounded-field hover:bg-base-200"
                             >
-                                <div className="text-xs font-semibold opacity-60 min-w-0">
+                                <div className="text-xs font-semibold opacity-60 min-w-0 flex-1">
                                     <SourceDot idx={entry.sourceIdx} autoHide namePostfix=" –" className="me-1" />
                                     {ieeeAddress ? (
                                         <Link
@@ -45,9 +45,7 @@ const Activity = memo(({ devices, maxRows }: ActivityProps) => {
                                     ) : (
                                         <span className="font-semibold truncate">{entry.friendlyName}</span>
                                     )}
-                                </div>
-                                <div className="min-w-0 grow">
-                                    <p className="text-xs text-base-content/60 truncate">— {entry.activity}</p>
+                                    <span className="text-xs text-base-content/60 truncate">— {entry.activity}</span>
                                 </div>
                                 <div>
                                     <p className="text-xs text-base-content/60">{entry.time}</p>
