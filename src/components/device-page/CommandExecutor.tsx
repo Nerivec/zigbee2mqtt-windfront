@@ -55,25 +55,29 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
         const deviceCustoms = new Set<string>();
         const otherZcls = new Set<string>();
 
-        if (deviceEndpoint) {
-            for (const inCluster of deviceEndpoint.clusters.input) {
-                uniqueClusters.add(inCluster);
-                deviceInputs.add(inCluster);
-            }
-
-            for (const outCluster of deviceEndpoint.clusters.output) {
-                uniqueClusters.add(outCluster);
-                deviceOutputs.add(outCluster);
-            }
-        }
-
-        const customClusters = bridgeDefinitions.custom_clusters[device.friendly_name];
+        const customClusters = bridgeDefinitions.custom_clusters[device.ieee_address];
 
         if (customClusters) {
-            for (const key in bridgeDefinitions.custom_clusters[device.friendly_name]) {
+            for (const key in bridgeDefinitions.custom_clusters[device.ieee_address]) {
                 if (!uniqueClusters.has(key)) {
                     uniqueClusters.add(key);
                     deviceCustoms.add(key);
+                }
+            }
+        }
+
+        if (deviceEndpoint) {
+            for (const inCluster of deviceEndpoint.clusters.input) {
+                if (!uniqueClusters.has(inCluster)) {
+                    uniqueClusters.add(inCluster);
+                    deviceInputs.add(inCluster);
+                }
+            }
+
+            for (const outCluster of deviceEndpoint.clusters.output) {
+                if (!uniqueClusters.has(outCluster)) {
+                    uniqueClusters.add(outCluster);
+                    deviceOutputs.add(outCluster);
                 }
             }
         }
@@ -86,6 +90,10 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
 
         return [
             {
+                name: "custom_clusters",
+                clusters: deviceCustoms,
+            },
+            {
                 name: "input_clusters",
                 clusters: deviceInputs,
             },
@@ -94,15 +102,11 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
                 clusters: deviceOutputs,
             },
             {
-                name: "custom_clusters",
-                clusters: deviceCustoms,
-            },
-            {
                 name: "other_zcl_clusters",
                 clusters: otherZcls,
             },
         ];
-    }, [device.friendly_name, device.endpoints, endpoint, bridgeDefinitions]);
+    }, [device.ieee_address, device.endpoints, endpoint, bridgeDefinitions]);
 
     const onExecute = useCallback(async () => {
         let commandKey: string | number = Number.parseInt(command, 10);

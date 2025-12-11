@@ -1,20 +1,24 @@
-import { type ChangeEvent, type InputHTMLAttributes, type JSX, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import Select, { type SingleValue } from "react-select";
 import { useShallow } from "zustand/react/shallow";
+import { REACT_SELECT_DEFAULT_CLASSNAMES } from "../../consts.js";
 import { useAppStore } from "../../store.js";
-import type { AttributeDefinition, Device } from "../../types.js";
-import SelectField from "../form-fields/SelectField.js";
+import type { AttributeDefinition, BaseSelectOption, Device } from "../../types.js";
 import { getClusterAttributes } from "../reporting/index.js";
 
-interface AttributePickerProps extends Omit<InputHTMLAttributes<HTMLSelectElement>, "onChange"> {
+interface AttributePickerProps {
     sourceIdx: number;
     cluster: string;
     device: Device;
+    value: string | number;
     label?: string;
+    required?: boolean;
+    disabled?: boolean;
     onChange: (attr: string, definition: AttributeDefinition) => void;
 }
 
-const AttributePicker = memo(({ sourceIdx, cluster, device, onChange, label, ...rest }: AttributePickerProps) => {
+const AttributePicker = memo(({ sourceIdx, cluster, device, onChange, value, label, required, disabled }: AttributePickerProps) => {
     const bridgeDefinitions = useAppStore(useShallow((state) => state.bridgeDefinitions[sourceIdx]));
     const { t } = useTranslation("zigbee");
 
@@ -25,33 +29,45 @@ const AttributePicker = memo(({ sourceIdx, cluster, device, onChange, label, ...
     );
 
     const options = useMemo(() => {
-        const attrs: JSX.Element[] = [];
+        const attrs: BaseSelectOption[] = [];
 
         for (const key in clusterAttributes) {
-            attrs.push(
-                <option key={key} value={key}>
-                    {key}
-                </option>,
-            );
+            attrs.push({ value: key, label: key });
         }
 
         return attrs;
     }, [clusterAttributes]);
 
+    const selected = useMemo<SingleValue<BaseSelectOption>>(
+        () => (value == null || value === "" ? null : (options.find((o) => o.value === value) ?? null)),
+        [value, options],
+    );
+
     return (
-        <SelectField
-            name="attribute_picker"
-            label={label}
-            onChange={(e: ChangeEvent<HTMLSelectElement>): void => onChange(e.target.value, clusterAttributes[e.target.value])}
-            disabled={options.length === 0}
-            className="select validator w-64"
-            {...rest}
-        >
-            <option value="" disabled>
-                {t(($) => $.select_attribute)}
-            </option>
-            {options}
-        </SelectField>
+        <fieldset className="fieldset">
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {required ? " *" : ""}
+                </legend>
+            )}
+            <Select
+                unstyled
+                placeholder={t(($) => $.select_attribute)}
+                aria-label={label ?? t(($) => $.select_attribute)}
+                options={options}
+                value={selected}
+                isSearchable
+                isDisabled={disabled}
+                onChange={(option) => {
+                    if (option != null) {
+                        onChange(option.value, clusterAttributes[option.value]);
+                    }
+                }}
+                className="min-w-64"
+                classNames={REACT_SELECT_DEFAULT_CLASSNAMES}
+            />
+        </fieldset>
     );
 });
 

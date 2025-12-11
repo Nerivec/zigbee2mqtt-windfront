@@ -1,14 +1,11 @@
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, memo, useMemo } from "react";
+import { memo, type ReactNode, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
-import { useSearch } from "../../hooks/useSearch.js";
+import { useNavigate } from "react-router";
+import Select, { type SingleValue } from "react-select";
+import { REACT_SELECT_DEFAULT_CLASSNAMES } from "../../consts.js";
 import type { TabName } from "../../pages/GroupPage.js";
 import { API_URLS, useAppStore } from "../../store.js";
-import type { Group } from "../../types.js";
-import DialogDropdown from "../DialogDropdown.js";
-import DebouncedInput from "../form-fields/DebouncedInput.js";
+import type { BaseSelectOption, Group } from "../../types.js";
 import SourceDot from "../SourceDot.js";
 
 interface HeaderGroupSelectorProps {
@@ -17,13 +14,27 @@ interface HeaderGroupSelectorProps {
     tab?: TabName;
 }
 
+interface SelectOption extends BaseSelectOption<ReactNode> {
+    name: string;
+    link: string;
+}
+
 const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devices" }: HeaderGroupSelectorProps) => {
-    const [searchTerm, normalizedSearchTerm, setSearchTerm] = useSearch();
     const { t } = useTranslation("common");
     const groups = useAppStore((state) => state.groups);
+    const navigate = useNavigate();
 
-    const items = useMemo(() => {
-        const elements: JSX.Element[] = [];
+    const onSelectHandler = useCallback(
+        (option: SingleValue<SelectOption>) => {
+            if (option) {
+                navigate(option.link);
+            }
+        },
+        [navigate],
+    );
+
+    const options = useMemo(() => {
+        const elements: SelectOption[] = [];
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             for (const group of groups[sourceIdx]) {
@@ -31,45 +42,43 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
                     continue;
                 }
 
-                if (normalizedSearchTerm.length > 0 && !group.friendly_name.toLowerCase().includes(normalizedSearchTerm)) {
-                    continue;
-                }
-
-                elements.push(
-                    <li key={`${group.friendly_name}-${group.id}-${sourceIdx}`}>
-                        <Link to={`/group/${sourceIdx}/${group.id}/${tab}`} onClick={() => setSearchTerm("")} className="dropdown-item">
+                elements.push({
+                    value: group.friendly_name,
+                    label: (
+                        <>
                             <SourceDot idx={sourceIdx} autoHide namePostfix=" – " /> {group.friendly_name}
-                        </Link>
-                    </li>,
-                );
+                        </>
+                    ),
+                    name: `${sourceIdx} ${group.friendly_name}`,
+                    link: `/group/${sourceIdx}/${group.id}/${tab}`,
+                });
             }
         }
 
-        elements.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
+        elements.sort((elA, elB) => elA.name.localeCompare(elB.name));
 
         return elements;
-    }, [groups, normalizedSearchTerm, currentSourceIdx, currentGroup, tab, setSearchTerm]);
+    }, [groups, currentSourceIdx, currentGroup, tab]);
 
     return (
-        <DialogDropdown
-            buttonChildren={
-                <>
-                    {currentSourceIdx !== undefined && <SourceDot idx={currentSourceIdx} autoHide />}
-                    {currentGroup ? currentGroup.friendly_name : t(($) => $.unknown_group)}
-                </>
+        <Select
+            unstyled
+            placeholder={
+                currentGroup && currentSourceIdx !== undefined ? (
+                    <>
+                        <SourceDot idx={currentSourceIdx} autoHide namePostfix=" – " /> {currentGroup.friendly_name}
+                    </>
+                ) : (
+                    t(($) => $.select_group)
+                )
             }
-        >
-            <label className="input min-h-10" key="search">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-                <DebouncedInput
-                    onChange={setSearchTerm}
-                    placeholder={t(($) => $.type_to_filter)}
-                    value={searchTerm}
-                    title={t(($) => $.type_to_filter)}
-                />
-            </label>
-            {items}
-        </DialogDropdown>
+            aria-label={t(($) => $.select_group)}
+            options={options}
+            isSearchable
+            onChange={onSelectHandler}
+            className="min-w-48 sm:w-auto me-2"
+            classNames={REACT_SELECT_DEFAULT_CLASSNAMES}
+        />
     );
 });
 

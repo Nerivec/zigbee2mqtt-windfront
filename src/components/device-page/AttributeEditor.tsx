@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, type JSX, memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
+import { useShallow } from "zustand/react/shallow";
+import { useAppStore } from "../../store.js";
 import type { AttributeDefinition, Device, LogMessage } from "../../types.js";
 import { getEndpoints, getObjectFirstKey } from "../../utils.js";
 import Button from "../Button.js";
@@ -11,6 +13,7 @@ import InputField from "../form-fields/InputField.js";
 import AttributePicker from "../pickers/AttributePicker.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
+import type { ClusterGroup } from "../pickers/index.js";
 import LastLogResult from "./LastLogResult.js";
 
 export interface AttributeEditorProps {
@@ -55,6 +58,7 @@ function AttributeValueInput({ value, onChange, attribute, definition, ...rest }
 }
 
 const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, lastLog }: AttributeEditorProps) => {
+    const bridgeDefinitions = useAppStore(useShallow((state) => state.bridgeDefinitions[sourceIdx]));
     const [endpoint, setEndpoint] = useState(getObjectFirstKey(device.endpoints) ?? "");
     const [cluster, setCluster] = useState("");
     const [attributes, setAttributes] = useState<AttributeInfo[]>([]);
@@ -149,21 +153,57 @@ const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, l
             ),
         [attributes],
     );
-    const availableClusters = useMemo(() => {
-        const clusters = new Set<string>();
+    const availableClusters = useMemo((): ClusterGroup[] => {
+        const deviceInputs = new Set<string>();
+        const deviceCustoms = new Set<string>();
+        const otherZcls = new Set<string>();
 
         if (endpoint) {
             const deviceEndpoint = device.endpoints[Number.parseInt(endpoint, 10)];
+            const uniqueClusters = new Set<string>();
+
+            const customClusters = bridgeDefinitions.custom_clusters[device.ieee_address];
+
+            if (customClusters) {
+                for (const key in bridgeDefinitions.custom_clusters[device.ieee_address]) {
+                    if (!uniqueClusters.has(key)) {
+                        uniqueClusters.add(key);
+                        deviceCustoms.add(key);
+                    }
+                }
+            }
 
             if (deviceEndpoint) {
                 for (const inCluster of deviceEndpoint.clusters.input) {
-                    clusters.add(inCluster);
+                    if (!uniqueClusters.has(inCluster)) {
+                        uniqueClusters.add(inCluster);
+                        deviceInputs.add(inCluster);
+                    }
+                }
+            }
+
+            for (const key in bridgeDefinitions.clusters) {
+                if (!uniqueClusters.has(key)) {
+                    otherZcls.add(key);
                 }
             }
         }
 
-        return clusters;
-    }, [device, endpoint]);
+        return [
+            {
+                name: "custom_clusters",
+                clusters: deviceCustoms,
+            },
+            {
+                name: "input_clusters",
+                clusters: deviceInputs,
+            },
+            {
+                name: "other_zcl_clusters",
+                clusters: otherZcls,
+            },
+        ];
+    }, [device, endpoint, bridgeDefinitions]);
 
     const disableButtons = attributes.length === 0 || cluster === "";
     const endpoints = useMemo(() => getEndpoints(device), [device]);

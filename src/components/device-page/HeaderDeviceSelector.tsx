@@ -1,14 +1,11 @@
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type JSX, memo, useMemo } from "react";
+import { memo, type ReactNode, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
-import { useSearch } from "../../hooks/useSearch.js";
+import { useNavigate } from "react-router";
+import Select, { type SingleValue } from "react-select";
+import { REACT_SELECT_DEFAULT_CLASSNAMES } from "../../consts.js";
 import type { TabName } from "../../pages/DevicePage.js";
 import { API_URLS, useAppStore } from "../../store.js";
-import type { Device } from "../../types.js";
-import DialogDropdown from "../DialogDropdown.js";
-import DebouncedInput from "../form-fields/DebouncedInput.js";
+import type { BaseSelectOption, Device } from "../../types.js";
 import SourceDot from "../SourceDot.js";
 
 interface HeaderDeviceSelectorProps {
@@ -17,13 +14,27 @@ interface HeaderDeviceSelectorProps {
     tab?: TabName;
 }
 
+interface SelectOption extends BaseSelectOption<ReactNode> {
+    name: string;
+    link: string;
+}
+
 const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "info" }: HeaderDeviceSelectorProps) => {
-    const [searchTerm, normalizedSearchTerm, setSearchTerm] = useSearch();
     const { t } = useTranslation("common");
     const devices = useAppStore((state) => state.devices);
+    const navigate = useNavigate();
 
-    const items = useMemo(() => {
-        const elements: JSX.Element[] = [];
+    const onSelectHandler = useCallback(
+        (option: SingleValue<SelectOption>) => {
+            if (option) {
+                navigate(option.link);
+            }
+        },
+        [navigate],
+    );
+
+    const options = useMemo(() => {
+        const elements: SelectOption[] = [];
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             for (const device of devices[sourceIdx]) {
@@ -31,40 +42,43 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
                     continue;
                 }
 
-                if (normalizedSearchTerm.length > 0 && !device.friendly_name.toLowerCase().includes(normalizedSearchTerm)) {
-                    continue;
-                }
-
-                elements.push(
-                    <li key={`${device.friendly_name}-${device.ieee_address}-${sourceIdx}`}>
-                        <Link to={`/device/${sourceIdx}/${device.ieee_address}/${tab}`} onClick={() => setSearchTerm("")} className="dropdown-item">
+                elements.push({
+                    value: device.friendly_name,
+                    label: (
+                        <>
                             <SourceDot idx={sourceIdx} autoHide namePostfix=" – " /> {device.friendly_name}
-                        </Link>
-                    </li>,
-                );
+                        </>
+                    ),
+                    name: `${sourceIdx} ${device.friendly_name}`,
+                    link: `/device/${sourceIdx}/${device.ieee_address}/${tab}`,
+                });
             }
         }
 
-        elements.sort((elA, elB) => elA.key!.localeCompare(elB.key!));
+        elements.sort((elA, elB) => elA.name.localeCompare(elB.name));
 
         return elements;
-    }, [devices, normalizedSearchTerm, currentSourceIdx, currentDevice, tab, setSearchTerm]);
+    }, [devices, currentSourceIdx, currentDevice, tab]);
 
     return (
-        <DialogDropdown
-            buttonChildren={
-                <>
-                    {currentSourceIdx !== undefined && <SourceDot idx={currentSourceIdx} autoHide />}
-                    {currentDevice ? currentDevice.friendly_name : t(($) => $.unknown_device)}
-                </>
+        <Select
+            unstyled
+            placeholder={
+                currentDevice && currentSourceIdx !== undefined ? (
+                    <>
+                        <SourceDot idx={currentSourceIdx} autoHide namePostfix=" – " /> {currentDevice.friendly_name}
+                    </>
+                ) : (
+                    t(($) => $.select_device)
+                )
             }
-        >
-            <label className="input min-h-10" key="search">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-                <DebouncedInput onChange={setSearchTerm} placeholder={t(($) => $.type_to_filter)} value={searchTerm} />
-            </label>
-            {items}
-        </DialogDropdown>
+            aria-label={t(($) => $.select_device)}
+            options={options}
+            isSearchable
+            onChange={onSelectHandler}
+            className="min-w-48 sm:w-auto me-2"
+            classNames={REACT_SELECT_DEFAULT_CLASSNAMES}
+        />
     );
 });
 
