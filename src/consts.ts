@@ -94,8 +94,8 @@ export const REACT_SELECT_DEFAULT_CLASSNAMES = {
     indicatorSeparator: () => "hidden",
     menu: () => "!min-w-full !w-fit dropdown-content menu p-0 bg-base-100 text-base-content shadow-md border border-base-300 rounded-box mt-1 !z-2",
     menuList: () => "max-h-60 overflow-auto",
-    groupHeading: () => "px-2 py-2 text-xs font-semibold uppercase text-base-content/70",
+    groupHeading: () => "px-1 py-2 text-xs font-semibold uppercase text-base-content/70",
     option: ({ isFocused, isSelected }) =>
-        `px-2 py-1 cursor-pointer ${isSelected ? "bg-primary text-primary-content" : isFocused ? "bg-primary/10" : ""}`,
+        `px-3 py-1 cursor-pointer ${isSelected ? "bg-primary text-primary-content" : isFocused ? "bg-primary/10" : ""}`,
     noOptionsMessage: () => "px-2 py-1 text-base-content/70",
 };
