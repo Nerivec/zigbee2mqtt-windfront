@@ -190,4 +190,13 @@ export type AnyColor = RGBColor | XYColor | HueSaturationColor | HexColor;
 
 export type ColorFormat = "color_rgb" | "color_xy" | "color_hs" | "hex";
 
+export interface BaseSelectOption {
+    readonly value: string;
+    readonly label: string;
+}
+
+export interface BaseGroupedOption<T = BaseSelectOption> {
+    readonly label: string;
+    readonly options: readonly T[];
+}
 // #endregion

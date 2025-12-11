@@ -80,3 +80,22 @@ export enum InterviewState {
     Successful = "SUCCESSFUL",
     Failed = "FAILED",
 }
+
+export const REACT_SELECT_DEFAULT_CLASSNAMES = {
+    container: () => "w-full",
+    control: ({ isDisabled }) => `w-full input input-bordered ${isDisabled ? "pointer-events-none opacity-50" : ""}`,
+    // valueContainer: () => "",
+    input: () => "text-base-content",
+    placeholder: () => "text-base-content/60",
+    singleValue: () => "text-base-content",
+    indicatorsContainer: () => "flex items-center",
+    dropdownIndicator: ({ isFocused }) => `text-base-content ${isFocused ? "text-primary" : ""}`,
+    clearIndicator: () => "text-base-content/70 hover:text-error",
+    indicatorSeparator: () => "hidden",
+    menu: () => "!min-w-full !w-fit dropdown-content menu p-0 bg-base-100 text-base-content shadow-md border border-base-300 rounded-box mt-1 !z-2",
+    menuList: () => "max-h-60 overflow-auto",
+    groupHeading: () => "px-2 py-2 text-xs font-semibold uppercase text-base-content/70",
+    option: ({ isFocused, isSelected }) =>
+        `px-2 py-1 cursor-pointer ${isSelected ? "bg-primary text-primary-content" : isFocused ? "bg-primary/10" : ""}`,
+    noOptionsMessage: () => "px-2 py-1 text-base-content/70",
+};
