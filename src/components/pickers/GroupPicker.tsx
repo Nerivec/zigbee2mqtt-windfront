@@ -1,49 +1,65 @@
-import { type ChangeEvent, memo, type SelectHTMLAttributes, useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import Select, { type SingleValue } from "react-select";
+import { REACT_SELECT_DEFAULT_CLASSNAMES } from "../../consts.js";
 import type { AppState } from "../../store.js";
-import type { Group } from "../../types.js";
-import SelectField from "../form-fields/SelectField.js";
+import type { BaseSelectOption, Group } from "../../types.js";
 
-interface GroupPickerProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange"> {
+interface GroupPickerProps {
     groups: AppState["groups"][number];
     value: string | number;
     label?: string;
+    required?: boolean;
+    disabled?: boolean;
     onChange(group?: Group): void;
 }
 
-const GroupPicker = memo(({ groups, value, label, onChange, ...rest }: GroupPickerProps) => {
+const GroupPicker = memo(({ groups, value, label, required, disabled, onChange }: GroupPickerProps) => {
     const { t } = useTranslation("common");
 
     const onSelectHandler = useCallback(
-        (e: ChangeEvent<HTMLSelectElement>): void => {
-            const { value: selectedValue } = e.target;
+        (option: SingleValue<BaseSelectOption>): void => {
+            if (option) {
+                const selectedId = Number.parseInt(option.value, 10);
 
-            const selectedId = Number.parseInt(selectedValue, 10);
-
-            onChange(groups.find((g) => selectedId === g.id));
+                onChange(groups.find((g) => selectedId === g.id));
+            }
         },
         [groups, onChange],
     );
 
     const options = useMemo(
-        () =>
-            groups
-                .map((group) => (
-                    <option key={group.friendly_name} value={group.id}>
-                        {group.friendly_name}
-                    </option>
-                ))
-                .sort((elA, elB) => elA.key!.localeCompare(elB.key!)),
+        (): BaseSelectOption[] =>
+            groups.map((group) => ({ value: `${group.id}`, label: group.friendly_name })).sort((elA, elB) => elA.label!.localeCompare(elB.label!)),
         [groups],
     );
 
+    const selected = useMemo<SingleValue<BaseSelectOption>>(
+        () => (value == null || value === "" ? null : (options.find((o) => o.value === value) ?? null)),
+        [value, options],
+    );
+
     return (
-        <SelectField name="group_picker" label={label} value={value} onChange={onSelectHandler} {...rest}>
-            <option value="" disabled>
-                {t(($) => $.select_group)}
-            </option>
-            {options}
-        </SelectField>
+        <fieldset className="fieldset">
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {required ? " *" : ""}
+                </legend>
+            )}
+            <Select
+                unstyled
+                placeholder={t(($) => $.select_group)}
+                aria-label={label ?? t(($) => $.select_group)}
+                options={options}
+                value={selected}
+                isSearchable
+                isDisabled={disabled}
+                onChange={onSelectHandler}
+                className="min-w-96"
+                classNames={REACT_SELECT_DEFAULT_CLASSNAMES}
+            />
+        </fieldset>
     );
 });
 

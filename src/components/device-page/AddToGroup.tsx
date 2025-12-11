@@ -43,7 +43,7 @@ const AddToGroup = memo(({ sourceIdx, device, nonMemberGroups }: AddToGroupProps
     return (
         <>
             <h2 className="text-lg font-semibold">{t(($) => $.add_to_group)}</h2>
-            <div className="mb-3">
+            <div className="flex flex-row flex-wrap mb-3 gap-3">
                 <GroupPicker label={t(($) => $.group, { ns: "zigbee" })} value={groupId} groups={nonMemberGroups} onChange={onGroupChange} required />
                 <EndpointPicker
                     label={t(($) => $.endpoint, { ns: "zigbee" })}
