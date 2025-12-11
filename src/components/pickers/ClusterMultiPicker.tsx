@@ -1,56 +1,62 @@
-import { type ChangeEvent, type DetailedHTMLProps, type InputHTMLAttributes, memo, useCallback, useMemo } from "react";
+import { type DetailedHTMLProps, type InputHTMLAttributes, memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import Select, { type MultiValue } from "react-select";
+import { REACT_SELECT_DEFAULT_CLASSNAMES } from "../../consts.js";
+import type { BaseSelectOption } from "../../types.js";
 
 export interface ClusterMultiPickerProps extends Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "onChange"> {
     label?: string;
     clusters: Set<string>;
     value: string[];
+    required?: boolean;
+    disabled?: boolean;
     onChange(clusters: string[]): void;
 }
 
-const ClusterMultiPicker = memo((props: ClusterMultiPickerProps) => {
-    const { clusters, onChange, label, value, disabled } = props;
+const ClusterMultiPicker = memo(({ clusters, onChange, label, value, disabled, required }: ClusterMultiPickerProps) => {
+    const { t } = useTranslation("zigbee");
 
-    const onChangeHandler = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            const { checked: isChecked, name } = e.target;
-            let newVal = [...value];
+    const options = useMemo((): BaseSelectOption[] => {
+        const options: BaseSelectOption[] = [];
 
-            if (isChecked) {
-                newVal.push(name);
-            } else {
-                newVal = newVal.filter((v) => v !== name);
-            }
+        for (const cluster of clusters) {
+            options.push({ label: cluster, value: cluster });
+        }
 
-            onChange(newVal);
-        },
-        [onChange, value],
-    );
+        options.sort((elA, elB) => elA.label!.localeCompare(elB.label!));
 
-    const options = useMemo(
-        () =>
-            Array.from(clusters)
-                .sort((a, b) => a.toString().localeCompare(b.toString()))
-                .map((cluster) => (
-                    <label key={cluster} className="label" title={cluster}>
-                        <input
-                            className="checkbox checkbox-sm"
-                            type="checkbox"
-                            checked={value.includes(cluster)}
-                            name={cluster}
-                            value={cluster}
-                            onChange={onChangeHandler}
-                            disabled={disabled}
-                        />
-                        {cluster}
-                    </label>
-                )),
-        [clusters, onChangeHandler, value, disabled],
+        return options;
+    }, [clusters]);
+
+    const selected = useMemo<MultiValue<BaseSelectOption>>(
+        () => (value == null ? [] : options.filter((o) => value.includes(o.value))),
+        [value, options],
     );
 
     return (
         <fieldset className="fieldset">
-            {label && <legend className="fieldset-legend">{label}</legend>}
-            <div className="flex flex-row flex-wrap gap-2">{options}</div>
+            {label && (
+                <legend className="fieldset-legend">
+                    {label}
+                    {required ? " *" : ""}
+                </legend>
+            )}
+            <Select
+                unstyled
+                placeholder={t(($) => $.select_cluster)}
+                aria-label={label ?? t(($) => $.select_cluster)}
+                options={options}
+                value={selected}
+                isMulti
+                hideSelectedOptions
+                isSearchable
+                isDisabled={disabled}
+                onChange={(option) => {
+                    onChange(option.map((o) => o.value));
+                }}
+                className="min-w-64"
+                classNames={REACT_SELECT_DEFAULT_CLASSNAMES}
+            />
         </fieldset>
     );
 });
