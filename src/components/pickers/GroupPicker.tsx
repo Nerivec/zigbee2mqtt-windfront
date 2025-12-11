@@ -7,14 +7,13 @@ import type { BaseSelectOption, Group } from "../../types.js";
 
 interface GroupPickerProps {
     groups: AppState["groups"][number];
-    value: string | number;
     label?: string;
     required?: boolean;
     disabled?: boolean;
     onChange(group?: Group): void;
 }
 
-const GroupPicker = memo(({ groups, value, label, required, disabled, onChange }: GroupPickerProps) => {
+const GroupPicker = memo(({ groups, label, required, disabled, onChange }: GroupPickerProps) => {
     const { t } = useTranslation("common");
 
     const onSelectHandler = useCallback(
@@ -34,11 +33,6 @@ const GroupPicker = memo(({ groups, value, label, required, disabled, onChange }
         [groups],
     );
 
-    const selected = useMemo<SingleValue<BaseSelectOption>>(
-        () => (value == null || value === "" ? null : (options.find((o) => o.value === value) ?? null)),
-        [value, options],
-    );
-
     return (
         <fieldset className="fieldset">
             {label && (
@@ -52,7 +46,6 @@ const GroupPicker = memo(({ groups, value, label, required, disabled, onChange }
                 placeholder={t(($) => $.select_group)}
                 aria-label={label ?? t(($) => $.select_group)}
                 options={options}
-                value={selected}
                 isSearchable
                 isDisabled={disabled}
                 onChange={onSelectHandler}
