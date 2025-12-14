@@ -80,3 +80,29 @@ export enum InterviewState {
     Successful = "SUCCESSFUL",
     Failed = "FAILED",
 }
+
+export const REACT_SELECT_DEFAULT_CLASSNAMES = {
+    clearIndicator: () => "text-base-content/70 hover:text-error cursor-pointer",
+    container: () => "w-full !max-w-full",
+    control: ({ isDisabled }) => `w-full input input-bordered !h-auto ${isDisabled ? "pointer-events-none opacity-50" : ""}`,
+    dropdownIndicator: ({ isFocused }) => `text-base-content ${isFocused ? "text-primary" : ""}`,
+    // group: () => "",
+    groupHeading: () => "px-1 py-2 text-xs font-semibold uppercase text-base-content/70",
+    indicatorsContainer: () => "flex items-center",
+    indicatorSeparator: () => "hidden",
+    input: () => "text-base-content",
+    // loadingIndicator: () => "",
+    // loadingMessage: () => "",
+    menu: () => "!min-w-full !w-fit dropdown-content menu p-0 bg-base-100 text-base-content shadow-md border border-base-300 rounded-box !z-2",
+    menuList: () => "max-h-60 overflow-auto",
+    // menuPortal: () => "",
+    multiValue: () => "p-1 bg-base-200 text-base-content rounded-box",
+    // multiValueLabel: () => "",
+    multiValueRemove: () => "p-0 ps-1 text-base-content/50 hover:text-error cursor-pointer",
+    noOptionsMessage: () => "px-2 py-2 text-base-content/70",
+    option: ({ isFocused, isSelected }) =>
+        `px-3 py-2 cursor-pointer ${isSelected ? "bg-primary text-primary-content" : isFocused ? "bg-primary/10" : ""}`,
+    placeholder: () => "text-base-content/60 truncate",
+    singleValue: () => "text-base-content truncate",
+    valueContainer: () => "gap-1 py-1 min-w-0",
+};

@@ -15,13 +15,10 @@ interface RecallRemoveProps {
 const RecallRemove = memo(({ sourceIdx, target }: RecallRemoveProps) => {
     const { t } = useTranslation(["scene", "common"]);
     const [scene, setScene] = useState<Scene>({ id: 0, name: "Scene 0" });
-    const [sceneIsNotSelected, setsceneIsNotSelected] = useState<boolean>(true);
     const scenes = useMemo(() => getScenes(target), [target]);
 
     const onSceneSelected = useCallback(
         (sceneId: number) => {
-            setsceneIsNotSelected(false);
-
             const foundScene = scenes.find((s) => s.id === sceneId);
 
             if (foundScene !== undefined) {
@@ -70,14 +67,14 @@ const RecallRemove = memo(({ sourceIdx, target }: RecallRemoveProps) => {
         <>
             <h2 className="text-lg font-semibold">{t(($) => $.manage_scenes_header)}</h2>
             <div className="mb-3">
-                <ScenePicker onSceneSelected={onSceneSelected} value={sceneIsNotSelected ? undefined : scene} scenes={scenes} />
+                <ScenePicker onSceneSelected={onSceneSelected} scenes={scenes} />
             </div>
             <div className="join join-horizontal w-full">
-                <Button disabled={sceneIsNotSelected} onClick={onRecallClick} className="btn btn-success join-item flex-1">
+                <Button disabled={!scene} onClick={onRecallClick} className="btn btn-success join-item flex-1">
                     {t(($) => $.recall)}
                 </Button>
                 <ConfirmButton
-                    disabled={sceneIsNotSelected}
+                    disabled={!scene}
                     onClick={onRemoveClick}
                     className="btn btn-error join-item flex-1"
                     title={t(($) => $.remove, { ns: "common" })}
