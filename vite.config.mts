@@ -47,10 +47,10 @@ export default defineConfig(async ({ command, mode }) => {
                 reportOnFailure: false,
                 thresholds: {
                     /** current dev status, should maintain above this */
-                    statements: 0,
-                    functions: 0,
-                    branches: 0,
-                    lines: 0,
+                    statements: 3.5,
+                    branches: 2.5,
+                    functions: 1.5,
+                    lines: 4,
                 },
             },
         },
