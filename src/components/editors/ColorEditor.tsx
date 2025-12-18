@@ -19,6 +19,7 @@ import {
     convertStringToColor,
     convertToColor,
     convertXyYToString,
+    SUPPORTED_COLOR_SPACES,
     type ZigbeeColor,
 } from "./index.js";
 
@@ -46,7 +47,9 @@ const ColorInput = memo(({ label, ...rest }: ColorInputProps) => (
 
 const ColorEditor = memo((props: ColorEditorProps) => {
     const { onChange, value: initialValue = {} as AnyColor, format, minimal } = props;
-    const [color, setColor] = useState(convertToColor(initialValue, format));
+    const [colorSpaceKey, setColorSpaceKey] = useState<keyof typeof SUPPORTED_COLOR_SPACES>("rec2020");
+    const selectedColorSpace = useMemo(() => SUPPORTED_COLOR_SPACES[colorSpaceKey] ?? SUPPORTED_COLOR_SPACES.rec2020, [colorSpaceKey]);
+    const [color, setColor] = useState(convertToColor(initialValue, format, selectedColorSpace));
     const [colorString, setColorString] = useState(convertColorToString(color));
     const [inputStates, setInputStates] = useState({
         color_rgb: false,
@@ -56,11 +59,11 @@ const ColorEditor = memo((props: ColorEditorProps) => {
     });
 
     useEffect(() => {
-        const newColor = convertToColor(initialValue, format);
+        const newColor = convertToColor(initialValue, format, selectedColorSpace);
 
         setColor(newColor);
         setColorString(convertColorToString(newColor));
-    }, [initialValue, format]);
+    }, [initialValue, format, selectedColorSpace]);
 
     useEffect(() => {
         if (!inputStates.color_xy) {
@@ -102,10 +105,10 @@ const ColorEditor = memo((props: ColorEditorProps) => {
                 const colorHsString = convertHsvToString(colorHs);
 
                 setColorString((currentColorString) => ({ ...currentColorString, color_hs: colorHsString }));
-                setColor(convertStringToColor(colorHsString, "color_hs"));
+                setColor(convertStringToColor(colorHsString, "color_hs", selectedColorSpace));
             }
         },
-        [color.color_hs],
+        [color.color_hs, selectedColorSpace],
     );
 
     const onHueChange = useCallback(
@@ -118,18 +121,21 @@ const ColorEditor = memo((props: ColorEditorProps) => {
                 const colorHsString = convertHsvToString(colorHs);
 
                 setColorString((currentColorString) => ({ ...currentColorString, color_hs: colorHsString }));
-                setColor(convertStringToColor(colorHsString, "color_hs"));
+                setColor(convertStringToColor(colorHsString, "color_hs", selectedColorSpace));
             }
         },
-        [color.color_hs],
+        [color.color_hs, selectedColorSpace],
     );
 
-    const onInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        const { value, name } = e.target;
+    const onInputChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            const { value, name } = e.target;
 
-        setColorString((currentColorString) => ({ ...currentColorString, [name]: value }));
-        setColor(convertStringToColor(value, name as ColorFormat));
-    }, []);
+            setColorString((currentColorString) => ({ ...currentColorString, [name]: value }));
+            setColor(convertStringToColor(value, name as ColorFormat, selectedColorSpace));
+        },
+        [selectedColorSpace],
+    );
 
     const onInputFocus = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setInputStates((states) => ({ ...states, [e.target.name]: true }));
@@ -151,6 +157,19 @@ const ColorEditor = memo((props: ColorEditorProps) => {
 
     return (
         <>
+            <div className="flex flex-row flex-wrap gap-3 items-center">
+                <select
+                    value={colorSpaceKey}
+                    onChange={(event) => setColorSpaceKey(event.target.value as keyof typeof SUPPORTED_COLOR_SPACES)}
+                    className="select select-sm"
+                >
+                    {Object.entries(SUPPORTED_COLOR_SPACES).map(([key, cs]) => (
+                        <option key={key} value={key}>
+                            Color Space: {cs.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
             <div className="flex flex-row flex-wrap gap-3 items-center">
                 <div className={`w-full${minimal ? " max-w-xs" : ""}`}>
                     <input
