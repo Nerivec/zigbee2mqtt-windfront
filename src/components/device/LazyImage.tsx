@@ -28,7 +28,7 @@ const LazyImage = memo(({ device = {} as Device, className }: Readonly<LazyImage
 
     const { src } = useImage({ srcList });
 
-    return <img alt={device.ieee_address} src={src} className={className} style={{ objectFit: "contain" }} />;
+    return <img alt={device.ieee_address} src={src} className={`object-contain ${className ?? ""}`} />;
 });
 
 export default LazyImage;
