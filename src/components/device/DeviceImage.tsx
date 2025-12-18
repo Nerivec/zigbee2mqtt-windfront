@@ -46,7 +46,7 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
         <Suspense fallback={<img alt={device.ieee_address} src={genericDevice} />}>
             <ErrorBoundary>
                 {noIndicator ? (
-                    <LazyImage device={device} className={`grid place-items-center${className ? ` ${className}` : ""}`} />
+                    <LazyImage device={device} className={`grid place-items-center${className ? ` ${className}` : ""}`} style="object-fit: contain" />
                 ) : (
                     <div className="indicator w-full">
                         {otaState === "updating" && (
