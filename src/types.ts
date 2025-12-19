@@ -174,6 +174,7 @@ export type RGBColor = {
 export type HueSaturationColor = {
     hue: number;
     saturation: number;
+    value?: number;
 };
 
 export type XYColor = {

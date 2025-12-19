@@ -1,8 +1,9 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { GradientFeature } from "../../types.js";
 import Button from "../Button.js";
 import ColorEditor from "../editors/ColorEditor.js";
+import { getDeviceGamut } from "../editors/index.js";
 import { type BaseFeatureProps, clampList } from "./index.js";
 
 type GradientProps = BaseFeatureProps<GradientFeature>;
@@ -11,6 +12,7 @@ const buildDefaultArray = (min: number): string[] => (min > 0 ? Array(min).fill(
 
 export const Gradient = memo((props: GradientProps) => {
     const {
+        device,
         minimal,
         onChange,
         feature: { length_min, length_max, property },
@@ -33,6 +35,14 @@ export const Gradient = memo((props: GradientProps) => {
         setCanAdd(colors.length < length_max);
         setCanRemove(colors.length > length_min);
     }, [colors, length_min, length_max]);
+
+    const gamut = useMemo(() => {
+        if (device.definition) {
+            return getDeviceGamut(device.definition.vendor, device.definition.description);
+        }
+
+        return "cie1931";
+    }, [device.definition]);
 
     const setColor = useCallback((idx: number, hex: string) => {
         setColors((prev) => {
@@ -69,6 +79,7 @@ export const Gradient = memo((props: GradientProps) => {
                         }}
                         value={{ hex: color }}
                         format="hex"
+                        gamut={gamut}
                         minimal={minimal}
                     />
                     {canRemove && (

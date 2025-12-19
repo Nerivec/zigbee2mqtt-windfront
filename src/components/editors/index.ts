@@ -1,24 +1,25 @@
+/**
+ * Adapted from: https://viereck.ch/hue-xy-rgb/
+ */
 import clamp from "lodash/clamp.js";
 import type { AnyColor, ColorFormat, HexColor, HueSaturationColor, RGBColor, XYColor } from "../../types.js";
 
-//-- Adapted from https://viereck.ch/hue-xy-rgb/
-
-type Vector3 = [number, number, number];
+export type Vector3 = [number, number, number];
 type Vector2 = [number, number];
 type Matrix3 = [number, number, number, number, number, number, number, number, number];
 
-export interface ColorTransfer {
+export interface GammaCorrection {
     encode: (linear: number) => number; // linear [0..1] -> non-linear
     decode: (nonLinear: number) => number; // non-linear [0..1] -> linear
 }
 
-export interface ColorSpace {
+export interface Gamut {
     name: string;
     red: Vector2;
     green: Vector2;
     blue: Vector2;
     white: Vector2;
-    transfer: ColorTransfer;
+    gammaCorrection: Readonly<GammaCorrection>;
 }
 
 export interface ZigbeeColor extends Record<ColorFormat, Vector3 | string> {
@@ -76,11 +77,11 @@ const multiplyMatrix3 = (m: Matrix3, v: Vector3): Vector3 => {
     return [m[0] * v[0] + m[1] * v[1] + m[2] * v[2], m[3] * v[0] + m[4] * v[1] + m[5] * v[2], m[6] * v[0] + m[7] * v[1] + m[8] * v[2]];
 };
 
-const buildMatrices = (cs: ColorSpace): { toXyz: Matrix3; toRgb: Matrix3 } => {
-    const [Xr, Yr, Zr] = xyToXyz(cs.red);
-    const [Xg, Yg, Zg] = xyToXyz(cs.green);
-    const [Xb, Yb, Zb] = xyToXyz(cs.blue);
-    const [Xw, Yw, Zw] = xyToXyz(cs.white);
+const buildMatrices = (gamut: Gamut): { toXyz: Matrix3; toRgb: Matrix3 } => {
+    const [Xr, Yr, Zr] = xyToXyz(gamut.red);
+    const [Xg, Yg, Zg] = xyToXyz(gamut.green);
+    const [Xb, Yb, Zb] = xyToXyz(gamut.blue);
+    const [Xw, Yw, Zw] = xyToXyz(gamut.white);
 
     const primariesMatrix: Matrix3 = [Xr, Xg, Xb, Yr, Yg, Yb, Zr, Zg, Zb];
     const primariesInv = invert3x3(primariesMatrix);
@@ -91,7 +92,7 @@ const buildMatrices = (cs: ColorSpace): { toXyz: Matrix3; toRgb: Matrix3 } => {
     return { toXyz, toRgb: invert3x3(toXyz) };
 };
 
-const makePowerTransfer = (params: { threshold: number; slope: number; exponent: number; offset: number }): ColorTransfer => {
+const makeGammaCorrection = (params: { threshold: number; slope: number; exponent: number; offset: number }): Readonly<GammaCorrection> => {
     const { threshold, slope, exponent, offset } = params;
 
     const encode = (linear: number): number => {
@@ -115,140 +116,70 @@ const makePowerTransfer = (params: { threshold: number; slope: number; exponent:
     return { encode, decode };
 };
 
-const makePQTransfer = (): ColorTransfer => {
-    // ITU-R BT.2100 PQ (ST 2084) constants
-    const m1 = 2610 / 16384;
-    const m2 = 2523 / 32;
-    const c1 = 3424 / 4096;
-    const c2 = 2413 / 128;
-    const c3 = 2392 / 128;
-
-    const encode = (linear: number): number => {
-        const l = Math.max(linear, 0);
-        const num = c1 + c2 * l ** m1;
-        const den = 1 + c3 * l ** m1;
-
-        return (num / den) ** m2;
-    };
-
-    const decode = (nonLinear: number): number => {
-        const e = Math.max(nonLinear, 0);
-        const num = e ** (1 / m2) - c1;
-        const den = c2 - c3 * e ** (1 / m2);
-
-        if (den <= 0) {
-            return 0;
-        }
-
-        const ratio = num / den;
-
-        if (ratio <= 0 || !Number.isFinite(ratio)) {
-            return 0;
-        }
-
-        return ratio ** (1 / m1);
-    };
-
-    return { encode, decode };
+const GAMMA_CORRECTION_LINEAR: Readonly<GammaCorrection> = {
+    encode: (linear: number): number => clamp(linear, 0, 1),
+    decode: (nonLinear: number): number => clamp(nonLinear, 0, 1),
 };
 
-const makeHlgTransfer = (): ColorTransfer => {
-    // ITU-R BT.2100 HLG OETF/EOTF (normalized for nominal 0-1 range)
-    const a = 0.17883277;
-    const b = 1 - 4 * a; // 0.28466892
-    const c = 0.55991073;
+const GAMMA_CORRECTION_SRGB = makeGammaCorrection({ threshold: 0.0031308, slope: 12.92, exponent: 2.4, offset: 0.055 });
 
-    const encode = (linear: number): number => {
-        const l = Math.max(linear, 0);
-
-        if (l <= 1 / 12) {
-            return Math.sqrt(3 * l);
-        }
-
-        return a * Math.log(12 * l - b) + c;
-    };
-
-    const decode = (nonLinear: number): number => {
-        const e = Math.max(nonLinear, 0);
-
-        if (e <= 0.5) {
-            const v = e ** 2;
-            return v / 3;
-        }
-
-        return (Math.exp((e - c) / a) + b) / 12;
-    };
-
-    return { encode, decode };
+/** https://en.wikipedia.org/wiki/CIE_1931_color_space */
+const CIE1931: Readonly<Gamut> = {
+    name: "Zigbee / CIE 1931",
+    red: [0.7347, 0.2653],
+    green: [0.2738, 0.7174],
+    blue: [0.1666, 0.0089],
+    white: [1 / 3, 1 / 3],
+    gammaCorrection: GAMMA_CORRECTION_LINEAR,
+};
+/** https://developers.meethue.com/develop/application-design-guidance/color-conversion-formulas-rgb-to-xy-and-back/ */
+const PHILIPS_HUE: Readonly<Gamut> = {
+    name: "Philips Hue",
+    red: [0.675, 0.322],
+    green: [0.4091, 0.518],
+    blue: [0.167, 0.04],
+    white: [1 / 3, 1 / 3],
+    gammaCorrection: GAMMA_CORRECTION_SRGB,
+};
+/** https://developers.meethue.com/develop/application-design-guidance/color-conversion-formulas-rgb-to-xy-and-back/ */
+const PHILIPS_HUE_LIVING_COLORS: Readonly<Gamut> = {
+    name: "Philips Hue Living Colors",
+    red: [0.704, 0.296],
+    green: [0.2151, 0.7106],
+    blue: [0.138, 0.08],
+    white: [1 / 3, 1 / 3],
+    gammaCorrection: GAMMA_CORRECTION_SRGB,
 };
 
-const TRANSFER_SRGB = makePowerTransfer({ threshold: 0.0031308, slope: 12.92, exponent: 2.4, offset: 0.055 });
-const TRANSFER_REC709 = makePowerTransfer({ threshold: 0.018, slope: 4.5, exponent: 2.2222222222, offset: 0.099 });
-const TRANSFER_REC2020 = makePowerTransfer({ threshold: 0.0181, slope: 4.5, exponent: 2.2222222222, offset: 0.0993 });
-const TRANSFER_REC2100_PQ = makePQTransfer();
-const TRANSFER_REC2100_HLG = makeHlgTransfer();
-
-/** https://en.wikipedia.org/wiki/SRGB */
-const SRGB: Readonly<ColorSpace> = {
-    name: "sRGB / IEC 61966-2-1",
-    red: [0.64, 0.33],
-    green: [0.3, 0.6],
-    blue: [0.15, 0.06],
-    white: [0.3127, 0.329],
-    transfer: TRANSFER_SRGB,
-};
-/** https://en.wikipedia.org/wiki/Rec._709 */
-const REC709: Readonly<ColorSpace> = {
-    name: "Rec.709 / ITU-R BT.709",
-    red: [0.64, 0.33],
-    green: [0.3, 0.6],
-    blue: [0.15, 0.06],
-    white: [0.3127, 0.329],
-    transfer: TRANSFER_REC709,
-};
-/** https://en.wikipedia.org/wiki/Rec._2020 */
-const REC2020: Readonly<ColorSpace> = {
-    name: "Rec.2020 / ITU-R BT.2020",
-    red: [0.708, 0.292],
-    green: [0.17, 0.797],
-    blue: [0.131, 0.046],
-    white: [0.3127, 0.329],
-    transfer: TRANSFER_REC2020,
-};
-/** https://en.wikipedia.org/wiki/Rec._2100 */
-const REC2100_PQ: Readonly<ColorSpace> = {
-    name: "Rec.2100 PQ / ITU-R BT.2100",
-    red: [0.708, 0.292],
-    green: [0.17, 0.797],
-    blue: [0.131, 0.046],
-    white: [0.3127, 0.329],
-    transfer: TRANSFER_REC2100_PQ,
-};
-/** https://en.wikipedia.org/wiki/Rec._2100 */
-const REC2100_HLG: Readonly<ColorSpace> = {
-    name: "Rec.2100 HLG / ITU-R BT.2100",
-    red: [0.708, 0.292],
-    green: [0.17, 0.797],
-    blue: [0.131, 0.046],
-    white: [0.3127, 0.329],
-    transfer: TRANSFER_REC2100_HLG,
-};
-
-export const SUPPORTED_COLOR_SPACES = {
-    sRgb: SRGB,
-    rec709: REC709,
-    rec2020: REC2020,
-    rec2100pq: REC2100_PQ,
-    rec2100hlg: REC2100_HLG,
+export const SUPPORTED_GAMUTS = {
+    cie1931: CIE1931,
+    philipsHue: PHILIPS_HUE,
+    philipsLivingColors: PHILIPS_HUE_LIVING_COLORS,
 } as const;
 
-const colorSpaceMatrices: Record<string, ReturnType<typeof buildMatrices>> = {};
+const gamutMatrices: Record<string, ReturnType<typeof buildMatrices>> = {};
 
-for (const key in SUPPORTED_COLOR_SPACES) {
-    const entry = SUPPORTED_COLOR_SPACES[key];
+for (const key in SUPPORTED_GAMUTS) {
+    const entry = SUPPORTED_GAMUTS[key];
 
-    colorSpaceMatrices[entry.name] = buildMatrices(entry);
+    gamutMatrices[entry.name] = buildMatrices(entry);
 }
+
+/**
+ * Use vendor and description from device definition to determine the proper gamut.
+ * This can be easily expanded by added entries to @see SUPPORTED_GAMUTS and by refining checks in this function as appropriate.
+ */
+export const getDeviceGamut = (vendor: string, description: string): keyof typeof SUPPORTED_GAMUTS => {
+    if (vendor === "Philips") {
+        if (description.includes("LivingColors") || description.includes("Bloom") || description.includes("Aura") || description.includes("Iris")) {
+            return "philipsLivingColors";
+        }
+
+        return "philipsHue";
+    }
+
+    return "cie1931";
+};
 
 const timesArray = (array: Vector3, matrix: Matrix3): Vector3 => {
     const result: Vector3 = [0, 0, 0];
@@ -264,30 +195,7 @@ const timesArray = (array: Vector3, matrix: Matrix3): Vector3 => {
     return result;
 };
 
-// RGB in [0..1] range
-const convertRgbToXyz = (r: number, g: number, b: number, cs: ColorSpace): Vector3 => {
-    const rgb: Vector3 = [cs.transfer.decode(r), cs.transfer.decode(g), cs.transfer.decode(b)];
-    const { toXyz } = colorSpaceMatrices[cs.name];
-
-    return timesArray(rgb, toXyz);
-};
-
-// RGB in [0..1] range
-const convertXyzToRgb = (x: number, y: number, z: number, cs: ColorSpace): Vector3 => {
-    const { toRgb } = colorSpaceMatrices[cs.name];
-    const rgb = timesArray([x, y, z], toRgb);
-
-    return [cs.transfer.encode(rgb[0]), cs.transfer.encode(rgb[1]), cs.transfer.encode(rgb[2])];
-};
-
-// RGB in [0..1] range
-const convertXyyToRgb = (x: number, y: number, Y: number, cs: ColorSpace): Vector3 => {
-    const z = 1.0 - x - y;
-
-    return convertXyzToRgb((Y / y) * x, Y, (Y / y) * z, cs);
-};
-
-const findMaximumY = (x: number, y: number, cs: ColorSpace, iterations = 10) => {
+const findMaximumY = (x: number, y: number, gamut: Gamut, iterations = 10) => {
     if (y <= 0) {
         return 0;
     }
@@ -295,7 +203,7 @@ const findMaximumY = (x: number, y: number, cs: ColorSpace, iterations = 10) => 
     let bri = 1;
 
     for (let i = 0; i < iterations; i++) {
-        const max = Math.max(...convertXyyToRgb(x, y, bri, cs));
+        const max = Math.max(...convertXyYToRgb(x, y, bri, gamut));
 
         if (max <= 0 || !Number.isFinite(max)) {
             return 0;
@@ -307,36 +215,61 @@ const findMaximumY = (x: number, y: number, cs: ColorSpace, iterations = 10) => 
     return bri;
 };
 
-export const convertRgbToXyY = (r: number, g: number, b: number, cs: ColorSpace): Vector3 => {
+/** Expects RGB in [0..1] range */
+const convertRgbToXyz = (r: number, g: number, b: number, gamut: Gamut): Vector3 => {
+    const rgb: Vector3 = [gamut.gammaCorrection.decode(r), gamut.gammaCorrection.decode(g), gamut.gammaCorrection.decode(b)];
+    const { toXyz } = gamutMatrices[gamut.name];
+
+    return timesArray(rgb, toXyz);
+};
+
+/** Return RGB in [0..1] range */
+const convertXyzToRgb = (x: number, y: number, z: number, gamut: Gamut): Vector3 => {
+    const { toRgb } = gamutMatrices[gamut.name];
+    const rgb = timesArray([x, y, z], toRgb);
+
+    return [gamut.gammaCorrection.encode(rgb[0]), gamut.gammaCorrection.encode(rgb[1]), gamut.gammaCorrection.encode(rgb[2])];
+};
+
+/** Returns RGB in [0..1] range */
+export const convertXyYToRgb = (x: number, y: number, Y: number, gamut: Gamut): Vector3 => {
+    const z = 1.0 - x - y;
+
+    return convertXyzToRgb((Y / y) * x, Y, (Y / y) * z, gamut);
+};
+
+/** Expects RGB in [0..255] range */
+export const convertRgbToXyY = (r: number, g: number, b: number, gamut: Gamut): Vector3 => {
     r /= 255;
     g /= 255;
     b /= 255;
 
     if (r < 1e-12 && g < 1e-12 && b < 1e-12) {
-        const [x, y, z] = convertRgbToXyz(1, 1, 1, cs);
+        const [x, y, z] = convertRgbToXyz(1, 1, 1, gamut);
         const sum = x + y + z;
 
         return [x / sum, y / sum, 0];
     }
 
-    const [x, y, z] = convertRgbToXyz(r, g, b, cs);
+    const [x, y, z] = convertRgbToXyz(r, g, b, gamut);
     const sum = x + y + z;
 
     return [x / sum, y / sum, y];
 };
 
-export const convertXyToRgb = (x: number, y: number, Y: number | undefined, cs: ColorSpace): Vector3 => {
+/** Returns RGB in [0..255] range */
+export const convertXyToRgb = (x: number, y: number, Y: number | undefined, gamut: Gamut): Vector3 => {
     if (y <= 0) {
         return [0, 0, 0];
     }
 
-    const luminance = Y ?? findMaximumY(x, y, cs, 10);
+    const luminance = Y ?? findMaximumY(x, y, gamut, 10);
 
     if (luminance <= 0 || !Number.isFinite(luminance)) {
         return [0, 0, 0];
     }
 
-    const [r, g, b] = convertXyyToRgb(x, y, luminance, cs);
+    const [r, g, b] = convertXyYToRgb(x, y, luminance, gamut);
 
     return [clamp(r * 255, 0, 255), clamp(g * 255, 0, 255), clamp(b * 255, 0, 255)];
 };
@@ -386,11 +319,11 @@ export const convertHexToRgb = (hex: string): Vector3 => {
     return Array.from({ length: 3 }).map((_, i) => Number.parseInt(hex.slice(i * 2, i * 2 + 2), 16)) as Vector3;
 };
 
-export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, cs: ColorSpace): ZigbeeColor => {
+export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, gamut: Gamut): ZigbeeColor => {
     switch (sourceFormat) {
         case "color_xy": {
-            const { x = 0.313, y = 0.329, Y = findMaximumY(x, y === 0 ? 0.329 : y, cs, 10) } = source as XYColor;
-            const rgb = y === 0 ? ([255, 255, 255] as Vector3) : convertXyToRgb(x, y, Y, cs);
+            const { x = gamut.white[0], y = gamut.white[1], Y = findMaximumY(x, y === 0 ? gamut.white[1] : y, gamut, 10) } = source as XYColor;
+            const rgb = y === 0 ? ([255, 255, 255] as Vector3) : convertXyToRgb(x, y, Y, gamut);
 
             return {
                 color_rgb: rgb,
@@ -401,14 +334,13 @@ export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, cs: 
         }
 
         case "color_hs": {
-            const { hue = 0, saturation = 0 } = source as HueSaturationColor;
-            const value = 100.0;
+            const { hue = 0, saturation = 0, value = 100.0 } = source as HueSaturationColor;
             const rgb = convertHsvToRgb(hue, saturation, value);
 
             return {
                 color_rgb: rgb,
                 color_hs: [hue, saturation, value],
-                color_xy: convertRgbToXyY(...rgb, cs),
+                color_xy: convertRgbToXyY(...rgb, gamut),
                 hex: convertRgbToHex(...rgb),
             };
         }
@@ -419,7 +351,7 @@ export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, cs: 
             return {
                 color_rgb: [r, g, b],
                 color_hs: convertRgbToHsv(r, g, b),
-                color_xy: convertRgbToXyY(r, g, b, cs),
+                color_xy: convertRgbToXyY(r, g, b, gamut),
                 hex: convertRgbToHex(r, g, b),
             };
         }
@@ -431,7 +363,7 @@ export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, cs: 
             return {
                 color_rgb: rgb,
                 color_hs: convertRgbToHsv(...rgb),
-                color_xy: convertRgbToXyY(...rgb, cs),
+                color_xy: convertRgbToXyY(...rgb, gamut),
                 hex,
             };
         }
@@ -442,13 +374,14 @@ export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, cs: 
             return {
                 color_rgb: rgb,
                 color_hs: convertRgbToHsv(...rgb),
-                color_xy: convertRgbToXyY(...rgb, cs),
+                color_xy: convertRgbToXyY(...rgb, gamut),
                 hex: convertRgbToHex(...rgb),
             };
         }
     }
 };
 
+/** Convert to payloads expected by ZH/ZHC for each format */
 export const convertFromColor = (source: ZigbeeColor, targetFormat: ColorFormat): AnyColor => {
     switch (targetFormat) {
         case "color_xy": {
@@ -512,28 +445,28 @@ export const convertStringToRgb = (value: string): ZigbeeColor["color_rgb"] => {
     return Array.from({ length: 3 }).map((_, i) => clamp(+(rgb[i] ?? 0), 0, 255)) as Vector3;
 };
 
-export const convertStringToColor = (source: string, format: ColorFormat, cs: ColorSpace): ZigbeeColor => {
+export const convertStringToColor = (source: string, format: ColorFormat, gamut: Gamut): ZigbeeColor => {
     switch (format) {
         case "color_xy": {
             const xyY = convertStringToXyY(source);
 
-            return convertToColor({ x: xyY[0], y: xyY[1] }, "color_xy", cs);
+            return convertToColor({ x: xyY[0], y: xyY[1] }, "color_xy", gamut);
         }
 
         case "color_hs": {
             const hsv = convertStringToHsv(source);
 
-            return convertToColor({ hue: hsv[0], saturation: hsv[1] }, "color_hs", cs);
+            return convertToColor({ hue: hsv[0], saturation: hsv[1] }, "color_hs", gamut);
         }
 
         case "color_rgb": {
             const rgb = convertStringToRgb(source);
 
-            return convertToColor({ r: rgb[0], g: rgb[1], b: rgb[2] }, "color_rgb", cs);
+            return convertToColor({ r: rgb[0], g: rgb[1], b: rgb[2] }, "color_rgb", gamut);
         }
 
         case "hex": {
-            return convertToColor({ hex: source }, "hex", cs);
+            return convertToColor({ hex: source }, "hex", gamut);
         }
     }
 };
