@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
-
 import {
     convertColorToString,
     convertFromColor,
     convertHexToRgb,
+    convertHexToString,
     convertHsvToRgb,
+    convertHsvToString,
     convertRgbToHex,
     convertRgbToHsv,
+    convertRgbToString,
     convertRgbToXyY,
     convertStringToColor,
     convertStringToHsv,
@@ -14,333 +16,221 @@ import {
     convertStringToXyY,
     convertToColor,
     convertXyToRgb,
-    SUPPORTED_COLOR_SPACES,
+    convertXyYToString,
+    getDeviceGamut,
+    SUPPORTED_GAMUTS,
+    type Vector3,
+    type ZigbeeColor,
 } from "../src/components/editors/index.js";
-import type { AnyColor, ColorFormat } from "../src/types.js";
+import type { ColorFormat } from "../src/types.js";
 
-const expectVectorCloseTo = (actual: ReadonlyArray<number>, expected: ReadonlyArray<number>, digits = 1): void => {
-    actual.forEach((value, index) => {
-        expect(value).toBeCloseTo(expected[index], digits);
+describe("color conversions", () => {
+    it("detects device gamut from Philips descriptors", () => {
+        expect(getDeviceGamut("Philips", "LivingColors Bloom")).toBe("philipsLivingColors");
+        expect(getDeviceGamut("Philips", "Iris strip")).toBe("philipsLivingColors");
+        expect(getDeviceGamut("Philips", "Hue bulb")).toBe("philipsHue");
+        expect(getDeviceGamut("Other", "anything")).toBe("cie1931");
     });
-};
 
-const SRGB_REFERENCE_XYY: Record<string, [number, number, number]> = {
-    red: [0.6401, 0.33, 0.2126],
-    green: [0.3, 0.6, 0.7152],
-    blue: [0.15, 0.06, 0.0722],
-    white: [0.3127, 0.329, 1],
-};
-
-const REC709_REFERENCE_XYY = SRGB_REFERENCE_XYY;
-
-const REC2020_REFERENCE_XYY: Record<string, [number, number, number]> = {
-    red: [0.708, 0.292, 0.2627],
-    green: [0.17, 0.797, 0.678],
-    blue: [0.131, 0.046, 0.0593],
-    white: [0.3127, 0.329, 1],
-};
-
-const REC2100_REFERENCE_XYY = REC2020_REFERENCE_XYY; // Same primaries/whitepoint as Rec.2020
-
-describe("Color conversions", () => {
-    const roundTripPrimaries = (csKey: keyof typeof SUPPORTED_COLOR_SPACES) => {
-        const primaries: Array<[number, number, number]> = [
-            [255, 0, 0],
-            [0, 255, 0],
-            [0, 0, 255],
-            [255, 255, 255],
-            [0, 0, 0],
+    it("converts primaries to xy correctly across gamuts", () => {
+        const primaries = [
+            { name: "red", rgb: [255, 0, 0] as Vector3 },
+            { name: "green", rgb: [0, 255, 0] as Vector3 },
+            { name: "blue", rgb: [0, 0, 255] as Vector3 },
+            { name: "white", rgb: [255, 255, 255] as Vector3 },
         ];
 
-        for (const [r, g, b] of primaries) {
-            const [x, y, Y] = convertRgbToXyY(r, g, b, SUPPORTED_COLOR_SPACES[csKey]);
-            const [rr, gg, bb] = convertXyToRgb(x, y, Y, SUPPORTED_COLOR_SPACES[csKey]);
+        const expected = {
+            cie1931: [
+                [0.7347, 0.2653],
+                [0.2738, 0.7174],
+                [0.1666, 0.0089],
+                [1 / 3, 1 / 3],
+            ],
+            philipsHue: [
+                [0.675, 0.322],
+                [0.4091, 0.518],
+                [0.167, 0.04],
+                [1 / 3, 1 / 3],
+            ],
+            philipsLivingColors: [
+                [0.704, 0.296],
+                [0.2151, 0.7106],
+                [0.138, 0.08],
+                [1 / 3, 1 / 3],
+            ],
+        } as const;
 
-            expectVectorCloseTo([rr, gg, bb], [r, g, b], 0);
-            expect(Number.isFinite(x)).toBe(true);
-            expect(Number.isFinite(y)).toBe(true);
+        let i = 0;
+
+        for (const primary of primaries) {
+            for (const [key, gamut] of Object.entries(SUPPORTED_GAMUTS)) {
+                const xyY = convertRgbToXyY(...primary.rgb, gamut);
+                const [expectedX, expectedY] = expected[key as keyof typeof expected][i];
+
+                expect(xyY[0]).toBeCloseTo(expectedX, 3);
+                expect(xyY[1]).toBeCloseTo(expectedY, 3);
+
+                const roundTrip = convertXyToRgb(xyY[0], xyY[1], xyY[2], gamut);
+                expect(roundTrip[0]).toBeCloseTo(primary.rgb[0], 1);
+                expect(roundTrip[1]).toBeCloseTo(primary.rgb[1], 1);
+                expect(roundTrip[2]).toBeCloseTo(primary.rgb[2], 1);
+            }
+
+            i++;
         }
-    };
+    });
 
-    const assertReferences = (csKey: keyof typeof SUPPORTED_COLOR_SPACES, refs: Record<string, [number, number, number]>) => {
-        const cs = SUPPORTED_COLOR_SPACES[csKey];
-        expectVectorCloseTo(convertRgbToXyY(255, 0, 0, cs), refs.red, 3);
-        expectVectorCloseTo(convertRgbToXyY(0, 255, 0, cs), refs.green, 3);
-        expectVectorCloseTo(convertRgbToXyY(0, 0, 255, cs), refs.blue, 3);
-        expectVectorCloseTo(convertRgbToXyY(255, 255, 255, cs), refs.white, 3);
-    };
+    it("matches reference xy for verified random vectors", () => {
+        const vectors: Vector3[] = [
+            [12, 200, 45],
+            [210, 120, 45],
+        ];
 
-    it("converts rgb to hex and back without losing channel values", () => {
-        const rgb = [17, 34, 51] as const;
+        const expected: Record<keyof typeof SUPPORTED_GAMUTS, Array<Vector3>> = {
+            cie1931: [
+                [0.26650550128336625, 0.5721749788539626, 0.6473982876227985],
+                [0.4518410517002019, 0.40951075744006393, 0.5298799161758426],
+            ],
+            philipsHue: [
+                [0.40254161298617874, 0.5046802767838672, 0.5263709717356333],
+                [0.44893661068959984, 0.4467925096144207, 0.2021762870257196],
+            ],
+            philipsLivingColors: [
+                [0.21369420643415807, 0.6721442878940195, 0.3696838603284343],
+                [0.5775004013467272, 0.37559571854458723, 0.2959061674822272],
+            ],
+        };
+
+        let i = 0;
+
+        for (const vector of vectors) {
+            for (const [key, gamut] of Object.entries(SUPPORTED_GAMUTS)) {
+                const actual = convertRgbToXyY(...vector, gamut);
+                const [expectedX, expectedY, expectedL] = expected[key as keyof typeof expected][i];
+
+                expect(actual[0]).toBeCloseTo(expectedX, 6);
+                expect(actual[1]).toBeCloseTo(expectedY, 6);
+                expect(actual[2]).toBeCloseTo(expectedL, 6);
+
+                const back = convertXyToRgb(actual[0], actual[1], actual[2], gamut);
+                expect(back[0]).toBeCloseTo(vector[0], 1);
+                expect(back[1]).toBeCloseTo(vector[1], 1);
+                expect(back[2]).toBeCloseTo(vector[2], 1);
+            }
+
+            i++;
+        }
+    });
+
+    it("handles xy luminance caching and fallback", () => {
+        const gamut = SUPPORTED_GAMUTS.cie1931;
+        const explicitY = 0.42;
+        const withCachedY = convertToColor({ x: gamut.white[0], y: gamut.white[1], Y: explicitY }, "color_xy", gamut);
+        expect(withCachedY.color_xy[2]).toBeCloseTo(explicitY, 6);
+
+        const zeroY = convertToColor({ x: 0.4, y: 0 }, "color_xy", gamut);
+        expect(zeroY.color_rgb).toEqual([255, 255, 255]);
+
+        const computedY = convertToColor({ x: 0.4, y: 0.3 }, "color_xy", gamut);
+        expect(computedY.color_xy[2]).toBeGreaterThan(0);
+    });
+
+    it("handles HSV caching and conversion", () => {
+        const gamut = SUPPORTED_GAMUTS.cie1931;
+        const cached = convertToColor({ hue: 120, saturation: 70, value: 25 }, "color_hs", gamut);
+        expect(cached.color_hs[2]).toBe(25);
+
+        const hsvRoundTrip = convertRgbToHsv(255, 255, 255);
+        expect(hsvRoundTrip).toEqual([0, 0, 100]);
+
+        const rgbRoundTrip = convertHsvToRgb(240, 100, 50);
+        expect(rgbRoundTrip[0]).toBeCloseTo(0, 3);
+        expect(rgbRoundTrip[1]).toBeCloseTo(0, 3);
+        expect(rgbRoundTrip[2]).toBeCloseTo(127.5, 3);
+    });
+
+    it("round-trips RGB and hex conversions", () => {
+        const rgb: Vector3 = [10.4, 20.5, 30.6];
         const hex = convertRgbToHex(...rgb);
-        const back = convertHexToRgb(hex);
-
-        expect(hex).toBe("#112233");
-        expectVectorCloseTo(back, rgb, 5);
+        expect(hex).toBe("#0a151f");
+        expect(convertHexToRgb(hex)).toEqual([10, 21, 31]);
     });
 
-    it("round-trips rgb -> hsv -> rgb within tolerance", () => {
-        const rgb = [12, 200, 128] as const;
-        const hsv = convertRgbToHsv(...rgb);
-        const back = convertHsvToRgb(...hsv);
+    it("supports convertFromColor mappings", () => {
+        const gamut = SUPPORTED_GAMUTS.cie1931;
+        const color = convertToColor({ r: 10, g: 20, b: 30 }, "color_rgb", gamut);
 
-        expectVectorCloseTo(back, rgb, 0);
-        expect(hsv[0]).toBeGreaterThanOrEqual(0);
-        expect(hsv[0]).toBeLessThanOrEqual(360);
+        expect(convertFromColor(color, "color_xy")).toEqual({ x: color.color_xy[0], y: color.color_xy[1] });
+        expect(convertFromColor(color, "color_hs")).toEqual({ hue: color.color_hs[0], saturation: color.color_hs[1] });
+        expect(convertFromColor(color, "color_rgb")).toEqual({ r: 10, g: 20, b: 30 });
+        expect(convertFromColor(color, "hex")).toEqual({ hex: color.hex });
     });
 
-    it("round-trips primaries across all color spaces", () => {
-        roundTripPrimaries("sRgb");
-        roundTripPrimaries("rec709");
-        roundTripPrimaries("rec2020");
-        roundTripPrimaries("rec2100pq");
-        roundTripPrimaries("rec2100hlg");
+    it("formats values as strings", () => {
+        const sample: ZigbeeColor = {
+            color_xy: [0.1234, 0.5678, 0.9],
+            color_hs: [180.1234, 50.5678, 75.9012],
+            color_rgb: [10.4, 20.5, 30.6],
+            hex: "#0a141f",
+        } as never;
+
+        expect(convertXyYToString(sample.color_xy)).toBe("0.123, 0.568, 0.900");
+        expect(convertHsvToString(sample.color_hs)).toBe("180.12°, 50.57%, 75.90%");
+        expect(convertRgbToString(sample.color_rgb)).toBe("10, 21, 31");
+        expect(convertHexToString(sample.hex)).toBe("#0a141f");
+        expect(convertColorToString(sample)).toEqual({
+            color_xy: "0.123, 0.568, 0.900",
+            color_hs: "180.12°, 50.57%, 75.90%",
+            color_rgb: "10, 21, 31",
+            hex: "#0a141f",
+        });
     });
 
-    it("matches sRGB xyY reference values for primaries and white", () => {
-        assertReferences("sRgb", SRGB_REFERENCE_XYY);
+    it("parses strings to numeric payloads and caches format-specific values", () => {
+        const gamut = SUPPORTED_GAMUTS.philipsHue;
+        expect(convertStringToXyY("x=0.5 y=0.25 Y=0.1")).toEqual([0.5, 0.25, 0.1]);
+        expect(convertStringToHsv("-10, 200, 150")).toEqual([0, 100, 100]);
+        expect(convertStringToRgb("-1, 256, 42")).toEqual([0, 255, 42]);
+
+        const fromStringXy = convertStringToColor("0.25, 0.4", "color_xy", gamut);
+        expect(fromStringXy.color_xy[0]).toBeCloseTo(0.25, 6);
+        expect(fromStringXy.color_xy[1]).toBeCloseTo(0.4, 6);
+
+        const fromStringHs = convertStringToColor("180, 20", "color_hs", gamut);
+        expect(fromStringHs.color_hs[0]).toBe(180);
+        expect(fromStringHs.color_hs[1]).toBe(20);
+
+        const fromStringRgb = convertStringToColor("10,20,30", "color_rgb", gamut);
+        expect(fromStringRgb.color_rgb).toEqual([10, 20, 30]);
+
+        const fromHex = convertStringToColor("#AaBbCc", "hex", gamut);
+        expect(fromHex.color_rgb).toEqual([170, 187, 204]);
     });
 
-    it("matches Rec.709 xyY reference values for primaries and white", () => {
-        assertReferences("rec709", REC709_REFERENCE_XYY);
-    });
+    it("covers default paths and invalid inputs", () => {
+        const gamut = SUPPORTED_GAMUTS.cie1931;
+        const defaultColor = convertToColor({} as never, "invalid" as ColorFormat, gamut);
+        expect(defaultColor.color_rgb).toEqual([255, 255, 255]);
 
-    it("matches Rec.2020 xyY reference values for primaries and white", () => {
-        assertReferences("rec2020", REC2020_REFERENCE_XYY);
-    });
+        const negativeXy = convertToColor({ x: 0.2, y: -0.5 }, "color_xy", gamut);
+        expect(negativeXy.color_rgb).toEqual([0, 0, 0]);
 
-    it("matches Rec.2100 PQ xyY reference values for primaries and white", () => {
-        assertReferences("rec2100pq", REC2100_REFERENCE_XYY);
-    });
+        const negativeY = convertXyToRgb(0.2, -0.1, 1, gamut);
+        expect(negativeY).toEqual([0, 0, 0]);
 
-    it("matches Rec.2100 HLG xyY reference values for primaries and white", () => {
-        assertReferences("rec2100hlg", REC2100_REFERENCE_XYY);
-    });
+        const nanY = convertXyToRgb(0.2, Number.NaN, Number.NaN, gamut);
+        expect(nanY).toEqual([0, 0, 0]);
 
-    it("distinguishes transfer curves at mid-gray (sRGB vs Rec.709)", () => {
-        const srgbMid = convertRgbToXyY(128, 128, 128, SUPPORTED_COLOR_SPACES.sRgb);
-        const rec709Mid = convertRgbToXyY(128, 128, 128, SUPPORTED_COLOR_SPACES.rec709);
+        const nonFiniteMax = convertXyToRgb(Number.NaN, 0.4, undefined, gamut);
+        expect(nonFiniteMax).toEqual([0, 0, 0]);
 
-        // Chromaticity should match (same primaries), luminance should differ because of transfer curves.
-        expectVectorCloseTo([srgbMid[0], srgbMid[1]], [rec709Mid[0], rec709Mid[1]], 3);
-        expect(rec709Mid[2]).toBeGreaterThan(srgbMid[2]);
-        expect(rec709Mid[2] - srgbMid[2]).toBeGreaterThan(0.02);
-    });
+        const normalizedY = convertXyToRgb(gamut.white[0], gamut.white[1], undefined, gamut);
+        expect(normalizedY[0]).toBeGreaterThan(0);
+        expect(normalizedY[1]).toBeGreaterThan(0);
+        expect(normalizedY[2]).toBeGreaterThan(0);
 
-    it("distinguishes transfer curves in the toe region (sRGB vs Rec.709)", () => {
-        const srgbDark = convertRgbToXyY(16, 16, 16, SUPPORTED_COLOR_SPACES.sRgb);
-        const rec709Dark = convertRgbToXyY(16, 16, 16, SUPPORTED_COLOR_SPACES.rec709);
-
-        expectVectorCloseTo([srgbDark[0], srgbDark[1]], [rec709Dark[0], rec709Dark[1]], 3);
-        expect(rec709Dark[2]).toBeGreaterThan(srgbDark[2]);
-        expect(rec709Dark[2] - srgbDark[2]).toBeGreaterThan(0.001);
-    });
-
-    it("orders luminance across all transfer curves at mid-gray", () => {
-        const code = 128;
-        const spaces = ["rec2020", "rec709", "sRgb", "rec2100hlg", "rec2100pq"] as const;
-        const lumas = spaces.map((key) => convertRgbToXyY(code, code, code, SUPPORTED_COLOR_SPACES[key])[2]);
-
-        expect(lumas[0]).toBeGreaterThan(lumas[1]); // rec2020 > rec709
-        expect(lumas[1]).toBeGreaterThan(lumas[2]); // rec709 > sRgb
-        expect(lumas[2]).toBeGreaterThan(lumas[3]); // sRgb > hlg
-        expect(lumas[3]).toBeGreaterThan(lumas[4]); // hlg > pq
-    });
-
-    it("orders luminance across all transfer curves in the toe", () => {
-        const code = 16;
-        const spaces = ["rec2020", "rec709", "sRgb", "rec2100hlg", "rec2100pq"] as const;
-        const lumas = spaces.map((key) => convertRgbToXyY(code, code, code, SUPPORTED_COLOR_SPACES[key])[2]);
-
-        expect(Math.abs(lumas[0] - lumas[1])).toBeLessThan(1e-6); // rec2020 ~ rec709
-        expect(lumas[1]).toBeGreaterThan(lumas[2]); // rec709 > sRgb
-        expect(lumas[2]).toBeGreaterThan(lumas[3]); // sRgb > hlg
-        expect(lumas[3]).toBeGreaterThan(lumas[4]); // hlg > pq
-    });
-
-    it("returns D65 chromaticity for black while keeping luminance zero", () => {
-        const [x, y, Y] = convertRgbToXyY(0, 0, 0, SUPPORTED_COLOR_SPACES.rec2020);
-
-        expect(Y).toBe(0);
-        expect(x).toBeCloseTo(0.313, 3);
-        expect(y).toBeCloseTo(0.329, 3);
-    });
-
-    it("uses proper PQ transfer for Rec.2100 PQ", () => {
-        const pq = SUPPORTED_COLOR_SPACES.rec2100pq;
-        const xy = convertRgbToXyY(255, 0, 0, pq);
-        const rgbBack = convertXyToRgb(xy[0], xy[1], xy[2], pq);
-
-        expectVectorCloseTo(rgbBack, [255, 0, 0], 0);
-        expectVectorCloseTo([xy[0], xy[1]], [0.708, 0.292], 3);
-    });
-
-    it("uses proper HLG transfer for Rec.2100 HLG", () => {
-        const hlg = SUPPORTED_COLOR_SPACES.rec2100hlg;
-        const xy = convertRgbToXyY(255, 0, 0, hlg);
-        const rgbBack = convertXyToRgb(xy[0], xy[1], xy[2], hlg);
-
-        expectVectorCloseTo(rgbBack, [255, 0, 0], 0);
-        expectVectorCloseTo([xy[0], xy[1]], [0.708, 0.292], 3);
-    });
-
-    it("clamps parsed hsv strings to valid bounds", () => {
-        const color = convertStringToColor("400°, -10%, 250%", "color_hs", SUPPORTED_COLOR_SPACES.rec2020);
-
-        expectVectorCloseTo(color.color_hs, [360, 0, 100], 5);
-        expect(color.hex.startsWith("#")).toBe(true);
-    });
-
-    it("uses full brightness when converting from hs input", () => {
-        const hue = 120;
-        const saturation = 50;
-        const color = convertToColor({ hue, saturation }, "color_hs", SUPPORTED_COLOR_SPACES.rec2020);
-        const expectedRgb = convertHsvToRgb(hue, saturation, 100);
-
-        expect(color.color_hs[2]).toBe(100);
-        expectVectorCloseTo(color.color_rgb, expectedRgb, 0);
-    });
-
-    it("converts xyY reference primaries back to rgb using provided luminance", () => {
-        const red = convertXyToRgb(...SRGB_REFERENCE_XYY.red, SUPPORTED_COLOR_SPACES.sRgb);
-        const green = convertXyToRgb(...SRGB_REFERENCE_XYY.green, SUPPORTED_COLOR_SPACES.sRgb);
-        const blue = convertXyToRgb(...SRGB_REFERENCE_XYY.blue, SUPPORTED_COLOR_SPACES.sRgb);
-
-        expectVectorCloseTo(red, [255, 0, 0], 0);
-        expectVectorCloseTo(green, [0, 255, 0], 0);
-        expectVectorCloseTo(blue, [0, 0, 255], 0);
-    });
-
-    it("parses xyY strings via convertStringToXyY", () => {
-        expectVectorCloseTo(convertStringToXyY("0.1, 0.2, 0.3"), [0.1, 0.2, 0.3], 5);
-    });
-
-    it("parses hsv and rgb strings via convertString helpers", () => {
-        expectVectorCloseTo(convertStringToHsv("720, -10, 150"), [360, 0, 100], 5);
-        expectVectorCloseTo(convertStringToRgb("-5, 128, 999"), [0, 128, 255], 5);
-    });
-
-    it("handles invalid chromaticity input safely", () => {
-        expectVectorCloseTo(convertXyToRgb(0.2, 0, undefined, SUPPORTED_COLOR_SPACES.rec2020), [0, 0, 0], 5);
-    });
-
-    it("returns zero for negative or zero y chromaticity", () => {
-        expectVectorCloseTo(convertXyToRgb(0.2, -0.1, undefined, SUPPORTED_COLOR_SPACES.rec2020), [0, 0, 0], 5);
-        expectVectorCloseTo(convertXyToRgb(0.2, 0, undefined, SUPPORTED_COLOR_SPACES.rec709), [0, 0, 0], 5);
-    });
-
-    it("returns zero when maximum luminance search fails", () => {
-        // Invalid chromaticity (NaN) forces findMaximumY to hit a non-finite value and bail out
-        expectVectorCloseTo(convertXyToRgb(Number.NaN, Number.NaN, undefined, SUPPORTED_COLOR_SPACES.rec709), [0, 0, 0], 5);
-    });
-
-    it("parses color_xy with missing luminance and zero y using fallback", () => {
-        const color = convertToColor({ x: 0.1, y: 0 }, "color_xy", SUPPORTED_COLOR_SPACES.rec709);
-
-        expect(color.color_xy[1]).toBeCloseTo(0, 5); // stored y remains zero
-        expectVectorCloseTo(color.color_rgb, [255, 255, 255], 0); // white fallback for y=0
-        expect(color.color_xy[0]).toBeCloseTo(0.1, 3);
-        expect(color.hex).toBe("#ffffff");
-    });
-
-    it("respects provided luminance in color_xy", () => {
-        const Y = 0.5;
-        const color = convertToColor({ x: 0.64, y: 0.33, Y }, "color_xy", SUPPORTED_COLOR_SPACES.rec709);
-
-        expect(color.color_xy[2]).toBeCloseTo(Y, 5);
-    });
-
-    it("uses computed luminance when Y is omitted for valid chromaticity", () => {
-        const color = convertToColor({ x: 0.64, y: 0.33 }, "color_xy", SUPPORTED_COLOR_SPACES.rec709);
-
-        expectVectorCloseTo(convertXyToRgb(color.color_xy[0], color.color_xy[1], color.color_xy[2], SUPPORTED_COLOR_SPACES.rec709), [255, 0, 0], 0);
-    });
-
-    it("parses color_xy strings through convertStringToColor", () => {
-        const color = convertStringToColor("0.64, 0.33, 0.5", "color_xy", SUPPORTED_COLOR_SPACES.rec709);
-
-        expectVectorCloseTo(convertXyToRgb(color.color_xy[0], color.color_xy[1], color.color_xy[2], SUPPORTED_COLOR_SPACES.rec709), [255, 0, 0], 0);
-    });
-
-    it("converts hex input through convertToColor", () => {
-        const color = convertToColor({ hex: "#0f0f0f" }, "hex", SUPPORTED_COLOR_SPACES.sRgb);
-
-        expect(color.color_rgb[0]).toBe(15);
-        expect(color.hex).toBe("#0f0f0f");
-    });
-
-    it("parses hex input through convertStringToColor", () => {
-        const color = convertStringToColor("#123abc", "hex", SUPPORTED_COLOR_SPACES.sRgb);
-
-        expect(color.hex).toBe("#123abc");
-        expectVectorCloseTo(color.color_rgb, convertHexToRgb("#123abc"), 0);
-    });
-
-    it("falls back to default when format is unknown", () => {
-        const color = convertToColor({} as AnyColor, "color_xyz" as ColorFormat, SUPPORTED_COLOR_SPACES.rec709);
-
-        expectVectorCloseTo(color.color_rgb, [255, 255, 255], 0);
-        expect(color.hex).toBe("#ffffff");
-    });
-
-    it("handles PQ transfer edge cases", () => {
-        const pq = SUPPORTED_COLOR_SPACES.rec2100pq.transfer;
-
-        expect(pq.decode(1e9)).toBe(0); // denominator guard
-        expect(pq.decode(Number.NaN)).toBe(0); // non-finite ratio guard
-        expect(pq.encode(-1)).toBe(pq.encode(0)); // negative linear clamps to zero
-    });
-
-    it("formats color strings consistently", () => {
-        const color = convertToColor({ r: 10, g: 20, b: 30 }, "color_rgb", SUPPORTED_COLOR_SPACES.rec2020);
-        const formatted = convertColorToString(color);
-
-        expect(formatted.hex).toBe("#0a141e");
-        expect(formatted.color_rgb).toBe("10, 20, 30");
-        expect(formatted.color_hs).toContain("°");
-        expect(formatted.color_xy.split(",").length).toBe(3);
-    });
-
-    it("parses and clamps rgb strings with out-of-range values", () => {
-        const color = convertStringToColor("-20, 260, 999", "color_rgb", SUPPORTED_COLOR_SPACES.rec2020);
-
-        expectVectorCloseTo(color.color_rgb, [0, 255, 255], 0);
-    });
-
-    it("handles hex conversion case-insensitively", () => {
-        const lower = convertHexToRgb("#ff00ff");
-        const upper = convertHexToRgb("#FF00FF");
-
-        expectVectorCloseTo(lower, upper, 0);
-        expect(convertRgbToHex(...upper)).toBe("#ff00ff");
-    });
-
-    it("returns canonical hsv values for basic rgb colors", () => {
-        expectVectorCloseTo(convertRgbToHsv(255, 0, 0), [0, 100, 100], 0);
-        expectVectorCloseTo(convertRgbToHsv(0, 255, 0), [120, 100, 100], 0);
-        expectVectorCloseTo(convertRgbToHsv(0, 0, 255), [240, 100, 100], 0);
-        expectVectorCloseTo(convertRgbToHsv(255, 255, 255), [0, 0, 100], 0);
-        expectVectorCloseTo(convertRgbToHsv(0, 0, 0), [0, 0, 0], 0);
-    });
-
-    it("returns canonical rgb values for basic hsv colors", () => {
-        expectVectorCloseTo(convertHsvToRgb(0, 100, 100), [255, 0, 0], 0);
-        expectVectorCloseTo(convertHsvToRgb(120, 100, 100), [0, 255, 0], 0);
-        expectVectorCloseTo(convertHsvToRgb(240, 100, 100), [0, 0, 255], 0);
-        expectVectorCloseTo(convertHsvToRgb(0, 0, 100), [255, 255, 255], 0);
-        expectVectorCloseTo(convertHsvToRgb(42, 0, 0), [0, 0, 0], 0);
-    });
-
-    it("converts through zigbee color shapes with minimal payloads", () => {
-        const rgbColor = convertToColor({ r: 1, g: 2, b: 3 }, "color_rgb", SUPPORTED_COLOR_SPACES.rec2020);
-        const rgbPayload = convertFromColor(rgbColor, "color_rgb");
-        const xyPayload = convertFromColor(rgbColor, "color_xy");
-        const hsPayload = convertFromColor(rgbColor, "color_hs");
-        const hexPayload = convertFromColor(rgbColor, "hex");
-
-        expect(rgbPayload).toEqual({ r: 1, g: 2, b: 3 });
-        expect(xyPayload).toEqual({ x: rgbColor.color_xy[0], y: rgbColor.color_xy[1] });
-        expect(hsPayload).toEqual({ hue: rgbColor.color_hs[0], saturation: rgbColor.color_hs[1] });
-        expect(hexPayload).toEqual({ hex: rgbColor.hex });
+        const blackXy = convertRgbToXyY(0, 0, 0, gamut);
+        expect(blackXy[2]).toBe(0);
     });
 });
