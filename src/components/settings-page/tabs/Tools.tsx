@@ -22,9 +22,11 @@ export default function Tools({ sourceIdx }: ToolsProps) {
     const { t } = useTranslation(["settings", "common"]);
 
     const downloadBackup = useCallback((): void => {
-        const backupFileName = `z2m-backup.${bridgeInfo.version}.${Date.now()}.zip`;
+        if (backup) {
+            const backupFileName = `z2m-backup.${bridgeInfo.version}.${Date.now()}.zip`;
 
-        saveAs(`data:application/zip;base64,${backup}`, backupFileName);
+            saveAs(`data:application/zip;base64,${backup}`, backupFileName);
+        }
     }, [backup, bridgeInfo.version]);
 
     return (

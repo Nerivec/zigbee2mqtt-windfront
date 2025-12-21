@@ -587,7 +587,7 @@ class WebSocketManager {
             case "bridge/response/backup": {
                 const backupData = msg.payload as Zigbee2MQTTResponse<typeof msg.topic>;
 
-                store.setBackup(conn.idx, backupData.data.zip);
+                store.setBackup(conn.idx, backupData.status === "ok" ? backupData.data.zip : "");
 
                 break;
             }
