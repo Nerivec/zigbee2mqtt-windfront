@@ -1,0 +1,1 @@
+import{r as t,j as r}from"./index-CIcd--T8.js";function n({indeterminate:e,...o}){const c=t.useRef(null);return t.useEffect(()=>{typeof e=="boolean"&&(c.current.indeterminate=!o.checked&&e)},[c,e]),r.jsx("input",{ref:c,type:"checkbox",className:"checkbox",...o})}export{n as I};
