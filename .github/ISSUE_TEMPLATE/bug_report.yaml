@@ -5,8 +5,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        ### Before submitting any bug report, make sure that you can reproduce the issue with latest browsers versions and on latest Zigbee2MQTT dev branch
-        https://www.zigbee2mqtt.io/advanced/more/switch-to-dev-branch.html
+        ### Before submitting any bug report, make sure that you can reproduce the issue with latest browsers versions and on latest demo
+        https://nerivec.github.io/zigbee2mqtt-windfront/iframe.html?viewMode=story&id=app--single-instance
         Thanks for taking the time to fill out this bug report!
   - type: textarea
     id: describe
