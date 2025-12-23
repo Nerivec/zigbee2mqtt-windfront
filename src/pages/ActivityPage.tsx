@@ -103,7 +103,7 @@ export default function ActivityPage(): JSX.Element {
                             <div className="size-10">
                                 <DeviceImage device={entry.device} disabled={entry.device.disabled} noIndicator />
                             </div>
-                            <div>
+                            <div className="min-w-0">
                                 <div className="min-w-0">
                                     <SourceDot idx={entry.sourceIdx} autoHide namePostfix=" –" className="me-1" />
                                     <Link
