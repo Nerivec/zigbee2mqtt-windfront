@@ -81,7 +81,7 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
     }, []);
 
     return (
-        <section className="card bg-base-100 card-border border-base-200 shadow-sm">
+        <section className="card bg-base-200 card-border border-base-200 shadow-sm">
             <div className="card-body p-3">
                 <div className="card-title flex flex-wrap gap-2 items-center justify-between">
                     {t(($) => $.endpoint)} {endpointId}
