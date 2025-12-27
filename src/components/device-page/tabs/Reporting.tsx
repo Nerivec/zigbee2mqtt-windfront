@@ -44,6 +44,8 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
         onOpenChange: setIsAddOpen,
         placement: "bottom-end",
         middleware: [offset(8), shift({ padding: 16, crossAxis: true }), arrow({ element: arrowRef })],
+        strategy: "fixed",
+        transform: false,
     });
     const click = useClick(context, { event: "click" });
     const dismiss = useDismiss(context);
