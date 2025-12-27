@@ -12,6 +12,7 @@ import {
     faList,
     faMobileVibrate,
     faPlug,
+    faQuestionCircle,
     faTableCellsLarge,
     faTableColumns,
     faWaveSquare,
@@ -19,12 +20,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type JSX, memo, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NavLink, type NavLinkRenderProps } from "react-router";
+import { Link, NavLink, type NavLinkRenderProps } from "react-router";
 import store2 from "store2";
 import LanguageSwitcher from "../components/LanguageSwitcher.js";
 import Notifications from "../components/Notifications.js";
 import PermitJoinButton from "../components/PermitJoinButton.js";
 import ThemeSwitcher from "../components/ThemeSwitcher.js";
+import { HELP_URL } from "../consts.js";
 import { SIDEBAR_COLLAPSED_KEY } from "../localStoreConsts.js";
 import NavBar from "./NavBar.js";
 import { NavBarProvider } from "./NavBarContext.js";
@@ -147,6 +149,9 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                             <PermitJoinButton sidebarCollapsed={sidebarCollapsed} />
 
                             <div className={`menu w-full p-2 gap-2 flex-row justify-center p-2 gap-2 ${sidebarCollapsed ? "hidden lg:hidden" : ""}`}>
+                                <Link to={HELP_URL} className="btn btn-outline btn-primary" target="_blank" rel="noopener noreferrer">
+                                    <FontAwesomeIcon icon={faQuestionCircle} />
+                                </Link>
                                 <LanguageSwitcher />
                                 <ThemeSwitcher />
                             </div>
