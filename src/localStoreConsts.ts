@@ -8,7 +8,8 @@ export const THEME_KEY = "theme";
 export const SIDEBAR_COLLAPSED_KEY = "windfront-sidebar-collapsed";
 export const PERMIT_JOIN_TIME_KEY = "permit-join-time";
 export const MAX_ON_SCREEN_NOTIFICATIONS_KEY = "max-on-screen-notifications";
-export const HIDE_STATIC_INFO_ALERTS = "hide-static-info-alerts";
+export const HIDE_STATIC_INFO_ALERTS_KEY = "hide-static-info-alerts";
+export const DEFAULT_ROUTE_KEY = "default-route";
 
 export const TABLE_FILTERS_KEY = "table-filters";
 export const TABLE_COLUMNS_KEY = "table-columns";

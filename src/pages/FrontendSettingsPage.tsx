@@ -4,11 +4,13 @@ import store2 from "store2";
 import ConfirmButton from "../components/ConfirmButton.js";
 import CheckboxField from "../components/form-fields/CheckboxField.js";
 import NumberField from "../components/form-fields/NumberField.js";
+import SelectField from "../components/form-fields/SelectField.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
 import {
     AUTH_FLAG_KEY,
     AUTH_TOKEN_KEY,
-    HIDE_STATIC_INFO_ALERTS,
+    DEFAULT_ROUTE_KEY,
+    HIDE_STATIC_INFO_ALERTS_KEY,
     HOME_QUICK_FILTER_KEY,
     HOME_SHOW_ACTIVITY_KEY,
     HOME_SHOW_GROUP_SCENES_KEY,
@@ -29,7 +31,8 @@ export default function FrontendSettingsPage() {
     const { t } = useTranslation(["settings", "navbar", "network", "common"]);
     const [permitJoinTime, setPermitJoinTime] = useState<number>(store2.get(PERMIT_JOIN_TIME_KEY, 254));
     const [maxOnScreenNotifications, setMaxOnScreenNotifications] = useState<number>(store2.get(MAX_ON_SCREEN_NOTIFICATIONS_KEY, 3));
-    const [hideStaticInfoAlerts, setHideStaticInfoAlerts] = useState<boolean>(store2.get(HIDE_STATIC_INFO_ALERTS, false));
+    const [defaultPage, setDefaultPage] = useState<string>(store2.get(DEFAULT_ROUTE_KEY, ""));
+    const [hideStaticInfoAlerts, setHideStaticInfoAlerts] = useState<boolean>(store2.get(HIDE_STATIC_INFO_ALERTS_KEY, false));
     const [homeShowActivity, setHomeShowActivity] = useState<boolean>(store2.get(HOME_SHOW_ACTIVITY_KEY, true));
     const [homeShowGroupScenes, setHomeShowGroupScenes] = useState<boolean>(store2.get(HOME_SHOW_GROUP_SCENES_KEY, true));
     const [miShowSourceName, setMiShowSourceName] = useState<boolean>(store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
@@ -43,7 +46,11 @@ export default function FrontendSettingsPage() {
     }, [maxOnScreenNotifications]);
 
     useEffect(() => {
-        store2.set(HIDE_STATIC_INFO_ALERTS, hideStaticInfoAlerts);
+        store2.set(DEFAULT_ROUTE_KEY, defaultPage);
+    }, [defaultPage]);
+
+    useEffect(() => {
+        store2.set(HIDE_STATIC_INFO_ALERTS_KEY, hideStaticInfoAlerts);
     }, [hideStaticInfoAlerts]);
 
     useEffect(() => {
@@ -64,7 +71,7 @@ export default function FrontendSettingsPage() {
         store2.remove(THEME_KEY);
         store2.remove(PERMIT_JOIN_TIME_KEY);
         store2.remove(MAX_ON_SCREEN_NOTIFICATIONS_KEY);
-        store2.remove(HIDE_STATIC_INFO_ALERTS);
+        store2.remove(HIDE_STATIC_INFO_ALERTS_KEY);
         store2.remove(HOME_QUICK_FILTER_KEY);
         store2.remove(HOME_SHOW_ACTIVITY_KEY);
         store2.remove(HOME_SHOW_GROUP_SCENES_KEY);
@@ -159,6 +166,29 @@ export default function FrontendSettingsPage() {
                     initialValue={maxOnScreenNotifications}
                     onSubmit={(value, valid) => valid && value !== "" && setMaxOnScreenNotifications(value)}
                 />
+                <SelectField
+                    name="default_page"
+                    label={t(($) => $.default_page)}
+                    value={defaultPage}
+                    onChange={(e) => {
+                        if (!e.target.validationMessage) {
+                            setDefaultPage(e.target.value);
+                        }
+                    }}
+                >
+                    <option value="">{t(($) => $.home, { ns: "navbar" })}</option>
+                    <option value="/dashboard">{t(($) => $.dashboard, { ns: "navbar" })}</option>
+                    <option value="/devices">{t(($) => $.devices, { ns: "navbar" })}</option>
+                    <option value="/groups">{t(($) => $.groups, { ns: "navbar" })}</option>
+                    <option value="/reporting">{t(($) => $.reporting, { ns: "navbar" })}</option>
+                    <option value="/bindings">{t(($) => $.bindings, { ns: "navbar" })}</option>
+                    <option value="/ota">{t(($) => $.ota, { ns: "navbar" })}</option>
+                    <option value="/touchlink">{t(($) => $.touchlink, { ns: "navbar" })}</option>
+                    <option value="/network">{t(($) => $.network, { ns: "navbar" })}</option>
+                    <option value="/logs">{t(($) => $.logs, { ns: "navbar" })}</option>
+                    <option value="/activity">{t(($) => $.activity, { ns: "navbar" })}</option>
+                    <option value="/settings">{t(($) => $.settings, { ns: "navbar" })}</option>
+                </SelectField>
                 <CheckboxField
                     name="hide_static_info_alerts"
                     label={t(($) => $.hide_static_info_alerts, { ns: "common" })}
