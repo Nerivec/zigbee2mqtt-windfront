@@ -270,6 +270,15 @@ export default function ReportingPage(): JSX.Element {
                 minSize: 150,
                 header: t(($) => $.cluster),
                 accessorFn: ({ rule }) => rule.cluster,
+                cell: ({
+                    row: {
+                        original: { rule },
+                    },
+                }) => (
+                    <div className="min-w-0" title={`${rule.cluster}`}>
+                        <div className="truncate">{rule.cluster}</div>
+                    </div>
+                ),
                 filterFn: "includesString",
                 meta: { filterVariant: "text", textFaceted: true },
             },
