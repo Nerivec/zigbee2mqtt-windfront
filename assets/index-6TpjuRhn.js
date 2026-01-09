@@ -1,0 +1,1 @@
+import{d3 as t}from"./index-BMhnA8QP.js";const n=""+new URL("generic-zigbee-device-Dj-9sUqG.png",import.meta.url).href,s="https://www.zigbee2mqtt.io/images/devices/",c=i=>{const e=t(i.definition?.model);return e==="NA"?n:`${s}${e}.png`};export{n as a,c as g};
