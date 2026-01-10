@@ -162,7 +162,7 @@ describe("color conversions", () => {
         const color = convertToColor({ r: 10, g: 20, b: 30 }, "color_rgb", gamut);
 
         expect(convertFromColor(color, "color_xy")).toEqual({ x: color.color_xy[0], y: color.color_xy[1] });
-        expect(convertFromColor(color, "color_hs")).toEqual({ hue: color.color_hs[0], saturation: color.color_hs[1], value: color.color_hs[2] });
+        expect(convertFromColor(color, "color_hs")).toEqual({ hue: color.color_hs[0], saturation: color.color_hs[1] });
         expect(convertFromColor(color, "color_rgb")).toEqual({ r: 10, g: 20, b: 30 });
         expect(convertFromColor(color, "hex")).toEqual({ hex: color.hex });
     });
