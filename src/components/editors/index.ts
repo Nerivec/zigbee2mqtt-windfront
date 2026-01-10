@@ -389,7 +389,7 @@ export const convertFromColor = (source: ZigbeeColor, targetFormat: ColorFormat)
         }
 
         case "color_hs": {
-            return { hue: source.color_hs[0], saturation: source.color_hs[1] };
+            return { hue: source.color_hs[0], saturation: source.color_hs[1], value: source.color_hs[2] };
         }
 
         case "color_rgb": {
