@@ -167,6 +167,17 @@ describe("color conversions", () => {
         expect(convertFromColor(color, "hex")).toEqual({ hex: color.hex });
     });
 
+    it("supports convertFromColor mappings", () => {
+        const gamut = SUPPORTED_GAMUTS.cie1931;
+        const color = convertToColor({ r: 60, g: 138, b: 164 }, "color_rgb", gamut);
+
+        console.log(convertFromColor(color, "color_xy"));
+        expect(convertFromColor(color, "color_xy")).toEqual({ x: color.color_xy[0], y: color.color_xy[1] });
+        expect(convertFromColor(color, "color_hs")).toEqual({ hue: color.color_hs[0], saturation: color.color_hs[1] });
+        expect(convertFromColor(color, "color_rgb")).toEqual({ r: 60, g: 138, b: 164 });
+        expect(convertFromColor(color, "hex")).toEqual({ hex: color.hex });
+    });
+
     it("formats values as strings", () => {
         const sample: ZigbeeColor = {
             color_xy: [0.1234, 0.5678, 0.9],

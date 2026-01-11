@@ -160,7 +160,7 @@ export const SUPPORTED_GAMUTS = {
 const gamutMatrices: Record<string, ReturnType<typeof buildMatrices>> = {};
 
 for (const key in SUPPORTED_GAMUTS) {
-    const entry = SUPPORTED_GAMUTS[key];
+    const entry = SUPPORTED_GAMUTS[key as keyof typeof SUPPORTED_GAMUTS];
 
     gamutMatrices[entry.name] = buildMatrices(entry);
 }
@@ -274,6 +274,7 @@ export const convertXyToRgb = (x: number, y: number, Y: number | undefined, gamu
     return [clamp(r * 255, 0, 255), clamp(g * 255, 0, 255), clamp(b * 255, 0, 255)];
 };
 
+/** Expects RGB in [0..255] range */
 export const convertRgbToHsv = (r: number, g: number, b: number): Vector3 => {
     r /= 255;
     g /= 255;
@@ -289,6 +290,7 @@ export const convertRgbToHsv = (r: number, g: number, b: number): Vector3 => {
     return [clamp(h, 0, 360), clamp(s, 0, 100), clamp(v, 0, 100)];
 };
 
+/** Returns RGB in [0..255] range */
 export const convertHsvToRgb = (h: number, s: number, v: number): Vector3 => {
     s /= 100;
     v /= 100;
@@ -307,16 +309,16 @@ export const convertHsvToRgb = (h: number, s: number, v: number): Vector3 => {
     return [clamp(r, 0, 255), clamp(g, 0, 255), clamp(b, 0, 255)];
 };
 
+/** Expects RGB in [0..255] range */
 export const convertRgbToHex = (r: number, g: number, b: number): string => {
-    const [rr, gg, bb] = [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0"));
-
-    return `#${rr}${gg}${bb}`;
+    return `#${Math.round(r).toString(16).padStart(2, "0")}${Math.round(g).toString(16).padStart(2, "0")}${Math.round(b).toString(16).padStart(2, "0")}`;
 };
 
+/** Returns RGB in [0..255] range */
 export const convertHexToRgb = (hex: string): Vector3 => {
-    hex = hex.slice(1);
+    const hexNum = Number.parseInt(hex.slice(1), 16);
 
-    return Array.from({ length: 3 }).map((_, i) => Number.parseInt(hex.slice(i * 2, i * 2 + 2), 16)) as Vector3;
+    return [(hexNum >> 16) & 255, (hexNum >> 8) & 255, hexNum & 255];
 };
 
 export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, gamut: Gamut): ZigbeeColor => {
