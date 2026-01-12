@@ -131,3 +131,6 @@ dist
 
 *storybook.log
 storybook-static
+
+# JetBrains IDEs
+.idea
