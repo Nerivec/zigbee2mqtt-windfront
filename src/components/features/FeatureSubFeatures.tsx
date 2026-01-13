@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Zigbee2MQTTDeviceOptions } from "zigbee2mqtt";
 import type { DeviceState, FeatureWithAnySubFeatures } from "../../types.js";
 import Button from "../Button.js";
 import type { ValueWithLabelOrPrimitive } from "../editors/EnumEditor.js";
 import Feature from "./Feature.js";
+import { READ_TIMEOUT_MS } from "./FeatureWrapper.js";
 import { type BaseFeatureProps, getFeatureKey } from "./index.js";
 
 interface FeatureSubFeaturesProps extends Omit<BaseFeatureProps<FeatureWithAnySubFeatures>, "deviceValue"> {
@@ -55,14 +56,83 @@ export default function FeatureSubFeatures({
     const features = ("features" in feature && feature.features) || [];
     const isRoot = isFeatureRoot(type, parentFeatures);
 
+    // Apply button state machine
+    const [sentState, setSentState] = useState<CompositeState | null>(null);
+    const [isConfirmed, setIsConfirmed] = useState(false);
+    const [isTimedOut, setIsTimedOut] = useState(false);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const lastDeviceStateRef = useRef(deviceState);
+
+    // Check if there are actual local changes (value differs from device)
+    const hasLocalChanges = Object.keys(state).some((key) => state[key] !== deviceState?.[key]);
+
+    // Helper to check if a specific property has a local change
+    const propertyHasLocalChange = (prop: string): boolean => {
+        // If Apply is pending/timed out, show amber for properties that were sent
+        if (sentState !== null && prop in sentState) {
+            return true;
+        }
+        // If not pending, show amber only if local value differs from device
+        return prop in state && state[prop] !== deviceState?.[prop];
+    };
+
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
         setState({});
+        setSentState(null);
+        setIsConfirmed(false);
+        setIsTimedOut(false);
     }, [device.ieee_address]);
+
+    // Cleanup timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
+
+    // Detect device response for Apply button
+    useEffect(() => {
+        if (sentState !== null && deviceState !== lastDeviceStateRef.current) {
+            // Device state changed - check if it matches what we sent
+            const allMatch = Object.keys(sentState).every((key) => deviceState[key] === sentState[key]);
+            if (allMatch) {
+                setIsConfirmed(true);
+                setIsTimedOut(false);
+                setSentState(null);
+                setState({}); // Clear local changes
+                if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                    timeoutRef.current = null;
+                }
+            }
+        }
+        lastDeviceStateRef.current = deviceState;
+    }, [deviceState, sentState]);
+
+    // Timeout for Apply button confirmation
+    useEffect(() => {
+        if (sentState !== null && !isTimedOut) {
+            timeoutRef.current = setTimeout(() => {
+                setIsTimedOut(true);
+            }, READ_TIMEOUT_MS);
+        }
+
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
+        };
+    }, [sentState, isTimedOut]);
 
     const onFeatureChange = useCallback(
         (value: Record<string, unknown>): void => {
             setState((prev) => ({ ...prev, ...value }));
+            // Clear confirmed state when user makes new changes
+            setIsConfirmed(false);
 
             if (!isRoot) {
                 if (type === "composite") {
@@ -77,6 +147,11 @@ export default function FeatureSubFeatures({
 
     const onRootApply = useCallback((): void => {
         const newState = { ...deviceState, ...state };
+
+        // Track the sent state for confirmation
+        setSentState(state);
+        setIsConfirmed(false);
+        setIsTimedOut(false);
 
         onChange(property ? { [property]: newState } : newState);
     }, [property, onChange, state, deviceState]);
@@ -109,12 +184,30 @@ export default function FeatureSubFeatures({
                     minimal={minimal}
                     endpointSpecific={endpointSpecific}
                     steps={steps?.[feature.name]}
+                    batched={isRoot}
+                    hasLocalChange={isRoot && feature.property !== undefined && propertyHasLocalChange(feature.property)}
                 />
             ))}
             {isRoot && (
-                <div className="self-end float-right">
-                    <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply}>
+                <div className="flex flex-row gap-3 items-center w-full">
+                    <div className="flex-1" />
+                    <Button
+                        className={`btn ${minimal ? "btn-sm" : ""} ${
+                            isConfirmed
+                                ? "btn-success"
+                                : isTimedOut
+                                  ? "btn-error"
+                                  : sentState !== null
+                                    ? "btn-warning animate-pulse"
+                                    : hasLocalChanges
+                                      ? "btn-warning"
+                                      : "btn-primary"
+                        }`}
+                        onClick={onRootApply}
+                        disabled={!hasLocalChanges && sentState === null}
+                    >
                         {t(($) => $.apply)}
+                        {isConfirmed && " ✓"}
                     </Button>
                 </div>
             )}

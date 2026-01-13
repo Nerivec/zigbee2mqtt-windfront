@@ -6,7 +6,8 @@ import { startServer } from "./mocks/ws.js";
 
 // biome-ignore lint/suspicious/useAwait: follows API
 export default defineConfig(async ({ command, mode }) => {
-    if (command === "serve" && mode !== "test") {
+    // Only start mock server if no real backend is configured
+    if (command === "serve" && mode !== "test" && !process.env.Z2M_API_URI) {
         startServer();
     }
 
@@ -30,6 +31,7 @@ export default defineConfig(async ({ command, mode }) => {
             root: ".",
             dir: "test",
             environment: "jsdom",
+            setupFiles: ["./test/setup.ts"],
             typecheck: {
                 enabled: true,
             },

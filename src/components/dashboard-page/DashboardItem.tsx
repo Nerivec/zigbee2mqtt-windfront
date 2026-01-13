@@ -9,7 +9,9 @@ import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
 import DeviceCard from "../device/DeviceCard.js";
 import { RemoveDeviceModal } from "../modal/components/RemoveDeviceModal.js";
+import { DashboardDeviceProvider } from "./DashboardDeviceContext.js";
 import DashboardFeatureWrapper from "./DashboardFeatureWrapper.js";
+import DashboardSyncButton from "./DashboardSyncButton.js";
 
 const DashboardItem = ({
     original: { sourceIdx, device, deviceState, deviceAvailability, features, lastSeenConfig, removeDevice },
@@ -29,29 +31,30 @@ const DashboardItem = ({
     );
 
     return (
-        <div
-            className={`mb-3 card bg-base-200 rounded-box shadow-md ${deviceAvailability === "disabled" ? "card-dash border-warning/40" : deviceAvailability === "offline" ? "card-border border-error/50" : "card-border border-base-300"}`}
-        >
-            <DeviceCard
-                features={features}
-                sourceIdx={sourceIdx}
-                device={device}
-                deviceState={deviceState}
-                onChange={onCardChange}
-                featureWrapperClass={DashboardFeatureWrapper}
-                lastSeenConfig={lastSeenConfig}
+        <DashboardDeviceProvider>
+            <div
+                className={`mb-3 card bg-base-200 rounded-box shadow-md ${deviceAvailability === "disabled" ? "card-dash border-warning/40" : deviceAvailability === "offline" ? "card-border border-error/50" : "card-border border-base-300"}`}
             >
-                <div className="join join-horizontal">
+                <DeviceCard
+                    features={features}
+                    sourceIdx={sourceIdx}
+                    device={device}
+                    deviceState={deviceState}
+                    onChange={onCardChange}
+                    featureWrapperClass={DashboardFeatureWrapper}
+                    lastSeenConfig={lastSeenConfig}
+                    headerAction={<DashboardSyncButton />}
+                >
                     <Button<void>
                         onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
-                        className="btn btn-outline btn-error btn-square btn-sm join-item tooltip-left"
+                        className="btn btn-outline btn-error btn-square btn-sm tooltip-left"
                         title={t(($) => $.remove_device)}
                     >
                         <FontAwesomeIcon icon={faTrash} />
                     </Button>
-                </div>
-            </DeviceCard>
-        </div>
+                </DeviceCard>
+            </div>
+        </DashboardDeviceProvider>
     );
 };
 

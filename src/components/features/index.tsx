@@ -125,6 +125,8 @@ export interface BaseFeatureProps<T extends FeatureWithAnySubFeatures> extends O
     onRead?(value: Record<string, unknown> | unknown): void;
     featureWrapperClass: FunctionComponent<PropsWithChildren<FeatureWrapperProps>>;
     minimal?: boolean;
+    /** When true, changes are batched and submitted via Apply button - editors should show editing state only */
+    batched?: boolean;
 }
 
 export interface BaseWithSubFeaturesProps<T extends FeatureWithAnySubFeatures> extends Omit<BaseFeatureProps<T>, "deviceValue"> {

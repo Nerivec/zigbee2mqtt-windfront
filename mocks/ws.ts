@@ -35,8 +35,9 @@ const randomString = (len: number): string =>
 // const randomIntInclusive = (min: number, max: number) =>  Math.floor(Math.random() * (max - min + 1)) + min;
 
 export function startServer() {
+    const port = Number.parseInt(process.env.MOCK_WS_PORT || "8579", 10);
     const wss = new WebSocketServer({
-        port: 8579,
+        port,
     });
 
     wss.on("connection", (ws) => {
