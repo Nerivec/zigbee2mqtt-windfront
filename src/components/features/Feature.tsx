@@ -31,12 +31,18 @@ interface FeatureProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onCha
     steps?: ValueWithLabelOrPrimitive[];
     parentFeatures: FeatureWithAnySubFeatures[];
     deviceState: DeviceState | Zigbee2MQTTDeviceOptions;
+    deviceStateVersion?: number;
+    /** When true, changes are batched and submitted via Apply button */
+    batched?: boolean;
+    /** When true, this feature has a local change pending Apply */
+    hasLocalChange?: boolean;
 }
 
 export default function Feature({
     feature,
     device,
     deviceState,
+    deviceStateVersion,
     steps,
     onRead,
     onChange,
@@ -44,6 +50,8 @@ export default function Feature({
     minimal,
     endpointSpecific,
     parentFeatures,
+    batched,
+    hasLocalChange,
 }: FeatureProps): JSX.Element {
     const deviceValue = feature.property ? deviceState[feature.property] : deviceState;
     const key = getFeatureKey(feature);
@@ -56,13 +64,15 @@ export default function Feature({
         minimal,
         endpointSpecific,
         parentFeatures,
+        batched,
+        hasLocalChange,
     };
-    const wrapperParams = { feature, onRead, deviceValue, parentFeatures, endpointSpecific };
+    const wrapperParams = { feature, onRead, deviceValue, deviceStateVersion, parentFeatures, endpointSpecific };
 
     switch (feature.type) {
         case "binary": {
             return (
-                <FeatureWrapper key={key} {...wrapperParams}>
+                <FeatureWrapper key={key} {...wrapperParams} inline={batched}>
                     <Binary feature={feature} key={key} {...genericParams} />
                 </FeatureWrapper>
             );

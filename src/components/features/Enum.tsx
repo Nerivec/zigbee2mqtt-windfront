@@ -14,6 +14,7 @@ const Enum = memo((props: EnumProps) => {
         feature: { access = FeatureAccessMode.SET, values, property },
         deviceValue,
         minimal,
+        batched,
     } = props;
 
     if (access & FeatureAccessMode.SET) {
@@ -27,6 +28,7 @@ const Enum = memo((props: EnumProps) => {
                         : ""
                 }
                 minimal={minimal || values.length > BIG_ENUM_SIZE}
+                batched={batched}
             />
         );
     }

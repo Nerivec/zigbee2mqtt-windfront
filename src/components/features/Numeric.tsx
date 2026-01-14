@@ -8,6 +8,7 @@ import NoAccessError from "./NoAccessError.js";
 
 interface NumericProps extends BaseFeatureProps<NumericFeature> {
     steps?: ValueWithLabelOrPrimitive[];
+    hasLocalChange?: boolean;
 }
 
 const Numeric = memo((props: NumericProps) => {
@@ -17,6 +18,8 @@ const Numeric = memo((props: NumericProps) => {
         steps,
         onChange,
         minimal,
+        batched,
+        hasLocalChange,
     } = props;
 
     if (access & FeatureAccessMode.SET) {
@@ -30,6 +33,8 @@ const Numeric = memo((props: NumericProps) => {
                 steps={presets?.length ? (presets as ValueWithLabelOrPrimitive[]) /* typing failure */ : steps}
                 unit={unit}
                 minimal={minimal}
+                batched={batched}
+                hasLocalChange={hasLocalChange}
             />
         );
     }

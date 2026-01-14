@@ -1,14 +1,18 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { GradientFeature } from "../../types.js";
 import Button from "../Button.js";
 import ColorEditor from "../editors/ColorEditor.js";
 import { getDeviceGamut } from "../editors/index.js";
+import { READ_TIMEOUT_MS } from "./FeatureWrapper.js";
 import { type BaseFeatureProps, clampList } from "./index.js";
 
 type GradientProps = BaseFeatureProps<GradientFeature>;
 
 const buildDefaultArray = (min: number): string[] => (min > 0 ? Array(min).fill("#ffffff") : []);
+
+// Helper to compare arrays
+const arraysEqual = (a: string[], b: string[]): boolean => a.length === b.length && a.every((v, i) => v === b[i]);
 
 export const Gradient = memo((props: GradientProps) => {
     const {
@@ -19,22 +23,89 @@ export const Gradient = memo((props: GradientProps) => {
         deviceValue,
     } = props;
     const { t } = useTranslation("common");
-    const [colors, setColors] = useState<string[]>(buildDefaultArray(length_min));
-    const [canAdd, setCanAdd] = useState(false);
-    const [canRemove, setCanRemove] = useState(false);
 
-    useEffect(() => {
+    // Track pending colors as full array (null = no local edits, use device value)
+    const [pendingColors, setPendingColors] = useState<string[] | null>(null);
+
+    // Apply button state machine (same pattern as List.tsx and FeatureSubFeatures)
+    const [sentColors, setSentColors] = useState<string[] | null>(null);
+    const [isConfirmed, setIsConfirmed] = useState(false);
+    const [isTimedOut, setIsTimedOut] = useState(false);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const lastDeviceValueRef = useRef(deviceValue);
+
+    // Helper to get device array from deviceValue prop
+    const getDeviceArray = useCallback((): string[] => {
         if (deviceValue && Array.isArray(deviceValue)) {
-            setColors(clampList(deviceValue, length_min, length_max, (min) => buildDefaultArray(min)));
-        } else {
-            setColors(buildDefaultArray(length_min));
+            return clampList(deviceValue, length_min, length_max, (min) => buildDefaultArray(min));
         }
+        return buildDefaultArray(length_min);
     }, [deviceValue, length_min, length_max]);
 
+    const deviceArray = getDeviceArray();
+
+    // Current colors = pending (if editing) or device array
+    const colors = pendingColors ?? deviceArray;
+
+    // Check if there are actual local changes
+    const hasLocalChanges = pendingColors !== null && !arraysEqual(pendingColors, deviceArray);
+
+    // Computed add/remove constraints
+    const canAdd = length_max !== undefined && length_max > 0 ? colors.length < length_max : true;
+    const canRemove = length_min !== undefined && length_min > 0 ? colors.length > length_min : true;
+
+    // Reset on device change (same pattern as List.tsx)
+    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
-        setCanAdd(colors.length < length_max);
-        setCanRemove(colors.length > length_min);
-    }, [colors, length_min, length_max]);
+        setPendingColors(null);
+        setSentColors(null);
+        setIsConfirmed(false);
+        setIsTimedOut(false);
+    }, [device.ieee_address]);
+
+    // Cleanup timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
+
+    // Detect device response (same pattern as List.tsx)
+    useEffect(() => {
+        if (sentColors !== null && deviceValue !== lastDeviceValueRef.current) {
+            // Device state changed - check if it matches what we sent
+            const currentDeviceArray = getDeviceArray();
+            if (arraysEqual(currentDeviceArray, sentColors)) {
+                setIsConfirmed(true);
+                setIsTimedOut(false);
+                setSentColors(null);
+                setPendingColors(null);
+                if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                    timeoutRef.current = null;
+                }
+            }
+        }
+        lastDeviceValueRef.current = deviceValue;
+    }, [deviceValue, sentColors, getDeviceArray]);
+
+    // Timeout for confirmation (same pattern as List.tsx)
+    useEffect(() => {
+        if (sentColors !== null && !isTimedOut) {
+            timeoutRef.current = setTimeout(() => {
+                setIsTimedOut(true);
+            }, READ_TIMEOUT_MS);
+        }
+
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
+        };
+    }, [sentColors, isTimedOut]);
 
     const gamut = useMemo(() => {
         if (device.definition) {
@@ -44,29 +115,45 @@ export const Gradient = memo((props: GradientProps) => {
         return "cie1931";
     }, [device.definition]);
 
-    const setColor = useCallback((idx: number, hex: string) => {
-        setColors((prev) => {
-            const c = Array.from(prev);
-            c[idx] = hex;
-
-            return c;
-        });
-    }, []);
+    const setColor = useCallback(
+        (idx: number, hex: string) => {
+            setPendingColors((prev) => {
+                const current = prev ?? deviceArray;
+                const newColors = [...current];
+                newColors[idx] = hex;
+                return newColors;
+            });
+            setIsConfirmed(false);
+        },
+        [deviceArray],
+    );
 
     const addColor = useCallback(() => {
-        setColors((prev) => [...prev, "#ffffff"]);
-    }, []);
-
-    const removeColor = useCallback((idx: number) => {
-        setColors((prev) => {
-            const c = Array.from(prev);
-            c.splice(idx, 1);
-
-            return c;
+        setPendingColors((prev) => {
+            const current = prev ?? deviceArray;
+            return [...current, "#ffffff"];
         });
-    }, []);
+        setIsConfirmed(false);
+    }, [deviceArray]);
 
-    const onGradientApply = useCallback(() => onChange({ [property ?? "gradient"]: colors }), [colors, property, onChange]);
+    const removeColor = useCallback(
+        (idx: number) => {
+            setPendingColors((prev) => {
+                const current = prev ?? deviceArray;
+                return current.filter((_, i) => i !== idx);
+            });
+            setIsConfirmed(false);
+        },
+        [deviceArray],
+    );
+
+    const onGradientApply = useCallback(() => {
+        // Track the sent state for confirmation
+        setSentColors(colors);
+        setIsConfirmed(false);
+        setIsTimedOut(false);
+        onChange({ [property ?? "gradient"]: colors });
+    }, [colors, property, onChange]);
 
     return (
         <>
@@ -97,8 +184,23 @@ export const Gradient = memo((props: GradientProps) => {
                 </div>
             )}
             <div>
-                <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onGradientApply}>
+                <Button
+                    className={`btn ${minimal ? "btn-sm" : ""} ${
+                        isConfirmed
+                            ? "btn-success"
+                            : isTimedOut
+                              ? "btn-error"
+                              : sentColors !== null
+                                ? "btn-warning animate-pulse"
+                                : hasLocalChanges
+                                  ? "btn-warning"
+                                  : "btn-primary"
+                    }`}
+                    onClick={onGradientApply}
+                    disabled={!hasLocalChanges && sentColors === null}
+                >
                     {t(($) => $.apply)}
+                    {isConfirmed && " ✓"}
                 </Button>
             </div>
         </>

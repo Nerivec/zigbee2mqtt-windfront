@@ -13,6 +13,7 @@ const Color = memo((props: ColorProps) => {
         feature: { name, features, property },
         onChange,
         minimal,
+        batched,
     } = props;
 
     const value = useMemo(() => {
@@ -39,7 +40,7 @@ const Color = memo((props: ColorProps) => {
 
     const onEditorChange = useCallback((color: AnyColor) => onChange({ [property ?? "color"]: color }), [property, onChange]);
 
-    return <ColorEditor onChange={onEditorChange} value={value} format={name} minimal={minimal} gamut={gamut} />;
+    return <ColorEditor onChange={onEditorChange} value={value} format={name} minimal={minimal} gamut={gamut} batched={batched} />;
 });
 
 export default Color;

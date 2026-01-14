@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../../store.js";
@@ -16,6 +16,20 @@ type ExposesProps = {
 export default function Exposes({ sourceIdx, device }: ExposesProps) {
     const { t } = useTranslation("common");
     const deviceState = useAppStore(useShallow((state) => state.deviceStates[sourceIdx][device.friendly_name] ?? {}));
+
+    // Track device state updates - increments whenever deviceState object changes
+    // This allows child components to detect device responses even if specific values don't change
+    // IMPORTANT: Increment synchronously during render (not in useEffect) so children see the
+    // updated version on the same render cycle. Effects run after render, causing a race condition.
+    const deviceStateVersionRef = useRef(0);
+    const prevDeviceStateRef = useRef<typeof deviceState | null>(null);
+
+    if (deviceState !== prevDeviceStateRef.current) {
+        deviceStateVersionRef.current++;
+    }
+    prevDeviceStateRef.current = deviceState;
+
+    const deviceStateVersion = deviceStateVersionRef.current;
 
     const onChange = useCallback(
         async (value: Record<string, unknown>) => {
@@ -49,6 +63,7 @@ export default function Exposes({ sourceIdx, device }: ExposesProps) {
                     feature={expose}
                     device={device}
                     deviceState={deviceState}
+                    deviceStateVersion={deviceStateVersion}
                     onChange={onChange}
                     onRead={onRead}
                     featureWrapperClass={FeatureWrapper}
