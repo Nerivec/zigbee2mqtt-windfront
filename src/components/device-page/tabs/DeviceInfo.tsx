@@ -14,6 +14,8 @@ import DeviceControlEditName from "../../device/DeviceControlEditName.js";
 import DeviceControlGroup from "../../device/DeviceControlGroup.js";
 import DeviceControlUpdateDesc from "../../device/DeviceControlUpdateDesc.js";
 import DeviceImage from "../../device/DeviceImage.js";
+import { formatOtaFileVersion } from "../../ota-page/index.js";
+import OtaControlGroup, { type OtaControlGroupProps } from "../../ota-page/OtaControlGroup.js";
 import SourceDot from "../../SourceDot.js";
 import Availability from "../../value-decorators/Availability.js";
 import DisplayValue from "../../value-decorators/DisplayValue.js";
@@ -126,7 +128,7 @@ ${JSON.stringify(bridgeHealth.devices[device.ieee_address] ?? {})}
 });
 
 export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
-    const { t } = useTranslation(["zigbee", "availability", "common"]);
+    const { t } = useTranslation(["zigbee", "availability", "common", "ota"]);
     const deviceStates = useAppStore(useShallow((state) => state.deviceStates[sourceIdx]));
     const bridgeConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config));
     const availability = useAppStore(useShallow((state) => state.availability[sourceIdx]));
@@ -134,6 +136,8 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     const homeassistantEnabled = bridgeConfig.homeassistant.enabled;
     const deviceState = deviceStates[device.friendly_name] ?? {};
     const deviceRecentActivity = recentActivity[device.friendly_name];
+
+    const otaInstalledVersion = useMemo(() => formatOtaFileVersion(deviceState.update?.installed_version), [deviceState.update?.installed_version]);
 
     const setDeviceDescription = useCallback(
         async (id: string, description: string): Promise<void> => {
@@ -158,6 +162,39 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     const removeDevice = useCallback(async (source: number, id: string, force: boolean, block: boolean): Promise<void> => {
         await sendMessage(source, "bridge/request/device/remove", { id, force, block });
     }, []);
+
+    const onOtaCheckClick: OtaControlGroupProps["onCheckClick"] = useCallback(
+        async ({ sourceIdx, ieee, ...rest }) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee, ...rest }),
+        [],
+    );
+
+    const onOtaUpdateClick: OtaControlGroupProps["onUpdateClick"] = useCallback(
+        async ({ sourceIdx, ieee, downgrade, ...rest }) =>
+            await sendMessage(
+                sourceIdx,
+                downgrade ? "bridge/request/device/ota_update/update/downgrade" : "bridge/request/device/ota_update/update",
+                {
+                    id: ieee,
+                    ...rest,
+                },
+            ),
+        [],
+    );
+
+    const onOtaScheduleClick: OtaControlGroupProps["onScheduleClick"] = useCallback(
+        async ({ sourceIdx, ieee, downgrade, ...rest }) =>
+            await sendMessage(
+                sourceIdx,
+                downgrade ? "bridge/request/device/ota_update/schedule/downgrade" : "bridge/request/device/ota_update/schedule",
+                { id: ieee, ...rest },
+            ),
+        [],
+    );
+
+    const onOtaUnscheduleClick: OtaControlGroupProps["onUnscheduleClick"] = useCallback(
+        async ({ sourceIdx, ieee }) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/unschedule", { id: ieee }),
+        [],
+    );
 
     const deviceAvailability = bridgeConfig.devices[device.ieee_address]?.availability;
     const definitionDescription = useMemo(() => {
@@ -284,10 +321,37 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             <VendorLink device={device} />
                         </div>
                     </div>
+                    {device.software_build_id ? (
+                        <div className="stat px-3">
+                            <div className="stat-title">{t(($) => $.firmware_id)}</div>
+                            <div className="stat-value text-xl">{device.software_build_id || "N/A"}</div>
+                            <div className="stat-desc">{device.date_code || "N/A"}</div>
+                        </div>
+                    ) : null}
                     <div className="stat px-3">
-                        <div className="stat-title">{t(($) => $.firmware_id)}</div>
-                        <div className="stat-value text-xl">{device.software_build_id || t(($) => $.unknown)}</div>
-                        <div className="stat-desc">{device.date_code || t(($) => $.unknown)}</div>
+                        <div className="stat-title">{t(($) => $.firmware_version, { ns: "ota" })}</div>
+                        <div className="stat-value text-xl">
+                            {deviceState.update?.installed_version ?? t(($) => $.unknown)}
+                            <span className="ms-3">
+                                <OtaControlGroup
+                                    sourceIdx={sourceIdx}
+                                    device={device}
+                                    otaSettings={bridgeConfig.ota}
+                                    state={deviceState.update}
+                                    onCheckClick={onOtaCheckClick}
+                                    onUpdateClick={onOtaUpdateClick}
+                                    onScheduleClick={onOtaScheduleClick}
+                                    onUnscheduleClick={onOtaUnscheduleClick}
+                                />
+                            </span>
+                        </div>
+                        {otaInstalledVersion ? (
+                            <div className="stat-desc">
+                                {t(($) => $.app, { ns: "ota" })}: {`${otaInstalledVersion[0]} build ${otaInstalledVersion[1]}`}
+                                {" | "}
+                                {t(($) => $.stack, { ns: "ota" })}: {`${otaInstalledVersion[2]} build ${otaInstalledVersion[3]}`}
+                            </div>
+                        ) : null}
                     </div>
                 </div>
                 <div className="stats stats-vertical lg:stats-horizontal shadow">

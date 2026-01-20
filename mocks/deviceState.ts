@@ -22,6 +22,8 @@ export const DEVICE_STATES: Message<DeviceState>[] = [
             update: {
                 installed_version: 268776729,
                 latest_version: 269498113,
+                latest_source: "http://example.com/my.ota",
+                latest_release_notes: null,
                 state: "updating",
                 progress: 35,
                 remaining: 1150,
@@ -146,6 +148,10 @@ export const DEVICE_STATES: Message<DeviceState>[] = [
             update: {
                 installed_version: 268776729,
                 latest_version: 269497625,
+                // latest_source: "http://example.com/my.ota",
+                // latest_source: "/opt/zigbee2mqtt/data/my.ota",
+                latest_source: "https://raw.githubusercontent.com/Koenkk/zigbee-OTA/master/images/manuf/file.ota",
+                latest_release_notes: "Fixes a bug in the ether",
                 state: "available",
             },
         },

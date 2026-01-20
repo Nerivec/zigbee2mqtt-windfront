@@ -80,13 +80,13 @@ export default function FloatingCardButton({
                         <div className="card-body px-4 py-3">
                             <div className="flex items-center justify-between">
                                 <h4 className="card-title">{title}</h4>
-                                <Button onClick={() => setIsAddOpen(false)} className="btn btn-ghost btn-sm">
+                                <Button onClick={() => setIsAddOpen(false)} className="btn btn-ghost btn-square">
                                     <FontAwesomeIcon icon={faClose} />
                                 </Button>
                             </div>
                             {children}
                             <div className="card-actions justify-end">
-                                <Button onClick={handleApply} className="btn btn-outline btn-primary btn-square btn-sm" disabled={!canApply}>
+                                <Button onClick={handleApply} className="btn btn-outline btn-primary btn-square btn-square" disabled={!canApply}>
                                     <FontAwesomeIcon icon={faCheck} />
                                 </Button>
                             </div>

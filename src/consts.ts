@@ -68,6 +68,8 @@ export const ZHC_RELEASE_TAG_URL = "https://github.com/Koenkk/zigbee-herdsman-co
 
 export const ZH_RELEASE_TAG_URL = "https://github.com/Koenkk/zigbee-herdsman/releases/tag/v";
 
+export const ZIGBEE_OTA_URL = "https://github.com/Koenkk/zigbee-OTA";
+
 export const HELP_URL = "https://github.com/Nerivec/zigbee2mqtt-windfront/wiki";
 export const CONTRIBUTE_TRANSLATION_URL = "https://github.com/Nerivec/zigbee2mqtt-windfront/issues/199";
 export const CONTRIBUTE_WINDFRONT_URL = "https://github.com/Nerivec/zigbee2mqtt-windfront/blob/main/CONTRIBUTING.md";

@@ -8,8 +8,9 @@ import ConfirmButton from "../components/ConfirmButton.js";
 import DeviceImage from "../components/device/DeviceImage.js";
 import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
 import { formatOtaFileVersion } from "../components/ota-page/index.js";
-import OtaControlGroup from "../components/ota-page/OtaControlGroup.js";
+import OtaControlGroup, { type OtaControlGroupProps } from "../components/ota-page/OtaControlGroup.js";
 import OtaFileVersion from "../components/ota-page/OtaFileVersion.js";
+import OtaUpdateButton from "../components/ota-page/OtaUpdateButton.js";
 import OtaUpdating from "../components/ota-page/OtaUpdating.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
@@ -20,7 +21,7 @@ import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
-import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
+import { API_NAMES, API_URLS, type AppState, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { Device, DeviceState } from "../types.js";
 import { toHex } from "../utils.js";
 import { sendMessage } from "../websocket/WebSocketManager.js";
@@ -34,11 +35,13 @@ type OtaTableData = {
         batteryState?: string | null;
         batteryLow?: boolean | null;
     };
+    otaSettings: AppState["bridgeInfo"][number]["config"]["ota"];
 };
 
 export default function OtaPage() {
     const devices = useAppStore((state) => state.devices);
     const deviceStates = useAppStore((state) => state.deviceStates);
+    const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const { t } = useTranslation(["ota", "zigbee", "common"]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
@@ -51,7 +54,10 @@ export default function OtaPage() {
         const filteredDevices: OtaTableData[] = [];
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
+            const otaSettings = bridgeInfo[sourceIdx].config.ota;
+
             for (const device of devices[sourceIdx]) {
+                // TODO: add "support genOta cluster"?
                 if (device.definition?.supports_ota && !device.disabled) {
                     const state = deviceStates[sourceIdx][device.friendly_name] ?? {};
 
@@ -67,13 +73,14 @@ export default function OtaPage() {
                                       batteryLow: state.battery_low as boolean,
                                   }
                                 : undefined,
+                        otaSettings,
                     });
                 }
             }
         }
 
         return filteredDevices;
-    }, [deviceStates, devices]);
+    }, [deviceStates, devices, bridgeInfo]);
 
     const rowSelectionCount = useMemo(() => Object.keys(rowSelection).length, [rowSelection]);
 
@@ -105,23 +112,36 @@ export default function OtaPage() {
         [],
     );
 
-    const onCheckClick = useCallback(
-        async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee }),
+    const onCheckClick: OtaControlGroupProps["onCheckClick"] = useCallback(
+        async ({ sourceIdx, ieee, ...rest }) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee, ...rest }),
         [],
     );
 
-    const onUpdateClick = useCallback(
-        async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/update", { id: ieee }),
+    const onUpdateClick: OtaControlGroupProps["onUpdateClick"] = useCallback(
+        async ({ sourceIdx, ieee, downgrade, ...rest }) =>
+            await sendMessage(
+                sourceIdx,
+                downgrade ? "bridge/request/device/ota_update/update/downgrade" : "bridge/request/device/ota_update/update",
+                {
+                    id: ieee,
+                    ...rest,
+                },
+            ),
         [],
     );
 
-    const onScheduleClick = useCallback(
-        async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/schedule", { id: ieee }),
+    const onScheduleClick: OtaControlGroupProps["onScheduleClick"] = useCallback(
+        async ({ sourceIdx, ieee, downgrade, ...rest }) =>
+            await sendMessage(
+                sourceIdx,
+                downgrade ? "bridge/request/device/ota_update/schedule/downgrade" : "bridge/request/device/ota_update/schedule",
+                { id: ieee, ...rest },
+            ),
         [],
     );
 
-    const onUnscheduleClick = useCallback(
-        async ([sourceIdx, ieee]: [number, string]) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/unschedule", { id: ieee }),
+    const onUnscheduleClick: OtaControlGroupProps["onUnscheduleClick"] = useCallback(
+        async ({ sourceIdx, ieee }) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/unschedule", { id: ieee }),
         [],
     );
 
@@ -349,21 +369,34 @@ export default function OtaPage() {
                 accessorFn: ({ state }) => state?.state,
                 cell: ({
                     row: {
-                        original: { sourceIdx, device, state },
+                        original: { sourceIdx, device, state, otaSettings },
                     },
                 }) =>
                     state?.state === "updating" ? (
                         <OtaUpdating label={t(($) => $.remaining_time)} remaining={state.remaining} progress={state.progress} />
                     ) : (
-                        <OtaControlGroup
-                            sourceIdx={sourceIdx}
-                            device={device}
-                            state={state}
-                            onCheckClick={onCheckClick}
-                            onUpdateClick={onUpdateClick}
-                            onScheduleClick={onScheduleClick}
-                            onUnscheduleClick={onUnscheduleClick}
-                        />
+                        <div className="join join-horizontal">
+                            <OtaControlGroup
+                                sourceIdx={sourceIdx}
+                                device={device}
+                                state={state}
+                                otaSettings={otaSettings}
+                                onCheckClick={onCheckClick}
+                                onUpdateClick={onUpdateClick}
+                                onScheduleClick={onScheduleClick}
+                                onUnscheduleClick={onUnscheduleClick}
+                            />
+                            {state?.state === "available" ? (
+                                <OtaUpdateButton
+                                    sourceIdx={sourceIdx}
+                                    device={device}
+                                    state={state}
+                                    otaSettings={otaSettings}
+                                    onUpdateClick={onUpdateClick}
+                                    onScheduleClick={onScheduleClick}
+                                />
+                            ) : null}
+                        </div>
                     ),
                 enableSorting: false,
                 enableColumnFilter: false,

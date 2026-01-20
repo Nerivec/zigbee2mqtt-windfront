@@ -4,7 +4,7 @@ type InputFieldProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, 
     name: string;
     label?: string;
     detail?: string;
-    type: "text" | "number";
+    type: "text" | "number" | "url";
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 };

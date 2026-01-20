@@ -122,7 +122,7 @@ const ReportingEndpointSection = memo(({ endpointId, rules, device, sourceIdx, o
                                     <h4 className="card-title">
                                         {t(($) => $.add, { ns: "common" })}: {t(($) => $.endpoint)} {endpointId}
                                     </h4>
-                                    <Button onClick={() => setIsAddOpen(false)} className="btn btn-ghost btn-sm">
+                                    <Button onClick={() => setIsAddOpen(false)} className="btn btn-ghost btn-square">
                                         <FontAwesomeIcon icon={faClose} />
                                     </Button>
                                 </div>
