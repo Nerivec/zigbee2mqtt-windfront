@@ -1004,7 +1004,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                     bindings: [],
                     clusters: {
                         input: ["genBasic", "genIdentify", "genGroups", "genScenes", "genOnOff"],
-                        output: ["genBasic"],
+                        output: ["genBasic", "genOta"],
                     },
                     configured_reportings: [],
                     scenes: [],

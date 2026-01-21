@@ -57,7 +57,6 @@ export default function OtaPage() {
             const otaSettings = bridgeInfo[sourceIdx].config.ota;
 
             for (const device of devices[sourceIdx]) {
-                // TODO: add "support genOta cluster"?
                 if (device.definition?.supports_ota && !device.disabled) {
                     const state = deviceStates[sourceIdx][device.friendly_name] ?? {};
 

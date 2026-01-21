@@ -14,6 +14,7 @@ import DeviceControlEditName from "../../device/DeviceControlEditName.js";
 import DeviceControlGroup from "../../device/DeviceControlGroup.js";
 import DeviceControlUpdateDesc from "../../device/DeviceControlUpdateDesc.js";
 import DeviceImage from "../../device/DeviceImage.js";
+import { hasOtaCluster } from "../../device/index.js";
 import { formatOtaFileVersion } from "../../ota-page/index.js";
 import OtaControlGroup, { type OtaControlGroupProps } from "../../ota-page/OtaControlGroup.js";
 import SourceDot from "../../SourceDot.js";
@@ -137,6 +138,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     const deviceState = deviceStates[device.friendly_name] ?? {};
     const deviceRecentActivity = recentActivity[device.friendly_name];
 
+    const canOta = useMemo(() => hasOtaCluster(device), [device]);
     const otaInstalledVersion = useMemo(() => formatOtaFileVersion(deviceState.update?.installed_version), [deviceState.update?.installed_version]);
 
     const setDeviceDescription = useCallback(
@@ -328,31 +330,33 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             <div className="stat-desc">{device.date_code || "N/A"}</div>
                         </div>
                     ) : null}
-                    <div className="stat px-3">
-                        <div className="stat-title">{t(($) => $.firmware_version, { ns: "ota" })}</div>
-                        <div className="stat-value text-xl">
-                            {deviceState.update?.installed_version ?? t(($) => $.unknown)}
-                            <span className="ms-3">
-                                <OtaControlGroup
-                                    sourceIdx={sourceIdx}
-                                    device={device}
-                                    otaSettings={bridgeConfig.ota}
-                                    state={deviceState.update}
-                                    onCheckClick={onOtaCheckClick}
-                                    onUpdateClick={onOtaUpdateClick}
-                                    onScheduleClick={onOtaScheduleClick}
-                                    onUnscheduleClick={onOtaUnscheduleClick}
-                                />
-                            </span>
-                        </div>
-                        {otaInstalledVersion ? (
-                            <div className="stat-desc">
-                                {t(($) => $.app, { ns: "ota" })}: {`${otaInstalledVersion[0]} build ${otaInstalledVersion[1]}`}
-                                {" | "}
-                                {t(($) => $.stack, { ns: "ota" })}: {`${otaInstalledVersion[2]} build ${otaInstalledVersion[3]}`}
+                    {canOta ? (
+                        <div className="stat px-3">
+                            <div className="stat-title">{t(($) => $.firmware_version, { ns: "ota" })}</div>
+                            <div className="stat-value text-xl">
+                                {deviceState.update?.installed_version ?? t(($) => $.unknown)}
+                                <span className="ms-3">
+                                    <OtaControlGroup
+                                        sourceIdx={sourceIdx}
+                                        device={device}
+                                        otaSettings={bridgeConfig.ota}
+                                        state={deviceState.update}
+                                        onCheckClick={onOtaCheckClick}
+                                        onUpdateClick={onOtaUpdateClick}
+                                        onScheduleClick={onOtaScheduleClick}
+                                        onUnscheduleClick={onOtaUnscheduleClick}
+                                    />
+                                </span>
                             </div>
-                        ) : null}
-                    </div>
+                            {otaInstalledVersion ? (
+                                <div className="stat-desc">
+                                    {t(($) => $.app, { ns: "ota" })}: {`${otaInstalledVersion[0]} build ${otaInstalledVersion[1]}`}
+                                    {" | "}
+                                    {t(($) => $.stack, { ns: "ota" })}: {`${otaInstalledVersion[2]} build ${otaInstalledVersion[3]}`}
+                                </div>
+                            ) : null}
+                        </div>
+                    ) : null}
                 </div>
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
                     <div className="stat px-3">

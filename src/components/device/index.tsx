@@ -9,3 +9,15 @@ export const getZ2MDeviceImage = (device: Device): string => {
 
     return sanitizedName === "NA" ? genericDevice : `${DEVICE_IMAGE_BASE_PATH}${sanitizedName}.png`;
 };
+
+export const hasOtaCluster = (device: Device): boolean => {
+    for (const endpointId in device.endpoints) {
+        const endpoint = device.endpoints[endpointId];
+
+        if (endpoint.clusters.output.includes("genOta")) {
+            return true;
+        }
+    }
+
+    return false;
+};
