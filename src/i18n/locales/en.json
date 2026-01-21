@@ -571,6 +571,7 @@
         "definitions-device-icon": "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).",
         "definitions-device-homeassistant-name": "Name of the device in Home Assistant",
         "definitions-group-qos": "QoS level for MQTT messages of this group",
-        "definitions-group-off_state": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF"
+        "definitions-group-off_state": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF",
+        "definitions-group-homeassistant-name": "Name of the group in Home Assistant"
     }
 }
