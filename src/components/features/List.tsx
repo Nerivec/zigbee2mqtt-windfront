@@ -73,7 +73,7 @@ const List = memo((props: Props) => {
     }, [currentValue, length_min, length_max]);
 
     const onItemChange = useCallback(
-        (itemValue: unknown, itemIndex: number) => {
+        async (itemValue: unknown, itemIndex: number) => {
             const newListValue = Array.from(currentValue);
 
             if (typeof itemValue === "object" && itemValue != null) {
@@ -85,7 +85,7 @@ const List = memo((props: Props) => {
             setCurrentValue(newListValue);
 
             if (!isRoot) {
-                onChange(property ? { [property]: newListValue } : newListValue);
+                await onChange(property ? { [property]: newListValue } : newListValue);
             }
         },
         [currentValue, property, isRoot, onChange],
@@ -94,21 +94,21 @@ const List = memo((props: Props) => {
     const addItem = useCallback(() => setCurrentValue((prev) => [...prev, item_type.type === "composite" ? {} : ""]), [item_type.type]);
 
     const removeItem = useCallback(
-        (itemIndex: number) => {
+        async (itemIndex: number) => {
             const newListValue = Array.from(currentValue);
 
             newListValue.splice(itemIndex, 1);
             setCurrentValue(newListValue);
 
             if (!isRoot) {
-                onChange(property ? { [property]: newListValue } : newListValue);
+                await onChange(property ? { [property]: newListValue } : newListValue);
             }
         },
         [currentValue, property, isRoot, onChange],
     );
 
-    const onRootApply = useCallback(() => {
-        onChange(property ? { [property]: currentValue } : currentValue);
+    const onRootApply = useCallback(async () => {
+        await onChange(property ? { [property]: currentValue } : currentValue);
     }, [property, onChange, currentValue]);
 
     if (access & FeatureAccessMode.SET) {

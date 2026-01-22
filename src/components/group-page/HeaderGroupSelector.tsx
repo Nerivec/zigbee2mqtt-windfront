@@ -27,7 +27,7 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
     const onSelectHandler = useCallback(
         (option: SingleValue<SelectOption>) => {
             if (option) {
-                navigate(option.link);
+                void navigate(option.link);
             }
         },
         [navigate],

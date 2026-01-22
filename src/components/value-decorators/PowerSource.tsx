@@ -58,6 +58,7 @@ const PowerSource = memo((props: PowerSourceProps) => {
             } else if (batteryState != null) {
                 batteryFormatted = batteryState;
 
+                // biome-ignore lint/nursery/useExhaustiveSwitchCases: biome failure
                 switch (batteryState) {
                     case "high":
                         batteryIcon = faBatteryFull;

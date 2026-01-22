@@ -17,7 +17,9 @@ const Text = memo((props: TextProps) => {
     if (access & FeatureAccessMode.SET) {
         return (
             <TextEditor
-                onChange={(value) => onChange(property ? { [property]: value } : value)}
+                onChange={async (value) => {
+                    await onChange(property ? { [property]: value } : value);
+                }}
                 value={deviceValue != null ? (typeof deviceValue === "string" ? deviceValue : JSON.stringify(deviceValue)) : ""}
             />
         );

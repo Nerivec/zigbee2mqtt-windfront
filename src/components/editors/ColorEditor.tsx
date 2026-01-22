@@ -27,7 +27,7 @@ type ColorEditorProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" |
     value: AnyColor;
     format: ColorFormat;
     gamut: keyof typeof SUPPORTED_GAMUTS;
-    onChange(color: AnyColor): void;
+    onChange(color: AnyColor): Promise<void>;
     minimal?: boolean;
 };
 

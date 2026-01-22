@@ -97,6 +97,11 @@
             "a11y": {
                 "useKeyWithClickEvents": "off",
                 "noLabelWithoutControl": "off"
+            },
+            "nursery": {
+                "useExhaustiveSwitchCases": "error",
+                "noFloatingPromises": "error",
+                "noMisusedPromises": "error"
             }
         }
     },

@@ -66,7 +66,9 @@ export const Gradient = memo((props: GradientProps) => {
         });
     }, []);
 
-    const onGradientApply = useCallback(() => onChange({ [property ?? "gradient"]: colors }), [colors, property, onChange]);
+    const onGradientApply = useCallback(async () => {
+        await onChange({ [property ?? "gradient"]: colors });
+    }, [colors, property, onChange]);
 
     return (
         <>
@@ -76,6 +78,8 @@ export const Gradient = memo((props: GradientProps) => {
                     <ColorEditor
                         onChange={(newColor: { hex: string }) => {
                             setColor(idx, newColor.hex);
+
+                            return Promise.resolve();
                         }}
                         value={{ hex: color }}
                         format="hex"

@@ -4,7 +4,7 @@ import EnumEditor, { type ValueWithLabelOrPrimitive } from "./EnumEditor.js";
 type RangeProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
     value: number | "";
     unit?: string;
-    onChange(value: number | null): void;
+    onChange(value: number | null): Promise<void>;
     steps?: ValueWithLabelOrPrimitive[];
     minimal?: boolean;
 };
@@ -22,7 +22,14 @@ const RangeEditor = memo((props: RangeProps) => {
         setCurrentValue(e.target.value ? e.target.valueAsNumber : "");
     }, []);
 
-    const onSubmit = useCallback((e) => !e.target.validationMessage && onChange(currentValue === "" ? null : currentValue), [currentValue, onChange]);
+    const onSubmit = useCallback(
+        async (e) => {
+            if (!e.target.validationMessage) {
+                await onChange(currentValue === "" ? null : currentValue);
+            }
+        },
+        [currentValue, onChange],
+    );
 
     return (
         <div className="flex flex-row flex-wrap gap-3 items-center">

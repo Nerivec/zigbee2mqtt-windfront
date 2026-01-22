@@ -188,7 +188,7 @@ export default function LogsPage() {
 
     useEffect(() => {
         if (!sourceIdx || !validSourceIdx) {
-            navigate("/logs/0", { replace: true });
+            void navigate("/logs/0", { replace: true });
         }
     }, [sourceIdx, validSourceIdx, navigate]);
 

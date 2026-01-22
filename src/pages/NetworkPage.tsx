@@ -172,7 +172,7 @@ export default function NetworkPage() {
 
     useEffect(() => {
         if (!sourceIdx || !validSourceIdx) {
-            navigate("/network/0", { replace: true });
+            void navigate("/network/0", { replace: true });
         }
     }, [sourceIdx, validSourceIdx, navigate]);
 
