@@ -310,6 +310,26 @@ export function startServer() {
 
                     break;
                 }
+                case "bridge/request/converter/save":
+                case "bridge/request/extension/save": {
+                    if (msg.payload.code === "valid") {
+                        sendResponseOK();
+                    } else {
+                        ws.send(
+                            JSON.stringify({
+                                payload: {
+                                    status: "error",
+                                    error: `${msg.payload.name} contains invalid code: mocked invalid code`,
+                                    data: {},
+                                    transaction: msg.payload.transaction,
+                                },
+                                topic: msg.topic.replace("bridge/request/", "bridge/response/"),
+                            } satisfies ResponseMessage<"bridge/response/converter/save" | "bridge/response/extension/save">),
+                        );
+                    }
+
+                    break;
+                }
                 default: {
                     if (msg.topic.endsWith("/set")) {
                         if ("command" in msg.payload) {

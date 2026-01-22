@@ -409,6 +409,26 @@ class MockWebSocket extends EventTarget {
 
                 break;
             }
+            case "bridge/request/converter/save":
+            case "bridge/request/extension/save": {
+                const payload = msg.payload as Zigbee2MQTTRequest<typeof msg.topic>;
+
+                if (payload.code === "valid") {
+                    this.#sendResponseOK(payload.transaction as string, msg.topic.replace("bridge/request/", "bridge/response/"));
+                } else {
+                    this.#emit({
+                        payload: {
+                            status: "error",
+                            data: {},
+                            transaction: payload.transaction,
+                            error: `${payload.name} contains invalid code: mocked invalid code`,
+                        },
+                        topic: msg.topic.replace("bridge/request/", "bridge/response/"),
+                    });
+                }
+
+                break;
+            }
             default: {
                 if (msg.topic.endsWith("/set")) {
                     const payload = msg.payload as Zigbee2MQTTRequest<"{friendlyNameOrId}/set">;
