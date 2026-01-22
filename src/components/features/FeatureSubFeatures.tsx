@@ -25,6 +25,11 @@ function isFeatureRoot(type: FeatureWithAnySubFeatures["type"], parentFeatures: 
             return true;
         }
 
+        // Check if any parent is a composite - if so, this composite is nested and should not be a root
+        if (parentFeatures.some((parent) => parent.type === "composite")) {
+            return false;
+        }
+
         if (parentFeatures.length === 1) {
             // When parent is e.g. climate
             const parentType = parentFeatures[0].type;
@@ -102,13 +107,13 @@ export default function FeatureSubFeatures({
 
     return (
         <>
-            {features.map((feature) => (
+            {features.map((subFeature) => (
                 <Feature
                     // @ts-expect-error typing failure
-                    key={getFeatureKey(feature)}
+                    key={getFeatureKey(subFeature)}
                     // @ts-expect-error typing failure
-                    feature={feature}
-                    parentFeatures={parentFeatures ?? []}
+                    feature={subFeature}
+                    parentFeatures={[...(parentFeatures ?? []), feature]}
                     device={device}
                     deviceState={combinedState}
                     onChange={onFeatureChange}
@@ -116,7 +121,7 @@ export default function FeatureSubFeatures({
                     featureWrapperClass={featureWrapperClass}
                     minimal={minimal}
                     endpointSpecific={endpointSpecific}
-                    steps={steps?.[feature.name]}
+                    steps={steps?.[subFeature.name]}
                 />
             ))}
             {isRoot && (
