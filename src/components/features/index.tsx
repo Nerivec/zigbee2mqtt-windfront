@@ -211,6 +211,10 @@ const ICON_MAP: Record<string, IconDefinition> = {
     vibration: faMobileVibrate,
     presence: faPerson,
     occupancy: faPerson,
+    area1Occupancy: faPerson,
+    area2Occupancy: faPerson,
+    area3Occupancy: faPerson,
+    area4Occupancy: faPerson,
     occupied: faPerson,
     vacancy: faPerson,
     vacant: faPerson,
@@ -641,6 +645,10 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
             break;
         }
         case "occupancy":
+        case "area1Occupancy":
+        case "area2Occupancy":
+        case "area3Occupancy":
+        case "area4Occupancy":
         case "presence": {
             if (value) {
                 className = "text-warning";

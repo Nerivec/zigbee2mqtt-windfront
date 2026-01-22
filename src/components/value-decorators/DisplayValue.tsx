@@ -14,7 +14,11 @@ const BooleanValueView = memo((props: DisplayValueProps) => {
         case "contact": {
             return value ? t(($) => $.closed) : t(($) => $.open);
         }
-        case "occupancy": {
+        case "occupancy":
+        case "area1Occupancy":
+        case "area2Occupancy":
+        case "area3Occupancy":
+        case "area4Occupancy": {
             return value ? t(($) => $.occupied) : t(($) => $.clear);
         }
         case "water_leak": {
