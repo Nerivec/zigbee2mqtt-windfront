@@ -96,7 +96,8 @@
         "mismatching_types": "Nesouhlasící typy",
         "sync": "Synchron.",
         "clear_self_as_source": "Odebrat sebe jako zdroj",
-        "sync_reporting": "Synchron. reportování"
+        "sync_reporting": "Synchron. reportování",
+        "exposes": "Hlavní přehled"
     },
     "devicePage": {
         "about": "O zařízení",
@@ -109,7 +110,6 @@
         "state": "Stav",
         "groups": "Skupiny",
         "scene": "Scény",
-        "exposes": "Hlavní přehled",
         "select_a_device": "Vybrat zařízení"
     },
     "groups": {

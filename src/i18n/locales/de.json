@@ -96,7 +96,8 @@
         "mismatching_types": "Nicht übereinstimmende Typen",
         "sync": "Synch.",
         "clear_self_as_source": "Dich selbst als Quelle entfernen",
-        "sync_reporting": "Synch. Berichte"
+        "sync_reporting": "Synch. Berichte",
+        "exposes": "Expose-Funktionen"
     },
     "devicePage": {
         "about": "Info",
@@ -109,7 +110,6 @@
         "state": "Status",
         "groups": "Gruppen",
         "scene": "Szene",
-        "exposes": "Expose-Funktionen",
         "select_a_device": "Ein Gerät auswählen"
     },
     "groups": {

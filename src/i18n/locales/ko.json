@@ -96,7 +96,8 @@
         "mismatching_types": "형식이 일치하지 않음",
         "sync": "동기",
         "clear_self_as_source": "자신을 소스에서 제거",
-        "sync_reporting": "동기 리포팅"
+        "sync_reporting": "동기 리포팅",
+        "exposes": "노출 기능"
     },
     "devicePage": {
         "about": "정보",
@@ -109,7 +110,6 @@
         "state": "상태",
         "groups": "그룹",
         "scene": "씬",
-        "exposes": "노출 기능",
         "select_a_device": "디바이스를 선택하세요"
     },
     "groups": {

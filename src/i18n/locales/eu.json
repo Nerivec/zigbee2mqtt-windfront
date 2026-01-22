@@ -96,7 +96,8 @@
         "mismatching_types": "Mota ez datorrenak",
         "sync": "Sinkron.",
         "clear_self_as_source": "Kendu zeure burua iturri gisa",
-        "sync_reporting": "Sinkron. txostenak"
+        "sync_reporting": "Sinkron. txostenak",
+        "exposes": "Esposatutako funtzioak"
     },
     "devicePage": {
         "about": "Honi buruz",
@@ -109,7 +110,6 @@
         "state": "Egoera",
         "groups": "Taldeak",
         "scene": "Eszena",
-        "exposes": "Esposatutako funtzioak",
         "select_a_device": "Hautatu gailu bat"
     },
     "groups": {

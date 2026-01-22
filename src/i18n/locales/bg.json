@@ -96,7 +96,8 @@
         "mismatching_types": "Несъвпадащи типове",
         "sync": "Синхр.",
         "clear_self_as_source": "Премахни себе си като източник",
-        "sync_reporting": "Синхр. отчитане"
+        "sync_reporting": "Синхр. отчитане",
+        "exposes": "Експонирани функции"
     },
     "devicePage": {
         "about": "Относно",
@@ -109,7 +110,6 @@
         "state": "Състояние",
         "groups": "Групи",
         "scene": "Сцена",
-        "exposes": "Експонирани функции",
         "select_a_device": "Изберете устройство"
     },
     "groups": {

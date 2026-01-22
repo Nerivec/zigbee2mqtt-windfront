@@ -118,7 +118,7 @@ export default function DevicePage(): JSX.Element {
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/exposes`} className={isTabActive}>
                     <FontAwesomeIcon icon={faWandMagic} className="me-2" />
-                    {t(($) => $.exposes)}
+                    {t(($) => $.exposes, { ns: "common" })}
                 </NavLink>
                 <NavLink to={`/device/${numSourceIdx}/${deviceId}/bind`} className={isTabActive}>
                     <FontAwesomeIcon icon={faLink} className="me-2" />

@@ -36,7 +36,7 @@ const DeviceCard = memo(
         featureWrapperClass,
         children,
     }: Props) => {
-        const { t } = useTranslation(["zigbee", "devicePage"]);
+        const { t } = useTranslation(["zigbee", "common"]);
         const endpointName = endpoint != null ? device.endpoints[endpoint]?.name : undefined;
         const displayedFeatures = useMemo(() => {
             const elements: JSX.Element[] = [];
@@ -99,7 +99,7 @@ const DeviceCard = memo(
                     </div>
                     <div className="flex flex-row justify-end mb-2">
                         <Link to={`/device/${sourceIdx}/${device.ieee_address}/exposes`} className="btn btn-xs">
-                            {t(($) => $.exposes, { ns: "devicePage" })} <FontAwesomeIcon icon={faRightLong} size="lg" />
+                            {t(($) => $.exposes, { ns: "common" })} <FontAwesomeIcon icon={faRightLong} size="lg" />
                         </Link>
                     </div>
                 </div>

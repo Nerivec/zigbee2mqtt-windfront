@@ -96,7 +96,8 @@
         "mismatching_types": "Несовпадающие типы",
         "sync": "Синхр.",
         "clear_self_as_source": "Убрать себя как источник",
-        "sync_reporting": "Синхр. отчётность"
+        "sync_reporting": "Синхр. отчётность",
+        "exposes": "Свойства"
     },
     "devicePage": {
         "about": "Информация",
@@ -109,7 +110,6 @@
         "state": "Состояние",
         "groups": "Группы",
         "scene": "Сцена",
-        "exposes": "Свойства",
         "select_a_device": "Выберите устройство"
     },
     "groups": {
