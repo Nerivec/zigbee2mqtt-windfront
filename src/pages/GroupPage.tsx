@@ -45,10 +45,10 @@ export default function GroupPage() {
     useEffect(() => {
         if (sourceIdx && validSourceIdx && group) {
             if (!tab) {
-                navigate(`/group/${sourceIdx}/${group.id}/devices`, { replace: true });
+                void navigate(`/group/${sourceIdx}/${group.id}/devices`, { replace: true });
             }
         } else {
-            navigate("/groups", { replace: true });
+            void navigate("/groups", { replace: true });
         }
     }, [sourceIdx, validSourceIdx, tab, group, navigate]);
 

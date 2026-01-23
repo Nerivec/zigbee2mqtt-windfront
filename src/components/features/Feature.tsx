@@ -23,8 +23,8 @@ import Text from "./Text.js";
 interface FeatureProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
     feature: FeatureWithAnySubFeatures;
     device: Device;
-    onChange(value: Record<string, unknown>): void;
-    onRead?(value: Record<string, unknown>): void;
+    onChange(value: Record<string, unknown>): Promise<void>;
+    onRead?(value: Record<string, unknown>): Promise<void>;
     featureWrapperClass: FunctionComponent<PropsWithChildren<FeatureWrapperProps>>;
     minimal?: boolean;
     endpointSpecific?: boolean;

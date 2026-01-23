@@ -13,7 +13,7 @@ export type ValueWithLabelOrPrimitive = ValueWithLabel | number | string;
 
 type EnumProps = {
     value?: ValueWithLabelOrPrimitive;
-    onChange(value: unknown): void;
+    onChange(value: unknown): Promise<void>;
     values: ValueWithLabelOrPrimitive[];
     minimal?: boolean;
 };
@@ -28,10 +28,10 @@ const EnumEditor = memo((props: EnumProps) => {
     const primitiveValue = isPrimitive(value);
 
     const onSelectChange = useCallback(
-        (e: ChangeEvent<HTMLSelectElement>) => {
+        async (e: ChangeEvent<HTMLSelectElement>) => {
             const selectedValue = values.find((v) => (isPrimitive(v) ? v === e.target.value : v.value === Number.parseInt(e.target.value, 10)));
 
-            onChange(selectedValue);
+            await onChange(selectedValue);
         },
         [values, onChange],
     );

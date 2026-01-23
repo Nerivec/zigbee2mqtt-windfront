@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "composite": true,
         "outDir": "./dist",
         "moduleResolution": "bundler",
         "module": "esnext",
@@ -17,5 +18,5 @@
         "skipLibCheck": true
     },
     "suppressImplicitAnyIndexErrors": true,
-    "include": ["./src/**/*", "./test/**/*"]
+    "include": ["./src/**/*", "./src/**/*.json", "package.json"]
 }

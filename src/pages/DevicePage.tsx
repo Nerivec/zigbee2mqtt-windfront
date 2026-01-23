@@ -96,12 +96,12 @@ export default function DevicePage(): JSX.Element {
     useEffect(() => {
         if (sourceIdx && validSourceIdx && device) {
             if (device.type === "Coordinator") {
-                navigate(`/settings/${sourceIdx}/about`, { replace: true });
+                void navigate(`/settings/${sourceIdx}/about`, { replace: true });
             } else if (!tab) {
-                navigate(`/device/${sourceIdx}/${device.ieee_address}/info`, { replace: true });
+                void navigate(`/device/${sourceIdx}/${device.ieee_address}/info`, { replace: true });
             }
         } else {
-            navigate("/devices", { replace: true });
+            void navigate("/devices", { replace: true });
         }
     }, [sourceIdx, validSourceIdx, tab, device, navigate]);
 

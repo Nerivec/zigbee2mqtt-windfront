@@ -2,7 +2,7 @@ import { type InputHTMLAttributes, memo, useEffect, useState } from "react";
 
 type TextProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
     value: string;
-    onChange(value: string): void;
+    onChange(value: string): Promise<void>;
 };
 
 const TextEditor = memo((props: TextProps) => {

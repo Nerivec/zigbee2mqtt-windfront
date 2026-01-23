@@ -27,7 +27,7 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
     const onSelectHandler = useCallback(
         (option: SingleValue<SelectOption>) => {
             if (option) {
-                navigate(option.link);
+                void navigate(option.link);
             }
         },
         [navigate],

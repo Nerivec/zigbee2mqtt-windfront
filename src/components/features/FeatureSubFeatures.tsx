@@ -61,32 +61,40 @@ export default function FeatureSubFeatures({
     }, [device.ieee_address]);
 
     const onFeatureChange = useCallback(
-        (value: Record<string, unknown>): void => {
-            setState((prev) => ({ ...prev, ...value }));
+        (value: Record<string, unknown>): Promise<void> => {
+            setState((prev) => {
+                const newState = { ...prev, ...value };
 
-            if (!isRoot) {
-                if (type === "composite") {
-                    onChange(property ? { [property]: { ...state, ...value } } : value);
-                } else {
-                    onChange(value);
+                if (!isRoot) {
+                    if (type === "composite") {
+                        const newValue = { ...deviceState, ...newState, ...value };
+
+                        onChange(property ? { [property]: newValue } : newValue);
+                    } else {
+                        onChange(value);
+                    }
                 }
-            }
+
+                return newState;
+            });
+
+            return Promise.resolve();
         },
-        [state, type, property, isRoot, onChange],
+        [deviceState, type, property, isRoot, onChange],
     );
 
-    const onRootApply = useCallback((): void => {
+    const onRootApply = useCallback(async (): Promise<void> => {
         const newState = { ...deviceState, ...state };
 
-        onChange(property ? { [property]: newState } : newState);
+        await onChange(property ? { [property]: newState } : newState);
     }, [property, onChange, state, deviceState]);
 
     const onFeatureRead = useCallback(
-        (prop: Record<string, unknown>): void => {
+        async (prop: Record<string, unknown>): Promise<void> => {
             if (type === "composite") {
-                onRead?.(property ? { [property]: prop } : prop);
+                await onRead?.(property ? { [property]: prop } : prop);
             } else {
-                onRead?.(prop);
+                await onRead?.(prop);
             }
         },
         [onRead, type, property],

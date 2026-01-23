@@ -52,14 +52,14 @@ export default function SettingsPage() {
 
     useEffect(() => {
         if (!sourceIdx || !validSourceIdx) {
-            navigate(`/settings/0/${tab || "about"}`, { replace: true });
+            void navigate(`/settings/0/${tab || "about"}`, { replace: true });
         } else if (!tab) {
-            navigate(`/settings/${sourceIdx}/about`, { replace: true });
+            void navigate(`/settings/${sourceIdx}/about`, { replace: true });
         } else if (!subTab) {
             if (tab === "settings") {
-                navigate(`/settings/${sourceIdx}/settings/main`, { replace: true });
+                void navigate(`/settings/${sourceIdx}/settings/main`, { replace: true });
             } else if (tab === "dev-console") {
-                navigate(`/settings/${sourceIdx}/dev-console/mqtt`, { replace: true });
+                void navigate(`/settings/${sourceIdx}/dev-console/mqtt`, { replace: true });
             }
         }
     }, [sourceIdx, validSourceIdx, tab, subTab, navigate]);

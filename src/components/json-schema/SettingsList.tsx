@@ -173,7 +173,14 @@ const propertyToField = (
                     );
                 }
             }
+
+            break;
         }
+
+        case "object":
+        case "null":
+        case undefined:
+            console.error(`Unexpected property type ${propertyType}`);
     }
 };
 

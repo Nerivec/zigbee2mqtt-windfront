@@ -121,8 +121,8 @@ export interface BaseFeatureProps<T extends FeatureWithAnySubFeatures> extends O
     feature: T;
     deviceValue: unknown;
     device: Device;
-    onChange(value: Record<string, unknown> | unknown): void;
-    onRead?(value: Record<string, unknown> | unknown): void;
+    onChange(value: Record<string, unknown> | unknown): Promise<void>;
+    onRead?(value: Record<string, unknown> | unknown): Promise<void>;
     featureWrapperClass: FunctionComponent<PropsWithChildren<FeatureWrapperProps>>;
     minimal?: boolean;
 }
@@ -544,6 +544,8 @@ const getBatteryStateIcon = (state: string | undefined): [IconDefinition, classN
             className = "text-error";
             break;
         }
+        case undefined:
+            break;
     }
 
     return [icon, className];

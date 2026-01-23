@@ -37,7 +37,12 @@ const Color = memo((props: ColorProps) => {
         return "cie1931";
     }, [device.definition]);
 
-    const onEditorChange = useCallback((color: AnyColor) => onChange({ [property ?? "color"]: color }), [property, onChange]);
+    const onEditorChange = useCallback(
+        async (color: AnyColor) => {
+            await onChange({ [property ?? "color"]: color });
+        },
+        [property, onChange],
+    );
 
     return <ColorEditor onChange={onEditorChange} value={value} format={name} minimal={minimal} gamut={gamut} />;
 });
