@@ -114,7 +114,7 @@ const BindingEndpointSection = memo(({ endpointId, rules, devices, groups, sourc
                                     <h4 className="card-title">
                                         {t(($) => $.add, { ns: "common" })}: {t(($) => $.source_endpoint, { ns: "common" })} {endpointId}
                                     </h4>
-                                    <Button onClick={() => setIsAddOpen(false)} className="btn btn-ghost btn-sm">
+                                    <Button onClick={() => setIsAddOpen(false)} className="btn btn-ghost btn-square">
                                         <FontAwesomeIcon icon={faClose} />
                                     </Button>
                                 </div>

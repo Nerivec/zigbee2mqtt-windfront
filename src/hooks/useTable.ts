@@ -19,7 +19,6 @@ import { TABLE_COLUMNS_KEY, TABLE_FILTERS_KEY, TABLE_SORTING_KEY } from "../loca
 
 declare module "@tanstack/react-table" {
     // allows us to define custom properties for our columns
-    // biome-ignore lint/correctness/noUnusedVariables: API
     interface ColumnMeta<TData extends RowData, TValue> {
         filterVariant?: "text" | "range" | "select" | "boolean" | "arrSelect";
         textFaceted?: boolean;

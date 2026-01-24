@@ -91,7 +91,7 @@ const DevicePeek = memo(({ selection: { anchor, sourceIdx, device }, onClose }: 
                                 {device.network_address}
                             </span>
                         </div>
-                        <Button onClick={onClose} className="btn btn-ghost btn-sm">
+                        <Button onClick={onClose} className="btn btn-ghost btn-square">
                             <FontAwesomeIcon icon={faClose} />
                         </Button>
                     </header>
