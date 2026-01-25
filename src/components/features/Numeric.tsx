@@ -17,14 +17,14 @@ const Numeric = memo((props: NumericProps) => {
         steps,
         onChange,
         minimal,
+        batched,
+        sourceIdx,
     } = props;
 
     if (access & FeatureAccessMode.SET) {
         return (
             <RangeEditor
-                onChange={async (value) => {
-                    await onChange(property ? { [property]: value } : value);
-                }}
+                onChange={(value, transactionId) => onChange(property ? { [property]: value } : value, transactionId)}
                 value={typeof deviceValue === "number" ? deviceValue : ""}
                 min={valueMin}
                 max={valueMax}
@@ -32,6 +32,8 @@ const Numeric = memo((props: NumericProps) => {
                 steps={presets?.length ? (presets as ValueWithLabelOrPrimitive[]) /* typing failure */ : steps}
                 unit={unit}
                 minimal={minimal}
+                batched={batched}
+                sourceIdx={sourceIdx}
             />
         );
     }

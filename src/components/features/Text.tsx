@@ -5,22 +5,30 @@ import BaseViewer from "./BaseViewer.js";
 import type { BaseFeatureProps } from "./index.js";
 import NoAccessError from "./NoAccessError.js";
 
-type TextProps = BaseFeatureProps<TextFeature>;
+interface TextProps extends BaseFeatureProps<TextFeature> {
+    hasLocalChange?: boolean;
+}
 
 const Text = memo((props: TextProps) => {
     const {
         feature: { access = FeatureAccessMode.SET, property },
         deviceValue,
         onChange,
+        minimal,
+        batched,
+        hasLocalChange,
+        sourceIdx,
     } = props;
 
     if (access & FeatureAccessMode.SET) {
         return (
             <TextEditor
-                onChange={async (value) => {
-                    await onChange(property ? { [property]: value } : value);
-                }}
+                onChange={(value, transactionId) => onChange(property ? { [property]: value } : value, transactionId)}
                 value={deviceValue != null ? (typeof deviceValue === "string" ? deviceValue : JSON.stringify(deviceValue)) : ""}
+                minimal={minimal}
+                batched={batched}
+                hasLocalChange={hasLocalChange}
+                sourceIdx={sourceIdx}
             />
         );
     }

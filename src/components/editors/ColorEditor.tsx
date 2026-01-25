@@ -3,6 +3,7 @@ import {
     type DetailedHTMLProps,
     type FocusEvent,
     type InputHTMLAttributes,
+    type KeyboardEvent,
     memo,
     useCallback,
     useEffect,
@@ -22,13 +23,18 @@ import {
     SUPPORTED_GAMUTS,
     type ZigbeeColor,
 } from "./index.js";
+import { useCommandFeedback } from "./useCommandFeedback.js";
 
 type ColorEditorProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
     value: AnyColor;
     format: ColorFormat;
     gamut: keyof typeof SUPPORTED_GAMUTS;
-    onChange(color: AnyColor): Promise<void>;
+    onChange(color: AnyColor, transactionId?: string): void;
     minimal?: boolean;
+    /** When true, changes are batched (Apply button) - only show editing state */
+    batched?: boolean;
+    /** Source index for transaction ID generation */
+    sourceIdx?: number;
 };
 
 type ColorInputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
@@ -46,7 +52,7 @@ const ColorInput = memo(({ label, ...rest }: ColorInputProps) => (
     </label>
 ));
 
-const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, format, gamut, minimal }: ColorEditorProps) => {
+const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, format, gamut, minimal, batched, sourceIdx }: ColorEditorProps) => {
     const [gamutKey, setGamutKey] = useState<keyof typeof SUPPORTED_GAMUTS>(gamut in SUPPORTED_GAMUTS ? gamut : "cie1931");
     const selectedGamut = SUPPORTED_GAMUTS[gamutKey];
     const [color, setColor] = useState(convertToColor(initialValue, format, selectedGamut));
@@ -58,9 +64,18 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
         hex: false,
     });
 
+    // Track the value we want to send (for comparison with device response)
+    const colorToSend = useMemo(() => convertFromColor(color, format), [color, format]);
+
+    const { send } = useCommandFeedback({ sourceIdx, batched });
+
+    // Sync color from device state whenever it changes.
+    // Value (device truth) and status dot are decoupled:
+    // - Value: always shows device state when available
+    // - Dot: shows command status (pending/ok/error) independently
+    // User's optimistic choice is shown until device state arrives.
     useEffect(() => {
         const newColor = convertToColor(initialValue, format, selectedGamut);
-
         setColor(newColor);
         setColorString(convertColorToString(newColor));
     }, [initialValue, format, selectedGamut]);
@@ -72,7 +87,6 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
     useEffect(() => {
         if (!inputStates.color_xy) {
             const newColorString = convertXyYToString(color.color_xy);
-
             setColorString((colorString) => ({ ...colorString, color_xy: newColorString }));
         }
     }, [inputStates.color_xy, color.color_xy]);
@@ -80,7 +94,6 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
     useEffect(() => {
         if (!inputStates.color_hs) {
             const newColorString = convertHsvToString(color.color_hs);
-
             setColorString((colorString) => ({ ...colorString, color_hs: newColorString }));
         }
     }, [inputStates.color_hs, color.color_hs]);
@@ -88,7 +101,6 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
     useEffect(() => {
         if (!inputStates.color_rgb) {
             const newColorString = convertRgbToString(color.color_rgb);
-
             setColorString((colorString) => ({ ...colorString, color_rgb: newColorString }));
         }
     }, [inputStates.color_rgb, color.color_rgb]);
@@ -96,7 +108,6 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
     useEffect(() => {
         if (!inputStates.hex) {
             const newColorString = convertHexToString(color.hex);
-
             setColorString((colorString) => ({ ...colorString, hex: newColorString }));
         }
     }, [inputStates.hex, color.hex]);
@@ -131,12 +142,14 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
         [color.color_hs, selectedGamut],
     );
 
+    // Handler for color text inputs - updates local value only, sends on blur/Enter
     const onInputChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             const { value, name } = e.target;
 
             setColorString((currentColorString) => ({ ...currentColorString, [name]: value }));
-            setColor(convertStringToColor(value, name as ColorFormat, selectedGamut));
+            const newColor = convertStringToColor(value, name as ColorFormat, selectedGamut);
+            setColor(newColor);
         },
         [selectedGamut],
     );
@@ -148,21 +161,31 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
     const onInputBlur = useCallback(
         (e: FocusEvent<HTMLInputElement>) => {
             setInputStates((states) => ({ ...states, [e.target.name]: false }));
-            onChange(convertFromColor(color, format));
+            send((txId) => onChange(colorToSend, txId));
         },
-        [color, format, onChange],
+        [colorToSend, send, onChange],
+    );
+
+    const onInputKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter") {
+                send((txId) => onChange(colorToSend, txId));
+                e.currentTarget.blur();
+            }
+        },
+        [colorToSend, send, onChange],
     );
 
     const onRangeSubmit = useCallback(() => {
-        onChange(convertFromColor(color, format));
-    }, [color, format, onChange]);
+        send((txId) => onChange(colorToSend, txId));
+    }, [colorToSend, send, onChange]);
 
     const hueBackgroundColor = useMemo(() => `hsl(${color.color_hs[0]}, 100%, 50%)`, [color.color_hs[0]]);
 
     return (
         <>
-            <div className="flex flex-row flex-wrap gap-3 items-center">
-                <div className={`w-full${minimal ? " max-w-xs" : ""}`}>
+            <div className="flex flex-row items-start gap-2">
+                <div className={`flex-1${minimal ? " max-w-xs" : ""}`}>
                     <input
                         type="range"
                         min={0}
@@ -177,25 +200,31 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
                     />
                 </div>
             </div>
-            <div className="flex flex-row flex-wrap gap-3 items-center">
-                <div className={`w-full${minimal ? " max-w-xs" : ""}`}>
-                    <input
-                        type="range"
-                        min={0}
-                        max={360}
-                        value={color.color_hs[0]}
-                        className={`range [--range-bg:transparent] [--range-fill:0] w-full${minimal ? " range-xs " : ""}`}
-                        style={{ backgroundImage: HUE_BACKGROUND_IMAGE }}
-                        onChange={onHueChange}
-                        onTouchEnd={onRangeSubmit}
-                        onMouseUp={onRangeSubmit}
-                        onKeyUp={onRangeSubmit}
-                    />
-                </div>
+            <div className={`flex-1${minimal ? " max-w-xs" : ""}`}>
+                <input
+                    type="range"
+                    min={0}
+                    max={360}
+                    value={color.color_hs[0]}
+                    className={`range [--range-bg:transparent] [--range-fill:0] w-full${minimal ? " range-xs " : ""}`}
+                    style={{ backgroundImage: HUE_BACKGROUND_IMAGE }}
+                    onChange={onHueChange}
+                    onTouchEnd={onRangeSubmit}
+                    onMouseUp={onRangeSubmit}
+                    onKeyUp={onRangeSubmit}
+                />
             </div>
             {!minimal && (
-                <div className="flex flex-row flex-wrap gap-2 justify-around">
-                    <ColorInput label="hex" name="hex" value={colorString.hex} onChange={onInputChange} onFocus={onInputFocus} onBlur={onInputBlur} />
+                <div className="flex flex-row flex-wrap gap-2 justify-around items-center">
+                    <ColorInput
+                        label="hex"
+                        name="hex"
+                        value={colorString.hex}
+                        onChange={onInputChange}
+                        onFocus={onInputFocus}
+                        onBlur={onInputBlur}
+                        onKeyDown={onInputKeyDown}
+                    />
                     <ColorInput
                         label="rgb"
                         name="color_rgb"
@@ -203,6 +232,7 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
                         onChange={onInputChange}
                         onFocus={onInputFocus}
                         onBlur={onInputBlur}
+                        onKeyDown={onInputKeyDown}
                     />
                     <ColorInput
                         label="hsv"
@@ -211,6 +241,7 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
                         onChange={onInputChange}
                         onFocus={onInputFocus}
                         onBlur={onInputBlur}
+                        onKeyDown={onInputKeyDown}
                     />
                     <ColorInput
                         label="xyY"
@@ -219,6 +250,7 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
                         onChange={onInputChange}
                         onFocus={onInputFocus}
                         onBlur={onInputBlur}
+                        onKeyDown={onInputKeyDown}
                     />
                 </div>
             )}

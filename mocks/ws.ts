@@ -27,6 +27,20 @@ const cloneDeviceState = (ieee: string) => {
     }
 };
 
+/**
+ * Resolve a topic (IEEE address or friendly name) to the friendly name.
+ * In real Z2M, state updates are always published to the friendly_name topic.
+ */
+const resolveToFriendlyName = (topic: string): string => {
+    if (topic.startsWith("0x")) {
+        const device = BRIDGE_DEVICES.payload.find((d) => d.ieee_address === topic);
+        if (device) {
+            return device.friendly_name;
+        }
+    }
+    return topic;
+};
+
 const randomString = (len: number): string =>
     Math.random()
         .toString(36)
@@ -35,8 +49,9 @@ const randomString = (len: number): string =>
 // const randomIntInclusive = (min: number, max: number) =>  Math.floor(Math.random() * (max - min + 1)) + min;
 
 export function startServer() {
+    const port = Number.parseInt(process.env.MOCK_WS_PORT || "8579", 10);
     const wss = new WebSocketServer({
-        port: 8579,
+        port,
     });
 
     wss.on("connection", (ws) => {
@@ -332,6 +347,8 @@ export function startServer() {
                 }
                 default: {
                     if (msg.topic.endsWith("/set")) {
+                        const deviceTopic = msg.topic.replace("/set", "");
+
                         if ("command" in msg.payload) {
                             setTimeout(() => {
                                 ws.send(JSON.stringify(BRIDGE_LOGGING_EXECUTE_COMMAND));
@@ -340,6 +357,99 @@ export function startServer() {
                             setTimeout(() => {
                                 ws.send(JSON.stringify(BRIDGE_LOGGING_READ_ATTR));
                             }, 500);
+                        } else {
+                            // Command Response API: Send response on {device}/response topic
+                            const requestId = msg.payload?.z2m?.request_id;
+
+                            if (requestId) {
+                                // Check if this is the sleepy test device (resolve to friendly name first)
+                                const friendlyName = resolveToFriendlyName(deviceTopic);
+                                const isSleepyDevice = friendlyName === "test/sleepy-device";
+
+                                // Simulate backend processing delay (50-200ms, realistic for Zigbee)
+                                const delay = 50 + Math.random() * 150;
+
+                                setTimeout(() => {
+                                    if (isSleepyDevice) {
+                                        // Sleepy device: Return "pending" with final:true
+                                        // This simulates a battery-powered device that's asleep
+                                        // The command is queued and will be delivered when device wakes
+                                        ws.send(
+                                            JSON.stringify({
+                                                topic: `${deviceTopic}/response`,
+                                                payload: {
+                                                    status: "pending",
+                                                    z2m: { request_id: requestId, final: true },
+                                                    data: msg.payload,
+                                                },
+                                            }),
+                                        );
+
+                                        // Simulate device waking up after 30 seconds and confirming the command
+                                        // This sends the state update as if the device finally received the command
+                                        const wakeupDelay = 30000 + Math.random() * 5000; // 30-35 seconds
+                                        setTimeout(() => {
+                                            const { z2m, ...statePayload } = msg.payload;
+                                            const stateTopic = resolveToFriendlyName(deviceTopic);
+                                            ws.send(
+                                                JSON.stringify({
+                                                    topic: stateTopic,
+                                                    payload: {
+                                                        ...statePayload,
+                                                        last_seen: new Date().toISOString(),
+                                                    },
+                                                }),
+                                            );
+                                        }, wakeupDelay);
+                                    } else {
+                                        // Regular device: 90% success, 10% error for realistic testing
+                                        const isSuccess = Math.random() > 0.1;
+
+                                        if (isSuccess) {
+                                            // Success response
+                                            ws.send(
+                                                JSON.stringify({
+                                                    topic: `${deviceTopic}/response`,
+                                                    payload: {
+                                                        status: "ok",
+                                                        z2m: { request_id: requestId },
+                                                        data: msg.payload,
+                                                    },
+                                                }),
+                                            );
+
+                                            // Also send state update (always to friendly_name topic, like real Z2M)
+                                            const { z2m, ...statePayload } = msg.payload;
+                                            const stateTopic = resolveToFriendlyName(deviceTopic);
+                                            ws.send(
+                                                JSON.stringify({
+                                                    topic: stateTopic,
+                                                    payload: {
+                                                        ...statePayload,
+                                                        last_seen: new Date().toISOString(),
+                                                    },
+                                                }),
+                                            );
+                                        } else {
+                                            // Error response (simulate timeout or device error)
+                                            ws.send(
+                                                JSON.stringify({
+                                                    topic: `${deviceTopic}/response`,
+                                                    payload: {
+                                                        status: "error",
+                                                        z2m: { request_id: requestId },
+                                                        error: {
+                                                            code: "SEND_FAILED",
+                                                            message: "Send failed",
+                                                            zcl_status: 134,
+                                                        },
+                                                    },
+                                                }),
+                                            );
+                                        }
+                                    }
+                                }, delay);
+                            }
                         }
                     } else if (msg.topic.startsWith("bridge/request/")) {
                         sendResponseOK();
@@ -351,5 +461,5 @@ export function startServer() {
         });
     });
 
-    console.log("Started WebSocket server");
+    console.log(`Started WebSocket server on port ${port}`);
 }

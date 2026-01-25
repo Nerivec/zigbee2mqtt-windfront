@@ -165,6 +165,50 @@ export type AnySubFeature = BasicFeature | WithAnySubFeatures<FeatureWithSubFeat
 
 export type Toast = { sourceIdx: number; topic: string; status: "ok" | "error"; error: string | undefined; transaction?: string };
 
+/**
+ * Command Response from Z2M backend (API V2)
+ * Received on {device}/response topic after sending commands with z2m.request_id
+ */
+export type CommandResponse = {
+    /** Operation type */
+    type: "set" | "get";
+
+    /** Result status */
+    status: "ok" | "partial" | "error" | "pending";
+
+    /** Device/group friendly_name */
+    target: string;
+
+    /** Successful attribute values (present if status is 'ok' or 'partial') */
+    data?: Record<string, unknown>;
+
+    /** Failed attributes with error messages (present if status is 'partial') */
+    failed?: Record<string, string>;
+
+    /** Global error (present if status is 'error') */
+    error?: {
+        /** Normalized error code (optional - Z2M sets where detectable) */
+        code?: "TIMEOUT" | "NO_ROUTE" | "ZCL_ERROR" | "UNKNOWN";
+        /** Raw message from zigbee-herdsman */
+        message: string;
+        /** ZCL status code (e.g., 134 = UNSUPPORTED_ATTRIBUTE) */
+        zcl_status?: number;
+    };
+
+    /** Z2M metadata */
+    z2m: {
+        /** Echoed from request */
+        request_id: string;
+        /** TRUE = Gateway finished processing (stop spinner) */
+        final: boolean;
+        /** Round-trip time in milliseconds (optional) */
+        elapsed_ms?: number;
+        /** For group commands only */
+        transmission_type?: "unicast" | "multicast";
+        member_count?: number;
+    };
+};
+
 export type RGBColor = {
     r: number;
     g: number;

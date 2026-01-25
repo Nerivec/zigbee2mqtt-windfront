@@ -469,6 +469,12 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
                         addedToasts = true;
                         const [, type, key, name, error] = match;
 
+                        // KNOWN ISSUE: For sleepy devices, when a newer command supersedes an older
+                        // queued command, zigbee-herdsman rejects the old command with "Delivery failed"
+                        // error (the original failure reason), not a distinct "superseded" error.
+                        // This causes confusing error toasts when rapidly sending commands.
+                        // Future enhancement: herdsman could use distinct error for superseded commands,
+                        // allowing frontend to suppress those toasts. See pr-backend.md enhancement C.
                         newToasts.push({
                             sourceIdx,
                             topic: `${name}/${type}(${key})`,

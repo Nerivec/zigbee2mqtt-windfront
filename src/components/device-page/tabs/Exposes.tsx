@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../../store.js";
@@ -17,25 +17,41 @@ export default function Exposes({ sourceIdx, device }: ExposesProps) {
     const { t } = useTranslation("common");
     const deviceState = useAppStore(useShallow((state) => state.deviceStates[sourceIdx][device.friendly_name] ?? {}));
 
+    // Track device state updates - increments whenever deviceState object changes
+    // This allows child components to detect device responses even if specific values don't change
+    // IMPORTANT: Increment synchronously during render (not in useEffect) so children see the
+    // updated version on the same render cycle. Effects run after render, causing a race condition.
+    const deviceStateVersionRef = useRef(0);
+    const prevDeviceStateRef = useRef<typeof deviceState | null>(null);
+
+    if (deviceState !== prevDeviceStateRef.current) {
+        deviceStateVersionRef.current++;
+    }
+    prevDeviceStateRef.current = deviceState;
+
+    const deviceStateVersion = deviceStateVersionRef.current;
+
     const onChange = useCallback(
-        async (value: Record<string, unknown>) => {
+        async (value: Record<string, unknown>, transactionId?: string) => {
+            const payload = transactionId ? { ...value, z2m: { request_id: transactionId } } : value;
             await sendMessage<"{friendlyNameOrId}/set">(
                 sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${device.ieee_address}/set`,
-                value,
+                payload,
             );
         },
         [sourceIdx, device.ieee_address],
     );
 
     const onRead = useCallback(
-        async (value: Record<string, unknown>) => {
+        async (value: Record<string, unknown>, transactionId?: string) => {
+            const payload = transactionId ? { ...value, z2m: { request_id: transactionId } } : value;
             await sendMessage<"{friendlyNameOrId}/get">(
                 sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${device.ieee_address}/get`,
-                value,
+                payload,
             );
         },
         [sourceIdx, device.ieee_address],
@@ -49,10 +65,12 @@ export default function Exposes({ sourceIdx, device }: ExposesProps) {
                     feature={expose}
                     device={device}
                     deviceState={deviceState}
+                    deviceStateVersion={deviceStateVersion}
                     onChange={onChange}
                     onRead={onRead}
                     featureWrapperClass={FeatureWrapper}
                     parentFeatures={[]}
+                    sourceIdx={sourceIdx}
                 />
             ))}
         </div>

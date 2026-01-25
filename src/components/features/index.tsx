@@ -121,10 +121,14 @@ export interface BaseFeatureProps<T extends FeatureWithAnySubFeatures> extends O
     feature: T;
     deviceValue: unknown;
     device: Device;
-    onChange(value: Record<string, unknown> | unknown): Promise<void>;
-    onRead?(value: Record<string, unknown> | unknown): Promise<void>;
+    onChange(value: Record<string, unknown> | unknown, transactionId?: string): void;
+    onRead?(value: Record<string, unknown> | unknown, transactionId?: string): void;
     featureWrapperClass: FunctionComponent<PropsWithChildren<FeatureWrapperProps>>;
     minimal?: boolean;
+    /** When true, changes are batched and submitted via Apply button - editors should show editing state only */
+    batched?: boolean;
+    /** Source index for transaction ID generation */
+    sourceIdx?: number;
 }
 
 export interface BaseWithSubFeaturesProps<T extends FeatureWithAnySubFeatures> extends Omit<BaseFeatureProps<T>, "deviceValue"> {

@@ -23,20 +23,28 @@ import Text from "./Text.js";
 interface FeatureProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
     feature: FeatureWithAnySubFeatures;
     device: Device;
-    onChange(value: Record<string, unknown>): Promise<void>;
-    onRead?(value: Record<string, unknown>): Promise<void>;
+    onChange(value: Record<string, unknown>, transactionId?: string): void;
+    onRead?(value: Record<string, unknown>, transactionId?: string): void;
     featureWrapperClass: FunctionComponent<PropsWithChildren<FeatureWrapperProps>>;
     minimal?: boolean;
     endpointSpecific?: boolean;
     steps?: ValueWithLabelOrPrimitive[];
     parentFeatures: FeatureWithAnySubFeatures[];
     deviceState: DeviceState | Zigbee2MQTTDeviceOptions;
+    deviceStateVersion?: number;
+    /** When true, changes are batched and submitted via Apply button */
+    batched?: boolean;
+    /** When true, this feature has a local change pending Apply */
+    hasLocalChange?: boolean;
+    /** Source index for transaction ID generation */
+    sourceIdx?: number;
 }
 
 export default function Feature({
     feature,
     device,
     deviceState,
+    deviceStateVersion,
     steps,
     onRead,
     onChange,
@@ -44,25 +52,32 @@ export default function Feature({
     minimal,
     endpointSpecific,
     parentFeatures,
+    batched,
+    hasLocalChange,
+    sourceIdx,
 }: FeatureProps): JSX.Element {
     const deviceValue = feature.property ? deviceState[feature.property] : deviceState;
     const key = getFeatureKey(feature);
     const genericParams = {
         device,
         deviceValue,
+        deviceStateVersion,
         onChange,
         onRead,
         featureWrapperClass: FeatureWrapper,
         minimal,
         endpointSpecific,
         parentFeatures,
+        batched,
+        hasLocalChange,
+        sourceIdx,
     };
-    const wrapperParams = { feature, onRead, deviceValue, parentFeatures, endpointSpecific };
+    const wrapperParams = { feature, onRead, deviceValue, deviceStateVersion, parentFeatures, endpointSpecific, sourceIdx };
 
     switch (feature.type) {
         case "binary": {
             return (
-                <FeatureWrapper key={key} {...wrapperParams}>
+                <FeatureWrapper key={key} {...wrapperParams} inline={batched}>
                     <Binary feature={feature} key={key} {...genericParams} />
                 </FeatureWrapper>
             );

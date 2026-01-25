@@ -315,4 +315,74 @@ export const DEVICE_STATES: Message<DeviceState>[] = [
         },
         topic: "multi-sensor wiren",
     },
+    {
+        payload: {
+            linkquality: 180,
+            // Generic composite test
+            test_composite: {
+                temperature_setpoint: 21.5,
+                custom_value: 42,
+                enabled: true,
+                power_mode: "ON",
+                operating_mode: "auto",
+                device_name: "Living Room",
+            },
+            // List test
+            schedule_times: [360, 720, 1080],
+            // Climate type (thermostat controls)
+            test_climate: {
+                local_temperature: 22.5,
+                occupied_heating_setpoint: 21.0,
+                system_mode: "heat",
+                running_state: "idle",
+            },
+            // Cover type (blinds/shutters)
+            test_cover: {
+                state: "OPEN",
+                position: 75,
+                tilt: 50,
+            },
+            // Fan type
+            test_fan: {
+                state: "ON",
+                mode: "medium",
+            },
+            // Light type
+            test_light: {
+                state: "ON",
+                brightness: 200,
+                color_temp: 300,
+            },
+            // Lock type
+            test_lock: {
+                state: "LOCK",
+            },
+            // Switch type
+            test_switch: {
+                state: "OFF",
+            },
+        },
+        topic: "test/composite-device",
+    },
+    // Sleepy device for testing Command Response API with queued commands
+    {
+        payload: {
+            battery: 85,
+            linkquality: 120,
+            // Generic composite test (batched with Apply button)
+            sleepy_composite: {
+                temperature_setpoint: 20.0,
+                enabled: false,
+                operating_mode: "eco",
+            },
+            // List test (batched with Apply button)
+            sleepy_schedule: [480, 1020],
+            // Immediate-mode features (no Apply button)
+            sleepy_power: "OFF",
+            sleepy_brightness: 128,
+            sleepy_mode: "auto",
+            sleepy_name: "Bedroom Sensor",
+        },
+        topic: "test/sleepy-device",
+    },
 ];

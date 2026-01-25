@@ -20,6 +20,7 @@ type Props = Omit<BaseWithSubFeaturesProps<FeatureWithAnySubFeatures>, "feature"
         features: FeatureWithAnySubFeatures[];
         lastSeenConfig: LastSeenConfig;
         endpoint?: number;
+        headerAction?: React.ReactNode;
     }>;
 
 const DeviceCard = memo(
@@ -35,6 +36,7 @@ const DeviceCard = memo(
         features,
         featureWrapperClass,
         children,
+        headerAction,
     }: Props) => {
         const { t } = useTranslation(["zigbee", "devicePage"]);
         const endpointName = endpoint != null ? device.endpoints[endpoint]?.name : undefined;
@@ -58,13 +60,14 @@ const DeviceCard = memo(
                             minimal={true}
                             parentFeatures={[]}
                             endpointSpecific={endpointSpecific}
+                            sourceIdx={sourceIdx}
                         />,
                     );
                 }
             }
 
             return elements;
-        }, [endpointName, device, endpoint, deviceState, features, featureWrapperClass, onChange, onRead]);
+        }, [endpointName, device, endpoint, deviceState, features, featureWrapperClass, onChange, onRead, sourceIdx]);
 
         return (
             <>
@@ -74,7 +77,7 @@ const DeviceCard = memo(
                             {/* disabled always false because dashboard does not contain disabled devices */}
                             <DeviceImage disabled={false} device={device} otaState={deviceState.update?.state} />
                         </div>
-                        <div className="min-w-0">
+                        <div className="min-w-0 grow">
                             <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover font-semibold">
                                 {device.friendly_name}
                                 {endpoint != null ? ` (${t(($) => $.endpoint)}: ${endpointName ? `${endpointName} / ` : ""}${endpoint})` : ""}
@@ -93,6 +96,7 @@ const DeviceCard = memo(
                                 </span>
                             )}
                         </div>
+                        {headerAction && <div className="flex-none">{headerAction}</div>}
                     </div>
                     <div className="text-sm w-full p-2 max-h-125 overflow-y-auto" style={{ scrollbarWidth: "thin" }}>
                         {displayedFeatures}

@@ -18,7 +18,7 @@ export type GroupMemberProps = {
         groupMember: AppState["groups"][number][number]["members"][number];
         lastSeenConfig: AppState["bridgeInfo"][number]["config"]["advanced"]["last_seen"];
         removeDeviceFromGroup(deviceIeee: string, endpoint: number): Promise<void>;
-        setDeviceState(ieee: string, value: Record<string, unknown>): Promise<void>;
+        setDeviceState(ieee: string, value: Record<string, unknown>, transactionId?: string): Promise<void>;
     };
 };
 
@@ -37,7 +37,7 @@ const GroupMember = ({
     const scenesFeatures = useAppStore(useShallow((state) => state.deviceScenesFeatures[sourceIdx][device.ieee_address] ?? []));
 
     const onCardChange = useCallback(
-        async (value: Record<string, unknown>) => await setDeviceState(device.ieee_address, value),
+        async (value: Record<string, unknown>, transactionId?: string) => await setDeviceState(device.ieee_address, value, transactionId),
         [device.ieee_address, setDeviceState],
     );
 

@@ -14,12 +14,14 @@ const Enum = memo((props: EnumProps) => {
         feature: { access = FeatureAccessMode.SET, values, property },
         deviceValue,
         minimal,
+        batched,
+        sourceIdx,
     } = props;
 
     if (access & FeatureAccessMode.SET) {
         return (
             <EnumEditor
-                onChange={(value) => onChange(property ? { [property]: value } : value)}
+                onChange={(value, transactionId) => onChange(property ? { [property]: value } : value, transactionId)}
                 values={values}
                 value={
                     deviceValue != null && (typeof deviceValue === "string" || typeof deviceValue === "number" || typeof deviceValue === "object")
@@ -27,6 +29,8 @@ const Enum = memo((props: EnumProps) => {
                         : ""
                 }
                 minimal={minimal || values.length > BIG_ENUM_SIZE}
+                batched={batched}
+                sourceIdx={sourceIdx}
             />
         );
     }

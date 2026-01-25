@@ -13,6 +13,8 @@ const Color = memo((props: ColorProps) => {
         feature: { name, features, property },
         onChange,
         minimal,
+        batched,
+        sourceIdx,
     } = props;
 
     const value = useMemo(() => {
@@ -38,13 +40,13 @@ const Color = memo((props: ColorProps) => {
     }, [device.definition]);
 
     const onEditorChange = useCallback(
-        async (color: AnyColor) => {
-            await onChange({ [property ?? "color"]: color });
-        },
+        (color: AnyColor, transactionId?: string) => onChange({ [property ?? "color"]: color }, transactionId),
         [property, onChange],
     );
 
-    return <ColorEditor onChange={onEditorChange} value={value} format={name} minimal={minimal} gamut={gamut} />;
+    return (
+        <ColorEditor onChange={onEditorChange} value={value} format={name} minimal={minimal} gamut={gamut} batched={batched} sourceIdx={sourceIdx} />
+    );
 });
 
 export default Color;

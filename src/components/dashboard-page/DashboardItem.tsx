@@ -17,12 +17,26 @@ const DashboardItem = ({
     const { t } = useTranslation("zigbee");
 
     const onCardChange = useCallback(
-        async (value: unknown) => {
+        async (value: unknown, transactionId?: string) => {
+            const payload = transactionId ? { ...(value as Record<string, unknown>), z2m: { request_id: transactionId } } : value;
             await sendMessage<"{friendlyNameOrId}/set">(
                 sourceIdx,
                 // @ts-expect-error templated API endpoint
                 `${device.ieee_address}/set`,
-                value,
+                payload,
+            );
+        },
+        [sourceIdx, device.ieee_address],
+    );
+
+    const onCardRead = useCallback(
+        async (value: Record<string, unknown>, transactionId?: string) => {
+            const payload = transactionId ? { ...value, z2m: { request_id: transactionId } } : value;
+            await sendMessage<"{friendlyNameOrId}/get">(
+                sourceIdx,
+                // @ts-expect-error templated API endpoint
+                `${device.ieee_address}/get`,
+                payload,
             );
         },
         [sourceIdx, device.ieee_address],
@@ -38,18 +52,17 @@ const DashboardItem = ({
                 device={device}
                 deviceState={deviceState}
                 onChange={onCardChange}
+                onRead={onCardRead}
                 featureWrapperClass={DashboardFeatureWrapper}
                 lastSeenConfig={lastSeenConfig}
             >
-                <div className="join join-horizontal">
-                    <Button<void>
-                        onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
-                        className="btn btn-outline btn-error btn-square btn-sm join-item tooltip-left"
-                        title={t(($) => $.remove_device)}
-                    >
-                        <FontAwesomeIcon icon={faTrash} />
-                    </Button>
-                </div>
+                <Button<void>
+                    onClick={async () => await NiceModal.show(RemoveDeviceModal, { sourceIdx, device, removeDevice })}
+                    className="btn btn-outline btn-error btn-square btn-sm tooltip-left"
+                    title={t(($) => $.remove_device)}
+                >
+                    <FontAwesomeIcon icon={faTrash} />
+                </Button>
             </DeviceCard>
         </div>
     );
