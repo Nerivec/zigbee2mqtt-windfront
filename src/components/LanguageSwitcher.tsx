@@ -45,9 +45,9 @@ const LanguageSwitcher = memo(() => {
                         await i18n.changeLanguage(language);
                     }}
                     onKeyUp={async (e) => {
-                            if (e.key === "enter") {
-                                await i18n.changeLanguage(language);
-                            }
+                        if (e.key === "enter") {
+                            await i18n.changeLanguage(language);
+                        }
                     }}
                 >
                     <span className={`dropdown-item${language === currentLanguage ? " menu-active" : ""}`}>

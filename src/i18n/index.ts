@@ -174,7 +174,7 @@ i18n.use(LanguageDetector)
         },
     });
 
-let savedLang: string | null = null;
+const savedLang: string | null = null;
 
 if (!savedLang) {
     i18n.changeLanguage("en");
