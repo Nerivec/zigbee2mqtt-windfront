@@ -1,6 +1,7 @@
 import { type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import DialogDropdown from "./DialogDropdown.js";
+import { I18NEXTLNG_KEY } from "../localStoreConsts.js";
 
 const LOCALES_NAMES_MAP = {
     bg: "Български",
@@ -41,11 +42,21 @@ const LanguageSwitcher = memo(() => {
             languages.push(
                 <li
                     key={language}
-                    onClick={async () => await i18n.changeLanguage(language)}
-                    onKeyUp={async (e) => {
-                        if (e.key === "enter") {
-                            await i18n.changeLanguage(language);
+                    onClick={async () => {
+                        try {
+                            localStorage.setItem(I18NEXTLNG_KEY, language);
+                        } catch (e) {
                         }
+                        await i18n.changeLanguage(language);
+                    }}
+                    onKeyUp={async (e) => {
+                            if (e.key === "enter") {
+                                try {
+                                    localStorage.setItem(I18NEXTLNG_KEY, language);
+                                } catch (e) {
+                                }
+                                await i18n.changeLanguage(language);
+                            }
                     }}
                 >
                     <span className={`dropdown-item${language === currentLanguage ? " menu-active" : ""}`}>
