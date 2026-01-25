@@ -21,3 +21,11 @@ input, select, textarea, label {
     --tw-outline-style: none !important;
     outline-style: none !important;
 }
+
+/* Nested expose rows: one separator between sub-sections (DaisyUI adds ::after to .list .list-row) */
+.list .list-row-sub::after {
+    display: none;
+}
+.list-col-wrap > .list-row-sub:not(:first-child) {
+    border-top: var(--border, 1px) solid color-mix(in oklab, var(--color-base-content, currentColor) 5%, transparent);
+}
