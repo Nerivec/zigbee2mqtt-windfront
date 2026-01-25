@@ -2,7 +2,6 @@ import i18n, { type ResourceLanguage } from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import { register } from "timeago.js";
-import { I18NEXTLNG_KEY } from "../localStoreConsts.js";
 import timeBg from "timeago.js/lib/lang/bg.js";
 import timeCa from "timeago.js/lib/lang/ca.js";
 import timeCs from "timeago.js/lib/lang/cs.js";
@@ -162,33 +161,12 @@ i18n.on("languageChanged", (lng: string) => {
     document.documentElement.lang = lng;
 });
 
-function storageAvailable(type: "localStorage" | "sessionStorage"): boolean {
-    try {
-        const storage = (window as any)[type];
-        const x = "__storage_test__";
-        storage.setItem(x, x);
-        storage.removeItem(x);
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-
-const hasLocalStorage = storageAvailable("localStorage");
-
-const detectionOptions = {
-    order: ["localStorage", "navigator", "htmlTag", "path", "subdomain"],
-    lookupLocalStorage: I18NEXTLNG_KEY,
-    caches: [],
-};
-
 i18n.use(LanguageDetector)
     .use(initReactI18next)
     .init({
         fallbackLng: "en",
         debug,
         resources,
-        detection: detectionOptions,
         ns: Object.keys(enTranslations),
         defaultNS: "common",
         interpolation: {
@@ -197,13 +175,6 @@ i18n.use(LanguageDetector)
     });
 
 let savedLang: string | null = null;
-if (hasLocalStorage) {
-    try {
-        savedLang = localStorage.getItem(I18NEXTLNG_KEY);
-    } catch (e) {
-        savedLang = null;
-    }
-}
 
 if (!savedLang) {
     i18n.changeLanguage("en");
