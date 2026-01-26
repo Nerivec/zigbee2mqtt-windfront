@@ -49,12 +49,8 @@ export default function FeatureWrapper({
         [onRead],
     );
 
-    // Nested rows: keep list-row layout but avoid double borders (DaisyUI adds ::after to .list .list-row)
-    const isNested = parentFeatures.length > 0;
-    const rowClass = isNested ? "list-row list-row-sub p-3" : "list-row p-3";
-
     return (
-        <div className={rowClass}>
+        <div className="list-row p-3">
             <div>
                 <FontAwesomeIcon icon={fi} className={fiClassName} size="2xl" />
             </div>
