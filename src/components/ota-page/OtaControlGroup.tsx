@@ -80,7 +80,7 @@ const OtaControlGroup = memo(
 
                 switch (action) {
                     case "check": {
-                        const payload: OnCheckClickPayload = { sourceIdx, ieee: device.ieee_address };
+                        const payload: OnCheckClickPayload = { sourceIdx, ieee: device.ieee_address, downgrade: sourceDowngrade };
 
                         if (sourceUrl) {
                             payload.url = sourceUrl;

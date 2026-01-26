@@ -1,19 +1,24 @@
 import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
 
-export type OnCheckClickPayload = { sourceIdx: number; ieee: string } & Omit<Zigbee2MQTTAPI["bridge/request/device/ota_update/check"], "id">;
+export type OnCheckClickPayload = {
+    sourceIdx: number;
+    ieee: string;
+    downgrade: boolean;
+} & Omit<Zigbee2MQTTAPI["bridge/request/device/ota_update/check"], "id">;
 export type OnUpdateClickPayload = {
     sourceIdx: number;
     ieee: string;
     downgrade: boolean;
 } & Omit<Zigbee2MQTTAPI["bridge/request/device/ota_update/update"], "id">;
-export type OnScheduleClickPayload = { sourceIdx: number; ieee: string; downgrade: boolean } & Omit<
-    Zigbee2MQTTAPI["bridge/request/device/ota_update/schedule"],
-    "id"
->;
-export type OnUnscheduleClickPayload = { sourceIdx: number; ieee: string } & Omit<
-    Zigbee2MQTTAPI["bridge/request/device/ota_update/unschedule"],
-    "id"
->;
+export type OnScheduleClickPayload = {
+    sourceIdx: number;
+    ieee: string;
+    downgrade: boolean;
+} & Omit<Zigbee2MQTTAPI["bridge/request/device/ota_update/schedule"], "id">;
+export type OnUnscheduleClickPayload = {
+    sourceIdx: number;
+    ieee: string;
+} & Omit<Zigbee2MQTTAPI["bridge/request/device/ota_update/unschedule"], "id">;
 
 export type OtaImageHeader = {
     otaUpgradeFileIdentifier: Uint8Array;

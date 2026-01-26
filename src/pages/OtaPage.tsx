@@ -112,7 +112,11 @@ export default function OtaPage() {
     );
 
     const onCheckClick: OtaControlGroupProps["onCheckClick"] = useCallback(
-        async ({ sourceIdx, ieee, ...rest }) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee, ...rest }),
+        async ({ sourceIdx, ieee, downgrade, ...rest }) =>
+            await sendMessage(sourceIdx, downgrade ? "bridge/request/device/ota_update/check/downgrade" : "bridge/request/device/ota_update/check", {
+                id: ieee,
+                ...rest,
+            }),
         [],
     );
 
