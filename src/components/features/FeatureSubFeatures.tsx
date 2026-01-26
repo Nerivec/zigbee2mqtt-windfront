@@ -110,7 +110,7 @@ export default function FeatureSubFeatures({
                 />
             ))}
             {isRoot && (
-                <div className="self-end float-right">
+                <div className="self-end float-right mt-2">
                     <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply} title={feature.property ?? feature.name}>
                         {t(($) => $.apply)}
                     </Button>

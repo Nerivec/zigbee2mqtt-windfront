@@ -52,7 +52,10 @@ export default function FeatureWrapper({
     return (
         <div className="list-row p-3">
             <div>
-                <FontAwesomeIcon icon={fi} className={fiClassName} size="2xl" />
+                {/* prevent nested composite (most often used for grouping) from extra-indenting with invisible icon, better for small screen */}
+                {parentFeatures.length > 0 && feature.type === "composite" && fiClassName === "opacity-0" ? null : (
+                    <FontAwesomeIcon icon={fi} className={fiClassName} size="2xl" />
+                )}
             </div>
             <div>
                 <div title={featureName}>

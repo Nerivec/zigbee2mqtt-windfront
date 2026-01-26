@@ -132,12 +132,14 @@ export default function Feature({
 
             return (
                 <FeatureWrapper key={key} {...wrapperParams}>
-                    <FeatureSubFeatures
-                        feature={feature}
-                        key={key}
-                        {...genericParams}
-                        deviceState={feature.property ? deviceState[feature.property] : deviceState}
-                    />
+                    <div className="list bg-base-100">
+                        <FeatureSubFeatures
+                            feature={feature}
+                            key={key}
+                            {...genericParams}
+                            deviceState={feature.property ? deviceState[feature.property] : deviceState}
+                        />
+                    </div>
                 </FeatureWrapper>
             );
         }

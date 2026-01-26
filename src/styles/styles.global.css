@@ -21,3 +21,18 @@ input, select, textarea, label {
     --tw-outline-style: none !important;
     outline-style: none !important;
 }
+
+/* Better support for list dividers (nested & not) */
+.list {
+    .list-row {
+        &::after {
+            content: none;
+        }
+
+        &:not(:last-of-type) {
+            &::after {
+                content: "";
+            }
+        }
+    }
+}
