@@ -25,12 +25,8 @@ function isListRoot(parentFeatures: FeatureWithAnySubFeatures[]) {
             return true;
         }
 
-        if (parentFeatures.length === 1) {
-            // When parent is e.g. climate
-            const parentType = parentFeatures[0].type;
-
-            return parentType != null && parentType !== "composite" && parentType !== "list";
-        }
+        // none of the parents must be `composite` or `list` to be considered root
+        return !parentFeatures.some(({ type }) => type === "composite" || type === "list");
     }
 
     return false;

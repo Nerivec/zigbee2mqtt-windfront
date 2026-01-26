@@ -23,6 +23,7 @@ interface FeatureCallbacks {
 
 const mockFeatureCallbacks = new Map<string, FeatureCallbacks>();
 let mockApplyCallback: (() => void) | null = null;
+const applyButtons = new Set<string>();
 
 vi.mock("../src/components/features/Feature.js", () => ({
     default: ({
@@ -41,8 +42,9 @@ vi.mock("../src/components/features/Feature.js", () => ({
 }));
 
 vi.mock("../src/components/Button.js", () => ({
-    default: ({ onClick, children }: { onClick: () => void; children: React.ReactNode }) => {
+    default: ({ onClick, children, title }: { onClick: () => void; children: React.ReactNode; title: string }) => {
         mockApplyCallback = onClick;
+        applyButtons.add(title);
 
         return (
             <button type="button" onClick={onClick}>
@@ -51,8 +53,6 @@ vi.mock("../src/components/Button.js", () => ({
         );
     },
 }));
-
-const expectApplyButtonRendered = (rendered: boolean) => (rendered ? expect(mockApplyCallback).not.toBeNull() : expect(mockApplyCallback).toBeNull());
 
 describe("FeatureSubFeatures", () => {
     const mockDevice: Device = {
@@ -68,6 +68,7 @@ describe("FeatureSubFeatures", () => {
         mockFeatureCallbacks.clear();
 
         mockApplyCallback = null;
+        applyButtons.clear();
 
         vi.clearAllMocks();
     });
@@ -171,7 +172,8 @@ describe("FeatureSubFeatures", () => {
                 />,
             );
 
-            expectApplyButtonRendered(true);
+            expect(applyButtons.size).toStrictEqual(1);
+            expect(applyButtons.has("test")).toStrictEqual(true);
         });
 
         it("identifies root when type=composite with single non-composite/non-list parent", () => {
@@ -192,7 +194,33 @@ describe("FeatureSubFeatures", () => {
                 />,
             );
 
-            expectApplyButtonRendered(true);
+            expect(applyButtons.size).toStrictEqual(1);
+            expect(applyButtons.has("test")).toStrictEqual(true);
+        });
+
+        it("identifies root when type=composite with multiple non-composite parents", () => {
+            const feature: FeatureWithAnySubFeatures = {
+                type: "composite",
+                property: "test",
+                features: [{ type: "numeric", name: "feature1", property: "prop1", access: 7, label: "" }],
+            };
+
+            render(
+                <FeatureSubFeatures
+                    feature={feature}
+                    device={mockDevice}
+                    deviceState={{}}
+                    onChange={vi.fn()}
+                    parentFeatures={[
+                        { type: "switch", name: "parent1", label: "", access: 7, features: [feature] },
+                        { type: "light", name: "parent2", label: "", access: 7, features: [feature] },
+                    ]}
+                    featureWrapperClass={FeatureWrapper}
+                />,
+            );
+
+            expect(applyButtons.size).toStrictEqual(1);
+            expect(applyButtons.has("test")).toStrictEqual(true);
         });
 
         it("identifies non-root when type=composite with composite parent", () => {
@@ -213,7 +241,7 @@ describe("FeatureSubFeatures", () => {
                 />,
             );
 
-            expectApplyButtonRendered(false);
+            expect(applyButtons.size).toStrictEqual(0);
         });
 
         it("identifies non-root when type=composite with list parent", () => {
@@ -243,10 +271,10 @@ describe("FeatureSubFeatures", () => {
                 />,
             );
 
-            expectApplyButtonRendered(false);
+            expect(applyButtons.size).toStrictEqual(0);
         });
 
-        it("identifies non-root when type=composite with multiple parents", () => {
+        it("identifies non-root when type=composite with top parent composite", () => {
             const feature: FeatureWithAnySubFeatures = {
                 type: "composite",
                 property: "test",
@@ -260,14 +288,38 @@ describe("FeatureSubFeatures", () => {
                     deviceState={{}}
                     onChange={vi.fn()}
                     parentFeatures={[
-                        { type: "switch", name: "parent1", label: "", access: 7, features: [feature] },
+                        { type: "composite", name: "parent1", label: "", property: "p1", access: 7, features: [feature] },
                         { type: "light", name: "parent2", label: "", access: 7, features: [feature] },
                     ]}
                     featureWrapperClass={FeatureWrapper}
                 />,
             );
 
-            expectApplyButtonRendered(false);
+            expect(applyButtons.size).toStrictEqual(0);
+        });
+
+        it("identifies non-root when type=composite with non-top parent composite", () => {
+            const feature: FeatureWithAnySubFeatures = {
+                type: "composite",
+                property: "nested",
+                features: [{ type: "numeric", name: "feature1", property: "prop1", access: 7, label: "" }],
+            };
+
+            render(
+                <FeatureSubFeatures
+                    feature={feature}
+                    device={mockDevice}
+                    deviceState={{}}
+                    onChange={vi.fn()}
+                    parentFeatures={[
+                        { type: "light", name: "parent1", label: "", access: 7, features: [feature] },
+                        { type: "composite", name: "parent2", label: "", property: "p2", access: 7, features: [feature] },
+                    ]}
+                    featureWrapperClass={FeatureWrapper}
+                />,
+            );
+
+            expect(applyButtons.size).toStrictEqual(0);
         });
 
         it("identifies non-root when type is not composite", () => {
@@ -287,7 +339,7 @@ describe("FeatureSubFeatures", () => {
                 />,
             );
 
-            expectApplyButtonRendered(false);
+            expect(applyButtons.size).toStrictEqual(0);
         });
 
         it("identifies non-root when parentFeatures is undefined", () => {
@@ -301,7 +353,7 @@ describe("FeatureSubFeatures", () => {
                 <FeatureSubFeatures feature={feature} device={mockDevice} deviceState={{}} onChange={vi.fn()} featureWrapperClass={FeatureWrapper} />,
             );
 
-            expectApplyButtonRendered(false);
+            expect(applyButtons.size).toStrictEqual(0);
         });
     });
 

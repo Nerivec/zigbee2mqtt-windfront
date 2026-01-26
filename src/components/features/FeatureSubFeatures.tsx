@@ -25,12 +25,8 @@ function isFeatureRoot(type: FeatureWithAnySubFeatures["type"], parentFeatures: 
             return true;
         }
 
-        if (parentFeatures.length === 1) {
-            // When parent is e.g. climate
-            const parentType = parentFeatures[0].type;
-
-            return parentType != null && parentType !== "composite" && parentType !== "list";
-        }
+        // none of the parents must be `composite` or `list` to be considered root
+        return !parentFeatures.some(({ type }) => type === "composite" || type === "list");
     }
 
     return false;
@@ -61,26 +57,20 @@ export default function FeatureSubFeatures({
     }, [device.ieee_address]);
 
     const onFeatureChange = useCallback(
-        (value: Record<string, unknown>): Promise<void> => {
-            setState((prev) => {
-                const newState = { ...prev, ...value };
+        async (value: Record<string, unknown>): Promise<void> => {
+            setState((prev) => ({ ...prev, ...value }));
 
-                if (!isRoot) {
-                    if (type === "composite") {
-                        const newValue = { ...deviceState, ...newState, ...value };
+            if (!isRoot) {
+                if (type === "composite") {
+                    const newValue = { ...deviceState, ...state, ...value };
 
-                        onChange(property ? { [property]: newValue } : newValue);
-                    } else {
-                        onChange(value);
-                    }
+                    await onChange(property ? { [property]: newValue } : newValue);
+                } else {
+                    await onChange(value);
                 }
-
-                return newState;
-            });
-
-            return Promise.resolve();
+            }
         },
-        [deviceState, type, property, isRoot, onChange],
+        [deviceState, state, type, property, isRoot, onChange],
     );
 
     const onRootApply = useCallback(async (): Promise<void> => {
@@ -102,13 +92,13 @@ export default function FeatureSubFeatures({
 
     return (
         <>
-            {features.map((feature) => (
+            {features.map((subFeature) => (
                 <Feature
                     // @ts-expect-error typing failure
-                    key={getFeatureKey(feature)}
+                    key={getFeatureKey(subFeature)}
                     // @ts-expect-error typing failure
-                    feature={feature}
-                    parentFeatures={parentFeatures ?? []}
+                    feature={subFeature}
+                    parentFeatures={[...(parentFeatures ?? []), feature]}
                     device={device}
                     deviceState={combinedState}
                     onChange={onFeatureChange}
@@ -116,12 +106,12 @@ export default function FeatureSubFeatures({
                     featureWrapperClass={featureWrapperClass}
                     minimal={minimal}
                     endpointSpecific={endpointSpecific}
-                    steps={steps?.[feature.name]}
+                    steps={steps?.[subFeature.name]}
                 />
             ))}
             {isRoot && (
-                <div className="self-end float-right">
-                    <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply}>
+                <div className="self-end float-right mt-2">
+                    <Button className={`btn btn-primary ${minimal ? "btn-sm" : ""}`} onClick={onRootApply} title={feature.property ?? feature.name}>
                         {t(($) => $.apply)}
                     </Button>
                 </div>
