@@ -224,7 +224,23 @@
         "available": "可用",
         "scheduled": "已计划",
         "schedule_selected": "安排所选",
-        "unschedule_selected": "取消所选安排"
+        "unschedule_selected": "取消所选安排",
+        "downgrade": "降级",
+        "source": "来源",
+        "source_url": "来源 URL",
+        "source_url_index": "索引 URL 或主机文件路径 (*.json)",
+        "source_url_firmware": "固件 URL 或主机文件路径",
+        "source_firmware": "源固件",
+        "default": "默认",
+        "custom_index": "自定义索引",
+        "custom_firmware": "自定义固件",
+        "release_notes": "发行说明",
+        "show_update_settings": "显示更新设置",
+        "image_block_request_timeout": "镜像块请求超时",
+        "image_block_response_delay": "镜像块响应延迟",
+        "default_maximum_data_size": "默认最大数据大小",
+        "no_official_ota_support": "无官方 OTA 支持",
+        "downgrade_notice": "降级支持取决于设备，可能会被拒绝。"
     },
     "settings": {
         "about": "关于",
@@ -275,7 +291,8 @@
         "node_version": "Node 版本",
         "version": "版本",
         "health": "健康",
-        "download_z2m_backup": "下载 Zigbee2MQTT 备份"
+        "download_z2m_backup": "下载 Zigbee2MQTT 备份",
+        "default_page": "默认页面"
     },
     "health": {
         "awaiting_next_check": "等待下次检查",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "自定义图标",
         "definitions-device-homeassistant-name": "Home Assistant 名称",
         "definitions-group-qos": "分组 QoS",
-        "definitions-group-off_state": "发布分组 OFF/CLOSE 时机"
+        "definitions-group-off_state": "发布分组 OFF/CLOSE 时机",
+        "definitions-group-homeassistant-name": "Home Assistant 中的群组名称"
     }
 }

@@ -224,7 +224,23 @@
         "available": "Saatavilla",
         "scheduled": "Ajastettu",
         "schedule_selected": "Aikatauluta valitut",
-        "unschedule_selected": "Poista aikataulutus valituilta"
+        "unschedule_selected": "Poista aikataulutus valituilta",
+        "downgrade": "Palauta vanhempaan versioon",
+        "source": "Lähde",
+        "source_url": "Lähteen URL",
+        "source_url_index": "Indeksin URL tai polku isännän tiedostoon (*.json)",
+        "source_url_firmware": "Firmware-URL tai polku isännän tiedostoon",
+        "source_firmware": "Lähdefirmware",
+        "default": "Oletus",
+        "custom_index": "Mukautettu indeksi",
+        "custom_firmware": "Mukautettu firmware",
+        "release_notes": "Julkaisumuistiinpanot",
+        "show_update_settings": "Näytä päivitysasetukset",
+        "image_block_request_timeout": "Kuvablokin pyynnön aikakatkaisu",
+        "image_block_response_delay": "Kuvablokin vastausviive",
+        "default_maximum_data_size": "Oletus maksimi datakoko",
+        "no_official_ota_support": "Ei virallista OTA-tukea",
+        "downgrade_notice": "Downgrade-tuki riippuu laitteesta ja voidaan hylätä."
     },
     "settings": {
         "about": "Tietoja",
@@ -275,7 +291,8 @@
         "node_version": "Node-versio",
         "version": "Versio",
         "health": "Terveys",
-        "download_z2m_backup": "Lataa Zigbee2MQTT-varmuuskopio"
+        "download_z2m_backup": "Lataa Zigbee2MQTT-varmuuskopio",
+        "default_page": "Oletussivu"
     },
     "health": {
         "awaiting_next_check": "Odottaa seuraavaa tarkistusta",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Mukautettu ikoni",
         "definitions-device-homeassistant-name": "Nimi Home Assistantissa",
         "definitions-group-qos": "Ryhmän QoS",
-        "definitions-group-off_state": "Milloin julkaista OFF/CLOSE"
+        "definitions-group-off_state": "Milloin julkaista OFF/CLOSE",
+        "definitions-group-homeassistant-name": "Ryhmän nimi Home Assistantissa"
     }
 }

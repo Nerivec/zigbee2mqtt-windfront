@@ -224,7 +224,23 @@
         "available": "Eskuragarri",
         "scheduled": "Programatuta",
         "schedule_selected": "Hautatuak programatu",
-        "unschedule_selected": "Hautatuak desprogramatu"
+        "unschedule_selected": "Hautatuak desprogramatu",
+        "downgrade": "Beheraketa",
+        "source": "Iturburu",
+        "source_url": "Iturburuaren URL",
+        "source_url_index": "Indizearen URL edo host fitxategiaren bidea (*.json)",
+        "source_url_firmware": "Firmware URL edo host fitxategiaren bidea",
+        "source_firmware": "Iturburu firmware",
+        "default": "Lehenetsitakoa",
+        "custom_index": "Indize pertsonalizatua",
+        "custom_firmware": "Firmware pertsonalizatua",
+        "release_notes": "Bertsio oharrak",
+        "show_update_settings": "Eguneratze ezarpenak erakutsi",
+        "image_block_request_timeout": "Irudi bloke eskaeraren denbora-muga",
+        "image_block_response_delay": "Irudi bloke erantzun atzerapena",
+        "default_maximum_data_size": "Lehenetsitako datu neurria",
+        "no_official_ota_support": "Ez dago OTA ofizialeko laguntzarik",
+        "downgrade_notice": "Beheraketaren laguntza gailuaren araberakoa da eta ukatu daiteke."
     },
     "settings": {
         "about": "Honi buruz",
@@ -275,7 +291,8 @@
         "node_version": "Node bertsioa",
         "version": "Bertsioa",
         "health": "Osasuna",
-        "download_z2m_backup": "Deskargatu Zigbee2MQTT babeskopia"
+        "download_z2m_backup": "Deskargatu Zigbee2MQTT babeskopia",
+        "default_page": "Lehen orria"
     },
     "health": {
         "awaiting_next_check": "Hurrengo egiaztapen zain",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Ikonoa",
         "definitions-device-homeassistant-name": "HA izena",
         "definitions-group-qos": "Talde QoS",
-        "definitions-group-off_state": "Noiz OFF/CLOSE"
+        "definitions-group-off_state": "Noiz OFF/CLOSE",
+        "definitions-group-homeassistant-name": "Taldearen izena Home Assistant-en"
     }
 }

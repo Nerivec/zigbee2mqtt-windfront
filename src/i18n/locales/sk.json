@@ -224,7 +224,23 @@
         "available": "Dostupné",
         "scheduled": "Naplánované",
         "schedule_selected": "Naplánovať vybrané",
-        "unschedule_selected": "Zrušiť naplánovanie vybraných"
+        "unschedule_selected": "Zrušiť naplánovanie vybraných",
+        "downgrade": "Vrátiť na staršiu verziu",
+        "source": "Zdroj",
+        "source_url": "URL zdroja",
+        "source_url_index": "URL indexu alebo cesta k súboru na hostiteľovi (*.json)",
+        "source_url_firmware": "URL firmvéru alebo cesta k súboru na hostiteľovi",
+        "source_firmware": "Zdrojový firmvér",
+        "default": "Predvolené",
+        "custom_index": "Vlastný index",
+        "custom_firmware": "Vlastný firmvér",
+        "release_notes": "Poznámky k vydaniu",
+        "show_update_settings": "Zobraziť nastavenia aktualizácie",
+        "image_block_request_timeout": "Časový limit požiadavky na blok obrázka",
+        "image_block_response_delay": "Oneskorenie odpovede bloku obrázka",
+        "default_maximum_data_size": "Predvolená maximálna veľkosť dát",
+        "no_official_ota_support": "Žiadna oficiálna podpora OTA",
+        "downgrade_notice": "Podpora vrátenia na staršiu verziu závisí od zariadenia a môže byť odmietnutá."
     },
     "settings": {
         "about": "O aplikácii",
@@ -275,7 +291,8 @@
         "node_version": "Verzia uzla",
         "version": "Verzia",
         "health": "Zdravie",
-        "download_z2m_backup": "Stiahnuť zálohu Zigbee2MQTT"
+        "download_z2m_backup": "Stiahnuť zálohu Zigbee2MQTT",
+        "default_page": "Predvolená stránka"
     },
     "health": {
         "awaiting_next_check": "Čaká sa na ďalšiu kontrolu",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Používateľom definovaná ikona zariadenia pre používateľské rozhranie. Môže to byť úplný URL odkaz na obrázok (napr. https://NEJAKA.STRANKA/MODEL123.jpg) alebo cesta k lokálnemu súboru v adresári `device_icons` (napr. device_icons/MODEL123.png).",
         "definitions-device-homeassistant-name": "Názov zariadenia v Home Assistant",
         "definitions-group-qos": "Úroveň QoS pre MQTT správy tejto skupiny",
-        "definitions-group-off_state": "Kontrolovať, kedy zverejniť stav OFF alebo CLOSE pre skupinu. 'all_members_off': zverejniť stav OFF/CLOSE iba vtedy, keď sú všetci členovia skupiny v stave OFF/CLOSE, 'last_member_state': zverejniť stav OFF vždy, keď sa jeden z jej členov zmení na OFF"
+        "definitions-group-off_state": "Kontrolovať, kedy zverejniť stav OFF alebo CLOSE pre skupinu. 'all_members_off': zverejniť stav OFF/CLOSE iba vtedy, keď sú všetci členovia skupiny v stave OFF/CLOSE, 'last_member_state': zverejniť stav OFF vždy, keď sa jeden z jej členov zmení na OFF",
+        "definitions-group-homeassistant-name": "Názov skupiny v Home Assistante"
     }
 }

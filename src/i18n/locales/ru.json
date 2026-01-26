@@ -224,7 +224,23 @@
         "available": "Доступно",
         "scheduled": "Запланировано",
         "schedule_selected": "Запланировать выбранные",
-        "unschedule_selected": "Отменить планирование выбранных"
+        "unschedule_selected": "Отменить планирование выбранных",
+        "downgrade": "Откат",
+        "source": "Источник",
+        "source_url": "URL источника",
+        "source_url_index": "URL индекса или путь к файлу на хосте (*.json)",
+        "source_url_firmware": "URL прошивки или путь к файлу на хосте",
+        "source_firmware": "Исходная прошивка",
+        "default": "По умолчанию",
+        "custom_index": "Пользовательский индекс",
+        "custom_firmware": "Пользовательская прошивка",
+        "release_notes": "Примечания к выпуску",
+        "show_update_settings": "Показать параметры обновления",
+        "image_block_request_timeout": "Таймаут запроса блока изображения",
+        "image_block_response_delay": "Задержка ответа блока изображения",
+        "default_maximum_data_size": "Максимальный размер данных по умолчанию",
+        "no_official_ota_support": "Официальная поддержка OTA отсутствует",
+        "downgrade_notice": "Поддержка отката зависит от устройства и может быть отклонена."
     },
     "settings": {
         "about": "О программе",
@@ -275,7 +291,8 @@
         "node_version": "Версия Node",
         "version": "Версия",
         "health": "Здоровье",
-        "download_z2m_backup": "Скачать резервную копию Zigbee2MQTT"
+        "download_z2m_backup": "Скачать резервную копию Zigbee2MQTT",
+        "default_page": "Страница по умолчанию"
     },
     "health": {
         "awaiting_next_check": "Ожидание следующей проверки",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Пользовательская иконка",
         "definitions-device-homeassistant-name": "Имя в Home Assistant",
         "definitions-group-qos": "QoS группы",
-        "definitions-group-off_state": "Когда публиковать OFF/CLOSE для группы"
+        "definitions-group-off_state": "Когда публиковать OFF/CLOSE для группы",
+        "definitions-group-homeassistant-name": "Имя группы в Home Assistant"
     }
 }

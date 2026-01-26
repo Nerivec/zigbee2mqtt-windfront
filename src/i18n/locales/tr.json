@@ -224,7 +224,23 @@
         "available": "Mevcut",
         "scheduled": "Zamanlandı",
         "schedule_selected": "Seçilenleri zamanla",
-        "unschedule_selected": "Seçilenlerin zamanlamasını kaldır"
+        "unschedule_selected": "Seçilenlerin zamanlamasını kaldır",
+        "downgrade": "Sürüm düşürme",
+        "source": "Kaynak",
+        "source_url": "Kaynak URL",
+        "source_url_index": "İndeks URL'si veya host dosya yolu (*.json)",
+        "source_url_firmware": "Firmware URL'si veya host dosya yolu",
+        "source_firmware": "Kaynak firmware",
+        "default": "Varsayılan",
+        "custom_index": "Özel indeks",
+        "custom_firmware": "Özel firmware",
+        "release_notes": "Sürüm notları",
+        "show_update_settings": "Güncelleme ayarlarını göster",
+        "image_block_request_timeout": "Görüntü blok isteği zaman aşımı",
+        "image_block_response_delay": "Görüntü blok yanıt gecikmesi",
+        "default_maximum_data_size": "Varsayılan maksimum veri boyutu",
+        "no_official_ota_support": "Resmi OTA desteği yok",
+        "downgrade_notice": "Sürüm düşürme desteği cihaza bağlıdır ve reddedilebilir."
     },
     "settings": {
         "about": "Hakkında",
@@ -275,7 +291,8 @@
         "node_version": "Node sürümü",
         "version": "Sürüm",
         "health": "Sağlık",
-        "download_z2m_backup": "Zigbee2MQTT yedeğini indir"
+        "download_z2m_backup": "Zigbee2MQTT yedeğini indir",
+        "default_page": "Varsayılan sayfa"
     },
     "health": {
         "awaiting_next_check": "Sonraki kontrol bekleniyor",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Özel simge",
         "definitions-device-homeassistant-name": "Home Assistant içindeki ad",
         "definitions-group-qos": "Grup QoS",
-        "definitions-group-off_state": "Grup OFF/CLOSE yayınlama zamanı"
+        "definitions-group-off_state": "Grup OFF/CLOSE yayınlama zamanı",
+        "definitions-group-homeassistant-name": "Home Assistant'taki grup adı"
     }
 }

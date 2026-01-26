@@ -224,7 +224,23 @@
         "available": "Có sẵn",
         "scheduled": "Đã lên lịch",
         "schedule_selected": "Lên lịch đã chọn",
-        "unschedule_selected": "Hủy lịch đã chọn"
+        "unschedule_selected": "Hủy lịch đã chọn",
+        "downgrade": "Hạ cấp",
+        "source": "Nguồn",
+        "source_url": "URL nguồn",
+        "source_url_index": "URL chỉ mục hoặc đường dẫn tệp trên host (*.json)",
+        "source_url_firmware": "URL firmware hoặc đường dẫn tệp trên host",
+        "source_firmware": "Firmware nguồn",
+        "default": "Mặc định",
+        "custom_index": "Chỉ mục tùy chỉnh",
+        "custom_firmware": "Firmware tùy chỉnh",
+        "release_notes": "Ghi chú phát hành",
+        "show_update_settings": "Hiển thị cài đặt cập nhật",
+        "image_block_request_timeout": "Thời gian chờ yêu cầu khối ảnh",
+        "image_block_response_delay": "Độ trễ phản hồi khối ảnh",
+        "default_maximum_data_size": "Kích thước dữ liệu tối đa mặc định",
+        "no_official_ota_support": "Không có hỗ trợ OTA chính thức",
+        "downgrade_notice": "Hỗ trợ hạ cấp phụ thuộc vào thiết bị và có thể bị từ chối."
     },
     "settings": {
         "about": "Giới thiệu",
@@ -275,7 +291,8 @@
         "node_version": "Phiên bản Node",
         "version": "Phiên bản",
         "health": "Sức khỏe",
-        "download_z2m_backup": "Tải xuống bản sao lưu Zigbee2MQTT"
+        "download_z2m_backup": "Tải xuống bản sao lưu Zigbee2MQTT",
+        "default_page": "Trang mặc định"
     },
     "health": {
         "awaiting_next_check": "Đang chờ kiểm tra tiếp theo",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Biểu tượng thiết bị do người dùng định nghĩa cho frontend. Nó có thể là liên kết URL đầy đủ đến hình ảnh (ví dụ: https://SOME.SITE/MODEL123.jpg) hoặc đường dẫn đến tệp cục bộ bên trong thư mục `device_icons` (ví dụ: device_icons/MODEL123.png).",
         "definitions-device-homeassistant-name": "Tên của thiết bị trong Home Assistant",
         "definitions-group-qos": "Mức QoS cho tin nhắn MQTT của nhóm này",
-        "definitions-group-off_state": "Điều khiển khi nào xuất bản trạng thái OFF hoặc CLOSE cho nhóm. 'all_members_off': chỉ xuất bản trạng thái OFF/CLOSE khi tất cả thành viên nhóm ở trạng thái OFF/CLOSE, 'last_member_state': xuất bản trạng thái OFF bất cứ khi nào một trong các thành viên của nó thay đổi thành OFF"
+        "definitions-group-off_state": "Điều khiển khi nào xuất bản trạng thái OFF hoặc CLOSE cho nhóm. 'all_members_off': chỉ xuất bản trạng thái OFF/CLOSE khi tất cả thành viên nhóm ở trạng thái OFF/CLOSE, 'last_member_state': xuất bản trạng thái OFF bất cứ khi nào một trong các thành viên của nó thay đổi thành OFF",
+        "definitions-group-homeassistant-name": "Tên nhóm trong Home Assistant"
     }
 }

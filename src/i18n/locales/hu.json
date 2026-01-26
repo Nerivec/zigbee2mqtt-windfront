@@ -224,7 +224,23 @@
         "available": "Elérhető",
         "scheduled": "Ütemezett",
         "schedule_selected": "Kijelöltek ütemezése",
-        "unschedule_selected": "Kijelöltek ütemezésének törlése"
+        "unschedule_selected": "Kijelöltek ütemezésének törlése",
+        "downgrade": "Visszalépés",
+        "source": "Forrás",
+        "source_url": "Forrás URL",
+        "source_url_index": "Index URL vagy host fájl elérési útja (*.json)",
+        "source_url_firmware": "Firmware URL vagy host fájl elérési útja",
+        "source_firmware": "Forrás firmware",
+        "default": "Alapértelmezett",
+        "custom_index": "Egyéni index",
+        "custom_firmware": "Egyéni firmware",
+        "release_notes": "Változásnapló",
+        "show_update_settings": "Frissítési beállítások megjelenítése",
+        "image_block_request_timeout": "Kép blokk kérés időkorlátja",
+        "image_block_response_delay": "Kép blokk válasz késleltetése",
+        "default_maximum_data_size": "Alapértelmezett maximális adatmérték",
+        "no_official_ota_support": "Nincs hivatalos OTA támogatás",
+        "downgrade_notice": "A visszalépés támogatása az eszköztől függ, és elutasítható."
     },
     "settings": {
         "about": "Névjegy",
@@ -275,7 +291,8 @@
         "node_version": "Node verzió",
         "version": "Verzió",
         "health": "Állapot",
-        "download_z2m_backup": "Zigbee2MQTT biztonsági mentés letöltése"
+        "download_z2m_backup": "Zigbee2MQTT biztonsági mentés letöltése",
+        "default_page": "Alapértelmezett oldal"
     },
     "health": {
         "awaiting_next_check": "Következő ellenőrzésre vár",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Egyedi ikon",
         "definitions-device-homeassistant-name": "Név Home Assistant",
         "definitions-group-qos": "Csoport QoS",
-        "definitions-group-off_state": "Csoport OFF/CLOSE publikálás ideje"
+        "definitions-group-off_state": "Csoport OFF/CLOSE publikálás ideje",
+        "definitions-group-homeassistant-name": "A csoport neve a Home Assistantban"
     }
 }

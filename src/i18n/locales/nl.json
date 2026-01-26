@@ -224,7 +224,23 @@
         "available": "Beschikbaar",
         "scheduled": "Gepland",
         "schedule_selected": "Geselecteerde inplannen",
-        "unschedule_selected": "Inplanning geselecteerde opheffen"
+        "unschedule_selected": "Inplanning geselecteerde opheffen",
+        "downgrade": "Terugdraaien",
+        "source": "Bron",
+        "source_url": "Bron URL",
+        "source_url_index": "Index-URL of pad naar hostbestand (*.json)",
+        "source_url_firmware": "Firmware-URL of pad naar hostbestand",
+        "source_firmware": "Bronfirmware",
+        "default": "Standaard",
+        "custom_index": "Aangepast index",
+        "custom_firmware": "Aangepaste firmware",
+        "release_notes": "Release-opmerkingen",
+        "show_update_settings": "Toon update-instellingen",
+        "image_block_request_timeout": "Time-out image-blok aanvraag",
+        "image_block_response_delay": "Vertraging bij image-blok antwoord",
+        "default_maximum_data_size": "Standaard maximale gegevensgrootte",
+        "no_official_ota_support": "Geen officiële OTA-ondersteuning",
+        "downgrade_notice": "Ondersteuning voor terugdraaien is afhankelijk van het apparaat en kan worden geweigerd."
     },
     "settings": {
         "about": "Over",
@@ -275,7 +291,8 @@
         "node_version": "Node-versie",
         "version": "Versie",
         "health": "Gezondheid",
-        "download_z2m_backup": "Zigbee2MQTT-back-up downloaden"
+        "download_z2m_backup": "Zigbee2MQTT-back-up downloaden",
+        "default_page": "Standaardpagina"
     },
     "health": {
         "awaiting_next_check": "Wachten op volgende controle",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Aangepast pictogram",
         "definitions-device-homeassistant-name": "Naam in Home Assistant",
         "definitions-group-qos": "QoS groep",
-        "definitions-group-off_state": "Wanneer OFF/CLOSE voor groep publiceren"
+        "definitions-group-off_state": "Wanneer OFF/CLOSE voor groep publiceren",
+        "definitions-group-homeassistant-name": "Naam van de groep in Home Assistant"
     }
 }

@@ -224,7 +224,23 @@
         "available": "Доступний",
         "scheduled": "Заплановано",
         "schedule_selected": "Запланувати вибрані",
-        "unschedule_selected": "Скасувати планування вибраних"
+        "unschedule_selected": "Скасувати планування вибраних",
+        "downgrade": "Пониження версії",
+        "source": "Джерело",
+        "source_url": "URL джерела",
+        "source_url_index": "URL індексу або шлях до файлу на хості (*.json)",
+        "source_url_firmware": "URL прошивки або шлях до файлу на хості",
+        "source_firmware": "Прошивка джерела",
+        "default": "За замовчуванням",
+        "custom_index": "Користувацький індекс",
+        "custom_firmware": "Користувацька прошивка",
+        "release_notes": "Примітки до релізу",
+        "show_update_settings": "Показати налаштування оновлення",
+        "image_block_request_timeout": "Таймаут запиту блоку зображення",
+        "image_block_response_delay": "Затримка відповіді блоку зображення",
+        "default_maximum_data_size": "Максимальний розмір даних за замовчуванням",
+        "no_official_ota_support": "Немає офіційної підтримки OTA",
+        "downgrade_notice": "Підтримка пониження версії залежить від пристрою і може бути відхилена."
     },
     "settings": {
         "about": "Про програму",
@@ -275,7 +291,8 @@
         "node_version": "Node версія",
         "version": "Версія",
         "health": "Стан",
-        "download_z2m_backup": "Завантажити резервну копію Zigbee2MQTT"
+        "download_z2m_backup": "Завантажити резервну копію Zigbee2MQTT",
+        "default_page": "Сторінка за замовчуванням"
     },
     "health": {
         "awaiting_next_check": "Очікування наступної перевірки",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Іконка",
         "definitions-device-homeassistant-name": "Назва в HA",
         "definitions-group-qos": "QoS групи",
-        "definitions-group-off_state": "Коли OFF/CLOSE"
+        "definitions-group-off_state": "Коли OFF/CLOSE",
+        "definitions-group-homeassistant-name": "Назва групи в Home Assistant"
     }
 }

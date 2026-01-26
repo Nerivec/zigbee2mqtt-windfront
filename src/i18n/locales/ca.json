@@ -224,7 +224,23 @@
         "available": "Disponible",
         "scheduled": "Programat",
         "schedule_selected": "Programa els seleccionats",
-        "unschedule_selected": "Desprograma els seleccionats"
+        "unschedule_selected": "Desprograma els seleccionats",
+        "downgrade": "Retrocés",
+        "source": "Origen",
+        "source_url": "URL origen",
+        "source_url_index": "URL d'índex o ruta de fitxer al host (*.json)",
+        "source_url_firmware": "URL del firmware o ruta de fitxer al host",
+        "source_firmware": "Firmware d'origen",
+        "default": "Per defecte",
+        "custom_index": "Índex personalitzat",
+        "custom_firmware": "Firmware personalitzat",
+        "release_notes": "Notes de la versió",
+        "show_update_settings": "Mostra ajustos d'actualització",
+        "image_block_request_timeout": "Temps d'espera de sol·licitud de bloc d'imatge",
+        "image_block_response_delay": "Retard de resposta del bloc d'imatge",
+        "default_maximum_data_size": "Mida màxima de dades per defecte",
+        "no_official_ota_support": "Sense suport OTA oficial",
+        "downgrade_notice": "El suport per a retrocessos depèn del dispositiu i pot ser rebutjat."
     },
     "settings": {
         "about": "Quant a",
@@ -275,7 +291,8 @@
         "node_version": "Versió Node",
         "version": "Versió",
         "health": "Salut",
-        "download_z2m_backup": "Descarregar còpia de seguretat de Zigbee2MQTT"
+        "download_z2m_backup": "Descarregar còpia de seguretat de Zigbee2MQTT",
+        "default_page": "Pàgina per defecte"
     },
     "health": {
         "awaiting_next_check": "Esperant proper control",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Icona",
         "definitions-device-homeassistant-name": "Nom Home Assistant",
         "definitions-group-qos": "QoS grup",
-        "definitions-group-off_state": "Quan publicar OFF/CLOSE"
+        "definitions-group-off_state": "Quan publicar OFF/CLOSE",
+        "definitions-group-homeassistant-name": "Nom del grup a Home Assistant"
     }
 }

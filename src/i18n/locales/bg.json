@@ -224,7 +224,23 @@
         "available": "Налично",
         "scheduled": "Планирано",
         "schedule_selected": "Насрочи избраните",
-        "unschedule_selected": "Отмени насрочването на избраните"
+        "unschedule_selected": "Отмени насрочването на избраните",
+        "downgrade": "Връщане към по-стара версия",
+        "source": "Източник",
+        "source_url": "URL на източника",
+        "source_url_index": "URL на индекс или път до файл на хоста (*.json)",
+        "source_url_firmware": "URL на фърмуера или път до файл на хоста",
+        "source_firmware": "Фърмуер източник",
+        "default": "По подразбиране",
+        "custom_index": "Потребителски индекс",
+        "custom_firmware": "Потребителски фърмуер",
+        "release_notes": "Бележки към изданието",
+        "show_update_settings": "Покажи настройки за актуализация",
+        "image_block_request_timeout": "Изчакване при заявка за блок изображение",
+        "image_block_response_delay": "Забавяне на отговора на блок изображение",
+        "default_maximum_data_size": "Максимален размер на данните по подразбиране",
+        "no_official_ota_support": "Няма официална поддръжка за OTA",
+        "downgrade_notice": "Поддръжката за връщане на версия зависи от устройството и може да бъде отказана."
     },
     "settings": {
         "about": "Относно",
@@ -275,7 +291,8 @@
         "node_version": "Node версия",
         "version": "Версия",
         "health": "Състояние",
-        "download_z2m_backup": "Изтегляне на резервно копие на Zigbee2MQTT"
+        "download_z2m_backup": "Изтегляне на резервно копие на Zigbee2MQTT",
+        "default_page": "Начална страница"
     },
     "health": {
         "awaiting_next_check": "Изчакване следваща проверка",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Икона",
         "definitions-device-homeassistant-name": "Име Home Assistant",
         "definitions-group-qos": "QoS група",
-        "definitions-group-off_state": "Кога OFF/CLOSE"
+        "definitions-group-off_state": "Кога OFF/CLOSE",
+        "definitions-group-homeassistant-name": "Име на групата в Home Assistant"
     }
 }

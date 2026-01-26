@@ -224,7 +224,23 @@
         "available": "Disponível",
         "scheduled": "Agendado",
         "schedule_selected": "Agendar selecionados",
-        "unschedule_selected": "Desagendar selecionados"
+        "unschedule_selected": "Desagendar selecionados",
+        "downgrade": "Rebaixar",
+        "source": "Fonte",
+        "source_url": "URL da fonte",
+        "source_url_index": "URL do índice ou caminho do arquivo no host (*.json)",
+        "source_url_firmware": "URL do firmware ou caminho do arquivo no host",
+        "source_firmware": "Firmware da fonte",
+        "default": "Padrão",
+        "custom_index": "Índice personalizado",
+        "custom_firmware": "Firmware personalizado",
+        "release_notes": "Notas de versão",
+        "show_update_settings": "Mostrar configurações de atualização",
+        "image_block_request_timeout": "Tempo limite de solicitação de bloco de imagem",
+        "image_block_response_delay": "Atraso na resposta do bloco de imagem",
+        "default_maximum_data_size": "Tamanho máximo de dados padrão",
+        "no_official_ota_support": "Sem suporte OTA oficial",
+        "downgrade_notice": "O suporte a rebaixamento depende do dispositivo e pode ser rejeitado."
     },
     "settings": {
         "about": "Sobre",
@@ -275,7 +291,8 @@
         "node_version": "Versão do Node",
         "version": "Versão",
         "health": "Saúde",
-        "download_z2m_backup": "Baixar backup do Zigbee2MQTT"
+        "download_z2m_backup": "Baixar backup do Zigbee2MQTT",
+        "default_page": "Página padrão"
     },
     "health": {
         "awaiting_next_check": "Aguardando próxima verificação",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Ícone personalizado",
         "definitions-device-homeassistant-name": "Nome no Home Assistant",
         "definitions-group-qos": "QoS do grupo",
-        "definitions-group-off_state": "Quando publicar OFF/CLOSE grupo"
+        "definitions-group-off_state": "Quando publicar OFF/CLOSE grupo",
+        "definitions-group-homeassistant-name": "Nome do grupo no Home Assistant"
     }
 }

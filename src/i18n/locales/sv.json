@@ -224,7 +224,23 @@
         "available": "Tillgänglig",
         "scheduled": "Schemalagd",
         "schedule_selected": "Schemalägg valda",
-        "unschedule_selected": "Ta bort schemaläggning för valda"
+        "unschedule_selected": "Ta bort schemaläggning för valda",
+        "downgrade": "Nedgradera",
+        "source": "Källa",
+        "source_url": "Källa URL",
+        "source_url_index": "Index-URL eller sökväg till fil på värd (*.json)",
+        "source_url_firmware": "Firmware-URL eller sökväg till fil på värd",
+        "source_firmware": "Källfirmware",
+        "default": "Standard",
+        "custom_index": "Anpassat index",
+        "custom_firmware": "Anpassad firmware",
+        "release_notes": "Versionsanteckningar",
+        "show_update_settings": "Visa uppdateringsinställningar",
+        "image_block_request_timeout": "Timeout för bildblocksförfrågan",
+        "image_block_response_delay": "Fördröjning för bildblocksvar",
+        "default_maximum_data_size": "Standard maximal datastorlek",
+        "no_official_ota_support": "Ingen officiell OTA-support",
+        "downgrade_notice": "Stöd för nedgradering beror på enheten och kan nekas."
     },
     "settings": {
         "about": "Om",
@@ -275,7 +291,8 @@
         "node_version": "Node-version",
         "version": "Version",
         "health": "Hälsa",
-        "download_z2m_backup": "Ladda ner Zigbee2MQTT-säkerhetskopia"
+        "download_z2m_backup": "Ladda ner Zigbee2MQTT-säkerhetskopia",
+        "default_page": "Standardsida"
     },
     "health": {
         "awaiting_next_check": "Väntar på nästa kontroll",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Anpassad ikon",
         "definitions-device-homeassistant-name": "Namn i Home Assistant",
         "definitions-group-qos": "Grupp QoS",
-        "definitions-group-off_state": "När publicera OFF/CLOSE för grupp"
+        "definitions-group-off_state": "När publicera OFF/CLOSE för grupp",
+        "definitions-group-homeassistant-name": "Gruppens namn i Home Assistant"
     }
 }

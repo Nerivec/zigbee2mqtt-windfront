@@ -224,7 +224,23 @@
         "available": "Dostępny",
         "scheduled": "Zaplanowany",
         "schedule_selected": "Zaplanuj wybrane",
-        "unschedule_selected": "Anuluj zaplanowanie wybranych"
+        "unschedule_selected": "Anuluj zaplanowanie wybranych",
+        "downgrade": "Przywróć starszą wersję",
+        "source": "Źródło",
+        "source_url": "URL źródła",
+        "source_url_index": "URL indeksu lub ścieżka do pliku na hoście (*.json)",
+        "source_url_firmware": "URL firmware lub ścieżka do pliku na hoście",
+        "source_firmware": "Firmware źródła",
+        "default": "Domyślne",
+        "custom_index": "Indeks niestandardowy",
+        "custom_firmware": "Niestandardowy firmware",
+        "release_notes": "Notatki wydania",
+        "show_update_settings": "Pokaż ustawienia aktualizacji",
+        "image_block_request_timeout": "Limit czasu żądania bloku obrazu",
+        "image_block_response_delay": "Opóźnienie odpowiedzi bloku obrazu",
+        "default_maximum_data_size": "Domyślny maksymalny rozmiar danych",
+        "no_official_ota_support": "Brak oficjalnego wsparcia OTA",
+        "downgrade_notice": "Wsparcie dla obniżenia wersji zależy od urządzenia i może zostać odrzucone."
     },
     "settings": {
         "about": "O",
@@ -275,7 +291,8 @@
         "node_version": "Wersja Node",
         "version": "Wersja",
         "health": "Zdrowie",
-        "download_z2m_backup": "Pobierz kopię zapasową Zigbee2MQTT"
+        "download_z2m_backup": "Pobierz kopię zapasową Zigbee2MQTT",
+        "default_page": "Strona domyślna"
     },
     "health": {
         "awaiting_next_check": "Oczekiwanie na kolejny test",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Ikona użytkownika",
         "definitions-device-homeassistant-name": "Nazwa w Home Assistant",
         "definitions-group-qos": "QoS grupy",
-        "definitions-group-off_state": "Kiedy publikować OFF/CLOSE grupy"
+        "definitions-group-off_state": "Kiedy publikować OFF/CLOSE grupy",
+        "definitions-group-homeassistant-name": "Nazwa grupy w Home Assistancie"
     }
 }

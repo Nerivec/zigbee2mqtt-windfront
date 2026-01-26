@@ -224,7 +224,23 @@
         "available": "Disponibile",
         "scheduled": "Programmato",
         "schedule_selected": "Pianifica selezionati",
-        "unschedule_selected": "Annulla pianificazione selezionati"
+        "unschedule_selected": "Annulla pianificazione selezionati",
+        "downgrade": "Ripristina versione precedente",
+        "source": "Sorgente",
+        "source_url": "URL sorgente",
+        "source_url_index": "URL indice o percorso file sull'host (*.json)",
+        "source_url_firmware": "URL firmware o percorso file sull'host",
+        "source_firmware": "Firmware sorgente",
+        "default": "Predefinito",
+        "custom_index": "Indice personalizzato",
+        "custom_firmware": "Firmware personalizzato",
+        "release_notes": "Note di rilascio",
+        "show_update_settings": "Mostra impostazioni aggiornamento",
+        "image_block_request_timeout": "Timeout richiesta blocco immagine",
+        "image_block_response_delay": "Ritardo risposta blocco immagine",
+        "default_maximum_data_size": "Dimensione massima dati predefinita",
+        "no_official_ota_support": "Nessun supporto OTA ufficiale",
+        "downgrade_notice": "Il supporto per il downgrade dipende dal dispositivo e potrebbe essere rifiutato."
     },
     "settings": {
         "about": "Informazioni",
@@ -275,7 +291,8 @@
         "node_version": "Versione Node",
         "version": "Versione",
         "health": "Salute",
-        "download_z2m_backup": "Scarica backup Zigbee2MQTT"
+        "download_z2m_backup": "Scarica backup Zigbee2MQTT",
+        "default_page": "Pagina predefinita"
     },
     "health": {
         "awaiting_next_check": "In attesa prossimo controllo",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Icona definita utente",
         "definitions-device-homeassistant-name": "Nome in Home Assistant",
         "definitions-group-qos": "QoS gruppo",
-        "definitions-group-off_state": "Quando pubblicare stato OFF/CLOSE gruppo"
+        "definitions-group-off_state": "Quando pubblicare stato OFF/CLOSE gruppo",
+        "definitions-group-homeassistant-name": "Nome del gruppo in Home Assistant"
     }
 }

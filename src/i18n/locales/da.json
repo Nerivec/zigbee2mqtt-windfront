@@ -224,7 +224,23 @@
         "available": "Tilgængelig",
         "scheduled": "Planlagt",
         "schedule_selected": "Planlæg valgte",
-        "unschedule_selected": "Fjern planlægning for valgte"
+        "unschedule_selected": "Fjern planlægning for valgte",
+        "downgrade": "Nedgradering",
+        "source": "Kilde",
+        "source_url": "Kilde-URL",
+        "source_url_index": "Indeks-URL eller sti til fil på værten (*.json)",
+        "source_url_firmware": "Firmware-URL eller sti til fil på værten",
+        "source_firmware": "Kildefirmware",
+        "default": "Standard",
+        "custom_index": "Brugerdefineret indeks",
+        "custom_firmware": "Brugerdefineret firmware",
+        "release_notes": "Udgivelsesnoter",
+        "show_update_settings": "Vis opdateringsindstillinger",
+        "image_block_request_timeout": "Timeout for billedeblok-anmodning",
+        "image_block_response_delay": "Forsinkelse af billedeblok-respons",
+        "default_maximum_data_size": "Standard maksimal datastørrelse",
+        "no_official_ota_support": "Ingen officiel OTA-support",
+        "downgrade_notice": "Support til nedgradering afhænger af enheden og kan blive afvist."
     },
     "settings": {
         "about": "Om",
@@ -275,7 +291,8 @@
         "node_version": "Node-version",
         "version": "Version",
         "health": "Sundhed",
-        "download_z2m_backup": "Hent Zigbee2MQTT-sikkerhedskopi"
+        "download_z2m_backup": "Hent Zigbee2MQTT-sikkerhedskopi",
+        "default_page": "Standardside"
     },
     "health": {
         "awaiting_next_check": "Venter på næste kontrol",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Ikon",
         "definitions-device-homeassistant-name": "HA Navn",
         "definitions-group-qos": "Gruppe QoS",
-        "definitions-group-off_state": "Hvornår OFF/CLOSE"
+        "definitions-group-off_state": "Hvornår OFF/CLOSE",
+        "definitions-group-homeassistant-name": "Gruppens navn i Home Assistant"
     }
 }

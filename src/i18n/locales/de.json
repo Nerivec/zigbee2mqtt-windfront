@@ -224,7 +224,23 @@
         "available": "Verfügbar",
         "scheduled": "Geplant",
         "schedule_selected": "Ausgewählte planen",
-        "unschedule_selected": "Planung für Ausgewählte aufheben"
+        "unschedule_selected": "Planung für Ausgewählte aufheben",
+        "downgrade": "Herabstufen",
+        "source": "Quelle",
+        "source_url": "Quelle URL",
+        "source_url_index": "Index-URL oder Pfad zur Host-Datei (*.json)",
+        "source_url_firmware": "Firmware-URL oder Pfad zur Host-Datei",
+        "source_firmware": "Quell-Firmware",
+        "default": "Standard",
+        "custom_index": "Benutzerdefinierter Index",
+        "custom_firmware": "Benutzerdefinierte Firmware",
+        "release_notes": "Versionshinweise",
+        "show_update_settings": "Update-Einstellungen anzeigen",
+        "image_block_request_timeout": "Timeout für Bildblock-Anfrage",
+        "image_block_response_delay": "Antwortverzögerung des Bildblocks",
+        "default_maximum_data_size": "Standard maximale Datengröße",
+        "no_official_ota_support": "Keine offizielle OTA-Unterstützung",
+        "downgrade_notice": "Die Unterstützung für Downgrades hängt vom Gerät ab und kann abgelehnt werden."
     },
     "settings": {
         "about": "Info",
@@ -275,7 +291,8 @@
         "node_version": "Node-Version",
         "version": "Version",
         "health": "Systemzustand",
-        "download_z2m_backup": "Zigbee2MQTT-Sicherung herunterladen"
+        "download_z2m_backup": "Zigbee2MQTT-Sicherung herunterladen",
+        "default_page": "Standardseite"
     },
     "health": {
         "awaiting_next_check": "Warte auf nächsten Check",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Benutzerdefiniertes Geräteicon (URL oder lokaler Pfad)",
         "definitions-device-homeassistant-name": "Gerätename in Home Assistant",
         "definitions-group-qos": "QoS-Level für MQTT-Nachrichten dieser Gruppe",
-        "definitions-group-off_state": "Steuerung wann OFF/CLOSE für eine Gruppe veröffentlicht wird"
+        "definitions-group-off_state": "Steuerung wann OFF/CLOSE für eine Gruppe veröffentlicht wird",
+        "definitions-group-homeassistant-name": "Name der Gruppe in Home Assistant"
     }
 }

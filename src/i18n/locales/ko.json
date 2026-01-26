@@ -224,7 +224,23 @@
         "available": "사용 가능",
         "scheduled": "예약됨",
         "schedule_selected": "선택 항목 일정 등록",
-        "unschedule_selected": "선택 항목 일정 해제"
+        "unschedule_selected": "선택 항목 일정 해제",
+        "downgrade": "다운그레이드",
+        "source": "출처",
+        "source_url": "출처 URL",
+        "source_url_index": "인덱스 URL 또는 호스트의 파일 경로 (*.json)",
+        "source_url_firmware": "펌웨어 URL 또는 호스트의 파일 경로",
+        "source_firmware": "출처 펌웨어",
+        "default": "기본값",
+        "custom_index": "사용자 정의 인덱스",
+        "custom_firmware": "사용자 정의 펌웨어",
+        "release_notes": "릴리스 노트",
+        "show_update_settings": "업데이트 설정 표시",
+        "image_block_request_timeout": "이미지 블록 요청 제한 시간",
+        "image_block_response_delay": "이미지 블록 응답 지연",
+        "default_maximum_data_size": "기본 최대 데이터 크기",
+        "no_official_ota_support": "공식 OTA 지원 없음",
+        "downgrade_notice": "다운그레이드 지원은 장치에 따라 다르며 거부될 수 있습니다."
     },
     "settings": {
         "about": "정보",
@@ -275,7 +291,8 @@
         "node_version": "Node 버전",
         "version": "버전",
         "health": "상태",
-        "download_z2m_backup": "Zigbee2MQTT 백업 다운로드"
+        "download_z2m_backup": "Zigbee2MQTT 백업 다운로드",
+        "default_page": "기본 페이지"
     },
     "health": {
         "awaiting_next_check": "다음 점검 대기",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "사용자 정의 아이콘(URL/로컬 경로)",
         "definitions-device-homeassistant-name": "Home Assistant 내 이름",
         "definitions-group-qos": "이 그룹 MQTT QoS",
-        "definitions-group-off_state": "OFF/CLOSE 발행 시점 제어"
+        "definitions-group-off_state": "OFF/CLOSE 발행 시점 제어",
+        "definitions-group-homeassistant-name": "Home Assistant의 그룹 이름"
     }
 }

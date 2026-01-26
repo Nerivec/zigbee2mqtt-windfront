@@ -224,7 +224,23 @@
         "available": "Disponible",
         "scheduled": "Programado",
         "schedule_selected": "Programar seleccionados",
-        "unschedule_selected": "Desprogramar seleccionados"
+        "unschedule_selected": "Desprogramar seleccionados",
+        "downgrade": "Reversión",
+        "source": "Origen",
+        "source_url": "URL de origen",
+        "source_url_index": "URL de índice o ruta de archivo en el host (*.json)",
+        "source_url_firmware": "URL del firmware o ruta de archivo en el host",
+        "source_firmware": "Firmware de origen",
+        "default": "Predeterminado",
+        "custom_index": "Índice personalizado",
+        "custom_firmware": "Firmware personalizado",
+        "release_notes": "Notas de la versión",
+        "show_update_settings": "Mostrar ajustes de actualización",
+        "image_block_request_timeout": "Tiempo de espera de solicitud de bloque de imagen",
+        "image_block_response_delay": "Retardo en la respuesta del bloque de imagen",
+        "default_maximum_data_size": "Tamaño máximo de datos predeterminado",
+        "no_official_ota_support": "Sin soporte OTA oficial",
+        "downgrade_notice": "El soporte para reversión depende del dispositivo y puede ser rechazado."
     },
     "settings": {
         "about": "Acerca de",
@@ -275,7 +291,8 @@
         "node_version": "Versión de Node",
         "version": "Versión",
         "health": "Salud",
-        "download_z2m_backup": "Descargar copia de seguridad de Zigbee2MQTT"
+        "download_z2m_backup": "Descargar copia de seguridad de Zigbee2MQTT",
+        "default_page": "Página predeterminada"
     },
     "health": {
         "awaiting_next_check": "Esperando próxima comprobación",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Icono definido por el usuario",
         "definitions-device-homeassistant-name": "Nombre en Home Assistant",
         "definitions-group-qos": "QoS para este grupo",
-        "definitions-group-off_state": "Controlar cuándo publicar estado OFF/CLOSE"
+        "definitions-group-off_state": "Controlar cuándo publicar estado OFF/CLOSE",
+        "definitions-group-homeassistant-name": "Nombre del grupo en Home Assistant"
     }
 }

@@ -224,7 +224,23 @@
         "available": "利用可能",
         "scheduled": "予定済み",
         "schedule_selected": "選択項目をスケジュール",
-        "unschedule_selected": "選択項目のスケジュールを解除"
+        "unschedule_selected": "選択項目のスケジュールを解除",
+        "downgrade": "ダウングレード",
+        "source": "ソース",
+        "source_url": "ソース URL",
+        "source_url_index": "インデックス URL またはホスト上のファイルパス (*.json)",
+        "source_url_firmware": "ファームウェア URL またはホスト上のファイルパス",
+        "source_firmware": "ソースファームウェア",
+        "default": "デフォルト",
+        "custom_index": "カスタムインデックス",
+        "custom_firmware": "カスタムファームウェア",
+        "release_notes": "リリースノート",
+        "show_update_settings": "更新設定を表示",
+        "image_block_request_timeout": "イメージブロック要求タイムアウト",
+        "image_block_response_delay": "イメージブロック応答遅延",
+        "default_maximum_data_size": "デフォルトの最大データサイズ",
+        "no_official_ota_support": "公式 OTA サポートなし",
+        "downgrade_notice": "ダウングレードのサポートはデバイス依存で、拒否される場合があります。"
     },
     "settings": {
         "about": "概要",
@@ -275,7 +291,8 @@
         "node_version": "Node バージョン",
         "version": "バージョン",
         "health": "ヘルス",
-        "download_z2m_backup": "Zigbee2MQTT バックアップをダウンロード"
+        "download_z2m_backup": "Zigbee2MQTT バックアップをダウンロード",
+        "default_page": "デフォルトページ"
     },
     "health": {
         "awaiting_next_check": "次の確認待ち",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "ユーザ定義アイコン",
         "definitions-device-homeassistant-name": "Home Assistant におけるデバイス名",
         "definitions-group-qos": "このグループの MQTT メッセージの QoS レベル",
-        "definitions-group-off_state": "グループの状態を OFF または CLOSE として公開するタイミングを制御します。'all_members_off': 全メンバーが OFF/CLOSE 状態のときのみ OFF/CLOSE を公開します。'last_member_state': いずれかのメンバーが OFF へ変化した時点で OFF を公開します。"
+        "definitions-group-off_state": "グループの状態を OFF または CLOSE として公開するタイミングを制御します。'all_members_off': 全メンバーが OFF/CLOSE 状態のときのみ OFF/CLOSE を公開します。'last_member_state': いずれかのメンバーが OFF へ変化した時点で OFF を公開します。",
+        "definitions-group-homeassistant-name": "Home Assistant のグループ名"
     }
 }

@@ -224,7 +224,23 @@
         "available": "Dostupné",
         "scheduled": "Naplánováno",
         "schedule_selected": "Naplánovat vybrané",
-        "unschedule_selected": "Zrušit plán u vybraných"
+        "unschedule_selected": "Zrušit plán u vybraných",
+        "downgrade": "Vrátit na starší verzi",
+        "source": "Zdroj",
+        "source_url": "URL zdroje",
+        "source_url_index": "URL indexu nebo cesta k souboru na hostiteli (*.json)",
+        "source_url_firmware": "URL firmwaru nebo cesta k souboru na hostiteli",
+        "source_firmware": "Zdrojový firmware",
+        "default": "Výchozí",
+        "custom_index": "Vlastní index",
+        "custom_firmware": "Vlastní firmware",
+        "release_notes": "Poznámky k vydání",
+        "show_update_settings": "Zobrazit nastavení aktualizace",
+        "image_block_request_timeout": "Časový limit požadavku bloku obrázku",
+        "image_block_response_delay": "Zpoždění odpovědi bloku obrázku",
+        "default_maximum_data_size": "Výchozí maximální velikost dat",
+        "no_official_ota_support": "Oficiální podpora OTA není k dispozici",
+        "downgrade_notice": "Podpora vrácení verze závisí na zařízení a může být odmítnuta."
     },
     "settings": {
         "about": "O aplikaci",
@@ -275,7 +291,8 @@
         "node_version": "Verze Node.js",
         "version": "Verze",
         "health": "Zdraví",
-        "download_z2m_backup": "Stáhnout zálohu Zigbee2MQTT"
+        "download_z2m_backup": "Stáhnout zálohu Zigbee2MQTT",
+        "default_page": "Výchozí stránka"
     },
     "health": {
         "awaiting_next_check": "Čekání na další kontrolu",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Vlastní ikona zařízení ve frontendu. Může být buď plná URL (např. https://SOME.SITE/model123.jpg), nebo cesta k lokálnímu souboru v adresáři `device_icons`.",
         "definitions-device-homeassistant-name": "Název zařízení v Home Assistant.",
         "definitions-group-qos": "Úroveň QoS (Quality of Service) pro MQTT zprávy této skupiny.",
-        "definitions-group-off_state": "Určuje, kdy má být pro skupinu publikován stav OFF nebo CLOSE. all_members_off: pouze pokud jsou všechna zařízení ve stavu OFF/CLOSE. last_member_state: pokud alespoň jedno zařízení přejde do stavu OFF."
+        "definitions-group-off_state": "Určuje, kdy má být pro skupinu publikován stav OFF nebo CLOSE. all_members_off: pouze pokud jsou všechna zařízení ve stavu OFF/CLOSE. last_member_state: pokud alespoň jedno zařízení přejde do stavu OFF.",
+        "definitions-group-homeassistant-name": "Název skupiny v Home Assistant"
     }
 }

@@ -224,7 +224,23 @@
         "available": "Tilgjengelig",
         "scheduled": "Planlagt",
         "schedule_selected": "Planlegg valgte",
-        "unschedule_selected": "Fjern planlegging for valgte"
+        "unschedule_selected": "Fjern planlegging for valgte",
+        "downgrade": "Nedgradering",
+        "source": "Kilde",
+        "source_url": "Kilde-URL",
+        "source_url_index": "Indeks-URL eller filbane på vert (*.json)",
+        "source_url_firmware": "Firmware-URL eller filbane på vert",
+        "source_firmware": "Kildefirmware",
+        "default": "Standard",
+        "custom_index": "Egendefinert indeks",
+        "custom_firmware": "Egendefinert firmware",
+        "release_notes": "Utgivelsesnotater",
+        "show_update_settings": "Vis oppdateringsinnstillinger",
+        "image_block_request_timeout": "Timeout for bildeblokk-forespørsel",
+        "image_block_response_delay": "Forsinkelse ved respons for bildeblokk",
+        "default_maximum_data_size": "Standard maksimal datastørrelse",
+        "no_official_ota_support": "Ingen offisiell OTA-støtte",
+        "downgrade_notice": "Støtte for nedgradering avhenger av enheten og kan bli avslått."
     },
     "settings": {
         "about": "Om",
@@ -275,7 +291,8 @@
         "node_version": "Node-versjon",
         "version": "Versjon",
         "health": "Helse",
-        "download_z2m_backup": "Last ned Zigbee2MQTT-sikkerhetskopi"
+        "download_z2m_backup": "Last ned Zigbee2MQTT-sikkerhetskopi",
+        "default_page": "Standardside"
     },
     "health": {
         "awaiting_next_check": "Venter på neste sjekk",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Egendef ikon",
         "definitions-device-homeassistant-name": "Navn i Home Assistant",
         "definitions-group-qos": "QoS gruppe",
-        "definitions-group-off_state": "Når publisere OFF/CLOSE"
+        "definitions-group-off_state": "Når publisere OFF/CLOSE",
+        "definitions-group-homeassistant-name": "Gruppenavn i Home Assistant"
     }
 }

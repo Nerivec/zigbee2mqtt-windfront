@@ -224,7 +224,23 @@
         "available": "Disponible",
         "scheduled": "Planifié",
         "schedule_selected": "Programmer la sélection",
-        "unschedule_selected": "Déprogrammer la sélection"
+        "unschedule_selected": "Déprogrammer la sélection",
+        "downgrade": "Rétrograder",
+        "source": "Source",
+        "source_url": "URL de la source",
+        "source_url_index": "URL de l'index ou chemin du fichier sur l'hôte (*.json)",
+        "source_url_firmware": "URL du firmware ou chemin du fichier sur l'hôte",
+        "source_firmware": "Firmware source",
+        "default": "Par défaut",
+        "custom_index": "Index personnalisé",
+        "custom_firmware": "Firmware personnalisé",
+        "release_notes": "Notes de version",
+        "show_update_settings": "Afficher les paramètres de mise à jour",
+        "image_block_request_timeout": "Délai d'attente de la requête de bloc d'image",
+        "image_block_response_delay": "Délai de réponse du bloc d'image",
+        "default_maximum_data_size": "Taille maximale de données par défaut",
+        "no_official_ota_support": "Pas de prise en charge OTA officielle",
+        "downgrade_notice": "La prise en charge du rétrogradage dépend de l'appareil et peut être refusée."
     },
     "settings": {
         "about": "À propos",
@@ -275,7 +291,8 @@
         "node_version": "Version de Node",
         "version": "Version",
         "health": "Santé",
-        "download_z2m_backup": "Télécharger la sauvegarde Zigbee2MQTT"
+        "download_z2m_backup": "Télécharger la sauvegarde Zigbee2MQTT",
+        "default_page": "Page par défaut"
     },
     "health": {
         "awaiting_next_check": "En attente de la prochaine vérification",
@@ -570,6 +587,7 @@
         "definitions-device-icon": "Icône d'appareil définie par l'utilisateur pour l'interface. Peut être une URL vers une image ou un chemin local dans `device_icons`.",
         "definitions-device-homeassistant-name": "Nom de l'appareil dans Home Assistant",
         "definitions-group-qos": "Level QoS pour messages MQTT de ce groupe",
-        "definitions-group-off_state": "Contrôle la publication de l'état OFF/FERMÉ pour un groupe: 'all_members_off' = publier OFF/CLOSE quand tous les membres sont OFF/CLOSE ; 'last_member_state' = publier OFF dès qu'un membre passe à OFF"
+        "definitions-group-off_state": "Contrôle la publication de l'état OFF/FERMÉ pour un groupe: 'all_members_off' = publier OFF/CLOSE quand tous les membres sont OFF/CLOSE ; 'last_member_state' = publier OFF dès qu'un membre passe à OFF",
+        "definitions-group-homeassistant-name": "Nom du groupe dans Home Assistant"
     }
 }
