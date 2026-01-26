@@ -96,7 +96,8 @@
         "mismatching_types": "類型不相符",
         "sync": "同步",
         "clear_self_as_source": "清除自己作為來源",
-        "sync_reporting": "同步回報"
+        "sync_reporting": "同步回報",
+        "exposes": "暴露功能"
     },
     "devicePage": {
         "about": "關於",
@@ -109,7 +110,6 @@
         "state": "狀態",
         "groups": "群組",
         "scene": "情境",
-        "exposes": "暴露功能",
         "select_a_device": "請選擇裝置"
     },
     "groups": {

@@ -96,7 +96,8 @@
         "mismatching_types": "Kiểu không khớp",
         "sync": "Đ.bộ",
         "clear_self_as_source": "Xóa bản thân làm nguồn",
-        "sync_reporting": "Đ.bộ báo cáo"
+        "sync_reporting": "Đ.bộ báo cáo",
+        "exposes": "Exposes"
     },
     "devicePage": {
         "about": "Giới thiệu",
@@ -109,7 +110,6 @@
         "state": "Trạng thái",
         "groups": "Nhóm",
         "scene": "Cảnh",
-        "exposes": "Exposes",
         "select_a_device": "Chọn một thiết bị"
     },
     "groups": {

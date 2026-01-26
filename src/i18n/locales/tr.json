@@ -96,7 +96,8 @@
         "mismatching_types": "Eşleşmeyen türler",
         "sync": "Senk.",
         "clear_self_as_source": "Kendini kaynak olarak kaldır",
-        "sync_reporting": "Senk. raporlama"
+        "sync_reporting": "Senk. raporlama",
+        "exposes": "Açığa çıkan işlevler"
     },
     "devicePage": {
         "about": "Hakkında",
@@ -109,7 +110,6 @@
         "state": "Durum",
         "groups": "Gruplar",
         "scene": "Sahne",
-        "exposes": "Açığa çıkan işlevler",
         "select_a_device": "Bir cihaz seçin"
     },
     "groups": {

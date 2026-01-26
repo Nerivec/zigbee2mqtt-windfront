@@ -96,7 +96,8 @@
         "mismatching_types": "Nem egyező típusok",
         "sync": "Szinkr.",
         "clear_self_as_source": "Távolítsd el magad forrásként",
-        "sync_reporting": "Szinkr. jelentés"
+        "sync_reporting": "Szinkr. jelentés",
+        "exposes": "Exponált funkciók"
     },
     "devicePage": {
         "about": "Névjegy",
@@ -109,7 +110,6 @@
         "state": "Állapot",
         "groups": "Csoportok",
         "scene": "Jelenet",
-        "exposes": "Exponált funkciók",
         "select_a_device": "Válassz egy eszközt"
     },
     "groups": {

@@ -96,7 +96,8 @@
         "mismatching_types": "Mismatching types",
         "sync": "Sync",
         "clear_self_as_source": "Clear self as source",
-        "sync_reporting": "Sync reporting"
+        "sync_reporting": "Sync reporting",
+        "exposes": "Exposes"
     },
     "devicePage": {
         "about": "About",
@@ -109,7 +110,6 @@
         "state": "State",
         "groups": "Groups",
         "scene": "Scene",
-        "exposes": "Exposes",
         "select_a_device": "Select a device"
     },
     "groups": {

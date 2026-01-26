@@ -10,7 +10,7 @@ import { useAppStore } from "../store.js";
 import type { Group } from "../types.js";
 import { getValidSourceIdx } from "../utils.js";
 
-export type TabName = "devices" | "settings";
+export type TabName = "devices" | "exposes" | "settings";
 
 type GroupPageUrlParams = {
     sourceIdx: `${number}`;
@@ -19,6 +19,7 @@ type GroupPageUrlParams = {
 };
 
 const DevicesTab = lazy(async () => await import("../components/group-page/tabs/Devices.js"));
+const ExposesTab = lazy(async () => await import("../components/group-page/tabs/Exposes.js"));
 const GroupSettingsTab = lazy(async () => await import("../components/group-page/tabs/GroupSettings.js"));
 
 function renderTab(sourceIdx: number, tab: TabName, group: Group) {
@@ -27,6 +28,8 @@ function renderTab(sourceIdx: number, tab: TabName, group: Group) {
     switch (tab) {
         case "devices":
             return <DevicesTab key={key} sourceIdx={sourceIdx} group={group} />;
+        case "exposes":
+            return <ExposesTab key={key} sourceIdx={sourceIdx} group={group} />;
         case "settings":
             return <GroupSettingsTab key={key} sourceIdx={sourceIdx} group={group} />;
     }
@@ -62,6 +65,10 @@ export default function GroupPage() {
                 <NavLink to={`/group/${numSourceIdx}/${groupId}/devices`} className={isTabActive}>
                     <FontAwesomeIcon icon={faObjectGroup} className="me-2" />
                     {t(($) => $.devices, { ns: "common" })}
+                </NavLink>
+                <NavLink to={`/group/${numSourceIdx}/${groupId}/exposes`} className={isTabActive}>
+                    <FontAwesomeIcon icon={faObjectGroup} className="me-2" />
+                    {t(($) => $.exposes, { ns: "common" })}
                 </NavLink>
                 <NavLink to={`/group/${numSourceIdx}/${groupId}/settings`} className={isTabActive}>
                     <FontAwesomeIcon icon={faCogs} className="me-2" />

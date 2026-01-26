@@ -96,7 +96,8 @@
         "mismatching_types": "Ulike typer",
         "sync": "Synk.",
         "clear_self_as_source": "Fjern deg selv som kilde",
-        "sync_reporting": "Synk. rapportering"
+        "sync_reporting": "Synk. rapportering",
+        "exposes": "Eksponerte funksjoner"
     },
     "devicePage": {
         "about": "Om",
@@ -109,7 +110,6 @@
         "state": "Tilstand",
         "groups": "Grupper",
         "scene": "Scene",
-        "exposes": "Eksponerte funksjoner",
         "select_a_device": "Velg en enhet"
     },
     "groups": {

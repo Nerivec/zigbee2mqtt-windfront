@@ -96,7 +96,8 @@
         "mismatching_types": "Tipos incompatíveis",
         "sync": "Sincron.",
         "clear_self_as_source": "Remover a si mesmo como fonte",
-        "sync_reporting": "Sincron. relatórios"
+        "sync_reporting": "Sincron. relatórios",
+        "exposes": "Funções expostas"
     },
     "devicePage": {
         "about": "Sobre",
@@ -109,7 +110,6 @@
         "state": "Estado",
         "groups": "Grupos",
         "scene": "Cena",
-        "exposes": "Funções expostas",
         "select_a_device": "Selecione um dispositivo"
     },
     "groups": {

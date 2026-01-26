@@ -96,7 +96,8 @@
         "mismatching_types": "Types incompatibles",
         "sync": "Synchro",
         "clear_self_as_source": "Me retirer comme source",
-        "sync_reporting": "Synchro rapports"
+        "sync_reporting": "Synchro rapports",
+        "exposes": "Expositions"
     },
     "devicePage": {
         "about": "À propos",
@@ -109,7 +110,6 @@
         "state": "État",
         "groups": "Groupes",
         "scene": "Scène",
-        "exposes": "Expositions",
         "select_a_device": "Sélectionner un appareil"
     },
     "groups": {

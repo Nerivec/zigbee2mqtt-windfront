@@ -96,7 +96,8 @@
         "mismatching_types": "Tipus no coincidents",
         "sync": "Sincron.",
         "clear_self_as_source": "Esborra't com a origen",
-        "sync_reporting": "Sincron. informes"
+        "sync_reporting": "Sincron. informes",
+        "exposes": "Funcions exposades"
     },
     "devicePage": {
         "about": "Quant a",
@@ -109,7 +110,6 @@
         "state": "Estat",
         "groups": "Grups",
         "scene": "Escena",
-        "exposes": "Funcions exposades",
         "select_a_device": "Seleccioneu un dispositiu"
     },
     "groups": {

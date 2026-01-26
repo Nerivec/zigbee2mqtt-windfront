@@ -96,7 +96,8 @@
         "mismatching_types": "Niedopasowane typy",
         "sync": "Synchron.",
         "clear_self_as_source": "Usuń siebie jako źródło",
-        "sync_reporting": "Synchron. raporty"
+        "sync_reporting": "Synchron. raporty",
+        "exposes": "Eksponowane funkcje"
     },
     "devicePage": {
         "about": "O z2m",
@@ -109,7 +110,6 @@
         "state": "Stan",
         "groups": "Grupy",
         "scene": "Scena",
-        "exposes": "Eksponowane funkcje",
         "select_a_device": "Wybierz urządzenie"
     },
     "groups": {

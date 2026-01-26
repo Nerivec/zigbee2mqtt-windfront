@@ -96,7 +96,8 @@
         "mismatching_types": "Невідповідні типи",
         "sync": "Синхр.",
         "clear_self_as_source": "Прибрати себе як джерело",
-        "sync_reporting": "Синхр. звітність"
+        "sync_reporting": "Синхр. звітність",
+        "exposes": "Експоновані функції"
     },
     "devicePage": {
         "about": "Про",
@@ -109,7 +110,6 @@
         "state": "Стан",
         "groups": "Групи",
         "scene": "Сцена",
-        "exposes": "Експоновані функції",
         "select_a_device": "Виберіть пристрій"
     },
     "groups": {

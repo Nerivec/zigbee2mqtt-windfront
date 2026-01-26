@@ -96,7 +96,8 @@
         "mismatching_types": "Yhteensopimattomat tyypit",
         "sync": "Synk.",
         "clear_self_as_source": "Poista itsesi lähteenä",
-        "sync_reporting": "Synk. raportointi"
+        "sync_reporting": "Synk. raportointi",
+        "exposes": "Näkyvät toiminnot"
     },
     "devicePage": {
         "about": "Tietoja",
@@ -109,7 +110,6 @@
         "state": "Tila",
         "groups": "Ryhmät",
         "scene": "Skenaario",
-        "exposes": "Näkyvät toiminnot",
         "select_a_device": "Valitse laite"
     },
     "groups": {

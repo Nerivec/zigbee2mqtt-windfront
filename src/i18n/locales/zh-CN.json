@@ -96,7 +96,8 @@
         "mismatching_types": "类型不匹配",
         "sync": "同步",
         "clear_self_as_source": "清除自己作为来源",
-        "sync_reporting": "同步上报"
+        "sync_reporting": "同步上报",
+        "exposes": "暴露功能"
     },
     "devicePage": {
         "about": "关于",
@@ -109,7 +110,6 @@
         "state": "状态",
         "groups": "分组",
         "scene": "场景",
-        "exposes": "暴露功能",
         "select_a_device": "请选择一个设备"
     },
     "groups": {

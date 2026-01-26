@@ -96,7 +96,8 @@
         "mismatching_types": "種類が一致しません",
         "sync": "同期",
         "clear_self_as_source": "自分をソースから外す",
-        "sync_reporting": "同期レポート"
+        "sync_reporting": "同期レポート",
+        "exposes": "公開機能"
     },
     "devicePage": {
         "about": "概要",
@@ -109,7 +110,6 @@
         "state": "状態",
         "groups": "グループ",
         "scene": "シーン",
-        "exposes": "公開機能",
         "select_a_device": "デバイスを選択"
     },
     "groups": {

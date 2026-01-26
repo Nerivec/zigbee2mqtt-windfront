@@ -96,7 +96,8 @@
         "mismatching_types": "Niet-overeenkomende typen",
         "sync": "Synchr.",
         "clear_self_as_source": "Verwijder jezelf als bron",
-        "sync_reporting": "Synchr. rapportage"
+        "sync_reporting": "Synchr. rapportage",
+        "exposes": "Blootgestelde functies"
     },
     "devicePage": {
         "about": "Over",
@@ -109,7 +110,6 @@
         "state": "Status",
         "groups": "Groepen",
         "scene": "Scene",
-        "exposes": "Blootgestelde functies",
         "select_a_device": "Selecteer een apparaat"
     },
     "groups": {
