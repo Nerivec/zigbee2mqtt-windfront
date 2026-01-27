@@ -121,7 +121,7 @@ const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, l
     const selectedAttributes = useMemo(
         () =>
             attributes.length > 0 && (
-                <fieldset className="fieldset gap-2 p-3 bg-base-200 rounded-box shadow-md border border-base-300 w-full">
+                <fieldset className="fieldset gap-1 p-3 bg-base-200 rounded-box shadow-md border border-base-300 w-full">
                     {attributes.map(({ attribute, value = "", definition }) => (
                         <div key={attribute} className="w-full flex flex-row rounded-box p-1.5 hover:bg-base-100">
                             <div className="flex-1 self-center text-[0.85rem] flex flex-row items-center gap-1">
