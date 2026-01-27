@@ -106,7 +106,7 @@ const BindingEndpointSection = memo(({ endpointId, rules, devices, groups, sourc
                             ref={refs.setFloating}
                             style={floatingStyles}
                             {...getFloatingProps({
-                                className: "card bg-base-200 shadow-lg border border-base-300 w-[min(32rem,calc(100vw-2.5rem))] max-h-[80vh] z-11",
+                                className: "card bg-base-200 shadow-lg border border-base-300 w-[min(32rem,calc(100vw-2.5rem))] max-h-[90vh] z-11",
                             })}
                         >
                             <div className="card-body py-2">

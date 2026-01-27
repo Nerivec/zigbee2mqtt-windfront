@@ -1,4 +1,16 @@
-import { arrow, FloatingArrow, FloatingPortal, offset, shift, useClick, useDismiss, useFloating, useInteractions, useRole } from "@floating-ui/react";
+import {
+    arrow,
+    autoPlacement,
+    FloatingArrow,
+    FloatingPortal,
+    offset,
+    shift,
+    useClick,
+    useDismiss,
+    useFloating,
+    useInteractions,
+    useRole,
+} from "@floating-ui/react";
 import { faClock, faClockRotateLeft, faClose, faCloudArrowDown, faCloudArrowUp, faTrashCan, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -56,10 +68,13 @@ const OtaControlGroup = memo(
         const { refs, floatingStyles, context } = useFloating({
             open: isOpen,
             onOpenChange: setIsOpen,
-            placement: "bottom-end",
-            middleware: [offset(8), shift({ padding: 16, crossAxis: true }), arrow({ element: arrowRef })],
-            strategy: "fixed",
-            transform: false,
+            middleware: [
+                offset(4),
+                // flip({ fallbackAxisSideDirection: "end", fallbackPlacements: ["left", "top", "bottom"], padding: 16 }),
+                autoPlacement({ padding: 16, crossAxis: true }),
+                shift({ padding: 16, crossAxis: true }),
+                arrow({ element: arrowRef }),
+            ],
         });
         const click = useClick(context, { event: "click" });
         const dismiss = useDismiss(context);
@@ -190,17 +205,17 @@ const OtaControlGroup = memo(
                             ref={refs.setFloating}
                             style={floatingStyles}
                             {...getFloatingProps({
-                                className: "card bg-base-200 shadow-lg border border-base-300 w-[min(32rem,calc(100vw-2.5rem))] max-h-[80vh] z-11",
+                                className: "card bg-base-200 shadow-lg border border-base-300 w-[min(32rem,calc(100vw-2.5rem))] max-h-[90vh] z-11",
                             })}
                         >
-                            <div className="card-body py-2">
+                            <div className="card-body py-2 w-full h-full overflow-hidden">
                                 <div className="flex items-center justify-between">
                                     <h4 className="card-title">OTA: {device.friendly_name}</h4>
                                     <Button onClick={() => setIsOpen(false)} className="btn btn-ghost btn-square">
                                         <FontAwesomeIcon icon={faClose} />
                                     </Button>
                                 </div>
-                                <div className="flex flex-col gap-2 items-center">
+                                <div className="flex flex-col gap-2 items-center w-full h-full overflow-y-auto">
                                     {state?.installed_version ? (
                                         <ul className="steps steps-horizontal w-full mb-2">
                                             <li className="step step-neutral" data-content="●">
