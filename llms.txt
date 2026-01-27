@@ -1,0 +1,51 @@
+# Zigbee2MQTT WindFront
+
+> A React + TypeScript frontend UI for Zigbee2MQTT, built with Vite, Tailwind CSS v4, and daisyUI, providing real-time device control and monitoring via WebSocket.
+
+This repository is a monolithic frontend with feature/page component boundaries. It supports multi-instance setups via `sourceIdx` throughout state and WebSocket flows. Routing uses React Router with hash-based navigation, and internationalization is handled with `react-i18next` JSON namespaces.
+
+## Documentation
+
+- [README](README.md): Project overview, badges, screenshots, and main entry links.
+- [AGENTS](AGENTS.md): Architecture notes, setup commands, testing, and workflow guidance.
+- [Contributing](CONTRIBUTING.md): Contribution guidelines and development expectations.
+- [Code of Conduct](CODE_OF_CONDUCT.md): Community standards.
+- [License](LICENSE): Licensing terms.
+
+## Architecture & Entry Points
+
+- [App bootstrap](src/index.tsx): React application bootstrap and root render.
+- [Main application](src/Main.tsx): Top-level app composition and routing entry.
+- [Error boundary](src/ErrorBoundary.tsx): Global error handling UI.
+- [State store](src/store.ts): Global Zustand store and actions (multi-instance aware).
+- [WebSocket manager](src/websocket/WebSocketManager.ts): Centralized real-time messaging.
+- [Internationalization](src/i18n/index.ts): i18n initialization and namespace setup.
+- [Utilities](src/utils.ts): Shared helpers and formatting utilities.
+- [Types](src/types.ts): Shared TypeScript types used across the app.
+
+## Configuration & Tooling
+
+- [Package scripts and dependencies](package.json): Project metadata, scripts, and dependency versions.
+- [TypeScript config](tsconfig.json): Compiler options and module settings.
+- [Vite config](vite.config.mts): Build and dev server configuration.
+- [Biome config](biome.json): Formatting and linting rules.
+- [Dockerfile](Dockerfile): Container build configuration.
+- [Docker Compose](docker-compose.yml): Local containerized setup.
+- [Public entry HTML](src/index.html): Vite HTML entry template.
+
+## Testing
+
+- [Test directory](test/): Vitest tests and test-specific config.
+- [Vitest config](test/tsconfig.json): TypeScript settings for tests.
+
+## Data, Mocks, and Samples
+
+- [Mocks](mocks/): Mock Zigbee2MQTT responses for development/testing.
+
+## Optional
+
+- [Storybook config](.storybook/): Storybook setup for component development.
+- [Storybook static build](storybook-static/): Generated Storybook site output.
+- [Coverage artifacts](coverage/): Generated coverage reports.
+- [GitHub workflows](.github/workflows/): CI, i18n, and release automation pipelines.
+- [Scripts](scripts/): i18n and repo maintenance scripts.
