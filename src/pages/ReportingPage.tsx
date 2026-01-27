@@ -17,7 +17,7 @@ import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.
 import DevicePicker from "../components/pickers/DevicePicker.js";
 import EndpointPicker from "../components/pickers/EndpointPicker.js";
 import { getClusterAttribute } from "../components/pickers/index.js";
-import { isAnalogDataType, makeDefaultReporting, type ReportingRule } from "../components/reporting/index.js";
+import { makeDefaultReporting, type ReportingRule } from "../components/reporting/index.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import TableSearch from "../components/table/TableSearch.js";
@@ -27,6 +27,7 @@ import { API_NAMES, API_URLS, type AppState, MULTI_INSTANCE, useAppStore } from 
 import type { Device } from "../types.js";
 import { getEndpoints } from "../utils.js";
 import { sendMessage } from "../websocket/WebSocketManager.js";
+import { isAnalogDataType } from "../zspec.js";
 
 export type ReportingTableData = {
     sourceIdx: number;

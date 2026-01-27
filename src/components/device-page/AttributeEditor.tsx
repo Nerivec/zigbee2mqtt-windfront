@@ -7,6 +7,7 @@ import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../store.js";
 import type { AttributeDefinition, Device, LogMessage } from "../../types.js";
 import { getEndpoints, getObjectFirstKey } from "../../utils.js";
+import { BuffaloZclDataType, DataType } from "../../zspec.js";
 import Button from "../Button.js";
 import ConfirmButton from "../ConfirmButton.js";
 import InputField from "../form-fields/InputField.js";
@@ -14,7 +15,6 @@ import AttributePicker from "../pickers/AttributePicker.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
 import type { ClusterGroup } from "../pickers/index.js";
-import { MergedDataType } from "./index.js";
 import LastLogResult from "./LastLogResult.js";
 
 export interface AttributeEditorProps {
@@ -39,10 +39,8 @@ export type AttributeValueInputProps = {
     value?: string | number;
 };
 
-const TEXT_DATA_TYPES = [65 /* DataType.OCTET_STR */, 66 /* DataType.CHAR_STR */, 67 /* DataType.LONG_OCTET_STR */, 68 /* DataType.LONG_CHAR_STR */];
-
 function AttributeValueInput({ value, onChange, attribute, definition }: Readonly<AttributeValueInputProps>): JSX.Element {
-    const type = TEXT_DATA_TYPES.includes(definition.type) ? "text" : "number";
+    const type = definition.type >= DataType.OCTET_STR && definition.type <= DataType.LONG_CHAR_STR ? "text" : "number";
 
     return (
         <input
@@ -125,7 +123,7 @@ const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, l
                     {attributes.map(({ attribute, value = "", definition }) => (
                         <div key={attribute} className="w-full flex flex-row rounded-box p-1.5 hover:bg-base-100">
                             <div className="flex-1 self-center text-[0.85rem] flex flex-row items-center gap-1">
-                                {attribute} ({MergedDataType[definition.type]})
+                                {attribute} ({DataType[definition.type] ?? BuffaloZclDataType[definition.type]})
                                 {definition.required ? null : (
                                     <span className={"tooltip tooltip-right"} data-tip={t(($) => $.attribute_not_required, { ns: "zigbee" })}>
                                         <FontAwesomeIcon icon={faQuestion} className="text-warning" />

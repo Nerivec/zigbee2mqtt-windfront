@@ -4,6 +4,7 @@ import { type ChangeEvent, memo, useCallback, useEffect, useMemo, useState } fro
 import { useTranslation } from "react-i18next";
 import type { AppState } from "../../store.js";
 import type { AttributeDefinition, Device } from "../../types.js";
+import { isAnalogDataType } from "../../zspec.js";
 import Button from "../Button.js";
 import ConfirmButton from "../ConfirmButton.js";
 import InputField from "../form-fields/InputField.js";
@@ -11,7 +12,7 @@ import AttributePicker from "../pickers/AttributePicker.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
 import type { ClusterGroup } from "../pickers/index.js";
 import { getClusterAttributes } from "../pickers/index.js";
-import { isAnalogDataType, isValidReportingRule, type ReportingRule } from "../reporting/index.js";
+import { isValidReportingRule, type ReportingRule } from "../reporting/index.js";
 
 interface ReportingRowProps {
     sourceIdx: number;

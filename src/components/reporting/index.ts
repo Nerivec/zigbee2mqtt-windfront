@@ -1,4 +1,4 @@
-import type { AttributeDefinition, Device } from "../../types.js";
+import type { Device } from "../../types.js";
 
 export type ReportingRule = {
     isNew?: string;
@@ -9,18 +9,6 @@ export interface ReportingEndpoint {
     endpointId: string;
     rules: ReportingRule[];
 }
-
-export const isDiscreteOrCompositeDataType = (attrDefinition: AttributeDefinition): boolean =>
-    (attrDefinition.type >= 0x08 && attrDefinition.type <= 0x1f) ||
-    attrDefinition.type === 0x30 ||
-    attrDefinition.type === 0x31 ||
-    (attrDefinition.type >= 0x41 && attrDefinition.type <= 0x51) ||
-    (attrDefinition.type >= 0xe8 && attrDefinition.type <= 0xf1);
-
-export const isAnalogDataType = (attrDefinition: AttributeDefinition): boolean =>
-    (attrDefinition.type >= 0x20 && attrDefinition.type <= 0x2f) ||
-    (attrDefinition.type >= 0x38 && attrDefinition.type <= 0x3a) ||
-    (attrDefinition.type >= 0xe0 && attrDefinition.type <= 0xe2);
 
 export const makeDefaultReporting = (ieeeAddress: string, endpoint: string): ReportingRule => ({
     isNew: ieeeAddress,

@@ -8,9 +8,10 @@ import { useShallow } from "zustand/react/shallow";
 import { type AppState, useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { sendMessage } from "../../../websocket/WebSocketManager.js";
+import { isAnalogDataType } from "../../../zspec.js";
 import Button from "../../Button.js";
 import { getClusterAttribute } from "../../pickers/index.js";
-import { aggregateReporting, isAnalogDataType, makeDefaultReporting, type ReportingEndpoint, type ReportingRule } from "../../reporting/index.js";
+import { aggregateReporting, makeDefaultReporting, type ReportingEndpoint, type ReportingRule } from "../../reporting/index.js";
 import ReportingRow from "../ReportingRow.js";
 
 interface ReportingProps {

@@ -6,13 +6,13 @@ import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../store.js";
 import type { CommandDefinition, Device, LogMessage } from "../../types.js";
 import { sendMessage } from "../../websocket/WebSocketManager.js";
+import { BuffaloZclDataType, DataType } from "../../zspec.js";
 import Button from "../Button.js";
 import InputField from "../form-fields/InputField.js";
 import TextareaField from "../form-fields/TextareaField.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
 import CommandPicker from "../pickers/CommandPicker.js";
 import type { ClusterGroup } from "../pickers/index.js";
-import { MergedDataType } from "./index.js";
 import LastLogResult from "./LastLogResult.js";
 
 interface CommandExecutorProps {
@@ -224,7 +224,7 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
                         commandDefinition.parameters.map((param) => (
                             <div key={param.name} className="list-row p-1">
                                 <div>
-                                    {param.name}: {MergedDataType[param.type]}
+                                    {param.name}: {DataType[param.type] ?? BuffaloZclDataType[param.type]}
                                 </div>
                                 <div className="flex flex-row gap-2 justify-end">
                                     {param.min != null ? <span>Min: {param.min}</span> : null}
