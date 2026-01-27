@@ -7,7 +7,7 @@ import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../store.js";
 import type { AttributeDefinition, Device, LogMessage } from "../../types.js";
 import { getEndpoints, getObjectFirstKey } from "../../utils.js";
-import { BuffaloZclDataType, DataType } from "../../zspec.js";
+import { DataType } from "../../zspec.js";
 import Button from "../Button.js";
 import ConfirmButton from "../ConfirmButton.js";
 import InputField from "../form-fields/InputField.js";
@@ -29,23 +29,80 @@ export interface AttributeEditorProps {
 export type AttributeInfo = {
     attribute: string;
     definition: AttributeDefinition;
-    value?: string | number;
+    value?: string | number | Record<string, unknown> | unknown[];
 };
 
 export type AttributeValueInputProps = {
     onChange(attribute: string, value?: string | number): void;
     attribute: string;
     definition: AttributeDefinition;
-    value?: string | number;
+    value?: string | number | Record<string, unknown> | unknown[];
+};
+
+const getTypeFormatHint = (type: DataType): string | undefined => {
+    switch (type) {
+        case DataType.ARRAY:
+        case DataType.SET:
+        case DataType.BAG: {
+            return `{"elementType": TODO, "elements": [TODO]}`;
+        }
+        case DataType.STRUCT: {
+            return `[{"elmType": TODO, "elmVal": TODO}]`;
+        }
+        case DataType.TOD: {
+            return `{"hours": TODO, "minutes": TODO, "seconds": TODO, "hundredths": TODO}`;
+        }
+        case DataType.DATE: {
+            return `{"year": TODO, "month": TODO, "dayOfMonth": TODO, "dayOfWeek": TODO}`;
+        }
+        case DataType.SEC_KEY: {
+            return "[TODO]"; // number array works fine with `Buffer.from()` used by `Buffalo.writeBuffer`
+        }
+    }
 };
 
 function AttributeValueInput({ value, onChange, attribute, definition }: Readonly<AttributeValueInputProps>): JSX.Element {
-    const type = definition.type >= DataType.OCTET_STR && definition.type <= DataType.LONG_CHAR_STR ? "text" : "number";
+    if (
+        definition.type === DataType.ARRAY ||
+        definition.type === DataType.STRUCT ||
+        definition.type === DataType.SET ||
+        definition.type === DataType.BAG ||
+        definition.type === DataType.TOD ||
+        definition.type === DataType.DATE ||
+        definition.type === DataType.SEC_KEY
+    ) {
+        return (
+            <input
+                type="text"
+                className="flex-1 input"
+                value={value != null && value !== "" ? (typeof value === "object" ? JSON.stringify(value) : value) : undefined}
+                placeholder={getTypeFormatHint(definition.type)}
+                onChange={(e) => {
+                    onChange(attribute, e.target.value);
+                }}
+                onBlur={(e) => {
+                    if (e.target.value) {
+                        // try to convert to object as "final step"
+                        // will throw if invalid format
+                        const json = JSON.parse(e.target.value);
+
+                        onChange(attribute, json);
+                    }
+                }}
+                disabled={!definition.write}
+            />
+        );
+    }
+
+    const type =
+        definition.type === DataType.IEEE_ADDR || (definition.type >= DataType.OCTET_STR && definition.type <= DataType.LONG_CHAR_STR)
+            ? "text"
+            : "number";
 
     return (
         <input
             type={type}
-            value={value}
+            value={value == null || typeof value === "string" || typeof value === "number" ? value : undefined}
             min={definition.minExcl ? definition.minExcl + 1 : definition.min}
             max={definition.maxExcl ? definition.maxExcl - 1 : definition.max}
             minLength={definition.minLen ?? definition.length}
@@ -121,9 +178,9 @@ const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, l
             attributes.length > 0 && (
                 <fieldset className="fieldset gap-1 p-3 bg-base-200 rounded-box shadow-md border border-base-300 w-full">
                     {attributes.map(({ attribute, value = "", definition }) => (
-                        <div key={attribute} className="w-full flex flex-row rounded-box p-1.5 hover:bg-base-100">
+                        <div key={attribute} className="w-full flex flex-row items-center rounded-box p-1.5 hover:bg-base-100">
                             <div className="flex-1 self-center text-[0.85rem] flex flex-row items-center gap-1">
-                                {attribute} ({DataType[definition.type] ?? BuffaloZclDataType[definition.type]})
+                                {attribute} ({DataType[definition.type]})
                                 {definition.required ? null : (
                                     <span className={"tooltip tooltip-right"} data-tip={t(($) => $.attribute_not_required, { ns: "zigbee" })}>
                                         <FontAwesomeIcon icon={faQuestion} className="text-warning" />
