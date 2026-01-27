@@ -10,7 +10,8 @@ import InputField from "../form-fields/InputField.js";
 import AttributePicker from "../pickers/AttributePicker.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
 import type { ClusterGroup } from "../pickers/index.js";
-import { getClusterAttributes, isAnalogDataType, isValidReportingRule, type ReportingRule } from "../reporting/index.js";
+import { getClusterAttributes } from "../pickers/index.js";
+import { isAnalogDataType, isValidReportingRule, type ReportingRule } from "../reporting/index.js";
 
 interface ReportingRowProps {
     sourceIdx: number;

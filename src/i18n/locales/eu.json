@@ -425,7 +425,14 @@
         "low_lqi": "LQI baxua",
         "extended_pan_id": "PAN ID hedatua",
         "rx_on_when_idle": "RX aktibo geldi dagoenean",
-        "permit_joining": "Baimendu batzea"
+        "permit_joining": "Baimendu batzea",
+        "select_command": "Agindu hautatu",
+        "command_not_required": "Agindu honen laguntza ez da beharrezkoa",
+        "command_has_response": "Agindu honek normalean erantzuna sortzen du",
+        "attribute_not_required": "Atributu honen laguntza ez da beharrezkoa",
+        "attribute_not_readable": "Atributu hau ez da irakurterraza",
+        "attribute_not_writable": "Atributu hau ezin da idatzi",
+        "attribute_report_not_required": "Atributu honen txosten-laguntza ez da beharrezkoa"
     },
     "scene": {
         "manage_scenes_header": "Kudeatu eszenak",

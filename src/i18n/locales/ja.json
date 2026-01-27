@@ -425,7 +425,14 @@
         "low_lqi": "低LQI",
         "extended_pan_id": "拡張PAN ID",
         "rx_on_when_idle": "アイドル時にRXオン",
-        "permit_joining": "参加を許可"
+        "permit_joining": "参加を許可",
+        "select_command": "コマンドを選択",
+        "command_not_required": "このコマンドのサポートは必要ありません",
+        "command_has_response": "このコマンドは通常応答を生成します",
+        "attribute_not_required": "この属性のサポートは必要ありません",
+        "attribute_not_readable": "この属性は読み取りできません",
+        "attribute_not_writable": "この属性は書き込みできません",
+        "attribute_report_not_required": "この属性のレポートサポートは必要ありません"
     },
     "scene": {
         "manage_scenes_header": "シーン管理",

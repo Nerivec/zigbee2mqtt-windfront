@@ -425,7 +425,14 @@
         "low_lqi": "Lage LQI",
         "extended_pan_id": "Uitgebreide PAN-ID",
         "rx_on_when_idle": "RX ingeschakeld in rust",
-        "permit_joining": "Toegang toestaan"
+        "permit_joining": "Toegang toestaan",
+        "select_command": "Selecteer opdracht",
+        "command_not_required": "Ondersteuning voor dit commando is niet vereist",
+        "command_has_response": "Dit commando genereert meestal een antwoord",
+        "attribute_not_required": "Ondersteuning voor dit attribuut is niet vereist",
+        "attribute_not_readable": "Dit attribuut is niet leesbaar",
+        "attribute_not_writable": "Dit attribuut is niet schrijfbaar",
+        "attribute_report_not_required": "Rapportage-ondersteuning voor dit attribuut is niet vereist"
     },
     "scene": {
         "manage_scenes_header": "Scènes beheren",

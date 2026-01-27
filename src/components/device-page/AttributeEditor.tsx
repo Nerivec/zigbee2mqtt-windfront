@@ -1,4 +1,4 @@
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faDownLong, faMagnifyingGlass, faPen, faQuestion, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, type JSX, memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ import AttributePicker from "../pickers/AttributePicker.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
 import type { ClusterGroup } from "../pickers/index.js";
+import { MergedDataType } from "./index.js";
 import LastLogResult from "./LastLogResult.js";
 
 export interface AttributeEditorProps {
@@ -21,7 +22,7 @@ export interface AttributeEditorProps {
     device: Device;
     read(endpoint: string, cluster: string, attributes: string[], stateProperty?: string): Promise<void>;
     write(endpoint: string, cluster: string, attributes: AttributeInfo[]): Promise<void>;
-    readReporting(endpoint: string, cluster: string, configs: Zigbee2MQTTAPI["bridge/request/device/reporting/read"]["configs"]);
+    readReporting(endpoint: string, cluster: string, configs: Zigbee2MQTTAPI["bridge/request/device/reporting/read"]["configs"]): Promise<void>;
     lastLog: LogMessage | undefined;
 }
 
@@ -40,19 +41,24 @@ export type AttributeValueInputProps = {
 
 const TEXT_DATA_TYPES = [65 /* DataType.OCTET_STR */, 66 /* DataType.CHAR_STR */, 67 /* DataType.LONG_OCTET_STR */, 68 /* DataType.LONG_CHAR_STR */];
 
-function AttributeValueInput({ value, onChange, attribute, definition, ...rest }: Readonly<AttributeValueInputProps>): JSX.Element {
+function AttributeValueInput({ value, onChange, attribute, definition }: Readonly<AttributeValueInputProps>): JSX.Element {
     const type = TEXT_DATA_TYPES.includes(definition.type) ? "text" : "number";
 
     return (
         <input
             type={type}
             value={value}
+            min={definition.minExcl ? definition.minExcl + 1 : definition.min}
+            max={definition.maxExcl ? definition.maxExcl - 1 : definition.max}
+            minLength={definition.minLen ?? definition.length}
+            maxLength={definition.maxLen ?? definition.length}
             onChange={(e): void => {
                 const val = type === "number" ? e.target.valueAsNumber : e.target.value;
 
                 onChange(attribute, Number.isNaN(val) ? undefined : val);
             }}
-            {...rest}
+            disabled={!definition.write}
+            className="flex-1 input validator"
         />
     );
 }
@@ -117,27 +123,32 @@ const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, l
             attributes.length > 0 && (
                 <fieldset className="fieldset gap-2 p-3 bg-base-200 rounded-box shadow-md border border-base-300 w-full">
                     {attributes.map(({ attribute, value = "", definition }) => (
-                        <div key={attribute} className="join join-horizontal min-w-xs w-full">
-                            <label className="input join-item grow">
-                                {attribute}
-                                <AttributeValueInput
-                                    value={value}
-                                    attribute={attribute}
-                                    definition={definition}
-                                    onChange={(attribute, value): void => {
-                                        const newAttributes = Array.from(attributes);
-                                        const attr = newAttributes.find((info) => info.attribute === attribute);
-
-                                        if (attr) {
-                                            attr.value = value;
-                                        }
-
-                                        setAttributes(newAttributes);
-                                    }}
-                                />
-                            </label>
+                        <div key={attribute} className="w-full flex flex-row rounded-box p-1.5 hover:bg-base-100">
+                            <div className="flex-1 self-center text-[0.85rem] flex flex-row items-center gap-1">
+                                {attribute} ({MergedDataType[definition.type]})
+                                {definition.required ? null : (
+                                    <span className={"tooltip tooltip-right"} data-tip={t(($) => $.attribute_not_required, { ns: "zigbee" })}>
+                                        <FontAwesomeIcon icon={faQuestion} className="text-warning" />
+                                    </span>
+                                )}
+                                {definition.read === false ? (
+                                    <span className={"tooltip tooltip-right"} data-tip={t(($) => $.attribute_not_readable, { ns: "zigbee" })}>
+                                        <FontAwesomeIcon icon={faMagnifyingGlass} className="text-error" />
+                                    </span>
+                                ) : null}
+                                {definition.write ? null : (
+                                    <span className={"tooltip tooltip-right"} data-tip={t(($) => $.attribute_not_writable, { ns: "zigbee" })}>
+                                        <FontAwesomeIcon icon={faPen} className="text-error" />
+                                    </span>
+                                )}
+                                {definition.report ? null : (
+                                    <span className={"tooltip tooltip-right"} data-tip={t(($) => $.attribute_report_not_required, { ns: "zigbee" })}>
+                                        <FontAwesomeIcon icon={faDownLong} className="text-warning" />
+                                    </span>
+                                )}
+                            </div>
                             <Button<string>
-                                className="btn btn-error btn-outline join-item"
+                                className="btn btn-error btn-outline mx-2"
                                 item={attribute}
                                 onClick={(attribute): void => {
                                     const newAttributes = attributes.filter((info) => info.attribute !== attribute);
@@ -147,11 +158,26 @@ const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, l
                             >
                                 <FontAwesomeIcon icon={faTrash} />
                             </Button>
+                            <AttributeValueInput
+                                value={value}
+                                attribute={attribute}
+                                definition={definition}
+                                onChange={(attribute, value): void => {
+                                    const newAttributes = Array.from(attributes);
+                                    const attr = newAttributes.find((info) => info.attribute === attribute);
+
+                                    if (attr) {
+                                        attr.value = value;
+                                    }
+
+                                    setAttributes(newAttributes);
+                                }}
+                            />
                         </div>
                     ))}
                 </fieldset>
             ),
-        [attributes],
+        [attributes, t],
     );
     const availableClusters = useMemo((): ClusterGroup[] => {
         const deviceInputs = new Set<string>();
@@ -238,27 +264,36 @@ const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, l
                 />
             </div>
             {selectedAttributes}
-            <div className="flex flex-row flex-wrap justify-between gap-2">
-                <div className="join join-horizontal">
+            <div className="w-full flex flex-row flex-wrap justify-between gap-2">
+                <div className="w-full flex flex-row justify-between">
                     <Button<void>
-                        disabled={disableButtons || attributes.some((attr) => !!attr.value)}
-                        className="btn btn-success join-item"
+                        disabled={
+                            disableButtons || attributes.some((attr) => !!attr.value) || attributes.some((attr) => attr.definition.read === false)
+                        }
+                        className="btn btn-success"
                         onClick={onReadClick}
                     >
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
                         {t(($) => $.read)}
                     </Button>
-                    <Button<void> disabled={disableButtons} className="btn btn-error join-item" onClick={onWriteClick}>
+                    <Button<void>
+                        disabled={disableButtons || attributes.some((attr) => !attr.definition.write)}
+                        className="btn btn-error"
+                        onClick={onWriteClick}
+                    >
+                        <FontAwesomeIcon icon={faPen} />
                         {t(($) => $.write)}
                     </Button>
                 </div>
                 <ConfirmButton<void>
                     disabled={disableButtons || attributes.some((attr) => !!attr.value)}
-                    className="btn btn-accent join-item"
+                    className="btn btn-accent"
                     onClick={onReadReportingClick}
                     title={t(($) => $.sync_reporting)}
                     modalDescription={t(($) => $.dialog_confirmation_prompt)}
                     modalCancelLabel={t(($) => $.cancel)}
                 >
+                    <FontAwesomeIcon icon={faDownLong} />
                     {t(($) => $.sync_reporting)}
                 </ConfirmButton>
             </div>

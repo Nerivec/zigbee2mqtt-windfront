@@ -425,7 +425,14 @@
         "low_lqi": "Düşük LQI",
         "extended_pan_id": "Genişletilmiş PAN ID",
         "rx_on_when_idle": "Boştayken RX açık",
-        "permit_joining": "Katılıma izin ver"
+        "permit_joining": "Katılıma izin ver",
+        "select_command": "Komut seç",
+        "command_not_required": "Bu komut için destek gerekli değildir",
+        "command_has_response": "Bu komut genellikle bir yanıt üretir",
+        "attribute_not_required": "Bu özellik için destek gerekli değildir",
+        "attribute_not_readable": "Bu özellik okunabilir değil",
+        "attribute_not_writable": "Bu özellik yazılabilir değil",
+        "attribute_report_not_required": "Bu özellik için raporlama desteği gerekli değildir"
     },
     "scene": {
         "manage_scenes_header": "Sahneleri yönet",

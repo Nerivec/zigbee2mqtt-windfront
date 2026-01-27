@@ -425,7 +425,14 @@
         "low_lqi": "低 LQI",
         "extended_pan_id": "扩展 PAN ID",
         "rx_on_when_idle": "空闲时 RX 开启",
-        "permit_joining": "允许接入"
+        "permit_joining": "允许接入",
+        "select_command": "选择命令",
+        "command_not_required": "不要求支持此命令",
+        "command_has_response": "此命令通常会生成响应",
+        "attribute_not_required": "不要求支持此属性",
+        "attribute_not_readable": "此属性不可读",
+        "attribute_not_writable": "此属性不可写",
+        "attribute_report_not_required": "不要求该属性的上报支持"
     },
     "scene": {
         "manage_scenes_header": "管理场景",

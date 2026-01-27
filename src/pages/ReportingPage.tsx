@@ -16,7 +16,8 @@ import { ReportingRuleModal } from "../components/modal/components/ReportingRule
 import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
 import DevicePicker from "../components/pickers/DevicePicker.js";
 import EndpointPicker from "../components/pickers/EndpointPicker.js";
-import { getClusterAttribute, isAnalogDataType, makeDefaultReporting, type ReportingRule } from "../components/reporting/index.js";
+import { getClusterAttribute } from "../components/pickers/index.js";
+import { isAnalogDataType, makeDefaultReporting, type ReportingRule } from "../components/reporting/index.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import TableSearch from "../components/table/TableSearch.js";

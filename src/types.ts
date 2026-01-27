@@ -47,11 +47,11 @@ export type AvailabilityState = Zigbee2MQTTAPI["{friendlyName}/availability"];
 
 export type DeviceAvailability = AvailabilityState["state"] | "disabled";
 
-export type ClusterDefinition = RecursiveMutable<
-    Zigbee2MQTTAPI["bridge/definitions"]["clusters"][keyof Zigbee2MQTTAPI["bridge/definitions"]["clusters"]]
->;
+export type ClusterDefinition = Zigbee2MQTTAPI["bridge/definitions"]["clusters"][keyof Zigbee2MQTTAPI["bridge/definitions"]["clusters"]];
 
-export type AttributeDefinition = RecursiveMutable<ClusterDefinition["attributes"][number]>;
+export type AttributeDefinition = ClusterDefinition["attributes"][number];
+export type CommandDefinition = ClusterDefinition["commands"][number];
+export type CommandResponseDefinition = ClusterDefinition["commandsResponse"][number];
 
 export interface Message<T = string | Record<string, unknown> | Record<string, unknown>[] | string[]> {
     topic: string;

@@ -425,7 +425,14 @@
         "low_lqi": "Нисък LQI",
         "extended_pan_id": "Разширен PAN ID",
         "rx_on_when_idle": "RX ON при бездействие",
-        "permit_joining": "Разреши присъединяване"
+        "permit_joining": "Разреши присъединяване",
+        "select_command": "Изберете команда",
+        "command_not_required": "Поддръжката на тази команда не е задължителна",
+        "command_has_response": "Тази команда обикновено генерира отговор",
+        "attribute_not_required": "Поддръжката на този атрибут не е задължителна",
+        "attribute_not_readable": "Този атрибут не може да бъде прочетен",
+        "attribute_not_writable": "Този атрибут не може да бъде записан",
+        "attribute_report_not_required": "Поддръжката за отчитане на този атрибут не е задължителна"
     },
     "scene": {
         "manage_scenes_header": "Управление на сцени",

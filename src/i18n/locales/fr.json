@@ -425,7 +425,14 @@
         "low_lqi": "LQI faible",
         "extended_pan_id": "PAN ID étendu",
         "rx_on_when_idle": "RX actif au repos",
-        "permit_joining": "Autoriser l'appairage"
+        "permit_joining": "Autoriser l'appairage",
+        "select_command": "Sélectionner la commande",
+        "command_not_required": "La prise en charge de cette commande n'est pas requise",
+        "command_has_response": "Cette commande génère généralement une réponse",
+        "attribute_not_required": "La prise en charge de cet attribut n'est pas requise",
+        "attribute_not_readable": "Cet attribut n'est pas lisible",
+        "attribute_not_writable": "Cet attribut n'est pas modifiable",
+        "attribute_report_not_required": "La prise en charge des rapports pour cet attribut n'est pas requise"
     },
     "scene": {
         "manage_scenes_header": "Gérer les scènes",
