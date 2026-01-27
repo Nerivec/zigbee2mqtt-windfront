@@ -323,7 +323,7 @@ const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, l
                 <div className="w-full flex flex-row justify-between">
                     <Button<void>
                         disabled={
-                            disableButtons || attributes.some((attr) => !!attr.value) || attributes.some((attr) => attr.definition.read === false)
+                            disableButtons || attributes.some((attr) => attr.definition.read === false || (attr.value != null && attr.value !== ""))
                         }
                         className="btn btn-success"
                         onClick={onReadClick}
@@ -341,7 +341,7 @@ const AttributeEditor = memo(({ sourceIdx, device, read, write, readReporting, l
                     </Button>
                 </div>
                 <ConfirmButton<void>
-                    disabled={disableButtons || attributes.some((attr) => !!attr.value)}
+                    disabled={disableButtons || attributes.some((attr) => attr.value != null && attr.value !== "")}
                     className="btn btn-accent"
                     onClick={onReadReportingClick}
                     title={t(($) => $.sync_reporting)}
