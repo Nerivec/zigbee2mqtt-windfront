@@ -425,7 +425,14 @@
         "low_lqi": "LQI thấp",
         "extended_pan_id": "PAN ID mở rộng",
         "rx_on_when_idle": "RX bật khi rảnh",
-        "permit_joining": "Cho phép tham gia"
+        "permit_joining": "Cho phép tham gia",
+        "select_command": "Chọn lệnh",
+        "command_not_required": "Không cần hỗ trợ cho lệnh này",
+        "command_has_response": "Lệnh này thường tạo ra một phản hồi",
+        "attribute_not_required": "Không cần hỗ trợ cho thuộc tính này",
+        "attribute_not_readable": "Thuộc tính này không thể đọc được",
+        "attribute_not_writable": "Thuộc tính này không thể ghi được",
+        "attribute_report_not_required": "Không cần hỗ trợ báo cáo cho thuộc tính này"
     },
     "scene": {
         "manage_scenes_header": "Quản lý cảnh",

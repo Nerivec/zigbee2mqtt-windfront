@@ -425,7 +425,14 @@
         "low_lqi": "Низький LQI",
         "extended_pan_id": "Розширений PAN ID",
         "rx_on_when_idle": "RX увімкнено в простої",
-        "permit_joining": "Дозволити приєднання"
+        "permit_joining": "Дозволити приєднання",
+        "select_command": "Виберіть команду",
+        "command_not_required": "Підтримка цієї команди не потрібна",
+        "command_has_response": "Ця команда зазвичай генерує відповідь",
+        "attribute_not_required": "Підтримка цього атрибута не потрібна",
+        "attribute_not_readable": "Цей атрибут не можна прочитати",
+        "attribute_not_writable": "Цей атрибут не можна записати",
+        "attribute_report_not_required": "Підтримка звітності для цього атрибута не потрібна"
     },
     "scene": {
         "manage_scenes_header": "Керування сценами",

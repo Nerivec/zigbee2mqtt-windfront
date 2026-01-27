@@ -425,7 +425,14 @@
         "low_lqi": "Alacsony LQI",
         "extended_pan_id": "Kiterjesztett PAN ID",
         "rx_on_when_idle": "RX bekapcsolva üresjáratban",
-        "permit_joining": "Csatlakozás engedélyezése"
+        "permit_joining": "Csatlakozás engedélyezése",
+        "select_command": "Válasszon parancsot",
+        "command_not_required": "Ennek a parancsnak a támogatása nem kötelező",
+        "command_has_response": "Ez a parancs általában választ ad",
+        "attribute_not_required": "Ennek a attribútumnak a támogatása nem kötelező",
+        "attribute_not_readable": "Ez az attribútum nem olvasható",
+        "attribute_not_writable": "Ez az attribútum nem írható",
+        "attribute_report_not_required": "Jelentési támogatás ennek az attribútumnak nem szükséges"
     },
     "scene": {
         "manage_scenes_header": "Jelenetek kezelése",

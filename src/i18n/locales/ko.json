@@ -425,7 +425,14 @@
         "low_lqi": "낮은 LQI",
         "extended_pan_id": "확장 PAN ID",
         "rx_on_when_idle": "유휴 시 RX 켬",
-        "permit_joining": "조인 허용"
+        "permit_joining": "조인 허용",
+        "select_command": "명령 선택",
+        "command_not_required": "이 명령에 대한 지원은 필요하지 않습니다",
+        "command_has_response": "이 명령은 일반적으로 응답을 생성합니다",
+        "attribute_not_required": "이 속성에 대한 지원은 필요하지 않습니다",
+        "attribute_not_readable": "이 속성은 읽을 수 없습니다",
+        "attribute_not_writable": "이 속성은 쓸 수 없습니다",
+        "attribute_report_not_required": "이 속성에 대한 보고 지원은 필요하지 않습니다"
     },
     "scene": {
         "manage_scenes_header": "씬 관리",

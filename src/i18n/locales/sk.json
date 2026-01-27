@@ -425,7 +425,14 @@
         "low_lqi": "Nízke LQI",
         "extended_pan_id": "Rozšírené PAN ID",
         "rx_on_when_idle": "RX zapnuté v nečinnosti",
-        "permit_joining": "Povoliť pripojenie"
+        "permit_joining": "Povoliť pripojenie",
+        "select_command": "Vyberte príkaz",
+        "command_not_required": "Podpora tohto príkazu nie je vyžadovaná",
+        "command_has_response": "Tento príkaz zvyčajne generuje odpoveď",
+        "attribute_not_required": "Podpora tohto atribútu nie je vyžadovaná",
+        "attribute_not_readable": "Tento atribút nie je čitateľný",
+        "attribute_not_writable": "Tento atribút nie je zapisovateľný",
+        "attribute_report_not_required": "Podpora hlásenia pre tento atribút nie je vyžadovaná"
     },
     "scene": {
         "manage_scenes_header": "Spravovať scény",

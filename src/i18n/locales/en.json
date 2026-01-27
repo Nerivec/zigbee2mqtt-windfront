@@ -425,7 +425,14 @@
         "low_lqi": "Low LQI",
         "extended_pan_id": "Extended PAN ID",
         "rx_on_when_idle": "RX ON when idle",
-        "permit_joining": "Permit joining"
+        "permit_joining": "Permit joining",
+        "select_command": "Select command",
+        "command_not_required": "Support for this command is not required",
+        "command_has_response": "This command usually generates a response",
+        "attribute_not_required": "Support for this attribute is not required",
+        "attribute_not_readable": "This attribute is not readable",
+        "attribute_not_writable": "This attribute is not writable",
+        "attribute_report_not_required": "Reporting support for this attribute is not required"
     },
     "scene": {
         "manage_scenes_header": "Manage scenes",

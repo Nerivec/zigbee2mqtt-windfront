@@ -425,7 +425,14 @@
         "low_lqi": "Matala LQI",
         "extended_pan_id": "Laajennettu PAN ID",
         "rx_on_when_idle": "RX päällä joutilaana",
-        "permit_joining": "Salli liittyminen"
+        "permit_joining": "Salli liittyminen",
+        "select_command": "Valitse komento",
+        "command_not_required": "Tämän komennon tuki ei ole pakollinen",
+        "command_has_response": "Tämä komento yleensä tuottaa vastauksen",
+        "attribute_not_required": "Tämän attribuutin tuki ei ole pakollinen",
+        "attribute_not_readable": "Tätä attribuuttia ei voi lukea",
+        "attribute_not_writable": "Tätä attribuuttia ei voi kirjoittaa",
+        "attribute_report_not_required": "Raportointituki tälle attribuutille ei ole pakollinen"
     },
     "scene": {
         "manage_scenes_header": "Hallinnoi skenaarioita",

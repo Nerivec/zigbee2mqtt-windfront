@@ -1,13 +1,17 @@
+import { faQuestion, faReply } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../store.js";
-import type { Device, LogMessage } from "../../types.js";
+import type { CommandDefinition, Device, LogMessage } from "../../types.js";
 import { sendMessage } from "../../websocket/WebSocketManager.js";
+import { BuffaloZclDataType, DataType } from "../../zspec.js";
 import Button from "../Button.js";
 import InputField from "../form-fields/InputField.js";
 import TextareaField from "../form-fields/TextareaField.js";
 import ClusterSinglePicker from "../pickers/ClusterSinglePicker.js";
+import CommandPicker from "../pickers/CommandPicker.js";
 import type { ClusterGroup } from "../pickers/index.js";
 import LastLogResult from "./LastLogResult.js";
 
@@ -17,11 +21,34 @@ interface CommandExecutorProps {
     lastLog: LogMessage | undefined;
 }
 
+const getConditionStr = (conditions: CommandDefinition["parameters"][number]["conditions"]): string | undefined => {
+    if (conditions) {
+        let str = "[";
+
+        for (const condition of conditions) {
+            str += `{${condition.type}`;
+
+            for (const key in condition) {
+                if (key === "type") {
+                    continue;
+                }
+
+                str += ` ${key}=${condition[key as keyof typeof condition]}`;
+            }
+
+            str += "}";
+        }
+
+        return `${str}]`;
+    }
+};
+
 const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorProps) => {
     const { t } = useTranslation(["common", "zigbee"]);
     const [endpoint, setEndpoint] = useState<number>(1);
     const [cluster, setCluster] = useState<string>("");
     const [command, setCommand] = useState<string>("");
+    const [commandDefinition, setCommandDefinition] = useState<CommandDefinition | null>(null);
     const [payload, setPayload] = useState("{}");
     const bridgeDefinitions = useAppStore(useShallow((state) => state.bridgeDefinitions[sourceIdx]));
 
@@ -108,6 +135,24 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
         ];
     }, [device.ieee_address, device.endpoints, endpoint, bridgeDefinitions]);
 
+    const onCommandChange = useCallback((cmd: string, definition: CommandDefinition): void => {
+        setCommand(cmd);
+        setCommandDefinition(definition);
+
+        let newPayload = "{\n";
+        const lastParam = definition.parameters.length - 1;
+
+        for (let i = 0; i < definition.parameters.length; i++) {
+            const param = definition.parameters[i];
+
+            newPayload += `    "${param.name}": TODO${i === lastParam ? "" : ","}\n`;
+        }
+
+        newPayload += "}";
+
+        setPayload(newPayload);
+    }, []);
+
     const onExecute = useCallback(async () => {
         let commandKey: string | number = Number.parseInt(command, 10);
 
@@ -148,25 +193,68 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
                     }}
                     required
                 />
-                <InputField
-                    type="text"
-                    name="command"
+                <CommandPicker
+                    sourceIdx={sourceIdx}
                     label={t(($) => $.command)}
                     value={command}
-                    placeholder={"state, color..."}
-                    onChange={(e) => setCommand(e.target.value)}
-                    pattern="^\d+|^\w+"
-                    required
+                    cluster={cluster}
+                    device={device}
+                    onChange={onCommandChange}
                 />
             </div>
+            {commandDefinition ? (
+                <div className="list">
+                    {commandDefinition.required && commandDefinition.response == null ? null : (
+                        <div className="list-row p-1">
+                            <div className="flex flex-row gap-2">
+                                {commandDefinition.required ? null : (
+                                    <span className={"tooltip tooltip-right"} data-tip={t(($) => $.command_not_required, { ns: "zigbee" })}>
+                                        <FontAwesomeIcon icon={faQuestion} className="text-warning" />
+                                    </span>
+                                )}
+                                {commandDefinition.response == null ? null : (
+                                    <span className={"tooltip tooltip-right"} data-tip={t(($) => $.command_has_response, { ns: "zigbee" })}>
+                                        <FontAwesomeIcon icon={faReply} className="text-accent" />
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                    {commandDefinition.parameters.length > 0 ? (
+                        commandDefinition.parameters.map((param) => (
+                            <div key={param.name} className="list-row p-1">
+                                <div>
+                                    {param.name}: {DataType[param.type] ?? BuffaloZclDataType[param.type]}
+                                </div>
+                                <div className="flex flex-row gap-2 justify-end">
+                                    {param.min != null ? <span>Min: {param.min}</span> : null}
+                                    {param.minExcl != null ? <span>Min excl: {param.minExcl}</span> : null}
+                                    {param.max != null ? <span>Max: {param.max}</span> : null}
+                                    {param.maxExcl != null ? <span>Max excl: {param.maxExcl}</span> : null}
+                                    {param.minLen != null ? <span>Min len: {param.minLen}</span> : null}
+                                    {param.maxLen != null ? <span>Max len: {param.maxLen}</span> : null}
+                                    {param.length != null ? <span>Length: {param.length}</span> : null}
+                                    {param.special != null ? (
+                                        <span>Special: [{param.special.map((sp) => `${sp[0]}=${sp[1]}`).join(" ")}]</span>
+                                    ) : null}
+                                    {param.conditions != null ? <span>Conditions: {getConditionStr(param.conditions)}</span> : null}
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <>NO PARAMETER</>
+                    )}
+                </div>
+            ) : null}
             <TextareaField
                 name="payload"
                 label={t(($) => $.payload)}
-                rows={3}
+                rows={(payload.match(/\n/g) || "").length + 1}
                 value={payload}
                 onChange={(e) => setPayload(e.target.value)}
                 className="textarea validator w-full"
                 required
+                disabled={commandDefinition?.parameters.length === 0}
             />
             <div>
                 <Button<void> onClick={onExecute} disabled={!canExecute} className="btn btn-success">

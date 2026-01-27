@@ -425,7 +425,14 @@
         "low_lqi": "LQI baix",
         "extended_pan_id": "PAN ID ampliat",
         "rx_on_when_idle": "RX ON en repòs",
-        "permit_joining": "Permet unir-se"
+        "permit_joining": "Permet unir-se",
+        "select_command": "Selecciona comanda",
+        "command_not_required": "No cal compatibilitat per a aquesta comanda",
+        "command_has_response": "Aquesta comanda normalment genera una resposta",
+        "attribute_not_required": "No cal compatibilitat per a aquest atribut",
+        "attribute_not_readable": "Aquest atribut no es pot llegir",
+        "attribute_not_writable": "Aquest atribut no es pot escriure",
+        "attribute_report_not_required": "No cal suport d'informes per a aquest atribut"
     },
     "scene": {
         "manage_scenes_header": "Gestiona escenes",

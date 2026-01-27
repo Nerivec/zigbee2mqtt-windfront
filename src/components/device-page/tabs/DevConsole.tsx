@@ -177,17 +177,16 @@ export default function DevConsole({ sourceIdx, device }: DevConsoleProps) {
                 </>
             )}
             <div className="divider" />
-            <div className="flex flex-row flex-wrap justify-evenly gap-4">
-                <AttributeEditor
-                    sourceIdx={sourceIdx}
-                    device={device}
-                    read={readAttributes}
-                    write={writeAttributes}
-                    readReporting={readAttributesReporting}
-                    lastLog={lastAttributeLog}
-                />
-                <CommandExecutor sourceIdx={sourceIdx} device={device} lastLog={lastCommandLog} />
-            </div>
+            <AttributeEditor
+                sourceIdx={sourceIdx}
+                device={device}
+                read={readAttributes}
+                write={writeAttributes}
+                readReporting={readAttributesReporting}
+                lastLog={lastAttributeLog}
+            />
+            <div className="divider" />
+            <CommandExecutor sourceIdx={sourceIdx} device={device} lastLog={lastCommandLog} />
         </div>
     );
 }

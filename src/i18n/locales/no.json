@@ -425,7 +425,14 @@
         "low_lqi": "Lav LQI",
         "extended_pan_id": "Utvidet PAN-ID",
         "rx_on_when_idle": "RX på i hvile",
-        "permit_joining": "Tillat tilkobling"
+        "permit_joining": "Tillat tilkobling",
+        "select_command": "Velg kommando",
+        "command_not_required": "Støtte for denne kommandoen er ikke nødvendig",
+        "command_has_response": "Denne kommandoen gir vanligvis et svar",
+        "attribute_not_required": "Støtte for dette attributtet er ikke nødvendig",
+        "attribute_not_readable": "Dette attributtet er ikke mulig å lese",
+        "attribute_not_writable": "Dette attributtet er ikke mulig å skrive",
+        "attribute_report_not_required": "Rapportstøtte for dette attributtet er ikke nødvendig"
     },
     "scene": {
         "manage_scenes_header": "Administrer scener",

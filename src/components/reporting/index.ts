@@ -1,6 +1,4 @@
-import type { Zigbee2MQTTAPI } from "zigbee2mqtt";
-import type { AppState } from "../../store.js";
-import type { AttributeDefinition, ClusterDefinition, Device } from "../../types.js";
+import type { Device } from "../../types.js";
 
 export type ReportingRule = {
     isNew?: string;
@@ -11,53 +9,6 @@ export interface ReportingEndpoint {
     endpointId: string;
     rules: ReportingRule[];
 }
-
-type BridgeDefinitions = Zigbee2MQTTAPI["bridge/definitions"];
-
-export const isDiscreteOrCompositeDataType = (attrDefinition: AttributeDefinition): boolean =>
-    (attrDefinition.type >= 0x08 && attrDefinition.type <= 0x1f) ||
-    attrDefinition.type === 0x30 ||
-    attrDefinition.type === 0x31 ||
-    (attrDefinition.type >= 0x41 && attrDefinition.type <= 0x51) ||
-    (attrDefinition.type >= 0xe8 && attrDefinition.type <= 0xf1);
-
-export const isAnalogDataType = (attrDefinition: AttributeDefinition): boolean =>
-    (attrDefinition.type >= 0x20 && attrDefinition.type <= 0x2f) ||
-    (attrDefinition.type >= 0x38 && attrDefinition.type <= 0x3a) ||
-    (attrDefinition.type >= 0xe0 && attrDefinition.type <= 0xe2);
-
-export const getClusterAttributes = (
-    bridgeDefinitions: AppState["bridgeDefinitions"][number],
-    deviceIeeeAddress: string,
-    clusterName: string,
-): ClusterDefinition["attributes"] => {
-    const deviceCustomClusters: BridgeDefinitions["custom_clusters"][string] | undefined = bridgeDefinitions.custom_clusters[deviceIeeeAddress];
-
-    if (deviceCustomClusters) {
-        const customClusters = deviceCustomClusters[clusterName];
-
-        if (customClusters) {
-            return customClusters.attributes;
-        }
-    }
-
-    const stdCluster: BridgeDefinitions["clusters"][keyof BridgeDefinitions["clusters"]] | undefined = bridgeDefinitions.clusters[clusterName];
-
-    if (stdCluster) {
-        return stdCluster.attributes;
-    }
-
-    return {};
-};
-
-export const getClusterAttribute = (
-    bridgeDefinitions: AppState["bridgeDefinitions"][number],
-    deviceIeeeAddress: string,
-    clusterName: string,
-    attribute: string | number,
-): ClusterDefinition["attributes"][string] | undefined => {
-    return getClusterAttributes(bridgeDefinitions, deviceIeeeAddress, clusterName)[attribute];
-};
 
 export const makeDefaultReporting = (ieeeAddress: string, endpoint: string): ReportingRule => ({
     isNew: ieeeAddress,

@@ -425,7 +425,14 @@
         "low_lqi": "Låg LQI",
         "extended_pan_id": "Utökat PAN-ID",
         "rx_on_when_idle": "RX på vid inaktivitet",
-        "permit_joining": "Tillåt anslutning"
+        "permit_joining": "Tillåt anslutning",
+        "select_command": "Välj kommando",
+        "command_not_required": "Stöd för detta kommando krävs inte",
+        "command_has_response": "Detta kommando genererar vanligtvis ett svar",
+        "attribute_not_required": "Stöd för detta attribut krävs inte",
+        "attribute_not_readable": "Detta attribut är inte läsbart",
+        "attribute_not_writable": "Detta attribut är inte skrivbart",
+        "attribute_report_not_required": "Rapporteringsstöd för detta attribut krävs inte"
     },
     "scene": {
         "manage_scenes_header": "Hantera scener",
