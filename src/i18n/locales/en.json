@@ -529,6 +529,7 @@
         "ota-update_check_interval": "Your device may request a check for a new firmware update. This value determines how frequently third party servers may actually be contacted to look for firmware updates. The value is set in minutes, and the default is 1 day.",
         "ota-disable_automatic_update_check": "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually.",
         "ota-zigbee_ota_override_index_location": "Location of override OTA index file",
+        "ota-image_block_request_timeout": "Timeout (in milliseconds) during OTA updates. You can increase this value if your device is requesting blocks too slowly.",
         "ota-image_block_response_delay": "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA.",
         "ota-default_maximum_data_size": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values.",
         "frontend-enabled": "Enable frontend",
@@ -593,6 +594,7 @@
         "definitions-device-filtered_optimistic": "Filter attributes with regex from optimistic publish payload when calling /set. (This has no effect if optimistic is set to false).",
         "definitions-device-icon": "The user-defined device icon for the frontend. It can be a full URL link to an image (e.g. https://SOME.SITE/MODEL123.jpg) or a path to a local file inside the `device_icons` directory (e.g. device_icons/MODEL123.png).",
         "definitions-device-homeassistant-name": "Name of the device in Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually.",
         "definitions-group-qos": "QoS level for MQTT messages of this group",
         "definitions-group-off_state": "Control when to publish state OFF or CLOSE for a group. 'all_members_off': only publish state OFF/CLOSE when all group members are in state OFF/CLOSE,  'last_member_state': publish state OFF whenever one of its members changes to OFF",
         "definitions-group-homeassistant-name": "Name of the group in Home Assistant"
