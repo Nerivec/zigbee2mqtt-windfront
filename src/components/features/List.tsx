@@ -1,10 +1,10 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { Fragment, memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { type DeviceState, FeatureAccessMode, type FeatureWithAnySubFeatures, type FeatureWithSubFeatures, type ListFeature } from "../../types.js";
+import { type DeviceState, FeatureAccessMode, type FeatureWithAnySubFeatures, type ListFeature } from "../../types.js";
 import Button from "../Button.js";
 import BaseViewer from "./BaseViewer.js";
 import Feature from "./Feature.js";
-import { type BaseFeatureProps, clampList } from "./index.js";
+import { type BaseFeatureProps, clampList, getFeatureKey } from "./index.js";
 import NoAccessError from "./NoAccessError.js";
 
 type Props = BaseFeatureProps<ListFeature> & {
@@ -100,16 +100,13 @@ const List = memo((props: Props) => {
     }, [property, onChange, currentValue]);
 
     if (access & FeatureAccessMode.SET) {
-        const isListOfComposites = "type" in item_type && item_type.type === "composite";
-
         return (
             <>
-                <div className={isListOfComposites ? "list bg-base-100" : undefined}>
+                <div className="list bg-base-100">
                     {currentValue.map((itemValue, itemIndex) => (
-                        // biome-ignore lint/suspicious/noArrayIndexKey: don't have a fixed value type
-                        <div key={itemIndex} className={isListOfComposites ? undefined : "flex flex-row flex-wrap gap-2 items-center"}>
+                        <Fragment key={`${getFeatureKey(item_type)}-${itemIndex}`}>
                             <Feature
-                                feature={item_type as FeatureWithSubFeatures}
+                                feature={item_type}
                                 device={device}
                                 deviceState={itemValue as DeviceState}
                                 onChange={(value) => onItemChange(value, itemIndex)}
@@ -117,26 +114,14 @@ const List = memo((props: Props) => {
                                 parentFeatures={[...parentFeatures, feature]}
                                 minimal={minimal}
                             />
-                            {!isListOfComposites && canRemove && (
+                            {canRemove && (
                                 <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square" onClick={removeItem}>
                                     -
                                 </Button>
                             )}
-                        </div>
+                        </Fragment>
                     ))}
                 </div>
-                {isListOfComposites && canRemove && (
-                    <div className="flex flex-row flex-wrap gap-2 mt-2">
-                        {currentValue.map((_, itemIndex) => (
-                            // biome-ignore lint/suspicious/noArrayIndexKey: don't have a fixed value type
-                            <div key={itemIndex}>
-                                <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square" onClick={removeItem}>
-                                    -
-                                </Button>
-                            </div>
-                        ))}
-                    </div>
-                )}
                 {canAdd && (
                     <div className="flex flex-row flex-wrap gap-2">
                         <Button<void> className="btn btn-sm btn-success btn-square" onClick={addItem}>
@@ -156,37 +141,31 @@ const List = memo((props: Props) => {
     }
 
     if (access & FeatureAccessMode.STATE) {
-        const arrayValue = Array.isArray(deviceValue)
+        const arrayValue: DeviceState[] = Array.isArray(deviceValue)
             ? deviceValue
             : property && typeof deviceValue === "object" && deviceValue != null
-              ? (deviceValue as Record<string, unknown>)[property]
+              ? deviceValue[property]
               : undefined;
-        const isReadOnlyListOfComposites =
-            !(access & FeatureAccessMode.SET) && "type" in item_type && item_type.type === "composite" && Array.isArray(arrayValue);
 
-        if (isReadOnlyListOfComposites) {
-            return (
-                <div className="list bg-base-100">
-                    {arrayValue.map((itemValue, itemIndex) => (
-                        // biome-ignore lint/suspicious/noArrayIndexKey: don't have a fixed value type
-                        <div key={itemIndex}>
-                            <Feature
-                                feature={item_type as FeatureWithSubFeatures}
-                                device={device}
-                                deviceState={(itemValue as Record<string, unknown>) ?? {}}
-                                onChange={() => Promise.resolve()}
-                                onRead={onRead}
-                                featureWrapperClass={FeatureWrapper}
-                                parentFeatures={[...parentFeatures, feature]}
-                                minimal={minimal}
-                            />
-                        </div>
-                    ))}
-                </div>
-            );
-        }
-
-        return <BaseViewer {...props} />;
+        return "type" in item_type && item_type.type === "composite" && Array.isArray(arrayValue) ? (
+            <div className="list bg-base-100">
+                {arrayValue.map((itemValue, itemIndex) => (
+                    <Feature
+                        key={`${getFeatureKey(item_type)}-${itemIndex}`}
+                        feature={item_type}
+                        device={device}
+                        deviceState={itemValue ?? {}}
+                        onChange={() => Promise.resolve()}
+                        onRead={onRead}
+                        featureWrapperClass={FeatureWrapper}
+                        parentFeatures={[...parentFeatures, feature]}
+                        minimal={minimal}
+                    />
+                ))}
+            </div>
+        ) : (
+            <BaseViewer {...props} />
+        );
     }
 
     return <NoAccessError {...props} />;
