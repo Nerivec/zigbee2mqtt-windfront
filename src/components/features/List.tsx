@@ -1,18 +1,10 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { Fragment, memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-    type Device,
-    type DeviceState,
-    FeatureAccessMode,
-    type FeatureWithAnySubFeatures,
-    type FeatureWithSubFeatures,
-    type ListFeature,
-} from "../../types.js";
+import { type DeviceState, FeatureAccessMode, type FeatureWithAnySubFeatures, type ListFeature } from "../../types.js";
 import Button from "../Button.js";
 import BaseViewer from "./BaseViewer.js";
 import Feature from "./Feature.js";
-import FeatureWrapper from "./FeatureWrapper.js";
-import { type BaseFeatureProps, clampList } from "./index.js";
+import { type BaseFeatureProps, clampList, getFeatureKey } from "./index.js";
 import NoAccessError from "./NoAccessError.js";
 
 type Props = BaseFeatureProps<ListFeature> & {
@@ -36,7 +28,7 @@ const buildDefaultArray = (min: number, type: string) => (min > 0 ? Array(min).f
 
 const List = memo((props: Props) => {
     const { t } = useTranslation("common");
-    const { feature, minimal, parentFeatures, onChange, deviceValue } = props;
+    const { feature, minimal, parentFeatures, onChange, onRead, deviceValue, device, featureWrapperClass: FeatureWrapper } = props;
     const { property, access = FeatureAccessMode.SET, item_type, length_min, length_max } = feature;
     const [currentValue, setCurrentValue] = useState<unknown[]>(buildDefaultArray(length_min ?? 0, item_type.type));
     const [canAdd, setCanAdd] = useState(false);
@@ -110,24 +102,26 @@ const List = memo((props: Props) => {
     if (access & FeatureAccessMode.SET) {
         return (
             <>
-                {currentValue.map((itemValue, itemIndex) => (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: don't have a fixed value type
-                    <div key={itemIndex} className="flex flex-row flex-wrap gap-2 items-center">
-                        <Feature
-                            feature={item_type as FeatureWithSubFeatures}
-                            device={{} as Device}
-                            deviceState={itemValue as DeviceState}
-                            onChange={(value) => onItemChange(value, itemIndex)}
-                            featureWrapperClass={FeatureWrapper}
-                            parentFeatures={[...parentFeatures, feature]}
-                        />
-                        {canRemove && (
-                            <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square" onClick={removeItem}>
-                                -
-                            </Button>
-                        )}
-                    </div>
-                ))}
+                <div className="list bg-base-100">
+                    {currentValue.map((itemValue, itemIndex) => (
+                        <Fragment key={`${getFeatureKey(item_type)}-${itemIndex}`}>
+                            <Feature
+                                feature={item_type}
+                                device={device}
+                                deviceState={itemValue as DeviceState}
+                                onChange={(value) => onItemChange(value, itemIndex)}
+                                featureWrapperClass={FeatureWrapper}
+                                parentFeatures={[...parentFeatures, feature]}
+                                minimal={minimal}
+                            />
+                            {canRemove && (
+                                <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square" onClick={removeItem}>
+                                    -
+                                </Button>
+                            )}
+                        </Fragment>
+                    ))}
+                </div>
                 {canAdd && (
                     <div className="flex flex-row flex-wrap gap-2">
                         <Button<void> className="btn btn-sm btn-success btn-square" onClick={addItem}>
@@ -147,7 +141,31 @@ const List = memo((props: Props) => {
     }
 
     if (access & FeatureAccessMode.STATE) {
-        return <BaseViewer {...props} />;
+        const arrayValue: DeviceState[] = Array.isArray(deviceValue)
+            ? deviceValue
+            : property && typeof deviceValue === "object" && deviceValue != null
+              ? deviceValue[property]
+              : undefined;
+
+        return "type" in item_type && item_type.type === "composite" && Array.isArray(arrayValue) ? (
+            <div className="list bg-base-100">
+                {arrayValue.map((itemValue, itemIndex) => (
+                    <Feature
+                        key={`${getFeatureKey(item_type)}-${itemIndex}`}
+                        feature={item_type}
+                        device={device}
+                        deviceState={itemValue ?? {}}
+                        onChange={() => Promise.resolve()}
+                        onRead={onRead}
+                        featureWrapperClass={FeatureWrapper}
+                        parentFeatures={[...parentFeatures, feature]}
+                        minimal={minimal}
+                    />
+                ))}
+            </div>
+        ) : (
+            <BaseViewer {...props} />
+        );
     }
 
     return <NoAccessError {...props} />;
