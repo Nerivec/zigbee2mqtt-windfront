@@ -1,17 +1,9 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-    type Device,
-    type DeviceState,
-    FeatureAccessMode,
-    type FeatureWithAnySubFeatures,
-    type FeatureWithSubFeatures,
-    type ListFeature,
-} from "../../types.js";
+import { type DeviceState, FeatureAccessMode, type FeatureWithAnySubFeatures, type FeatureWithSubFeatures, type ListFeature } from "../../types.js";
 import Button from "../Button.js";
 import BaseViewer from "./BaseViewer.js";
 import Feature from "./Feature.js";
-import FeatureWrapper from "./FeatureWrapper.js";
 import { type BaseFeatureProps, clampList } from "./index.js";
 import NoAccessError from "./NoAccessError.js";
 
@@ -36,7 +28,7 @@ const buildDefaultArray = (min: number, type: string) => (min > 0 ? Array(min).f
 
 const List = memo((props: Props) => {
     const { t } = useTranslation("common");
-    const { feature, minimal, parentFeatures, onChange, deviceValue } = props;
+    const { feature, minimal, parentFeatures, onChange, onRead, deviceValue, device, featureWrapperClass: FeatureWrapper } = props;
     const { property, access = FeatureAccessMode.SET, item_type, length_min, length_max } = feature;
     const [currentValue, setCurrentValue] = useState<unknown[]>(buildDefaultArray(length_min ?? 0, item_type.type));
     const [canAdd, setCanAdd] = useState(false);
@@ -108,26 +100,43 @@ const List = memo((props: Props) => {
     }, [property, onChange, currentValue]);
 
     if (access & FeatureAccessMode.SET) {
+        const isListOfComposites = "type" in item_type && item_type.type === "composite";
+
         return (
             <>
-                {currentValue.map((itemValue, itemIndex) => (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: don't have a fixed value type
-                    <div key={itemIndex} className="flex flex-row flex-wrap gap-2 items-center">
-                        <Feature
-                            feature={item_type as FeatureWithSubFeatures}
-                            device={{} as Device}
-                            deviceState={itemValue as DeviceState}
-                            onChange={(value) => onItemChange(value, itemIndex)}
-                            featureWrapperClass={FeatureWrapper}
-                            parentFeatures={[...parentFeatures, feature]}
-                        />
-                        {canRemove && (
-                            <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square" onClick={removeItem}>
-                                -
-                            </Button>
-                        )}
+                <div className={isListOfComposites ? "list bg-base-100" : undefined}>
+                    {currentValue.map((itemValue, itemIndex) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: don't have a fixed value type
+                        <div key={itemIndex} className={isListOfComposites ? undefined : "flex flex-row flex-wrap gap-2 items-center"}>
+                            <Feature
+                                feature={item_type as FeatureWithSubFeatures}
+                                device={device}
+                                deviceState={itemValue as DeviceState}
+                                onChange={(value) => onItemChange(value, itemIndex)}
+                                featureWrapperClass={FeatureWrapper}
+                                parentFeatures={[...parentFeatures, feature]}
+                                minimal={minimal}
+                            />
+                            {!isListOfComposites && canRemove && (
+                                <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square" onClick={removeItem}>
+                                    -
+                                </Button>
+                            )}
+                        </div>
+                    ))}
+                </div>
+                {isListOfComposites && canRemove && (
+                    <div className="flex flex-row flex-wrap gap-2 mt-2">
+                        {currentValue.map((_, itemIndex) => (
+                            // biome-ignore lint/suspicious/noArrayIndexKey: don't have a fixed value type
+                            <div key={itemIndex}>
+                                <Button<number> item={itemIndex} className="btn btn-sm btn-error btn-square" onClick={removeItem}>
+                                    -
+                                </Button>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                )}
                 {canAdd && (
                     <div className="flex flex-row flex-wrap gap-2">
                         <Button<void> className="btn btn-sm btn-success btn-square" onClick={addItem}>
@@ -147,6 +156,36 @@ const List = memo((props: Props) => {
     }
 
     if (access & FeatureAccessMode.STATE) {
+        const arrayValue = Array.isArray(deviceValue)
+            ? deviceValue
+            : property && typeof deviceValue === "object" && deviceValue != null
+              ? (deviceValue as Record<string, unknown>)[property]
+              : undefined;
+        const isReadOnlyListOfComposites =
+            !(access & FeatureAccessMode.SET) && "type" in item_type && item_type.type === "composite" && Array.isArray(arrayValue);
+
+        if (isReadOnlyListOfComposites) {
+            return (
+                <div className="list bg-base-100">
+                    {arrayValue.map((itemValue, itemIndex) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: don't have a fixed value type
+                        <div key={itemIndex}>
+                            <Feature
+                                feature={item_type as FeatureWithSubFeatures}
+                                device={device}
+                                deviceState={(itemValue as Record<string, unknown>) ?? {}}
+                                onChange={() => Promise.resolve()}
+                                onRead={onRead}
+                                featureWrapperClass={FeatureWrapper}
+                                parentFeatures={[...parentFeatures, feature]}
+                                minimal={minimal}
+                            />
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
         return <BaseViewer {...props} />;
     }
 
