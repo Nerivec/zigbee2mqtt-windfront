@@ -1,11 +1,12 @@
 import { faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { ColumnDef } from "@tanstack/react-table";
-import { type JSX, useCallback, useMemo } from "react";
+import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
+import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import DeviceControlGroup from "../components/device/DeviceControlGroup.js";
 import DeviceImage from "../components/device/DeviceImage.js";
+import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import TableSearch from "../components/table/TableSearch.js";
@@ -35,7 +36,15 @@ export default function DevicesPage(): JSX.Element {
     const deviceStates = useAppStore((state) => state.deviceStates);
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const availability = useAppStore((state) => state.availability);
+    const setBulkSelectedDevices = useAppStore((state) => state.setBulkSelectedDevices);
     const { t } = useTranslation(["zigbee", "common", "availability"]);
+    const navigate = useNavigate();
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
+    useEffect(() => {
+        setRowSelection({});
+    }, [devices]);
 
     const data = useMemo((): DeviceTableData[] => {
         const renderDevices: DeviceTableData[] = [];
@@ -99,8 +108,65 @@ export default function DevicesPage(): JSX.Element {
         await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block });
     }, []);
 
+    // Get selected devices from current selection
+    const selectedDevicesInfo = useMemo(() => {
+        const selectedRowIds = Object.keys(rowSelection);
+        if (selectedRowIds.length === 0) {
+            return { count: 0, sourceIdx: -1, ieeeAddresses: [] as string[] };
+        }
+
+        // Check that all selected devices are from the same source
+        const sourceIdxSet = new Set<number>();
+        const ieeeAddresses: string[] = [];
+
+        for (const rowId of selectedRowIds) {
+            const rowIdx = Number.parseInt(rowId, 10);
+            const row = data[rowIdx];
+            if (row) {
+                sourceIdxSet.add(row.sourceIdx);
+                ieeeAddresses.push(row.device.ieee_address);
+            }
+        }
+
+        // If multiple sources selected, return the count but flag it
+        const sourceIdx = sourceIdxSet.size === 1 ? [...sourceIdxSet][0] : -1;
+
+        return { count: selectedRowIds.length, sourceIdx, ieeeAddresses };
+    }, [rowSelection, data]);
+
+    const handleBulkSettings = useCallback(() => {
+        if (selectedDevicesInfo.sourceIdx >= 0 && selectedDevicesInfo.ieeeAddresses.length >= 2) {
+            setBulkSelectedDevices(selectedDevicesInfo.sourceIdx, selectedDevicesInfo.ieeeAddresses);
+            void navigate(`/bulk-settings/${selectedDevicesInfo.sourceIdx}`);
+        }
+    }, [selectedDevicesInfo, setBulkSelectedDevices, navigate]);
+
     const columns = useMemo<ColumnDef<DeviceTableData, unknown>[]>(
         () => [
+            {
+                id: "select",
+                size: 45,
+                header: ({ table }) => (
+                    <IndeterminateCheckbox
+                        checked={table.getIsAllRowsSelected()}
+                        indeterminate={table.getIsSomeRowsSelected()}
+                        onChange={table.getToggleAllRowsSelectedHandler()}
+                    />
+                ),
+                accessorFn: () => "",
+                cell: ({ row }) => (
+                    <input
+                        type="checkbox"
+                        className="checkbox"
+                        checked={row.getIsSelected()}
+                        disabled={!row.getCanSelect()}
+                        onChange={row.getToggleSelectedHandler()}
+                    />
+                ),
+                enableGlobalFilter: false,
+                enableColumnFilter: false,
+                enableSorting: false,
+            },
             {
                 id: "source",
                 size: 60,
@@ -376,6 +442,8 @@ export default function DevicesPage(): JSX.Element {
         data,
         visibleColumns: { source: MULTI_INSTANCE, type: false, power_source: false, battery_level: false, battery_low: false, disabled: false },
         sorting: [{ id: "friendly_name", desc: false }],
+        rowSelection,
+        onRowSelectionChange: setRowSelection,
     });
 
     return (
@@ -385,6 +453,25 @@ export default function DevicesPage(): JSX.Element {
             </NavBarContent>
 
             <div className="mb-5">
+                {selectedDevicesInfo.count > 0 && (
+                    <div className="flex flex-row flex-wrap gap-2 px-2 pb-3">
+                        <span className="self-center text-sm">
+                            {t(($) => $.devices_selected, { ns: "common", count: selectedDevicesInfo.count })}
+                        </span>
+                        {MULTI_INSTANCE && selectedDevicesInfo.sourceIdx < 0 && (
+                            <span className="badge badge-warning self-center">{t(($) => $.multi_source_warning, { ns: "common" })}</span>
+                        )}
+                        <button
+                            type="button"
+                            className="btn btn-outline btn-primary btn-sm"
+                            onClick={handleBulkSettings}
+                            disabled={selectedDevicesInfo.count < 2 || selectedDevicesInfo.sourceIdx < 0}
+                            title={t(($) => $.bulk_settings, { ns: "common" })}
+                        >
+                            {t(($) => $.bulk_settings, { ns: "common" })}
+                        </button>
+                    </div>
+                )}
                 <Table id="all-devices" {...table} />
             </div>
         </>

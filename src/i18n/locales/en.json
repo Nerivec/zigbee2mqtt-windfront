@@ -97,7 +97,10 @@
         "sync": "Sync",
         "clear_self_as_source": "Clear self as source",
         "sync_reporting": "Sync reporting",
-        "exposes": "Exposes"
+        "exposes": "Exposes",
+        "devices_selected": "{{count}} device(s) selected",
+        "bulk_settings": "Bulk Settings",
+        "multi_source_warning": "Select devices from same source"
     },
     "devicePage": {
         "about": "About",
@@ -488,6 +491,19 @@
         "development": "Development",
         "contributing": "Here is where you can find information to contribute to this project",
         "translation": "Translation"
+    },
+    "bulkSettings": {
+        "title": "Bulk Settings",
+        "selected_devices_count": "{{count}} devices selected",
+        "common_features": "Common Features",
+        "common_features_description": "These features are available on all selected devices and can be edited in bulk.",
+        "no_common_features": "No common features found across selected devices.",
+        "mixed_values": "Mixed",
+        "unknown_value": "Unknown",
+        "legend": "Legend",
+        "legend_uniform": "All devices have the same value",
+        "legend_mixed": "Devices have different values",
+        "legend_unknown": "Value not available"
     },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant integration (MQTT discovery)",

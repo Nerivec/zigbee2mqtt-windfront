@@ -15,6 +15,7 @@ import { startWebSocketManager } from "./websocket/WebSocketManager.js";
 const HomePage = lazy(async () => await import("./pages/HomePage.js"));
 const DevicesPage = lazy(async () => await import("./pages/DevicesPage.js"));
 const DevicePage = lazy(async () => await import("./pages/DevicePage.js"));
+const BulkSettingsPage = lazy(async () => await import("./pages/BulkSettingsPage.js"));
 const DashboardPage = lazy(async () => await import("./pages/Dashboard.js"));
 const NetworkPage = lazy(async () => await import("./pages/NetworkPage.js"));
 const GroupsPage = lazy(async () => await import("./pages/GroupsPage.js"));
@@ -56,6 +57,7 @@ function App() {
                         <Route path="/dashboard" element={<DashboardPage />} />
                         <Route path="/devices" element={<DevicesPage />} />
                         <Route path="/device/:sourceIdx/:deviceId/:tab?" element={<DevicePage />} />
+                        <Route path="/bulk-settings/:sourceIdx" element={<BulkSettingsPage />} />
                         <Route path="/groups" element={<GroupsPage />} />
                         <Route path="/group/:sourceIdx/:groupId/:tab?" element={<GroupPage />} />
                         <Route path="/reporting" element={<ReportingPage />} />
