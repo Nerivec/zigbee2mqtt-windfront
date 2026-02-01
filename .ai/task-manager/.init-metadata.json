@@ -1,18 +1,18 @@
 {
-  "version": "1.26.0",
-  "timestamp": "2026-02-01T01:26:14.673Z",
-  "files": {
-    "config/TASK_MANAGER.md": "ad37290f6f5bced23be611198f288f8c196452183aa139197085c3da73174b49",
-    "config/hooks/POST_ERROR_DETECTION.md": "ed4e1691880ea54ea43c318dc236c326ed81a3ce2785321a25e6db747a6e7e88",
-    "config/hooks/POST_PHASE.md": "d79fccfee4629ffc226db97f6f755c4dd068ee9c30f7d8bf98dfc55b104003c5",
-    "config/hooks/POST_PLAN.md": "4c9850cb6d11d74065b6c4a00137fe00540aeea7b44d9edbfc8211ff5ea34662",
-    "config/hooks/POST_TASK_GENERATION_ALL.md": "aa86468a634da40ae141670b960473bce10589190b0f9119bf07d64cd49a9a7b",
-    "config/hooks/PRE_PHASE.md": "efd9ad1ae9265ef36388cd5dfd9f96a45ae98f7f3d1a2eb5cc8caec01f4efb23",
-    "config/hooks/PRE_PLAN.md": "b8291630f12a1745e00b4a8079e9b7d8d5f7cd3c146df505b2fc8fa175dea1b9",
-    "config/hooks/PRE_TASK_ASSIGNMENT.md": "94735720070a6084560cc89708deb1e123f8c8b24c9ed8ffbb95886423d4b9f7",
-    "config/templates/BLUEPRINT_TEMPLATE.md": "f67488cd05a2fcdbf8a58a863d1315cde4f77a3b42d7e752374feb31620e8063",
-    "config/templates/EXECUTION_SUMMARY_TEMPLATE.md": "9023bd2f6e39169068fd8684254679c82bc76ddbde3d2881eadd76c107f083c2",
-    "config/templates/PLAN_TEMPLATE.md": "c506f6f9394bc4b75e4ccc9fafcef244219bb255a9efd7b95852e8f21123728b",
-    "config/templates/TASK_TEMPLATE.md": "e0fa4d9bde7d9ab9edcf4f32785011c7125424f5199a0994c5900ef0352c4e02"
-  }
+    "version": "1.26.0",
+    "timestamp": "2026-02-01T01:26:14.673Z",
+    "files": {
+        "config/TASK_MANAGER.md": "ad37290f6f5bced23be611198f288f8c196452183aa139197085c3da73174b49",
+        "config/hooks/POST_ERROR_DETECTION.md": "ed4e1691880ea54ea43c318dc236c326ed81a3ce2785321a25e6db747a6e7e88",
+        "config/hooks/POST_PHASE.md": "d79fccfee4629ffc226db97f6f755c4dd068ee9c30f7d8bf98dfc55b104003c5",
+        "config/hooks/POST_PLAN.md": "4c9850cb6d11d74065b6c4a00137fe00540aeea7b44d9edbfc8211ff5ea34662",
+        "config/hooks/POST_TASK_GENERATION_ALL.md": "aa86468a634da40ae141670b960473bce10589190b0f9119bf07d64cd49a9a7b",
+        "config/hooks/PRE_PHASE.md": "efd9ad1ae9265ef36388cd5dfd9f96a45ae98f7f3d1a2eb5cc8caec01f4efb23",
+        "config/hooks/PRE_PLAN.md": "b8291630f12a1745e00b4a8079e9b7d8d5f7cd3c146df505b2fc8fa175dea1b9",
+        "config/hooks/PRE_TASK_ASSIGNMENT.md": "94735720070a6084560cc89708deb1e123f8c8b24c9ed8ffbb95886423d4b9f7",
+        "config/templates/BLUEPRINT_TEMPLATE.md": "f67488cd05a2fcdbf8a58a863d1315cde4f77a3b42d7e752374feb31620e8063",
+        "config/templates/EXECUTION_SUMMARY_TEMPLATE.md": "9023bd2f6e39169068fd8684254679c82bc76ddbde3d2881eadd76c107f083c2",
+        "config/templates/PLAN_TEMPLATE.md": "c506f6f9394bc4b75e4ccc9fafcef244219bb255a9efd7b95852e8f21123728b",
+        "config/templates/TASK_TEMPLATE.md": "e0fa4d9bde7d9ab9edcf4f32785011c7125424f5199a0994c5900ef0352c4e02"
+    }
 }
