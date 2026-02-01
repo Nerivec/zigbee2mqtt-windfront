@@ -118,7 +118,7 @@ function BulkFeatureRow({ feature, valueStatus, selectedDevices, onApplyBulkSett
                 onChange={(e) => setIsExpanded(e.target.checked)}
                 disabled={isApplying}
             />
-            <div className="collapse-title p-3 min-h-0">
+            <div className="collapse-title p-3 pr-10 min-h-0">
                 <div className="flex items-center gap-3">
                     <div className="w-8 flex justify-center">
                         <FontAwesomeIcon icon={icon} className={iconClassName} size="xl" />
