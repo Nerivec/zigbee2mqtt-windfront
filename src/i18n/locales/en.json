@@ -509,7 +509,6 @@
         "bulk_apply_all_failed": "Failed to update all {{count}} devices",
         "bulk_apply_partial": "Updated {{successCount}}/{{total}} devices ({{failureCount}} failed)",
         "bulk_apply_failed_devices": "Failed",
-        "sort_by_status": "Sort by status",
         "aria_same_value": "same value",
         "aria_mixed_values": "mixed values",
         "aria_unknown_values": "unknown values"

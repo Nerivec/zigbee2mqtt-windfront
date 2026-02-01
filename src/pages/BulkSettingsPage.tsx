@@ -191,8 +191,10 @@ export default function BulkSettingsPage(): JSX.Element {
     // Track which feature is currently being applied
     const [applyingFeature, setApplyingFeature] = useState<string | null>(null);
 
-    // Sort mode: false = default order, true = sort by status (uniform → mixed → unknown)
-    const [sortByStatus, setSortByStatus] = useState(false);
+    // Filter by status type - all enabled by default
+    const [showUniform, setShowUniform] = useState(true);
+    const [showMixed, setShowMixed] = useState(true);
+    const [showUnknown, setShowUnknown] = useState(true);
 
     // Filter to get only selected devices
     const selectedDevices = useMemo(() => {
@@ -218,32 +220,17 @@ export default function BulkSettingsPage(): JSX.Element {
         return statuses;
     }, [commonExposes, selectedDevices, deviceStates]);
 
-    // Sort features by status if enabled, otherwise use default order
-    const sortedExposes = useMemo(() => {
-        if (!sortByStatus) {
-            return commonExposes;
-        }
-
-        // Create array with original indices for stable sort
-        const indexed = commonExposes.map((feature, index) => ({ feature, index }));
-
-        // Sort by status priority, then by original index
-        const getStatusPriority = (feature: BasicFeature): number => {
+    // Filter features by status type
+    const filteredExposes = useMemo(() => {
+        return commonExposes.filter((feature) => {
             const status = feature.property ? featureValueStatuses.get(feature.property) : undefined;
-            if (status?.type === "uniform") return 0;
-            if (status?.type === "mixed") return 1;
-            return 2; // unknown
-        };
+            const statusType = status?.type ?? "unknown";
 
-        indexed.sort((a, b) => {
-            const priorityA = getStatusPriority(a.feature);
-            const priorityB = getStatusPriority(b.feature);
-            if (priorityA !== priorityB) return priorityA - priorityB;
-            return a.index - b.index; // preserve original order within group
+            if (statusType === "uniform") return showUniform;
+            if (statusType === "mixed") return showMixed;
+            return showUnknown;
         });
-
-        return indexed.map(({ feature }) => feature);
-    }, [commonExposes, featureValueStatuses, sortByStatus]);
+    }, [commonExposes, featureValueStatuses, showUniform, showMixed, showUnknown]);
 
     /**
      * Apply a setting change to all selected devices in parallel.
@@ -362,39 +349,50 @@ export default function BulkSettingsPage(): JSX.Element {
             {commonExposes.length > 0 ? (
                 <div className="card bg-base-100">
                     <div className="card-body p-0">
-                        <h3 className="card-title p-4 pb-0 flex-wrap">
+                        <h3 className="card-title p-4 pb-0">
                             {t(($) => $.common_features)}
-                            <span className="badge badge-neutral">{commonExposes.length}</span>
-                            <div className="flex-1" />
-                            <label className="label cursor-pointer gap-2">
-                                <span className="label-text text-sm font-normal">{t(($) => $.sort_by_status)}</span>
-                                <input
-                                    type="checkbox"
-                                    className="toggle toggle-sm"
-                                    checked={sortByStatus}
-                                    onChange={(e) => setSortByStatus(e.target.checked)}
-                                />
-                            </label>
+                            <span className="badge badge-neutral">{filteredExposes.length}/{commonExposes.length}</span>
                         </h3>
                         <p className="text-sm opacity-70 px-4">{t(($) => $.common_features_description)}</p>
                         <p className="text-sm opacity-50 px-4">{t(($) => $.click_to_edit)}</p>
-                        {/* Legend */}
+                        {/* Filter by status */}
                         <div className="flex flex-wrap gap-4 text-sm px-4 mt-2">
-                            <div className="flex items-center gap-2">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    className="checkbox checkbox-success checkbox-sm"
+                                    checked={showUniform}
+                                    onChange={(e) => setShowUniform(e.target.checked)}
+                                    aria-label={t(($) => $.aria_same_value)}
+                                />
                                 <FontAwesomeIcon icon={faCircle} className="text-success" size="sm" aria-hidden="true" />
                                 <span className="opacity-70">{t(($) => $.legend_uniform)}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    className="checkbox checkbox-warning checkbox-sm"
+                                    checked={showMixed}
+                                    onChange={(e) => setShowMixed(e.target.checked)}
+                                    aria-label={t(($) => $.aria_mixed_values)}
+                                />
                                 <FontAwesomeIcon icon={faCircleHalfStroke} className="text-warning" size="sm" aria-hidden="true" />
                                 <span className="opacity-70">{t(($) => $.legend_mixed)}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
+                            </label>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    className="checkbox checkbox-sm"
+                                    checked={showUnknown}
+                                    onChange={(e) => setShowUnknown(e.target.checked)}
+                                    aria-label={t(($) => $.aria_unknown_values)}
+                                />
                                 <FontAwesomeIcon icon={faCircle} className="text-base-content opacity-30" size="sm" aria-hidden="true" />
                                 <span className="opacity-70">{t(($) => $.legend_unknown)}</span>
-                            </div>
+                            </label>
                         </div>
                         <div className="mt-2">
-                            {sortedExposes.map((feature) => (
+                            {filteredExposes.map((feature) => (
                                 <BulkFeatureRow
                                     key={feature.property || feature.name}
                                     feature={feature}
