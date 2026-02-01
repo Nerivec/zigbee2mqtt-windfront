@@ -231,3 +231,43 @@ The selection state will be cleared after successful bulk operations or when the
 ## Integration Strategy
 
 - this project is a front end built on the websocket API of zigbee2mqtt.
+
+## Task Dependency Graph
+
+```mermaid
+graph TD
+    1[Task 1: Store Slice] --> 2[Task 2: Row Selection]
+    1 --> 4[Task 4: Bulk Settings Page]
+    3[Task 3: Common Expose Logic] --> 4
+    4 --> 5[Task 5: Batch Apply]
+    5 --> 6[Task 6: Integration Tests]
+```
+
+## Execution Blueprint
+
+**Validation Gates:**
+- Reference: `/config/hooks/POST_PHASE.md`
+
+### Phase 1: Foundation
+**Parallel Tasks:**
+- Task 1: Add bulk selection store slice
+- Task 3: Implement common expose computation logic
+
+### Phase 2: UI Integration
+**Parallel Tasks:**
+- Task 2: Add device row selection to Devices page (depends on: 1)
+- Task 4: Create Bulk Settings page (depends on: 1, 3)
+
+### Phase 3: Feature Completion
+**Parallel Tasks:**
+- Task 5: Implement batch apply with feedback (depends on: 4)
+
+### Phase 4: Quality Assurance
+**Parallel Tasks:**
+- Task 6: Add integration tests for bulk settings flow (depends on: 5)
+
+### Execution Summary
+- Total Phases: 4
+- Total Tasks: 6
+- Maximum Parallelism: 2 tasks (in Phases 1 and 2)
+- Critical Path Length: 4 phases (1 → 4 → 5 → 6)
