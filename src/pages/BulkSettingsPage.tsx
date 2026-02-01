@@ -205,13 +205,13 @@ export default function BulkSettingsPage(): JSX.Element {
         return computeCommonExposes(selectedDevices);
     }, [selectedDevices]);
 
-    // Compute value statuses for each feature
+    // Compute value statuses for each feature (keyed by property for uniqueness)
     const featureValueStatuses = useMemo(() => {
         const statuses = new Map<string, ValueStatus>();
 
         for (const feature of commonExposes) {
             if (feature.property) {
-                statuses.set(feature.name, getCurrentValueStatus(feature.property, selectedDevices, deviceStates));
+                statuses.set(feature.property, getCurrentValueStatus(feature.property, selectedDevices, deviceStates));
             }
         }
 
@@ -229,7 +229,7 @@ export default function BulkSettingsPage(): JSX.Element {
 
         // Sort by status priority, then by original index
         const getStatusPriority = (feature: BasicFeature): number => {
-            const status = featureValueStatuses.get(feature.name);
+            const status = feature.property ? featureValueStatuses.get(feature.property) : undefined;
             if (status?.type === "uniform") return 0;
             if (status?.type === "mixed") return 1;
             return 2; // unknown
@@ -381,9 +381,9 @@ export default function BulkSettingsPage(): JSX.Element {
                         <div className="mt-2">
                             {sortedExposes.map((feature) => (
                                 <BulkFeatureRow
-                                    key={feature.name}
+                                    key={feature.property || feature.name}
                                     feature={feature}
-                                    valueStatus={featureValueStatuses.get(feature.name) ?? { type: "unknown" }}
+                                    valueStatus={(feature.property ? featureValueStatuses.get(feature.property) : undefined) ?? { type: "unknown" }}
                                     selectedDevices={selectedDevices}
                                     onApplyBulkSetting={applyBulkSetting}
                                     isApplying={applyingFeature === feature.name}
