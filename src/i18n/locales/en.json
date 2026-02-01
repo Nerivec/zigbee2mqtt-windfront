@@ -501,7 +501,6 @@
         "no_common_features": "No common features found across selected devices.",
         "mixed_values": "Mixed",
         "unknown_value": "Unknown",
-        "legend": "Legend",
         "legend_uniform": "All devices have the same value",
         "legend_mixed": "Devices have different values",
         "legend_unknown": "Value not available",
@@ -510,7 +509,10 @@
         "bulk_apply_all_failed": "Failed to update all {{count}} devices",
         "bulk_apply_partial": "Updated {{successCount}}/{{total}} devices ({{failureCount}} failed)",
         "bulk_apply_failed_devices": "Failed",
-        "sort_by_status": "Sort by status"
+        "sort_by_status": "Sort by status",
+        "aria_same_value": "same value",
+        "aria_mixed_values": "mixed values",
+        "aria_unknown_values": "unknown values"
     },
     "settingsSchemaDescriptions": {
         "homeassistant": "Home Assistant integration (MQTT discovery)",

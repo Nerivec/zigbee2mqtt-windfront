@@ -133,19 +133,19 @@ function BulkFeatureRow({ feature, valueStatus, selectedDevices, onApplyBulkSett
                         {isApplying && <span className="loading loading-spinner loading-sm" />}
                         {valueStatus.type === "uniform" && !isApplying && (
                             <div className="flex items-center gap-2">
-                                <FontAwesomeIcon icon={faCircle} className="text-success" size="sm" />
+                                <FontAwesomeIcon icon={faCircle} className="text-success" size="sm" aria-label={t(($) => $.aria_same_value)} />
                                 <span className="badge badge-ghost badge-sm">{formatValue(valueStatus.value)}</span>
                             </div>
                         )}
                         {valueStatus.type === "mixed" && !isApplying && (
                             <div className="flex items-center gap-2">
-                                <FontAwesomeIcon icon={faCircleHalfStroke} className="text-warning" size="sm" />
+                                <FontAwesomeIcon icon={faCircleHalfStroke} className="text-warning" size="sm" aria-label={t(($) => $.aria_mixed_values)} />
                                 <span className="badge badge-warning badge-outline badge-sm">{t(($) => $.mixed_values)}</span>
                             </div>
                         )}
                         {valueStatus.type === "unknown" && !isApplying && (
                             <div className="flex items-center gap-2">
-                                <FontAwesomeIcon icon={faCircle} className="text-base-content opacity-30" size="sm" />
+                                <FontAwesomeIcon icon={faCircle} className="text-base-content opacity-30" size="sm" aria-label={t(($) => $.aria_unknown_values)} />
                                 <span className="badge badge-ghost badge-sm opacity-50">{t(($) => $.unknown_value)}</span>
                             </div>
                         )}
@@ -378,6 +378,21 @@ export default function BulkSettingsPage(): JSX.Element {
                         </h3>
                         <p className="text-sm opacity-70 px-4">{t(($) => $.common_features_description)}</p>
                         <p className="text-sm opacity-50 px-4">{t(($) => $.click_to_edit)}</p>
+                        {/* Legend */}
+                        <div className="flex flex-wrap gap-4 text-sm px-4 mt-2">
+                            <div className="flex items-center gap-2">
+                                <FontAwesomeIcon icon={faCircle} className="text-success" size="sm" aria-hidden="true" />
+                                <span className="opacity-70">{t(($) => $.legend_uniform)}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <FontAwesomeIcon icon={faCircleHalfStroke} className="text-warning" size="sm" aria-hidden="true" />
+                                <span className="opacity-70">{t(($) => $.legend_mixed)}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <FontAwesomeIcon icon={faCircle} className="text-base-content opacity-30" size="sm" aria-hidden="true" />
+                                <span className="opacity-70">{t(($) => $.legend_unknown)}</span>
+                            </div>
+                        </div>
                         <div className="mt-2">
                             {sortedExposes.map((feature) => (
                                 <BulkFeatureRow
@@ -398,27 +413,6 @@ export default function BulkSettingsPage(): JSX.Element {
                     <span>{t(($) => $.no_common_features)}</span>
                 </div>
             )}
-
-            {/* Legend */}
-            <div className="card bg-base-200">
-                <div className="card-body py-3">
-                    <h4 className="text-sm font-medium mb-2">{t(($) => $.legend)}</h4>
-                    <div className="flex flex-wrap gap-4 text-sm">
-                        <div className="flex items-center gap-2">
-                            <FontAwesomeIcon icon={faCircle} className="text-success" size="sm" />
-                            <span>{t(($) => $.legend_uniform)}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <FontAwesomeIcon icon={faCircleHalfStroke} className="text-warning" size="sm" />
-                            <span>{t(($) => $.legend_mixed)}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <FontAwesomeIcon icon={faCircle} className="text-base-content opacity-30" size="sm" />
-                            <span>{t(($) => $.legend_unknown)}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }
