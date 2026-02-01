@@ -17,6 +17,7 @@ created: 2026-01-31
 | Where should the bulk settings UI be accessible from? | Devices page for selection, then navigate to a dedicated Bulk Settings page for editing |
 | Which types of settings should be available? | Expose features only (power_on_behavior, sensitivity, LED indicators, etc.) |
 | How should common settings be determined? | Exact match by feature name AND type - features must share the same name and same type/value constraints |
+| How should current values be displayed? | Query each device for current value; if all match, show that as default; if values differ, show no default with a note indicating variance |
 
 ## Executive Summary
 
@@ -36,6 +37,7 @@ This feature addresses a common pain point for users with many similar devices (
 | Devices page has no selection mechanism | Devices page has row selection with checkboxes | Enables multi-device operations |
 | No dedicated bulk settings page exists | New Bulk Settings page shows common exposes for selected devices | Provides focused UI for bulk configuration with adequate screen space |
 | Each device setting change is a separate action | Bulk changes are applied to all selected devices in parallel | Improves efficiency and user experience |
+| No visibility into current values across devices | Settings show common value as default or indicate variance | Prevents accidental overwrites; provides context before changes |
 
 ### Background
 
@@ -109,6 +111,28 @@ The page will display:
 - An apply mechanism for each setting (or batch apply for multiple changes)
 
 The existing Feature components (`Binary`, `Enum`, `Numeric`, etc.) will be reused with a modified `onChange` handler that applies to all selected devices. The page will show which devices will be affected and provide feedback on the operation results.
+
+### Current Value Detection
+
+**Objective**: Show intelligent defaults based on current device states, with clear indication when values differ.
+
+When the Bulk Settings page loads, the system will query the current state of each selected device for each common expose feature. The display logic:
+
+1. **Uniform values**: If all selected devices have the same current value for a setting, pre-populate the control with that value as the default
+2. **Mixed values**: If values differ across devices, show the control with no value selected and display a subtle note (e.g., "Current setting varies across selected devices")
+3. **Unknown values**: If some devices don't have a current state available, treat as mixed/unknown
+
+```mermaid
+flowchart TD
+    A[Load Bulk Settings Page] --> B[For each common expose]
+    B --> C[Query deviceStates for each selected device]
+    C --> D{All values identical?}
+    D -->|Yes| E[Set control default to common value]
+    D -->|No| F[Leave control empty]
+    F --> G[Show variance indicator note]
+```
+
+This approach ensures users understand the current state before making changes and avoids accidentally overwriting intentionally different configurations.
 
 ### Batch WebSocket Operations
 
@@ -185,8 +209,9 @@ The selection state will be cleared after successful bulk operations or when the
 
 1. Users can select multiple devices on the Devices page using checkboxes
 2. Users can navigate to a Bulk Settings page showing only common expose features
-3. Changing a setting applies the value to all selected devices via WebSocket
-4. Users receive clear feedback on which devices were updated successfully
+3. Settings with uniform values across devices show that value as the default; settings with mixed values show no default with a variance indicator
+4. Changing a setting applies the value to all selected devices via WebSocket
+5. Users receive clear feedback on which devices were updated successfully
 
 ## Resource Requirements
 
