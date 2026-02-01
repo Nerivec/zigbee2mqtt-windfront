@@ -1,14 +1,17 @@
 import { faCircle, faCircleHalfStroke, faExclamationTriangle, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import startCase from "lodash/startCase.js";
-import { type JSX, useEffect, useMemo } from "react";
+import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
 import { useShallow } from "zustand/react/shallow";
+import Feature from "../components/features/Feature.js";
+import FeatureWrapper from "../components/features/FeatureWrapper.js";
 import { getFeatureIcon } from "../components/features/index.js";
 import { useAppStore } from "../store.js";
-import type { BasicFeature, Device, DeviceState } from "../types.js";
+import type { BasicFeature, Device, DeviceState, FeatureWithAnySubFeatures } from "../types.js";
 import { computeCommonExposes, getValidSourceIdx } from "../utils.js";
+import { sendMessage } from "../websocket/WebSocketManager.js";
 
 type BulkSettingsPageUrlParams = {
     sourceIdx: `${number}`;
@@ -63,56 +66,112 @@ function formatValue(value: unknown): string {
     return String(value);
 }
 
+type BulkApplyResult = {
+    successCount: number;
+    failureCount: number;
+    failedDevices: string[];
+};
+
 interface BulkFeatureRowProps {
     feature: BasicFeature;
     valueStatus: ValueStatus;
+    selectedDevices: Device[];
+    onApplyBulkSetting: (feature: BasicFeature, value: Record<string, unknown>) => Promise<BulkApplyResult>;
+    isApplying: boolean;
 }
 
 /**
  * Component for displaying a single feature row in the bulk settings list.
  * Shows the feature name, current value status, and a variance indicator for mixed values.
+ * Expands to show feature controls when clicked.
  */
-function BulkFeatureRow({ feature, valueStatus }: BulkFeatureRowProps) {
+function BulkFeatureRow({ feature, valueStatus, selectedDevices, onApplyBulkSetting, isApplying }: BulkFeatureRowProps) {
     const { t } = useTranslation("bulkSettings");
+    const [isExpanded, setIsExpanded] = useState(false);
     // Unit is only available on NumericFeature type
     const unit = "unit" in feature ? (feature.unit as string | undefined) : undefined;
     const [icon, iconClassName] = getFeatureIcon(feature.name, valueStatus.type === "uniform" ? valueStatus.value : undefined, unit);
     const label = feature.label || startCase(feature.name);
 
+    // Create a mock device for the Feature component (using first selected device)
+    const mockDevice = selectedDevices[0];
+    // Create a deviceState that represents the current value (use uniform value or undefined for mixed)
+    const deviceState = useMemo(() => {
+        if (valueStatus.type === "uniform" && feature.property) {
+            return { [feature.property]: valueStatus.value };
+        }
+        return {};
+    }, [valueStatus, feature.property]);
+
+    const handleChange = useCallback(
+        async (value: Record<string, unknown>) => {
+            await onApplyBulkSetting(feature, value);
+        },
+        [feature, onApplyBulkSetting],
+    );
+
     return (
-        <div className="list-row p-3">
-            <div>
-                <FontAwesomeIcon icon={icon} className={iconClassName} size="2xl" />
-            </div>
-            <div className="flex-1">
-                <div className="font-medium" title={feature.name}>
-                    {label}
+        <div className="collapse collapse-arrow bg-base-100 border-b border-base-200">
+            <input
+                type="checkbox"
+                checked={isExpanded}
+                onChange={(e) => setIsExpanded(e.target.checked)}
+                disabled={isApplying}
+            />
+            <div className="collapse-title p-3 min-h-0">
+                <div className="flex items-center gap-3">
+                    <div className="w-8 flex justify-center">
+                        <FontAwesomeIcon icon={icon} className={iconClassName} size="xl" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                        <div className="font-medium truncate" title={feature.name}>
+                            {label}
+                        </div>
+                        {feature.description && <div className="text-xs opacity-60 truncate">{feature.description}</div>}
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                        {isApplying && <span className="loading loading-spinner loading-sm" />}
+                        {valueStatus.type === "uniform" && !isApplying && (
+                            <div className="flex items-center gap-2">
+                                <FontAwesomeIcon icon={faCircle} className="text-success" size="sm" />
+                                <span className="badge badge-ghost badge-sm">{formatValue(valueStatus.value)}</span>
+                            </div>
+                        )}
+                        {valueStatus.type === "mixed" && !isApplying && (
+                            <div className="flex items-center gap-2">
+                                <FontAwesomeIcon icon={faCircleHalfStroke} className="text-warning" size="sm" />
+                                <span className="badge badge-warning badge-outline badge-sm">{t(($) => $.mixed_values)}</span>
+                            </div>
+                        )}
+                        {valueStatus.type === "unknown" && !isApplying && (
+                            <div className="flex items-center gap-2">
+                                <FontAwesomeIcon icon={faCircle} className="text-base-content opacity-30" size="sm" />
+                                <span className="badge badge-ghost badge-sm opacity-50">{t(($) => $.unknown_value)}</span>
+                            </div>
+                        )}
+                    </div>
+                    <div className="text-xs opacity-50 shrink-0">
+                        {feature.type}
+                        {unit && ` (${unit})`}
+                    </div>
                 </div>
-                {feature.description && <div className="text-xs opacity-60">{feature.description}</div>}
             </div>
-            <div className="flex items-center gap-2">
-                {valueStatus.type === "uniform" && (
-                    <div className="flex items-center gap-2">
-                        <FontAwesomeIcon icon={faCircle} className="text-success" size="sm" />
-                        <span className="badge badge-ghost">{formatValue(valueStatus.value)}</span>
+            <div className="collapse-content px-3 pb-3">
+                <div className="pt-2 border-t border-base-200">
+                    <div className="text-sm opacity-70 mb-2">
+                        {t(($) => $.apply_to_devices, { count: selectedDevices.length })}
                     </div>
-                )}
-                {valueStatus.type === "mixed" && (
-                    <div className="flex items-center gap-2">
-                        <FontAwesomeIcon icon={faCircleHalfStroke} className="text-warning" size="sm" />
-                        <span className="badge badge-warning badge-outline">{t(($) => $.mixed_values)}</span>
+                    <div className="list bg-base-200 rounded-box">
+                        <Feature
+                            feature={feature as FeatureWithAnySubFeatures}
+                            device={mockDevice}
+                            deviceState={deviceState}
+                            onChange={handleChange}
+                            featureWrapperClass={FeatureWrapper}
+                            parentFeatures={[]}
+                        />
                     </div>
-                )}
-                {valueStatus.type === "unknown" && (
-                    <div className="flex items-center gap-2">
-                        <FontAwesomeIcon icon={faCircle} className="text-base-content opacity-30" size="sm" />
-                        <span className="badge badge-ghost opacity-50">{t(($) => $.unknown_value)}</span>
-                    </div>
-                )}
-            </div>
-            <div className="text-xs opacity-50">
-                {feature.type}
-                {unit && ` (${unit})`}
+                </div>
             </div>
         </div>
     );
@@ -123,10 +182,14 @@ export default function BulkSettingsPage(): JSX.Element {
     const { t } = useTranslation(["bulkSettings", "common"]);
     const { sourceIdx } = useParams<BulkSettingsPageUrlParams>();
     const [numSourceIdx, validSourceIdx] = getValidSourceIdx(sourceIdx);
+    const addToast = useAppStore((state) => state.addToast);
 
     const bulkSelectedDevices = useAppStore(useShallow((state) => state.bulkSelectedDevices[numSourceIdx] ?? []));
     const allDevices = useAppStore(useShallow((state) => state.devices[numSourceIdx] ?? []));
     const deviceStates = useAppStore(useShallow((state) => state.deviceStates[numSourceIdx] ?? {}));
+
+    // Track which feature is currently being applied
+    const [applyingFeature, setApplyingFeature] = useState<string | null>(null);
 
     // Filter to get only selected devices
     const selectedDevices = useMemo(() => {
@@ -151,6 +214,83 @@ export default function BulkSettingsPage(): JSX.Element {
 
         return statuses;
     }, [commonExposes, selectedDevices, deviceStates]);
+
+    /**
+     * Apply a setting change to all selected devices in parallel.
+     * Uses Promise.allSettled to handle partial failures gracefully.
+     */
+    const applyBulkSetting = useCallback(
+        async (feature: BasicFeature, value: Record<string, unknown>): Promise<BulkApplyResult> => {
+            setApplyingFeature(feature.name);
+
+            const promises = selectedDevices.map(async (device) => {
+                try {
+                    await sendMessage<"{friendlyNameOrId}/set">(
+                        numSourceIdx,
+                        // @ts-expect-error templated API endpoint
+                        `${device.ieee_address}/set`,
+                        value,
+                    );
+                    return { success: true, device };
+                } catch (error) {
+                    return { success: false, device, error };
+                }
+            });
+
+            const results = await Promise.allSettled(promises);
+
+            let successCount = 0;
+            let failureCount = 0;
+            const failedDevices: string[] = [];
+
+            for (const result of results) {
+                if (result.status === "fulfilled") {
+                    if (result.value.success) {
+                        successCount++;
+                    } else {
+                        failureCount++;
+                        failedDevices.push(result.value.device.friendly_name);
+                    }
+                } else {
+                    // Promise rejected (shouldn't normally happen with our try/catch)
+                    failureCount++;
+                }
+            }
+
+            // Show toast notification with results
+            const totalDevices = selectedDevices.length;
+            const allSuccess = successCount === totalDevices;
+            const allFailed = failureCount === totalDevices;
+
+            let toastMessage: string;
+            if (allSuccess) {
+                toastMessage = t(($) => $.bulk_apply_success, { count: successCount });
+            } else if (allFailed) {
+                toastMessage = t(($) => $.bulk_apply_all_failed, { count: failureCount });
+            } else {
+                toastMessage = t(($) => $.bulk_apply_partial, {
+                    successCount,
+                    failureCount,
+                    total: totalDevices,
+                });
+                if (failedDevices.length > 0) {
+                    toastMessage += ` ${t(($) => $.bulk_apply_failed_devices)}: ${failedDevices.join(", ")}`;
+                }
+            }
+
+            addToast({
+                sourceIdx: numSourceIdx,
+                topic: `bulk/${feature.name}`,
+                status: allFailed ? "error" : "ok",
+                error: toastMessage,
+            });
+
+            setApplyingFeature(null);
+
+            return { successCount, failureCount, failedDevices };
+        },
+        [selectedDevices, numSourceIdx, addToast, t],
+    );
 
     // Redirect if selection is invalid (less than 2 devices or invalid sourceIdx)
     useEffect(() => {
@@ -197,12 +337,16 @@ export default function BulkSettingsPage(): JSX.Element {
                             <span className="badge badge-neutral">{commonExposes.length}</span>
                         </h3>
                         <p className="text-sm opacity-70 px-4">{t(($) => $.common_features_description)}</p>
-                        <div className="list bg-base-100 mt-2">
+                        <p className="text-sm opacity-50 px-4">{t(($) => $.click_to_edit)}</p>
+                        <div className="mt-2">
                             {commonExposes.map((feature) => (
                                 <BulkFeatureRow
                                     key={feature.name}
                                     feature={feature}
                                     valueStatus={featureValueStatuses.get(feature.name) ?? { type: "unknown" }}
+                                    selectedDevices={selectedDevices}
+                                    onApplyBulkSetting={applyBulkSetting}
+                                    isApplying={applyingFeature === feature.name}
                                 />
                             ))}
                         </div>
