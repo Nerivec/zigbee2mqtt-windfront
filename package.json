@@ -67,6 +67,7 @@
         "jsdom": "^27.4.0",
         "jszip": "^3.10.1",
         "lodash": "^4.17.23",
+        "oidc-client-ts": "^3.1.0",
         "react": "^19.2.4",
         "react-app-polyfill": "^3.0.0",
         "react-dom": "^19.2.4",
@@ -105,5 +106,8 @@
     "funding": {
         "type": "github",
         "url": "https://github.com/sponsors/Nerivec"
+    },
+    "dependencies": {
+        "@fortawesome/free-brands-svg-icons": "^7.1.0"
     }
 }

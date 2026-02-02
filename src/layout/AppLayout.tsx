@@ -62,7 +62,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
             { to: "/logs", icon: faList, title: t(($) => $.logs) },
             { to: "/activity", icon: faWaveSquare, title: t(($) => $.activity) },
             { to: "/settings", icon: faCogs, title: t(($) => $.settings) },
-            { to: "/frontend-settings", icon: faDisplay, title: t(($) => $.frontend_settings) },
+            { to: "/frontend-settings", icon: faDisplay, title: t(($) => $.preferences) },
         ],
         [t],
     );

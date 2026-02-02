@@ -198,6 +198,7 @@
         "websocket_status": "WebSocket status",
         "transaction_prefix": "Transaction prefix",
         "frontend_settings": "Frontend settings",
+        "preferences": "Preferences",
         "contribute": "Contribute",
         "home": "Home",
         "activity": "Activity",

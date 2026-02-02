@@ -1,8 +1,9 @@
 import store2 from "store2";
 import type { Zigbee2MQTTAPI, Zigbee2MQTTRequestEndpoints, Zigbee2MQTTResponse } from "zigbee2mqtt";
+import { getOidcToken } from "../auth/oidcService.js";
 import { AVAILABILITY_FEATURE_TOPIC_ENDING } from "../consts.js";
 import { USE_PROXY } from "../envs.js";
-import { AUTH_FLAG_KEY, AUTH_TOKEN_KEY } from "../localStoreConsts.js";
+import { AUTH_FLAG_KEY, AUTH_TOKEN_KEY, OIDC_TOKEN_KEY } from "../localStoreConsts.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { LogMessage, Message, RecursiveMutable, ResponseMessage } from "../types.js";
 import { randomString, stringifyWithUndefinedAsNull } from "../utils.js";
@@ -255,7 +256,10 @@ class WebSocketManager {
         const authRequired = !!store2.get(`${AUTH_FLAG_KEY}_${idx}`);
 
         if (authRequired) {
-            const token = new URLSearchParams(window.location.search).get("token") ?? (store2.get(`${AUTH_TOKEN_KEY}_${idx}`) as string | undefined);
+            // Check for OIDC token first, then fall back to static token
+            const oidcToken = getOidcToken(idx);
+            const staticToken = new URLSearchParams(window.location.search).get("token") ?? (store2.get(`${AUTH_TOKEN_KEY}_${idx}`) as string | undefined);
+            const token = oidcToken ?? staticToken;
 
             if (!token) {
                 // trigger LoginPage
@@ -321,6 +325,7 @@ class WebSocketManager {
         if (unauthorized) {
             store2.set(`${AUTH_FLAG_KEY}_${conn.idx}`, true);
             store2.remove(`${AUTH_TOKEN_KEY}_${conn.idx}`);
+            store2.remove(`${OIDC_TOKEN_KEY}_${conn.idx}`);
             useAppStore.getState().setAuthRequired(conn.idx, true);
         }
 

@@ -8,6 +8,13 @@ import { useAppStore } from "../../../store.js";
 import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import InfoAlert from "../../InfoAlert.js";
 import SettingsList from "../../json-schema/SettingsList.js";
+import AdvancedSettingsTab from "./AdvancedSettingsTab.js";
+import AvailabilitySettingsTab from "./AvailabilitySettingsTab.js";
+import FrontendSettingsTab from "./FrontendSettingsTab.js";
+import HomeAssistantSettingsTab from "./HomeAssistantSettingsTab.js";
+import MqttSettingsTab from "./MqttSettingsTab.js";
+import OtaSettingsTab from "./OtaSettingsTab.js";
+import SerialSettingsTab from "./SerialSettingsTab.js";
 
 export type TabName = "main" | "frontend" | "mqtt" | "serial" | "availability" | "ota" | "advanced" | "homeassistant";
 
@@ -21,14 +28,40 @@ export default function Settings({ sourceIdx, tab }: SettingsProps) {
 
     const setSettings = useCallback(
         async (options: Record<string, unknown>) => {
-            if (tab === "main") {
-                await sendMessage(sourceIdx, "bridge/request/options", { options });
-            } else {
-                await sendMessage(sourceIdx, "bridge/request/options", { options: { [tab]: options } });
-            }
+            await sendMessage(sourceIdx, "bridge/request/options", { options });
         },
-        [sourceIdx, tab],
+        [sourceIdx],
     );
+
+    const renderTabContent = () => {
+        switch (tab) {
+            case "frontend":
+                return <FrontendSettingsTab sourceIdx={sourceIdx} />;
+            case "mqtt":
+                return <MqttSettingsTab sourceIdx={sourceIdx} />;
+            case "serial":
+                return <SerialSettingsTab sourceIdx={sourceIdx} />;
+            case "availability":
+                return <AvailabilitySettingsTab sourceIdx={sourceIdx} />;
+            case "ota":
+                return <OtaSettingsTab sourceIdx={sourceIdx} />;
+            case "advanced":
+                return <AdvancedSettingsTab sourceIdx={sourceIdx} />;
+            case "homeassistant":
+                return <HomeAssistantSettingsTab sourceIdx={sourceIdx} />;
+            case "main":
+            default:
+                return (
+                    <SettingsList
+                        schema={bridgeInfo.config_schema as unknown as JSONSchema7}
+                        data={bridgeInfo.config as unknown as Record<string, unknown>}
+                        set={setSettings}
+                        rootOnly
+                        namespace=""
+                    />
+                );
+        }
+    };
 
     return (
         <>
@@ -63,22 +96,7 @@ export default function Settings({ sourceIdx, tab }: SettingsProps) {
                     {t(($) => $.homeassistant)}
                 </NavLink>
                 <div className="tab-content block h-full bg-base-100 p-3">
-                    {tab === "main" ? (
-                        <SettingsList
-                            schema={bridgeInfo.config_schema as unknown as JSONSchema7}
-                            data={bridgeInfo.config as unknown as Record<string, unknown>}
-                            set={setSettings}
-                            rootOnly
-                            namespace=""
-                        />
-                    ) : bridgeInfo.config_schema.properties[tab] ? (
-                        <SettingsList
-                            schema={bridgeInfo.config_schema.properties[tab] as unknown as JSONSchema7}
-                            data={bridgeInfo.config[tab]}
-                            set={setSettings}
-                            namespace={tab}
-                        />
-                    ) : null}
+                    {renderTabContent()}
                 </div>
             </div>
         </>

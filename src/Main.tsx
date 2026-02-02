@@ -1,8 +1,9 @@
 import NiceModal from "@ebay/nice-modal-react";
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { I18nextProvider } from "react-i18next";
 import { HashRouter, Route, Routes } from "react-router";
 import { useShallow } from "zustand/react/shallow";
+import { handleOidcCallback } from "./auth/oidcService.js";
 import ScrollToTop from "./components/ScrollToTop.js";
 import Toasts from "./components/Toasts.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
@@ -31,11 +32,38 @@ const ContributePage = lazy(async () => await import("./pages/ContributePage.js"
 
 function App() {
     const authRequired = useAppStore(useShallow((s) => s.authRequired.some((v) => v === true)));
+    const [oidcProcessing, setOidcProcessing] = useState(true);
 
     useEffect(() => {
-        // do the initial startup, will determine if LoginPage needs to be shown or not
-        startWebSocketManager();
+        const init = async () => {
+            try {
+                // Check if this is an OIDC callback (has code param in URL)
+                const wasCallback = await handleOidcCallback();
+                if (wasCallback) {
+                    console.log("OIDC callback processed");
+                }
+            } catch (error) {
+                console.error("OIDC callback error:", error);
+            } finally {
+                setOidcProcessing(false);
+                // do the initial startup, will determine if LoginPage needs to be shown or not
+                startWebSocketManager();
+            }
+        };
+
+        init();
     }, []);
+
+    if (oidcProcessing) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="flex flex-col items-center gap-4">
+                    <span className="loading loading-infinity loading-xl" />
+                    <span className="text-base-content/70">Initializing...</span>
+                </div>
+            </div>
+        );
+    }
 
     if (authRequired) {
         return <LoginPage />;

@@ -1,6 +1,8 @@
 //-- WebSocket
 export const AUTH_TOKEN_KEY = "z2m-token";
 export const AUTH_FLAG_KEY = "z2m-auth";
+export const OIDC_TOKEN_KEY = "z2m-oidc-token";
+export const AUTH_CONFIG_KEY = "z2m-auth-config";
 export const LAST_API_URL_KEY = "last-api-url";
 
 //-- General
