@@ -29,7 +29,7 @@ export default function TableSearch<T>({ table, resetFilters, globalFilter, colu
     return (
         <div className="flex flex-row flex-wrap flex-1 items-center gap-x-3 gap-y-2 text-sm">
             <div className="join">
-                <label className="input input-sm join-item min-w-64">
+                <label className="input input-sm join-item min-w-48 lg:min-w-64">
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                     <DebouncedInput onChange={table.setGlobalFilter} placeholder={t(($) => $.search)} value={globalFilter} />
                 </label>

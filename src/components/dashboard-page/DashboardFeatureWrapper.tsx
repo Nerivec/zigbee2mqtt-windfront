@@ -19,7 +19,7 @@ export default function DashboardFeatureWrapper({ children, feature, deviceValue
                 {startCase(featureName)}
                 {!endpointSpecific && <span title={t(($) => $.endpoint)}>{feature.endpoint ? ` (${feature.endpoint})` : null}</span>}
             </div>
-            <div className="shrink-1">{children}</div>
+            <div className="shrink-1 *:bg-base-200">{children}</div>
         </div>
     );
 }

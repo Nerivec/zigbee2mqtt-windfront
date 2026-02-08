@@ -94,9 +94,7 @@ const DeviceCard = memo(
                             )}
                         </div>
                     </div>
-                    <div className="text-sm w-full p-2 max-h-125 overflow-y-auto" style={{ scrollbarWidth: "thin" }}>
-                        {displayedFeatures}
-                    </div>
+                    <div className="text-sm w-full p-2">{displayedFeatures}</div>
                     <div className="flex flex-row justify-end mb-2">
                         <Link to={`/device/${sourceIdx}/${device.ieee_address}/exposes`} className="btn btn-xs">
                             {t(($) => $.exposes, { ns: "common" })} <FontAwesomeIcon icon={faRightLong} size="lg" />
