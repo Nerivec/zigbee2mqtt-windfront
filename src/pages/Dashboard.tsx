@@ -29,7 +29,7 @@ export interface DashboardTableData {
 }
 
 export default function Dashboard() {
-    const { t } = useTranslation(["common", "zigbee"]);
+    const { t } = useTranslation(["common", "zigbee", "availability"]);
     const deviceStates = useAppStore((state) => state.deviceStates);
     const availability = useAppStore((state) => state.availability);
     const deviceDashbordFeatures = useAppStore((state) => state.deviceDashboardFeatures);
