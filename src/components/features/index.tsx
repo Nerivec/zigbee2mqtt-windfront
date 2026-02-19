@@ -186,6 +186,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     // Water / leak / irrigation
     active_water_leak: faWater,
     water_leak: faWater,
+    water: faWater,
     leakage: faWater,
     leak: faWater,
     rainwater: faCloudShowersHeavy,
@@ -343,6 +344,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     broadcast_alarm: faTriangleExclamation,
     linkage_alarm: faTriangleExclamation,
     alarm: faTriangleExclamation,
+    alarm_mode: faBell,
     alert_behaviour: faTriangleExclamation,
     warning: faTriangleExclamation,
     clear_fault: faCircleCheck,
