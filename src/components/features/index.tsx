@@ -661,6 +661,7 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
             break;
         }
         case "water_leak":
+        case "water":
         case "vibration": {
             if (value) {
                 className = "text-primary";
