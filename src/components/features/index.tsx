@@ -344,7 +344,6 @@ const ICON_MAP: Record<string, IconDefinition> = {
     broadcast_alarm: faTriangleExclamation,
     linkage_alarm: faTriangleExclamation,
     alarm: faTriangleExclamation,
-    alarm_mode: faBell,
     alert_behaviour: faTriangleExclamation,
     warning: faTriangleExclamation,
     clear_fault: faCircleCheck,
@@ -413,6 +412,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     sensitivity: faFeather,
     system_mode: faCog,
     identify: faHandPointUp,
+    alarm_mode: faBell,
 
     // Health
     heartbeat: faHeartPulse,
