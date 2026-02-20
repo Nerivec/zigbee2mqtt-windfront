@@ -1,7 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../../store.js";
 import type { Group } from "../../../types.js";
-import AddScene from "../../device-page/AddScene.js";
+import AddUpdateScene from "../../device-page/AddUpdateScene";
 import RecallRemove from "../../device-page/RecallRemove.js";
 import AddDeviceToGroup from "../AddDeviceToGroup.js";
 import GroupMembers from "../GroupMembers.js";
@@ -29,7 +29,7 @@ export default function Devices({ sourceIdx, group }: DevicesProps) {
                 </div>
                 <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">
                     <div className="card-body p-4">
-                        <AddScene sourceIdx={sourceIdx} target={group} deviceState={{}} />
+                        <AddUpdateScene sourceIdx={sourceIdx} target={group} deviceState={{}} />
                     </div>
                 </div>
             </div>
