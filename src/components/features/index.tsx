@@ -186,6 +186,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     // Water / leak / irrigation
     active_water_leak: faWater,
     water_leak: faWater,
+    water: faWater,
     leakage: faWater,
     leak: faWater,
     rainwater: faCloudShowersHeavy,
@@ -411,6 +412,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     sensitivity: faFeather,
     system_mode: faCog,
     identify: faHandPointUp,
+    alarm_mode: faBell,
 
     // Health
     heartbeat: faHeartPulse,
@@ -659,6 +661,7 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
             break;
         }
         case "water_leak":
+        case "water":
         case "vibration": {
             if (value) {
                 className = "text-primary";
