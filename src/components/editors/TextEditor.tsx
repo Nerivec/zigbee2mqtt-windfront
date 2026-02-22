@@ -1,4 +1,5 @@
-import { type InputHTMLAttributes, memo, useEffect, useState } from "react";
+import { type InputHTMLAttributes, memo, useCallback } from "react";
+import { useTrackedValue } from "../../hooks/useTrackedValue.js";
 
 type TextProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
     value: string;
@@ -7,11 +8,16 @@ type TextProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
 
 const TextEditor = memo((props: TextProps) => {
     const { onChange, value, ...rest } = props;
-    const [currentValue, setCurrentValue] = useState<string>(value);
+    const { currentValue, setCurrentValue, consumeChange } = useTrackedValue(value);
 
-    useEffect(() => {
-        setCurrentValue(value);
-    }, [value]);
+    const onSubmit = useCallback(
+        (e: { currentTarget: { validationMessage: string } }) => {
+            if (!e.currentTarget.validationMessage && consumeChange()) {
+                onChange(currentValue);
+            }
+        },
+        [currentValue, consumeChange, onChange],
+    );
 
     return (
         <input
@@ -19,7 +25,7 @@ const TextEditor = memo((props: TextProps) => {
             className="input validator"
             value={currentValue}
             onChange={(e) => setCurrentValue(e.target.value)}
-            onBlur={(e) => !e.target.validationMessage && onChange(currentValue)}
+            onBlur={onSubmit}
             onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.nativeEvent.isComposing) {
                     e.preventDefault();
@@ -27,7 +33,7 @@ const TextEditor = memo((props: TextProps) => {
                     if (e.currentTarget.validationMessage) {
                         e.currentTarget.reportValidity();
                     } else {
-                        onChange(currentValue);
+                        onSubmit(e);
                     }
                 }
             }}
