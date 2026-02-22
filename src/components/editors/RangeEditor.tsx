@@ -1,4 +1,4 @@
-import { type ChangeEvent, type InputHTMLAttributes, memo, useCallback, useEffect, useState } from "react";
+import { type ChangeEvent, type InputHTMLAttributes, type KeyboardEvent, memo, useCallback, useEffect, useState } from "react";
 import EnumEditor, { type ValueWithLabelOrPrimitive } from "./EnumEditor.js";
 
 type RangeProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
@@ -29,6 +29,21 @@ const RangeEditor = memo((props: RangeProps) => {
             }
         },
         [currentValue, onChange],
+    );
+
+    const onKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+                e.preventDefault();
+
+                if (e.currentTarget.validationMessage) {
+                    e.currentTarget.reportValidity();
+                } else {
+                    void onSubmit(e);
+                }
+            }
+        },
+        [onSubmit],
     );
 
     return (
@@ -63,6 +78,7 @@ const RangeEditor = memo((props: RangeProps) => {
                         value={currentValue}
                         onChange={onInputChange}
                         onBlur={onSubmit}
+                        onKeyDown={onKeyDown}
                         min={min}
                         max={max}
                         {...rest}

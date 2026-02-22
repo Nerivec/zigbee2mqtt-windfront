@@ -20,6 +20,17 @@ const TextEditor = memo((props: TextProps) => {
             value={currentValue}
             onChange={(e) => setCurrentValue(e.target.value)}
             onBlur={(e) => !e.target.validationMessage && onChange(currentValue)}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+                    e.preventDefault();
+
+                    if (e.currentTarget.validationMessage) {
+                        e.currentTarget.reportValidity();
+                    } else {
+                        onChange(currentValue);
+                    }
+                }
+            }}
             {...rest}
         />
     );
