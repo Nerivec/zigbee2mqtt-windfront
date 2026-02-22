@@ -146,6 +146,10 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                     friendly_name: "hue lights",
                 },
             },
+            health: {
+                interval: 10,
+                reset_on_check: false,
+            },
             homeassistant: {
                 discovery_topic: "homeassistant",
                 enabled: true,

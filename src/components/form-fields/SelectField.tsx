@@ -18,7 +18,7 @@ const SelectField = memo((props: SelectFieldProps) => {
                     {props.required ? " *" : ""}
                 </legend>
             )}
-            <select className={`select${props.required ? " validator" : ""}`} onChange={onChange} {...rest}>
+            <select className={`select ${props.required ? "validator" : ""}`} onChange={onChange} {...rest}>
                 {children}
             </select>
             {detail && <span className="label">{detail}</span>}

@@ -23,10 +23,11 @@
     "homepage": "https://github.com/Nerivec/zigbee2mqtt-windfront/#readme",
     "scripts": {
         "clean": "rm -rf ./dist",
-        "build": "vite build",
+        "build": "vite build && vite build --config vite.onboarding.config.mts",
         "preview": "vite preview",
         "start": "vite dev",
         "start:envs": "VITE_Z2M_API_URLS=localhost:5173/api,localhost:8080/api,bogus.local:8080/api VITE_Z2M_API_NAMES=dev,main,bogus npm start",
+        "start:onboarding": "vite dev --config vite.onboarding.config.mts",
         "test": "vitest run",
         "test:cov": "vitest run --coverage",
         "typecheck": "tsc --noEmit",

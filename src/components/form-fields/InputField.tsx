@@ -20,7 +20,7 @@ const InputField = memo((props: InputFieldProps) => {
                     {props.required ? " *" : ""}
                 </legend>
             )}
-            <input className={`input min-w-xs${props.pattern || props.required ? " validator" : ""}`} onChange={onChange} onBlur={onBlur} {...rest} />
+            <input className={`input min-w-xs ${props.pattern || props.required ? "validator" : ""}`} onChange={onChange} onBlur={onBlur} {...rest} />
             {detail && <p className="label">{detail}</p>}
         </fieldset>
     );
