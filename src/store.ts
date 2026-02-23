@@ -63,6 +63,10 @@ export interface AppState {
     recentActivity: Record<number, Record<string, RecentActivityEntry>>;
     recentActivityFeed: RecentActivityFeedEntry[];
 
+    //-- Bulk operations
+    /** Maps sourceIdx to array of selected device IEEE addresses */
+    bulkSelectedDevices: Record<number, string[]>;
+
     //-- WebSocket
     /** idx is API_URLS/source idx */
     authRequired: boolean[];
@@ -115,6 +119,10 @@ interface AppActions {
     resetWebSocketMetrics: (sourceIdx: number) => void;
     setPendingRequestsCount: (sourceIdx: number, pending: number) => void;
 
+    //-- Bulk operations
+    setBulkSelectedDevices: (sourceIdx: number, ieeeAddresses: string[]) => void;
+    clearBulkSelectedDevices: (sourceIdx?: number) => void;
+
     //-- non source dependent
     addToast: (toast: Toast) => void;
     removeToast: (idx: number) => void;
@@ -159,6 +167,7 @@ const makeInitialState = (): AppState => {
     const backup: AppState["backup"] = {};
     const recentActivity: AppState["recentActivity"] = {};
     const recentActivityFeed: AppState["recentActivityFeed"] = [];
+    const bulkSelectedDevices: AppState["bulkSelectedDevices"] = {};
     const authRequired: AppState["authRequired"] = [];
     const readyStates: AppState["readyStates"] = [];
     const webSocketMetrics: AppState["webSocketMetrics"] = {};
@@ -328,6 +337,7 @@ const makeInitialState = (): AppState => {
         preparingBackup[idx] = false;
         backup[idx] = "";
         recentActivity[idx] = {};
+        bulkSelectedDevices[idx] = [];
         authRequired[idx] = false;
         readyStates[idx] = WebSocket.CLOSED;
         webSocketMetrics[idx] = {
@@ -369,6 +379,7 @@ const makeInitialState = (): AppState => {
         backup,
         recentActivity,
         recentActivityFeed,
+        bulkSelectedDevices,
         logsLimit: 100,
         notificationsAlert: [false, false],
         toasts: [],
@@ -867,6 +878,26 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
                 },
             },
         })),
+
+    //-- Bulk operations
+    setBulkSelectedDevices: (sourceIdx, ieeeAddresses) =>
+        set((state) => ({
+            bulkSelectedDevices: { ...state.bulkSelectedDevices, [sourceIdx]: ieeeAddresses },
+        })),
+    clearBulkSelectedDevices: (sourceIdx) =>
+        set((state) => {
+            if (sourceIdx !== undefined) {
+                return { bulkSelectedDevices: { ...state.bulkSelectedDevices, [sourceIdx]: [] } };
+            }
+
+            const bulkSelectedDevices: AppState["bulkSelectedDevices"] = {};
+
+            for (let idx = 0; idx < API_URLS.length; idx++) {
+                bulkSelectedDevices[idx] = [];
+            }
+
+            return { bulkSelectedDevices };
+        }),
 
     //-- non source dependent
 
