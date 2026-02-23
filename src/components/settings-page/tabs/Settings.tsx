@@ -9,7 +9,7 @@ import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import InfoAlert from "../../InfoAlert.js";
 import SettingsList from "../../json-schema/SettingsList.js";
 
-export type TabName = "main" | "frontend" | "mqtt" | "serial" | "availability" | "ota" | "advanced" | "homeassistant";
+export type TabName = "main" | "frontend" | "mqtt" | "serial" | "availability" | "ota" | "advanced" | "homeassistant" | "health";
 
 const isTabActive = ({ isActive }: NavLinkRenderProps) => (isActive ? "tab tab-active" : "tab");
 
@@ -61,6 +61,9 @@ export default function Settings({ sourceIdx, tab }: SettingsProps) {
                 </NavLink>
                 <NavLink to={`/settings/${sourceIdx}/settings/homeassistant`} className={isTabActive}>
                     {t(($) => $.homeassistant)}
+                </NavLink>
+                <NavLink to={`/settings/${sourceIdx}/settings/health`} className={isTabActive}>
+                    {t(($) => $.health)}
                 </NavLink>
                 <div className="tab-content block h-full bg-base-100 p-3">
                     {tab === "main" ? (

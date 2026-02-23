@@ -180,7 +180,7 @@ const propertyToField = (
         case "object":
         case "null":
         case undefined:
-            console.error(`Unexpected property type ${propertyType}`);
+            console.error(`Unexpected property type ${propertyType} for ${key}`, property);
     }
 };
 
@@ -257,14 +257,13 @@ const groupProperties = (
                     depth,
                     required.includes(key),
                     property.description
-                        ? `${t(($) => $[newPath], { defaultValue: property.description })}${property.default != null ? ` (${t(($) => $.default, { ns: "common" })}: ${property.default})` : ""}`
+                        ? `${t(($) => $[newPath], { defaultValue: property.description })}${property.default != null ? ` (${t(($) => $.default, { ns: "common", defaultValue: "Default" })}: ${property.default})` : ""}`
                         : property.default != null
-                          ? `${t(($) => $.default, { ns: "common" })}: ${property.default}}`
+                          ? `${t(($) => $.default, { ns: "common", defaultValue: "Default" })}: ${property.default}}`
                           : undefined,
                 );
 
                 if (feature) {
-                    // XXX: enforce tailwind class presence: ps-4 ps-8 ps-12
                     elements.push(
                         <div className={`list-row p-3 ${depth !== 0 ? ` ps-${4 + depth * 4}` : ""}`} key={`${depth}-${key}`}>
                             {feature}
