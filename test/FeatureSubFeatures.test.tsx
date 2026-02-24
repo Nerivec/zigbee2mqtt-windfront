@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import FeatureSubFeatures from "../src/components/features/FeatureSubFeatures.js";
 import FeatureWrapper from "../src/components/features/FeatureWrapper.js";
@@ -42,7 +43,7 @@ vi.mock("../src/components/features/Feature.js", () => ({
 }));
 
 vi.mock("../src/components/Button.js", () => ({
-    default: ({ onClick, children, title }: { onClick: () => void; children: React.ReactNode; title: string }) => {
+    default: ({ onClick, children, title }: { onClick: () => void; children: ReactNode; title: string }) => {
         mockApplyCallback = onClick;
         applyButtons.add(title);
 
