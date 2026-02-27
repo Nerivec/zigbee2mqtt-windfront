@@ -46,6 +46,8 @@ import {
     faHandPointUp,
     faHashtag,
     faHeartPulse,
+    faHourglassEnd,
+    faHourglassStart,
     faIcons,
     faIdBadge,
     faIndustry,
@@ -72,6 +74,7 @@ import {
     faRadiation,
     faRadiationAlt,
     faRainbow,
+    faRecycle,
     faRotate,
     faRuler,
     faSeedling,
@@ -182,6 +185,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     gas: faCloud,
     smoke: faSmoking,
     carbon_monoxide: faCloud,
+    carbon_monoxide_value: faCloud,
 
     // Water / leak / irrigation
     active_water_leak: faWater,
@@ -367,8 +371,11 @@ const ICON_MAP: Record<string, IconDefinition> = {
     enabled: faCircleCheck,
     online: faWifi,
     lifecycle: faInfinity,
+    end_of_life: faRecycle,
     test: faCheck,
+    testing: faFlask,
     trigger_count: faTurnUp,
+    warming_up: faHourglassEnd,
 
     // Connectivity / network
     wifi: faWifi,
@@ -618,6 +625,10 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
             break;
         }
         case "battery_low":
+        case "carbon_monoxide":
+        case "end_of_life":
+        case "fault":
+        case "water_leak":
         case "tamper": {
             if (value) {
                 className = "text-error";
@@ -653,18 +664,26 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
         case "area2Occupancy":
         case "area3Occupancy":
         case "area4Occupancy":
-        case "presence": {
+        case "presence":
+        case "testing": {
             if (value) {
                 className = "text-warning";
             }
 
             break;
         }
-        case "water_leak":
         case "water":
         case "vibration": {
             if (value) {
                 className = "text-primary";
+            }
+
+            break;
+        }
+        case "warming_up": {
+            if (value) {
+                className = "text-warning";
+                icon = faHourglassStart;
             }
 
             break;

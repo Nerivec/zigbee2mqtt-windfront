@@ -24,8 +24,19 @@ const BooleanValueView = memo((props: DisplayValueProps) => {
         case "water_leak": {
             return value ? <span className="text-error animate-pulse">{t(($) => $.leaking)}</span> : t(($) => $.clear);
         }
+        case "carbon_monoxide": {
+            return value ? <span className="text-error animate-pulse">{t(($) => $.alarm)}</span> : t(($) => $.normal);
+        }
         case "tamper": {
             return value ? <span className="text-error animate-pulse">{t(($) => $.tampered)}</span> : t(($) => $.clear);
+        }
+        case "end_of_life":
+        case "fault": {
+            return value ? <span className="text-error animate-pulse">{t(($) => $.true)}</span> : t(($) => $.false);
+        }
+        case "testing":
+        case "warming_up": {
+            return value ? <span className="text-warning animate-pulse">{t(($) => $.in_progress)}</span> : t(($) => $.done);
         }
         case "supported": {
             return value ? t(($) => $.supported) : t(($) => $.not_supported);
