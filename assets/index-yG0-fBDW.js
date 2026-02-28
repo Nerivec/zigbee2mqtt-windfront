@@ -1,0 +1,1 @@
+import{d9 as n}from"./index-DTLwKrFY.js";const i=""+new URL("generic-zigbee-device-Dj-9sUqG.png",import.meta.url).href,s="https://www.zigbee2mqtt.io/images/devices/",a=e=>{const t=n(e.definition?.model);return t==="NA"?i:`${s}${t}.png`},c=e=>{for(const t in e.endpoints)if(e.endpoints[t].clusters.output.includes("genOta"))return!0;return!1};export{i as a,a as g,c as h};

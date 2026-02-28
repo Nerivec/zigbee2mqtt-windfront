@@ -1,0 +1,1 @@
+import{m as e,ay as t,j as o,F as a,a0 as r}from"./index-DTLwKrFY.js";function i({children:s}){return e.get(t,!1)?null:o.jsxs("div",{className:"alert alert-info alert-soft mb-2",role:"alert",children:[o.jsx(a,{icon:r,size:"2xl"}),s]})}export{i as I};

@@ -1,0 +1,1 @@
+import{r as h,j as r}from"./index-DTLwKrFY.js";const l=h.memo(({durationSec:t})=>{if(t&&t>0){const o=Math.floor(t/3600),s=Math.floor(t/60)%60,n=Math.floor(t%60),a=o>0,e=s>0;return r.jsxs(r.Fragment,{children:[a?`${o}:`:"",e?`${s.toString().padStart(2,"0")}:`:"",n.toString().padStart(2,"0")]})}return null});export{l as D};
