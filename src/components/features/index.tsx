@@ -692,12 +692,10 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
         }
         case "ringtone":
         case "alarm_ringtone": {
-            switch (String(value).toLowerCase()) {
+            switch (value) {
                 case "mute":
                 case "muted":
-                case "silent":
-                case "off":
-                case "none": {
+                case "OFF": {
                     icon = faVolumeXmark;
 
                     break;
