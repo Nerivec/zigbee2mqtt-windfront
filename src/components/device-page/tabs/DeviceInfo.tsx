@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
+import { OUI } from "../../../oui.js";
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { toHex } from "../../../utils.js";
@@ -140,6 +141,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
 
     const canOta = useMemo(() => hasOtaCluster(device), [device]);
     const otaInstalledVersion = useMemo(() => formatOtaFileVersion(deviceState.update?.installed_version), [deviceState.update?.installed_version]);
+    const oui = useMemo(() => OUI.get(device.ieee_address.slice(2, 8)) ?? "?", [device.ieee_address]);
 
     const setDeviceDescription = useCallback(
         async (id: string, description: string): Promise<void> => {
@@ -279,7 +281,9 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         <div className="stat-value text-xl tooltip tooltip-bottom" data-tip={t(($) => $.ieee_address)}>
                             {device.ieee_address}
                         </div>
-                        <div className="stat-desc text-base-content/0">-</div>
+                        <div className="stat-desc tooltip tooltip-top" data-tip="Organizationally Unique Identifier / IEEE Vendor Prefix">
+                            OUI: {oui}
+                        </div>
                     </div>
                     <div className="stat px-3">
                         <div className="stat-title">{t(($) => $.network_address)}</div>
