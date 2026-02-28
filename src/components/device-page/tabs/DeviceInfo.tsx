@@ -320,10 +320,15 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <div className="font-semibold text-base-content/70">{t(($) => $.model)}</div>
                     <div className="min-w-0">
                         <p className="font-semibold break-all">
-                            <ModelLink device={device} />
+                            <ModelLink
+                                modelId={device.model_id}
+                                supported={device.supported}
+                                definitionModel={device.definition?.model}
+                                definitionVendor={device.definition?.vendor}
+                            />
                         </p>
                         <p className="text-base-content/50">
-                            {definitionDescription} (<VendorLink device={device} />)
+                            {definitionDescription} (<VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} />)
                         </p>
                     </div>
                     {device.software_build_id ? (

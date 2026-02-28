@@ -288,10 +288,15 @@ export default function OtaPage() {
                     },
                 }) => (
                     <>
-                        <ModelLink device={device} />
+                        <ModelLink
+                            modelId={device.model_id}
+                            supported={device.supported}
+                            definitionModel={device.definition?.model}
+                            definitionVendor={device.definition?.vendor}
+                        />
                         <div>
                             <span className="badge badge-sm badge-ghost tooltip tooltip-bottom" data-tip={t(($) => $.manufacturer, { ns: "zigbee" })}>
-                                <VendorLink device={device} />
+                                <VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} />
                             </span>
                         </div>
                     </>

@@ -5,7 +5,10 @@ import { SUPPORT_NEW_DEVICES_DOCS_URL } from "../../consts.js";
 import type { Device } from "../../types.js";
 
 type ModelLinkProps = {
-    device: Device;
+    modelId: Device["model_id"];
+    supported: Device["supported"];
+    definitionModel?: NonNullable<Device["definition"]>["model"];
+    definitionVendor?: NonNullable<Device["definition"]>["vendor"];
 };
 
 const normalizeModel = (model: string): string => {
@@ -15,20 +18,17 @@ const normalizeModel = (model: string): string => {
     return model.replace(re, "_");
 };
 
-const ModelLink = memo(({ device }: ModelLinkProps) => {
+const ModelLink = memo(({ modelId, supported, definitionModel, definitionVendor }: ModelLinkProps) => {
     const { t } = useTranslation("zigbee");
-    let label = device.model_id || t(($) => $.unknown);
+    let label = modelId || t(($) => $.unknown);
     let url = SUPPORT_NEW_DEVICES_DOCS_URL;
 
-    if (device.supported && device.definition) {
-        const detailsAnchor = [
-            encodeURIComponent(device.definition.vendor.toLowerCase()),
-            encodeURIComponent(device.definition.model.toLowerCase()),
-        ].join("-");
+    if (supported && definitionModel && definitionVendor) {
+        const detailsAnchor = [encodeURIComponent(definitionVendor.toLowerCase()), encodeURIComponent(definitionModel.toLowerCase())].join("-");
         url = `https://www.zigbee2mqtt.io/devices/${encodeURIComponent(
-            normalizeModel(device.definition.model),
+            normalizeModel(definitionModel),
         )}.html#${encodeURIComponent(normalizeModel(detailsAnchor))}`;
-        label = device.definition.model;
+        label = definitionModel;
     }
 
     return (
