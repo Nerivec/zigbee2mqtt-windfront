@@ -329,9 +329,13 @@
         "serial_numbers": "일련번호 (CSV)"
     },
     "values": {
+        "alarm": "경보",
         "clear": "지우기",
         "closed": "닫힘",
+        "done": "완료",
         "false": "거짓",
+        "in_progress": "진행 중",
+        "normal": "정상",
         "not_supported": "미지원",
         "occupied": "점유",
         "open": "열림",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "서드파티 서버 펌웨어 체크 주기",
         "ota-disable_automatic_update_check": "디바이스 펌웨어 체크 억제",
         "ota-zigbee_ota_override_index_location": "OTA 인덱스 재정의 경로",
+        "ota-image_block_request_timeout": "OTA 업데이트 중 시간 초과(밀리초)입니다. 장치가 블록을 너무 느리게 요청하면 이 값을 늘릴 수 있습니다.",
         "ota-image_block_response_delay": "OTA 동안 요청 속도 제한(ms)",
         "ota-default_maximum_data_size": "업데이트 중 블록 크기(바이트)",
         "frontend-enabled": "프론트엔드 활성화",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "낙관 /set 페이로드 필터",
         "definitions-device-icon": "사용자 정의 아이콘(URL/로컬 경로)",
         "definitions-device-homeassistant-name": "Home Assistant 내 이름",
+        "definitions-device-disable_automatic_update_check": "Zigbee 장치는 펌웨어 업데이트를 자주 요청할 수 있으며, 이로 인해 Zigbee2MQTT가 타사 서버에 연결하게 됩니다. 이러한 장치 시작 검사를 비활성화해도 펌웨어 업데이트 확인은 수동으로 시작할 수 있습니다.",
         "definitions-group-qos": "이 그룹 MQTT QoS",
         "definitions-group-off_state": "OFF/CLOSE 발행 시점 제어",
         "definitions-group-homeassistant-name": "Home Assistant의 그룹 이름"

@@ -329,9 +329,13 @@
         "serial_numbers": "Serienummers (CSV)"
     },
     "values": {
+        "alarm": "alarm",
         "clear": "leeg",
         "closed": "gesloten",
+        "done": "gereed",
         "false": "onwaar",
+        "in_progress": "bezig",
+        "normal": "normaal",
         "not_supported": "niet ondersteund",
         "occupied": "bezet",
         "open": "open",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Interval voor firmware-checks derden",
         "ota-disable_automatic_update_check": "Onderdruk update-aanvragen devices",
         "ota-zigbee_ota_override_index_location": "Pad override OTA index",
+        "ota-image_block_request_timeout": "Time-out (in milliseconden) tijdens OTA-updates. U kunt deze waarde verhogen als uw apparaat te langzaam blokken opvraagt.",
         "ota-image_block_response_delay": "Vertraging (ms) tussen blokken",
         "ota-default_maximum_data_size": "Blokgrootte tijdens updates (bytes)",
         "frontend-enabled": "Frontend inschakelen",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Attribuut uit optimistische payload",
         "definitions-device-icon": "Aangepast pictogram",
         "definitions-device-homeassistant-name": "Naam in Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Zigbee-apparaten kunnen een firmware-update aanvragen, en dit vaak doen, waardoor Zigbee2MQTT contact opneemt met servers van derden. Als u deze door het apparaat geïnitieerde controles uitschakelt, kunt u nog steeds handmatig een firmware-updatecontrole starten.",
         "definitions-group-qos": "QoS groep",
         "definitions-group-off_state": "Wanneer OFF/CLOSE voor groep publiceren",
         "definitions-group-homeassistant-name": "Naam van de groep in Home Assistant"

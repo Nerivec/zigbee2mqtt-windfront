@@ -329,9 +329,13 @@
         "serial_numbers": "Seriennummern (CSV)"
     },
     "values": {
+        "alarm": "alarm",
         "clear": "frei",
         "closed": "geschlossen",
+        "done": "fertig",
         "false": "falsch",
+        "in_progress": "in bearbeitung",
+        "normal": "normal",
         "not_supported": "nicht unterstützt",
         "occupied": "belegt",
         "open": "offen",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Intervall, wie oft Drittserver für Firmware-Updates kontaktiert werden dürfen.",
         "ota-disable_automatic_update_check": "Firmware-Update-Anfragen von Geräten unterdrücken.",
         "ota-zigbee_ota_override_index_location": "Pfad zur Override-OTA-Indexdatei",
+        "ota-image_block_request_timeout": "Zeitüberschreitung (in Millisekunden) während OTA-Updates. Sie können diesen Wert erhöhen, wenn Ihr Gerät Blöcke zu langsam anfordert.",
         "ota-image_block_response_delay": "Rate der Requests (ms) während OTA begrenzen zur Reduzierung der Netzwerklast.",
         "ota-default_maximum_data_size": "Größe der Dateiblöcke (Bytes) während Updates.",
         "frontend-enabled": "Frontend aktivieren",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Attribute per Regex aus optimistischer /set-Payload filtern",
         "definitions-device-icon": "Benutzerdefiniertes Geräteicon (URL oder lokaler Pfad)",
         "definitions-device-homeassistant-name": "Gerätename in Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Zigbee-Geräte können ein Firmware-Update anfordern und dies häufig tun, wodurch Zigbee2MQTT Server von Drittanbietern kontaktieren muss. Wenn Sie diese vom Gerät initiierten Prüfungen deaktivieren, können Sie eine Firmware-Update-Prüfung weiterhin manuell starten.",
         "definitions-group-qos": "QoS-Level für MQTT-Nachrichten dieser Gruppe",
         "definitions-group-off_state": "Steuerung wann OFF/CLOSE für eine Gruppe veröffentlicht wird",
         "definitions-group-homeassistant-name": "Name der Gruppe in Home Assistant"

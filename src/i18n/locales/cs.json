@@ -329,9 +329,13 @@
         "serial_numbers": "Sériová čísla (CSV)"
     },
     "values": {
+        "alarm": "poplach",
         "clear": "Klid/Bez poplachu",
         "closed": "Zavřeno",
+        "done": "hotovo",
         "false": "Vypnuto",
+        "in_progress": "probíhá",
+        "normal": "normální",
         "not_supported": "Nepodporováno",
         "occupied": "Obsazeno",
         "open": "Otevřeno",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Lhůta, po jejíž uplynutí může zařízení požádat o kontrolu nové verze firmwaru. Určuje, jak často může Zigbee2MQTT kontaktovat vzdálené servery pro ověření dostupných aktualizací (v minutách, výchozí hodnota = 1 den).",
         "ota-disable_automatic_update_check": "Zakáže automatické kontroly aktualizací vyžadované zařízeními. Tuto volbu použijte, pokud nechcete, aby Zigbee2MQTT často kontaktovalo servery výrobců. Aktualizace lze nadále spouštět ručně.",
         "ota-zigbee_ota_override_index_location": "Cesta k vlastnímu (override) indexovému souboru OTA aktualizací.",
+        "ota-image_block_request_timeout": "Časový limit (v milisekundách) během OTA aktualizací. Tuto hodnotu můžete zvýšit, pokud si vaše zařízení vyžaduje bloky příliš pomalu.",
         "ota-image_block_response_delay": "Zpoždění (v milisekundách) mezi bloky dat během OTA aktualizace. Slouží ke snížení zatížení sítě. Pokud je síť nestabilní, lze tuto hodnotu zvýšit.",
         "ota-default_maximum_data_size": "Velikost datových bloků (v bajtech) odesílaných při aktualizaci. Někteří výrobci mohou vyžadovat pevně dané hodnoty, které toto nastavení přepíší.",
         "frontend-enabled": "Povolit webové rozhraní (frontend)",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Filtrování vlastností (atributů), které nebudou zahrnovány do „optimistických“ zpráv při volání /set (nemá vliv, pokud je optimistic=false).",
         "definitions-device-icon": "Vlastní ikona zařízení ve frontendu. Může být buď plná URL (např. https://SOME.SITE/model123.jpg), nebo cesta k lokálnímu souboru v adresáři `device_icons`.",
         "definitions-device-homeassistant-name": "Název zařízení v Home Assistant.",
+        "definitions-device-disable_automatic_update_check": "Zařízení Zigbee mohou žádat o aktualizaci firmwaru, a to i často, což způsobí, že Zigbee2MQTT bude kontaktovat servery třetích stran. Pokud tyto kontroly iniciované zařízením zakážete, můžete i nadále ručně spustit kontrolu aktualizace firmwaru.",
         "definitions-group-qos": "Úroveň QoS (Quality of Service) pro MQTT zprávy této skupiny.",
         "definitions-group-off_state": "Určuje, kdy má být pro skupinu publikován stav OFF nebo CLOSE. all_members_off: pouze pokud jsou všechna zařízení ve stavu OFF/CLOSE. last_member_state: pokud alespoň jedno zařízení přejde do stavu OFF.",
         "definitions-group-homeassistant-name": "Název skupiny v Home Assistant"

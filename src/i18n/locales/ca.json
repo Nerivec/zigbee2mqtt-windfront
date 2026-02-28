@@ -329,9 +329,13 @@
         "serial_numbers": "Números de sèrie (CSV)"
     },
     "values": {
+        "alarm": "alarma",
         "clear": "neteja",
         "closed": "tancat",
+        "done": "fet",
         "false": "fals",
+        "in_progress": "en curs",
+        "normal": "normal",
         "not_supported": "no suportat",
         "occupied": "ocupat",
         "open": "obert",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Freq consultes firmware",
         "ota-disable_automatic_update_check": "Suprimeix peticions firmware",
         "ota-zigbee_ota_override_index_location": "Camí override OTA index",
+        "ota-image_block_request_timeout": "Temps d'espera (en mil·lisegons) durant les actualitzacions OTA. Podeu augmentar aquest valor si el vostre dispositiu sol·licita blocs massa lentament.",
         "ota-image_block_response_delay": "Retard blocs (ms)",
         "ota-default_maximum_data_size": "Mida bloc (bytes)",
         "frontend-enabled": "Activa frontend",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Filtre optimistic payload",
         "definitions-device-icon": "Icona",
         "definitions-device-homeassistant-name": "Nom Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Els dispositius Zigbee poden sol·licitar una actualització de firmware, i fer-ho sovint, fent que Zigbee2MQTT contacti amb servidors de tercers. Si desactiveu aquestes comprovacions iniciades pel dispositiu, encara podreu iniciar manualment una comprovació d'actualització de firmware.",
         "definitions-group-qos": "QoS grup",
         "definitions-group-off_state": "Quan publicar OFF/CLOSE",
         "definitions-group-homeassistant-name": "Nom del grup a Home Assistant"

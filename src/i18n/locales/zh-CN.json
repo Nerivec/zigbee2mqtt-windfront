@@ -329,9 +329,13 @@
         "serial_numbers": "序列号 (CSV)"
     },
     "values": {
+        "alarm": "警报",
         "clear": "清除",
         "closed": "关闭",
+        "done": "完成",
         "false": "false",
+        "in_progress": "进行中",
+        "normal": "正常",
         "not_supported": "不支持",
         "occupied": "占用",
         "open": "打开",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "访问第三方固件间隔",
         "ota-disable_automatic_update_check": "抑制频繁固件请求",
         "ota-zigbee_ota_override_index_location": "OTA 索引覆盖路径",
+        "ota-image_block_request_timeout": "OTA 更新期间的超时时间（毫秒）。如果设备请求数据块过慢，可以增大此值。",
         "ota-image_block_response_delay": "OTA 块响应延迟 (ms)",
         "ota-default_maximum_data_size": "更新块大小 (字节)",
         "frontend-enabled": "启用前端",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "乐观 payload 过滤",
         "definitions-device-icon": "自定义图标",
         "definitions-device-homeassistant-name": "Home Assistant 名称",
+        "definitions-device-disable_automatic_update_check": "Zigbee 设备可能会频繁请求固件更新，导致 Zigbee2MQTT 访问第三方服务器。即使禁用这些由设备发起的检查，您仍可手动发起固件更新检查。",
         "definitions-group-qos": "分组 QoS",
         "definitions-group-off_state": "发布分组 OFF/CLOSE 时机",
         "definitions-group-homeassistant-name": "Home Assistant 中的群组名称"

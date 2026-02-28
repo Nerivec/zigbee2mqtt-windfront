@@ -329,9 +329,13 @@
         "serial_numbers": "Numéros de série (CSV)"
     },
     "values": {
+        "alarm": "Alarme",
         "clear": "Effacer",
         "closed": "Fermé",
+        "done": "Terminé",
         "false": "Faux",
+        "in_progress": "En cours",
+        "normal": "Normal",
         "not_supported": "Non pris en charge",
         "occupied": "Occupé",
         "open": "Ouvert",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Votre appareil peut demander une vérification de mise à jour : cette valeur détermine la fréquence (en minutes) des requêtes aux serveurs tiers. Par défaut, 1 jour.",
         "ota-disable_automatic_update_check": "Les appareils Zigbee peuvent demander souvent une mise à jour firmware, provoquant des requêtes à des serveurs tiers. Si vous les désactivez, vous pouvez toujours lancer cette vérification manuellement.",
         "ota-zigbee_ota_override_index_location": "Emplacement du fichier d'index OTA de remplacement",
+        "ota-image_block_request_timeout": "Délai d'attente (en millisecondes) pendant les mises à jour OTA. Vous pouvez augmenter cette valeur si votre appareil demande les blocs trop lentement.",
         "ota-image_block_response_delay": "Limite le taux de requêtes (en ms) lors des mises à jour OTA pour éviter la congestion. Augmentez si instabilité réseau.",
         "ota-default_maximum_data_size": "Taille des blocs envoyés pendant la mise à jour (en octets). Note : certains fabricants exigent une valeur spécifique, ce qui peut ignorer cette valeur.",
         "frontend-enabled": "Activer l'interface",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Filtrer les attributs du payload optimiste (lors de /set) via regex. (Sans effet si optimistic=false).",
         "definitions-device-icon": "Icône d'appareil définie par l'utilisateur pour l'interface. Peut être une URL vers une image ou un chemin local dans `device_icons`.",
         "definitions-device-homeassistant-name": "Nom de l'appareil dans Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Les appareils Zigbee peuvent demander une mise à jour du firmware, et le faire fréquemment, ce qui amène Zigbee2MQTT à contacter des serveurs tiers. Si vous désactivez ces vérifications initiées par l'appareil, vous pouvez toujours lancer manuellement une vérification de mise à jour du firmware.",
         "definitions-group-qos": "Level QoS pour messages MQTT de ce groupe",
         "definitions-group-off_state": "Contrôle la publication de l'état OFF/FERMÉ pour un groupe: 'all_members_off' = publier OFF/CLOSE quand tous les membres sont OFF/CLOSE ; 'last_member_state' = publier OFF dès qu'un membre passe à OFF",
         "definitions-group-homeassistant-name": "Nom du groupe dans Home Assistant"

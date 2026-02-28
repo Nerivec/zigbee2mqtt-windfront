@@ -329,9 +329,13 @@
         "serial_numbers": "Серийные номера (CSV)"
     },
     "values": {
+        "alarm": "тревога",
         "clear": "очистить",
         "closed": "закрыто",
+        "done": "готово",
         "false": "ложь",
+        "in_progress": "в процессе",
+        "normal": "нормально",
         "not_supported": "не поддерживается",
         "occupied": "занято",
         "open": "открыто",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Частота проверки серверов обновлений",
         "ota-disable_automatic_update_check": "Подавить частые запросы прошивки",
         "ota-zigbee_ota_override_index_location": "Путь к override OTA index",
+        "ota-image_block_request_timeout": "Тайм-аут (в миллисекундах) во время OTA-обновлений. Вы можете увеличить это значение, если устройство запрашивает блоки слишком медленно.",
         "ota-image_block_response_delay": "Ограничить скорость блоков (мс)",
         "ota-default_maximum_data_size": "Размер блока обновления (байт)",
         "frontend-enabled": "Включить фронтенд",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Фильтр оптимистичного payload",
         "definitions-device-icon": "Пользовательская иконка",
         "definitions-device-homeassistant-name": "Имя в Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Устройства Zigbee могут запрашивать обновление прошивки, и делать это часто, из-за чего Zigbee2MQTT обращается к сторонним серверам. Если отключить эти проверки, инициируемые устройством, вы всё равно сможете вручную запустить проверку обновления прошивки.",
         "definitions-group-qos": "QoS группы",
         "definitions-group-off_state": "Когда публиковать OFF/CLOSE для группы",
         "definitions-group-homeassistant-name": "Имя группы в Home Assistant"

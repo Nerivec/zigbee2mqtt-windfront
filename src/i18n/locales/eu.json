@@ -329,9 +329,13 @@
         "serial_numbers": "Serie zenbakiak (CSV)"
     },
     "values": {
+        "alarm": "alarma",
         "clear": "garbitu",
         "closed": "itxita",
+        "done": "eginda",
         "false": "false",
+        "in_progress": "martxan",
+        "normal": "normala",
         "not_supported": "onartzen ez dena",
         "occupied": "okupatuta",
         "open": "irekita",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Firmware eguneratze maiztasuna",
         "ota-disable_automatic_update_check": "Murriztu eskaerak",
         "ota-zigbee_ota_override_index_location": "Override index bidea",
+        "ota-image_block_request_timeout": "Denbora-muga (milisegundotan) OTA eguneratzeetan. Balio hau handitu dezakezu zure gailuak blokeak motelegi eskatzen baditu.",
         "ota-image_block_response_delay": "Bloke atzerapena",
         "ota-default_maximum_data_size": "Bloke tamaina",
         "frontend-enabled": "Gaitu frontend",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Optimistic kendu",
         "definitions-device-icon": "Ikonoa",
         "definitions-device-homeassistant-name": "HA izena",
+        "definitions-device-disable_automatic_update_check": "Zigbee gailuek firmware eguneraketa bat eska dezakete, eta maiz egin, horrek Zigbee2MQTT hirugarrenen zerbitzarietara jotzea eraginez. Gailuak hasitako egiaztapen hauek desgaitzen badituzu, firmware eguneraketa-egiaztapena eskuz abiarazi ahal izango duzu hala ere.",
         "definitions-group-qos": "Talde QoS",
         "definitions-group-off_state": "Noiz OFF/CLOSE",
         "definitions-group-homeassistant-name": "Taldearen izena Home Assistant-en"

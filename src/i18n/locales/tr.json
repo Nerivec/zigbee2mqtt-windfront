@@ -329,9 +329,13 @@
         "serial_numbers": "Seri numaraları (CSV)"
     },
     "values": {
+        "alarm": "alarm",
         "clear": "temizle",
         "closed": "kapalı",
+        "done": "tamamlandı",
         "false": "yanlış",
+        "in_progress": "devam ediyor",
+        "normal": "normal",
         "not_supported": "desteklenmiyor",
         "occupied": "dolu",
         "open": "açık",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Üçüncü sunucu kontrol sıklığı",
         "ota-disable_automatic_update_check": "Cihaz firmware taleplerini bastır",
         "ota-zigbee_ota_override_index_location": "OTA index override yolu",
+        "ota-image_block_request_timeout": "OTA güncellemeleri sırasında zaman aşımı (milisaniye cinsinden). Cihazınız blokları çok yavaş istiyorsa bu değeri artırabilirsiniz.",
         "ota-image_block_response_delay": "OTA blok yanıt gecikmesi (ms)",
         "ota-default_maximum_data_size": "Güncelleme blok boyutu (byte)",
         "frontend-enabled": "Önyüzü etkinleştir",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "İyimser payload filtre",
         "definitions-device-icon": "Özel simge",
         "definitions-device-homeassistant-name": "Home Assistant içindeki ad",
+        "definitions-device-disable_automatic_update_check": "Zigbee cihazları bir ürün yazılımı güncellemesi isteyebilir ve bunu sık sık yapabilir; bu da Zigbee2MQTT’nin üçüncü taraf sunuculara bağlanmasına neden olur. Cihaz tarafından başlatılan bu kontrolleri devre dışı bırakırsanız, ürün yazılımı güncelleme kontrolünü yine de manuel olarak başlatabilirsiniz.",
         "definitions-group-qos": "Grup QoS",
         "definitions-group-off_state": "Grup OFF/CLOSE yayınlama zamanı",
         "definitions-group-homeassistant-name": "Home Assistant'taki grup adı"

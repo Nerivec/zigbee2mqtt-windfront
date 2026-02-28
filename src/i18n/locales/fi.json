@@ -329,9 +329,13 @@
         "serial_numbers": "Sarjanumerot (CSV)"
     },
     "values": {
+        "alarm": "hälytys",
         "clear": "tyhjennä",
         "closed": "suljettu",
+        "done": "valmis",
         "false": "false",
+        "in_progress": "käynnissä",
+        "normal": "normaali",
         "not_supported": "ei tuettu",
         "occupied": "varattu",
         "open": "avoin",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Firmware-tarkistusväli",
         "ota-disable_automatic_update_check": "Estä toistuvat firmware-pyynnöt",
         "ota-zigbee_ota_override_index_location": "OTA override index polku",
+        "ota-image_block_request_timeout": "Aikakatkaisu (millisekunteina) OTA-päivitysten aikana. Voit kasvattaa tätä arvoa, jos laitteesi pyytää lohkoja liian hitaasti.",
         "ota-image_block_response_delay": "Block viive (ms)",
         "ota-default_maximum_data_size": "Block koko (tavut)",
         "frontend-enabled": "Ota frontend käyttöön",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Suodata optimistinen payload",
         "definitions-device-icon": "Mukautettu ikoni",
         "definitions-device-homeassistant-name": "Nimi Home Assistantissa",
+        "definitions-device-disable_automatic_update_check": "Zigbee-laitteet voivat pyytää laiteohjelmistopäivitystä usein, jolloin Zigbee2MQTT ottaa yhteyttä kolmansien osapuolten palvelimiin. Jos poistat käytöstä nämä laitteen käynnistämät tarkistukset, voit silti käynnistää laiteohjelmistopäivityksen tarkistuksen manuaalisesti.",
         "definitions-group-qos": "Ryhmän QoS",
         "definitions-group-off_state": "Milloin julkaista OFF/CLOSE",
         "definitions-group-homeassistant-name": "Ryhmän nimi Home Assistantissa"

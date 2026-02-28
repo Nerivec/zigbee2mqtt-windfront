@@ -329,9 +329,13 @@
         "serial_numbers": "Números de série (CSV)"
     },
     "values": {
+        "alarm": "alarme",
         "clear": "limpar",
         "closed": "fechado",
+        "done": "concluído",
         "false": "falso",
+        "in_progress": "em andamento",
+        "normal": "normal",
         "not_supported": "não suportado",
         "occupied": "ocupado",
         "open": "aberto",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Frequência de checagem firmware",
         "ota-disable_automatic_update_check": "Desabilitar requisições de atualização",
         "ota-zigbee_ota_override_index_location": "Local índice OTA override",
+        "ota-image_block_request_timeout": "Tempo limite (em milissegundos) durante atualizações OTA. Você pode aumentar este valor se o seu dispositivo estiver solicitando blocos muito lentamente.",
         "ota-image_block_response_delay": "Atraso resposta bloco OTA (ms)",
         "ota-default_maximum_data_size": "Tamanho de bloco (bytes)",
         "frontend-enabled": "Ativar frontend",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Filtrar payload otimista",
         "definitions-device-icon": "Ícone personalizado",
         "definitions-device-homeassistant-name": "Nome no Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Dispositivos Zigbee podem solicitar atualização de firmware com frequência, fazendo com que o Zigbee2MQTT acesse servidores de terceiros. Se você desativar essas verificações iniciadas pelo dispositivo, ainda poderá iniciar manualmente uma verificação de atualização de firmware.",
         "definitions-group-qos": "QoS do grupo",
         "definitions-group-off_state": "Quando publicar OFF/CLOSE grupo",
         "definitions-group-homeassistant-name": "Nome do grupo no Home Assistant"

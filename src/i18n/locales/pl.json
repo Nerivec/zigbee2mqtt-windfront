@@ -329,9 +329,13 @@
         "serial_numbers": "Numery seryjne (CSV)"
     },
     "values": {
+        "alarm": "alarm",
         "clear": "nie wykryto",
         "closed": "zamknięte",
+        "done": "gotowe",
         "false": "fałsz",
+        "in_progress": "w toku",
+        "normal": "normalny",
         "not_supported": "niewspierane",
         "occupied": "zajęte",
         "open": "otwarte",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Częstotliwość zapytań o dostępność aktualizacji (min, domyślnie 1 dzień)",
         "ota-disable_automatic_update_check": "Wyłącz automatyczne sprawdzanie dostępności aktualizacji",
         "ota-zigbee_ota_override_index_location": "Lokalizacja niestandardowego pliku index OTA",
+        "ota-image_block_request_timeout": "Limit czasu (w milisekundach) podczas aktualizacji OTA. Możesz zwiększyć tę wartość, jeśli Twoje urządzenie zbyt wolno żąda bloków.",
         "ota-image_block_response_delay": "Opóźnienie w wysłaniu następnego fragmentu danych aktualizacji (ms)",
         "ota-default_maximum_data_size": "Rozmiar wysyłanych do urządzenia fragmentów danych aktualizacji (bajty)",
         "frontend-enabled": "Włącz frontend",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Filtr (regex) optymistyczycznych, publikowanych payloadów (wymagane wcześniejsze włączenie publikowania payloadów optymistycznych)",
         "definitions-device-icon": "Ikona użytkownika",
         "definitions-device-homeassistant-name": "Nazwa w Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Urządzenia Zigbee mogą żądać aktualizacji firmware i robić to często, przez co Zigbee2MQTT łączy się z serwerami firm trzecich. Jeśli wyłączysz te kontrole inicjowane przez urządzenie, nadal możesz ręcznie uruchomić sprawdzanie aktualizacji firmware.",
         "definitions-group-qos": "QoS grupy",
         "definitions-group-off_state": "Kiedy publikować OFF/CLOSE grupy",
         "definitions-group-homeassistant-name": "Nazwa grupy w Home Assistancie"

@@ -329,9 +329,13 @@
         "serial_numbers": "Серийни номера (CSV)"
     },
     "values": {
+        "alarm": "аларма",
         "clear": "изчистване",
         "closed": "затворено",
+        "done": "готово",
         "false": "false",
+        "in_progress": "в процес",
+        "normal": "нормално",
         "not_supported": "неподдържано",
         "occupied": "заето",
         "open": "отворено",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Честота проверка firmware",
         "ota-disable_automatic_update_check": "Подтискай заявки",
         "ota-zigbee_ota_override_index_location": "Override OTA index път",
+        "ota-image_block_request_timeout": "Изчакване (в милисекунди) по време на OTA актуализации. Можете да увеличите тази стойност, ако устройството ви заявява блокове твърде бавно.",
         "ota-image_block_response_delay": "Забавяне блок (ms)",
         "ota-default_maximum_data_size": "Размер блок (байтове)",
         "frontend-enabled": "Активирай frontend",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Филтър оптимистични",
         "definitions-device-icon": "Икона",
         "definitions-device-homeassistant-name": "Име Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Zigbee устройствата може да изискват актуализация на фърмуера и да го правят често, което кара Zigbee2MQTT да се свързва със сървъри на трети страни. Ако изключите тези проверки, инициирани от устройството, все пак можете да стартирате ръчна проверка за актуализация на фърмуера.",
         "definitions-group-qos": "QoS група",
         "definitions-group-off_state": "Кога OFF/CLOSE",
         "definitions-group-homeassistant-name": "Име на групата в Home Assistant"

@@ -329,9 +329,13 @@
         "serial_numbers": "Serienummer (CSV)"
     },
     "values": {
+        "alarm": "larm",
         "clear": "rensa",
         "closed": "stängd",
+        "done": "klart",
         "false": "falsk",
+        "in_progress": "pågår",
+        "normal": "normal",
         "not_supported": "stöds ej",
         "occupied": "upptaget",
         "open": "öppen",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Frekvens kontakt tredjepartsservrar",
         "ota-disable_automatic_update_check": "Undertryck täta firmwareförfrågningar",
         "ota-zigbee_ota_override_index_location": "Sökväg override OTA index",
+        "ota-image_block_request_timeout": "Tidsgräns (i millisekunder) under OTA-uppdateringar. Du kan öka detta värde om din enhet begär block för långsamt.",
         "ota-image_block_response_delay": "Fördröjning (ms) mellan block",
         "ota-default_maximum_data_size": "Blockstorlek uppdatering (bytes)",
         "frontend-enabled": "Aktivera frontend",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Filtrera optimistisk payload",
         "definitions-device-icon": "Anpassad ikon",
         "definitions-device-homeassistant-name": "Namn i Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Zigbee-enheter kan begära en firmwareuppdatering, och göra det ofta, vilket gör att Zigbee2MQTT kontaktar tredjepartsservrar. Om du inaktiverar dessa enhetsinitierade kontroller kan du fortfarande starta en firmwareuppdateringskontroll manuellt.",
         "definitions-group-qos": "Grupp QoS",
         "definitions-group-off_state": "När publicera OFF/CLOSE för grupp",
         "definitions-group-homeassistant-name": "Gruppens namn i Home Assistant"

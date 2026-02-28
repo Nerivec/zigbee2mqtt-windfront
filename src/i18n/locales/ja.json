@@ -329,9 +329,13 @@
         "serial_numbers": "シリアル番号 (CSV)"
     },
     "values": {
+        "alarm": "アラーム",
         "clear": "クリア",
         "closed": "閉",
+        "done": "完了",
         "false": "False",
+        "in_progress": "進行中",
+        "normal": "通常",
         "not_supported": "未サポート",
         "occupied": "占有",
         "open": "開",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "サーバ問い合わせ頻度",
         "ota-disable_automatic_update_check": "頻繁な更新要求を無効化",
         "ota-zigbee_ota_override_index_location": "OTA インデックス上書き位置",
+        "ota-image_block_request_timeout": "OTA 更新中のタイムアウト（ミリ秒）。デバイスがブロックを要求する速度が遅すぎる場合は、この値を増やせます。",
         "ota-image_block_response_delay": "OTA ブロック応答遅延 (ms)",
         "ota-default_maximum_data_size": "更新送信チャンクサイズ (バイト)",
         "frontend-enabled": "フロントエンド有効化",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "楽観ペイロード除外 (regex)",
         "definitions-device-icon": "ユーザ定義アイコン",
         "definitions-device-homeassistant-name": "Home Assistant におけるデバイス名",
+        "definitions-device-disable_automatic_update_check": "Zigbee デバイスはファームウェア更新を要求することがあり、それが頻繁に発生すると Zigbee2MQTT がサードパーティのサーバーへ接続します。これらのデバイス起点のチェックを無効にしても、ファームウェア更新チェックを手動で開始できます。",
         "definitions-group-qos": "このグループの MQTT メッセージの QoS レベル",
         "definitions-group-off_state": "グループの状態を OFF または CLOSE として公開するタイミングを制御します。'all_members_off': 全メンバーが OFF/CLOSE 状態のときのみ OFF/CLOSE を公開します。'last_member_state': いずれかのメンバーが OFF へ変化した時点で OFF を公開します。",
         "definitions-group-homeassistant-name": "Home Assistant のグループ名"

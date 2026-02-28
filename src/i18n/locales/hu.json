@@ -329,9 +329,13 @@
         "serial_numbers": "Sorozatszámok (CSV)"
     },
     "values": {
+        "alarm": "riasztás",
         "clear": "törlés",
         "closed": "zárt",
+        "done": "kész",
         "false": "false",
+        "in_progress": "folyamatban",
+        "normal": "normál",
         "not_supported": "nem támogatott",
         "occupied": "foglalt",
         "open": "nyitott",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Firmware ellenőrzési intervallum",
         "ota-disable_automatic_update_check": "Frissítés kérések elnyomása",
         "ota-zigbee_ota_override_index_location": "OTA index override útvonal",
+        "ota-image_block_request_timeout": "Időtúllépés (ezredmásodpercben) OTA frissítések közben. Növelheti ezt az értéket, ha az eszköze túl lassan kéri a blokkokat.",
         "ota-image_block_response_delay": "Blokk válasz késleltetés (ms)",
         "ota-default_maximum_data_size": "Blokk méret (byte)",
         "frontend-enabled": "Frontend engedélyezése",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Optimista payload szűrése",
         "definitions-device-icon": "Egyedi ikon",
         "definitions-device-homeassistant-name": "Név Home Assistant",
+        "definitions-device-disable_automatic_update_check": "A Zigbee eszközök firmware-frissítést kérhetnek, akár gyakran is, ami miatt a Zigbee2MQTT külső szervereket keres fel. Ha letiltja ezeket az eszköz által kezdeményezett ellenőrzéseket, továbbra is indíthat manuálisan firmware-frissítés ellenőrzést.",
         "definitions-group-qos": "Csoport QoS",
         "definitions-group-off_state": "Csoport OFF/CLOSE publikálás ideje",
         "definitions-group-homeassistant-name": "A csoport neve a Home Assistantban"

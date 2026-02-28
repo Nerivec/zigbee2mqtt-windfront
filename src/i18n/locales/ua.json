@@ -329,9 +329,13 @@
         "serial_numbers": "Серійні номери (CSV)"
     },
     "values": {
+        "alarm": "тривога",
         "clear": "очистити",
         "closed": "закрито",
+        "done": "готово",
         "false": "false",
+        "in_progress": "у процесі",
+        "normal": "нормально",
         "not_supported": "не підтримується",
         "occupied": "зайнято",
         "open": "відкрито",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Інтервал перевірки прошивки",
         "ota-disable_automatic_update_check": "Придушити часті запити",
         "ota-zigbee_ota_override_index_location": "Шлях override OTA index",
+        "ota-image_block_request_timeout": "Тайм-аут (у мілісекундах) під час OTA-оновлень. Ви можете збільшити це значення, якщо ваш пристрій запитує блоки надто повільно.",
         "ota-image_block_response_delay": "Затримка блоків (мс)",
         "ota-default_maximum_data_size": "Розмір блоку (байти)",
         "frontend-enabled": "Увімкнути фронтенд",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Фільтр optimistic",
         "definitions-device-icon": "Іконка",
         "definitions-device-homeassistant-name": "Назва в HA",
+        "definitions-device-disable_automatic_update_check": "Zigbee-пристрої можуть запитувати оновлення прошивки, і робити це часто, через що Zigbee2MQTT звертається до сторонніх серверів. Якщо вимкнути ці перевірки, ініційовані пристроєм, ви все одно зможете вручну запустити перевірку оновлення прошивки.",
         "definitions-group-qos": "QoS групи",
         "definitions-group-off_state": "Коли OFF/CLOSE",
         "definitions-group-homeassistant-name": "Назва групи в Home Assistant"

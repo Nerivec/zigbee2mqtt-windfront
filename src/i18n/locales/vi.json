@@ -329,9 +329,13 @@
         "serial_numbers": "Số serial (CSV)"
     },
     "values": {
+        "alarm": "báo động",
         "clear": "Xóa",
         "closed": "Đóng",
+        "done": "hoàn tất",
         "false": "Sai",
+        "in_progress": "đang xử lý",
+        "normal": "bình thường",
         "not_supported": "Không hỗ trợ",
         "occupied": "Có người",
         "open": "Mở",
@@ -529,6 +533,7 @@
         "ota-update_check_interval": "Thiết bị của bạn có thể yêu cầu kiểm tra cập nhật firmware mới. Giá trị này xác định tần suất máy chủ bên thứ ba thực sự có thể được liên hệ để tìm cập nhật firmware. Giá trị được đặt tính bằng phút, và mặc định là 1 ngày.",
         "ota-disable_automatic_update_check": "Thiết bị Zigbee có thể yêu cầu cập nhật firmware, và làm điều này thường xuyên, khiến Zigbee2MQTT liên hệ với máy chủ bên thứ ba. Nếu bạn vô hiệu hóa các kiểm tra do thiết bị khởi tạo này, bạn vẫn có thể khởi tạo kiểm tra cập nhật firmware thủ công.",
         "ota-zigbee_ota_override_index_location": "Vị trí của tệp chỉ mục OTA ghi đè",
+        "ota-image_block_request_timeout": "Hết thời gian chờ (tính bằng mili giây) trong quá trình cập nhật OTA. Bạn có thể tăng giá trị này nếu thiết bị của bạn yêu cầu các khối quá chậm.",
         "ota-image_block_response_delay": "Giới hạn tốc độ yêu cầu (tính bằng mili giây) trong quá trình cập nhật OTA để giảm tắc nghẽn mạng. Bạn có thể tăng giá trị này nếu mạng của bạn có vẻ không ổn định trong quá trình OTA.",
         "ota-default_maximum_data_size": "Kích thước của các khối tệp được gửi trong quá trình cập nhật (tính bằng byte). Lưu ý: Giá trị này có thể bị bỏ qua đối với các nhà sản xuất yêu cầu giá trị cụ thể.",
         "frontend-enabled": "Bật frontend",
@@ -593,6 +598,7 @@
         "definitions-device-filtered_optimistic": "Lọc thuộc tính bằng regex từ payload xuất bản lạc quan khi gọi /set. (Điều này không có hiệu lực nếu optimistic được đặt thành false).",
         "definitions-device-icon": "Biểu tượng thiết bị do người dùng định nghĩa cho frontend. Nó có thể là liên kết URL đầy đủ đến hình ảnh (ví dụ: https://SOME.SITE/MODEL123.jpg) hoặc đường dẫn đến tệp cục bộ bên trong thư mục `device_icons` (ví dụ: device_icons/MODEL123.png).",
         "definitions-device-homeassistant-name": "Tên của thiết bị trong Home Assistant",
+        "definitions-device-disable_automatic_update_check": "Thiết bị Zigbee có thể yêu cầu cập nhật firmware và làm điều đó thường xuyên, khiến Zigbee2MQTT phải kết nối tới máy chủ bên thứ ba. Nếu bạn tắt các kiểm tra do thiết bị khởi tạo này, bạn vẫn có thể tự khởi chạy kiểm tra cập nhật firmware theo cách thủ công.",
         "definitions-group-qos": "Mức QoS cho tin nhắn MQTT của nhóm này",
         "definitions-group-off_state": "Điều khiển khi nào xuất bản trạng thái OFF hoặc CLOSE cho nhóm. 'all_members_off': chỉ xuất bản trạng thái OFF/CLOSE khi tất cả thành viên nhóm ở trạng thái OFF/CLOSE, 'last_member_state': xuất bản trạng thái OFF bất cứ khi nào một trong các thành viên của nó thay đổi thành OFF",
         "definitions-group-homeassistant-name": "Tên nhóm trong Home Assistant"
