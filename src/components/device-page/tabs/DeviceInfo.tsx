@@ -303,9 +303,9 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     </div>
                     <div className="font-semibold text-base-content/70">{t(($) => $.network_address)}</div>
                     <div className="min-w-0">
-                        <p className="font-semibold font-mono">
+                        <p className="font-semibold">
                             <span className="tooltip tooltip-bottom" data-tip={t(($) => $.network_address_hex)}>
-                                {toHex(device.network_address)}
+                                <span className="font-mono">{toHex(device.network_address)}</span>
                             </span>
                         </p>
                         <p className="text-base-content/50">
