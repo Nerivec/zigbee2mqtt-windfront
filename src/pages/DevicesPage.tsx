@@ -16,6 +16,7 @@ import ModelLink from "../components/value-decorators/ModelLink.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
+import { OUI } from "../oui.js";
 import { API_NAMES, API_URLS, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { AvailabilityState, Device, DeviceState } from "../types.js";
 import { getLastSeenEpoch, toHex } from "../utils.js";
@@ -28,6 +29,7 @@ type DeviceTableData = {
     availabilityState: AvailabilityState["state"];
     availabilityEnabledForDevice: boolean | undefined;
     batteryLow?: boolean;
+    oui: string;
 };
 
 export default function DevicesPage(): JSX.Element {
@@ -45,6 +47,7 @@ export default function DevicesPage(): JSX.Element {
                 if (device.type !== "Coordinator") {
                     const state = deviceStates[sourceIdx][device.friendly_name] ?? {};
                     const deviceAvailabilityConfig = bridgeInfo[sourceIdx].config.devices[device.ieee_address]?.availability;
+                    const oui = OUI.get(device.ieee_address.slice(2, 8)) ?? "?";
                     let batteryLow: boolean | undefined;
 
                     if (device.power_source === "Battery") {
@@ -70,6 +73,7 @@ export default function DevicesPage(): JSX.Element {
                         availabilityState: availability[sourceIdx][device.friendly_name]?.state ?? "offline",
                         availabilityEnabledForDevice: deviceAvailabilityConfig != null ? !!deviceAvailabilityConfig : undefined,
                         batteryLow,
+                        oui,
                     });
                 }
             }
@@ -181,6 +185,14 @@ export default function DevicesPage(): JSX.Element {
                 sortingFn: (rowA, rowB) => rowA.original.device.ieee_address.localeCompare(rowB.original.device.ieee_address),
                 filterFn: "includesString",
                 meta: { filterVariant: "text" },
+            },
+            {
+                id: "oui",
+                minSize: 125,
+                header: "OUI",
+                accessorFn: ({ oui }) => oui,
+                filterFn: "includesString",
+                meta: { filterVariant: "text", textFaceted: true, showFacetedOccurrences: true },
             },
             {
                 id: "model",
@@ -374,7 +386,15 @@ export default function DevicesPage(): JSX.Element {
         id: "all-devices",
         columns,
         data,
-        visibleColumns: { source: MULTI_INSTANCE, type: false, power_source: false, battery_level: false, battery_low: false, disabled: false },
+        visibleColumns: {
+            source: MULTI_INSTANCE,
+            type: false,
+            power_source: false,
+            battery_level: false,
+            battery_low: false,
+            disabled: false,
+            oui: false,
+        },
         sorting: [{ id: "friendly_name", desc: false }],
     });
 
