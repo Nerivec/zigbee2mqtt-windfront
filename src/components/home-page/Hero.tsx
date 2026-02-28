@@ -54,7 +54,7 @@ const Hero = memo(
                     <h2 className="card-title">{t(($) => $.overview)}</h2>
                     <div className="flex flex-row flex-wrap justify-center gap-y-3">
                         {MULTI_INSTANCE ? (
-                            <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center justify-center border-dashed border-s border-e border-current/25">
+                            <div className="flex flex-row w-36 xl:w-48 px-2 py-1 gap-3 justify-center justify-center border-dashed border-s border-e border-current/25">
                                 <div>
                                     <div className="text-sm text-base-content/70">{t(($) => $.instances)}</div>
                                     <div className={`font-semibold text-xl ${onlineInstances === totalInstances ? "" : "text-error"}`}>
@@ -77,7 +77,7 @@ const Hero = memo(
                                 </div>
                             </div>
                         ) : null}
-                        <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-s border-e border-current/25">
+                        <div className="flex flex-row w-36 xl:w-48 px-2 py-1 gap-3 justify-center border-dashed border-s border-e border-current/25">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.devices)}</div>
                                 <div className="font-semibold text-xl">{totalDevices}</div>
@@ -99,7 +99,7 @@ const Hero = memo(
                             </div>
                         </div>
                         {anyAvailabilityEnabled ? (
-                            <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-s border-e border-current/25">
+                            <div className="flex flex-row w-36 xl:w-48 px-2 py-1 gap-3 justify-center border-dashed border-s border-e border-current/25">
                                 <div>
                                     <div className="text-sm text-base-content/70">{t(($) => $.online, { ns: "availability" })}</div>
                                     <div className="font-semibold text-xl">
@@ -129,7 +129,7 @@ const Hero = memo(
                                 </div>
                             </div>
                         ) : null}
-                        <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-s border-e border-current/25">
+                        <div className="flex flex-row w-36 xl:w-48 px-2 py-1 gap-3 justify-center border-dashed border-s border-e border-current/25">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.Router, { ns: "zigbee" })}</div>
                                 <div className="font-semibold text-xl">{routers}</div>
@@ -145,7 +145,7 @@ const Hero = memo(
                                 </Button>
                             </div>
                         </div>
-                        <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-s border-e border-current/25">
+                        <div className="flex flex-row w-36 xl:w-48 px-2 py-1 gap-3 justify-center border-dashed border-s border-e border-current/25">
                             <div>
                                 <div className="text-sm text-base-content/70">{t(($) => $.EndDevice, { ns: "zigbee" })}</div>
                                 <div className="font-semibold text-xl">{endDevices}</div>
@@ -162,7 +162,7 @@ const Hero = memo(
                             </div>
                         </div>
                         {gpDevices > 0 && (
-                            <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-s border-e border-current/25">
+                            <div className="flex flex-row w-36 xl:w-48 px-2 py-1 gap-3 justify-center border-dashed border-s border-e border-current/25">
                                 <div>
                                     <div className="text-sm text-base-content/70">
                                         {t(($) => $.Router, { ns: "zigbee" })} - {t(($) => $.GreenPower, { ns: "zigbee" })}
@@ -182,7 +182,7 @@ const Hero = memo(
                             </div>
                         )}
                         {lowLqiDevices > 0 && (
-                            <div className="flex flex-row w-48 px-3 py-1 gap-4 justify-center border-dashed border-s border-e border-current/25">
+                            <div className="flex flex-row w-36 xl:w-48 px-2 py-1 gap-3 justify-center border-dashed border-s border-e border-current/25">
                                 <div>
                                     <div className="text-sm text-base-content/70">{t(($) => $.low_lqi, { ns: "zigbee" })}</div>
                                     <div className="font-semibold text-xl text-error">{lowLqiDevices}</div>
