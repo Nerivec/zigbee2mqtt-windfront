@@ -278,17 +278,23 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                 <div className="stats stats-vertical lg:stats-horizontal shadow">
                     <div className="stat px-3">
                         <div className="stat-title">{device.type}</div>
-                        <div className="stat-value text-xl tooltip tooltip-bottom" data-tip={t(($) => $.ieee_address)}>
-                            {device.ieee_address}
+                        <div className="stat-value text-xl">
+                            <span className="tooltip tooltip-bottom" data-tip={t(($) => $.ieee_address)}>
+                                {device.ieee_address}
+                            </span>
                         </div>
-                        <div className="stat-desc tooltip tooltip-top" data-tip="Organizationally Unique Identifier / IEEE Vendor Prefix">
-                            OUI: {oui}
+                        <div className="stat-desc">
+                            <span className="tooltip tooltip-top" data-tip="Organizationally Unique Identifier / IEEE Vendor Prefix">
+                                OUI: {oui}
+                            </span>
                         </div>
                     </div>
                     <div className="stat px-3">
                         <div className="stat-title">{t(($) => $.network_address)}</div>
-                        <div className="stat-value text-xl tooltip tooltip-bottom" data-tip={t(($) => $.network_address_hex)}>
-                            {toHex(device.network_address)}
+                        <div className="stat-value text-xl">
+                            <span className="tooltip tooltip-bottom" data-tip={t(($) => $.network_address_hex)}>
+                                {toHex(device.network_address)}
+                            </span>
                         </div>
                         <div className="stat-desc">
                             {t(($) => $.network_address_dec)}: {device.network_address}
