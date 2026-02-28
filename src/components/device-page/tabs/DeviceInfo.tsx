@@ -315,9 +315,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <div className="font-semibold text-base-content/70">{t(($) => $.zigbee_model)}</div>
                     <div className="min-w-0">
                         <p className="font-semibold break-all">{device.model_id}</p>
-                        <p className="text-base-content/50">
-                            {device.manufacturer} ({definitionDescription})
-                        </p>
+                        <p className="text-base-content/50">{device.manufacturer}</p>
                     </div>
                     <div className="font-semibold text-base-content/70">{t(($) => $.model)}</div>
                     <div className="min-w-0">
@@ -325,7 +323,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             <ModelLink device={device} />
                         </p>
                         <p className="text-base-content/50">
-                            <VendorLink device={device} />
+                            {definitionDescription} (<VendorLink device={device} />)
                         </p>
                     </div>
                     {device.software_build_id ? (
