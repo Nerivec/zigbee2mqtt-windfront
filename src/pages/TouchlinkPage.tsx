@@ -148,7 +148,7 @@ export default function TouchlinkPage() {
                 }) =>
                     friendlyName ? (
                         <div className="min-w-0">
-                            <Link to={`/device/${sourceIdx}/${touchlinkDevice.ieee_address}/info`} className="link link-hover truncate">
+                            <Link to={`/device/${sourceIdx}/${touchlinkDevice.ieee_address}/info`} className="link link-hover truncate font-mono">
                                 {touchlinkDevice.ieee_address}
                             </Link>
                         </div>

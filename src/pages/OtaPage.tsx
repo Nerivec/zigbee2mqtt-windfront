@@ -250,15 +250,21 @@ export default function OtaPage() {
                 }) => (
                     <>
                         <div>
-                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover font-mono">
                                 {device.ieee_address}
                             </Link>
                         </div>
                         <div className="flex flex-row gap-1">
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_hex, { ns: "zigbee" })}>
+                            <span
+                                className="badge badge-ghost badge-sm cursor-default font-mono"
+                                title={t(($) => $.network_address_hex, { ns: "zigbee" })}
+                            >
                                 {toHex(device.network_address, 4)}
                             </span>
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_dec, { ns: "zigbee" })}>
+                            <span
+                                className="badge badge-ghost badge-sm cursor-default font-mono"
+                                title={t(($) => $.network_address_dec, { ns: "zigbee" })}
+                            >
                                 {device.network_address}
                             </span>
                         </div>
