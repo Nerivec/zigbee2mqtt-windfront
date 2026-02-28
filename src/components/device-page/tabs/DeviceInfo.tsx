@@ -284,7 +284,10 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             </span>
                         </div>
                         <div className="stat-desc">
-                            <span className="tooltip tooltip-top" data-tip="Organizationally Unique Identifier / IEEE Vendor Prefix">
+                            <span
+                                className="tooltip tooltip-top"
+                                data-tip="Organizationally&nbsp;Unique&nbsp;Identifier / IEEE&nbsp;Vendor&nbsp;Prefix"
+                            >
                                 OUI: {oui}
                             </span>
                         </div>
