@@ -168,15 +168,15 @@ export default function DevicesPage(): JSX.Element {
                 }) => (
                     <>
                         <div>
-                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover font-mono">
                                 {device.ieee_address}
                             </Link>
                         </div>
                         <div className="flex flex-row gap-1">
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_hex)}>
+                            <span className="badge badge-ghost badge-sm cursor-default font-mono" title={t(($) => $.network_address_hex)}>
                                 {toHex(device.network_address, 4)}
                             </span>
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_dec)}>
+                            <span className="badge badge-ghost badge-sm cursor-default font-mono" title={t(($) => $.network_address_dec)}>
                                 {device.network_address}
                             </span>
                         </div>

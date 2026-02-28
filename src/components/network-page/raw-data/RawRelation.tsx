@@ -66,12 +66,15 @@ const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlight
                 <ul>
                     <li>
                         <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
-                            {t(($) => $.ieee_address, { ns: "zigbee" })}: {device.ieee_address}
+                            {t(($) => $.ieee_address, { ns: "zigbee" })}: <span className="font-mono">{device.ieee_address}</span>
                         </Link>
                     </li>
                     <li>
                         <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
-                            {t(($) => $.network_address, { ns: "zigbee" })}: {toHex(device.network_address, 4)} ({device.network_address})
+                            {t(($) => $.network_address, { ns: "zigbee" })}:{" "}
+                            <span className="font-mono">
+                                {toHex(device.network_address, 4)} ({device.network_address})
+                            </span>
                         </Link>
                     </li>
                     <li>

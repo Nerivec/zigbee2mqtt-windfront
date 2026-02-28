@@ -17,7 +17,7 @@ const DeviceControlUpdateDesc = memo(({ device, setDeviceDescription }: DeviceCo
 
     return (
         <Button<void>
-            className={`btn btn-link btn-sm${device.description ? " btn-square" : ""} tooltip-bottom`}
+            className={`btn btn-link btn-md ${device.description ? "btn-square" : ""} tooltip-bottom`}
             onClick={async () =>
                 await NiceModal.show(UpdateDeviceDescModal, {
                     device,

@@ -54,7 +54,7 @@ const Hero = memo(
                     <h2 className="card-title">{t(($) => $.overview)}</h2>
                     <div className="flex flex-row flex-wrap justify-center gap-y-3">
                         {MULTI_INSTANCE ? (
-                            <div className="flex flex-row w-36 xl:w-48 px-2 py-1 gap-3 justify-center justify-center border-dashed border-s border-e border-current/25">
+                            <div className="flex flex-row w-36 xl:w-48 px-2 py-1 gap-3 justify-center border-dashed border-s border-e border-current/25">
                                 <div>
                                     <div className="text-sm text-base-content/70">{t(($) => $.instances)}</div>
                                     <div className={`font-semibold text-xl ${onlineInstances === totalInstances ? "" : "text-error"}`}>
