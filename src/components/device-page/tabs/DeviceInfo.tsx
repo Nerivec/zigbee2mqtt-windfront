@@ -296,7 +296,12 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <div className="min-w-0">
                         <p className="font-semibold font-mono">{device.ieee_address}</p>
                         <p className="text-base-content/50">
-                            <span className="tooltip tooltip-bottom" data-tip="Organizationally Unique Identifier / IEEE Vendor Prefix">
+                            <span className="tooltip tooltip-bottom">
+                                <span className="tooltip-content">
+                                    Organizationally Unique Identifier
+                                    <br />
+                                    (IEEE Vendor Prefix)
+                                </span>
                                 OUI: {oui}
                             </span>
                         </p>
