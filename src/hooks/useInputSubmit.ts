@@ -4,9 +4,11 @@ export type UseInputSubmitProps = {
     /** The committed value from parent */
     value: string;
     /** Called when the value should be committed */
-    onSubmit: (value: string) => Promise<void>;
+    onSubmit: (value: string | null) => Promise<void>;
     /** Whether the input is disabled externally */
     disabled?: boolean;
+    /** Whether to submit `empty string` or `null` when value to submit is `empty string` */
+    submitEmptyAsNull?: boolean;
 };
 
 export type UseInputSubmit = {
@@ -17,7 +19,7 @@ export type UseInputSubmit = {
     onKeyDown: (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
 };
 
-export function useInputSubmit({ value, onSubmit, disabled }: UseInputSubmitProps): UseInputSubmit {
+export function useInputSubmit({ value, onSubmit, disabled, submitEmptyAsNull }: UseInputSubmitProps): UseInputSubmit {
     const prevValueRef = useRef<string>(value);
     const skipBlurRef = useRef<boolean>(false);
     const [draft, setDraft] = useState<string>(value);
@@ -44,6 +46,12 @@ export function useInputSubmit({ value, onSubmit, disabled }: UseInputSubmitProp
                 return;
             }
 
+            const input = e.currentTarget;
+
+            if (input.validationMessage) {
+                return;
+            }
+
             const submitValue = e.target.value;
 
             setDraft(submitValue);
@@ -53,9 +61,11 @@ export function useInputSubmit({ value, onSubmit, disabled }: UseInputSubmitProp
                 setSubmitting(true);
 
                 try {
-                    await onSubmit(`${submitValue}`);
+                    await onSubmit(submitEmptyAsNull && submitValue === "" ? null : submitValue);
                 } catch (error) {
                     console.error(error);
+                    input.setCustomValidity(error.message);
+                    input.reportValidity();
                 } finally {
                     setSubmitting(false);
                 }
@@ -73,12 +83,6 @@ export function useInputSubmit({ value, onSubmit, disabled }: UseInputSubmitProp
                 }
 
                 e.preventDefault();
-
-                if (e.currentTarget.validationMessage) {
-                    e.currentTarget.reportValidity();
-                    return;
-                }
-
                 e.currentTarget.blur(); // triggers onBlur which calls submit, no double-trigger
             } else if (e.key === "Escape") {
                 e.preventDefault();
