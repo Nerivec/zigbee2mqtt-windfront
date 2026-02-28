@@ -104,6 +104,7 @@ import {
     faUserShield,
     faVolumeHigh,
     faVolumeUp,
+    faVolumeXmark,
     faWandMagicSparkles,
     faWarehouse,
     faWater,
@@ -329,6 +330,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
 
     // Audio / sound
     ringtone: faVolumeHigh,
+    alarm_ringtone: faVolumeHigh,
     melody: faVolumeHigh,
     sound_volume: faVolumeHigh,
     volume: faVolumeHigh,
@@ -684,6 +686,20 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
             if (value) {
                 className = "text-warning";
                 icon = faHourglassStart;
+            }
+
+            break;
+        }
+        case "ringtone":
+        case "alarm_ringtone": {
+            switch (value) {
+                case "mute":
+                case "muted":
+                case "OFF": {
+                    icon = faVolumeXmark;
+
+                    break;
+                }
             }
 
             break;
