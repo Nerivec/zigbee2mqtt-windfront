@@ -31,7 +31,7 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
             await sendMessage<"{friendlyNameOrId}/set">(
                 sourceIdx,
                 // @ts-expect-error templated API endpoint
-                `${ieee}/set`,
+                `${ieee}/request/set`,
                 value,
             );
         },

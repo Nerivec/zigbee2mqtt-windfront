@@ -165,6 +165,21 @@ export type AnySubFeature = BasicFeature | WithAnySubFeatures<FeatureWithSubFeat
 
 export type Toast = { sourceIdx: number; topic: string; status: "ok" | "error"; error: string | undefined; transaction?: string };
 
+/**
+ * Transaction Response from Z2M backend.
+ * Received on {device}/response/set or {device}/response/get topics.
+ */
+export type CommandResponse = {
+    /** SET: echoed request values; GET: always {} */
+    data: Record<string, unknown>;
+    /** Result status */
+    status: "ok" | "error";
+    /** Error message — "group:key1,key2|group:key3" format (present when status is "error") */
+    error?: string;
+    /** Echoed correlation ID from request */
+    z2m_transaction?: string;
+};
+
 export type RGBColor = {
     r: number;
     g: number;
