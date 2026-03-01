@@ -185,7 +185,7 @@ export function FormPage({ data: { settings, settingsSchema, devices }, onDone }
         setSubmitting(true);
 
         try {
-            const response = await fetch("/submit", {
+            const response = await fetch(`${window.location.href}${window.location.pathname.endsWith("/") ? "" : "/"}submit`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
@@ -214,7 +214,7 @@ export function FormPage({ data: { settings, settingsSchema, devices }, onDone }
 
         try {
             const payload = await readFileAsBase64(zipFile);
-            const response = await fetch("/submit-zip", {
+            const response = await fetch(`${window.location.href}${window.location.pathname.endsWith("/") ? "" : "/"}submit-zip`, {
                 method: "POST",
                 headers: { "Content-Type": "text/plain; charset=utf-8" },
                 body: payload,

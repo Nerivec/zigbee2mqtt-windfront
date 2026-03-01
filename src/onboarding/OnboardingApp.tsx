@@ -13,7 +13,7 @@ export function OnboardingApp() {
 
         void (async () => {
             try {
-                const response = await fetch("/data");
+                const response = await fetch(`${window.location.href}${window.location.pathname.endsWith("/") ? "" : "/"}data`);
 
                 if (!response.ok) {
                     throw new Error(`Failed to load onboarding data (${response.status})`);
