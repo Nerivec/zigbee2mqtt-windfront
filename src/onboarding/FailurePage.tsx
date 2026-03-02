@@ -51,7 +51,7 @@ export function FailurePage({ errors }: FailurePageProps) {
                                 setSubmitting(true);
 
                                 try {
-                                    await fetch("/submit", {
+                                    await fetch(`${window.location.href}${window.location.pathname.endsWith("/") ? "" : "/"}submit`, {
                                         method: "POST",
                                         headers: {
                                             "Content-Type": "application/json",
