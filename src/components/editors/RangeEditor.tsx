@@ -1,4 +1,5 @@
-import { type ChangeEvent, type InputHTMLAttributes, memo, useCallback, useEffect, useState } from "react";
+import { type ChangeEvent, type InputHTMLAttributes, type KeyboardEvent, memo, useCallback } from "react";
+import { useTrackedValue } from "../../hooks/useTrackedValue.js";
 import EnumEditor, { type ValueWithLabelOrPrimitive } from "./EnumEditor.js";
 
 type RangeProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
@@ -11,24 +12,38 @@ type RangeProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "valu
 
 const RangeEditor = memo((props: RangeProps) => {
     const { onChange, value, min, max, unit, steps, minimal, ...rest } = props;
-    const [currentValue, setCurrentValue] = useState<number | "">(value);
+    const { currentValue, setCurrentValue, consumeChange } = useTrackedValue(value);
     const showRange = min != null && max != null;
 
-    useEffect(() => {
-        setCurrentValue(value);
-    }, [value]);
-
-    const onInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setCurrentValue(e.target.value ? e.target.valueAsNumber : "");
-    }, []);
+    const onInputChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            setCurrentValue(e.target.value ? e.target.valueAsNumber : "");
+        },
+        [setCurrentValue],
+    );
 
     const onSubmit = useCallback(
         async (e) => {
-            if (!e.target.validationMessage) {
+            if (!e.target.validationMessage && consumeChange()) {
                 await onChange(currentValue === "" ? null : currentValue);
             }
         },
-        [currentValue, onChange],
+        [currentValue, consumeChange, onChange],
+    );
+
+    const onKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+                e.preventDefault();
+
+                if (e.currentTarget.validationMessage) {
+                    e.currentTarget.reportValidity();
+                } else {
+                    void onSubmit(e);
+                }
+            }
+        },
+        [onSubmit],
     );
 
     return (
@@ -63,6 +78,7 @@ const RangeEditor = memo((props: RangeProps) => {
                         value={currentValue}
                         onChange={onInputChange}
                         onBlur={onSubmit}
+                        onKeyDown={onKeyDown}
                         min={min}
                         max={max}
                         {...rest}
