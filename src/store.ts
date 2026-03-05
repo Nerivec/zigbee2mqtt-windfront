@@ -466,15 +466,21 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
                     const match = newEntry.message.match(PUBLISH_GET_SET_REGEX);
 
                     if (match) {
-                        addedToasts = true;
                         const [, type, key, name, error] = match;
 
-                        newToasts.push({
-                            sourceIdx,
-                            topic: `${name}/${type}(${key})`,
-                            status: "error",
-                            error,
-                        });
+                        // Suppress toast for superseded commands. When rapidly sending commands
+                        // to sleepy devices, herdsman cancels the older queued command and rejects
+                        // it with "Request superseded". This is expected behavior, not an error.
+                        // The log entry still appears in notifications for debugging.
+                        if (!/request superseded/i.test(newEntry.message)) {
+                            addedToasts = true;
+                            newToasts.push({
+                                sourceIdx,
+                                topic: `${name}/${type}(${key})`,
+                                status: "error",
+                                error,
+                            });
+                        }
                     }
                 }
             }
