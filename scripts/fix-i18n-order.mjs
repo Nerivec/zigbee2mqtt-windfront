@@ -4,13 +4,13 @@ const LOCALES_PATH = "./src/i18n/locales/";
 
 const { compare } = new Intl.Collator("en");
 
-const sortJsonKeys = (json: unknown) => {
+const sortJsonKeys = (json) => {
     if (json !== null && !Array.isArray(json) && typeof json === "object") {
         const keys = Object.keys(json).sort(compare);
-        const result: Record<string, unknown> = {};
+        const result = {};
 
         for (const key of keys) {
-            result[key] = sortJsonKeys((json as Record<string, unknown>)[key]);
+            result[key] = sortJsonKeys(json[key]);
         }
 
         return result;
