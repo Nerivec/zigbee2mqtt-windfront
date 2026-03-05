@@ -1,6 +1,6 @@
 ---
+name: copilot-instructions-blueprint-generator
 description: 'Technology-agnostic blueprint generator for creating comprehensive copilot-instructions.md files that guide GitHub Copilot to produce code consistent with project standards, architecture patterns, and exact technology versions by analyzing existing codebase patterns and avoiding assumptions.'
-agent: 'agent'
 ---
 
 # Copilot Instructions Blueprint Generator
@@ -279,7 +279,7 @@ To create the copilot-instructions.md file, first analyze the codebase to:
 ### 3. Implementation Notes
 
 The final copilot-instructions.md should:
-- Be placed in the .github directory
+- Be placed in the .github/copilot directory
 - Reference only patterns and standards that exist in the codebase
 - Include explicit version compatibility requirements
 - Avoid prescribing any practices not evident in the code
