@@ -18,10 +18,13 @@ import {
     convertRgbToString,
     convertStringToColor,
     convertToColor,
+    convertXyToRgb,
     convertXyYToString,
+    SRGB,
     SUPPORTED_GAMUTS,
     type ZigbeeColor,
 } from "./index.js";
+import clamp from "lodash/clamp.js";
 
 type ColorEditorProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
     value: AnyColor;
@@ -157,42 +160,136 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
         onChange(convertFromColor(color, format));
     }, [color, format, onChange]);
 
+    const onXChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            if (e.target.value) {
+                const x = e.target.valueAsNumber;
+                const y = color.color_xy[1] || selectedGamut.white[1];
+                const newColor = convertToColor({ x, y }, "color_xy", selectedGamut);
+
+                setColor(newColor);
+                setColorString(convertColorToString(newColor));
+            }
+        },
+        [color.color_xy, selectedGamut],
+    );
+
+    const onYChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            if (e.target.value) {
+                const x = color.color_xy[0] || selectedGamut.white[0];
+                const y = e.target.valueAsNumber;
+                const newColor = convertToColor({ x, y }, "color_xy", selectedGamut);
+
+                setColor(newColor);
+                setColorString(convertColorToString(newColor));
+            }
+        },
+        [color.color_xy, selectedGamut],
+    );
+
     const hueBackgroundColor = useMemo(() => `hsl(${color.color_hs[0]}, 100%, 50%)`, [color.color_hs[0]]);
+
+    // Generate gradient backgrounds for XY sliders by sampling colors along each axis
+    const xGradientBackground = useMemo(() => {
+        const y = color.color_xy[1] || selectedGamut.white[1];
+        const stops = Array.from({ length: 8 }, (_, i) => {
+            const x = (i / 7) * 0.74;
+            const rgb = convertXyToRgb(x, y, undefined, SRGB);
+            return `rgb(${clamp(rgb[0], 0, 255)}, ${clamp(rgb[1], 0, 255)}, ${clamp(rgb[2], 0, 255)})`;
+        });
+
+        return `linear-gradient(to right, ${stops.join(", ")})`;
+    }, [color.color_xy[1], selectedGamut]);
+
+    const yGradientBackground = useMemo(() => {
+        const x = color.color_xy[0] || selectedGamut.white[0];
+        const stops = Array.from({ length: 8 }, (_, i) => {
+            const y = (i / 7) * 0.84;
+            const rgb = convertXyToRgb(x, y > 0 ? y : 0.001, undefined, SRGB);
+            return `rgb(${clamp(rgb[0], 0, 255)}, ${clamp(rgb[1], 0, 255)}, ${clamp(rgb[2], 0, 255)})`;
+        });
+
+        return `linear-gradient(to right, ${stops.join(", ")})`;
+    }, [color.color_xy[0], selectedGamut]);
 
     return (
         <>
-            <div className="flex flex-row flex-wrap gap-3 items-center">
-                <div className={`w-full${minimal ? " max-w-xs" : ""}`}>
-                    <input
-                        type="range"
-                        min={0}
-                        max={100}
-                        value={color.color_hs[1]}
-                        className={`range [--range-bg:transparent] [--range-fill:0] w-full${minimal ? " range-xs " : ""}`}
-                        style={{ backgroundImage: SATURATION_BACKGROUND_IMAGE, backgroundColor: hueBackgroundColor }}
-                        onChange={onSaturationChange}
-                        onTouchEnd={onRangeSubmit}
-                        onMouseUp={onRangeSubmit}
-                        onKeyUp={onRangeSubmit}
-                    />
-                </div>
-            </div>
-            <div className="flex flex-row flex-wrap gap-3 items-center">
-                <div className={`w-full${minimal ? " max-w-xs" : ""}`}>
-                    <input
-                        type="range"
-                        min={0}
-                        max={360}
-                        value={color.color_hs[0]}
-                        className={`range [--range-bg:transparent] [--range-fill:0] w-full${minimal ? " range-xs " : ""}`}
-                        style={{ backgroundImage: HUE_BACKGROUND_IMAGE }}
-                        onChange={onHueChange}
-                        onTouchEnd={onRangeSubmit}
-                        onMouseUp={onRangeSubmit}
-                        onKeyUp={onRangeSubmit}
-                    />
-                </div>
-            </div>
+            {format === "color_xy" ? (
+                <>
+                    <div className="flex flex-row flex-wrap gap-3 items-center">
+                        <span className="text-xs w-4">X</span>
+                        <div className={`grow${minimal ? " max-w-xs" : ""}`}>
+                            <input
+                                type="range"
+                                min={0}
+                                max={0.74}
+                                step={0.001}
+                                value={color.color_xy[0]}
+                                className={`range [--range-bg:transparent] [--range-fill:0] w-full${minimal ? " range-xs " : ""}`}
+                                style={{ backgroundImage: xGradientBackground }}
+                                onChange={onXChange}
+                                onTouchEnd={onRangeSubmit}
+                                onMouseUp={onRangeSubmit}
+                                onKeyUp={onRangeSubmit}
+                            />
+                        </div>
+                    </div>
+                    <div className="flex flex-row flex-wrap gap-3 items-center">
+                        <span className="text-xs w-4">Y</span>
+                        <div className={`grow${minimal ? " max-w-xs" : ""}`}>
+                            <input
+                                type="range"
+                                min={0}
+                                max={0.84}
+                                step={0.001}
+                                value={color.color_xy[1]}
+                                className={`range [--range-bg:transparent] [--range-fill:0] w-full${minimal ? " range-xs " : ""}`}
+                                style={{ backgroundImage: yGradientBackground }}
+                                onChange={onYChange}
+                                onTouchEnd={onRangeSubmit}
+                                onMouseUp={onRangeSubmit}
+                                onKeyUp={onRangeSubmit}
+                            />
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className="flex flex-row flex-wrap gap-3 items-center">
+                        <div className={`w-full${minimal ? " max-w-xs" : ""}`}>
+                            <input
+                                type="range"
+                                min={0}
+                                max={100}
+                                value={color.color_hs[1]}
+                                className={`range [--range-bg:transparent] [--range-fill:0] w-full${minimal ? " range-xs " : ""}`}
+                                style={{ backgroundImage: SATURATION_BACKGROUND_IMAGE, backgroundColor: hueBackgroundColor }}
+                                onChange={onSaturationChange}
+                                onTouchEnd={onRangeSubmit}
+                                onMouseUp={onRangeSubmit}
+                                onKeyUp={onRangeSubmit}
+                            />
+                        </div>
+                    </div>
+                    <div className="flex flex-row flex-wrap gap-3 items-center">
+                        <div className={`w-full${minimal ? " max-w-xs" : ""}`}>
+                            <input
+                                type="range"
+                                min={0}
+                                max={360}
+                                value={color.color_hs[0]}
+                                className={`range [--range-bg:transparent] [--range-fill:0] w-full${minimal ? " range-xs " : ""}`}
+                                style={{ backgroundImage: HUE_BACKGROUND_IMAGE }}
+                                onChange={onHueChange}
+                                onTouchEnd={onRangeSubmit}
+                                onMouseUp={onRangeSubmit}
+                                onKeyUp={onRangeSubmit}
+                            />
+                        </div>
+                    </div>
+                </>
+            )}
             {!minimal && (
                 <div className="flex flex-row flex-wrap gap-2 justify-around">
                     <ColorInput label="hex" name="hex" value={colorString.hex} onChange={onInputChange} onFocus={onInputFocus} onBlur={onInputBlur} />
