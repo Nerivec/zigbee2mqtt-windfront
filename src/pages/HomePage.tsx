@@ -1,3 +1,5 @@
+import { faCheck, faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
 import { t } from "i18next";
 import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
@@ -248,28 +250,57 @@ export default function HomePage(): JSX.Element {
     return (
         <>
             <NavBarContent>
-                <span className="text-sm">{t(($) => $.show)}: </span>
-                <Button<boolean>
-                    className={`btn btn-outline btn-sm ${showOverview ? "btn-active" : ""}`}
-                    onClick={setShowOverview}
-                    item={!showOverview}
-                >
-                    {t(($) => $.overview)}
-                </Button>
-                <Button<boolean>
-                    className={`btn btn-outline btn-sm ${showActivity ? "btn-active" : ""}`}
-                    onClick={setShowActivity}
-                    item={!showActivity}
-                >
-                    {t(($) => $.recent_activity)}
-                </Button>
-                <Button<boolean>
-                    className={`btn btn-outline btn-sm ${showGroupScenes ? "btn-active" : ""}`}
-                    onClick={setShowGroupScenes}
-                    item={!showGroupScenes}
-                >
-                    {t(($) => $.group_scenes)}
-                </Button>
+                {/* Desktop: toggle buttons */}
+                <div className="hidden sm:flex items-center gap-1">
+                    <span className="text-sm">{t(($) => $.show)}: </span>
+                    <Button<boolean>
+                        className={`btn btn-outline btn-sm ${showOverview ? "btn-active" : ""}`}
+                        onClick={setShowOverview}
+                        item={!showOverview}
+                    >
+                        {t(($) => $.overview)}
+                    </Button>
+                    <Button<boolean>
+                        className={`btn btn-outline btn-sm ${showActivity ? "btn-active" : ""}`}
+                        onClick={setShowActivity}
+                        item={!showActivity}
+                    >
+                        {t(($) => $.recent_activity)}
+                    </Button>
+                    <Button<boolean>
+                        className={`btn btn-outline btn-sm ${showGroupScenes ? "btn-active" : ""}`}
+                        onClick={setShowGroupScenes}
+                        item={!showGroupScenes}
+                    >
+                        {t(($) => $.group_scenes)}
+                    </Button>
+                </div>
+                {/* Mobile: dropdown */}
+                <details className="dropdown sm:hidden">
+                    <summary className="btn btn-outline btn-sm">
+                        <FontAwesomeIcon icon={faEye} />
+                    </summary>
+                    <ul className="dropdown-content menu bg-base-200 rounded-box z-10 p-2 shadow">
+                        <li>
+                            <button type="button" onClick={() => setShowOverview(!showOverview)}>
+                                <FontAwesomeIcon icon={faCheck} className={showOverview ? "opacity-100" : "opacity-0"} />
+                                {t(($) => $.overview)}
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" onClick={() => setShowActivity(!showActivity)}>
+                                <FontAwesomeIcon icon={faCheck} className={showActivity ? "opacity-100" : "opacity-0"} />
+                                {t(($) => $.recent_activity)}
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" onClick={() => setShowGroupScenes(!showGroupScenes)}>
+                                <FontAwesomeIcon icon={faCheck} className={showGroupScenes ? "opacity-100" : "opacity-0"} />
+                                {t(($) => $.group_scenes)}
+                            </button>
+                        </li>
+                    </ul>
+                </details>
             </NavBarContent>
 
             <div className="flex flex-col mb-5">
