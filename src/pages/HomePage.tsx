@@ -11,7 +11,7 @@ import Hero from "../components/home-page/Hero.js";
 import { QuickFilter } from "../components/home-page/index.js";
 import { useColumnCount } from "../hooks/useColumnCount.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
-import { HOME_QUICK_FILTER_KEY, HOME_SHOW_ACTIVITY_KEY, HOME_SHOW_GROUP_SCENES_KEY } from "../localStoreConsts.js";
+import { HOME_QUICK_FILTER_KEY, HOME_SHOW_ACTIVITY_KEY, HOME_SHOW_GROUP_SCENES_KEY, HOME_SHOW_OVERVIEW_KEY } from "../localStoreConsts.js";
 import { API_URLS, RECENT_ACTIVITY_FEED_LIMIT, useAppStore } from "../store.js";
 import type { Device, DeviceAvailability, DeviceState, Group, LastSeenConfig } from "../types.js";
 
@@ -62,6 +62,7 @@ export default function HomePage(): JSX.Element {
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const columnCount = useColumnCount();
     const [quickFilter, setQuickFilter] = useState<readonly [QuickFilter, unknown] | null>(store2.get(HOME_QUICK_FILTER_KEY, null));
+    const [showOverview, setShowOverview] = useState<boolean>(store2.get(HOME_SHOW_OVERVIEW_KEY, true));
     const [showActivity, setShowActivity] = useState<boolean>(store2.get(HOME_SHOW_ACTIVITY_KEY, true));
     const [showGroupScenes, setShowGroupScenes] = useState<boolean>(store2.get(HOME_SHOW_GROUP_SCENES_KEY, true));
     const [selection, setSelection] = useState<HomePageSelection | undefined>(undefined);
@@ -73,6 +74,10 @@ export default function HomePage(): JSX.Element {
             store2.set(HOME_QUICK_FILTER_KEY, quickFilter);
         }
     }, [quickFilter]);
+
+    useEffect(() => {
+        store2.set(HOME_SHOW_OVERVIEW_KEY, showOverview);
+    }, [showOverview]);
 
     useEffect(() => {
         store2.set(HOME_SHOW_ACTIVITY_KEY, showActivity);
@@ -245,6 +250,13 @@ export default function HomePage(): JSX.Element {
             <NavBarContent>
                 <span className="text-sm">{t(($) => $.show)}: </span>
                 <Button<boolean>
+                    className={`btn btn-outline btn-sm ${showOverview ? "btn-active" : ""}`}
+                    onClick={setShowOverview}
+                    item={!showOverview}
+                >
+                    {t(($) => $.overview)}
+                </Button>
+                <Button<boolean>
                     className={`btn btn-outline btn-sm ${showActivity ? "btn-active" : ""}`}
                     onClick={setShowActivity}
                     item={!showActivity}
@@ -261,7 +273,7 @@ export default function HomePage(): JSX.Element {
             </NavBarContent>
 
             <div className="flex flex-col mb-5">
-                <Hero {...data.counters} setQuickFilter={setQuickFilter} quickFilter={quickFilter} />
+                {showOverview && <Hero {...data.counters} setQuickFilter={setQuickFilter} quickFilter={quickFilter} />}
 
                 {showActivity && <Activity devices={devices} maxRows={maxActivityRows} />}
 

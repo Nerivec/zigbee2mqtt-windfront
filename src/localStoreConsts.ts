@@ -19,6 +19,7 @@ export const TABLE_SORTING_KEY = "table-sorting";
 export const HOME_QUICK_FILTER_KEY = "home-quick-filter";
 export const HOME_SHOW_ACTIVITY_KEY = "home-show-activity-key";
 export const HOME_SHOW_GROUP_SCENES_KEY = "home-show-group-scenes-key";
+export const HOME_SHOW_OVERVIEW_KEY = "home-show-overview-key";
 
 //-- Network
 export const NETWORK_RAW_DISPLAY_TYPE_KEY = "network-raw-display-type";

@@ -14,6 +14,7 @@ import {
     HOME_QUICK_FILTER_KEY,
     HOME_SHOW_ACTIVITY_KEY,
     HOME_SHOW_GROUP_SCENES_KEY,
+    HOME_SHOW_OVERVIEW_KEY,
     I18NEXTLNG_KEY,
     MAX_ON_SCREEN_NOTIFICATIONS_KEY,
     MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY,
@@ -33,6 +34,7 @@ export default function FrontendSettingsPage() {
     const [maxOnScreenNotifications, setMaxOnScreenNotifications] = useState<number>(store2.get(MAX_ON_SCREEN_NOTIFICATIONS_KEY, 3));
     const [defaultPage, setDefaultPage] = useState<string>(store2.get(DEFAULT_ROUTE_KEY, ""));
     const [hideStaticInfoAlerts, setHideStaticInfoAlerts] = useState<boolean>(store2.get(HIDE_STATIC_INFO_ALERTS_KEY, false));
+    const [homeShowOverview, setHomeShowOverview] = useState<boolean>(store2.get(HOME_SHOW_OVERVIEW_KEY, true));
     const [homeShowActivity, setHomeShowActivity] = useState<boolean>(store2.get(HOME_SHOW_ACTIVITY_KEY, true));
     const [homeShowGroupScenes, setHomeShowGroupScenes] = useState<boolean>(store2.get(HOME_SHOW_GROUP_SCENES_KEY, true));
     const [miShowSourceName, setMiShowSourceName] = useState<boolean>(store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
@@ -54,6 +56,10 @@ export default function FrontendSettingsPage() {
     }, [hideStaticInfoAlerts]);
 
     useEffect(() => {
+        store2.set(HOME_SHOW_OVERVIEW_KEY, homeShowOverview);
+    }, [homeShowOverview]);
+
+    useEffect(() => {
         store2.set(HOME_SHOW_ACTIVITY_KEY, homeShowActivity);
     }, [homeShowActivity]);
 
@@ -73,6 +79,7 @@ export default function FrontendSettingsPage() {
         store2.remove(MAX_ON_SCREEN_NOTIFICATIONS_KEY);
         store2.remove(HIDE_STATIC_INFO_ALERTS_KEY);
         store2.remove(HOME_QUICK_FILTER_KEY);
+        store2.remove(HOME_SHOW_OVERVIEW_KEY);
         store2.remove(HOME_SHOW_ACTIVITY_KEY);
         store2.remove(HOME_SHOW_GROUP_SCENES_KEY);
         store2.remove(NETWORK_RAW_DISPLAY_TYPE_KEY);
@@ -198,6 +205,12 @@ export default function FrontendSettingsPage() {
             </div>
             <h2 className="text-lg mt-2">{t(($) => $.home, { ns: "navbar" })}</h2>
             <div className="flex flex-row flex-wrap gap-4">
+                <CheckboxField
+                    name="show_overview"
+                    label={`${t(($) => $.show, { ns: "common" })}: ${t(($) => $.overview, { ns: "common" })}`}
+                    onChange={(event) => setHomeShowOverview(event.target.checked)}
+                    defaultChecked={homeShowOverview}
+                />
                 <CheckboxField
                     name="show_activity"
                     label={`${t(($) => $.show, { ns: "common" })}: ${t(($) => $.activity, { ns: "navbar" })}`}
