@@ -6,6 +6,7 @@ import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
 import store2 from "store2";
 import Button from "../components/Button.js";
 import DeviceTile from "../components/device/DeviceTile.js";
+import PopoverDropdown from "../components/PopoverDropdown.js";
 import GroupScenesTile from "../components/group/GroupScenesTile.js";
 import Activity from "../components/home-page/Activity.js";
 import DevicePeek from "../components/home-page/DevicePeek.js";
@@ -250,57 +251,26 @@ export default function HomePage(): JSX.Element {
     return (
         <>
             <NavBarContent>
-                {/* Desktop: toggle buttons */}
-                <div className="hidden sm:flex items-center gap-1">
-                    <span className="text-sm">{t(($) => $.show)}: </span>
-                    <Button<boolean>
-                        className={`btn btn-outline btn-sm ${showOverview ? "btn-active" : ""}`}
-                        onClick={setShowOverview}
-                        item={!showOverview}
-                    >
-                        {t(($) => $.overview)}
-                    </Button>
-                    <Button<boolean>
-                        className={`btn btn-outline btn-sm ${showActivity ? "btn-active" : ""}`}
-                        onClick={setShowActivity}
-                        item={!showActivity}
-                    >
-                        {t(($) => $.recent_activity)}
-                    </Button>
-                    <Button<boolean>
-                        className={`btn btn-outline btn-sm ${showGroupScenes ? "btn-active" : ""}`}
-                        onClick={setShowGroupScenes}
-                        item={!showGroupScenes}
-                    >
-                        {t(($) => $.group_scenes)}
-                    </Button>
-                </div>
-                {/* Mobile: dropdown */}
-                <details className="dropdown sm:hidden">
-                    <summary className="btn btn-outline btn-sm">
-                        <FontAwesomeIcon icon={faEye} />
-                    </summary>
-                    <ul className="dropdown-content menu bg-base-200 rounded-box z-10 p-2 shadow">
-                        <li>
-                            <button type="button" onClick={() => setShowOverview(!showOverview)}>
-                                <FontAwesomeIcon icon={faCheck} className={showOverview ? "opacity-100" : "opacity-0"} />
-                                {t(($) => $.overview)}
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" onClick={() => setShowActivity(!showActivity)}>
-                                <FontAwesomeIcon icon={faCheck} className={showActivity ? "opacity-100" : "opacity-0"} />
-                                {t(($) => $.recent_activity)}
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" onClick={() => setShowGroupScenes(!showGroupScenes)}>
-                                <FontAwesomeIcon icon={faCheck} className={showGroupScenes ? "opacity-100" : "opacity-0"} />
-                                {t(($) => $.group_scenes)}
-                            </button>
-                        </li>
-                    </ul>
-                </details>
+                <PopoverDropdown name="home-visibility" buttonChildren={<FontAwesomeIcon icon={faEye} />} buttonStyle="btn-outline btn-sm">
+                    <li>
+                        <button type="button" onClick={() => setShowOverview(!showOverview)}>
+                            <FontAwesomeIcon icon={faCheck} className={showOverview ? "opacity-100" : "opacity-0"} />
+                            {t(($) => $.overview)}
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" onClick={() => setShowActivity(!showActivity)}>
+                            <FontAwesomeIcon icon={faCheck} className={showActivity ? "opacity-100" : "opacity-0"} />
+                            {t(($) => $.recent_activity)}
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" onClick={() => setShowGroupScenes(!showGroupScenes)}>
+                            <FontAwesomeIcon icon={faCheck} className={showGroupScenes ? "opacity-100" : "opacity-0"} />
+                            {t(($) => $.group_scenes)}
+                        </button>
+                    </li>
+                </PopoverDropdown>
             </NavBarContent>
 
             <div className="flex flex-col mb-5">
