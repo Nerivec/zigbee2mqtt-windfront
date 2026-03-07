@@ -1,17 +1,19 @@
+import { faCheck, faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
 import { t } from "i18next";
 import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
 import store2 from "store2";
-import Button from "../components/Button.js";
 import DeviceTile from "../components/device/DeviceTile.js";
 import GroupScenesTile from "../components/group/GroupScenesTile.js";
 import Activity from "../components/home-page/Activity.js";
 import DevicePeek from "../components/home-page/DevicePeek.js";
 import Hero from "../components/home-page/Hero.js";
 import { QuickFilter } from "../components/home-page/index.js";
+import PopoverDropdown from "../components/PopoverDropdown.js";
 import { useColumnCount } from "../hooks/useColumnCount.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
-import { HOME_QUICK_FILTER_KEY, HOME_SHOW_ACTIVITY_KEY, HOME_SHOW_GROUP_SCENES_KEY } from "../localStoreConsts.js";
+import { HOME_QUICK_FILTER_KEY, HOME_SHOW_ACTIVITY_KEY, HOME_SHOW_GROUP_SCENES_KEY, HOME_SHOW_OVERVIEW_KEY } from "../localStoreConsts.js";
 import { API_URLS, RECENT_ACTIVITY_FEED_LIMIT, useAppStore } from "../store.js";
 import type { Device, DeviceAvailability, DeviceState, Group, LastSeenConfig } from "../types.js";
 
@@ -62,6 +64,7 @@ export default function HomePage(): JSX.Element {
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const columnCount = useColumnCount();
     const [quickFilter, setQuickFilter] = useState<readonly [QuickFilter, unknown] | null>(store2.get(HOME_QUICK_FILTER_KEY, null));
+    const [showOverview, setShowOverview] = useState<boolean>(store2.get(HOME_SHOW_OVERVIEW_KEY, true));
     const [showActivity, setShowActivity] = useState<boolean>(store2.get(HOME_SHOW_ACTIVITY_KEY, true));
     const [showGroupScenes, setShowGroupScenes] = useState<boolean>(store2.get(HOME_SHOW_GROUP_SCENES_KEY, true));
     const [selection, setSelection] = useState<HomePageSelection | undefined>(undefined);
@@ -73,6 +76,10 @@ export default function HomePage(): JSX.Element {
             store2.set(HOME_QUICK_FILTER_KEY, quickFilter);
         }
     }, [quickFilter]);
+
+    useEffect(() => {
+        store2.set(HOME_SHOW_OVERVIEW_KEY, showOverview);
+    }, [showOverview]);
 
     useEffect(() => {
         store2.set(HOME_SHOW_ACTIVITY_KEY, showActivity);
@@ -243,25 +250,30 @@ export default function HomePage(): JSX.Element {
     return (
         <>
             <NavBarContent>
-                <span className="text-sm">{t(($) => $.show)}: </span>
-                <Button<boolean>
-                    className={`btn btn-outline btn-sm ${showActivity ? "btn-active" : ""}`}
-                    onClick={setShowActivity}
-                    item={!showActivity}
-                >
-                    {t(($) => $.recent_activity)}
-                </Button>
-                <Button<boolean>
-                    className={`btn btn-outline btn-sm ${showGroupScenes ? "btn-active" : ""}`}
-                    onClick={setShowGroupScenes}
-                    item={!showGroupScenes}
-                >
-                    {t(($) => $.group_scenes)}
-                </Button>
+                <PopoverDropdown name="home-visibility" buttonChildren={<FontAwesomeIcon icon={faEye} />} buttonStyle="btn-outline btn-sm">
+                    <li>
+                        <button type="button" onClick={() => setShowOverview(!showOverview)}>
+                            <FontAwesomeIcon icon={faCheck} className={showOverview ? "opacity-100" : "opacity-0"} />
+                            {t(($) => $.overview)}
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" onClick={() => setShowActivity(!showActivity)}>
+                            <FontAwesomeIcon icon={faCheck} className={showActivity ? "opacity-100" : "opacity-0"} />
+                            {t(($) => $.recent_activity)}
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" onClick={() => setShowGroupScenes(!showGroupScenes)}>
+                            <FontAwesomeIcon icon={faCheck} className={showGroupScenes ? "opacity-100" : "opacity-0"} />
+                            {t(($) => $.group_scenes)}
+                        </button>
+                    </li>
+                </PopoverDropdown>
             </NavBarContent>
 
             <div className="flex flex-col mb-5">
-                <Hero {...data.counters} setQuickFilter={setQuickFilter} quickFilter={quickFilter} />
+                {showOverview && <Hero {...data.counters} setQuickFilter={setQuickFilter} quickFilter={quickFilter} />}
 
                 {showActivity && <Activity devices={devices} maxRows={maxActivityRows} />}
 
