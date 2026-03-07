@@ -237,6 +237,7 @@ export default function GroupsPage() {
                         className="select"
                     >
                         {API_NAMES.map((name, idx) => (
+                            // biome-ignore lint/suspicious/noArrayIndexKey: not alone
                             <option key={`${idx}-${name}`} value={idx}>
                                 {name}
                             </option>

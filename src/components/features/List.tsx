@@ -104,6 +104,7 @@ const List = memo((props: Props) => {
             <>
                 <div className="list bg-base-100">
                     {currentValue.map((itemValue, itemIndex) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: not alone
                         <Fragment key={`${getFeatureKey(item_type)}-${itemIndex}`}>
                             <Feature
                                 feature={item_type}
@@ -151,6 +152,7 @@ const List = memo((props: Props) => {
             <div className="list bg-base-100">
                 {arrayValue.map((itemValue, itemIndex) => (
                     <Feature
+                        // biome-ignore lint/suspicious/noArrayIndexKey: not alone
                         key={`${getFeatureKey(item_type)}-${itemIndex}`}
                         feature={item_type}
                         device={device}

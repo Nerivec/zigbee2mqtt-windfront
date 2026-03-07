@@ -159,6 +159,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
             <div className="mockup-code w-full mt-1 mb-3 before:content-none">
                 {filteredLogs.length > 0 ? (
                     filteredLogs.map((log, idx) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: not alone
                         <pre key={`${idx}-${log.timestamp}`} data-prefix={idx} className={colorLog(log.message, log.level)}>
                             <code>
                                 [{log.timestamp}] {log.message}

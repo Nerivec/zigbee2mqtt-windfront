@@ -78,6 +78,7 @@ const SourceNotifications = memo(({ sourceIdx, readyState }: SourceNotifications
                     </span>
                 </summary>
                 {notifications.map((log, idx) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: not alone
                     <Notification key={`${idx}-${log.timestamp}`} log={log} onClick={onNotificationClick} />
                 ))}
                 {notifications.length > 0 && (
