@@ -84,9 +84,16 @@ const ReportProblemLink = memo(({ sourceIdx, device }: LinkProps) => {
     const { t } = useTranslation("zigbee");
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const bridgeHealth = useAppStore(useShallow((state) => state.bridgeHealth[sourceIdx]));
+    const definition = device.definition;
+
+    if (!definition) {
+        return null;
+    }
+
+    const definitionModel = definition.model !== device.model_id ? ` (${definition.model})` : "";
     const githubUrlParams = {
         template: "problem_report.yaml",
-        title: `[${device.model_id} / ${device.manufacturer}] ???`,
+        title: `[${device.model_id}${definitionModel} / ${device.manufacturer}] ???`,
         z2m_version: `${bridgeInfo.version} (${bridgeInfo.commit})`,
         adapter_fwversion: JSON.stringify(bridgeInfo.coordinator.meta),
         adapter: bridgeInfo.coordinator.type,
@@ -95,6 +102,7 @@ node: \`${bridgeInfo.os.node_version}\`
 ha: \`${bridgeInfo.config.homeassistant.enabled}\``,
         notes: `
 #### Device
+definition: \`${definition.model}\` - \`${definition.vendor}\` (\`v${definition.version ?? "0.0.0"}\`)
 software_build_id: \`${device.software_build_id}\`
 date_code: \`${device.date_code}\`
 endpoints:
@@ -426,7 +434,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     )}
                 </div>
                 <div className="card-actions justify-center md:justify-end mt-2 me-4">
-                    <ReportProblemLink sourceIdx={sourceIdx} device={device} />
+                    {device.supported && <ReportProblemLink sourceIdx={sourceIdx} device={device} />}
                     <DeviceControlGroup
                         sourceIdx={sourceIdx}
                         device={device}
