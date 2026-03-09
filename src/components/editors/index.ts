@@ -123,6 +123,22 @@ const GAMMA_CORRECTION_LINEAR: Readonly<GammaCorrection> = {
 
 const GAMMA_CORRECTION_SRGB = makeGammaCorrection({ threshold: 0.0031308, slope: 12.92, exponent: 2.4, offset: 0.055 });
 
+/**
+ * sRGB gamut — the standard color space for web displays.
+ * All HSV/RGB/hex values shown on screen are in sRGB, so conversions between
+ * these display formats and CIE XY must use sRGB primaries. Using a device-specific
+ * gamut (e.g. Philips Hue) for this conversion produces incorrect XY coordinates
+ * because the device has different primaries than the screen.
+ */
+export const SRGB: Readonly<Gamut> = {
+    name: "sRGB",
+    red: [0.64, 0.33],
+    green: [0.3, 0.6],
+    blue: [0.15, 0.06],
+    white: [0.3127, 0.329],
+    gammaCorrection: GAMMA_CORRECTION_SRGB,
+};
+
 /** https://en.wikipedia.org/wiki/CIE_1931_color_space */
 const CIE1931: Readonly<Gamut> = {
     name: "Zigbee / CIE 1931",
@@ -164,6 +180,8 @@ for (const key in SUPPORTED_GAMUTS) {
 
     gamutMatrices[entry.name] = buildMatrices(entry);
 }
+
+gamutMatrices[SRGB.name] = buildMatrices(SRGB);
 
 /**
  * Use vendor and description from device definition to determine the proper gamut.
@@ -322,10 +340,16 @@ export const convertHexToRgb = (hex: string): Vector3 => {
 };
 
 export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, gamut: Gamut): ZigbeeColor => {
+    // All RGB/HSV/hex values are in sRGB (the web display standard).
+    // Conversions between these display formats and CIE XY must use sRGB primaries,
+    // not the device gamut, because the user sees sRGB colors on their screen.
+    // The device maps CIE XY to its own gamut internally.
+    const displayGamut = SRGB;
+
     switch (sourceFormat) {
         case "color_xy": {
-            const { x = gamut.white[0], y = gamut.white[1], Y = findMaximumY(x, y === 0 ? gamut.white[1] : y, gamut, 10) } = source as XYColor;
-            const rgb = y === 0 ? ([255, 255, 255] as Vector3) : convertXyToRgb(x, y, Y, gamut);
+            const { x = gamut.white[0], y = gamut.white[1], Y = findMaximumY(x, y === 0 ? gamut.white[1] : y, displayGamut, 10) } = source as XYColor;
+            const rgb = y === 0 ? ([255, 255, 255] as Vector3) : convertXyToRgb(x, y, Y, displayGamut);
 
             return {
                 color_rgb: rgb,
@@ -342,7 +366,7 @@ export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, gamu
             return {
                 color_rgb: rgb,
                 color_hs: [hue, saturation, value],
-                color_xy: convertRgbToXyY(...rgb, gamut),
+                color_xy: convertRgbToXyY(...rgb, displayGamut),
                 hex: convertRgbToHex(...rgb),
             };
         }
@@ -353,7 +377,7 @@ export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, gamu
             return {
                 color_rgb: [r, g, b],
                 color_hs: convertRgbToHsv(r, g, b),
-                color_xy: convertRgbToXyY(r, g, b, gamut),
+                color_xy: convertRgbToXyY(r, g, b, displayGamut),
                 hex: convertRgbToHex(r, g, b),
             };
         }
@@ -365,7 +389,7 @@ export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, gamu
             return {
                 color_rgb: rgb,
                 color_hs: convertRgbToHsv(...rgb),
-                color_xy: convertRgbToXyY(...rgb, gamut),
+                color_xy: convertRgbToXyY(...rgb, displayGamut),
                 hex,
             };
         }
@@ -376,7 +400,7 @@ export const convertToColor = (source: AnyColor, sourceFormat: ColorFormat, gamu
             return {
                 color_rgb: rgb,
                 color_hs: convertRgbToHsv(...rgb),
-                color_xy: convertRgbToXyY(...rgb, gamut),
+                color_xy: convertRgbToXyY(...rgb, displayGamut),
                 hex: convertRgbToHex(...rgb),
             };
         }
