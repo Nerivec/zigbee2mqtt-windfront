@@ -58,7 +58,7 @@ jobs:
 
       - name: Docker setup - Buildx
         if: (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')) && github.event_name == 'push'
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: edge - Docker meta
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
