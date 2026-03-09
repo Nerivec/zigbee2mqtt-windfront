@@ -263,6 +263,7 @@ export const BRIDGE_DEVICES: Message<Device[]> = {
                 ],
                 supports_ota: true,
                 vendor: "IKEA",
+                version: "0.0.1",
             },
             endpoints: {
                 "1": {

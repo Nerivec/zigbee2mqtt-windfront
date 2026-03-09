@@ -15,7 +15,7 @@ import OtaUpdating from "../components/ota-page/OtaUpdating.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import TableSearch from "../components/table/TableSearch.js";
-import ModelLink from "../components/value-decorators/ModelLink.js";
+import DefinitionLink from "../components/value-decorators/DefinitionLink.js";
 import OtaLink from "../components/value-decorators/OtaLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
@@ -288,12 +288,7 @@ export default function OtaPage() {
                     },
                 }) => (
                     <>
-                        <ModelLink
-                            modelId={device.model_id}
-                            supported={device.supported}
-                            definitionModel={device.definition?.model}
-                            definitionVendor={device.definition?.vendor}
-                        />
+                        <DefinitionLink modelId={device.model_id} supported={device.supported} definitionModel={device.definition?.model} />
                         <div>
                             <span className="badge badge-sm badge-ghost tooltip tooltip-bottom" data-tip={t(($) => $.manufacturer, { ns: "zigbee" })}>
                                 <VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} />

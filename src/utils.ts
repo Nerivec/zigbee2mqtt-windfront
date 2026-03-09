@@ -39,6 +39,13 @@ export const getValidSourceIdx = (sourceIdx: string | undefined): [numSourceIdx:
     return Number.isNaN(numSourceIdx) || !API_URLS[numSourceIdx] ? [0, false] : [numSourceIdx, true];
 };
 
+export const normalizeDefinitionModel = (model: string): string => {
+    const find = "[/| |:]";
+    const re = new RegExp(find, "g");
+
+    return model.replace(re, "_");
+};
+
 // #endregion
 
 // #region Format/Convert

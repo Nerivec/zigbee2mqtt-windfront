@@ -1,5 +1,6 @@
 import {
     faArrowsSpin,
+    faArrowUpRightFromSquare,
     faBug,
     faCog,
     faCogs,
@@ -33,7 +34,8 @@ export type TabName =
     | "settings-specific"
     | "dev-console"
     | "groups"
-    | "scene";
+    | "scene"
+    | "docs";
 
 type DevicePageUrlParams = {
     sourceIdx: `${number}`;
@@ -47,6 +49,7 @@ const DevConsoleTab = lazy(async () => await import("../components/device-page/t
 const DeviceInfoTab = lazy(async () => await import("../components/device-page/tabs/DeviceInfo.js"));
 const DeviceSettingsTab = lazy(async () => await import("../components/device-page/tabs/DeviceSettings.js"));
 const DeviceSpecificSettingsTab = lazy(async () => await import("../components/device-page/tabs/DeviceSpecificSettings.js"));
+const DocsTab = lazy(async () => await import("../components/device-page/tabs/Docs.js"));
 const ExposesTab = lazy(async () => await import("../components/device-page/tabs/Exposes.js"));
 const GroupsTab = lazy(async () => await import("../components/device-page/tabs/Groups.js"));
 const ReportingTab = lazy(async () => await import("../components/device-page/tabs/Reporting.js"));
@@ -79,6 +82,8 @@ function renderTab(sourceIdx: number, tab: TabName, device: Device) {
             return <SceneTab key={key} sourceIdx={sourceIdx} device={device} />;
         case "dev-console":
             return <DevConsoleTab key={key} sourceIdx={sourceIdx} device={device} />;
+        case "docs":
+            return device.definition?.model ? <DocsTab key={key} sourceIdx={sourceIdx} definitionModel={device.definition.model} /> : null;
     }
 }
 
@@ -156,6 +161,12 @@ export default function DevicePage(): JSX.Element {
                     <FontAwesomeIcon icon={faBug} className="me-2" />
                     {t(($) => $.dev_console)}
                 </NavLink>
+                {device?.definition?.model ? (
+                    <NavLink to={`/device/${numSourceIdx}/${deviceId}/docs`} className={isTabActive}>
+                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="me-2" />
+                        {t(($) => $.docs)}
+                    </NavLink>
+                ) : null}
 
                 <div className="tab-content block h-full bg-base-100 p-3">
                     {tab && device ? (
