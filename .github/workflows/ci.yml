@@ -62,7 +62,7 @@ jobs:
 
       - name: edge - Docker meta
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         id: meta_edge
         with:
           images: |
@@ -85,7 +85,7 @@ jobs:
 
       - name: Docker meta
         if: startsWith(github.ref, 'refs/tags/') && github.event_name == 'push'
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         id: meta
         with:
           images: |
