@@ -75,7 +75,7 @@ jobs:
 
       - name: edge - Docker build and push
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile
@@ -100,7 +100,7 @@ jobs:
 
       - name: Docker build and push
         if: startsWith(github.ref, 'refs/tags/') && github.event_name == 'push'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile
