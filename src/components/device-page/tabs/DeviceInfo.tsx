@@ -91,7 +91,6 @@ const ReportProblemLink = memo(({ sourceIdx, device }: LinkProps) => {
     }
 
     const definitionModel = definition.model !== device.model_id ? ` (${definition.model})` : "";
-    const definitionVersion = definition.version ? ` (\`v${definition.version}\`)` : "";
     const githubUrlParams = {
         template: "problem_report.yaml",
         title: `[${device.model_id}${definitionModel} / ${device.manufacturer}] ???`,
@@ -103,7 +102,7 @@ node: \`${bridgeInfo.os.node_version}\`
 ha: \`${bridgeInfo.config.homeassistant.enabled}\``,
         notes: `
 #### Device
-definition: \`${definition.model}\` - \`${definition.vendor}\`${definitionVersion}
+definition: \`${definition.model}\` - \`${definition.vendor}\` (\`v${definition.version ?? "0.0.0"}\`)
 software_build_id: \`${device.software_build_id}\`
 date_code: \`${device.date_code}\`
 endpoints:
