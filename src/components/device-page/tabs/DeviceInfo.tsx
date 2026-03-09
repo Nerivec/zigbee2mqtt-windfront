@@ -84,11 +84,12 @@ const ReportProblemLink = memo(({ sourceIdx, device }: LinkProps) => {
     const { t } = useTranslation("zigbee");
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const bridgeHealth = useAppStore(useShallow((state) => state.bridgeHealth[sourceIdx]));
-
     const definition = device.definition;
+
     if (!definition) {
         return null;
     }
+
     const definitionModel = definition.model !== device.model_id ? ` (${definition.model})` : "";
     const definitionVersion = definition.version ? ` (\`v${definition.version}\`)` : "";
     const githubUrlParams = {
