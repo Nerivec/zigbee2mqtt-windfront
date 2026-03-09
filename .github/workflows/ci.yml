@@ -8,6 +8,11 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+"
   pull_request:
 
+concurrency:
+  # PR: cancel outdated runs | push/release: queue runs
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
   id-token: write
