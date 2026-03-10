@@ -15,6 +15,7 @@ const MD_LINK_REGEX = /!?\[(.*?)]\((\.\.\/|\.\/)?(.*?)\)/g;
 const MD_STYLE_REGEX = /`([^`]+)`|\*\*\*(.+?)\*\*\*|\*\*(.+?)\*\*|\*(.+?)\*/g;
 const MD_UNORDERED_LIST_REGEX = /^\s*[-*]\s+(.*)$/;
 const MD_ORDERED_LIST_REGEX = /^\s*\d+\.\s+(.*)$/;
+const MD_TABLE_SEPARATOR_LINE_REGEX = /^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$/;
 
 const appendNodes = (target: ReactNode[], nodes: ReactNode[]) => {
     for (const node of nodes) {
@@ -135,9 +136,13 @@ function parseMarkdownInline(md: string): ReactNode[] {
     return parsedLine.length > 0 ? parsedLine : [md];
 }
 
+const parseTableCells = (line: string): string[] => {
+    return line.slice(line.startsWith("|") ? 1 : 0, line.endsWith("|") ? -1 : undefined).split("|");
+};
+
 function parseMarkdown(md: string): ReactNode[] {
     const textArr = md.split("\n");
-    const textRes: ReactNode[] = [];
+    const outputNodes: ReactNode[] = [];
     let blockIdx = 0;
     let inCodeBlock = false;
     let codeBlock: string[] = [];
@@ -151,13 +156,13 @@ function parseMarkdown(md: string): ReactNode[] {
             return;
         }
 
-        textRes.push(
+        outputNodes.push(
             listType === "ol" ? (
-                <ol key={`md-block-${blockIdx++}`} className="list-decimal list-inside">
+                <ol key={`md-block-${blockIdx++}`} className="list-decimal list-inside py-2">
                     {list}
                 </ol>
             ) : (
-                <ul key={`md-block-${blockIdx++}`} className="list-disc list-inside">
+                <ul key={`md-block-${blockIdx++}`} className="list-disc list-inside py-2">
                     {list}
                 </ul>
             ),
@@ -169,14 +174,73 @@ function parseMarkdown(md: string): ReactNode[] {
         listItemIdx = 0;
     };
 
-    for (const line of textArr) {
+    for (let lineIdx = 0; lineIdx < textArr.length; lineIdx++) {
+        const line = textArr[lineIdx];
+
         if (line === "") {
             flushList();
             continue;
         }
 
-        if (line.startsWith("<!--") || line.startsWith("|")) {
+        if (line.startsWith("<!--")) {
             flushList();
+            continue;
+        }
+
+        const tableHeaderCandidate = line;
+        const tableSeparatorCandidate = textArr[lineIdx + 1];
+        const isTableHeaderCandidate = tableHeaderCandidate.indexOf("|") !== -1;
+
+        if (isTableHeaderCandidate && tableSeparatorCandidate !== undefined && MD_TABLE_SEPARATOR_LINE_REGEX.test(tableSeparatorCandidate)) {
+            flushList();
+
+            let tableEndLineIdx = lineIdx + 1;
+            // always skip the first table (metadata table)
+            const headerCells = parseTableCells(tableHeaderCandidate);
+            const headerNodes: ReactNode[] = [];
+            const bodyNodes: ReactNode[] = [];
+            let headerKey = 0;
+            let rowKey = 0;
+
+            for (let rowIdx = lineIdx + 2; rowIdx < textArr.length; rowIdx++) {
+                const rowLine = textArr[rowIdx].trim();
+
+                if (rowLine === "" || rowLine.indexOf("|") === -1) {
+                    break;
+                }
+
+                const rowCells = parseTableCells(rowLine);
+                const rowNodes: ReactNode[] = [];
+
+                for (let cellIdx = 0; cellIdx < headerCells.length; cellIdx++) {
+                    let cellKey = 0;
+                    const rowCell = rowCells[cellIdx] ?? "";
+
+                    rowNodes.push(<td key={`md-table-cell-${rowKey}-${cellKey++}-${rowCell}`}>{parseMarkdownInline(rowCell.trim())}</td>);
+                }
+
+                bodyNodes.push(<tr key={`md-table-row-${rowKey++}`}>{rowNodes}</tr>);
+
+                tableEndLineIdx = rowIdx;
+            }
+
+            for (const headerCell of headerCells) {
+                headerNodes.push(<th key={`md-table-head-${headerKey++}-${headerCell}`}>{parseMarkdownInline(headerCell.trim())}</th>);
+            }
+
+            outputNodes.push(
+                <div key={`md-block-${blockIdx++}`} className="overflow-x-auto my-2">
+                    <table className="table table-border">
+                        <thead>
+                            <tr>{headerNodes}</tr>
+                        </thead>
+                        <tbody>{bodyNodes}</tbody>
+                    </table>
+                </div>,
+            );
+
+            lineIdx = tableEndLineIdx;
+
             continue;
         }
 
@@ -209,7 +273,7 @@ function parseMarkdown(md: string): ReactNode[] {
         flushList();
 
         if (line.startsWith("######")) {
-            textRes.push(
+            outputNodes.push(
                 <h6 key={`md-block-${blockIdx++}`} className="text-xs font-bold mt-4 mb-2">
                     {line.slice(7)}
                 </h6>,
@@ -218,7 +282,7 @@ function parseMarkdown(md: string): ReactNode[] {
         }
 
         if (line.startsWith("#####")) {
-            textRes.push(
+            outputNodes.push(
                 <h5 key={`md-block-${blockIdx++}`} className="text-sm font-bold mt-4 mb-2">
                     {line.slice(6)}
                 </h5>,
@@ -227,7 +291,7 @@ function parseMarkdown(md: string): ReactNode[] {
         }
 
         if (line.startsWith("####")) {
-            textRes.push(
+            outputNodes.push(
                 <h4 key={`md-block-${blockIdx++}`} className="text-md font-bold mt-4 mb-2">
                     {line.slice(5)}
                 </h4>,
@@ -236,7 +300,7 @@ function parseMarkdown(md: string): ReactNode[] {
         }
 
         if (line.startsWith("###")) {
-            textRes.push(
+            outputNodes.push(
                 <h3 key={`md-block-${blockIdx++}`} className="text-lg font-bold mt-4 mb-2">
                     {line.slice(4)}
                 </h3>,
@@ -245,7 +309,7 @@ function parseMarkdown(md: string): ReactNode[] {
         }
 
         if (line.startsWith("##")) {
-            textRes.push(
+            outputNodes.push(
                 <h2 key={`md-block-${blockIdx++}`} className="text-xl font-bold border-b border-base-content/25 py-1.5 mt-4 mb-2">
                     {line.slice(3)}
                 </h2>,
@@ -254,7 +318,7 @@ function parseMarkdown(md: string): ReactNode[] {
         }
 
         if (line.startsWith("#")) {
-            textRes.push(
+            outputNodes.push(
                 <h1 key={`md-block-${blockIdx++}`} className="text-2xl font-bold mt-4 mb-2">
                     {line.slice(2)}
                 </h1>,
@@ -264,7 +328,7 @@ function parseMarkdown(md: string): ReactNode[] {
 
         if (line.startsWith("```")) {
             if (inCodeBlock) {
-                textRes.push(
+                outputNodes.push(
                     <pre key={`md-block-${blockIdx++}`} className="w-full bg-base-200 my-1 py-2 px-4 rounded-sm overflow-x-auto">
                         <code>{codeBlock.join("\n")}</code>
                     </pre>,
@@ -284,12 +348,12 @@ function parseMarkdown(md: string): ReactNode[] {
             continue;
         }
 
-        textRes.push(<p key={`md-block-${blockIdx++}`}>{parseMarkdownInline(line)}</p>);
+        outputNodes.push(<p key={`md-block-${blockIdx++}`}>{parseMarkdownInline(line)}</p>);
     }
 
     flushList();
 
-    return textRes;
+    return outputNodes;
 }
 
 async function fetchMd(url: string): Promise<ReactNode[]> {
@@ -333,13 +397,16 @@ const Docs = memo(({ sourceIdx, definitionModel }: DocsProps) => {
             >
                 <DocsContent docsPromise={docsPromise} />
                 <div className="divider" />
-                <pre className="mt-3">
-                    <code>Source: {url}</code>
-                </pre>
-                Edit:{" "}
-                <a href={editUrl} className="link link-primary" target="_blank" rel="noopener noreferrer">
-                    {editUrl} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-                </a>
+                <div className="flex flex-row flex-wrap items-center gap-1 mt-3">
+                    Source:
+                    <span>{url}</span>
+                </div>
+                <div className="flex flex-row flex-wrap items-center gap-1">
+                    Edit:
+                    <a href={editUrl} className="link link-primary" target="_blank" rel="noopener noreferrer">
+                        {editUrl} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                    </a>
+                </div>
             </Suspense>
         </div>
     );
