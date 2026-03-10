@@ -11,7 +11,7 @@ type DocsProps = {
 };
 
 const Z2M_DOCS_LINK = "https://www.zigbee2mqtt.io/";
-const MD_LINK_REGEX = /!?\[(.*?)]\((\.\.\/|\.\/)?(.*?)\)/g;
+const MD_LINK_REGEX = /!?\[(.*?)]\((\.?\.?\/)?(.*?)\)/g;
 const MD_STYLE_REGEX = /`([^`]+)`|\*\*\*(.+?)\*\*\*|\*\*(.+?)\*\*|\*(.+?)\*/g;
 const MD_LIST_ITEM_REGEX = /^(\s*)([-*]|\d+\.)\s+(.*)$/;
 const MD_TABLE_SEPARATOR_LINE_REGEX = /^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$/;
