@@ -4,7 +4,7 @@ import { AVAILABILITY_FEATURE_TOPIC_ENDING } from "../consts.js";
 import { USE_PROXY } from "../envs.js";
 import { AUTH_FLAG_KEY, AUTH_TOKEN_KEY } from "../localStoreConsts.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
-import type { LogMessage, Message, RecursiveMutable, ResponseMessage } from "../types.js";
+import type { CommandResponse, LogMessage, Message, RecursiveMutable, ResponseMessage } from "../types.js";
 import { randomString, stringifyWithUndefinedAsNull } from "../utils.js";
 
 // prevent stripping
@@ -22,6 +22,8 @@ type PendingRequest = {
     timeoutId: number;
 };
 
+type DeviceSetCallback = (response: CommandResponse) => void;
+
 type Connection = {
     idx: number;
     socket: WebSocket | undefined;
@@ -30,6 +32,8 @@ type Connection = {
     transactionPrefix: string;
     transactionNumber: number;
     pending: Map<string, PendingRequest>;
+    /** Callbacks for transaction response messages (keyed by z2m_transaction) */
+    deviceSetCallbacks: Map<string, DeviceSetCallback>;
     deviceQueue: Message<Zigbee2MQTTAPI["{friendlyName}"]>[];
     logQueue: LogMessage[];
 
@@ -62,6 +66,7 @@ class WebSocketManager {
                 transactionPrefix: randomString(5),
                 transactionNumber: 1,
                 pending: new Map(),
+                deviceSetCallbacks: new Map(),
                 deviceQueue: [],
                 logQueue: [],
                 metricsMessagesSent: 0,
@@ -172,6 +177,61 @@ class WebSocketManager {
 
     getTransactionPrefix(idx: number): string {
         return this.#connections[idx].transactionPrefix;
+    }
+
+    /**
+     * Generate a unique transaction ID for device commands.
+     * Use this when you want to receive a response via registerDeviceSetCallback.
+     */
+    generateTransactionId(sourceIdx: number): string {
+        const conn = this.#connections[sourceIdx];
+        return `${conn.transactionPrefix}-${conn.transactionNumber++}`;
+    }
+
+    /**
+     * Register a callback for a transaction response.
+     * The callback will be called when a {device}/response/set or /response/get
+     * message arrives with a matching z2m_transaction.
+     *
+     * @param sourceIdx - The source/connection index
+     * @param requestId - The z2m_transaction value to listen for
+     * @param callback - Function to call with the CommandResponse
+     * @param timeoutMs - Optional timeout (default: 10000ms). Callback receives error response on timeout.
+     */
+    registerDeviceSetCallback(sourceIdx: number, requestId: string, callback: DeviceSetCallback, timeoutMs = 10000): void {
+        const conn = this.#connections[sourceIdx];
+        if (!conn) return;
+
+        // Set up timeout to auto-cleanup if no response arrives
+        const timeoutId = window.setTimeout(() => {
+            const cb = conn.deviceSetCallbacks.get(requestId);
+            if (cb) {
+                conn.deviceSetCallbacks.delete(requestId);
+                cb({
+                    data: {},
+                    status: "error",
+                    error: "Response timeout (frontend)",
+                    z2m_transaction: requestId,
+                });
+            }
+        }, timeoutMs);
+
+        // Wrap callback to clear timeout when called
+        const wrappedCallback: DeviceSetCallback = (response) => {
+            clearTimeout(timeoutId);
+            callback(response);
+        };
+
+        conn.deviceSetCallbacks.set(requestId, wrappedCallback);
+    }
+
+    /**
+     * Unregister a transaction response callback (e.g., on component unmount).
+     */
+    unregisterDeviceSetCallback(sourceIdx: number, requestId: string): void {
+        const conn = this.#connections[sourceIdx];
+        if (!conn) return;
+        conn.deviceSetCallbacks.delete(requestId);
     }
 
     async sendMessage<T extends Zigbee2MQTTRequestEndpoints>(sourceIdx: number, topic: T, payload: Zigbee2MQTTAPI[T]): Promise<void> {
@@ -500,10 +560,39 @@ class WebSocketManager {
             return;
         }
 
+        // Handle transaction response messages ({device}/response/set or /response/get)
+        if (parsed.topic.endsWith("/response/set") || parsed.topic.endsWith("/response/get")) {
+            this.#handleDeviceSetResponse(conn, parsed);
+            this.#scheduleFlush(); // ensure metrics commit
+
+            return;
+        }
+
         conn.metricsMessagesDevice++;
 
         // this.#scheduleFlush() called inside
         this.#queueUpdateDeviceState(conn, parsed as Message<Zigbee2MQTTAPI["{friendlyName}"]>);
+    }
+
+    /**
+     * Handle transaction response messages.
+     * These arrive on {device}/response/set or /response/get when the
+     * frontend sent to {device}/request/set or /request/get with z2m_transaction.
+     */
+    #handleDeviceSetResponse(conn: Connection, msg: Message): void {
+        const payload = msg.payload as CommandResponse;
+        const txId = payload?.z2m_transaction;
+
+        if (!txId) {
+            return;
+        }
+
+        const callback = conn.deviceSetCallbacks.get(txId);
+
+        if (callback) {
+            conn.deviceSetCallbacks.delete(txId);
+            callback(payload);
+        }
     }
 
     #handleBridge(conn: Connection, msg: Message): void {
@@ -753,4 +842,21 @@ export async function sendMessage<T extends Zigbee2MQTTRequestEndpoints>(sourceI
 
 export function getTransactionPrefix(sourceIdx: number): string {
     return manager.getTransactionPrefix(sourceIdx);
+}
+
+export function generateTransactionId(sourceIdx: number): string {
+    return manager.generateTransactionId(sourceIdx);
+}
+
+export function registerDeviceSetCallback(
+    sourceIdx: number,
+    requestId: string,
+    callback: (response: CommandResponse) => void,
+    timeoutMs?: number,
+): void {
+    manager.registerDeviceSetCallback(sourceIdx, requestId, callback, timeoutMs);
+}
+
+export function unregisterDeviceSetCallback(sourceIdx: number, requestId: string): void {
+    manager.unregisterDeviceSetCallback(sourceIdx, requestId);
 }
