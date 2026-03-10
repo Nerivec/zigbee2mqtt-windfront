@@ -1,6 +1,6 @@
 {
-    "name": "Zigbee2MQTT WindFront",
-    "short_name": "Z2M WindFront",
+    "name": "Zigbee2MQTT",
+    "short_name": "Z2M",
     "icons": [
         {
             "src": "/images/web-app-manifest-192x192.png",
