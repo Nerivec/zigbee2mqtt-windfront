@@ -264,14 +264,14 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         {device.definition ? `: ${device.definition.source}` : ""}
                     </span>
                     {!device.supported && (
-                        <span className="badge animate-bounce">
+                        <span className="badge">
                             <Link target="_blank" rel="noopener noreferrer" to={SUPPORT_NEW_DEVICES_DOCS_URL} className="link link-hover">
                                 {t(($) => $.how_to_add_support)}
                             </Link>
                         </span>
                     )}
                     {device.definition?.source === "external" && (
-                        <span className="badge animate-bounce">
+                        <span className="badge">
                             <SubmitConverterLink sourceIdx={sourceIdx} device={device} />
                         </span>
                     )}

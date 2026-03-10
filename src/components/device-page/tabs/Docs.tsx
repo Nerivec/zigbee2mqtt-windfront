@@ -11,7 +11,7 @@ type DocsProps = {
 };
 
 const Z2M_DOCS_LINK = "https://www.zigbee2mqtt.io/";
-const MD_LINK_REGEX = /\[(.*?)]\((\.\.\/|\.\/)?(.*?)\)/g;
+const MD_LINK_REGEX = /!?\[(.*?)]\((\.\.\/|\.\/)?(.*?)\)/g;
 const MD_STYLE_REGEX = /`([^`]+)`|\*\*\*(.+?)\*\*\*|\*\*(.+?)\*\*|\*(.+?)\*/g;
 const MD_UNORDERED_LIST_REGEX = /^\s*[-*]\s+(.*)$/;
 const MD_ORDERED_LIST_REGEX = /^\s*\d+\.\s+(.*)$/;
@@ -210,7 +210,7 @@ function parseMarkdown(md: string): ReactNode[] {
 
         if (line.startsWith("######")) {
             textRes.push(
-                <h6 key={`md-block-${blockIdx++}`} className="text-xs font-bold my-2">
+                <h6 key={`md-block-${blockIdx++}`} className="text-xs font-bold mt-4 mb-2">
                     {line.slice(7)}
                 </h6>,
             );
@@ -219,7 +219,7 @@ function parseMarkdown(md: string): ReactNode[] {
 
         if (line.startsWith("#####")) {
             textRes.push(
-                <h5 key={`md-block-${blockIdx++}`} className="text-sm font-bold my-2">
+                <h5 key={`md-block-${blockIdx++}`} className="text-sm font-bold mt-4 mb-2">
                     {line.slice(6)}
                 </h5>,
             );
@@ -228,7 +228,7 @@ function parseMarkdown(md: string): ReactNode[] {
 
         if (line.startsWith("####")) {
             textRes.push(
-                <h4 key={`md-block-${blockIdx++}`} className="text-md font-bold my-2">
+                <h4 key={`md-block-${blockIdx++}`} className="text-md font-bold mt-4 mb-2">
                     {line.slice(5)}
                 </h4>,
             );
@@ -237,7 +237,7 @@ function parseMarkdown(md: string): ReactNode[] {
 
         if (line.startsWith("###")) {
             textRes.push(
-                <h3 key={`md-block-${blockIdx++}`} className="text-lg font-bold my-2">
+                <h3 key={`md-block-${blockIdx++}`} className="text-lg font-bold mt-4 mb-2">
                     {line.slice(4)}
                 </h3>,
             );
@@ -246,7 +246,7 @@ function parseMarkdown(md: string): ReactNode[] {
 
         if (line.startsWith("##")) {
             textRes.push(
-                <h2 key={`md-block-${blockIdx++}`} className="text-xl font-bold border-b border-base-content/25 py-1 my-4">
+                <h2 key={`md-block-${blockIdx++}`} className="text-xl font-bold border-b border-base-content/25 py-1.5 mt-4 mb-2">
                     {line.slice(3)}
                 </h2>,
             );
@@ -255,7 +255,7 @@ function parseMarkdown(md: string): ReactNode[] {
 
         if (line.startsWith("#")) {
             textRes.push(
-                <h1 key={`md-block-${blockIdx++}`} className="text-2xl font-bold my-2">
+                <h1 key={`md-block-${blockIdx++}`} className="text-2xl font-bold mt-4 mb-2">
                     {line.slice(2)}
                 </h1>,
             );
@@ -265,7 +265,7 @@ function parseMarkdown(md: string): ReactNode[] {
         if (line.startsWith("```")) {
             if (inCodeBlock) {
                 textRes.push(
-                    <pre key={`md-block-${blockIdx++}`} className="w-full bg-base-200 my-1 py-2 px-4 rounded-sm">
+                    <pre key={`md-block-${blockIdx++}`} className="w-full bg-base-200 my-1 py-2 px-4 rounded-sm overflow-x-auto">
                         <code>{codeBlock.join("\n")}</code>
                     </pre>,
                 );
@@ -316,11 +316,14 @@ const DocsContent = memo(({ docsPromise }: { docsPromise: Promise<ReactNode[]> }
 
 const Docs = memo(({ sourceIdx, definitionModel }: DocsProps) => {
     const isDevVersion = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].version.match(/^\d+\.\d+\.\d+$/) === null));
-    const url = `https://raw.githubusercontent.com/Koenkk/zigbee2mqtt.io/${isDevVersion ? "dev" : "master"}/docs/devices/${encodeURIComponent(normalizeDefinitionModel(definitionModel))}.md`;
+    const branch = isDevVersion ? "dev" : "master";
+    const fileName = encodeURIComponent(normalizeDefinitionModel(definitionModel));
+    const url = `https://raw.githubusercontent.com/Koenkk/zigbee2mqtt.io/${branch}/docs/devices/${fileName}.md`;
+    const editUrl = `https://github.com/Koenkk/zigbee2mqtt.io/edit/${branch}/docs/devices/${fileName}.md`;
     const docsPromise = fetchMd(url);
 
     return (
-        <div className="w-full">
+        <div className="max-w-5xl">
             <Suspense
                 fallback={
                     <div className="flex flex-row justify-center items-center gap-2">
@@ -333,6 +336,10 @@ const Docs = memo(({ sourceIdx, definitionModel }: DocsProps) => {
                 <pre className="mt-3">
                     <code>Source: {url}</code>
                 </pre>
+                Edit:{" "}
+                <a href={editUrl} className="link link-primary" target="_blank" rel="noopener noreferrer">
+                    {editUrl} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                </a>
             </Suspense>
         </div>
     );
