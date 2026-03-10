@@ -13,9 +13,25 @@ type DocsProps = {
 const Z2M_DOCS_LINK = "https://www.zigbee2mqtt.io/";
 const MD_LINK_REGEX = /!?\[(.*?)]\((\.\.\/|\.\/)?(.*?)\)/g;
 const MD_STYLE_REGEX = /`([^`]+)`|\*\*\*(.+?)\*\*\*|\*\*(.+?)\*\*|\*(.+?)\*/g;
-const MD_UNORDERED_LIST_REGEX = /^\s*[-*]\s+(.*)$/;
-const MD_ORDERED_LIST_REGEX = /^\s*\d+\.\s+(.*)$/;
+const MD_LIST_ITEM_REGEX = /^(\s*)([-*]|\d+\.)\s+(.*)$/;
 const MD_TABLE_SEPARATOR_LINE_REGEX = /^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$/;
+
+type TableAlignment = "text-left" | "text-center" | "text-right" | undefined;
+
+type MarkdownListType = "ul" | "ol";
+
+type ParsedListItem = {
+    key: number;
+    lines: ReactNode[][];
+    children: ParsedList[];
+};
+
+type ParsedList = {
+    key: number;
+    type: MarkdownListType;
+    indent: number;
+    items: ParsedListItem[];
+};
 
 const appendNodes = (target: ReactNode[], nodes: ReactNode[]) => {
     for (const node of nodes) {
@@ -107,7 +123,7 @@ function parseMarkdownInline(md: string): ReactNode[] {
             );
         } else if (boldItalicText !== undefined) {
             parsedLine.push(
-                <span key={`md-bold-italic-${matchStartIndex}`} className="font-italic font-bold">
+                <span key={`md-bold-italic-${matchStartIndex}`} className="italic font-bold">
                     {parseMarkdownLinks(boldItalicText, `md-bold-italic-${matchStartIndex}`)}
                 </span>,
             );
@@ -119,7 +135,7 @@ function parseMarkdownInline(md: string): ReactNode[] {
             );
         } else if (italicText !== undefined) {
             parsedLine.push(
-                <span key={`md-italic-${matchStartIndex}`} className="font-italic">
+                <span key={`md-italic-${matchStartIndex}`} className="italic">
                     {parseMarkdownLinks(italicText, `md-italic-${matchStartIndex}`)}
                 </span>,
             );
@@ -140,38 +156,87 @@ const parseTableCells = (line: string): string[] => {
     return line.slice(line.startsWith("|") ? 1 : 0, line.endsWith("|") ? -1 : undefined).split("|");
 };
 
+const renderListItemLines = (lines: ReactNode[][], keyPrefix: string): ReactNode[] => {
+    const output: ReactNode[] = [];
+
+    for (let lineIdx = 0; lineIdx < lines.length; lineIdx++) {
+        const hasNewline = lineIdx > 0;
+
+        if (hasNewline) {
+            output.push(<br key={`${keyPrefix}-br-${lineIdx}`} />);
+        }
+
+        output.push(
+            <span key={`${keyPrefix}-line-${lineIdx}`} className={hasNewline ? "ps-4" : undefined}>
+                {lines[lineIdx]}
+            </span>,
+        );
+    }
+
+    return output;
+};
+
+const renderMarkdownList = (list: ParsedList, keyPrefix: string, depth = 0): ReactNode => {
+    const renderedItems: ReactNode[] = [];
+
+    for (let itemIdx = 0; itemIdx < list.items.length; itemIdx++) {
+        const item = list.items[itemIdx];
+
+        renderedItems.push(
+            <li key={`${keyPrefix}-item-${item.key}`}>
+                {renderListItemLines(item.lines, `${keyPrefix}-${item.key}`)}
+                {item.children.map((child) => renderMarkdownList(child, `${keyPrefix}-${item.key}-${child.key}`, depth + 1))}
+            </li>,
+        );
+    }
+
+    return list.type === "ol" ? (
+        <ol key={`${keyPrefix}-ol`} className={`list-decimal list-inside py-2 ${depth > 0 ? "ms-4" : ""}`}>
+            {renderedItems}
+        </ol>
+    ) : (
+        <ul key={`${keyPrefix}-ul`} className={`list-disc list-inside py-2 ${depth > 0 ? "ms-4" : ""}`}>
+            {renderedItems}
+        </ul>
+    );
+};
+
+const isListContinuationLine = (line: string): boolean => {
+    const trimmedLine = line.trim();
+
+    return trimmedLine !== "" && !trimmedLine.startsWith("#") && !trimmedLine.startsWith("```") && !trimmedLine.startsWith("<!--");
+};
+
 function parseMarkdown(md: string): ReactNode[] {
     const textArr = md.split("\n");
     const outputNodes: ReactNode[] = [];
     let blockIdx = 0;
     let inCodeBlock = false;
     let codeBlock: string[] = [];
-    let inList = false;
-    let listType: "ul" | "ol" | undefined;
-    let list: ReactNode[] = [];
-    let listItemIdx = 0;
+    let rootLists: ParsedList[] = [];
+    let listStack: ParsedList[] = [];
+    let listNodeKey = 0;
+
+    const nextListNodeKey = () => {
+        const key = listNodeKey;
+        listNodeKey += 1;
+
+        return key;
+    };
 
     const flushList = () => {
-        if (!inList || list.length === 0 || listType === undefined) {
+        if (rootLists.length === 0) {
             return;
         }
 
-        outputNodes.push(
-            listType === "ol" ? (
-                <ol key={`md-block-${blockIdx++}`} className="list-decimal list-inside py-2">
-                    {list}
-                </ol>
-            ) : (
-                <ul key={`md-block-${blockIdx++}`} className="list-disc list-inside py-2">
-                    {list}
-                </ul>
-            ),
-        );
+        for (let rootIdx = 0; rootIdx < rootLists.length; rootIdx++) {
+            outputNodes.push(
+                <div key={`md-block-${blockIdx++}`}>{renderMarkdownList(rootLists[rootIdx], `md-list-${rootLists[rootIdx].key}-${rootIdx}`)}</div>,
+            );
+        }
 
-        list = [];
-        inList = false;
-        listType = undefined;
-        listItemIdx = 0;
+        rootLists = [];
+        listStack = [];
     };
 
     for (let lineIdx = 0; lineIdx < textArr.length; lineIdx++) {
@@ -195,12 +260,34 @@ function parseMarkdown(md: string): ReactNode[] {
             flushList();
 
             let tableEndLineIdx = lineIdx + 1;
-            // always skip the first table (metadata table)
             const headerCells = parseTableCells(tableHeaderCandidate);
+            const separatorCells = parseTableCells(tableSeparatorCandidate);
+            const tableAlignments: TableAlignment[] = [];
             const headerNodes: ReactNode[] = [];
             const bodyNodes: ReactNode[] = [];
-            let headerKey = 0;
-            let rowKey = 0;
+
+            for (let headerCellIdx = 0; headerCellIdx < headerCells.length; headerCellIdx++) {
+                const headerCell = headerCells[headerCellIdx];
+                const separatorCell = (separatorCells[headerCellIdx] ?? "").trim();
+                const isLeftAligned = separatorCell.startsWith(":");
+                const isRightAligned = separatorCell.endsWith(":");
+                let cellAlignment: TableAlignment;
+
+                if (isLeftAligned && isRightAligned) {
+                    cellAlignment = "text-center";
+                } else if (isRightAligned) {
+                    cellAlignment = "text-right";
+                } else if (isLeftAligned) {
+                    cellAlignment = "text-left";
+                }
+
+                tableAlignments.push(cellAlignment);
+                headerNodes.push(
+                    <th key={`md-table-head-${headerCellIdx}-${headerCell}`} className={cellAlignment}>
+                        {parseMarkdownInline(headerCell.trim())}
+                    </th>,
+                );
+            }
 
             for (let rowIdx = lineIdx + 2; rowIdx < textArr.length; rowIdx++) {
                 const rowLine = textArr[rowIdx].trim();
@@ -213,24 +300,23 @@ function parseMarkdown(md: string): ReactNode[] {
                 const rowNodes: ReactNode[] = [];
 
                 for (let cellIdx = 0; cellIdx < headerCells.length; cellIdx++) {
-                    let cellKey = 0;
                     const rowCell = rowCells[cellIdx] ?? "";
 
-                    rowNodes.push(<td key={`md-table-cell-${rowKey}-${cellKey++}-${rowCell}`}>{parseMarkdownInline(rowCell.trim())}</td>);
+                    rowNodes.push(
+                        <td key={`md-table-cell-${rowIdx}-${cellIdx}-${rowCell}`} className={tableAlignments[cellIdx]}>
+                            {parseMarkdownInline(rowCell.trim())}
+                        </td>,
+                    );
                 }
 
-                bodyNodes.push(<tr key={`md-table-row-${rowKey++}`}>{rowNodes}</tr>);
+                bodyNodes.push(<tr key={`md-table-row-${rowIdx}`}>{rowNodes}</tr>);
 
                 tableEndLineIdx = rowIdx;
             }
 
-            for (const headerCell of headerCells) {
-                headerNodes.push(<th key={`md-table-head-${headerKey++}-${headerCell}`}>{parseMarkdownInline(headerCell.trim())}</th>);
-            }
-
             outputNodes.push(
                 <div key={`md-block-${blockIdx++}`} className="overflow-x-auto my-2">
-                    <table className="table table-border">
+                    <table className="table table-border [&>thead>tr>th]:px-2 [&>tbody>tr>td]:px-2 [&>thead>tr>th]:py-1.25 [&>tbody>tr>td]:py-1.25">
                         <thead>
                             <tr>{headerNodes}</tr>
                         </thead>
@@ -244,30 +330,60 @@ function parseMarkdown(md: string): ReactNode[] {
             continue;
         }
 
-        const unorderedList = line.match(MD_UNORDERED_LIST_REGEX);
+        const listMatch = line.match(MD_LIST_ITEM_REGEX);
 
-        if (unorderedList) {
-            if (inList && listType !== "ul") {
-                flushList();
+        if (listMatch) {
+            const [, leadingWs, marker, listText] = listMatch;
+            const indent = leadingWs.length;
+            const listType: MarkdownListType = marker.endsWith(".") ? "ol" : "ul";
+
+            while (listStack.length > 0 && indent < listStack[listStack.length - 1].indent) {
+                listStack.pop();
             }
 
-            inList = true;
-            listType = "ul";
-            list.push(<li key={`md-list-item-${listItemIdx++}`}>{parseMarkdownInline(unorderedList[1])}</li>);
+            if (listStack.length > 0 && indent === listStack[listStack.length - 1].indent && listType !== listStack[listStack.length - 1].type) {
+                listStack.pop();
+            }
+
+            let targetList = listStack[listStack.length - 1];
+
+            if (!targetList || indent > targetList.indent || (indent === targetList.indent && listType !== targetList.type)) {
+                const newList: ParsedList = {
+                    key: nextListNodeKey(),
+                    type: listType,
+                    indent,
+                    items: [],
+                };
+
+                const parentList = listStack[listStack.length - 1];
+                const parentItem = parentList?.items[parentList.items.length - 1];
+
+                if (parentItem && indent > parentList.indent) {
+                    parentItem.children.push(newList);
+                } else {
+                    rootLists.push(newList);
+                }
+
+                listStack.push(newList);
+                targetList = newList;
+            }
+
+            targetList.items.push({
+                key: nextListNodeKey(),
+                lines: [parseMarkdownInline(listText)],
+                children: [],
+            });
             continue;
         }
 
-        const orderedList = line.match(MD_ORDERED_LIST_REGEX);
+        if (listStack.length > 0 && isListContinuationLine(line)) {
+            const currentList = listStack[listStack.length - 1];
+            const currentItem = currentList.items[currentList.items.length - 1];
 
-        if (orderedList) {
-            if (inList && listType !== "ol") {
-                flushList();
+            if (currentItem) {
+                currentItem.lines.push(parseMarkdownInline(line.trim()));
+                continue;
             }
-
-            inList = true;
-            listType = "ol";
-            list.push(<li key={`md-list-item-${listItemIdx++}`}>{parseMarkdownInline(orderedList[1])}</li>);
-            continue;
         }
 
         flushList();
