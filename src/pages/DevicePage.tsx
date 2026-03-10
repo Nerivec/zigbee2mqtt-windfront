@@ -161,7 +161,7 @@ export default function DevicePage(): JSX.Element {
                     <FontAwesomeIcon icon={faBug} className="me-2" />
                     {t(($) => $.dev_console)}
                 </NavLink>
-                {device?.definition?.model ? (
+                {device?.supported && device.definition?.source === "native" ? (
                     <NavLink to={`/device/${numSourceIdx}/${deviceId}/docs`} className={isTabActive}>
                         <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="me-2" />
                         {t(($) => $.docs)}
