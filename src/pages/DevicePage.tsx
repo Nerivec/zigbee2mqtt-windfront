@@ -1,10 +1,10 @@
 import {
     faArrowsSpin,
-    faArrowUpRightFromSquare,
     faBug,
     faCog,
     faCogs,
     faDownLong,
+    faFileDownload,
     faInfo,
     faLink,
     faObjectGroup,
@@ -163,7 +163,7 @@ export default function DevicePage(): JSX.Element {
                 </NavLink>
                 {device?.supported && device.definition?.source === "native" ? (
                     <NavLink to={`/device/${numSourceIdx}/${deviceId}/docs`} className={isTabActive}>
-                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="me-2" />
+                        <FontAwesomeIcon icon={faFileDownload} className="me-2" />
                         {t(($) => $.docs)}
                     </NavLink>
                 ) : null}
