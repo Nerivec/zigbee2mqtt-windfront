@@ -20,9 +20,9 @@ import { formatOtaFileVersion } from "../../ota-page/index.js";
 import OtaControlGroup, { type OtaControlGroupProps } from "../../ota-page/OtaControlGroup.js";
 import SourceDot from "../../SourceDot.js";
 import Availability from "../../value-decorators/Availability.js";
+import DefinitionLink from "../../value-decorators/DefinitionLink.js";
 import DisplayValue from "../../value-decorators/DisplayValue.js";
 import LastSeen from "../../value-decorators/LastSeen.js";
-import ModelLink from "../../value-decorators/ModelLink.js";
 import PowerSource from "../../value-decorators/PowerSource.js";
 import VendorLink from "../../value-decorators/VendorLink.js";
 
@@ -264,14 +264,14 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         {device.definition ? `: ${device.definition.source}` : ""}
                     </span>
                     {!device.supported && (
-                        <span className="badge animate-bounce">
+                        <span className="badge">
                             <Link target="_blank" rel="noopener noreferrer" to={SUPPORT_NEW_DEVICES_DOCS_URL} className="link link-hover">
                                 {t(($) => $.how_to_add_support)}
                             </Link>
                         </span>
                     )}
                     {device.definition?.source === "external" && (
-                        <span className="badge animate-bounce">
+                        <span className="badge">
                             <SubmitConverterLink sourceIdx={sourceIdx} device={device} />
                         </span>
                     )}
@@ -330,18 +330,15 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         <p className="font-semibold break-all">{device.model_id}</p>
                         <p className="text-base-content/50">{device.manufacturer}</p>
                     </div>
-                    <div className="font-semibold text-base-content/70">{t(($) => $.model)}</div>
+                    <div className="font-semibold text-base-content/70">{t(($) => $.definition, { ns: "common" })} (Zigbee2MQTT)</div>
                     <div className="min-w-0">
                         <p className="font-semibold break-all">
-                            <ModelLink
-                                modelId={device.model_id}
-                                supported={device.supported}
-                                definitionModel={device.definition?.model}
-                                definitionVendor={device.definition?.vendor}
-                            />
+                            <DefinitionLink modelId={device.model_id} supported={device.supported} definitionModel={device.definition?.model} icon />
+                            {device.definition?.version && device.definition.version !== "0.0.0" ? ` (v${device.definition.version})` : null}
                         </p>
                         <p className="text-base-content/50">
-                            {definitionDescription} (<VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} />)
+                            {definitionDescription} (
+                            <VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} icon />)
                         </p>
                     </div>
                     {device.software_build_id ? (

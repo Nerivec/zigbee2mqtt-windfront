@@ -10,9 +10,9 @@ import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import TableSearch from "../components/table/TableSearch.js";
 import Availability from "../components/value-decorators/Availability.js";
+import DefinitionLink from "../components/value-decorators/DefinitionLink.js";
 import LastSeen from "../components/value-decorators/LastSeen.js";
 import Lqi from "../components/value-decorators/Lqi.js";
-import ModelLink from "../components/value-decorators/ModelLink.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
@@ -206,12 +206,7 @@ export default function DevicesPage(): JSX.Element {
                     },
                 }) => (
                     <>
-                        <ModelLink
-                            modelId={device.model_id}
-                            supported={device.supported}
-                            definitionModel={device.definition?.model}
-                            definitionVendor={device.definition?.vendor}
-                        />
+                        <DefinitionLink modelId={device.model_id} supported={device.supported} definitionModel={device.definition?.model} />
                         <div className="flex flex-row gap-1">
                             <span className="badge badge-ghost badge-sm tooltip tooltip-bottom" data-tip={t(($) => $.manufacturer)}>
                                 <VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} />

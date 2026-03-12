@@ -5,21 +5,23 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { SUPPORT_NEW_DEVICES_DOCS_URL } from "../../consts.js";
 import type { Device } from "../../types.js";
+import { normalizeDefinitionModel } from "../../utils.js";
 
-type VendorLinkProps = {
+type DefinitionLinkProps = {
+    modelId: Device["model_id"];
     supported: Device["supported"];
-    definitionVendor?: NonNullable<Device["definition"]>["vendor"];
+    definitionModel?: NonNullable<Device["definition"]>["model"];
     icon?: boolean;
 };
 
-const VendorLink = memo(({ supported, definitionVendor, icon = false }: VendorLinkProps) => {
+const DefinitionLink = memo(({ modelId, supported, definitionModel, icon = false }: DefinitionLinkProps) => {
     const { t } = useTranslation("zigbee");
-    let label = t(($) => $.unsupported);
+    let label = modelId || t(($) => $.unknown);
     let url = SUPPORT_NEW_DEVICES_DOCS_URL;
 
-    if (supported && definitionVendor) {
-        url = `https://www.zigbee2mqtt.io/supported-devices/#v=${encodeURIComponent(definitionVendor)}`;
-        label = definitionVendor;
+    if (supported && definitionModel) {
+        url = `https://www.zigbee2mqtt.io/devices/${encodeURIComponent(normalizeDefinitionModel(definitionModel))}.html`;
+        label = definitionModel;
     }
 
     return (
@@ -30,4 +32,4 @@ const VendorLink = memo(({ supported, definitionVendor, icon = false }: VendorLi
     );
 });
 
-export default VendorLink;
+export default DefinitionLink;
