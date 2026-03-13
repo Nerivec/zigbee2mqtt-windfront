@@ -531,6 +531,7 @@ export const OUI = new Map([
     ["708976", "Tuya Smart Inc."],
     ["70ac08", "Silicon Laboratories"],
     ["70af09", "Espressif Inc."],
+    ["70b3d5", "IEEE Registration Authority"],
     ["70b8f6", "Espressif Inc."],
     ["70b950", "Texas Instruments"],
     ["70c59c", "Silicon Laboratories"],
