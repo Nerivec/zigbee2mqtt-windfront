@@ -38,15 +38,15 @@
         "build-storybook": "storybook build"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.4.6",
+        "@biomejs/biome": "^2.4.7",
         "@ebay/nice-modal-react": "^1.2.13",
         "@floating-ui/react": "^0.27.19",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
-        "@storybook/addon-a11y": "^10.2.17",
-        "@storybook/addon-docs": "^10.2.17",
-        "@storybook/react-vite": "^10.2.17",
+        "@storybook/addon-a11y": "^10.2.19",
+        "@storybook/addon-docs": "^10.2.19",
+        "@storybook/react-vite": "^10.2.19",
         "@tailwindcss/vite": "^4.2.1",
         "@tanstack/react-table": "^8.21.3",
         "@testing-library/dom": "^10.4.1",
@@ -60,7 +60,7 @@
         "@types/ws": "^8.18.1",
         "@virtuoso.dev/masonry": "^1.4.2",
         "@vitejs/plugin-react": "^5.1.4",
-        "@vitest/coverage-v8": "^4.0.18",
+        "@vitest/coverage-v8": "^4.1.0",
         "daisyui": "^5.5.19",
         "file-saver": "^2.0.5",
         "i18next": "^25.8.18",
@@ -83,11 +83,11 @@
         "timeago.js": "^4.0.2",
         "typescript": "^5.9.3",
         "vite": "^7.3.1",
-        "vite-plugin-compression2": "^2.5.1",
+        "vite-plugin-compression2": "^2.5.2",
         "vitest": "^4.0.18",
         "ws": "^8.19.0",
         "zigbee2mqtt": "github:Koenkk/zigbee2mqtt#dev-types",
-        "zustand": "^5.0.11"
+        "zustand": "^5.0.12"
     },
     "sideEffects": [
         "*.css"
