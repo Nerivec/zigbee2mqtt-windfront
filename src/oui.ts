@@ -45,6 +45,7 @@ export const OUI = new Map([
     ["002258", "Taiyo Yuden Co., Ltd."],
     ["0022a5", "Texas Instruments"],
     ["0023d4", "Texas Instruments"],
+    ["002446", "MMB Research Inc."],
     ["0024ba", "Texas Instruments"],
     ["0026e8", "Murata Manufacturing Co., Ltd."],
     ["00337a", "Tuya Smart Inc."],
