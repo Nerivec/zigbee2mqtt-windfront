@@ -39,6 +39,14 @@ const appendNodes = (target: ReactNode[], nodes: ReactNode[]) => {
     }
 };
 
+const generateHeadingId = (rawText: string): string => {
+    return rawText
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+};
+
 const rewriteRelativeDocsHref = (relativePathPrefix: string, urlPath: string): string => {
     // keep `?query` or `#hash` if any
     const queryIdx = urlPath.indexOf("?");
@@ -72,17 +80,32 @@ const parseMarkdownLinks = (segment: string, keyPrefix: string): ReactNode[] => 
             nodes.push(segment.slice(parseIndex, matchStartIndex));
         }
 
-        let href = urlPath;
+        const href = relativePathPrefix ? rewriteRelativeDocsHref(relativePathPrefix, urlPath) : urlPath;
 
-        if (relativePathPrefix) {
-            href = rewriteRelativeDocsHref(relativePathPrefix, urlPath);
+        if (href.startsWith("#")) {
+            // same-page hash link, scroll to heading instead of navigating (incompatible with hash router)
+            const targetId = urlPath.slice(1);
+
+            nodes.push(
+                <button
+                    type="button"
+                    key={`${keyPrefix}-link-${matchStartIndex}`}
+                    className="link link-primary"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                >
+                    {linkText}
+                </button>,
+            );
+        } else {
+            nodes.push(
+                <a key={`${keyPrefix}-link-${matchStartIndex}`} href={href} className="link link-primary" target="_blank" rel="noopener noreferrer">
+                    {linkText} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                </a>,
+            );
         }
-
-        nodes.push(
-            <a key={`${keyPrefix}-link-${matchStartIndex}`} href={href} className="link link-primary" target="_blank" rel="noopener noreferrer">
-                {linkText} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-            </a>,
-        );
 
         parseIndex = matchEndIndex;
         match = MD_LINK_REGEX.exec(segment);
@@ -389,54 +412,70 @@ function parseMarkdown(md: string): ReactNode[] {
         flushList();
 
         if (line.startsWith("######")) {
+            const text = line.slice(7);
+
             outputNodes.push(
-                <h6 key={`md-block-${blockIdx++}`} className="text-xs font-bold mt-4 mb-2">
-                    {line.slice(7)}
+                <h6 key={`md-block-${blockIdx++}`} id={generateHeadingId(text)} className="text-xs font-bold mt-4 mb-2">
+                    {text}
                 </h6>,
             );
             continue;
         }
 
         if (line.startsWith("#####")) {
+            const text = line.slice(6);
+
             outputNodes.push(
-                <h5 key={`md-block-${blockIdx++}`} className="text-sm font-bold mt-4 mb-2">
-                    {line.slice(6)}
+                <h5 key={`md-block-${blockIdx++}`} id={generateHeadingId(text)} className="text-sm font-bold mt-4 mb-2">
+                    {text}
                 </h5>,
             );
             continue;
         }
 
         if (line.startsWith("####")) {
+            const text = line.slice(5);
+
             outputNodes.push(
-                <h4 key={`md-block-${blockIdx++}`} className="text-md font-bold mt-4 mb-2">
-                    {line.slice(5)}
+                <h4 key={`md-block-${blockIdx++}`} id={generateHeadingId(text)} className="text-md font-bold mt-4 mb-2">
+                    {text}
                 </h4>,
             );
             continue;
         }
 
         if (line.startsWith("###")) {
+            const text = line.slice(4);
+
             outputNodes.push(
-                <h3 key={`md-block-${blockIdx++}`} className="text-lg font-bold mt-4 mb-2">
-                    {line.slice(4)}
+                <h3 key={`md-block-${blockIdx++}`} id={generateHeadingId(text)} className="text-lg font-bold mt-4 mb-2">
+                    {text}
                 </h3>,
             );
             continue;
         }
 
         if (line.startsWith("##")) {
+            const text = line.slice(3);
+
             outputNodes.push(
-                <h2 key={`md-block-${blockIdx++}`} className="text-xl font-bold border-b border-base-content/25 py-1.5 mt-4 mb-2">
-                    {line.slice(3)}
+                <h2
+                    key={`md-block-${blockIdx++}`}
+                    id={generateHeadingId(text)}
+                    className="text-xl font-bold border-b border-base-content/25 py-1.5 mt-4 mb-2"
+                >
+                    {text}
                 </h2>,
             );
             continue;
         }
 
         if (line.startsWith("#")) {
+            const text = line.slice(2);
+
             outputNodes.push(
-                <h1 key={`md-block-${blockIdx++}`} className="text-2xl font-bold mt-4 mb-2">
-                    {line.slice(2)}
+                <h1 key={`md-block-${blockIdx++}`} id={generateHeadingId(text)} className="text-2xl font-bold mt-4 mb-2">
+                    {text}
                 </h1>,
             );
             continue;
