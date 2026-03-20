@@ -415,12 +415,7 @@ function parseMarkdown(md: string): ReactNode[] {
             const text = line.slice(7);
 
             outputNodes.push(
-                <h6
-                    key={`md-block-${blockIdx++}`}
-                    id={generateHeadingId(text)}
-                    className="text-xs font-bold mt-4 mb-2"
-                    style={{ scrollMarginTop: "80px" }}
-                >
+                <h6 key={`md-block-${blockIdx++}`} id={generateHeadingId(text)} className="text-xs font-bold mt-4 mb-2 scroll-mt-18">
                     {text}
                 </h6>,
             );
@@ -431,12 +426,7 @@ function parseMarkdown(md: string): ReactNode[] {
             const text = line.slice(6);
 
             outputNodes.push(
-                <h5
-                    key={`md-block-${blockIdx++}`}
-                    id={generateHeadingId(text)}
-                    className="text-sm font-bold mt-4 mb-2"
-                    style={{ scrollMarginTop: "80px" }}
-                >
+                <h5 key={`md-block-${blockIdx++}`} id={generateHeadingId(text)} className="text-sm font-bold mt-4 mb-2 scroll-mt-18">
                     {text}
                 </h5>,
             );
@@ -447,12 +437,7 @@ function parseMarkdown(md: string): ReactNode[] {
             const text = line.slice(5);
 
             outputNodes.push(
-                <h4
-                    key={`md-block-${blockIdx++}`}
-                    id={generateHeadingId(text)}
-                    className="text-md font-bold mt-4 mb-2"
-                    style={{ scrollMarginTop: "80px" }}
-                >
+                <h4 key={`md-block-${blockIdx++}`} id={generateHeadingId(text)} className="text-md font-bold mt-4 mb-2 scroll-mt-18">
                     {text}
                 </h4>,
             );
@@ -463,12 +448,7 @@ function parseMarkdown(md: string): ReactNode[] {
             const text = line.slice(4);
 
             outputNodes.push(
-                <h3
-                    key={`md-block-${blockIdx++}`}
-                    id={generateHeadingId(text)}
-                    className="text-lg font-bold mt-4 mb-2"
-                    style={{ scrollMarginTop: "80px" }}
-                >
+                <h3 key={`md-block-${blockIdx++}`} id={generateHeadingId(text)} className="text-lg font-bold mt-4 mb-2 scroll-mt-18">
                     {text}
                 </h3>,
             );
@@ -482,8 +462,7 @@ function parseMarkdown(md: string): ReactNode[] {
                 <h2
                     key={`md-block-${blockIdx++}`}
                     id={generateHeadingId(text)}
-                    className="text-xl font-bold border-b border-base-content/25 py-1.5 mt-4 mb-2"
-                    style={{ scrollMarginTop: "80px" }}
+                    className="text-xl font-bold border-b border-base-content/25 py-1.5 mt-4 mb-2 scroll-mt-18"
                 >
                     {text}
                 </h2>,
@@ -495,12 +474,7 @@ function parseMarkdown(md: string): ReactNode[] {
             const text = line.slice(2);
 
             outputNodes.push(
-                <h1
-                    key={`md-block-${blockIdx++}`}
-                    id={generateHeadingId(text)}
-                    className="text-2xl font-bold mt-4 mb-2"
-                    style={{ scrollMarginTop: "80px" }}
-                >
+                <h1 key={`md-block-${blockIdx++}`} id={generateHeadingId(text)} className="text-2xl font-bold mt-4 mb-2 scroll-mt-18">
                     {text}
                 </h1>,
             );
