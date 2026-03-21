@@ -16,10 +16,6 @@ interface FeatureSubFeaturesProps extends Omit<BaseFeatureProps<FeatureWithAnySu
     endpointSpecific?: boolean;
 }
 
-interface CompositeState {
-    [key: string]: unknown;
-}
-
 function isFeatureRoot(type: FeatureWithAnySubFeatures["type"], parentFeatures: FeatureWithAnySubFeatures[] | undefined) {
     if (type === "composite" && parentFeatures !== undefined) {
         if (parentFeatures.length === 0) {
@@ -46,7 +42,7 @@ export default function FeatureSubFeatures({
     steps,
 }: FeatureSubFeaturesProps) {
     const { type, property } = feature;
-    const [state, setState] = useState<CompositeState>({});
+    const [state, setState] = useState<Record<string, unknown>>({});
     const { t } = useTranslation("common");
     const combinedState = useMemo(() => ({ ...deviceState, ...state }), [deviceState, state]);
     const features = ("features" in feature && feature.features) || [];

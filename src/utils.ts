@@ -17,14 +17,14 @@ export const randomString = (len: number): string =>
         .toString(36)
         .slice(2, 2 + len);
 
-export const getObjectFirstKey = <T>(object: T): string | undefined => {
-    for (const key in object) {
+export const getObjectFirstKey = <T extends object>(obj: T): string | undefined => {
+    for (const key in obj) {
         return key;
     }
 };
 
-export const isEmptyObject = <T>(object: T): boolean => {
-    for (const _k in object) {
+export const isEmptyObject = <T extends object>(obj: T): boolean => {
+    for (const _k in obj) {
         return false;
     }
 
