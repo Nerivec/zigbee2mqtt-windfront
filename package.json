@@ -59,7 +59,7 @@
         "@types/react-dom": "^19.2.3",
         "@types/ws": "^8.18.1",
         "@virtuoso.dev/masonry": "^1.4.2",
-        "@vitejs/plugin-react": "^5.2.0",
+        "@vitejs/plugin-react": "^6.0.1",
         "@vitest/coverage-v8": "^4.1.0",
         "daisyui": "^5.5.19",
         "file-saver": "^2.0.5",
