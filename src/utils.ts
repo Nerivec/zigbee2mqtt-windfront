@@ -23,6 +23,14 @@ export const getObjectFirstKey = <T>(object: T): string | undefined => {
     }
 };
 
+export const isEmptyObject = <T>(object: T): boolean => {
+    for (const _k in object) {
+        return false;
+    }
+
+    return true;
+};
+
 /**
  * For use with URL params.
  * Always return a valid numeric source index to prevent issues with shallow `useAppStore`.
