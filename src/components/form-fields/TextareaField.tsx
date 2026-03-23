@@ -19,7 +19,7 @@ const TextareaField = memo((props: TextAreaFieldProps) => {
                     {props.required ? " *" : ""}
                 </legend>
             )}
-            <textarea className={`textarea${props.required ? " validator" : ""}`} onChange={onChange} onBlur={onBlur} {...rest} />
+            <textarea className={`textarea ${props.required ? "validator" : ""}`} onChange={onChange} onBlur={onBlur} {...rest} />
             {detail && <div className="label">{detail}</div>}
         </fieldset>
     );

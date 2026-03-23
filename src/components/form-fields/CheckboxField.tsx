@@ -20,11 +20,11 @@ const CheckboxField = memo((props: CheckboxFieldProps) => {
             )}
             {detail ? (
                 <label className="label">
-                    <input className={`checkbox${props.required ? " validator" : ""}`} type="checkbox" onChange={onChange} {...rest} />
+                    <input className={`checkbox ${props.required ? "validator" : ""}`} type="checkbox" onChange={onChange} {...rest} />
                     {detail}
                 </label>
             ) : (
-                <input className={`checkbox${props.required ? " validator" : ""}`} type="checkbox" onChange={onChange} {...rest} />
+                <input className={`checkbox ${props.required ? "validator" : ""}`} type="checkbox" onChange={onChange} {...rest} />
             )}
         </fieldset>
     );

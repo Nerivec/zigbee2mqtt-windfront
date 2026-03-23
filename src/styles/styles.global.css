@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@source inline("ps-4");
+@source inline("ps-8");
+@source inline("ps-12");
 @plugin "daisyui" {
     themes: all;
     logs: false;

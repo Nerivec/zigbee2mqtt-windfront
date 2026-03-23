@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
+import { OUI } from "../../../oui.js";
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
 import { toHex } from "../../../utils.js";
@@ -19,9 +20,9 @@ import { formatOtaFileVersion } from "../../ota-page/index.js";
 import OtaControlGroup, { type OtaControlGroupProps } from "../../ota-page/OtaControlGroup.js";
 import SourceDot from "../../SourceDot.js";
 import Availability from "../../value-decorators/Availability.js";
+import DefinitionLink from "../../value-decorators/DefinitionLink.js";
 import DisplayValue from "../../value-decorators/DisplayValue.js";
 import LastSeen from "../../value-decorators/LastSeen.js";
-import ModelLink from "../../value-decorators/ModelLink.js";
 import PowerSource from "../../value-decorators/PowerSource.js";
 import VendorLink from "../../value-decorators/VendorLink.js";
 
@@ -83,9 +84,16 @@ const ReportProblemLink = memo(({ sourceIdx, device }: LinkProps) => {
     const { t } = useTranslation("zigbee");
     const bridgeInfo = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx]));
     const bridgeHealth = useAppStore(useShallow((state) => state.bridgeHealth[sourceIdx]));
+    const definition = device.definition;
+
+    if (!definition) {
+        return null;
+    }
+
+    const definitionModel = definition.model !== device.model_id ? ` (${definition.model})` : "";
     const githubUrlParams = {
         template: "problem_report.yaml",
-        title: `[${device.model_id} / ${device.manufacturer}] ???`,
+        title: `[${device.model_id}${definitionModel} / ${device.manufacturer}] ???`,
         z2m_version: `${bridgeInfo.version} (${bridgeInfo.commit})`,
         adapter_fwversion: JSON.stringify(bridgeInfo.coordinator.meta),
         adapter: bridgeInfo.coordinator.type,
@@ -94,6 +102,7 @@ node: \`${bridgeInfo.os.node_version}\`
 ha: \`${bridgeInfo.config.homeassistant.enabled}\``,
         notes: `
 #### Device
+definition: \`${definition.model}\` - \`${definition.vendor}\` (\`v${definition.version ?? "0.0.0"}\`)
 software_build_id: \`${device.software_build_id}\`
 date_code: \`${device.date_code}\`
 endpoints:
@@ -140,6 +149,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
 
     const canOta = useMemo(() => hasOtaCluster(device), [device]);
     const otaInstalledVersion = useMemo(() => formatOtaFileVersion(deviceState.update?.installed_version), [deviceState.update?.installed_version]);
+    const oui = useMemo(() => OUI.get(device.ieee_address.slice(2, 8)) ?? "?", [device.ieee_address]);
 
     const setDeviceDescription = useCallback(
         async (id: string, description: string): Promise<void> => {
@@ -235,9 +245,9 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     return (
         <div className="card lg:card-side bg-base-100">
             <figure className="w-64 h-64" style={{ overflow: "visible" }}>
-                <DeviceImage device={device} otaState={deviceState.update?.state} disabled={device.disabled} />
+                <DeviceImage device={device} otaState={deviceState.update?.state} disabled={device.disabled} noIndicator />
             </figure>
-            <div className="card-body">
+            <div className="card-body py-0 px-3">
                 <h2 className="card-title">
                     {device.friendly_name}
                     <DeviceControlEditName
@@ -245,7 +255,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         name={device.friendly_name}
                         renameDevice={renameDevice}
                         homeassistantEnabled={homeassistantEnabled}
-                        style="btn-link btn-sm btn-square"
+                        style="btn-link btn-md btn-square"
                     />
                 </h2>
                 <div className="flex flex-row flex-wrap gap-2">
@@ -254,14 +264,14 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         {device.definition ? `: ${device.definition.source}` : ""}
                     </span>
                     {!device.supported && (
-                        <span className="badge animate-bounce">
+                        <span className="badge">
                             <Link target="_blank" rel="noopener noreferrer" to={SUPPORT_NEW_DEVICES_DOCS_URL} className="link link-hover">
                                 {t(($) => $.how_to_add_support)}
                             </Link>
                         </span>
                     )}
                     {device.definition?.source === "external" && (
-                        <span className="badge animate-bounce">
+                        <span className="badge">
                             <SubmitConverterLink sourceIdx={sourceIdx} device={device} />
                         </span>
                     )}
@@ -273,102 +283,112 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <pre className="inline text-wrap break-all">{device.description || ""}</pre>
                     <DeviceControlUpdateDesc device={device} setDeviceDescription={setDeviceDescription} />
                 </div>
-                <div className="stats stats-vertical lg:stats-horizontal shadow">
-                    <div className="stat px-3">
-                        <div className="stat-title">{device.type}</div>
-                        <div className="stat-value text-xl tooltip tooltip-bottom" data-tip={t(($) => $.ieee_address)}>
-                            {device.ieee_address}
-                        </div>
-                        <div className="stat-desc text-base-content/0">-</div>
-                    </div>
-                    <div className="stat px-3">
-                        <div className="stat-title">{t(($) => $.network_address)}</div>
-                        <div className="stat-value text-xl tooltip tooltip-bottom" data-tip={t(($) => $.network_address_hex)}>
-                            {toHex(device.network_address)}
-                        </div>
-                        <div className="stat-desc">
-                            {t(($) => $.network_address_dec)}: {device.network_address}
-                        </div>
-                    </div>
-                    <div className="stat px-3">
-                        <div className="stat-title">{t(($) => $.power)}</div>
-                        <div className="stat-value text-xl">
-                            <PowerSource
-                                showLevel={true}
-                                device={device}
-                                batteryPercent={deviceState.battery as number}
-                                batteryState={deviceState.battery_state as string}
-                                batteryLow={deviceState.battery_low as boolean}
-                            />
-                        </div>
-                        <div className="stat-desc">
+                <div className="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-2 text-wrap">
+                    <div className="font-semibold text-base-content/70">{t(($) => $.type)}</div>
+                    <div className="min-w-0">
+                        <p className="font-semibold">{device.type}</p>
+                        <p className="text-base-content/50">
                             {device.type === "GreenPower" ? "GreenPower" : t(($) => $[snakeCase(device.power_source)] || $.unknown)}
-                        </div>
+                            <span className="ms-3">
+                                <PowerSource
+                                    showLevel={true}
+                                    device={device}
+                                    batteryPercent={deviceState.battery as number}
+                                    batteryState={deviceState.battery_state as string}
+                                    batteryLow={deviceState.battery_low as boolean}
+                                />
+                            </span>
+                        </p>
                     </div>
-                </div>
-                <div className="stats stats-vertical lg:stats-horizontal shadow">
-                    <div className="stat px-3">
-                        <div className="stat-title">{t(($) => $.zigbee_model)}</div>
-                        <div className="stat-value text-xl">{device.model_id}</div>
-                        <div className="stat-desc">
-                            {device.manufacturer} ({definitionDescription})
-                        </div>
+                    <div className="font-semibold text-base-content/70">{t(($) => $.ieee_address)}</div>
+                    <div className="min-w-0">
+                        <p className="font-semibold font-mono">{device.ieee_address}</p>
+                        <p className="text-base-content/50">
+                            <span className="tooltip tooltip-bottom">
+                                <span className="tooltip-content">
+                                    Organizationally Unique Identifier
+                                    <br />
+                                    (IEEE Vendor Prefix)
+                                </span>
+                                OUI: {oui}
+                            </span>
+                        </p>
                     </div>
-                    <div className="stat px-3">
-                        <div className="stat-title">{t(($) => $.model)}</div>
-                        <div className="stat-value text-xl">
-                            <ModelLink device={device} />
-                        </div>
-                        <div className="stat-desc">
-                            <VendorLink device={device} />
-                        </div>
+                    <div className="font-semibold text-base-content/70">{t(($) => $.network_address)}</div>
+                    <div className="min-w-0">
+                        <p className="font-semibold">
+                            <span className="tooltip tooltip-bottom" data-tip={t(($) => $.network_address_hex)}>
+                                <span className="font-mono">{toHex(device.network_address)}</span>
+                            </span>
+                        </p>
+                        <p className="text-base-content/50">
+                            {t(($) => $.network_address_dec)}: <span className="font-mono">{device.network_address}</span>
+                        </p>
+                    </div>
+                    <div className="font-semibold text-base-content/70">{t(($) => $.zigbee_model)}</div>
+                    <div className="min-w-0">
+                        <p className="font-semibold break-all">{device.model_id}</p>
+                        <p className="text-base-content/50">{device.manufacturer}</p>
+                    </div>
+                    <div className="font-semibold text-base-content/70">{t(($) => $.definition, { ns: "common" })} (Zigbee2MQTT)</div>
+                    <div className="min-w-0">
+                        <p className="font-semibold break-all">
+                            <DefinitionLink modelId={device.model_id} supported={device.supported} definitionModel={device.definition?.model} icon />
+                            {device.definition?.version && device.definition.version !== "0.0.0" ? ` (v${device.definition.version})` : null}
+                        </p>
+                        <p className="text-base-content/50">
+                            {definitionDescription} (
+                            <VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} icon />)
+                        </p>
                     </div>
                     {device.software_build_id ? (
-                        <div className="stat px-3">
-                            <div className="stat-title">{t(($) => $.firmware_id)}</div>
-                            <div className="stat-value text-xl">{device.software_build_id || "N/A"}</div>
-                            <div className="stat-desc">{device.date_code || "N/A"}</div>
-                        </div>
+                        <>
+                            <div className="font-semibold text-base-content/70">{t(($) => $.firmware_id)}</div>
+                            <div className="min-w-0">
+                                <p className="font-semibold">{device.software_build_id || "N/A"}</p>
+                                <p className="text-base-content/50">{device.date_code || "N/A"}</p>
+                            </div>
+                        </>
                     ) : null}
                     {canOta ? (
-                        <div className="stat px-3">
-                            <div className="stat-title">{t(($) => $.firmware_version, { ns: "ota" })}</div>
-                            <div className="stat-value text-xl">
-                                {deviceState.update?.installed_version ?? t(($) => $.unknown)}
-                                <span className="ms-3">
-                                    <OtaControlGroup
-                                        sourceIdx={sourceIdx}
-                                        device={device}
-                                        otaSettings={bridgeConfig.ota}
-                                        state={deviceState.update}
-                                        onCheckClick={onOtaCheckClick}
-                                        onUpdateClick={onOtaUpdateClick}
-                                        onScheduleClick={onOtaScheduleClick}
-                                        onUnscheduleClick={onOtaUnscheduleClick}
-                                    />
-                                </span>
+                        <>
+                            <div className="font-semibold text-base-content/70">{t(($) => $.firmware_version, { ns: "ota" })}</div>
+                            <div className="min-w-0">
+                                <p className="font-semibold">
+                                    {deviceState.update?.installed_version ?? t(($) => $.unknown)}
+                                    <span className="ms-3">
+                                        <OtaControlGroup
+                                            sourceIdx={sourceIdx}
+                                            device={device}
+                                            otaSettings={bridgeConfig.ota}
+                                            state={deviceState.update}
+                                            onCheckClick={onOtaCheckClick}
+                                            onUpdateClick={onOtaUpdateClick}
+                                            onScheduleClick={onOtaScheduleClick}
+                                            onUnscheduleClick={onOtaUnscheduleClick}
+                                        />
+                                    </span>
+                                </p>
+                                {otaInstalledVersion ? (
+                                    <p className="text-base-content/50">
+                                        {t(($) => $.app, { ns: "ota" })}: {`${otaInstalledVersion[0]} build ${otaInstalledVersion[1]}`}
+                                        {" | "}
+                                        {t(($) => $.stack, { ns: "ota" })}: {`${otaInstalledVersion[2]} build ${otaInstalledVersion[3]}`}
+                                    </p>
+                                ) : null}
                             </div>
-                            {otaInstalledVersion ? (
-                                <div className="stat-desc">
-                                    {t(($) => $.app, { ns: "ota" })}: {`${otaInstalledVersion[0]} build ${otaInstalledVersion[1]}`}
-                                    {" | "}
-                                    {t(($) => $.stack, { ns: "ota" })}: {`${otaInstalledVersion[2]} build ${otaInstalledVersion[3]}`}
-                                </div>
-                            ) : null}
-                        </div>
+                        </>
                     ) : null}
-                </div>
-                <div className="stats stats-vertical lg:stats-horizontal shadow">
-                    <div className="stat px-3">
-                        <div className="stat-title">{t(($) => $.last_seen)}</div>
-                        <div className="stat-value text-xl">
+                    <div className="font-semibold text-base-content/70">{t(($) => $.last_seen)}</div>
+                    <div className="min-w-0">
+                        <p className="font-semibold">
                             <LastSeen
                                 config={bridgeConfig.advanced.last_seen}
                                 lastSeen={deviceState.last_seen}
                                 fallback={t(($) => $.disabled, { ns: "common" })}
                             />
-                        </div>
-                        <div className="stat-desc">
+                        </p>
+                        <p className="text-base-content/50">
                             {t(($) => $.availability, { ns: "availability" })}
                             {": "}
                             <Availability
@@ -377,39 +397,41 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                                 availabilityFeatureEnabled={bridgeConfig.availability.enabled}
                                 availabilityEnabledForDevice={deviceAvailability != null ? !!deviceAvailability : undefined}
                             />
-                        </div>
+                        </p>
                     </div>
                     {deviceRecentActivity && (
-                        <div className="stat px-3 min-w-0">
-                            <div className="stat-title">{t(($) => $.recent_activity, { ns: "common" })}</div>
-                            <div className="stat-value text-xl truncate">
-                                <SourceDot idx={sourceIdx} autoHide />
-                                {deviceRecentActivity.desc}
+                        <>
+                            <div className="font-semibold text-base-content/70">{t(($) => $.recent_activity, { ns: "common" })}</div>
+                            <div className="min-w-0">
+                                <p className="font-semibold break-all">
+                                    <SourceDot idx={sourceIdx} autoHide />
+                                    {deviceRecentActivity.desc}
+                                </p>
+                                <p className="text-base-content/50">{new Date(deviceRecentActivity.timestamp).toLocaleString()}</p>
                             </div>
-                            <div className="stat-desc">{new Date(deviceRecentActivity.timestamp).toLocaleString()}</div>
-                        </div>
+                        </>
                     )}
-                </div>
-                <div className="stats stats-vertical lg:stats-horizontal shadow">
-                    <div className="stat px-3">
-                        <div className="stat-title">MQTT</div>
-                        <div className="stat-value text-xl">
+                    <div className="font-semibold text-base-content/70">MQTT</div>
+                    <div className="min-w-0">
+                        <p className="font-semibold break-all">
                             {bridgeConfig.mqtt.base_topic}/{device.friendly_name}
-                        </div>
-                        <div className="stat-desc text-base-content/0">-</div>
+                        </p>
+                        <p className="text-base-content/0">-</p>
                     </div>
                     {MULTI_INSTANCE && (
-                        <div className="stat px-3">
-                            <div className="stat-title">{t(($) => $.source, { ns: "common" })}</div>
-                            <div className="stat-value text-xl">
-                                <SourceDot idx={sourceIdx} alwaysShowName />
+                        <>
+                            <div className="font-semibold text-base-content/70">{t(($) => $.source, { ns: "common" })}</div>
+                            <div className="min-w-0">
+                                <p className="font-semibold">
+                                    <SourceDot idx={sourceIdx} alwaysShowName />
+                                </p>
+                                <p className="text-base-content/50">{API_URLS[sourceIdx]}</p>
                             </div>
-                            <div className="stat-desc">{API_URLS[sourceIdx]}</div>
-                        </div>
+                        </>
                     )}
                 </div>
-                <div className="card-actions justify-end mt-2">
-                    <ReportProblemLink sourceIdx={sourceIdx} device={device} />
+                <div className="card-actions justify-center md:justify-end mt-2 me-4">
+                    {device.supported && <ReportProblemLink sourceIdx={sourceIdx} device={device} />}
                     <DeviceControlGroup
                         sourceIdx={sourceIdx}
                         device={device}

@@ -81,13 +81,13 @@ const DevicePeek = memo(({ selection: { anchor, sourceIdx, device }, onClose }: 
                                 {device.friendly_name}
                             </Link>
                             <p className="truncate text-sm opacity-60">{description}</p>
-                            <span className="badge cursor-default tooltip tooltip-bottom" data-tip={t(($) => $.ieee_address)}>
+                            <span className="font-mono badge cursor-default tooltip tooltip-bottom" data-tip={t(($) => $.ieee_address)}>
                                 {device.ieee_address}
                             </span>
-                            <span className="badge cursor-default tooltip tooltip-bottom" data-tip={t(($) => $.network_address_hex)}>
+                            <span className="font-mono badge cursor-default tooltip tooltip-bottom" data-tip={t(($) => $.network_address_hex)}>
                                 {toHex(device.network_address, 4)}
                             </span>
-                            <span className="badge cursor-default tooltip tooltip-bottom" data-tip={t(($) => $.network_address_dec)}>
+                            <span className="font-mono badge cursor-default tooltip tooltip-bottom" data-tip={t(($) => $.network_address_dec)}>
                                 {device.network_address}
                             </span>
                         </div>

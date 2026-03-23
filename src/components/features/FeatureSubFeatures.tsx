@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Zigbee2MQTTDeviceOptions } from "zigbee2mqtt";
 import type { DeviceState, FeatureWithAnySubFeatures } from "../../types.js";
+import { isEmptyObject } from "../../utils.js";
 import Button from "../Button.js";
 import type { ValueWithLabelOrPrimitive } from "../editors/EnumEditor.js";
 import Feature from "./Feature.js";
@@ -13,10 +14,6 @@ interface FeatureSubFeaturesProps extends Omit<BaseFeatureProps<FeatureWithAnySu
     parentFeatures?: FeatureWithAnySubFeatures[];
     deviceState: DeviceState | Zigbee2MQTTDeviceOptions;
     endpointSpecific?: boolean;
-}
-
-interface CompositeState {
-    [key: string]: unknown;
 }
 
 function isFeatureRoot(type: FeatureWithAnySubFeatures["type"], parentFeatures: FeatureWithAnySubFeatures[] | undefined) {
@@ -45,16 +42,21 @@ export default function FeatureSubFeatures({
     steps,
 }: FeatureSubFeaturesProps) {
     const { type, property } = feature;
-    const [state, setState] = useState<CompositeState>({});
+    const [state, setState] = useState<Record<string, unknown>>({});
     const { t } = useTranslation("common");
     const combinedState = useMemo(() => ({ ...deviceState, ...state }), [deviceState, state]);
     const features = ("features" in feature && feature.features) || [];
     const isRoot = isFeatureRoot(type, parentFeatures);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
+    // biome-ignore lint/correctness/useExhaustiveDependencies: reset on device switch
     useEffect(() => {
         setState({});
     }, [device.ieee_address]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: let store win unless root has pending changes
+    useEffect(() => {
+        setState((prev) => (isRoot && !isEmptyObject(prev) ? prev : {}));
+    }, [deviceState]);
 
     const onFeatureChange = useCallback(
         async (value: Record<string, unknown>): Promise<void> => {
@@ -77,6 +79,7 @@ export default function FeatureSubFeatures({
         const newState = { ...deviceState, ...state };
 
         await onChange(property ? { [property]: newState } : newState);
+        setState({});
     }, [property, onChange, state, deviceState]);
 
     const onFeatureRead = useCallback(

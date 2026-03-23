@@ -15,7 +15,7 @@ import OtaUpdating from "../components/ota-page/OtaUpdating.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import TableSearch from "../components/table/TableSearch.js";
-import ModelLink from "../components/value-decorators/ModelLink.js";
+import DefinitionLink from "../components/value-decorators/DefinitionLink.js";
 import OtaLink from "../components/value-decorators/OtaLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
@@ -250,15 +250,21 @@ export default function OtaPage() {
                 }) => (
                     <>
                         <div>
-                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover font-mono">
                                 {device.ieee_address}
                             </Link>
                         </div>
                         <div className="flex flex-row gap-1">
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_hex, { ns: "zigbee" })}>
+                            <span
+                                className="badge badge-ghost badge-sm cursor-default font-mono"
+                                title={t(($) => $.network_address_hex, { ns: "zigbee" })}
+                            >
                                 {toHex(device.network_address, 4)}
                             </span>
-                            <span className="badge badge-ghost badge-sm cursor-default" title={t(($) => $.network_address_dec, { ns: "zigbee" })}>
+                            <span
+                                className="badge badge-ghost badge-sm cursor-default font-mono"
+                                title={t(($) => $.network_address_dec, { ns: "zigbee" })}
+                            >
                                 {device.network_address}
                             </span>
                         </div>
@@ -282,10 +288,10 @@ export default function OtaPage() {
                     },
                 }) => (
                     <>
-                        <ModelLink device={device} />
+                        <DefinitionLink modelId={device.model_id} supported={device.supported} definitionModel={device.definition?.model} />
                         <div>
                             <span className="badge badge-sm badge-ghost tooltip tooltip-bottom" data-tip={t(($) => $.manufacturer, { ns: "zigbee" })}>
-                                <VendorLink device={device} />
+                                <VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} />
                             </span>
                         </div>
                     </>

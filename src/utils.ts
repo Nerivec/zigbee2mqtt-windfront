@@ -17,10 +17,18 @@ export const randomString = (len: number): string =>
         .toString(36)
         .slice(2, 2 + len);
 
-export const getObjectFirstKey = <T>(object: T): string | undefined => {
-    for (const key in object) {
+export const getObjectFirstKey = <T extends object>(obj: T): string | undefined => {
+    for (const key in obj) {
         return key;
     }
+};
+
+export const isEmptyObject = <T extends object>(obj: T): boolean => {
+    for (const _k in obj) {
+        return false;
+    }
+
+    return true;
 };
 
 /**
@@ -37,6 +45,13 @@ export const getValidSourceIdx = (sourceIdx: string | undefined): [numSourceIdx:
     const numSourceIdx = Number(sourceIdx);
 
     return Number.isNaN(numSourceIdx) || !API_URLS[numSourceIdx] ? [0, false] : [numSourceIdx, true];
+};
+
+export const normalizeDefinitionModel = (model: string): string => {
+    const find = "[/| |:]";
+    const re = new RegExp(find, "g");
+
+    return model.replace(re, "_");
 };
 
 // #endregion

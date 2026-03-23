@@ -27,7 +27,10 @@ jobs:
       - name: Update EN i18n JSON file
         run: node ./scripts/override-z2m-en.mjs
 
-      - name: Lint
+      - name: Order EN i18n JSON file
+        run: node ./scripts/fix-i18n-order.mjs
+
+      - name: Format
         run: npm run check
 
       - name: Commit changes

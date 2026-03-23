@@ -30,6 +30,7 @@ const Activity = memo(({ devices, maxRows }: ActivityProps) => {
 
                         return (
                             <li
+                                // biome-ignore lint/suspicious/noArrayIndexKey: not alone
                                 key={`${entry.friendlyName}-${entry.sourceIdx}-${entry.activity}-${entry.time}-${i}`}
                                 className="flex flex-row gap-1 items-center w-full px-1 rounded-field hover:bg-base-200"
                             >
