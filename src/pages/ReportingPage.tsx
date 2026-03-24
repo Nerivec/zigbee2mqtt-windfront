@@ -1,5 +1,5 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { faArrowsRotate, faBan, faPenToSquare, faServer } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRotateLeft, faArrowsRotate, faBan, faPenToSquare, faServer, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
 import { type JSX, useCallback, useEffect, useMemo, useState } from "react";
@@ -84,47 +84,39 @@ export default function ReportingPage(): JSX.Element {
     const rowSelectionCount = useMemo(() => Object.keys(rowSelection).length, [rowSelection]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: can't dep table
-    const actOnFilteredSelected = useCallback(
-        async ([minRepInterval, maxRepInterval, repChange, disable]: [
-            number | undefined,
-            number | undefined,
-            number | undefined,
-            boolean | undefined,
-        ]) => {
-            const promises: Promise<void>[] = [];
+    const actOnFilteredSelected = useCallback(async ([minRepInterval, maxRepInterval, repChange]: [number, number, number]) => {
+        const promises: Promise<void>[] = [];
 
-            for (const row of table.table.getFilteredRowModel().rows) {
-                if (row.getIsSelected()) {
-                    const { sourceIdx, device, rule, bridgeDefinitions } = row.original;
-                    const attrDef = getClusterAttribute(bridgeDefinitions, device.ieee_address, rule.cluster, rule.attribute);
-                    // default to consider analog if can't find attribute definition
-                    const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
-                    const payload: Zigbee2MQTTAPI["bridge/request/device/reporting/configure"] = {
-                        id: device.ieee_address,
-                        endpoint: rule.endpoint,
-                        cluster: rule.cluster,
-                        attribute: rule.attribute,
-                        minimum_report_interval: minRepInterval === undefined ? rule.minimum_report_interval : minRepInterval,
-                        maximum_report_interval: disable ? 0xffff : maxRepInterval === undefined ? rule.maximum_report_interval : maxRepInterval,
-                        option: {}, // TODO: check this
-                    };
+        for (const row of table.table.getFilteredRowModel().rows) {
+            if (row.getIsSelected()) {
+                const { sourceIdx, device, rule, bridgeDefinitions } = row.original;
+                const attrDef = getClusterAttribute(bridgeDefinitions, device.ieee_address, rule.cluster, rule.attribute);
+                // default to consider analog if can't find attribute definition
+                const isAnalogAttribute = attrDef == null || isAnalogDataType(attrDef);
+                const payload: Zigbee2MQTTAPI["bridge/request/device/reporting/configure"] = {
+                    id: device.ieee_address,
+                    endpoint: rule.endpoint,
+                    cluster: rule.cluster,
+                    attribute: rule.attribute,
+                    minimum_report_interval: minRepInterval,
+                    maximum_report_interval: maxRepInterval,
+                    option: {}, // TODO: check this
+                };
 
-                    if (isAnalogAttribute) {
-                        payload.reportable_change = disable ? 0 : repChange === undefined ? rule.reportable_change : repChange;
-                    }
-
-                    promises.push(sendMessage(sourceIdx, "bridge/request/device/reporting/configure", payload));
+                if (isAnalogAttribute) {
+                    payload.reportable_change = repChange;
                 }
-            }
 
-            setRowSelection({});
-
-            if (promises.length > 0) {
-                await Promise.allSettled(promises);
+                promises.push(sendMessage(sourceIdx, "bridge/request/device/reporting/configure", payload));
             }
-        },
-        [],
-    );
+        }
+
+        setRowSelection({});
+
+        if (promises.length > 0) {
+            await Promise.allSettled(promises);
+        }
+    }, []);
 
     useEffect(() => {
         if (newRuleDevice && newRuleEndpoint) {
@@ -327,7 +319,7 @@ export default function ReportingPage(): JSX.Element {
             },
             {
                 id: "actions",
-                size: 110,
+                size: 150,
                 cell: ({
                     row: {
                         original: { sourceIdx, device, rule, bridgeDefinitions, isAnalogAttribute },
@@ -360,30 +352,49 @@ export default function ReportingPage(): JSX.Element {
                         >
                             <FontAwesomeIcon icon={faArrowsRotate} />
                         </ConfirmButton>
-                        {/* <ConfirmButton<void>
-                            title={t(($) => $.default, { ns: "common" })}
+                        <ConfirmButton<void>
+                            title={t(($) => $.reset, { ns: "common" })}
                             className="btn btn-sm btn-square btn-warning btn-outline join-item"
                             onClick={async () =>
-                                await applyRule(sourceIdx, device, {
-                                    ...rule,
-                                    minimum_report_interval: 0xffff,
-                                    maximum_report_interval: 0x0000,
-                                    reportable_change: 0,
-                                })
+                                // revert to device's default reporting
+                                await applyRule(
+                                    sourceIdx,
+                                    device,
+                                    { ...rule, minimum_report_interval: 0xffff, maximum_report_interval: 0x0000, reportable_change: 0 },
+                                    isAnalogAttribute,
+                                )
                             }
                             modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
                             modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                         >
                             <FontAwesomeIcon icon={faArrowRotateLeft} />
-                        </ConfirmButton> */}
+                        </ConfirmButton>
                         <ConfirmButton<void>
-                            title={t(($) => $.disable, { ns: "common" })}
+                            title={t(($) => $.disable_periodic, { ns: "common" })}
                             className="btn btn-sm btn-square btn-error btn-outline join-item"
                             onClick={async () =>
+                                // disable periodic reporting
                                 await applyRule(
                                     sourceIdx,
                                     device,
-                                    { ...rule, maximum_report_interval: 0xffff, reportable_change: 0 },
+                                    { ...rule, minimum_report_interval: 0x0000, maximum_report_interval: 0x0000 },
+                                    isAnalogAttribute,
+                                )
+                            }
+                            modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                            modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                        >
+                            <FontAwesomeIcon icon={faStopwatch} />
+                        </ConfirmButton>
+                        <ConfirmButton<void>
+                            title={t(($) => $.terminate, { ns: "common" })}
+                            className="btn btn-sm btn-square btn-error btn-outline join-item"
+                            onClick={async () =>
+                                // terminate reporting
+                                await applyRule(
+                                    sourceIdx,
+                                    device,
+                                    { ...rule, minimum_report_interval: 0x0000, maximum_report_interval: 0xffff, reportable_change: 0 },
                                     isAnalogAttribute,
                                 )
                             }
@@ -491,9 +502,10 @@ export default function ReportingPage(): JSX.Element {
                     >
                         {`${t(($) => $.edit_selected, { ns: "common" })} (${rowSelectionCount})`}
                     </Button>
-                    {/* <ConfirmButton
-                        item={[0xffff, 0x0000, 0, false]}
-                        className="btn btn-outline btn-warning btn-sm"
+                    <ConfirmButton
+                        // revert to device's default reporting
+                        item={[0xffff, 0x0000, 0]}
+                        className="btn btn-outline btn-error btn-sm"
                         onClick={actOnFilteredSelected}
                         title={t(($) => $.reset_selected, { ns: "common" })}
                         disabled={rowSelectionCount === 0}
@@ -501,17 +513,30 @@ export default function ReportingPage(): JSX.Element {
                         modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                     >
                         {`${t(($) => $.reset_selected, { ns: "common" })} (${rowSelectionCount})`}
-                    </ConfirmButton> */}
+                    </ConfirmButton>
                     <ConfirmButton
-                        item={[undefined, undefined, undefined, true /* disable */]}
+                        // disable periodic reporting
+                        item={[0x0000, 0x0000, 0]}
                         className="btn btn-outline btn-error btn-sm"
                         onClick={actOnFilteredSelected}
-                        title={t(($) => $.disable_selected, { ns: "common" })}
+                        title={t(($) => $.disable_selected_periodic, { ns: "common" })}
                         disabled={rowSelectionCount === 0}
                         modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
                         modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
                     >
-                        {`${t(($) => $.disable_selected, { ns: "common" })} (${rowSelectionCount})`}
+                        {`${t(($) => $.disable_selected_periodic, { ns: "common" })} (${rowSelectionCount})`}
+                    </ConfirmButton>
+                    <ConfirmButton
+                        // terminate reporting
+                        item={[0x0000, 0xffff, 0]}
+                        className="btn btn-outline btn-error btn-sm"
+                        onClick={actOnFilteredSelected}
+                        title={t(($) => $.terminate_selected, { ns: "common" })}
+                        disabled={rowSelectionCount === 0}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                    >
+                        {`${t(($) => $.terminate_selected, { ns: "common" })} (${rowSelectionCount})`}
                     </ConfirmButton>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { faArrowsRotate, faBan, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRotateLeft, faArrowsRotate, faBan, faCheck, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -178,25 +178,55 @@ const ReportingRow = memo(
                                     <FontAwesomeIcon icon={faArrowsRotate} />
                                 </ConfirmButton>
                             ) : null}
-                            {/* {!showOnlyApply && !stateRule.isNew ? (
-                            <ConfirmButton<void>
-                                title={t(($) => $.default, { ns: "common" })}
-                                className="btn btn-square btn-warning btn-outline join-item"
-                                onClick={async () => {
-                                    await onApply({ ...stateRule, minimum_report_interval: 0xffff, maximum_report_interval: 0x0000, reportable_change: 0 });
-                                }}
-                                modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
-                                modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
-                            >
-                                <FontAwesomeIcon icon={faArrowRotateLeft} />
-                            </ConfirmButton>
-                        ) : null} */}
                             {!showOnlyApply && !stateRule.isNew ? (
                                 <ConfirmButton<void>
-                                    title={t(($) => $.disable, { ns: "common" })}
+                                    title={t(($) => $.reset, { ns: "common" })}
+                                    className="btn btn-square btn-warning btn-outline join-item"
+                                    onClick={async () => {
+                                        // revert to device's default reporting
+                                        await onApply({
+                                            ...stateRule,
+                                            minimum_report_interval: 0xffff,
+                                            maximum_report_interval: 0x0000,
+                                            reportable_change: 0,
+                                        });
+                                    }}
+                                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                                >
+                                    <FontAwesomeIcon icon={faArrowRotateLeft} />
+                                </ConfirmButton>
+                            ) : null}
+                            {!showOnlyApply && !stateRule.isNew ? (
+                                <ConfirmButton<void>
+                                    title={t(($) => $.reset, { ns: "common" })}
                                     className="btn btn-square btn-error btn-outline join-item"
                                     onClick={async () => {
-                                        await onApply({ ...stateRule, maximum_report_interval: 0xffff, reportable_change: 0 });
+                                        // disable periodic reporting
+                                        await onApply({
+                                            ...stateRule,
+                                            minimum_report_interval: 0x0000,
+                                            maximum_report_interval: 0x0000,
+                                        });
+                                    }}
+                                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                                >
+                                    <FontAwesomeIcon icon={faStopwatch} />
+                                </ConfirmButton>
+                            ) : null}
+                            {!showOnlyApply && !stateRule.isNew ? (
+                                <ConfirmButton<void>
+                                    title={t(($) => $.terminate, { ns: "common" })}
+                                    className="btn btn-square btn-error btn-outline join-item"
+                                    onClick={async () => {
+                                        // terminate reporting
+                                        await onApply({
+                                            ...stateRule,
+                                            minimum_report_interval: 0x0000,
+                                            maximum_report_interval: 0xffff,
+                                            reportable_change: 0,
+                                        });
                                     }}
                                     modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
                                     modalCancelLabel={t(($) => $.cancel, { ns: "common" })}

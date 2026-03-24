@@ -7,7 +7,7 @@ import { isValidReportingRuleEdit } from "../../reporting/index.js";
 import Modal from "../Modal.js";
 
 type ReportingBatchEditModalProps = {
-    onApply(args: [number, number, number, false]): Promise<void>;
+    onApply(args: [number, number, number]): Promise<void>;
 };
 
 export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingBatchEditModalProps): JSX.Element => {
@@ -18,7 +18,7 @@ export const ReportingBatchEditModal = NiceModal.create(({ onApply }: ReportingB
     const [repChange, setRepChange] = useState<number | null>(null);
 
     const handleApply = useCallback(async (): Promise<void> => {
-        await onApply([minRepInterval as number, maxRepInterval as number, repChange ?? 0, false]);
+        await onApply([minRepInterval as number, maxRepInterval as number, repChange ?? 0]);
         modal.remove();
     }, [onApply, modal, minRepInterval, maxRepInterval, repChange]);
 
