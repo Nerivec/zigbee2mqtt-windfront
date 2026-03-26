@@ -58,6 +58,7 @@ import {
     faLightbulb,
     faLocationArrow,
     faLock,
+    faLockOpen,
     faLungs,
     faMap,
     faMobileVibrate,
@@ -390,6 +391,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
 
     // Data / update / configuration
     update_frequency: faRotate,
+    refresh: faRotate,
     refresh_rate: faRotate,
     forceupdate: faRotate,
     update: faRotate,
@@ -630,6 +632,7 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
         case "carbon_monoxide":
         case "end_of_life":
         case "fault":
+        case "gas":
         case "water_leak":
         case "tamper": {
             if (value) {
@@ -698,6 +701,16 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
                 case "OFF": {
                     icon = faVolumeXmark;
 
+                    break;
+                }
+            }
+
+            break;
+        }
+        case "child_lock": {
+            switch (value) {
+                case "UNLOCK": {
+                    icon = faLockOpen;
                     break;
                 }
             }
