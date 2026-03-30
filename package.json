@@ -63,7 +63,7 @@
         "@vitest/coverage-v8": "^4.1.0",
         "daisyui": "^5.5.19",
         "file-saver": "^2.0.5",
-        "i18next": "^25.10.5",
+        "i18next": "^26.0.2",
         "i18next-browser-languagedetector": "^8.2.1",
         "jsdom": "^29.0.1",
         "jszip": "^3.10.1",
