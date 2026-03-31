@@ -229,7 +229,7 @@ export default function TableFiltersDrawer<T>({ columns, resetFilters }: TableFi
                 {columns.map((col) => {
                     const meta = col.columnDef.meta;
 
-                    if (!meta || !meta.filterVariant) {
+                    if (!meta?.filterVariant) {
                         return null;
                     }
 
