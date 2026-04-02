@@ -280,7 +280,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     </span>
                 </div>
                 <div>
-                    {device.description || ""}
+                    <p className="text-wrap break-all text-base-content/70">{device.description || ""}</p>
                     <DeviceControlUpdateDesc device={device} setDeviceDescription={setDeviceDescription} />
                 </div>
                 <div className="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-2 text-wrap">
