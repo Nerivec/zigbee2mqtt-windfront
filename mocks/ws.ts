@@ -17,14 +17,37 @@ import { NETWORK_MAP_RESPONSE } from "./networkMapResponse.js";
 import { PERMIT_JOIN_RESPONSE } from "./permitJoinResponse.js";
 import { TOUCHLINK_RESPONSE } from "./touchlinkResponse.js";
 
+// Mutable device state cache — updated on successful SETs, used for GET and reconnect
+const deviceStateCache = new Map<string, Record<string, unknown>>();
+for (const ds of DEVICE_STATES) {
+    deviceStateCache.set(ds.topic, merge({}, ds.payload));
+}
+
 const cloneDeviceState = (ieee: string) => {
     const device = BRIDGE_DEVICES.payload.find((d) => d.ieee_address === ieee);
 
     if (device) {
-        const deviceState = DEVICE_STATES.find((state) => state.topic === device.friendly_name || state.topic === device.ieee_address);
+        const topic = deviceStateCache.has(device.friendly_name) ? device.friendly_name : device.ieee_address;
+        const cached = deviceStateCache.get(topic);
 
-        return merge({}, deviceState);
+        if (cached) {
+            return { topic, payload: merge({}, cached) };
+        }
     }
+};
+
+/**
+ * Resolve a topic (IEEE address or friendly name) to the friendly name.
+ * In real Z2M, state updates are always published to the friendly_name topic.
+ */
+const resolveToFriendlyName = (topic: string): string => {
+    if (topic.startsWith("0x")) {
+        const device = BRIDGE_DEVICES.payload.find((d) => d.ieee_address === topic);
+        if (device) {
+            return device.friendly_name;
+        }
+    }
+    return topic;
 };
 
 const randomString = (len: number): string =>
@@ -35,8 +58,9 @@ const randomString = (len: number): string =>
 // const randomIntInclusive = (min: number, max: number) =>  Math.floor(Math.random() * (max - min + 1)) + min;
 
 export function startServer() {
+    const port = Number.parseInt(process.env.MOCK_WS_PORT || "8579", 10);
     const wss = new WebSocketServer({
-        port: 8579,
+        port,
     });
 
     wss.on("connection", (ws) => {
@@ -59,8 +83,8 @@ export function startServer() {
             ws.send(JSON.stringify(message));
         }
 
-        for (const message of DEVICE_STATES) {
-            ws.send(JSON.stringify(message));
+        for (const [topic, payload] of deviceStateCache) {
+            ws.send(JSON.stringify({ topic, payload }));
         }
 
         for (const ds of DEVICE_STATES) {
@@ -331,15 +355,133 @@ export function startServer() {
                     break;
                 }
                 default: {
-                    if (msg.topic.endsWith("/set")) {
-                        if ("command" in msg.payload) {
+                    const isDeviceSet = msg.topic.endsWith("/request/set") || msg.topic.endsWith("/set");
+                    const isDeviceGet = msg.topic.endsWith("/request/get") || msg.topic.endsWith("/get");
+
+                    if (isDeviceSet || isDeviceGet) {
+                        const deviceTopic = msg.topic.replace(/\/(?:request\/)?(set|get)$/, "");
+                        const commandType = isDeviceGet ? "get" : "set";
+
+                        // SET-only special cases: command execution and attribute reading
+                        if (isDeviceSet && "command" in msg.payload) {
                             setTimeout(() => {
                                 ws.send(JSON.stringify(BRIDGE_LOGGING_EXECUTE_COMMAND));
                             }, 500);
-                        } else if ("read" in msg.payload) {
+                        } else if (isDeviceSet && "read" in msg.payload) {
                             setTimeout(() => {
                                 ws.send(JSON.stringify(BRIDGE_LOGGING_READ_ATTR));
                             }, 500);
+                        } else {
+                            // Transaction Response API: Send response on {device}/response/{set|get}
+                            const requestId = msg.payload?.z2m_transaction ?? msg.payload?.z2m?.request_id;
+
+                            if (requestId) {
+                                const friendlyName = resolveToFriendlyName(deviceTopic);
+                                const sleepyDelays: Record<string, [number, number]> = {
+                                    "test/sleepy-device-fast": [5000, 0],
+                                    "test/sleepy-device-slow": [30000, 5000],
+                                };
+                                const sleepyDelay = sleepyDelays[friendlyName];
+
+                                // Strip z2m_transaction from payload (real backend strips before converter processing)
+                                const { z2m_transaction: _tx, z2m: _z2m, ...dataPayload } = msg.payload;
+
+                                // Ping: no attribute keys beyond z2m_transaction
+                                const isPing = Object.keys(dataPayload).length === 0;
+
+                                /** Send state topic update after successful command */
+                                const sendStateUpdate = () => {
+                                    const stateTopic = resolveToFriendlyName(deviceTopic);
+
+                                    if (!isDeviceGet) {
+                                        // SET: merge set values into persistent cache
+                                        const cached = deviceStateCache.get(stateTopic) || deviceStateCache.get(deviceTopic);
+                                        if (cached) {
+                                            merge(cached, dataPayload);
+                                        }
+                                    }
+
+                                    // Send full cached state (GET or SET)
+                                    const cached = deviceStateCache.get(stateTopic) || deviceStateCache.get(deviceTopic);
+                                    if (cached) {
+                                        cached.last_seen = new Date().toISOString();
+                                        ws.send(JSON.stringify({ topic: stateTopic, payload: { ...cached } }));
+                                    }
+                                };
+
+                                if (isPing) {
+                                    // Ping response — immediate
+                                    setTimeout(() => {
+                                        ws.send(
+                                            JSON.stringify({
+                                                topic: `${deviceTopic}/response/${commandType}`,
+                                                payload: {
+                                                    data: {},
+                                                    status: "ok",
+                                                    z2m_transaction: requestId,
+                                                },
+                                            }),
+                                        );
+                                    }, 25);
+                                } else if (sleepyDelay) {
+                                    // Sleepy device: converter blocks until device wakes up.
+                                    // Fast variant (~5s) responds before frontend's 10s timeout.
+                                    // Slow variant (~30-35s) triggers "queued" UX after timeout.
+                                    const wakeupDelay = sleepyDelay[0] + Math.random() * sleepyDelay[1];
+
+                                    setTimeout(() => {
+                                        ws.send(
+                                            JSON.stringify({
+                                                topic: `${deviceTopic}/response/${commandType}`,
+                                                payload: {
+                                                    status: "ok",
+                                                    z2m_transaction: requestId,
+                                                    data: isDeviceGet ? {} : dataPayload,
+                                                },
+                                            }),
+                                        );
+
+                                        sendStateUpdate();
+                                    }, wakeupDelay);
+                                } else {
+                                    // Regular device: 50-200ms delay, 90% success
+                                    const delay = 50 + Math.random() * 150;
+
+                                    setTimeout(() => {
+                                        const isSuccess = Math.random() > 0.1;
+
+                                        if (isSuccess) {
+                                            ws.send(
+                                                JSON.stringify({
+                                                    topic: `${deviceTopic}/response/${commandType}`,
+                                                    payload: {
+                                                        status: "ok",
+                                                        z2m_transaction: requestId,
+                                                        data: isDeviceGet ? {} : dataPayload,
+                                                    },
+                                                }),
+                                            );
+
+                                            sendStateUpdate();
+                                        } else {
+                                            // Error response with actual failed key names
+                                            const failedKeys = Object.keys(dataPayload).join(",");
+
+                                            ws.send(
+                                                JSON.stringify({
+                                                    topic: `${deviceTopic}/response/${commandType}`,
+                                                    payload: {
+                                                        data: {},
+                                                        status: "error",
+                                                        z2m_transaction: requestId,
+                                                        error: `failed:${failedKeys || "unknown"}`,
+                                                    },
+                                                }),
+                                            );
+                                        }
+                                    }, delay);
+                                }
+                            }
                         }
                     } else if (msg.topic.startsWith("bridge/request/")) {
                         sendResponseOK();
@@ -351,5 +493,5 @@ export function startServer() {
         });
     });
 
-    console.log("Started WebSocket server");
+    console.log(`Started WebSocket server on port ${port}`);
 }
