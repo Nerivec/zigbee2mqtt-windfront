@@ -552,11 +552,11 @@ const Docs = memo(({ sourceIdx, definitionModel }: DocsProps) => {
             >
                 <DocsContent docsPromise={docsPromise} />
                 <div className="divider" />
-                <div className="flex flex-row flex-wrap items-center gap-1 mt-3">
+                <div className="flex flex-row flex-wrap items-center gap-1 mt-3 text-wrap break-all">
                     Source:
                     <span>{url}</span>
                 </div>
-                <div className="flex flex-row flex-wrap items-center gap-1">
+                <div className="flex flex-row flex-wrap items-center gap-1 text-wrap break-all">
                     Edit:
                     <a href={editUrl} className="link link-primary" target="_blank" rel="noopener noreferrer">
                         {editUrl} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
