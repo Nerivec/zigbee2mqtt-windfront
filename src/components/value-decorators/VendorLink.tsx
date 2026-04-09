@@ -10,9 +10,10 @@ type VendorLinkProps = {
     supported: Device["supported"];
     definitionVendor?: NonNullable<Device["definition"]>["vendor"];
     icon?: boolean;
+    brackets?: boolean;
 };
 
-const VendorLink = memo(({ supported, definitionVendor, icon = false }: VendorLinkProps) => {
+const VendorLink = memo(({ supported, definitionVendor, icon = false, brackets = false }: VendorLinkProps) => {
     const { t } = useTranslation("zigbee");
     let label = t(($) => $.unsupported);
     let url = SUPPORT_NEW_DEVICES_DOCS_URL;
@@ -24,8 +25,13 @@ const VendorLink = memo(({ supported, definitionVendor, icon = false }: VendorLi
 
     return (
         <Link target="_blank" rel="noopener noreferrer" to={url} className="link link-hover">
-            {label}
-            {icon ? <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="ms-0.5" /> : null}
+            {brackets && "("}
+            {label.split(" ").slice(0, -1).join(" ")}
+            <span className="whitespace-nowrap">
+                {label.split(" ").slice(-1)[0]}
+                {icon && <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="ms-0.5" />}
+                {brackets && ")"}
+            </span>
         </Link>
     );
 });
