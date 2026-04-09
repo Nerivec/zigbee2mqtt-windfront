@@ -140,7 +140,7 @@ function parseMarkdownInline(md: string): ReactNode[] {
 
         if (inlineCode !== undefined) {
             parsedLine.push(
-                <span key={`md-code-${matchStartIndex}`} className="badge badge-ghost">
+                <span key={`md-code-${matchStartIndex}`} className="badge badge-ghost font-mono">
                     {inlineCode}
                 </span>,
             );
