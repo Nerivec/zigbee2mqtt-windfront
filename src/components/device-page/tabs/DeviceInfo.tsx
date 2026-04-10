@@ -279,8 +279,8 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         {t(($) => $.interview_state)}: {deviceInterviewState}
                     </span>
                 </div>
-                <div>
-                    <p className="text-wrap break-all text-base-content/70">{device.description || ""}</p>
+                <div className="flex flex-row flex-wrap items-center text-wrap break-all text-base-content/70">
+                    {device.description || ""}
                     <DeviceControlUpdateDesc device={device} setDeviceDescription={setDeviceDescription} />
                 </div>
                 <div className="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-2 text-wrap">
