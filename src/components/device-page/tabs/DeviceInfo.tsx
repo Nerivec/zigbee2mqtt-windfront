@@ -339,8 +339,9 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             {device.definition?.version && device.definition.version !== "0.0.0" ? ` (v${device.definition.version})` : null}
                         </p>
                         <p className="text-base-content/50">
-                            {definitionDescription} (
-                            <VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} icon />)
+                            {definitionDescription}
+                            <br />
+                            <VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} icon />
                         </p>
                     </div>
                     {device.software_build_id ? (
