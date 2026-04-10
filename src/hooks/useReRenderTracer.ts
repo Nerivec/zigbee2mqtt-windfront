@@ -7,6 +7,7 @@ export default function useReRenderTracer(props: any, label = "useReRenderTracer
     useEffect(() => {
         const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
             if (prev.current[k] !== v) {
+                // @ts-expect-error dynamic
                 ps[k] = [prev.current[k], v];
             }
 

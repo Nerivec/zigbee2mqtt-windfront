@@ -41,7 +41,7 @@ const GroupPicker = memo(({ groups, label, required, disabled, onChange }: Group
                     {required ? " *" : ""}
                 </legend>
             )}
-            <Select
+            <Select<BaseSelectOption>
                 unstyled
                 placeholder={t(($) => $.select_group)}
                 aria-label={label ?? t(($) => $.select_group)}

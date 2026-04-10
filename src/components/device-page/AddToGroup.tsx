@@ -25,7 +25,10 @@ const AddToGroup = memo(({ sourceIdx, device, nonMemberGroups }: AddToGroupProps
     const onGroupChange = useCallback(
         (selectedGroup: Group): void => {
             setGroupId(selectedGroup.id);
-            setEndpoint(endpoints.values().next().value);
+
+            const firstEndpoint = endpoints.values().next().value;
+
+            setEndpoint(firstEndpoint ?? "");
         },
         [endpoints],
     );

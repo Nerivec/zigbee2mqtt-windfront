@@ -57,7 +57,7 @@ const RawNetworkData = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                             relations={relations}
                             highlight={highlight}
                             setHighlightValue={setHighlightValue}
-                            relationship={key}
+                            relationship={Number(key)}
                         />,
                     );
                 }

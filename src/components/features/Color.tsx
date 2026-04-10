@@ -16,17 +16,17 @@ const Color = memo((props: ColorProps) => {
     } = props;
 
     const value = useMemo(() => {
-        const val = {} as AnyColor;
-        const sanitizedDeviceValue = deviceValue != null && typeof deviceValue === "object" ? deviceValue : {};
+        const val: Record<string, string | number> = {};
+        const sanitizedDeviceValue = (deviceValue != null && typeof deviceValue === "object" ? deviceValue : {}) as Record<string, string>;
 
         for (const innerFeature of features) {
             // just in case the number comes in as string
             const propValue = Number.parseFloat(sanitizedDeviceValue[innerFeature.name]);
 
-            val[innerFeature.name] = Number.isNaN(propValue) ? 0 : propValue;
+            val[innerFeature.name as keyof AnyColor] = Number.isNaN(propValue) ? 0 : propValue;
         }
 
-        return val;
+        return val as AnyColor;
     }, [deviceValue, features]);
 
     const gamut = useMemo(() => {

@@ -1,14 +1,14 @@
 import { faBars, faInbox } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, type useState } from "react";
+import { type Dispatch, memo, type SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../store.js";
 import { useNavBarContent } from "./NavBarContext.js";
 
 type NavBarProps = {
-    setSidebarCollapsed: ReturnType<typeof useState<boolean>>[1];
+    setSidebarCollapsed: Dispatch<SetStateAction<boolean>>;
     showNotifications: boolean;
-    setShowNotifications: ReturnType<typeof useState<boolean>>[1];
+    setShowNotifications: Dispatch<SetStateAction<boolean>>;
 };
 
 const NavBar = memo(({ setSidebarCollapsed, showNotifications, setShowNotifications }: NavBarProps) => {

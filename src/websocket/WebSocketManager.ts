@@ -212,7 +212,7 @@ class WebSocketManager {
             try {
                 await this.#enqueueBridgeRequest(sourceIdx, conn, transaction, finalPayload);
             } catch (error) {
-                console.error(`Failed bridge API call (${API_NAMES[sourceIdx]} | ${sourceIdx})`, error.message, error.cause);
+                console.error(`Failed bridge API call (${API_NAMES[sourceIdx]} | ${sourceIdx})`, error);
             }
 
             return;
@@ -717,6 +717,10 @@ class WebSocketManager {
             conn.dirtyMetrics = false;
         }
     }
+}
+
+declare global {
+    var __WINDFRONT_WS_MANAGER__: WebSocketManager | undefined;
 }
 
 //-- Global / HMR-safe singleton handling

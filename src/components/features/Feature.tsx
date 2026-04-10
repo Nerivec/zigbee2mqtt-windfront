@@ -45,7 +45,7 @@ export default function Feature({
     endpointSpecific,
     parentFeatures,
 }: FeatureProps): JSX.Element {
-    const deviceValue = feature.property ? deviceState[feature.property] : deviceState;
+    const deviceValue = feature.property ? deviceState[feature.property as keyof typeof deviceState] : deviceState;
     const key = getFeatureKey(feature);
     const genericParams = {
         device,
@@ -137,7 +137,7 @@ export default function Feature({
                             feature={feature}
                             key={key}
                             {...genericParams}
-                            deviceState={feature.property ? deviceState[feature.property] : deviceState}
+                            deviceState={feature.property ? (deviceState[feature.property as keyof typeof deviceState] as DeviceState) : deviceState}
                         />
                     </div>
                 </FeatureWrapper>

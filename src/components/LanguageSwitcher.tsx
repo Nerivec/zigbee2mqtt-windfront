@@ -2,7 +2,7 @@ import { type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import DialogDropdown from "./DialogDropdown.js";
 
-const LOCALES_NAMES_MAP = {
+const LOCALES_NAMES_MAP: Record<string, string> = {
     bg: "Български",
     ca: "Català",
     cs: "Česky",

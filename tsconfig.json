@@ -17,6 +17,5 @@
         "checkJs": true,
         "skipLibCheck": true
     },
-    "suppressImplicitAnyIndexErrors": true,
     "include": ["./src/**/*", "./src/**/*.json", "package.json"]
 }

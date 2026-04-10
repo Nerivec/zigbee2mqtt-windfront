@@ -1,4 +1,15 @@
-import { type ChangeEvent, type InputHTMLAttributes, memo, useCallback, useEffect, useState } from "react";
+import {
+    type ChangeEvent,
+    type FocusEvent,
+    type InputHTMLAttributes,
+    type KeyboardEvent,
+    type MouseEvent,
+    memo,
+    type TouchEvent,
+    useCallback,
+    useEffect,
+    useState,
+} from "react";
 import EnumEditor, { type ValueWithLabelOrPrimitive } from "./EnumEditor.js";
 
 type RangeProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
@@ -23,7 +34,8 @@ const RangeEditor = memo((props: RangeProps) => {
     }, []);
 
     const onSubmit = useCallback(
-        async (e) => {
+        async (e: TouchEvent<HTMLInputElement> | MouseEvent<HTMLInputElement> | KeyboardEvent<HTMLInputElement> | FocusEvent<HTMLInputElement>) => {
+            // @ts-expect-error this is actually valid...
             if (!e.target.validationMessage) {
                 await onChange(currentValue === "" ? null : currentValue);
             }

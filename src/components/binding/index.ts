@@ -98,9 +98,11 @@ export const aggregateBindingsByEndpoints = (device: Device): BindingEndpoint[] 
 
 export const findPossibleClusters = (rule: BindingRule, deviceEndpoints: Device["endpoints"], target?: Device | Group) => {
     const clusters: Set<string> = new Set(rule.clusters);
-    const srcEndpoint = deviceEndpoints[rule.source.endpoint];
+    const srcEndpoint = deviceEndpoints[rule.source.endpoint as number]; // XXX: wrong typing?
     const dstEndpoint =
-        rule.target.type === "endpoint" && rule.target.endpoint != null ? (target as Device | undefined)?.endpoints[rule.target.endpoint] : undefined;
+        rule.target.type === "endpoint" && rule.target.endpoint != null
+            ? (target as Device | undefined)?.endpoints[rule.target.endpoint as number]
+            : undefined;
     const allClustersValid = rule.target.type === "group" || (target as Device | undefined)?.type === "Coordinator";
 
     if (srcEndpoint && (dstEndpoint || allClustersValid)) {

@@ -1,4 +1,4 @@
-import i18n, { type ResourceLanguage } from "i18next";
+import i18n, { type Resource, type ResourceLanguage } from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import { register } from "timeago.js";
@@ -126,7 +126,7 @@ register("vi", timeVi);
 register("zh", timeZh);
 register("zh-CN", timeZhCn);
 
-const resources = {
+const resources: Resource = {
     bg: bgTranslations as ResourceLanguage,
     ca: caTranslations as ResourceLanguage,
     cs: csTranslations as ResourceLanguage,

@@ -23,8 +23,9 @@ const AddDeviceToGroup = memo(({ sourceIdx, devices, group }: AddDeviceToGroupPr
         setDeviceIeee(selectedDevice.ieee_address);
 
         const deviceEndpoints = getEndpoints(selectedDevice);
+        const firstEndpoint = deviceEndpoints.values().next().value;
 
-        setEndpoint(deviceEndpoints.values().next().value);
+        setEndpoint(firstEndpoint ?? "");
     }, []);
 
     const onAddClick = useCallback(

@@ -1,5 +1,17 @@
 import { FontAwesomeIcon, type FontAwesomeIconProps } from "@fortawesome/react-fontawesome";
-import { type ChangeEvent, type DetailedHTMLProps, type InputHTMLAttributes, memo, useCallback, useEffect, useState } from "react";
+import {
+    type ChangeEvent,
+    type DetailedHTMLProps,
+    type FocusEvent,
+    type InputHTMLAttributes,
+    type KeyboardEvent,
+    type MouseEvent,
+    memo,
+    type TouchEvent,
+    useCallback,
+    useEffect,
+    useState,
+} from "react";
 
 type SliderFieldProps = Omit<
     DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
@@ -33,8 +45,12 @@ const SliderField = memo((props: SliderFieldProps) => {
     );
 
     const onSubmitHandler = useCallback(
-        (e) => {
-            onSubmit?.(currentValue, !e.target.validationMessage);
+        (e: TouchEvent<HTMLInputElement> | MouseEvent<HTMLInputElement> | KeyboardEvent<HTMLInputElement> | FocusEvent<HTMLInputElement>) => {
+            onSubmit?.(
+                currentValue,
+                // @ts-expect-error this is actually valid...
+                !e.target.validationMessage,
+            );
         },
         [onSubmit, currentValue],
     );

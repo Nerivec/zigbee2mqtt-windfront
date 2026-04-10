@@ -40,7 +40,7 @@ const List = memo((props: Props) => {
             if (Array.isArray(deviceValue)) {
                 setCurrentValue(clampList(deviceValue, length_min, length_max, (min) => buildDefaultArray(min, item_type.type)));
             } else if (property && typeof deviceValue === "object") {
-                const prop = deviceValue[property];
+                const prop = deviceValue[property as keyof typeof deviceValue];
 
                 if (prop) {
                     setCurrentValue(clampList(prop, length_min, length_max, (min) => buildDefaultArray(min, item_type.type)));
@@ -142,10 +142,10 @@ const List = memo((props: Props) => {
     }
 
     if (access & FeatureAccessMode.STATE) {
-        const arrayValue: DeviceState[] = Array.isArray(deviceValue)
-            ? deviceValue
+        const arrayValue: DeviceState | DeviceState[] | undefined = Array.isArray(deviceValue)
+            ? (deviceValue as DeviceState[])
             : property && typeof deviceValue === "object" && deviceValue != null
-              ? deviceValue[property]
+              ? (deviceValue[property as keyof typeof deviceValue] as DeviceState)
               : undefined;
 
         return "type" in item_type && item_type.type === "composite" && Array.isArray(arrayValue) ? (

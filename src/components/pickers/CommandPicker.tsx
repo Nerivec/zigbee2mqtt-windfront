@@ -51,7 +51,7 @@ const CommandPicker = memo(({ sourceIdx, cluster, device, onChange, value, label
                     {required ? " *" : ""}
                 </legend>
             )}
-            <Select
+            <Select<BaseSelectOption>
                 unstyled
                 placeholder={t(($) => $.select_command)}
                 aria-label={label ?? t(($) => $.select_command)}

@@ -61,7 +61,7 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
     }, [devices, currentSourceIdx, currentDevice, tab]);
 
     return (
-        <Select
+        <Select<SelectOption>
             unstyled
             placeholder={
                 currentDevice && currentSourceIdx !== undefined ? (

@@ -61,7 +61,7 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
     }, [groups, currentSourceIdx, currentGroup, tab]);
 
     return (
-        <Select
+        <Select<SelectOption>
             unstyled
             placeholder={
                 currentGroup && currentSourceIdx !== undefined ? (

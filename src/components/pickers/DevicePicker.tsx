@@ -75,7 +75,7 @@ const DevicePicker = memo(({ devices, value, label, detail, required, disabled, 
                     {required ? " *" : ""}
                 </legend>
             )}
-            <Select
+            <Select<BaseSelectOption>
                 unstyled
                 placeholder={t(($) => $.select_device)}
                 aria-label={label ?? t(($) => $.select_device)}

@@ -1,3 +1,5 @@
+import type { Props as ReactSelectProps } from "react-select";
+
 export const AVAILABILITY_FEATURE_TOPIC_ENDING = "/availability";
 
 export const LOG_LEVELS = ["debug", "info", "warning", "error"];
@@ -84,7 +86,8 @@ export enum InterviewState {
     Failed = "FAILED",
 }
 
-export const REACT_SELECT_DEFAULT_CLASSNAMES = {
+// biome-ignore lint/suspicious/noExplicitAny: dynamic
+export const REACT_SELECT_DEFAULT_CLASSNAMES: ReactSelectProps<any>["classNames"] = {
     clearIndicator: () => "text-base-content/70 hover:text-error cursor-pointer",
     container: () => "w-full !max-w-full",
     control: ({ isDisabled }) => `w-full input input-bordered !h-auto ${isDisabled ? "pointer-events-none opacity-50" : ""}`,

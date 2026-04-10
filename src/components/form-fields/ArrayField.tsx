@@ -35,7 +35,7 @@ const ArrayField = memo((props: ArrayFieldProps) => {
         setCurrentValues((prev) => [...prev, ""]);
     }, []);
 
-    const onRemoveClick = useCallback((idx) => {
+    const onRemoveClick = useCallback((idx: number) => {
         setCurrentValues((prev) => {
             const newValues = Array.from(prev);
             newValues.splice(idx, 1);

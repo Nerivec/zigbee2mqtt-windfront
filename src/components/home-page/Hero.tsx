@@ -8,17 +8,19 @@ import { MULTI_INSTANCE } from "../../store.js";
 import Button from "../Button.js";
 import { QuickFilter } from "./index.js";
 
+type Filter = [QuickFilter, boolean | string | number];
+
 export interface HeroProps extends HomePageDataCounters {
     setQuickFilter: (value: SetStateAction<readonly [QuickFilter, unknown] | null>) => void;
     quickFilter: readonly [QuickFilter, unknown] | null;
 }
 
-const SEARCH_DISABLED = [QuickFilter.Disabled, true] as const;
-const SEARCH_AVAILABILITY_OFFLINE = [QuickFilter.Availability, "offline"] as const;
-const SEARCH_TYPE_ROUTER = [QuickFilter.Type, "Router"] as const;
-const SEARCH_TYPE_END_DEVICE = [QuickFilter.Type, "EndDevice"] as const;
-const SEARCH_TYPE_GREENPOWER = [QuickFilter.Type, "GreenPower"] as const;
-const SEARCH_LQI_LOW = [QuickFilter.Lqi, 50] as const;
+const SEARCH_DISABLED = [QuickFilter.Disabled, true] as const satisfies Filter;
+const SEARCH_AVAILABILITY_OFFLINE = [QuickFilter.Availability, "offline"] as const satisfies Filter;
+const SEARCH_TYPE_ROUTER = [QuickFilter.Type, "Router"] as const satisfies Filter;
+const SEARCH_TYPE_END_DEVICE = [QuickFilter.Type, "EndDevice"] as const satisfies Filter;
+const SEARCH_TYPE_GREENPOWER = [QuickFilter.Type, "GreenPower"] as const satisfies Filter;
+const SEARCH_LQI_LOW = [QuickFilter.Lqi, 50] as const satisfies Filter;
 
 const Hero = memo(
     ({
@@ -38,7 +40,7 @@ const Hero = memo(
     }: HeroProps) => {
         const { t } = useTranslation(["common", "availability", "zigbee", "settings"]);
         const onFilterClick = useCallback(
-            (data) => {
+            (data: Filter) => {
                 if (data[0] === QuickFilter.Type) {
                     setQuickFilter(quickFilter?.[0] === data[0] && quickFilter?.[1] === data[1] ? null : data);
                 } else {

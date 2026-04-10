@@ -1,6 +1,6 @@
 import { faAngleDown, faTowerBroadcast } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type CSSProperties, type JSX, memo, useCallback, useMemo, useState } from "react";
+import { type CSSProperties, type Dispatch, type JSX, memo, type SetStateAction, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import store2 from "store2";
 import { useShallow } from "zustand/react/shallow";
@@ -19,7 +19,7 @@ type PermitJoinButtonProps = {
 
 type PermitJoinDropdownProps = {
     selectedRouter: [number, Device | undefined];
-    setSelectedRouter: ReturnType<typeof useState<[number, Device | undefined]>>[1];
+    setSelectedRouter: Dispatch<SetStateAction<[number, Device | undefined]>>;
 };
 
 const PermitJoinDropdown = memo(({ selectedRouter, setSelectedRouter }: PermitJoinDropdownProps) => {

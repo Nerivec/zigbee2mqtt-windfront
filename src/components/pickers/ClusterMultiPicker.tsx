@@ -41,7 +41,7 @@ const ClusterMultiPicker = memo(({ clusters, onChange, label, value, disabled, r
                     {required ? " *" : ""}
                 </legend>
             )}
-            <Select
+            <Select<BaseSelectOption, true>
                 unstyled
                 placeholder={t(($) => $.select_cluster)}
                 aria-label={label ?? t(($) => $.select_cluster)}

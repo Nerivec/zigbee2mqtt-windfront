@@ -23,7 +23,7 @@ const ScenePicker = memo(({ onSceneSelected, scenes = [], disabled }: ScenePicke
 
     return (
         <fieldset className="fieldset">
-            <CreatableSelect
+            <CreatableSelect<BaseSelectOption>
                 unstyled
                 placeholder={t(($) => $.scene_name)}
                 aria-label={t(($) => $.scene_name)}

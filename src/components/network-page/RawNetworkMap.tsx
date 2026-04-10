@@ -151,7 +151,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                 },
                 label: node.friendlyName,
                 labelVisible: true,
-                fill: NODE_TYPE_FILL_COLORS[node.type],
+                fill: NODE_TYPE_FILL_COLORS[node.type as keyof typeof NODE_TYPE_FILL_COLORS],
                 icon,
             });
         }
@@ -228,7 +228,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                 labelVisible: true,
                 source: link.source.ieeeAddr,
                 target: link.target.ieeeAddr,
-                fill: EDGE_RELATIONSHIP_FILL_COLORS[link.relationship],
+                fill: EDGE_RELATIONSHIP_FILL_COLORS[link.relationship as keyof typeof EDGE_RELATIONSHIP_FILL_COLORS],
             });
         }
 

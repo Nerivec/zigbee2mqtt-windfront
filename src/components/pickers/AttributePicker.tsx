@@ -51,7 +51,7 @@ const AttributePicker = memo(({ sourceIdx, cluster, device, onChange, value, lab
                     {required ? " *" : ""}
                 </legend>
             )}
-            <Select
+            <Select<BaseSelectOption>
                 unstyled
                 placeholder={t(($) => $.select_attribute)}
                 aria-label={label ?? t(($) => $.select_attribute)}

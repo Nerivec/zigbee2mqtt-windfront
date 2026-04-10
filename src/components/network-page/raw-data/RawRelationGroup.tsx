@@ -8,29 +8,31 @@ import RawRelation from "./RawRelation.js";
 type RawRelationGroupProps = {
     sourceIdx: number;
     devices: Device[];
-    relationship: string;
+    relationship: number;
     relations: Zigbee2MQTTNetworkMap["links"];
     highlight: (friendlyName: string) => boolean;
     setHighlightValue: (friendlyName: string) => void;
 };
 
 const ZIGBEE_RELATIONSHIP_TMAP = {
-    [ZigbeeRelationship.NeighborIsParent]: "parent",
-    [ZigbeeRelationship.NeighborIsAChild]: "children",
-    [ZigbeeRelationship.NeighborIsASibling]: "siblings",
-    [ZigbeeRelationship.NoneOfTheAbove]: "zigbee:none",
+    [ZigbeeRelationship.NeighborIsParent]: "parent" as const,
+    [ZigbeeRelationship.NeighborIsAChild]: "children" as const,
+    [ZigbeeRelationship.NeighborIsASibling]: "siblings" as const,
+    [ZigbeeRelationship.NoneOfTheAbove]: "none" as const,
     // Z2M is currently skipping > 3, so this is never present
-    [ZigbeeRelationship.NeighborIsPreviousChild]: "previous_children",
+    [ZigbeeRelationship.NeighborIsPreviousChild]: "previous_children" as const,
 };
 
 const RawRelationGroup = memo(({ sourceIdx, devices, relationship, relations, highlight, setHighlightValue }: RawRelationGroupProps) => {
     const { t } = useTranslation(["network", "zigbee"]);
+    const relationshipType = ZIGBEE_RELATIONSHIP_TMAP[relationship as keyof typeof ZIGBEE_RELATIONSHIP_TMAP];
 
     return (
         <li>
             <details>
                 <summary>
-                    {t(ZIGBEE_RELATIONSHIP_TMAP[relationship])} ({relations.length})
+                    {relationshipType === "none" ? t(($) => $.none, { ns: "zigbee" }) : t(($) => $[relationshipType as keyof (typeof $)["network"]])}{" "}
+                    ({relations.length})
                 </summary>
                 <ul>
                     {relations.map((relation) => {
