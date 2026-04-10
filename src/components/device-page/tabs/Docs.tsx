@@ -1,9 +1,8 @@
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, type ReactNode, Suspense, use } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../../store.js";
 import { normalizeDefinitionModel } from "../../../utils.js";
+import ExternalIcon from "../../value-decorators/ExternalIcon.js";
 
 type DocsProps = {
     sourceIdx: number;
@@ -102,7 +101,8 @@ const parseMarkdownLinks = (segment: string, keyPrefix: string): ReactNode[] => 
         } else {
             nodes.push(
                 <a key={`${keyPrefix}-link-${matchStartIndex}`} href={href} className="link link-primary" target="_blank" rel="noopener noreferrer">
-                    {linkText} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                    {linkText}
+                    <ExternalIcon />
                 </a>,
             );
         }
@@ -559,7 +559,8 @@ const Docs = memo(({ sourceIdx, definitionModel }: DocsProps) => {
                 <div className="flex flex-row flex-wrap items-center gap-1 text-wrap break-all">
                     Edit:
                     <a href={editUrl} className="link link-primary" target="_blank" rel="noopener noreferrer">
-                        {editUrl} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                        {editUrl}
+                        <ExternalIcon />
                     </a>
                 </div>
             </Suspense>

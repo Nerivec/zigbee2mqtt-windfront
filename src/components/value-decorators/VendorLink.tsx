@@ -1,10 +1,9 @@
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { SUPPORT_NEW_DEVICES_DOCS_URL } from "../../consts.js";
 import type { Device } from "../../types.js";
+import ExternalIcon from "./ExternalIcon.js";
 
 type VendorLinkProps = {
     supported: Device["supported"];
@@ -25,7 +24,7 @@ const VendorLink = memo(({ supported, definitionVendor, icon = false }: VendorLi
     return (
         <Link target="_blank" rel="noopener noreferrer" to={url} className="link link-hover">
             {label}
-            {icon ? <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="ms-0.5" /> : null}
+            {icon ? <ExternalIcon /> : null}
         </Link>
     );
 });
