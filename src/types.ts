@@ -27,6 +27,15 @@ export type PowerSource =
     | "Emergency mains constantly powered"
     | "Emergency mains and transfer switch";
 
+export type SnakeCasePowerSource =
+    | "unknown"
+    | "mains_single_phase"
+    | "mains_3_phase"
+    | "battery"
+    | "dc_source"
+    | "emergency_mains_constantly_powered"
+    | "emergency_mains_and_transfer_switch";
+
 export type Device = OmitFunctions<Zigbee2MQTTDevice>;
 
 export type Group = Zigbee2MQTTGroup;

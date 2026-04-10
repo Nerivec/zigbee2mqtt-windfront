@@ -18,22 +18,22 @@ type RawRelationProps = DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLL
 };
 
 const DEVICE_TYPE_BIT = {
-    0: "Coordinator",
-    1: "Router",
-    2: "EndDevice",
-    3: "Unknown",
+    0: "Coordinator" as const,
+    1: "Router" as const,
+    2: "EndDevice" as const,
+    3: "Unknown" as const,
 };
 
 const RX_ON_WHEN_IDLE_BIT = {
-    0: "badge-error",
-    1: "badge-success",
-    2: "badge-neutral",
+    0: "badge-error" as const,
+    1: "badge-success" as const,
+    2: "badge-neutral" as const,
 };
 
 const PERMIT_JOINING_BIT = {
-    0: "badge-error",
-    1: "badge-success",
-    2: "badge-neutral",
+    0: "badge-error" as const,
+    1: "badge-success" as const,
+    2: "badge-neutral" as const,
 };
 
 const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlightValue, ...rest }: RawRelationProps) => {
@@ -80,12 +80,18 @@ const RawRelation = memo(({ sourceIdx, relation, device, highlight, setHighlight
                     <li>
                         <span className="cursor-default justify-between">
                             <span className="badge badge-soft" title={t(($) => $.device_type, { ns: "zigbee" })}>
-                                {t(($) => $[DEVICE_TYPE_BIT[relation.deviceType]], { ns: "zigbee" })}
+                                {t(($) => $[DEVICE_TYPE_BIT[relation.deviceType as keyof typeof DEVICE_TYPE_BIT]], { ns: "zigbee" })}
                             </span>
-                            <span className={`badge badge-soft ${RX_ON_WHEN_IDLE_BIT[relation.rxOnWhenIdle]}`} title={`${relation.rxOnWhenIdle}`}>
+                            <span
+                                className={`badge badge-soft ${RX_ON_WHEN_IDLE_BIT[relation.rxOnWhenIdle as keyof typeof RX_ON_WHEN_IDLE_BIT]}`}
+                                title={`${relation.rxOnWhenIdle}`}
+                            >
                                 {t(($) => $.rx_on_when_idle, { ns: "zigbee" })}
                             </span>
-                            <span className={`badge badge-soft ${PERMIT_JOINING_BIT[relation.permitJoining]}`} title={`${relation.permitJoining}`}>
+                            <span
+                                className={`badge badge-soft ${PERMIT_JOINING_BIT[relation.permitJoining as keyof typeof PERMIT_JOINING_BIT]}`}
+                                title={`${relation.permitJoining}`}
+                            >
                                 {t(($) => $.permit_joining, { ns: "zigbee" })}
                             </span>
                         </span>

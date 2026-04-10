@@ -233,7 +233,10 @@ export default function TableFiltersDrawer<T>({ columns, resetFilters }: TableFi
                         return null;
                     }
 
-                    const label = typeof col.columnDef.header === "string" && col.columnDef.header ? col.columnDef.header : t(($) => $[col.id]);
+                    const label =
+                        typeof col.columnDef.header === "string" && col.columnDef.header
+                            ? col.columnDef.header
+                            : t(($) => $[col.id as keyof typeof $]);
 
                     return (
                         <Fragment key={col.id}>

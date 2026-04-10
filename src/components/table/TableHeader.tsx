@@ -21,7 +21,9 @@ export default function TableHeader<T>({ table }: TableHeaderProps<T>) {
                             type="checkbox"
                             className="checkbox checkbox-xs"
                         />
-                        {typeof column.columnDef.header === "string" && column.columnDef.header ? column.columnDef.header : t(($) => $[column.id])}
+                        {typeof column.columnDef.header === "string" && column.columnDef.header
+                            ? column.columnDef.header
+                            : t(($) => $[column.id as keyof typeof $])}
                     </label>
                 ),
             )}

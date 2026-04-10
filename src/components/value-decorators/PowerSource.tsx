@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import snakeCase from "lodash/snakeCase.js";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
-import type { Device, PowerSource as TPowerSource } from "../../types.js";
+import type { Device, SnakeCasePowerSource, PowerSource as TPowerSource } from "../../types.js";
 
 interface PowerSourceProps {
     device?: Device;
@@ -95,18 +95,24 @@ const PowerSource = memo((props: PowerSourceProps) => {
         case "Mains (single phase)":
         case "Mains (3 phase)":
         case "DC Source": {
-            return <FontAwesomeIcon icon={faPlug} title={t(($) => $[snakeCase(source)])} {...rest} />;
+            return <FontAwesomeIcon icon={faPlug} aria-label={t(($) => $[snakeCase(source) as SnakeCasePowerSource])} {...rest} />;
         }
         case "Emergency mains and transfer switch":
         case "Emergency mains constantly powered": {
-            return <FontAwesomeIcon icon={faPlugCircleExclamation} title={t(($) => $[snakeCase(source)])} {...rest} />;
+            return <FontAwesomeIcon icon={faPlugCircleExclamation} aria-label={t(($) => $[snakeCase(source) as SnakeCasePowerSource])} {...rest} />;
         }
         default: {
             if (device?.type === "GreenPower") {
-                return <FontAwesomeIcon icon={faLeaf} title={"Green"} {...rest} />;
+                return <FontAwesomeIcon icon={faLeaf} aria-label={"Green"} {...rest} />;
             }
 
-            return <FontAwesomeIcon icon={faQuestion} title={source ? t(($) => $[snakeCase(source)]) : undefined} {...rest} />;
+            return (
+                <FontAwesomeIcon
+                    icon={faQuestion}
+                    aria-label={source ? t(($) => $[snakeCase(source) as SnakeCasePowerSource]) : undefined}
+                    {...rest}
+                />
+            );
         }
     }
 });

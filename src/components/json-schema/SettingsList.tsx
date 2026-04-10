@@ -257,7 +257,7 @@ const groupProperties = (
                     depth,
                     required.includes(key),
                     property.description
-                        ? `${t(($) => $[newPath], { defaultValue: property.description })}${property.default != null ? ` (${t(($) => $.default, { ns: "common", defaultValue: "Default" })}: ${property.default})` : ""}`
+                        ? `${t(($) => $[newPath as keyof (typeof $)["settingsSchemaDescriptions"]], { defaultValue: property.description })}${property.default != null ? ` (${t(($) => $.default, { ns: "common", defaultValue: "Default" })}: ${property.default})` : ""}`
                         : property.default != null
                           ? `${t(($) => $.default, { ns: "common", defaultValue: "Default" })}: ${property.default}}`
                           : undefined,

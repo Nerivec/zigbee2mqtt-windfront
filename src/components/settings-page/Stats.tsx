@@ -3,6 +3,7 @@ import { type JSX, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { AppState } from "../../store.js";
+import type { SnakeCasePowerSource } from "../../types.js";
 
 type StatRowProps = {
     name: string;
@@ -55,7 +56,7 @@ const Stats = memo((props: StatsProps) => {
             const typeStr = t(($) => $[device.type], { ns: "zigbee" });
             const modelId = device.model_id || t(($) => $.unknown, { ns: "zigbee" });
             const manufacturer = device.manufacturer || t(($) => $.unknown, { ns: "zigbee" });
-            const powerSource = t(($) => $[snakeCase(device.power_source || "unknown")], { ns: "zigbee" });
+            const powerSource = t(($) => $[snakeCase(device.power_source || "unknown") as SnakeCasePowerSource], { ns: "zigbee" });
 
             byType[typeStr] = (byType[typeStr] || 0) + 1;
             byPowerSource[powerSource] = (byPowerSource[powerSource] || 0) + 1;

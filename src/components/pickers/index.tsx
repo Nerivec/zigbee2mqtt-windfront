@@ -3,7 +3,8 @@ import type { AppState } from "../../store.js";
 import type { ClusterDefinition } from "../../types.js";
 
 export interface ClusterGroup {
-    name: string;
+    // keys in i18n "zigbee"
+    name: "custom_clusters" | "input_clusters" | "output_clusters" | "other_zcl_clusters" | "available" | "possible";
     clusters: Set<string>;
 }
 
@@ -24,7 +25,8 @@ export const getClusterAttributes = (
         }
     }
 
-    const stdCluster: BridgeDefinitions["clusters"][keyof BridgeDefinitions["clusters"]] | undefined = bridgeDefinitions.clusters[clusterName];
+    const stdCluster: BridgeDefinitions["clusters"][keyof BridgeDefinitions["clusters"]] | undefined =
+        bridgeDefinitions.clusters[clusterName as keyof typeof bridgeDefinitions.clusters];
 
     if (stdCluster) {
         return stdCluster.attributes;
@@ -57,7 +59,8 @@ export const getClusterCommands = (
         }
     }
 
-    const stdCluster: BridgeDefinitions["clusters"][keyof BridgeDefinitions["clusters"]] | undefined = bridgeDefinitions.clusters[clusterName];
+    const stdCluster: BridgeDefinitions["clusters"][keyof BridgeDefinitions["clusters"]] | undefined =
+        bridgeDefinitions.clusters[clusterName as keyof typeof bridgeDefinitions.clusters];
 
     if (stdCluster) {
         return stdCluster.commands;

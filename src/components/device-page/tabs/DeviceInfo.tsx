@@ -8,7 +8,7 @@ import { useShallow } from "zustand/react/shallow";
 import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
 import { OUI } from "../../../oui.js";
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../../../store.js";
-import type { Device } from "../../../types.js";
+import type { Device, SnakeCasePowerSource } from "../../../types.js";
 import { toHex } from "../../../utils.js";
 import { sendMessage } from "../../../websocket/WebSocketManager.js";
 import DeviceControlEditName from "../../device/DeviceControlEditName.js";
@@ -288,7 +288,9 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <div className="min-w-0">
                         <p className="font-semibold">{device.type}</p>
                         <p className="text-base-content/50">
-                            {device.type === "GreenPower" ? "GreenPower" : t(($) => $[snakeCase(device.power_source)] || $.unknown)}
+                            {device.type === "GreenPower"
+                                ? "GreenPower"
+                                : t(($) => $[snakeCase(device.power_source || "unknown") as SnakeCasePowerSource])}
                             <span className="ms-3">
                                 <PowerSource
                                     showLevel={true}

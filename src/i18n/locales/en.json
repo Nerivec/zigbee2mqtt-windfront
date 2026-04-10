@@ -49,6 +49,7 @@
         "execute": "Execute",
         "execute_command": "Execute command",
         "exposes": "Exposes",
+        "error": "Error",
         "failed": "Failed",
         "feature_name": "Feature name",
         "feature_type": "Feature type",
