@@ -140,7 +140,7 @@ function parseMarkdownInline(md: string): ReactNode[] {
 
         if (inlineCode !== undefined) {
             parsedLine.push(
-                <span key={`md-code-${matchStartIndex}`} className="badge badge-ghost font-mono">
+                <span key={`md-code-${matchStartIndex}`} className="badge badge-ghost font-mono inline text-base-content/80">
                     {inlineCode}
                 </span>,
             );
@@ -484,7 +484,7 @@ function parseMarkdown(md: string): ReactNode[] {
         if (line.startsWith("```")) {
             if (inCodeBlock) {
                 outputNodes.push(
-                    <pre key={`md-block-${blockIdx++}`} className="w-full bg-base-200 my-1 py-2 px-4 rounded-sm overflow-x-auto">
+                    <pre key={`md-block-${blockIdx++}`} className="w-full bg-base-200 text-base-content/80 my-1 py-2 px-4 rounded-sm overflow-x-auto">
                         <code>{codeBlock.join("\n")}</code>
                     </pre>,
                 );
