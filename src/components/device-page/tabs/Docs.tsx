@@ -102,7 +102,8 @@ const parseMarkdownLinks = (segment: string, keyPrefix: string): ReactNode[] => 
         } else {
             nodes.push(
                 <a key={`${keyPrefix}-link-${matchStartIndex}`} href={href} className="link link-primary" target="_blank" rel="noopener noreferrer">
-                    {linkText} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                    {linkText}
+                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="ms-0.5" />
                 </a>,
             );
         }
@@ -140,7 +141,7 @@ function parseMarkdownInline(md: string): ReactNode[] {
 
         if (inlineCode !== undefined) {
             parsedLine.push(
-                <span key={`md-code-${matchStartIndex}`} className="badge badge-ghost font-mono">
+                <span key={`md-code-${matchStartIndex}`} className="badge badge-ghost font-mono inline text-base-content/80 pt-1 pb-1">
                     {inlineCode}
                 </span>,
             );
@@ -484,7 +485,7 @@ function parseMarkdown(md: string): ReactNode[] {
         if (line.startsWith("```")) {
             if (inCodeBlock) {
                 outputNodes.push(
-                    <pre key={`md-block-${blockIdx++}`} className="w-full bg-base-200 my-1 py-2 px-4 rounded-sm overflow-x-auto">
+                    <pre key={`md-block-${blockIdx++}`} className="w-full bg-base-200 text-base-content/80 my-1 py-2 px-4 rounded-sm overflow-x-auto">
                         <code>{codeBlock.join("\n")}</code>
                     </pre>,
                 );
@@ -559,7 +560,8 @@ const Docs = memo(({ sourceIdx, definitionModel }: DocsProps) => {
                 <div className="flex flex-row flex-wrap items-center gap-1 text-wrap break-all">
                     Edit:
                     <a href={editUrl} className="link link-primary" target="_blank" rel="noopener noreferrer">
-                        {editUrl} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                        {editUrl}
+                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="ms-0.5" />
                     </a>
                 </div>
             </Suspense>
