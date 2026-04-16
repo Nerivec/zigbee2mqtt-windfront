@@ -1017,8 +1017,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                             requiresRestart: true,
                             minimum: -128,
                             maximum: 127,
-                            description:
-                                "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)",
+                            description: "Transmit power of adapter (5dBm default)",
                         },
                         output: {
                             type: "string",

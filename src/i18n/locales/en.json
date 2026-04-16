@@ -407,7 +407,7 @@
         "advanced-output": "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)",
         "advanced-pan_id": "Zigbee pan ID, changing requires re-pairing all devices!",
         "advanced-timestamp_format": "Log timestamp format (see https://github.com/taylorhakes/fecha?tab=readme-ov-file#formatting-tokens for all supported tokens)",
-        "advanced-transmit_power": "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)",
+        "advanced-transmit_power": "Transmit power of adapter (5dBm default)",
         "availability": "Checks whether devices are online/offline",
         "availability-active": "Options for active devices (routers/mains powered)",
         "availability-active-backoff": "Enable timeout backoff on failed availability pings (x1.5, x3, x6, x12...)",
