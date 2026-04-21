@@ -61,25 +61,21 @@ export const normalizeDefinitionModel = (model: string): string => {
 export const stringifyWithUndefinedAsNull = (data: Record<string, unknown>): string => JSON.stringify(data, (_k, v) => (v === undefined ? null : v));
 
 export const getLastSeenEpoch = (lastSeen: unknown, lastSeenConfig: LastSeenConfig): number | undefined => {
-    if (!lastSeen) {
+    if (!lastSeen || lastSeenConfig === "disable") {
         return undefined;
     }
 
-    switch (lastSeenConfig) {
-        case "ISO_8601":
-        case "ISO_8601_local":
-            return Date.parse(lastSeen as string);
-
-        case "epoch":
-            return lastSeen as number;
-
-        case "disable":
-            return undefined;
-
-        default:
-            console.error(`Unknown last_seen type ${lastSeenConfig}`);
-            return undefined;
+    if (lastSeenConfig === "ISO_8601" || lastSeenConfig === "ISO_8601_local") {
+        return typeof lastSeen === "string" ? Date.parse(lastSeen) : undefined;
     }
+
+    if (lastSeenConfig === "epoch") {
+        return typeof lastSeen === "number" ? lastSeen : undefined;
+    }
+
+    console.error(`Unknown last_seen type ${lastSeenConfig}`);
+
+    return undefined;
 };
 
 export const toHex = (input: number, padding = 4): string => {
