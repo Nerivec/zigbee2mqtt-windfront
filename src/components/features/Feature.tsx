@@ -1,5 +1,4 @@
-import type React from "react";
-import type { FunctionComponent, JSX, PropsWithChildren } from "react";
+import type { FunctionComponent, HTMLAttributes, JSX, PropsWithChildren } from "react";
 import type { Zigbee2MQTTDeviceOptions } from "zigbee2mqtt";
 import type { ColorFeature, Device, DeviceState, FeatureWithAnySubFeatures, GradientFeature } from "../../types.js";
 import type { ValueWithLabelOrPrimitive } from "../editors/EnumEditor.js";
@@ -20,7 +19,7 @@ import Numeric from "./Numeric.js";
 import Switch from "./Switch.js";
 import Text from "./Text.js";
 
-interface FeatureProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+interface FeatureProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
     feature: FeatureWithAnySubFeatures;
     device: Device;
     onChange(value: Record<string, unknown>): Promise<void>;
