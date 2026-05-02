@@ -38,6 +38,7 @@ export const OUI = new Map([
     ["001834", "Texas Instruments"],
     ["001ab6", "Texas Instruments"],
     ["001ec0", "Microchip Technology Inc."],
+    ["001fee", "ubisys technologies GmbH"],
     ["00212e", "dresden-elektronik"],
     ["0021ba", "Texas Instruments"],
     ["0021e8", "Murata Manufacturing Co., Ltd."],
