@@ -342,6 +342,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     play_voice: faVolumeHigh,
     pulse_command: faVolumeHigh,
     squawk: faVolumeHigh,
+    silence_mode: faVolumeHigh,
     siren_and_light: faBell,
     sound: faVolumeUp,
 
@@ -351,6 +352,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     broadcast_alarm: faTriangleExclamation,
     linkage_alarm: faTriangleExclamation,
     alarm: faTriangleExclamation,
+    alarm_status: faTriangleExclamation,
     alert_behaviour: faTriangleExclamation,
     warning: faTriangleExclamation,
     clear_fault: faCircleCheck,
@@ -699,6 +701,17 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
                 case "mute":
                 case "muted":
                 case "OFF": {
+                    icon = faVolumeXmark;
+
+                    break;
+                }
+            }
+
+            break;
+        }
+        case "silence_mode": {
+            switch (value) {
+                case "ON": {
                     icon = faVolumeXmark;
 
                     break;
