@@ -223,6 +223,7 @@ const makeInitialState = (): AppState => {
                     network_key: [],
                     timestamp_format: "",
                     output: "json",
+                    enable_external_js: false,
                 },
                 devices: {},
                 device_options: {},
