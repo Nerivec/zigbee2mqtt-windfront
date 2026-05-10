@@ -41,6 +41,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                 pan_id: 2345,
                 timestamp_format: "YYYY-MM-DD HH:mm:ss",
                 transmit_power: 20,
+                enable_external_js: false,
             },
             availability: {
                 active: {
@@ -294,7 +295,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                                     default: 0,
                                     minimum: 0,
                                     description:
-                                        "Pause availability pings when backoff reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing.",
+                                        "Pause availability pings when the backoff multiplier reaches over this limit until a new Zigbee message is received from the device. A value of zero disables pausing.",
                                 },
                             },
                             required: ["timeout"],
@@ -578,6 +579,15 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                             description: "Location of override OTA index file",
                             examples: ["index.json"],
                         },
+                        image_block_request_timeout: {
+                            type: "number",
+                            title: "Image block request timeout",
+                            description:
+                                "Timeout (in milliseconds) during OTA updates. You can increase this value if your device is requesting blocks too slowly.",
+                            default: 150000,
+                            minimum: 10000,
+                            maximum: 2147483647,
+                        },
                         image_block_response_delay: {
                             type: "number",
                             title: "Image block response delay",
@@ -585,7 +595,6 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                                 "Limits the rate of requests (in milliseconds) during OTA updates to reduce network congestion. You can increase this value if your network appears unstable during OTA.",
                             default: 250,
                             minimum: 50,
-                            requiresRestart: true,
                         },
                         default_maximum_data_size: {
                             type: "number",
@@ -595,7 +604,6 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                             default: 50,
                             minimum: 10,
                             maximum: 100,
-                            requiresRestart: true,
                         },
                     },
                 },
@@ -612,9 +620,9 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                         },
                         package: {
                             type: "string",
-                            enum: ["zigbee2mqtt-frontend", "zigbee2mqtt-windfront"],
+                            enum: ["zigbee2mqtt-windfront", "zigbee2mqtt-frontend"],
                             title: "Package",
-                            default: "zigbee2mqtt-frontend",
+                            default: "zigbee2mqtt-windfront",
                             requiresRestart: true,
                             description: "Package used for the frontend",
                         },
@@ -1007,7 +1015,8 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                             type: "string",
                             title: "Timestamp format",
                             requiresRestart: true,
-                            description: "Log timestamp format",
+                            description:
+                                "Log timestamp format (see https://github.com/taylorhakes/fecha?tab=readme-ov-file#formatting-tokens for all supported tokens)",
                             default: "YYYY-MM-DD HH:mm:ss",
                             examples: ["YYYY-MM-DD HH:mm:ss.SSS"],
                         },
@@ -1017,8 +1026,7 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                             requiresRestart: true,
                             minimum: -128,
                             maximum: 127,
-                            description:
-                                "Transmit power of adapter, only available for Z-Stack (CC253*/CC2652/CC1352) adapters, CC2652 = 5dbm, CC1352 max is = 20dbm (5dbm default)",
+                            description: "Transmit power of adapter, in dBm (max is often 20, refer to chip specifications)",
                         },
                         output: {
                             type: "string",
@@ -1027,6 +1035,14 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                             description:
                                 "Examples when 'state' of a device is published json: topic: 'zigbee2mqtt/my_bulb' payload '{\"state\": \"ON\"}' attribute: topic 'zigbee2mqtt/my_bulb/state' payload 'ON' attribute_and_json: both json and attribute (see above)",
                             default: "json",
+                        },
+                        enable_external_js: {
+                            type: "boolean",
+                            title: "Enable external JS",
+                            description:
+                                "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+                            default: true,
+                            requiresRestart: true,
                         },
                     },
                 },
@@ -1155,11 +1171,18 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                             title: "Home Assistant",
                             properties: {
                                 name: {
-                                    type: "string",
+                                    type: ["string", "null"],
                                     title: "Home Assistant name",
                                     description: "Name of the device in Home Assistant",
                                 },
                             },
+                        },
+                        disable_automatic_update_check: {
+                            type: "boolean",
+                            title: "Disable automatic update check",
+                            description:
+                                "Zigbee devices may request a firmware update, and do so frequently, causing Zigbee2MQTT to reach out to third party servers. If you disable these device initiated checks, you can still initiate a firmware update check manually.",
+                            default: false,
                         },
                     },
                     required: ["friendly_name"],
@@ -1195,6 +1218,17 @@ export const BRIDGE_INFO: Message<Zigbee2MQTTAPI["bridge/info"]> = {
                             type: "array",
                             items: {
                                 type: "string",
+                            },
+                        },
+                        homeassistant: {
+                            type: ["object", "null"],
+                            title: "Home Assistant",
+                            properties: {
+                                name: {
+                                    type: ["string", "null"],
+                                    title: "Home Assistant name",
+                                    description: "Name of the group in Home Assistant",
+                                },
                             },
                         },
                     },

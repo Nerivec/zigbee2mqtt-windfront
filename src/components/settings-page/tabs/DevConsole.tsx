@@ -1,3 +1,5 @@
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, type NavLinkRenderProps } from "react-router";
@@ -17,6 +19,8 @@ export type TabName = "mqtt" | "external_converters" | "external_extensions" | "
 type DevConsoleProps = { sourceIdx: number; tab: TabName };
 
 type DevConsoleTabProps = { sourceIdx: number };
+
+const ENABLE_EXTERNAL_JS_URL = "https://www.zigbee2mqtt.io/guide/configuration/all-settings.html#enable-external-js";
 
 const MqttTab = ({ sourceIdx }: DevConsoleTabProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
@@ -91,6 +95,7 @@ const MqttTab = ({ sourceIdx }: DevConsoleTabProps) => {
 
 const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
+    const externalJsEnabled = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.enable_external_js));
     const converters = useAppStore(useShallow((state) => state.converters[sourceIdx]));
     const [selectedConverter, setSelectedConverter] = useState<AppState["converters"][number][number]>();
     const [converter, setConverter] = useState({ name: "", code: "" });
@@ -136,7 +141,7 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
         await sendMessage(sourceIdx, "bridge/request/converter/remove", { name: converter.name });
     }, [sourceIdx, converter.name]);
 
-    return (
+    return externalJsEnabled ? (
         <>
             <h2 className="text-lg mb-2">{t(($) => $.add_update_external_converter)}</h2>
             <InfoAlert>
@@ -194,11 +199,20 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
                 </ConfirmButton>
             </div>
         </>
+    ) : (
+        <div className="alert alert-info alert-soft mb-2" role="alert">
+            <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
+            {t(($) => $.disabled, { ns: "common" })}
+            <a href={ENABLE_EXTERNAL_JS_URL} target="_blank" rel="noreferrer" className="link link-hover">
+                {ENABLE_EXTERNAL_JS_URL}
+            </a>
+        </div>
     );
 };
 
 const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
     const { t } = useTranslation(["devConsole", "common"]);
+    const externalJsEnabled = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.enable_external_js));
     const extensions = useAppStore(useShallow((state) => state.extensions[sourceIdx]));
     const [selectedExtension, setSelectedExtension] = useState<AppState["extensions"][number][number]>();
     const [extension, setExtension] = useState({ name: "", code: "" });
@@ -244,7 +258,7 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
         await sendMessage(sourceIdx, "bridge/request/extension/remove", { name: extension.name });
     }, [sourceIdx, extension.name]);
 
-    return (
+    return externalJsEnabled ? (
         <>
             <h2 className="text-lg mb-2">{t(($) => $.add_update_external_extension)}</h2>
             <InfoAlert>
@@ -299,6 +313,14 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
                 </ConfirmButton>
             </div>
         </>
+    ) : (
+        <div className="alert alert-info alert-soft mb-2" role="alert">
+            <FontAwesomeIcon icon={faCircleInfo} size="2xl" />
+            {t(($) => $.disabled, { ns: "common" })}
+            <a href={ENABLE_EXTERNAL_JS_URL} target="_blank" rel="noreferrer" className="link link-hover">
+                {ENABLE_EXTERNAL_JS_URL}
+            </a>
+        </div>
     );
 };
 

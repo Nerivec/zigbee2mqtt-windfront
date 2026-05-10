@@ -349,6 +349,8 @@ class MockWebSocket extends EventTarget {
                         state: "updating",
                         installed_version: 1,
                         latest_version: 2,
+                        latest_source: null,
+                        latest_release_notes: null,
                     };
 
                     const timer = window.setInterval(() => {
@@ -359,6 +361,8 @@ class MockWebSocket extends EventTarget {
                                 state: "idle",
                                 installed_version: 2,
                                 latest_version: 2,
+                                latest_source: null,
+                                latest_release_notes: null,
                             };
                         } else {
                             updatedDeviceState.payload.update!.progress! += 1;
@@ -381,7 +385,13 @@ class MockWebSocket extends EventTarget {
 
                 if (updatedDeviceState) {
                     if (!updatedDeviceState.payload.update) {
-                        updatedDeviceState.payload.update = { state: "scheduled", installed_version: null, latest_version: null };
+                        updatedDeviceState.payload.update = {
+                            state: "scheduled",
+                            installed_version: null,
+                            latest_version: null,
+                            latest_source: null,
+                            latest_release_notes: null,
+                        };
                     } else {
                         updatedDeviceState.payload.update.state = "scheduled";
                     }
@@ -399,7 +409,13 @@ class MockWebSocket extends EventTarget {
 
                 if (updatedDeviceState) {
                     if (!updatedDeviceState.payload.update) {
-                        updatedDeviceState.payload.update = { state: "idle", installed_version: null, latest_version: null };
+                        updatedDeviceState.payload.update = {
+                            state: "idle",
+                            installed_version: null,
+                            latest_version: null,
+                            latest_source: null,
+                            latest_release_notes: null,
+                        };
                     } else if (updatedDeviceState.payload.update?.state === "scheduled") {
                         updatedDeviceState.payload.update.state = "idle"; // simpler
                     }
