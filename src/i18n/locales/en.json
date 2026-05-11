@@ -84,6 +84,7 @@
         "read_the_docs_info": "Read about this in the documentation…",
         "recent_activity": "Recent activity",
         "remove": "Remove",
+        "requires_restart": "Requires restart",
         "reset": "Reset",
         "reset_selected": "Reset selected",
         "save": "Save",
