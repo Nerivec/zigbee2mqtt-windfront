@@ -23,6 +23,40 @@ const DISABLE_AUTO_FILL_PROPS = {
     "data-1p-ignore": "true",
 };
 
+const buildFieldDescription = (
+    t: ReturnType<typeof useTranslation<["settingsSchemaDescriptions", "common"]>>["t"],
+    property: JSONSchema7 & { requiresRestart?: boolean },
+    newPath: string,
+) => {
+    let description: string | undefined;
+    const fieldDefault = property.default != null ? `${t(($) => $.default, { ns: "common" })}: ${property.default}` : undefined;
+    const requiresRestart = property.requiresRestart ? t(($) => $.requires_restart, { ns: "common" }) : undefined;
+
+    if (property.description !== null) {
+        description = `${t(($) => $[newPath as keyof (typeof $)["settingsSchemaDescriptions"]], { defaultValue: property.description })}`;
+
+        if (fieldDefault) {
+            description += ` 🔹${fieldDefault}`;
+        }
+
+        if (requiresRestart) {
+            description += ` 🔸${requiresRestart}`;
+        }
+    } else {
+        if (fieldDefault) {
+            description = `🔹${fieldDefault}`;
+
+            if (requiresRestart) {
+                description += ` 🔸${requiresRestart}`;
+            }
+        } else if (requiresRestart) {
+            description = `🔸${requiresRestart}`;
+        }
+    }
+
+    return description;
+};
+
 const propertyToField = (
     key: string,
     property: JSONSchema7,
@@ -249,19 +283,8 @@ const groupProperties = (
                     );
                 }
             } else {
-                const feature = propertyToField(
-                    key,
-                    property,
-                    data[key] ?? property.default,
-                    set,
-                    depth,
-                    required.includes(key),
-                    property.description
-                        ? `${t(($) => $[newPath as keyof (typeof $)["settingsSchemaDescriptions"]], { defaultValue: property.description })}${property.default != null ? ` (${t(($) => $.default, { ns: "common", defaultValue: "Default" })}: ${property.default})` : ""}`
-                        : property.default != null
-                          ? `${t(($) => $.default, { ns: "common", defaultValue: "Default" })}: ${property.default}}`
-                          : undefined,
-                );
+                const description = buildFieldDescription(t, property, newPath);
+                const feature = propertyToField(key, property, data[key] ?? property.default, set, depth, required.includes(key), description);
 
                 if (feature) {
                     elements.push(
