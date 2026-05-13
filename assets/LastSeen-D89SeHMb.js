@@ -1,0 +1,1 @@
+import{r as c,u as i,z as l,j as t}from"./index-BewLHcq5.js";import{T as m}from"./TimeAgo-BQfszbPX.js";const x=c.memo(({lastSeen:a,config:n,fallback:o=null})=>{const{i18n:r}=i(),e=l(a,n),s=e?new Date(e):void 0;return s?t.jsx("span",{children:t.jsx(m,{datetime:s,locale:r.language})}):o});export{x as L};
