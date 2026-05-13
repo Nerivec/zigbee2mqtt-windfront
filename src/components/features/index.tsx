@@ -160,7 +160,8 @@ const ICON_MAP: Record<string, IconDefinition> = {
     power_factor: faIndustry,
 
     // Temperature / climate
-    // cpu_temperature: faTemperatureHigh, // customized in fn
+    cpu_temperature: faThermometerThreeQuarters,
+    device_temperature: faThermometerThreeQuarters,
     heating_stop: faTemperatureHigh,
     heat_protect: faTemperatureHigh,
     warm_floor: faTemperatureHigh,
@@ -643,8 +644,6 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
 
             break;
         }
-        case "cpu_temperature":
-        case "device_temperature":
         case "temperature":
         case "local_temperature": {
             [icon, className] = getTemperatureIcon(value as number, unit as TemperatureUnit);
