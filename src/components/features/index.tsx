@@ -663,7 +663,7 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
             break;
         }
         case "faults": {
-            if (Array.isArray(value) && (value as string[]).length > 0) {
+            if (Array.isArray(value) && value.length > 0) {
                 className = "text-error";
             }
 

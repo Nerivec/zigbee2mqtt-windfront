@@ -52,7 +52,7 @@ const ArrayValueView = memo((props: DisplayValueProps) => {
     const { t } = useTranslation("values");
 
     if (name === "faults") {
-        return (value as string[]).length > 0 ? <span className="text-error animate-pulse">{String(value)}</span> : t(($) => $.clear);
+        return (value as string[]).length > 0 ? String(value) : t(($) => $.clear);
     }
 
     return String(value);
