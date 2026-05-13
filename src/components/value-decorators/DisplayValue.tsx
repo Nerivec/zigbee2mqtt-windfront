@@ -47,6 +47,17 @@ const BooleanValueView = memo((props: DisplayValueProps) => {
     }
 });
 
+const ArrayValueView = memo((props: DisplayValueProps) => {
+    const { value, name } = props;
+    const { t } = useTranslation("values");
+
+    if (name === "faults") {
+        return (value as string[]).length > 0 ? <span className="text-error animate-pulse">{String(value)}</span> : t(($) => $.clear);
+    }
+
+    return String(value);
+});
+
 const DisplayValue = memo((props: DisplayValueProps) => {
     const { t } = useTranslation("values");
     const { value } = props;
@@ -57,6 +68,7 @@ const DisplayValue = memo((props: DisplayValueProps) => {
         case "undefined":
             return "N/A";
         case "object":
+            if (Array.isArray(value)) return <ArrayValueView {...props} />;
             return value === null ? t(($) => $.null) : JSON.stringify(value);
         case "string":
             return value === "" ? <span className="text-xs opacity-50">{t(($) => $.empty_string)}</span> : value;
