@@ -24,6 +24,7 @@ import {
     faCloudShowersHeavy,
     faCloudSunRain,
     faCog,
+    faCoins,
     faCompass,
     faCube,
     faDatabase,
@@ -43,6 +44,7 @@ import {
     faGaugeHigh,
     faGear,
     faGraduationCap,
+    faHandHoldingDollar,
     faHandPointUp,
     faHashtag,
     faHeartPulse,
@@ -71,12 +73,14 @@ import {
     faPlane,
     faPlay,
     faPlugCircleXmark,
+    faPlus,
     faPowerOff,
     faRadiation,
     faRadiationAlt,
     faRainbow,
     faRecycle,
     faRotate,
+    faRotateLeft,
     faRuler,
     faSeedling,
     faShieldHalved,
@@ -151,16 +155,19 @@ const ICON_MAP: Record<string, IconDefinition> = {
     overpower: faBolt,
     overcurrent: faBolt,
     current: faBolt,
+    leakage_current: faBolt,
     reactive_energy: faBolt,
     signed_power: faBolt,
     power: faBolt,
     energy: faBolt,
+    energy_produced: faBolt,
     watt: faBolt,
     frequency: faWaveSquare,
     power_factor: faIndustry,
 
     // Temperature / climate
-    // cpu_temperature: faTemperatureHigh, // customized in fn
+    cpu_temperature: faThermometerThreeQuarters,
+    device_temperature: faThermometerThreeQuarters,
     heating_stop: faTemperatureHigh,
     heat_protect: faTemperatureHigh,
     warm_floor: faTemperatureHigh,
@@ -353,10 +360,14 @@ const ICON_MAP: Record<string, IconDefinition> = {
     linkage_alarm: faTriangleExclamation,
     alarm: faTriangleExclamation,
     alarm_status: faTriangleExclamation,
+    alarm_set_1: faTriangleExclamation,
+    alarm_set_2: faTriangleExclamation,
+    alarm_set_3: faTriangleExclamation,
     alert_behaviour: faTriangleExclamation,
     warning: faTriangleExclamation,
     clear_fault: faCircleCheck,
     fault: faCircleExclamation,
+    faults: faCircleExclamation,
     error: faCircleExclamation,
     breaker: faCircleExclamation,
     trouble: faCircleExclamation,
@@ -371,6 +382,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     restore_default: faPowerOff,
     reset_switch: faPowerOff,
     powerup_status: faPowerOff,
+    power_on_behavior: faPowerOff,
     status: faCircleInfo,
     state: faStarHalfAlt,
     enabled: faCircleCheck,
@@ -463,11 +475,18 @@ const ICON_MAP: Record<string, IconDefinition> = {
     region: faMap,
     sub_region: faMap,
 
-    // Contracts / production
+    // Contracts / production / expenses
     contract: faFileContract,
     contract_type: faFileContract,
     production: faIndustry,
     producer: faIndustry,
+    prepayment: faHandHoldingDollar,
+    energy_balance: faCoins,
+
+    // Operations
+    energy_balance_add: faPlus,
+    energy_balance_reset: faRotateLeft,
+    water_total_reset: faRotateLeft,
 
     // Generic descriptors
     model: faTag,
@@ -643,8 +662,13 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
 
             break;
         }
-        case "cpu_temperature":
-        case "device_temperature":
+        case "faults": {
+            if (Array.isArray(value) && value.length > 0) {
+                className = "text-error";
+            }
+
+            break;
+        }
         case "temperature":
         case "local_temperature": {
             [icon, className] = getTemperatureIcon(value as number, unit as TemperatureUnit);
