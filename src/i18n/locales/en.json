@@ -382,6 +382,7 @@
         "advanced-cache_state_send_on_startup": "Send cached state on startup, only used when cache_state: true",
         "advanced-channel": "Zigbee channel, changing might require re-pairing some devices! (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid problems)",
         "advanced-elapsed": "Add an elapsed attribute to MQTT messages, contains milliseconds since the previous msg",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Zigbee extended pan ID, changing requires re-pairing all devices!",
         "advanced-last_seen": "Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message",
         "advanced-log_console_json": "Console json log",
