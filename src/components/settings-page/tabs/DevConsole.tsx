@@ -105,7 +105,11 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
             return !!converter.code;
         }
 
-        return !!converter.name && !!converter.code;
+        return (
+            !!converter.name &&
+            !!converter.code &&
+            (converter.name.endsWith(".mjs") || converter.name.endsWith(".js") || converter.name.endsWith(".cjs"))
+        );
     }, [selectedConverter, converter]);
 
     const onSelectChange = useCallback(
@@ -170,9 +174,11 @@ const ExternalConverterTab = ({ sourceIdx }: DevConsoleTabProps) => {
                 label={t(($) => $.name, { ns: "common" })}
                 type="text"
                 onChange={onNameChange}
+                placeholder="my_converter.mjs"
                 value={converter.name}
                 readOnly={selectedConverter !== undefined}
                 required
+                pattern=".*\.(c|m)?js$"
             />
             <TextareaField
                 name="converter_code"
@@ -222,7 +228,11 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
             return !!extension.code;
         }
 
-        return !!extension.name && !!extension.code;
+        return (
+            !!extension.name &&
+            !!extension.code &&
+            (extension.name.endsWith(".mjs") || extension.name.endsWith(".js") || extension.name.endsWith(".cjs"))
+        );
     }, [selectedExtension, extension]);
 
     const onSelectChange = useCallback(
@@ -284,9 +294,11 @@ const ExternalExtensionTab = ({ sourceIdx }: DevConsoleTabProps) => {
                 label={t(($) => $.name, { ns: "common" })}
                 type="text"
                 onChange={onNameChange}
+                placeholder="my_extension.mjs"
                 value={extension.name}
                 readOnly={selectedExtension !== undefined}
                 required
+                pattern=".*\.(c|m)?js$"
             />
             <TextareaField
                 name="extension_code"
