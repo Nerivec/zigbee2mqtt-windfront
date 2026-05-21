@@ -840,7 +840,7 @@ export const OUI = new Map([
     ["b0d5cc", "Texas Instruments"],
     ["b0e8e8", "Silicon Laboratories"],
     ["b0fa91", "EM Microelectronic"],
-    ["b40e06", "Bouffalo Lab (Nanjing) Co., Ltd."],
+    ["b40e06", "Third Reality, Inc"],
     ["b40ecf", "Bouffalo Lab (Nanjing) Co., Ltd."],
     ["b4107b", "Texas Instruments"],
     ["b42330", "Itron Inc"],
@@ -1178,5 +1178,4 @@ export const OUI = new Map([
     ["fcdec5", "Texas Instruments"],
     ["fce8c0", "Espressif Inc."],
     ["fcf5c4", "Espressif Inc."],
-    ["ffffb4", "Bouffalo Lab (Nanjing) Co., Ltd."],
 ]);
