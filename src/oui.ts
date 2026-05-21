@@ -1177,4 +1177,5 @@ export const OUI = new Map([
     ["fcdec5", "Texas Instruments"],
     ["fce8c0", "Espressif Inc."],
     ["fcf5c4", "Espressif Inc."],
+    ["ffffb4", "Bouffalo Lab (Nanjing) Co., Ltd."],
 ]);
