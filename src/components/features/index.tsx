@@ -161,7 +161,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     power: faBolt,
     energy: faBolt,
     energy_produced: faBolt,
+    produced_energy: faBolt,
     watt: faBolt,
+    ac_frequency: faWaveSquare,
     frequency: faWaveSquare,
     power_factor: faIndustry,
 
@@ -486,6 +488,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     // Operations
     energy_balance_add: faPlus,
     energy_balance_reset: faRotateLeft,
+    energy_reset: faRotateLeft,
     water_total_reset: faRotateLeft,
 
     // Generic descriptors
