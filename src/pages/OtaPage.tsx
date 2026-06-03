@@ -380,7 +380,7 @@ export default function OtaPage() {
             {
                 id: "actions",
                 header: "",
-                minSize: 160,
+                minSize: 165,
                 accessorFn: ({ state }) => state?.state,
                 cell: ({
                     row: {
@@ -388,7 +388,7 @@ export default function OtaPage() {
                     },
                 }) =>
                     state?.state === "updating" ? (
-                        <div className="flex flex-row flex-wrap gap-1">
+                        <div className="flex flex-row gap-1">
                             <div>
                                 <progress className="progress" value={state.progress} max="100" />
                                 {state.remaining && state.remaining > 0 ? (

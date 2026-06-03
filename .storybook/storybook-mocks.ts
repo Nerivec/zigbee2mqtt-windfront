@@ -50,6 +50,7 @@ class MockWebSocket extends EventTarget {
     onopen: ((event: Event) => unknown) | null = null;
 
     #timers: number[] = [];
+    #otaUpdates = new Map<string, number>();
 
     // set in bootstrap
     #bridgeInfo!: Message<Zigbee2MQTTAPI["bridge/info"]>;
@@ -72,6 +73,9 @@ class MockWebSocket extends EventTarget {
         for (const timer of this.#timers) {
             window.clearTimeout(timer);
         }
+
+        this.#otaUpdates.clear();
+        this.#timers.length = 0;
 
         this.readyState = MockWebSocket.CLOSED;
 
@@ -338,9 +342,11 @@ class MockWebSocket extends EventTarget {
             }
             case "bridge/request/device/ota_update/update": {
                 const payload = msg.payload as Zigbee2MQTTRequest<typeof msg.topic>;
+                const id = String(payload.id);
+
                 this.#sendResponseOK(payload.transaction!, msg.topic.replace("bridge/request/", "bridge/response/"));
 
-                const updatedDeviceState = cloneDeviceState(String(payload.id));
+                const updatedDeviceState = cloneDeviceState(id);
 
                 if (updatedDeviceState) {
                     updatedDeviceState.payload.update = {
@@ -373,6 +379,34 @@ class MockWebSocket extends EventTarget {
                     }, 1000);
 
                     this.#timers.push(timer);
+                    this.#otaUpdates.set(id, timer);
+                }
+
+                break;
+            }
+            case "bridge/request/device/ota_update/update/abort": {
+                const payload = msg.payload as Zigbee2MQTTRequest<typeof msg.topic>;
+                const id = String(payload.id);
+                const otaUpdate = this.#otaUpdates.get(id);
+
+                if (otaUpdate) {
+                    clearInterval(otaUpdate);
+                }
+
+                this.#sendResponseOK(payload.transaction!, msg.topic.replace("bridge/request/", "bridge/response/"));
+
+                const updatedDeviceState = cloneDeviceState(id);
+
+                if (updatedDeviceState) {
+                    updatedDeviceState.payload.update = {
+                        state: "available",
+                        installed_version: 1,
+                        latest_version: 2,
+                        latest_source: null,
+                        latest_release_notes: null,
+                    };
+
+                    this.#emit(updatedDeviceState);
                 }
 
                 break;
