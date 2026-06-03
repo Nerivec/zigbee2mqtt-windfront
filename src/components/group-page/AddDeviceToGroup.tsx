@@ -4,7 +4,7 @@ import type { Device, Group } from "../../types.js";
 import { getEndpoints } from "../../utils.js";
 import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
-import DevicePicker from "../pickers/DevicePicker.js";
+import DeviceSinglePicker from "../pickers/DeviceSinglePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
 
 interface AddDeviceToGroupProps {
@@ -37,7 +37,7 @@ const AddDeviceToGroup = memo(({ sourceIdx, devices, group }: AddDeviceToGroupPr
         <>
             <h2 className="text-lg font-semibold">{t(($) => $.add_to_group_header)}</h2>
             <div className="mb-3">
-                <DevicePicker label={t(($) => $.device, { ns: "zigbee" })} value={deviceIeee} devices={devices} onChange={onDeviceChange} />
+                <DeviceSinglePicker label={t(($) => $.device, { ns: "zigbee" })} value={deviceIeee} devices={devices} onChange={onDeviceChange} />
                 <EndpointPicker
                     label={t(($) => $.endpoint, { ns: "zigbee" })}
                     values={endpoints}

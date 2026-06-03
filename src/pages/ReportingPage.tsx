@@ -14,7 +14,7 @@ import SelectField from "../components/form-fields/SelectField.js";
 import { ReportingBatchEditModal } from "../components/modal/components/ReportingBatchEditModal.js";
 import { ReportingRuleModal } from "../components/modal/components/ReportingRuleModal.js";
 import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
-import DevicePicker from "../components/pickers/DevicePicker.js";
+import DeviceSinglePicker from "../components/pickers/DeviceSinglePicker.js";
 import EndpointPicker from "../components/pickers/EndpointPicker.js";
 import { getClusterAttribute } from "../components/pickers/index.js";
 import { makeDefaultReporting, type ReportingRule } from "../components/reporting/index.js";
@@ -455,7 +455,7 @@ export default function ReportingPage(): JSX.Element {
                         ))}
                     </SelectField>
                 ) : null}
-                <DevicePicker
+                <DeviceSinglePicker
                     label={t(($) => $.device, { ns: "zigbee" })}
                     devices={devices[newRuleSourceIdx] ?? []}
                     value={newRuleDevice?.ieee_address ?? ""}

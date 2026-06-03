@@ -9,7 +9,7 @@ import Button from "../Button.js";
 import { type Action, type BindingRule, findPossibleClusters, isValidBindingRule } from "../binding/index.js";
 import ConfirmButton from "../ConfirmButton.js";
 import ClusterMultiPicker from "../pickers/ClusterMultiPicker.js";
-import DevicePicker from "../pickers/DevicePicker.js";
+import DeviceSinglePicker from "../pickers/DeviceSinglePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
 
 interface BindRowProps {
@@ -70,7 +70,7 @@ const BindRow = memo(({ devices, groups, device, rule, onApply, showDivider, hid
     return (
         <>
             <div className="flex flex-row flex-wrap gap-2">
-                <DevicePicker
+                <DeviceSinglePicker
                     label={t(($) => $.destination)}
                     disabled={!stateRule.isNew}
                     value={"ieee_address" in stateRule.target ? stateRule.target.ieee_address : stateRule.target.id}
