@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Aan groep toevoegen",
-        "add_to_group_header": "Voeg een apparaat toe aan de groep",
+        "add_to_group_header": "Voeg apparaten toe aan de groep",
         "create_group": "Groep aanmaken",
         "friendly_name_placeholder": "slaapkamer_lampen, tuin...",
         "group_id": "Groep-ID",

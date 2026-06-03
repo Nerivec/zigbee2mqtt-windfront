@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Thêm vào nhóm",
-        "add_to_group_header": "Thêm thiết bị vào nhóm",
+        "add_to_group_header": "Thêm các thiết bị vào nhóm",
         "create_group": "Tạo nhóm",
         "friendly_name_placeholder": "đèn_phòng_ngủ, vườn...",
         "group_id": "ID nhóm",

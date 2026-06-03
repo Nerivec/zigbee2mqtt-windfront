@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Lägg till i grupp",
-        "add_to_group_header": "Lägg till en enhet i gruppen",
+        "add_to_group_header": "Lägg till enheter i gruppen",
         "create_group": "Skapa grupp",
         "friendly_name_placeholder": "sovrum_lampor, tradgard...",
         "group_id": "Grupp-ID",

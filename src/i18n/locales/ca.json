@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Afegeix al grup",
-        "add_to_group_header": "Afegeix un dispositiu al grup",
+        "add_to_group_header": "Afegeix dispositius al grup",
         "create_group": "Crea grup",
         "friendly_name_placeholder": "llums_habitacio, jardi...",
         "group_id": "ID grup",

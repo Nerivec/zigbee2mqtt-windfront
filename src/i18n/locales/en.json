@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Add to group",
-        "add_to_group_header": "Add a device to the group",
+        "add_to_group_header": "Add devices to the group",
         "create_group": "Create group",
         "friendly_name_placeholder": "bedroom_lights, garden...",
         "group_id": "Group ID",

@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Ajouter au groupe",
-        "add_to_group_header": "Ajouter un appareil au groupe",
+        "add_to_group_header": "Ajouter des appareils au groupe",
         "create_group": "Créer un groupe",
         "friendly_name_placeholder": "lumières_chambre, jardin...",
         "group_id": "ID du groupe",

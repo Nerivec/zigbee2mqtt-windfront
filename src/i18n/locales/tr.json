@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Gruba ekle",
-        "add_to_group_header": "Cihazı gruba ekle",
+        "add_to_group_header": "Cihazları gruba ekle",
         "create_group": "Grup oluştur",
         "friendly_name_placeholder": "yatakodasi_isiklari, bahce...",
         "group_id": "Grup ID",

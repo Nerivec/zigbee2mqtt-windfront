@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "加入群組",
-        "add_to_group_header": "加入裝置到群組",
+        "add_to_group_header": "將裝置加入群組",
         "create_group": "建立群組",
         "friendly_name_placeholder": "woshi_deng, huayuan...",
         "group_id": "群組 ID",

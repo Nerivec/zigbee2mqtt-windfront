@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Dodaj do grupy",
-        "add_to_group_header": "Dodaj urządzenie do grupy",
+        "add_to_group_header": "Dodaj urządzenia do grupy",
         "create_group": "Utwórz grupę",
         "friendly_name_placeholder": "lampy_sypialnia, ogrod...",
         "group_id": "ID grupy",

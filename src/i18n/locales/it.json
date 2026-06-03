@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Aggiungi al gruppo",
-        "add_to_group_header": "Aggiungi un dispositivo al gruppo",
+        "add_to_group_header": "Aggiungi dispositivi al gruppo",
         "create_group": "Crea gruppo",
         "friendly_name_placeholder": "luci_camera, giardino...",
         "group_id": "ID gruppo",

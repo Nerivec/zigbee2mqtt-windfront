@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Hozzáadás csoporthoz",
-        "add_to_group_header": "Eszköz hozzáadása a csoporthoz",
+        "add_to_group_header": "Eszközök hozzáadása a csoporthoz",
         "create_group": "Csoport létrehozása",
         "friendly_name_placeholder": "haloszoba_lampak, kert...",
         "group_id": "Csoport ID",
