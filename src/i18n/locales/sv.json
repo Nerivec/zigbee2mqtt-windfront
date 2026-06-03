@@ -310,7 +310,8 @@
         "update": "Uppdatera firmware",
         "update_selected": "Uppdatera valda",
         "update_selected_info": "En OTA-uppdatering belastar nätet kraftigt. Säkerställ stabilitet.",
-        "updating": "Uppdaterar"
+        "updating": "Uppdaterar",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Lägg till / uppdatera scen",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Seriell baudrate",
         "serial-disable_led": "Avaktivera adapter-LED",
         "serial-port": "Adapterplats (null för autodetektering)",
-        "serial-rtscts": "RTS/CTS hårdvaruflöde"
+        "serial-rtscts": "RTS/CTS hårdvaruflöde",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Per modell",

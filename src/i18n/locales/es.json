@@ -310,7 +310,8 @@
         "update": "Actualizar firmware del dispositivo",
         "update_selected": "Actualizar seleccionados",
         "update_selected_info": "Una actualización OTA exige mucho a la red. Asegure estabilidad y elija horas de poco uso.",
-        "updating": "Actualizando"
+        "updating": "Actualizando",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Agregar/actualizar escena",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Velocidad baud del puerto serie",
         "serial-disable_led": "Deshabilitar LED del adaptador",
         "serial-port": "Ubicación del adaptador (null para autodetección)",
-        "serial-rtscts": "Control de flujo hardware RTS/CTS"
+        "serial-rtscts": "Control de flujo hardware RTS/CTS",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Por modelo",

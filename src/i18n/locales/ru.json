@@ -310,7 +310,8 @@
         "update": "Обновить прошивку",
         "update_selected": "Обновить выбранные",
         "update_selected_info": "OTA сильно нагружает сеть. Убедитесь в стабильности.",
-        "updating": "Обновляется"
+        "updating": "Обновляется",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Добавить/обновить сцену",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Скорость порта",
         "serial-disable_led": "Отключить LED адаптера",
         "serial-port": "Место адаптера (null автопоиск)",
-        "serial-rtscts": "Аппаратный RTS/CTS"
+        "serial-rtscts": "Аппаратный RTS/CTS",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "По модели",

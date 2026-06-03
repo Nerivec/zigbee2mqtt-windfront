@@ -1,21 +1,22 @@
-import { faServer } from "@fortawesome/free-solid-svg-icons";
+import { faServer, faStop } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ColumnDef, RowSelectionState } from "@tanstack/react-table";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import Button from "../components/Button.js";
 import ConfirmButton from "../components/ConfirmButton.js";
 import DeviceImage from "../components/device/DeviceImage.js";
 import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
-import { formatOtaFileVersion } from "../components/ota-page/index.js";
+import { formatOtaFileVersion, type OnAbortClickPayload } from "../components/ota-page/index.js";
 import OtaControlGroup, { type OtaControlGroupProps } from "../components/ota-page/OtaControlGroup.js";
 import OtaFileVersion from "../components/ota-page/OtaFileVersion.js";
 import OtaUpdateButton from "../components/ota-page/OtaUpdateButton.js";
-import OtaUpdating from "../components/ota-page/OtaUpdating.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
 import TableSearch from "../components/table/TableSearch.js";
 import DefinitionLink from "../components/value-decorators/DefinitionLink.js";
+import Duration from "../components/value-decorators/Duration.js";
 import OtaLink from "../components/value-decorators/OtaLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
@@ -145,6 +146,11 @@ export default function OtaPage() {
 
     const onUnscheduleClick: OtaControlGroupProps["onUnscheduleClick"] = useCallback(
         async ({ sourceIdx, ieee }) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/unschedule", { id: ieee }),
+        [],
+    );
+
+    const onAbortClick: (payload: OnAbortClickPayload) => void = useCallback(
+        async ({ sourceIdx, ieee }) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/update/abort", { id: ieee }),
         [],
     );
 
@@ -374,7 +380,7 @@ export default function OtaPage() {
             {
                 id: "actions",
                 header: "",
-                minSize: 130,
+                minSize: 160,
                 accessorFn: ({ state }) => state?.state,
                 cell: ({
                     row: {
@@ -382,7 +388,23 @@ export default function OtaPage() {
                     },
                 }) =>
                     state?.state === "updating" ? (
-                        <OtaUpdating label={t(($) => $.remaining_time)} remaining={state.remaining} progress={state.progress} />
+                        <div className="flex flex-row flex-wrap gap-1">
+                            <div>
+                                <progress className="progress" value={state.progress} max="100" />
+                                {state.remaining && state.remaining > 0 ? (
+                                    <div>
+                                        {t(($) => $.remaining_time)} <Duration durationSec={state.remaining} />
+                                    </div>
+                                ) : null}
+                            </div>
+                            <Button<void>
+                                className="btn btn-sm btn-square btn-outline btn-error tooltip-left"
+                                onClick={() => onAbortClick({ sourceIdx, ieee: device.ieee_address })}
+                                title={t(($) => $.abort)}
+                            >
+                                <FontAwesomeIcon icon={faStop} />
+                            </Button>
+                        </div>
                     ) : (
                         <div className="join join-horizontal">
                             <OtaControlGroup
@@ -412,7 +434,7 @@ export default function OtaPage() {
                 enableGlobalFilter: false,
             },
         ],
-        [onCheckClick, onUpdateClick, onScheduleClick, onUnscheduleClick, t],
+        [onCheckClick, onUpdateClick, onScheduleClick, onUnscheduleClick, onAbortClick, t],
     );
 
     const { table, resetFilters, globalFilter, columnFilters } = useTable({

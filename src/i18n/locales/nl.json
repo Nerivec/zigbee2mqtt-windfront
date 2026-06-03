@@ -310,7 +310,8 @@
         "update": "Firmware bijwerken",
         "update_selected": "Geselecteerden updaten",
         "update_selected_info": "Een OTA-update belast het netwerk sterk. Zorg voor stabiliteit.",
-        "updating": "Bezig met bijwerken"
+        "updating": "Bezig met bijwerken",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Scène toevoegen/bijwerken",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Seriële baudrate",
         "serial-disable_led": "Adapter-LED uitschakelen",
         "serial-port": "Locatie adapter (null autodetectie)",
-        "serial-rtscts": "RTS/CTS flow control"
+        "serial-rtscts": "RTS/CTS flow control",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Per model",

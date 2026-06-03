@@ -310,7 +310,8 @@
         "update": "Firmware frissítés",
         "update_selected": "Kijelöltek frissítése",
         "update_selected_info": "Az OTA erősen terheli a hálózatot. Legyen stabil.",
-        "updating": "Frissítés folyamatban"
+        "updating": "Frissítés folyamatban",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Jelenet hozzáadása / frissítése",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Soros baud rate",
         "serial-disable_led": "Adapter LED tiltás",
         "serial-port": "Adapter port (null auto)",
-        "serial-rtscts": "RTS/CTS flow"
+        "serial-rtscts": "RTS/CTS flow",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Modell szerint",

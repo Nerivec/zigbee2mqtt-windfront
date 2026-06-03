@@ -310,7 +310,8 @@
         "update": "デバイスファーム更新",
         "update_selected": "選択を更新",
         "update_selected_info": "OTA 更新はネットワークに高負荷です。安定性を確保してください。",
-        "updating": "更新中"
+        "updating": "更新中",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "シーン追加/更新",
@@ -482,7 +483,10 @@
         "serial-baudrate": "シリアルボーレート",
         "serial-disable_led": "アダプタ LED 無効化",
         "serial-port": "アダプタ位置 (null で自動検出)",
-        "serial-rtscts": "RTS/CTS フロー制御"
+        "serial-rtscts": "RTS/CTS フロー制御",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "モデル別",

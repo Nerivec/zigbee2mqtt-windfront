@@ -310,7 +310,8 @@
         "update": "디바이스 펌웨어 업데이트",
         "update_selected": "선택 항목 업데이트",
         "update_selected_info": "OTA 업데이트는 네트워크에 큰 부하를 줍니다. 안정성을 확보하세요.",
-        "updating": "업데이트 중"
+        "updating": "업데이트 중",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "씬 추가/업데이트",
@@ -482,7 +483,10 @@
         "serial-baudrate": "시리얼 보드레이트",
         "serial-disable_led": "어댑터 LED 비활성",
         "serial-port": "어댑터 위치 (null 자동탐지)",
-        "serial-rtscts": "RTS/CTS 하드웨어 플로우 제어"
+        "serial-rtscts": "RTS/CTS 하드웨어 플로우 제어",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "모델별",

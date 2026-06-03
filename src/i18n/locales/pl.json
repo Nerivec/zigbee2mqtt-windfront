@@ -310,7 +310,8 @@
         "update": "Aktualizuj firmware",
         "update_selected": "Aktualizuj zaznaczone",
         "update_selected_info": "Aktualizacja OTA znacząco obciąża sieć. Upewnij się, że sieć funkcjonuje stabilnie i rozważ aktualizację w czasie najmniejszego obciążenia.",
-        "updating": "Aktualizowanie"
+        "updating": "Aktualizowanie",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Dodaj/aktualizuj scenę",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Prędkość portu szeregowego",
         "serial-disable_led": "Wyłącz LED adaptera",
         "serial-port": "Lokalizacja adaptera (null autodetect)",
-        "serial-rtscts": "Sprzętowa kontrola przepływu RTS/CTS"
+        "serial-rtscts": "Sprzętowa kontrola przepływu RTS/CTS",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Według modelu",

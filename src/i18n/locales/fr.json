@@ -310,7 +310,8 @@
         "update": "Mettre à jour le firmware de l'appareil",
         "update_selected": "Mettre à jour la sélection",
         "update_selected_info": "Une mise à jour OTA est très exigeante pour un réseau. Assurez-vous qu'il est stable et optez pour des moments moins utilisés.",
-        "updating": "Mise à jour"
+        "updating": "Mise à jour",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Ajouter/mettre à jour une scène",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Vitesse du port série (baud rate). Doit correspondre à ce que prend en charge le firmware de votre adaptateur (couramment 115200).",
         "serial-disable_led": "Désactiver la LED de l'adaptateur si supporté",
         "serial-port": "Emplacement de l'adaptateur. Pour autodétecter le port, mettre null",
-        "serial-rtscts": "Contrôle de flux matériel RTS/CTS pour port série"
+        "serial-rtscts": "Contrôle de flux matériel RTS/CTS pour port série",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Par modèle",

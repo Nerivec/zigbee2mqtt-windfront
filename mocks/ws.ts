@@ -40,6 +40,7 @@ export function startServer() {
     });
 
     wss.on("connection", (ws) => {
+        const otaUpdates = new Map<string, NodeJS.Timeout>();
         const bridgeInfo = merge({}, BRIDGE_INFO);
         bridgeInfo.payload.commit = randomString(8);
         bridgeInfo.payload.config.advanced.log_output = Math.random() < 0.25 ? ["syslog"] : Math.random() < 0.5 ? ["console", "file"] : ["console"];
@@ -260,6 +261,8 @@ export function startServer() {
                             state: "updating",
                             installed_version: 1,
                             latest_version: 2,
+                            latest_source: null,
+                            latest_release_notes: null,
                         };
 
                         const interval = setInterval(() => {
@@ -269,9 +272,39 @@ export function startServer() {
                             updatedDeviceState.payload.update!.remaining! -= 1;
                         }, 1000);
 
+                        otaUpdates.set(msg.payload.id, interval);
                         setTimeout(() => {
                             clearInterval(interval);
                         }, 25000);
+                    }
+
+                    break;
+                }
+                case "bridge/request/device/ota_update/update/abort": {
+                    const otaUpdate = otaUpdates.get(msg.payload.id);
+
+                    if (otaUpdate) {
+                        clearInterval(otaUpdate);
+                    }
+
+                    sendResponseOK();
+
+                    const updatedDeviceState = cloneDeviceState(msg.payload.id);
+
+                    if (updatedDeviceState) {
+                        if (!updatedDeviceState.payload.update) {
+                            updatedDeviceState.payload.update = {
+                                state: "available",
+                                installed_version: 1,
+                                latest_version: 2,
+                                latest_source: null,
+                                latest_release_notes: null,
+                            };
+                        } else if (updatedDeviceState.payload.update?.state === "updating") {
+                            updatedDeviceState.payload.update.state = "available"; // simpler
+                        }
+
+                        ws.send(JSON.stringify(updatedDeviceState));
                     }
 
                     break;
@@ -283,7 +316,13 @@ export function startServer() {
 
                     if (updatedDeviceState) {
                         if (!updatedDeviceState.payload.update) {
-                            updatedDeviceState.payload.update = { state: "scheduled", installed_version: null, latest_version: null };
+                            updatedDeviceState.payload.update = {
+                                state: "scheduled",
+                                installed_version: null,
+                                latest_version: null,
+                                latest_source: null,
+                                latest_release_notes: null,
+                            };
                         } else {
                             updatedDeviceState.payload.update.state = "scheduled";
                         }
@@ -300,7 +339,13 @@ export function startServer() {
 
                     if (updatedDeviceState) {
                         if (!updatedDeviceState.payload.update) {
-                            updatedDeviceState.payload.update = { state: "idle", installed_version: null, latest_version: null };
+                            updatedDeviceState.payload.update = {
+                                state: "idle",
+                                installed_version: null,
+                                latest_version: null,
+                                latest_source: null,
+                                latest_release_notes: null,
+                            };
                         } else if (updatedDeviceState.payload.update?.state === "scheduled") {
                             updatedDeviceState.payload.update.state = "idle"; // simpler
                         }
