@@ -9,7 +9,7 @@ import Button from "../Button.js";
 import DeviceSinglePicker from "../pickers/DeviceSinglePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
 
-interface AddDeviceToGroupProps {
+interface AddDevicesToGroupProps {
     sourceIdx: number;
     devices: Device[];
     group: Group;
@@ -20,7 +20,7 @@ interface SelectedItem {
     endpoint: string | number;
 }
 
-const AddDeviceToGroup = memo(({ sourceIdx, devices: allDevices, group }: AddDeviceToGroupProps) => {
+const AddDevicesToGroup = memo(({ sourceIdx, devices: allDevices, group }: AddDevicesToGroupProps) => {
     const [devicePickerValue, setDevicePickerValue] = useState<Device['ieee_address']>("");
     const [selectedDevices, setSelectedDevices] = useState<SelectedItem[]>([]);
 
@@ -138,4 +138,4 @@ const AddDeviceToGroup = memo(({ sourceIdx, devices: allDevices, group }: AddDev
     );
 });
 
-export default AddDeviceToGroup;
+export default AddDevicesToGroup;
