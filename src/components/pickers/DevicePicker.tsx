@@ -5,7 +5,7 @@ import { REACT_SELECT_DEFAULT_CLASSNAMES } from "../../consts.js";
 import type { AppState } from "../../store.js";
 import type { BaseGroupedOption, BaseSelectOption, Device, Group } from "../../types.js";
 
-interface DeviceSinglePickerProps {
+interface DevicePickerProps {
     devices: AppState["devices"][number];
     value: string | number;
     label?: string;
@@ -16,7 +16,7 @@ interface DeviceSinglePickerProps {
     onChange(device?: Device | Group): void;
 }
 
-const DeviceSinglePicker = memo(({ devices, value, label, detail, required, disabled, onChange, groups = [] }: DeviceSinglePickerProps) => {
+const DevicePicker = memo(({ devices, value, label, detail, required, disabled, onChange, groups = [] }: DevicePickerProps) => {
     const { t } = useTranslation("common");
 
     const onSelectHandler = (option: SingleValue<BaseSelectOption>): void => {
@@ -92,4 +92,4 @@ const DeviceSinglePicker = memo(({ devices, value, label, detail, required, disa
     );
 });
 
-export default DeviceSinglePicker;
+export default DevicePicker;

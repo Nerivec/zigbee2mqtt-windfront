@@ -6,7 +6,7 @@ import type { Device, Group } from "../../types.js";
 import { getEndpoints, isDevice } from "../../utils.js";
 import { sendMessage } from "../../websocket/WebSocketManager.js";
 import Button from "../Button.js";
-import DeviceSinglePicker from "../pickers/DeviceSinglePicker.js";
+import DevicePicker from "../pickers/DevicePicker.js";
 import EndpointPicker from "../pickers/EndpointPicker.js";
 
 interface AddDevicesToGroupProps {
@@ -85,7 +85,7 @@ const AddDevicesToGroup = memo(({ sourceIdx, devices: allDevices, group }: AddDe
         <>
             <h2 className="text-lg font-semibold">{t(($) => $.add_to_group_header)}</h2>
             <div className="mb-3 flex flex-col gap-3 grow">
-                <DeviceSinglePicker
+                <DevicePicker
                     value={devicePickerValue}
                     devices={availableDevices}
                     onChange={onDevicePick}

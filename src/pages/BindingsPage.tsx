@@ -22,7 +22,7 @@ import SelectField from "../components/form-fields/SelectField.js";
 import { BindingRuleModal } from "../components/modal/components/BindingRuleModal.js";
 import { BindingsBatchEditModal } from "../components/modal/components/BindingsBatchEditModal.js";
 import IndeterminateCheckbox from "../components/ota-page/IndeterminateCheckbox.js";
-import DeviceSinglePicker from "../components/pickers/DeviceSinglePicker.js";
+import DevicePicker from "../components/pickers/DevicePicker.js";
 import EndpointPicker from "../components/pickers/EndpointPicker.js";
 import SourceDot from "../components/SourceDot.js";
 import Table from "../components/table/Table.js";
@@ -417,7 +417,7 @@ export default function BindingsPage(): JSX.Element {
                         ))}
                     </SelectField>
                 ) : null}
-                <DeviceSinglePicker
+                <DevicePicker
                     label={t(($) => $.device, { ns: "zigbee" })}
                     devices={devices[newRuleSourceIdx] ?? []}
                     value={newRuleDevice?.ieee_address ?? ""}
