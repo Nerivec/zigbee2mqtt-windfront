@@ -310,7 +310,8 @@
         "update": "Geräte-Firmware aktualisieren",
         "update_selected": "Ausgewählte aktualisieren",
         "update_selected_info": "Ein OTA-Update belastet das Netzwerk stark. Stellen Sie sicher, dass das Zigbee-Netzwerk stabil ist und wählen Sie wenig frequentierte Zeiten für das Update.",
-        "updating": "Aktualisiere"
+        "updating": "Aktualisiere",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Szene hinzufügen/aktualisieren",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Baudrate für die serielle Schnittstelle (häufig 115200).",
         "serial-disable_led": "LED des Adapters deaktivieren (falls unterstützt)",
         "serial-port": "Ort des Adapters. Für Autodetektion auf null setzen",
-        "serial-rtscts": "RTS/CTS Hardware-Flow-Control"
+        "serial-rtscts": "RTS/CTS Hardware-Flow-Control",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Nach Modell",

@@ -310,7 +310,8 @@
         "update": "Opdater firmware",
         "update_selected": "Opdater valgte",
         "update_selected_info": "OTA belaster netværket kraftigt.",
-        "updating": "Opdaterer"
+        "updating": "Opdaterer",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Tilføj/opdater scene",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Baudrate",
         "serial-disable_led": "Deaktiver LED",
         "serial-port": "Adapterplacering",
-        "serial-rtscts": "RTS/CTS"
+        "serial-rtscts": "RTS/CTS",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Efter model",

@@ -310,7 +310,8 @@
         "update": "Оновити прошивку",
         "update_selected": "Оновити вибрані",
         "update_selected_info": "OTA сильно навантажує мережу — забезпечте стабільність.",
-        "updating": "Оновлення"
+        "updating": "Оновлення",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Додати/оновити сцену",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Baudrate",
         "serial-disable_led": "Вимкнути LED",
         "serial-port": "Порт адаптера (null авто)",
-        "serial-rtscts": "RTS/CTS"
+        "serial-rtscts": "RTS/CTS",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "За моделлю",

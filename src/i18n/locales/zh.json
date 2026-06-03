@@ -310,7 +310,8 @@
         "update": "更新韌體",
         "update_selected": "更新所選",
         "update_selected_info": "OTA 更新會大量佔用網路資源，請確認穩定。",
-        "updating": "更新中"
+        "updating": "更新中",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "新增/更新情境",
@@ -482,7 +483,10 @@
         "serial-baudrate": "序列鮑率",
         "serial-disable_led": "停用介面卡 LED",
         "serial-port": "介面卡位置(null 自動)",
-        "serial-rtscts": "RTS/CTS 流控"
+        "serial-rtscts": "RTS/CTS 流控",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "依型號",

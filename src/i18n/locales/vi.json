@@ -310,7 +310,8 @@
         "update": "Cập nhật firmware thiết bị",
         "update_selected": "Cập nhật đã chọn",
         "update_selected_info": "Cập nhật OTA rất tốn tài nguyên mạng. Đảm bảo mạng ổn định và chọn thời gian ít sử dụng.",
-        "updating": "Đang cập nhật"
+        "updating": "Đang cập nhật",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Thêm/cập nhật cảnh",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Tốc độ baud rate cho cổng serial. Điều này phải khớp với những gì firmware trên adapter của bạn hỗ trợ (thường là 115200).",
         "serial-disable_led": "Vô hiệu hóa LED của adapter nếu được hỗ trợ",
         "serial-port": "Vị trí của adapter. Để tự động phát hiện cổng, đặt null",
-        "serial-rtscts": "Điều khiển luồng phần cứng RTS / CTS cho cổng serial"
+        "serial-rtscts": "Điều khiển luồng phần cứng RTS / CTS cho cổng serial",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Theo mẫu",

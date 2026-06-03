@@ -310,7 +310,8 @@
         "update": "Aktualizovat firmware zařízení",
         "update_selected": "Aktualizovat vybrané",
         "update_selected_info": "OTA aktualizace výrazně zatěžuje síť. Doporučujeme spustit aktualizaci v době menšího zatížení sítě.",
-        "updating": "Aktualizuje se"
+        "updating": "Aktualizuje se",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Přidat nebo aktualizovat scénu",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Rychlost přenosu (baud rate) sériového portu. Musí odpovídat nastavení firmwaru adaptéru (nejčastěji 115200).",
         "serial-disable_led": "Vypnout LED indikátor na adaptéru (pokud to firmware podporuje)",
         "serial-port": "Cesta k adaptéru (port). Pro automatické rozpoznání nastavte hodnotu na `null`.",
-        "serial-rtscts": "Hardwarové řízení toku RTS/CTS pro sériový port"
+        "serial-rtscts": "Hardwarové řízení toku RTS/CTS pro sériový port",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Podle modelu",

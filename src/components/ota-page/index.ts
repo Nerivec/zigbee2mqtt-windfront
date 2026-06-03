@@ -19,6 +19,10 @@ export type OnUnscheduleClickPayload = {
     sourceIdx: number;
     ieee: string;
 } & Omit<Zigbee2MQTTAPI["bridge/request/device/ota_update/unschedule"], "id">;
+export type OnAbortClickPayload = {
+    sourceIdx: number;
+    ieee: string;
+} & Omit<Zigbee2MQTTAPI["bridge/request/device/ota_update/update/abort"], "id">;
 
 export type OtaImageHeader = {
     otaUpgradeFileIdentifier: Uint8Array;

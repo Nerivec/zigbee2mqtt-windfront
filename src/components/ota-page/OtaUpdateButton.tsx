@@ -183,7 +183,7 @@ const OtaUpdateButton = memo(({ sourceIdx, device, state, otaSettings, onUpdateC
                             </div>
                             <div className="card-actions justify-end py-2">
                                 <Button
-                                    className="btn btn-square btn-outline btn-error join-item"
+                                    className="btn btn-square btn-outline btn-error join-item tooltip-left"
                                     onClick={handleAction}
                                     item="update"
                                     title={t(($) => $.update)}
@@ -191,7 +191,7 @@ const OtaUpdateButton = memo(({ sourceIdx, device, state, otaSettings, onUpdateC
                                     <FontAwesomeIcon icon={faUpload} />
                                 </Button>
                                 <Button
-                                    className="btn btn-square btn-outline btn-info join-item"
+                                    className="btn btn-square btn-outline btn-info join-item tooltip-left"
                                     onClick={handleAction}
                                     item="schedule"
                                     title={t(($) => $.schedule)}

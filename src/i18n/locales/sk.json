@@ -310,7 +310,8 @@
         "update": "Aktualizovať firmvér zariadenia",
         "update_selected": "Aktualizovať vybrané",
         "update_selected_info": "Aktualizácia OTA je pre sieť veľmi náročná. Uistite sa, že je stabilná a zvoľte menej používané časy.",
-        "updating": "Aktualizuje sa"
+        "updating": "Aktualizuje sa",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Pridať/aktualizovať scénu",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Rýchlosť prenosu dát pre sériový port. Musí sa zhodovať s tým, čo podporuje firmvér na vašom adaptéri (najčastejšie 115200).",
         "serial-disable_led": "Zakázať LED diódu adaptéra, ak je funkcia podporovaná",
         "serial-port": "Umiestnenie adaptéra. Pre automatickú detekciu portu nastavte null",
-        "serial-rtscts": "RTS / CTS Hardware Flow Control pre sériový port"
+        "serial-rtscts": "RTS / CTS Hardware Flow Control pre sériový port",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Podľa modelu",

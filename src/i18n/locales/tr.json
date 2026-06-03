@@ -310,7 +310,8 @@
         "update": "Firmware güncelle",
         "update_selected": "Seçileni güncelle",
         "update_selected_info": "OTA güncellemesi ağı zorlar. Stabil olduğundan emin olun.",
-        "updating": "Güncelleniyor"
+        "updating": "Güncelleniyor",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Sahne ekle/güncelle",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Seri baud hızı",
         "serial-disable_led": "Adaptör LED kapat",
         "serial-port": "Adaptör konumu (null otomatik)",
-        "serial-rtscts": "RTS/CTS akış kontrolü"
+        "serial-rtscts": "RTS/CTS akış kontrolü",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Modele göre",

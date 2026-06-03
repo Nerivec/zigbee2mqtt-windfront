@@ -310,7 +310,8 @@
         "update": "Actualitza firmware",
         "update_selected": "Actualitza seleccionats",
         "update_selected_info": "Una OTA carrega molt la xarxa.",
-        "updating": "Actualitzant"
+        "updating": "Actualitzant",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Afegeix/actualitza escena",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Baud rate",
         "serial-disable_led": "Desactiva LED adaptador",
         "serial-port": "Local adaptador (null auto)",
-        "serial-rtscts": "Flux RTS/CTS"
+        "serial-rtscts": "Flux RTS/CTS",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Per model",

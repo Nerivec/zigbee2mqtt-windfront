@@ -310,7 +310,8 @@
         "update": "Eguneratu firmware",
         "update_selected": "Eguneratu hautatuak",
         "update_selected_info": "OTAk sarean karga handia eragiten du.",
-        "updating": "Eguneratzen"
+        "updating": "Eguneratzen",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Gehitu/Eguneratu eszena",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Baudrate",
         "serial-disable_led": "Desgaitu LED",
         "serial-port": "Portua (null auto)",
-        "serial-rtscts": "RTS/CTS"
+        "serial-rtscts": "RTS/CTS",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "Modeloaren arabera",

@@ -310,7 +310,8 @@
         "update": "Обнови фърмуер",
         "update_selected": "Обнови избраните",
         "update_selected_info": "OTA натоварва мрежата силно – уверете се, че е стабилно.",
-        "updating": "Актуализира се"
+        "updating": "Актуализира се",
+        "abort": "Abort"
     },
     "scene": {
         "add_update_header": "Добавяне/обновяване сцена",
@@ -482,7 +483,10 @@
         "serial-baudrate": "Baudrate",
         "serial-disable_led": "Изключи LED",
         "serial-port": "Порт (null авто)",
-        "serial-rtscts": "RTS/CTS"
+        "serial-rtscts": "RTS/CTS",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
+        "definitions-group-retain": "Retain MQTT messages of this group"
     },
     "stats": {
         "byModel": "По модел",
