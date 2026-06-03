@@ -513,19 +513,23 @@ function parseMarkdown(md: string): ReactNode[] {
 }
 
 async function fetchMd(url: string): Promise<ReactNode[]> {
-    const res = await fetch(url);
+    try {
+        const res = await fetch(url);
 
-    if (!res.ok) {
-        return ["Failed to fetch"];
+        if (!res.ok) {
+            return [`Connection to GitHub (${url}) is required to access device docs.`, `${res.status} - ${res.statusText}`];
+        }
+
+        let text = (await res.text()).trim();
+
+        if (text.startsWith("---")) {
+            text = text.slice(text.indexOf("---", 3) + 3);
+        }
+
+        return parseMarkdown(text);
+    } catch (error) {
+        return [`Connection to GitHub (${url}) is required to access device docs.`, `${error}`];
     }
-
-    let text = (await res.text()).trim();
-
-    if (text.startsWith("---")) {
-        text = text.slice(text.indexOf("---", 3) + 3);
-    }
-
-    return parseMarkdown(text);
 }
 
 const DocsContent = memo(({ docsPromise }: { docsPromise: Promise<ReactNode[]> }) => {
