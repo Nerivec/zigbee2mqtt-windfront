@@ -351,7 +351,7 @@ const ICON_MAP: Record<string, IconDefinition> = {
     play_voice: faVolumeHigh,
     pulse_command: faVolumeHigh,
     squawk: faVolumeHigh,
-    silence_mode: faVolumeHigh,
+    silent_mode: faVolumeHigh,
     siren_and_light: faBell,
     sound: faVolumeUp,
 
@@ -736,7 +736,7 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
 
             break;
         }
-        case "silence_mode": {
+        case "silent_mode": {
             if (value === "ON") {
                 icon = faVolumeXmark;
             }
