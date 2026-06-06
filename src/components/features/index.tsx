@@ -771,8 +771,11 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
             break;
         }
         case "silent_mode": {
-            if (value === "ON") {
-                icon = faVolumeXmark;
+            switch (value) {
+                case "active":
+                case "ON": {
+                    icon = faVolumeXmark;
+                }
             }
 
             break;
