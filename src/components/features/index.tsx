@@ -145,7 +145,7 @@ export type TemperatureUnit = "°C" | "°F";
 const ICON_MAP: Record<string, IconDefinition> = {
     action: faA,
 
-    // Power / electrical
+    // #region Power / electrical
     // battery: faBatteryFull, // customized in fn
     battery_low: faBatteryEmpty,
     rms_voltage: faBolt,
@@ -166,8 +166,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     ac_frequency: faWaveSquare,
     frequency: faWaveSquare,
     power_factor: faIndustry,
+    // #endregion
 
-    // Temperature / climate
+    // #region Temperature / climate
     cpu_temperature: faThermometerThreeQuarters,
     device_temperature: faThermometerThreeQuarters,
     heating_stop: faTemperatureHigh,
@@ -179,8 +180,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     cool: faTemperatureLow,
     hot_water: faTemperatureHigh,
     pressure: faCloudDownloadAlt,
+    // #endregion
 
-    // Environment (humidity / air / gas)
+    // #region Environment (humidity / air / gas)
     humidity: faDroplet,
     moisture: faDroplet,
     soil_moisture: faSeedling,
@@ -197,8 +199,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     smoke: faSmoking,
     carbon_monoxide: faCloud,
     carbon_monoxide_value: faCloud,
+    // #endregion
 
-    // Water / leak / irrigation
+    // #region Water / leak / irrigation
     active_water_leak: faWater,
     water_leak: faWater,
     water: faWater,
@@ -215,8 +218,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     orp: faWater,
     free_chlorine: faWater,
     flow: faFaucetDrip,
+    // #endregion
 
-    // Motion / presence / people
+    // #region Motion / presence / people
     away_mode: faPlane,
     mmwave: faPersonWalking,
     motionless: faPerson,
@@ -236,8 +240,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     vacant: faPerson,
     human: faPerson,
     people: faPerson,
+    // #endregion
 
-    // Locks / security / access
+    // #region Locks / security / access
     keypad: faLock,
     child_lock: faLock,
     button_lock: faLock,
@@ -250,8 +255,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     permission: faUserLock,
     admin: faUserShield,
     master: faUserShield,
+    // #endregion
 
-    // Doors / windows / contact
+    // #region Doors / windows / contact
     garage_door: faWarehouse,
     door_state: faDoorClosed,
     door: faDoorClosed,
@@ -259,8 +265,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     window: faWindowMaximize,
     // contact: faDoorClosed, // customized in fn
     fixed_window_sash: faWindowMaximize,
+    // #endregion
 
-    // Switches / relay / valve
+    // #region Switches / relay / valve
     relay: faToggleOn,
     switch: faToggleOn,
     toggle: faToggleOn,
@@ -268,8 +275,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     valve: faFaucet,
     flow_switch: faFaucet,
     pump: faFaucet,
+    // #endregion
 
-    // Lighting / brightness
+    // #region Lighting / brightness
     led_disabled: faLightbulb,
     led: faLightbulb,
     backlight: faLightbulb,
@@ -289,8 +297,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     color_temp_startup: faSlidersH,
     color_xy: faPalette,
     gradient: faRainbow,
+    // #endregion
 
-    // Position / orientation / distance
+    // #region Position / orientation / distance
     orientation: faCompass,
     target_distance: faRuler,
     distance: faRuler,
@@ -305,8 +314,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     angle_z: faZ,
     approach_distance: faArrowsLeftRightToLine,
     side: faCube,
+    // #endregion
 
-    // Time / scheduling
+    // #region Time / scheduling
     timestamp: faClock,
     countdown: faClock,
     timer: faClock,
@@ -331,14 +341,16 @@ const ICON_MAP: Record<string, IconDefinition> = {
     delay: faClock,
     holidays_schedule: faCalendarDay,
     workdays_schedule: faCalendarDay,
+    // #endregion
 
-    // Scenes / effects
+    // #region Scenes / effects
     gradient_scene: faFilm,
     scene: faFilm,
     individual_led_effect: faWandMagicSparkles,
     effect: faWandMagicSparkles,
+    // #endregion
 
-    // Audio / sound
+    // #region Audio / sound
     ringtone: faVolumeHigh,
     alarm_ringtone: faVolumeHigh,
     melody: faVolumeHigh,
@@ -351,11 +363,12 @@ const ICON_MAP: Record<string, IconDefinition> = {
     play_voice: faVolumeHigh,
     pulse_command: faVolumeHigh,
     squawk: faVolumeHigh,
-    silence_mode: faVolumeHigh,
+    silent_mode: faVolumeHigh,
     siren_and_light: faBell,
     sound: faVolumeUp,
+    // #endregion
 
-    // Alerts / faults / security
+    // #region Alerts / faults / security
     humidity_alarm: faTriangleExclamation,
     sos: faTriangleExclamation,
     broadcast_alarm: faTriangleExclamation,
@@ -378,8 +391,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     power_outage_count: faPlugCircleXmark,
     tamper: faExclamationCircle,
     temperature_alarm: faTriangleExclamation,
+    // #endregion
 
-    // Status / state / power
+    // #region Status / state / power
     factory_reset: faPowerOff,
     restore_default: faPowerOff,
     reset_switch: faPowerOff,
@@ -395,8 +409,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     testing: faFlask,
     trigger_count: faTurnUp,
     warming_up: faHourglassEnd,
+    // #endregion
 
-    // Connectivity / network
+    // #region Connectivity / network
     wifi: faWifi,
     rssi: faWifi,
     transmit_power: faTowerBroadcast,
@@ -404,8 +419,9 @@ const ICON_MAP: Record<string, IconDefinition> = {
     rf_pairing: faTowerBroadcast,
     ip_address: faNetworkWired,
     // linkquality: faSignal, // customized in fn
+    // #endregion
 
-    // Data / update / configuration
+    // #region Data / update / configuration
     update_frequency: faRotate,
     refresh: faRotate,
     refresh_rate: faRotate,
@@ -440,97 +456,115 @@ const ICON_MAP: Record<string, IconDefinition> = {
     system_mode: faCog,
     identify: faHandPointUp,
     alarm_mode: faBell,
+    // #endregion
 
-    // Health
+    // #region Health
     heartbeat: faHeartPulse,
     breathing_rate: faLungs,
     pulse: faHeartPulse,
+    // #endregion
 
-    // Strength / force
+    // #region Strength / force
     strength: faDumbbell,
     force: faDumbbell,
+    // #endregion
 
-    // Percent
+    // #region Percent
     percent_state: faPercent,
     percent: faPercent,
     percentage: faPercent,
+    // #endregion
 
-    // Playback control
+    // #region Playback control
     play: faPlay,
     pause: faPause,
     stop: faStop,
+    // #endregion
 
-    // Restart / relaunch
+    // #region Restart / relaunch
     restart: faArrowsRotate,
     relaunch: faArrowsRotate,
+    // #endregion
 
-    // Identifiers
+    // #region Identifiers
     serial_number: faHashtag,
     meter_id: faHashtag,
     sceneid: faHashtag,
     id: faHashtag,
+    // #endregion
 
-    // Grouping / layout
+    // #region Grouping / layout
     group: faLayerGroup,
     zone: faLayerGroup,
     zones: faLayerGroup,
     region: faMap,
     sub_region: faMap,
+    // #endregion
 
-    // Contracts / production / expenses
+    // #region Contracts / production / expenses
     contract: faFileContract,
     contract_type: faFileContract,
     production: faIndustry,
     producer: faIndustry,
     prepayment: faHandHoldingDollar,
     energy_balance: faCoins,
+    // #endregion
 
-    // Operations
+    // #region Operations
     energy_balance_add: faPlus,
     energy_balance_reset: faRotateLeft,
     energy_reset: faRotateLeft,
     water_total_reset: faRotateLeft,
+    // #endregion
 
-    // Generic descriptors
+    // #region Generic descriptors
     model: faTag,
     name: faTag,
     type: faTag,
     station: faWarehouse,
+    // #endregion
 
-    // Icons / UI
+    // #region Icons / UI
     icon_application: faIcons,
     font_size: faTextHeight,
     theme: faPalette,
     language: faLanguage,
     translation: faLanguage,
+    // #endregion
 
-    // Learning
+    // #region Learning
     learn_ir_code: faGraduationCap,
     spatial_learning: faGraduationCap,
     learning: faGraduationCap,
+    // #endregion
 
-    // Speed / performance
+    // #region Speed / performance
     fan_speed: faFan,
     speed: faGaugeHigh,
     supported_max_motor_speed: faGaugeHigh,
+    // #endregion
 
-    // Growth / feeding
+    // #region Growth / feeding
     fertility: faSeedling,
     feed: faSeedling,
+    // #endregion
 
-    // Filters
+    // #region Filters
     replace_filter: faFilter,
     filter_age: faFilter,
     filter: faFilter,
+    // #endregion
 
-    // Radiation
+    // #region Radiation
     radiation_dose_per_hour: faRadiation,
     radioactive_events_per_minute: faRadiationAlt,
     radioactive_events: faRadiationAlt,
     radiation: faRadiation,
+    // #endregion
 
-    // Weather general
+    // #region Weather general
     weather: faCloudSunRain,
+    // #endregion
 };
 
 const getBatteryIcon = (level: number | undefined): [IconDefinition, className: string] => {
@@ -736,9 +770,12 @@ export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [I
 
             break;
         }
-        case "silence_mode": {
-            if (value === "ON") {
-                icon = faVolumeXmark;
+        case "silent_mode": {
+            switch (value) {
+                case "active":
+                case "ON": {
+                    icon = faVolumeXmark;
+                }
             }
 
             break;
