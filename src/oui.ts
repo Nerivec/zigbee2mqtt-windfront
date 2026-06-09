@@ -17,6 +17,7 @@ export const OUI = new Map([
     ["0012f3", "u-blox AG"],
     ["0013e0", "Murata Manufacturing Co., Ltd."],
     ["00158d", "Jennic Ltd"],
+    ["0015bc", "Develco"],
     ["0016a2", "CentraLite Systems, Inc."],
     ["001783", "Texas Instruments"],
     ["001788", "Philips Lighting BV"],
