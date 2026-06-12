@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Tilføj til gruppe",
-        "add_to_group_header": "Tilføj enhed til gruppe",
+        "add_to_group_header": "Tilføj enheder til gruppe",
         "create_group": "Opret gruppe",
         "friendly_name_placeholder": "sovevaerelse_lys, have...",
         "group_id": "Gruppe-ID",

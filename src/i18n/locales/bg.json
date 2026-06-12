@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Добави към група",
-        "add_to_group_header": "Добавяне на устройство към група",
+        "add_to_group_header": "Добавяне на устройства към група",
         "create_group": "Създай група",
         "friendly_name_placeholder": "spalnya_svetlini, gradina...",
         "group_id": "ID на група",

@@ -3,7 +3,7 @@ import { useAppStore } from "../../../store.js";
 import type { Group } from "../../../types.js";
 import AddScene from "../../device-page/AddScene.js";
 import RecallRemove from "../../device-page/RecallRemove.js";
-import AddDeviceToGroup from "../AddDeviceToGroup.js";
+import AddDevicesToGroup from "../AddDevicesToGroup.js";
 import GroupMembers from "../GroupMembers.js";
 
 type DevicesProps = {
@@ -19,7 +19,7 @@ export default function Devices({ sourceIdx, group }: DevicesProps) {
             <div className="flex flex-row flex-wrap gap-4 mb-4 w-full">
                 <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">
                     <div className="card-body p-4">
-                        <AddDeviceToGroup sourceIdx={sourceIdx} devices={devices} group={group} />
+                        <AddDevicesToGroup sourceIdx={sourceIdx} devices={devices} group={group} />
                     </div>
                 </div>
                 <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">

@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Zur Gruppe hinzufügen",
-        "add_to_group_header": "Ein Gerät zur Gruppe hinzufügen",
+        "add_to_group_header": "Geräte zur Gruppe hinzufügen",
         "create_group": "Gruppe erstellen",
         "friendly_name_placeholder": "schlafzimmer_lichter, garten...",
         "group_id": "Gruppen-ID",

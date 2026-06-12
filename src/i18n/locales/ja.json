@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "グループに追加",
-        "add_to_group_header": "デバイスをグループへ追加",
+        "add_to_group_header": "デバイスをグループに追加",
         "create_group": "グループ作成",
         "friendly_name_placeholder": "bedroom_lights, garden...",
         "group_id": "グループID",

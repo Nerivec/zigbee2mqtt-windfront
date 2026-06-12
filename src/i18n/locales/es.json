@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Agregar al grupo",
-        "add_to_group_header": "Agregar un dispositivo al grupo",
+        "add_to_group_header": "Agregar dispositivos al grupo",
         "create_group": "Crear grupo",
         "friendly_name_placeholder": "luces_dormitorio, jardin...",
         "group_id": "ID de grupo",

@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Legg til i gruppe",
-        "add_to_group_header": "Legg enhet til gruppe",
+        "add_to_group_header": "Legg enheter til gruppe",
         "create_group": "Opprett gruppe",
         "friendly_name_placeholder": "soverom_lys, hage...",
         "group_id": "Gruppe-ID",

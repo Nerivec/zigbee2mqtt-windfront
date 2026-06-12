@@ -161,7 +161,7 @@
     },
     "groups": {
         "add_to_group": "Lisää ryhmään",
-        "add_to_group_header": "Lisää laite ryhmään",
+        "add_to_group_header": "Lisää laitteita ryhmään",
         "create_group": "Luo ryhmä",
         "friendly_name_placeholder": "makuuhuone_valot, piha...",
         "group_id": "Ryhmä-ID",
