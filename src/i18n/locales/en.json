@@ -276,6 +276,7 @@
         "image_block_request_timeout": "Image block request timeout",
         "image_block_response_delay": "Image block response delay",
         "no_official_ota_support": "No official OTA support",
+        "not_assessed": "Not assessed",
         "release_notes": "Release notes",
         "remaining_time": "Remaining time",
         "schedule": "Schedule update",

@@ -12,7 +12,7 @@ const OtaFileVersion = memo(({ version, showRaw }: OtaFileVersionProps) => {
     const versions = useMemo(() => formatOtaFileVersion(version), [version]);
 
     return versions === undefined ? (
-        <span>N/A</span>
+        <span>{t(($) => $.not_assessed)}</span>
     ) : (
         <div className={`flex flex-col ${showRaw ? "" : "tooltip tooltip-top"}`} data-tip={version}>
             <span>
