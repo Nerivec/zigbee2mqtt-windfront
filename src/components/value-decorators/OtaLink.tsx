@@ -1,5 +1,4 @@
 import { memo } from "react";
-import { useTranslation } from "react-i18next";
 import type { Device } from "../../types.js";
 
 type OtaLinkProps = {
@@ -7,9 +6,8 @@ type OtaLinkProps = {
 };
 
 const OtaLink = memo(({ device }: OtaLinkProps) => {
-    const { t } = useTranslation("zigbee");
     let url = "https://github.com/Koenkk/zigbee-OTA/releases";
-    const title = device.software_build_id || t(($) => $.unknown);
+    const title = device.software_build_id || "N/A";
 
     switch (device?.definition?.vendor) {
         case "IKEA":
