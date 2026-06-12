@@ -11,6 +11,10 @@ const OtaFileVersion = memo(({ version, showRaw }: OtaFileVersionProps) => {
     const { t } = useTranslation(["ota", "zigbee"]);
     const versions = useMemo(() => formatOtaFileVersion(version), [version]);
 
+    if (version === -2) {
+        return <span>N/A</span>;
+    }
+
     return versions === undefined ? (
         <span>{t(($) => $.unknown, { ns: "zigbee" })}</span>
     ) : (
