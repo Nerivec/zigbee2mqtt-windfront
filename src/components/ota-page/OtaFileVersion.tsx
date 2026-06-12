@@ -8,11 +8,11 @@ type OtaFileVersionProps = {
 };
 
 const OtaFileVersion = memo(({ version, showRaw }: OtaFileVersionProps) => {
-    const { t } = useTranslation("ota");
+    const { t } = useTranslation(["ota", "zigbee"]);
     const versions = useMemo(() => formatOtaFileVersion(version), [version]);
 
     return versions === undefined ? (
-        <span>N/A</span>
+        <span>{t(($) => $.unknown, { ns: "zigbee" })}</span>
     ) : (
         <div className={`flex flex-col ${showRaw ? "" : "tooltip tooltip-top"}`} data-tip={version}>
             <span>
