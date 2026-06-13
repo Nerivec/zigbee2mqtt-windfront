@@ -7,7 +7,7 @@ type OtaLinkProps = {
 
 const OtaLink = memo(({ device }: OtaLinkProps) => {
     let url = "https://github.com/Koenkk/zigbee-OTA/releases";
-    const title = device.software_build_id || "N/A";
+    const title = device.software_build_id;
 
     switch (device?.definition?.vendor) {
         case "IKEA":
@@ -29,10 +29,12 @@ const OtaLink = memo(({ device }: OtaLinkProps) => {
             break;
     }
 
-    return (
-        <a target="_blank" rel="noopener noreferrer" href={url} className="link link-hover">
+    return title ? (
+        <a target="_blank" rel="noopener noreferrer" href={url} className="font-mono link link-hover">
             {title}
         </a>
+    ) : (
+        <span>N/A</span>
     );
 });
 
