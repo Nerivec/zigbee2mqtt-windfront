@@ -357,7 +357,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                         <>
                             <div className="font-semibold text-base-content/70">{t(($) => $.firmware_version, { ns: "ota" })}</div>
                             <div className="min-w-0">
-                                <p className="font-semibold">
+                                <p className="font-mono font-semibold">
                                     {(deviceState.update?.installed_version ?? 0) > 0 ? deviceState.update?.installed_version : t(($) => $.unknown)}
                                     <span className="ms-3">
                                         <OtaControlGroup
