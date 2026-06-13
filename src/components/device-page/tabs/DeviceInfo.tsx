@@ -349,7 +349,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             <div className="font-semibold text-base-content/70">{t(($) => $.firmware_id)}</div>
                             <div className="min-w-0">
                                 <p className="font-semibold">{device.software_build_id || "N/A"}</p>
-                                <p className="text-base-content/50">{device.date_code || "N/A"}</p>
+                                <p className="font-mono text-base-content/50">{device.date_code || "N/A"}</p>
                             </div>
                         </>
                     ) : null}
