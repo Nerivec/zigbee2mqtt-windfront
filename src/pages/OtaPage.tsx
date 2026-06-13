@@ -327,7 +327,7 @@ export default function OtaPage() {
                                     className="badge badge-sm badge-ghost tooltip tooltip-bottom"
                                     data-tip={t(($) => $.firmware_build_date, { ns: "zigbee" })}
                                 >
-                                    {device.date_code}
+                                    <span className="font-mono">{device.date_code}</span>
                                 </span>
                             </div>
                         )}
