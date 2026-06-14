@@ -21,7 +21,7 @@ const OtaFileVersion = memo(({ version, showRaw }: OtaFileVersionProps) => {
             <span>
                 {t(($) => $.stack)}: {`${versions[2]} build ${versions[3]}`}
             </span>
-            {showRaw ? <span className="text-base-content/75">{version}</span> : null}
+            {showRaw ? <span className="font-mono text-base-content/75">{version}</span> : null}
         </div>
     );
 });

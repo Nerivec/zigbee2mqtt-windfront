@@ -363,7 +363,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                             <div className="min-w-0">
                                 <p className="font-semibold">
                                     {deviceState.update?.installed_version ? (
-                                        <span>{deviceState.update.installed_version}</span>
+                                        <span className="font-mono">{deviceState.update.installed_version}</span>
                                     ) : (
                                         <span>{t(($) => $.not_assessed, { ns: "ota" })}</span>
                                     )}
