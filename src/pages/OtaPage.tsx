@@ -354,9 +354,9 @@ export default function OtaPage() {
                 },
             },
             {
-                id: "available_firmware_version",
+                id: "latest_firmware_version",
                 minSize: 175,
-                header: t(($) => $.available_firmware_version),
+                header: t(($) => $.latest_firmware_version),
                 accessorFn: ({ state }) => formatOtaFileVersion(state?.latest_version)?.join(" "),
                 cell: ({
                     row: {
