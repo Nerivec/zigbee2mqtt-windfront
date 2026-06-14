@@ -32,7 +32,7 @@ const OtaLink = memo(({ device }: OtaLinkProps) => {
     }
 
     return title ? (
-        <a target="_blank" rel="noopener noreferrer" href={url} className="link link-hover">
+        <a target="_blank" rel="noopener noreferrer" href={url} className="font-mono link link-hover">
             {title}
         </a>
     ) : (
