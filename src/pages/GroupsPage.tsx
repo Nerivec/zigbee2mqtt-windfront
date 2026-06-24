@@ -260,8 +260,8 @@ export default function GroupsPage() {
                     name="group_id"
                     label={t(($) => $.group_id)}
                     value={newGroupId}
-                    min={0}
-                    max={255}
+                    min={0x0001}
+                    max={0xfff7}
                     onChange={(e) => setNewGroupId(e.target.value)}
                     className="input"
                 />
