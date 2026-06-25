@@ -71,11 +71,20 @@ export default function GroupsPage() {
     );
 
     const isValidNewGroup = useMemo(() => {
-        if (newGroupFriendlyName) {
-            return !newGroupId || !groups[newGroupSourceIdx].find((group) => group.id.toString() === newGroupId);
+        if (!newGroupFriendlyName) {
+            return false;
         }
 
-        return false;
+        if (!newGroupId) {
+            return true;
+        }
+
+        const g = Number(newGroupId);
+        if (!Number.isInteger(g) || g < 0x0001 || g > 0xfff7) {
+            return false;
+        }
+
+        return !groups[newGroupSourceIdx].find((group) => group.id === g);
     }, [newGroupFriendlyName, newGroupId, newGroupSourceIdx, groups]);
 
     const columns = useMemo<ColumnDef<GroupTableData, unknown>[]>(
