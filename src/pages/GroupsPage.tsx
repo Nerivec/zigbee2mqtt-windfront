@@ -71,11 +71,20 @@ export default function GroupsPage() {
     );
 
     const isValidNewGroup = useMemo(() => {
-        if (newGroupFriendlyName) {
-            return !newGroupId || !groups[newGroupSourceIdx].find((group) => group.id.toString() === newGroupId);
+        if (!newGroupFriendlyName) {
+            return false;
         }
 
-        return false;
+        if (!newGroupId) {
+            return true;
+        }
+
+        const id = Number(newGroupId);
+        if (!Number.isFinite(id) || id < 0x0001 || id > 0xfff7) {
+            return false;
+        }
+
+        return !groups[newGroupSourceIdx].find((group) => group.id === id);
     }, [newGroupFriendlyName, newGroupId, newGroupSourceIdx, groups]);
 
     const columns = useMemo<ColumnDef<GroupTableData, unknown>[]>(
@@ -260,8 +269,8 @@ export default function GroupsPage() {
                     name="group_id"
                     label={t(($) => $.group_id)}
                     value={newGroupId}
-                    min={0}
-                    max={255}
+                    min={0x0001}
+                    max={0xfff7}
                     onChange={(e) => setNewGroupId(e.target.value)}
                     className="input"
                 />
