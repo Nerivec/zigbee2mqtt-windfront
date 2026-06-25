@@ -327,7 +327,7 @@ export default function OtaPage() {
                                     className="badge badge-sm badge-ghost tooltip tooltip-bottom"
                                     data-tip={t(($) => $.firmware_build_date, { ns: "zigbee" })}
                                 >
-                                    {device.date_code}
+                                    <span className="font-mono">{device.date_code}</span>
                                 </span>
                             </div>
                         )}
@@ -357,12 +357,32 @@ export default function OtaPage() {
                 id: "available_firmware_version",
                 minSize: 175,
                 header: t(($) => $.available_firmware_version),
-                accessorFn: ({ state }) => formatOtaFileVersion(state?.latest_version)?.join(" "),
+                accessorFn: ({ state }) => {
+                    let availableFirmwareVersion: number | undefined; // unknown - didn't check yet
+                    if (state?.latest_version && state?.latest_version >= 0) {
+                        if (!state?.latest_source && state?.latest_version === state?.installed_version) {
+                            availableFirmwareVersion = 0; // N/A - checked but no fw available
+                        } else {
+                            availableFirmwareVersion = state.latest_version;
+                        }
+                    }
+                    return formatOtaFileVersion(availableFirmwareVersion)?.join(" ");
+                },
                 cell: ({
                     row: {
                         original: { state },
                     },
-                }) => <OtaFileVersion version={state?.latest_version} />,
+                }) => {
+                    let availableFirmwareVersion: number | undefined; // unknown - didn't check yet
+                    if (state?.latest_version && state?.latest_version >= 0) {
+                        if (!state?.latest_source && state?.latest_version === state?.installed_version) {
+                            availableFirmwareVersion = -2; // N/A - checked but no fw available
+                        } else {
+                            availableFirmwareVersion = state.latest_version;
+                        }
+                    }
+                    return <OtaFileVersion version={availableFirmwareVersion} />;
+                },
                 filterFn: "includesString",
                 meta: {
                     filterVariant: "text",

@@ -8,20 +8,24 @@ type OtaFileVersionProps = {
 };
 
 const OtaFileVersion = memo(({ version, showRaw }: OtaFileVersionProps) => {
-    const { t } = useTranslation("ota");
+    const { t } = useTranslation(["ota", "zigbee"]);
     const versions = useMemo(() => formatOtaFileVersion(version), [version]);
 
+    if (version === -2) {
+        return <span>N/A</span>;
+    }
+
     return versions === undefined ? (
-        <span>N/A</span>
+        <span>{t(($) => $.unknown, { ns: "zigbee" })}</span>
     ) : (
-        <div className={`flex flex-col ${showRaw ? "" : "tooltip tooltip-top"}`} data-tip={version}>
-            <span>
+        <div className={`font-mono flex flex-col ${showRaw ? "" : "tooltip tooltip-top"}`} data-tip={version}>
+            <span className="font-sans">
                 {t(($) => $.app)}: {`${versions[0]} build ${versions[1]}`}
             </span>
-            <span>
+            <span className="font-sans">
                 {t(($) => $.stack)}: {`${versions[2]} build ${versions[3]}`}
             </span>
-            {showRaw ? <span className="text-base-content/75">{version}</span> : null}
+            {showRaw ? <span className="font-mono text-base-content/75">{version}</span> : null}
         </div>
     );
 });
