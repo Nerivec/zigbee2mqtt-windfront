@@ -79,12 +79,12 @@ export default function GroupsPage() {
             return true;
         }
 
-        const g = Number(newGroupId);
-        if (!Number.isInteger(g) || g < 0x0001 || g > 0xfff7) {
+        const id = Number(newGroupId);
+        if (!Number.isFinite(id) || id < 0x0001 || id > 0xfff7) {
             return false;
         }
 
-        return !groups[newGroupSourceIdx].find((group) => group.id === g);
+        return !groups[newGroupSourceIdx].find((group) => group.id === id);
     }, [newGroupFriendlyName, newGroupId, newGroupSourceIdx, groups]);
 
     const columns = useMemo<ColumnDef<GroupTableData, unknown>[]>(
