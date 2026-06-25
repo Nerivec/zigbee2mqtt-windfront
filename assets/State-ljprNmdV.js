@@ -1,0 +1,1 @@
+import{dC as a,dG as r,dn as i}from"./index-k-TbExtW.js";import{J as n}from"./Json-BsQWPyQO.js";import"./envs-CRUy-_iG.js";function u({sourceIdx:t,friendlyName:e}){const o=a(r(s=>s.deviceStates[t][e]));return i.jsx(n,{obj:o??{}})}export{u as default};

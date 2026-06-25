@@ -1,0 +1,1 @@
+import{dr as a,dn as s,o as n}from"./index-k-TbExtW.js";import{b as m}from"./index-CDx0vEl0.js";import{D as e}from"./DisplayValue-CN57ZSWx.js";const x=a.memo(({value:o})=>{const[t,r]=m(o);return s.jsxs(s.Fragment,{children:[s.jsx(n,{icon:t,className:r})," ",s.jsx(e,{value:o,name:"linkquality"})]})});export{x as L};

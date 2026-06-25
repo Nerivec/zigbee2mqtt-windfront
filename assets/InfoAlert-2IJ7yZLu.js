@@ -1,0 +1,1 @@
+import{dz as e,H as t,dn as o,o as a,aK as r}from"./index-k-TbExtW.js";function i({children:s}){return e.get(t,!1)?null:o.jsxs("div",{className:"alert alert-info alert-soft mb-2",role:"alert",children:[o.jsx(a,{icon:r,size:"2xl"}),s]})}export{i as I};
