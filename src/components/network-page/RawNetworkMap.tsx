@@ -31,6 +31,7 @@ export type NetworkMapConfig = {
     nodeStrength: number;
     linkDistance: number;
     showIcons: boolean;
+    iconScale: number;
 };
 
 type RawNetworkMapProps = {
@@ -41,14 +42,22 @@ type RawNetworkMapProps = {
 const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     const { t } = useTranslation("network");
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
+    const savedConfig = store2.get(NETWORK_MAP_CONFIG_KEY, null);
+    const iconScale = savedConfig?.iconScale ?? 1;
     const [config, setConfig] = useState<NetworkMapConfig>(
-        store2.get(NETWORK_MAP_CONFIG_KEY, {
-            layoutType: "forceDirected2d",
-            labelType: "all",
-            nodeStrength: -750,
-            linkDistance: 50,
-            showIcons: false,
-        } satisfies NetworkMapConfig),
+        () =>
+            ({
+                ...{
+                    layoutType: "forceDirected2d",
+                    labelType: "all",
+                    nodeStrength: -750,
+                    linkDistance: 50,
+                    showIcons: false,
+                    iconScale: 1,
+                },
+                ...savedConfig,
+                iconScale,
+            }) satisfies NetworkMapConfig,
     );
     const [showParents, setShowParents] = useState(true);
     const [showChildren, setShowChildren] = useState(true);
@@ -137,10 +146,6 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
 
             if (config.showIcons && device) {
                 icon = device.definition?.icon ?? getZ2MDeviceImage(device);
-
-                if (icon === genericDevice) {
-                    icon = undefined;
-                }
             }
 
             computedNodes.push({
@@ -277,6 +282,9 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                         linkDistance: config.linkDistance,
                     }}
                     sizingType="centrality"
+                    defaultNodeSize={7 * config.iconScale}
+                    minNodeSize={5 * config.iconScale}
+                    maxNodeSize={15 * config.iconScale}
                     labelType={config.labelType}
                     labelFontUrl={fontUrl}
                     edgeLabelPosition="natural"

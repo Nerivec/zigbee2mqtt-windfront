@@ -2,6 +2,8 @@ import {
     faArrowRightLong,
     faArrowsLeftRightToLine,
     faArrowsUpToLine,
+    faCircleMinus,
+    faCirclePlus,
     faDownload,
     faExpand,
     faIcons,
@@ -157,6 +159,25 @@ const Controls = memo(
                             icon={faArrowRightLong}
                             style={{ color: EDGE_RELATIONSHIP_FILL_COLORS[ZigbeeRelationship.NeighborIsASibling] }}
                         />
+                    </Button>
+                    <Button<boolean>
+                        className={"btn btn-square btn-neutral btn-sm tooltip-bottom btn-outline"}
+                        item={false}
+                        onClick={() => setConfig((prev) => ({ ...prev, iconScale: Math.max(1, prev.iconScale - 1) }))}
+                        title={t(($) => $.scale_out)}
+                    >
+                        <FontAwesomeIcon icon={faCircleMinus} />
+                    </Button>
+                    <span className="btn btn-disabled btn-sm tooltip-bottom" data-tip={t(($) => $.scale_level)}>
+                        {config.iconScale}
+                    </span>
+                    <Button<boolean>
+                        className={"btn btn-square btn-neutral btn-sm tooltip-bottom btn-outline"}
+                        item={false}
+                        onClick={() => setConfig((prev) => ({ ...prev, iconScale: Math.min(10, prev.iconScale + 1) }))}
+                        title={t(($) => $.scale_in)}
+                    >
+                        <FontAwesomeIcon icon={faCirclePlus} />
                     </Button>
                     <Button<boolean>
                         className={`btn btn-square btn-neutral btn-sm tooltip-bottom ${config.showIcons ? "" : "btn-outline"}`}
