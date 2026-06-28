@@ -4,6 +4,7 @@ import { I18nextProvider } from "react-i18next";
 import { HashRouter, Route, Routes } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import ScrollToTop from "./components/ScrollToTop.js";
+import { TitleUpdater } from "./components/TitleUpdater.js";
 import Toasts from "./components/Toasts.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
 import i18n from "./i18n/index.js";
@@ -52,6 +53,7 @@ function App() {
                         </div>
                     }
                 >
+                    <TitleUpdater />
                     <Routes>
                         <Route path="/dashboard" element={<DashboardPage />} />
                         <Route path="/devices" element={<DevicesPage />} />
