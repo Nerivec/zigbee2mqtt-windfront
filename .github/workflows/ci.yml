@@ -149,7 +149,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.PAT }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/Nerivec/ha-zigbee2mqtt-windfront/actions/workflows/manual-builder.yaml/dispatches \
-            -d '{"ref":"main","inputs":{"app":"windfront_edge","publish": true}}'
+            -d '{"ref":"main","inputs":{"app":"windfront_edge","publish":true}}'
 
       - name: Create ha-zigbee2mqtt-windfront windfront bump version PR
         if: startsWith(github.ref, 'refs/tags/') && github.event_name == 'push'
@@ -160,4 +160,4 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.PAT }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/Nerivec/ha-zigbee2mqtt-windfront/actions/workflows/bump-version.yaml/dispatches \
-            -d '{"ref":"main","inputs":{"app":"windfront", "arg_name": "WINDFRONT", "version": "${{ github.ref_name }}", "changelog": "## ${{ github.ref_name }}\n\n- [WindFront release notes](https://github.com/Nerivec/zigbee2mqtt-windfront/releases/tag/${{ github.ref_name }})"}}'
+            -d '{"ref":"main","inputs":{"app":"windfront","arg_name":"WINDFRONT","version":"${{ github.ref_name }}","changelog":"## ${{ github.ref_name }}\n\n- [WindFront release notes](https://github.com/Nerivec/zigbee2mqtt-windfront/releases/tag/${{ github.ref_name }})"}}'
