@@ -1,0 +1,1 @@
+import{aW as u}from"./index-BERTEbU5.js";import{r as C}from"./_createCompounder-Dc0A4G72.js";var e,r;function i(){if(r)return e;r=1;var a=C(),s=a(function(o,n,t){return o+(t?"_":"")+n.toLowerCase()});return e=s,e}var m=i();const k=u(m);export{k as s};
