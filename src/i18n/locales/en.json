@@ -473,6 +473,7 @@
         "mqtt-password": "MQTT server authentication password",
         "mqtt-reject_unauthorized": "Disable self-signed SSL certificate",
         "mqtt-server": "MQTT server URL (use mqtts:// for SSL/TLS connection)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT server authentication user",
         "mqtt-version": "MQTT protocol version",
         "ota-default_maximum_data_size": "The size of file chunks sent during an update (in bytes). Note: This value may get ignored for manufacturers that require specific values.",
