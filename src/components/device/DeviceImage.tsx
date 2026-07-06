@@ -30,9 +30,13 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
                 <span title={t(($) => $.interview_failed)}>
                     <FontAwesomeIcon icon={faExclamationTriangle} beat className="indicator-item indicator-bottom indicator-end text-error" />
                 </span>
-            ) : device.definition?.source === "generated" ? (
+            ) : (device.definition?.source === "generated" && !device.supported) ? (
                 <span title={t(($) => $.unsupported)}>
                     <FontAwesomeIcon icon={faQuestionCircle} beat className="indicator-item indicator-bottom indicator-end text-warning" />
+                </span>
+            ) : (device.definition?.source === "generated" && device.supported) ? (
+                <span title={t(($) => $.generated)}>
+                    <FontAwesomeIcon icon={faQuestionCircle} className="indicator-item indicator-bottom indicator-end text-warning" />
                 </span>
             ) : device.definition?.source === "external" ? (
                 <span title={t(($) => $.unsupported)}>

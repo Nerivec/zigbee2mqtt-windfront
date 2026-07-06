@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { useImage } from "react-image";
 import genericDevice from "../../images/generic-zigbee-device.png";
+import esphomeDevice from "../../images/ESPH-mark-color.png";
 import type { Device } from "../../types.js";
 import { getZ2MDeviceImage } from "./index.js";
 
@@ -22,8 +23,9 @@ const LazyImage = memo(({ device = {} as Device, className }: Readonly<LazyImage
         srcList.push(fromZ2MDocs);
     }
 
-    if (fromZ2MDocs !== genericDevice) {
-        srcList.push(genericDevice);
+    const genericImage = device.definition?.vendor === "esphome" ? esphomeDevice : genericDevice;
+    if (fromZ2MDocs !== genericImage) {
+        srcList.push(genericImage);
     }
 
     const { src } = useImage({ srcList });
