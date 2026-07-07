@@ -101,6 +101,7 @@
         "source": "Quelle",
         "source_endpoint": "Quell-Endpoint",
         "state": "Status",
+        "support": "Support",
         "sync": "Synch.",
         "sync_reporting": "Synch. Berichte",
         "terminate": "Beenden",
@@ -275,6 +276,7 @@
         "zoom_out": "Verkleinern"
     },
     "ota": {
+        "abort": "Abort",
         "app": "App",
         "available": "Verfügbar",
         "available_firmware_version": "Verfügbare Firmware-Version",
@@ -310,8 +312,7 @@
         "update": "Geräte-Firmware aktualisieren",
         "update_selected": "Ausgewählte aktualisieren",
         "update_selected_info": "Ein OTA-Update belastet das Netzwerk stark. Stellen Sie sicher, dass das Zigbee-Netzwerk stabil ist und wählen Sie wenig frequentierte Zeiten für das Update.",
-        "updating": "Aktualisiere",
-        "abort": "Abort"
+        "updating": "Aktualisiere"
     },
     "scene": {
         "add_update_header": "Szene hinzufügen/aktualisieren",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Cache-Zustand beim Start senden",
         "advanced-channel": "Zigbee-Kanal – Änderung kann erneutes Koppeln erfordern (empfohlen ZLL: 11, 15, 20, 25)",
         "advanced-elapsed": "elapsed-Attribut (ms seit vorheriger Nachricht) hinzufügen",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Zigbee Extended PAN-ID (Das Ändern erfordert das erneute Koppeln aller Geräte!)",
         "advanced-last_seen": "last_seen-Attribut hinzufügen (Zeit der letzten Zigbee-Nachricht)",
         "advanced-log_console_json": "Konsole JSON-Log",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Minimale Zeit zwischen Payloads (Sekunden)",
         "definitions-group-homeassistant-name": "Name der Gruppe in Home Assistant",
         "definitions-group-off_state": "Steuerung wann OFF/CLOSE für eine Gruppe veröffentlicht wird",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "QoS-Level für MQTT-Nachrichten dieser Gruppe",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Aktiviert Authentifizierung (standardmäßig aus)",
         "frontend-base_url": "Basis-URL für das Frontend (z.B. '/z2m')",
         "frontend-disable_ui_serving": "Wenn true, wird nur WebSocket bereitgestellt, nicht die UI.",
@@ -470,6 +474,7 @@
         "mqtt-password": "MQTT-Server Passwort",
         "mqtt-reject_unauthorized": "Selbstsigniertes SSL-Zertifikat deaktivieren",
         "mqtt-server": "MQTT-Server-URL (für SSL/TLS mqtts:// nutzen)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT-Server Benutzer",
         "mqtt-version": "MQTT-Protokollversion",
         "ota-default_maximum_data_size": "Größe der Dateiblöcke (Bytes) während Updates.",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Baudrate für die serielle Schnittstelle (häufig 115200).",
         "serial-disable_led": "LED des Adapters deaktivieren (falls unterstützt)",
         "serial-port": "Ort des Adapters. Für Autodetektion auf null setzen",
-        "serial-rtscts": "RTS/CTS Hardware-Flow-Control",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS Hardware-Flow-Control"
     },
     "stats": {
         "byModel": "Nach Modell",
@@ -518,13 +520,11 @@
         "in_progress": "in bearbeitung",
         "leaking": "Leck",
         "normal": "normal",
-        "not_supported": "nicht unterstützt",
         "null": "Null",
         "occupied": "belegt",
         "Occupied": "Belegt",
         "open": "offen",
         "Open": "Geöffnet",
-        "supported": "unterstützt",
         "tampered": "Manipuliert",
         "true": "wahr"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Endgerät",
         "endpoint": "Endpoint",
         "extended_pan_id": "Erweitertes PAN-ID",
+        "external": "External",
         "firmware_build_date": "Firmware-Build-Datum",
         "firmware_id": "Firmware-ID",
         "force_remove": "Entfernen erzwingen",
         "force_remove_notice": "Nur im Notfall verwenden (wird nicht im Netzwerk propagiert)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Gruppe",
         "how_to_add_support": "Wie füge ich Unterstützung hinzu?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Min. Wiederholungsänderung",
         "min_rep_interval": "Min. Wiederholungsintervall",
         "model": "Modell",
+        "native": "Native",
         "network_address": "Netzwerkadresse",
         "network_address_dec": "Netzwerkadresse im Dezimalformat",
         "network_address_hex": "Netzwerkadresse im Hex-Format",

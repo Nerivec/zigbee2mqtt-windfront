@@ -101,6 +101,7 @@
         "source": "ソース",
         "source_endpoint": "ソースエンドポイント",
         "state": "状態",
+        "support": "Support",
         "sync": "同期",
         "sync_reporting": "同期レポート",
         "terminate": "終了",
@@ -275,6 +276,7 @@
         "zoom_out": "ズームアウト"
     },
     "ota": {
+        "abort": "Abort",
         "app": "アプリ",
         "available": "利用可能",
         "available_firmware_version": "利用可能バージョン",
@@ -310,8 +312,7 @@
         "update": "デバイスファーム更新",
         "update_selected": "選択を更新",
         "update_selected_info": "OTA 更新はネットワークに高負荷です。安定性を確保してください。",
-        "updating": "更新中",
-        "abort": "Abort"
+        "updating": "更新中"
     },
     "scene": {
         "add_update_header": "シーン追加/更新",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "起動時キャッシュ送信",
         "advanced-channel": "Zigbee チャンネル",
         "advanced-elapsed": "elapsed 属性追加",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Zigbee 拡張 PAN ID (変更するとすべてのデバイスを再ペアリングする必要があります！)",
         "advanced-last_seen": "last_seen 属性追加",
         "advanced-log_console_json": "コンソール JSON ログ",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "最小ペイロード間隔 (秒)",
         "definitions-group-homeassistant-name": "Home Assistant のグループ名",
         "definitions-group-off_state": "グループの状態を OFF または CLOSE として公開するタイミングを制御します。'all_members_off': 全メンバーが OFF/CLOSE 状態のときのみ OFF/CLOSE を公開します。'last_member_state': いずれかのメンバーが OFF へ変化した時点で OFF を公開します。",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "このグループの MQTT メッセージの QoS レベル",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "認証を有効化",
         "frontend-base_url": "フロントエンドベース URL",
         "frontend-disable_ui_serving": "true で UI を提供せず WebSocket のみ",
@@ -470,6 +474,7 @@
         "mqtt-password": "MQTT パスワード",
         "mqtt-reject_unauthorized": "自己署名 SSL 証明書を無効化",
         "mqtt-server": "MQTT サーバ URL (SSL/TLS は mqtts://)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT ユーザ",
         "mqtt-version": "MQTT プロトコルバージョン",
         "ota-default_maximum_data_size": "更新送信チャンクサイズ (バイト)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "シリアルボーレート",
         "serial-disable_led": "アダプタ LED 無効化",
         "serial-port": "アダプタ位置 (null で自動検出)",
-        "serial-rtscts": "RTS/CTS フロー制御",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS フロー制御"
     },
     "stats": {
         "byModel": "モデル別",
@@ -518,13 +520,11 @@
         "in_progress": "進行中",
         "leaking": "漏れ",
         "normal": "通常",
-        "not_supported": "未サポート",
         "null": "Null",
         "occupied": "占有",
         "Occupied": "占有",
         "open": "開",
         "Open": "開",
-        "supported": "サポート済",
         "tampered": "改ざん",
         "true": "True"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "エンドデバイス",
         "endpoint": "エンドポイント",
         "extended_pan_id": "拡張PAN ID",
+        "external": "External",
         "firmware_build_date": "ビルド日",
         "firmware_id": "ファーム ID",
         "force_remove": "強制削除",
         "force_remove_notice": "最終手段のみ (ネットワークに伝播しません)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "グループ",
         "how_to_add_support": "サポート追加方法?",
@@ -579,6 +581,7 @@
         "min_rep_change": "最小変化",
         "min_rep_interval": "最小報告間隔",
         "model": "モデル",
+        "native": "Native",
         "network_address": "ネットワークアドレス",
         "network_address_dec": "ネットワークアドレス (10進)",
         "network_address_hex": "ネットワークアドレス (16進)",

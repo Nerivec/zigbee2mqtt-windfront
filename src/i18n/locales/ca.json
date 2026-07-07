@@ -101,6 +101,7 @@
         "source": "Origen",
         "source_endpoint": "Endpoint origen",
         "state": "Estat",
+        "support": "Support",
         "sync": "Sincron.",
         "sync_reporting": "Sincron. informes",
         "terminate": "Finalitza",
@@ -275,6 +276,7 @@
         "zoom_out": "Allunya"
     },
     "ota": {
+        "abort": "Abort",
         "app": "App",
         "available": "Disponible",
         "available_firmware_version": "Versió disponible",
@@ -310,8 +312,7 @@
         "update": "Actualitza firmware",
         "update_selected": "Actualitza seleccionats",
         "update_selected_info": "Una OTA carrega molt la xarxa.",
-        "updating": "Actualitzant",
-        "abort": "Abort"
+        "updating": "Actualitzant"
     },
     "scene": {
         "add_update_header": "Afegeix/actualitza escena",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Envia en arrencada",
         "advanced-channel": "Canal Zigbee",
         "advanced-elapsed": "Afegeix elapsed",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Extended PAN ID (Canviar això requereix tornar a emparellar tots els dispositius!)",
         "advanced-last_seen": "Afegeix last_seen",
         "advanced-log_console_json": "Log JSON consola",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Interval mín (s)",
         "definitions-group-homeassistant-name": "Nom del grup a Home Assistant",
         "definitions-group-off_state": "Quan publicar OFF/CLOSE",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "QoS grup",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Activa auth",
         "frontend-base_url": "Base URL",
         "frontend-disable_ui_serving": "True només WebSocket",
@@ -470,6 +474,7 @@
         "mqtt-password": "Contrasenya MQTT",
         "mqtt-reject_unauthorized": "Desactiva SSL autosignat",
         "mqtt-server": "URL servidor MQTT (mqtts://)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "Usuari MQTT",
         "mqtt-version": "Versió protocol",
         "ota-default_maximum_data_size": "Mida bloc (bytes)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Baud rate",
         "serial-disable_led": "Desactiva LED adaptador",
         "serial-port": "Local adaptador (null auto)",
-        "serial-rtscts": "Flux RTS/CTS",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "Flux RTS/CTS"
     },
     "stats": {
         "byModel": "Per model",
@@ -518,13 +520,11 @@
         "in_progress": "en curs",
         "leaking": "fuita",
         "normal": "normal",
-        "not_supported": "no suportat",
         "null": "Null",
         "occupied": "ocupat",
         "Occupied": "Ocupat",
         "open": "obert",
         "Open": "Obert",
-        "supported": "suportat",
         "tampered": "manipulat",
         "true": "cert"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Dispositiu final",
         "endpoint": "Endpoint",
         "extended_pan_id": "PAN ID ampliat",
+        "external": "External",
         "firmware_build_date": "Data build",
         "firmware_id": "ID firmware",
         "force_remove": "Força eliminació",
         "force_remove_notice": "Només darrer recurs",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Grup",
         "how_to_add_support": "Com afegir suport?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Canvi mín rep",
         "min_rep_interval": "Interval mín rep",
         "model": "Model",
+        "native": "Native",
         "network_address": "Adreça xarxa",
         "network_address_dec": "Adreça xarxa dec",
         "network_address_hex": "Adreça xarxa hex",

@@ -1,4 +1,4 @@
-import { faBan, faExclamationTriangle, faQuestionCircle, faSpinner, faSquareArrowUpRight, faSync } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faCode, faExclamationTriangle, faSpinner, faSquareArrowUpRight, faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -31,11 +31,11 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
                     <FontAwesomeIcon icon={faExclamationTriangle} beat className="indicator-item indicator-bottom indicator-end text-error" />
                 </span>
             ) : device.definition?.source === "generated" ? (
-                <span title={t(($) => $.unsupported)}>
-                    <FontAwesomeIcon icon={faQuestionCircle} beat className="indicator-item indicator-bottom indicator-end text-warning" />
+                <span title={`${t(($) => $.support, { ns: "common" })}: ${t(($) => $[device.definition!.source])}`}>
+                    <FontAwesomeIcon icon={faCode} className="indicator-item indicator-bottom indicator-end text-accent" />
                 </span>
             ) : device.definition?.source === "external" ? (
-                <span title={t(($) => $.unsupported)}>
+                <span title={`${t(($) => $.support, { ns: "common" })}: ${t(($) => $[device.definition!.source])}`}>
                     <FontAwesomeIcon icon={faSquareArrowUpRight} className="indicator-item indicator-bottom indicator-end text-info" />
                 </span>
             ) : null,

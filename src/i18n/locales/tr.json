@@ -101,6 +101,7 @@
         "source": "Kaynak",
         "source_endpoint": "Kaynak endpoint",
         "state": "Durum",
+        "support": "Support",
         "sync": "Senk.",
         "sync_reporting": "Senk. raporlama",
         "terminate": "Sonlandır",
@@ -275,6 +276,7 @@
         "zoom_out": "Uzaklaştır"
     },
     "ota": {
+        "abort": "Abort",
         "app": "Uygulama",
         "available": "Mevcut",
         "available_firmware_version": "Mevcut sürüm",
@@ -310,8 +312,7 @@
         "update": "Firmware güncelle",
         "update_selected": "Seçileni güncelle",
         "update_selected_info": "OTA güncellemesi ağı zorlar. Stabil olduğundan emin olun.",
-        "updating": "Güncelleniyor",
-        "abort": "Abort"
+        "updating": "Güncelleniyor"
     },
     "scene": {
         "add_update_header": "Sahne ekle/güncelle",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Başlangıçta önbelleği yayınla",
         "advanced-channel": "Zigbee kanalı",
         "advanced-elapsed": "elapsed özniteliği ekle",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Extended PAN ID (Bunu değiştirmek tüm cihazların yeniden eşleştirilmesini gerektirir!)",
         "advanced-last_seen": "last_seen özniteliği ekle",
         "advanced-log_console_json": "Konsol JSON log",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Payload arası min süre (sn)",
         "definitions-group-homeassistant-name": "Home Assistant'taki grup adı",
         "definitions-group-off_state": "Grup OFF/CLOSE yayınlama zamanı",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "Grup QoS",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Kimlik doğrulamayı etkinleştir",
         "frontend-base_url": "Önyüz temel URL",
         "frontend-disable_ui_serving": "True ise sadece WebSocket",
@@ -470,6 +474,7 @@
         "mqtt-password": "MQTT parola",
         "mqtt-reject_unauthorized": "Self-signed SSL sert kapat",
         "mqtt-server": "MQTT sunucu URL (SSL/TLS için mqtts://)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT kullanıcı",
         "mqtt-version": "MQTT protokol sürümü",
         "ota-default_maximum_data_size": "Güncelleme blok boyutu (byte)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Seri baud hızı",
         "serial-disable_led": "Adaptör LED kapat",
         "serial-port": "Adaptör konumu (null otomatik)",
-        "serial-rtscts": "RTS/CTS akış kontrolü",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS akış kontrolü"
     },
     "stats": {
         "byModel": "Modele göre",
@@ -518,13 +520,11 @@
         "in_progress": "devam ediyor",
         "leaking": "sızıntı",
         "normal": "normal",
-        "not_supported": "desteklenmiyor",
         "null": "Null",
         "occupied": "dolu",
         "Occupied": "Dolu",
         "open": "açık",
         "Open": "Açık",
-        "supported": "destekleniyor",
         "tampered": "kurcalanmış",
         "true": "doğru"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Uç cihaz",
         "endpoint": "Endpoint",
         "extended_pan_id": "Genişletilmiş PAN ID",
+        "external": "External",
         "firmware_build_date": "Firmware build tarihi",
         "firmware_id": "Firmware ID",
         "force_remove": "Zorla kaldır",
         "force_remove_notice": "Son çare (ağa yayılmaz)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Grup",
         "how_to_add_support": "Destek nasıl eklenir?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Min rapor değişimi",
         "min_rep_interval": "Min rapor aralığı",
         "model": "Model",
+        "native": "Native",
         "network_address": "Ağ adresi",
         "network_address_dec": "Ağ adresi (dec)",
         "network_address_hex": "Ağ adresi (hex)",

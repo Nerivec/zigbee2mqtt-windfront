@@ -101,6 +101,7 @@
         "source": "Origem",
         "source_endpoint": "Endpoint de origem",
         "state": "Estado",
+        "support": "Support",
         "sync": "Sincron.",
         "sync_reporting": "Sincron. relatórios",
         "terminate": "Encerrar",
@@ -275,6 +276,7 @@
         "zoom_out": "Reduzir"
     },
     "ota": {
+        "abort": "Abort",
         "app": "App",
         "available": "Disponível",
         "available_firmware_version": "Versão disponível",
@@ -310,8 +312,7 @@
         "update": "Atualizar firmware",
         "update_selected": "Atualizar selecionados",
         "update_selected_info": "Atualização OTA carrega a rede. Assegure estabilidade.",
-        "updating": "Atualizando",
-        "abort": "Abort"
+        "updating": "Atualizando"
     },
     "scene": {
         "add_update_header": "Adicionar/atualizar cena",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Enviar cache na inicialização",
         "advanced-channel": "Canal Zigbee",
         "advanced-elapsed": "Adicionar atributo elapsed",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "PAN ID estendido (Alterar isto exige emparelhar novamente todos os dispositivos!)",
         "advanced-last_seen": "Adicionar atributo last_seen",
         "advanced-log_console_json": "Log JSON console",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Tempo mínimo entre payloads (s)",
         "definitions-group-homeassistant-name": "Nome do grupo no Home Assistant",
         "definitions-group-off_state": "Quando publicar OFF/CLOSE grupo",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "QoS do grupo",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Ativar autenticação",
         "frontend-base_url": "URL base frontend",
         "frontend-disable_ui_serving": "Se true não serve UI, só WebSocket",
@@ -470,6 +474,7 @@
         "mqtt-password": "Senha MQTT",
         "mqtt-reject_unauthorized": "Desativar certificado SSL autoassinado",
         "mqtt-server": "URL servidor MQTT (mqtts:// para SSL/TLS)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "Usuário MQTT",
         "mqtt-version": "Versão protocolo MQTT",
         "ota-default_maximum_data_size": "Tamanho de bloco (bytes)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Baudrate serial",
         "serial-disable_led": "Desativar LED do adaptador",
         "serial-port": "Local do adaptador (null autodetecta)",
-        "serial-rtscts": "Controle de fluxo RTS/CTS",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "Controle de fluxo RTS/CTS"
     },
     "stats": {
         "byModel": "Por modelo",
@@ -518,13 +520,11 @@
         "in_progress": "em andamento",
         "leaking": "vazando",
         "normal": "normal",
-        "not_supported": "não suportado",
         "null": "Nulo",
         "occupied": "ocupado",
         "Occupied": "Ocupado",
         "open": "aberto",
         "Open": "Aberto",
-        "supported": "suportado",
         "tampered": "adulterado",
         "true": "verdadeiro"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Dispositivo final",
         "endpoint": "Endpoint",
         "extended_pan_id": "PAN ID estendido",
+        "external": "External",
         "firmware_build_date": "Data de build",
         "firmware_id": "ID do firmware",
         "force_remove": "Forçar remoção",
         "force_remove_notice": "Usar apenas como último recurso (não propagado)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Grupo",
         "how_to_add_support": "Como adicionar suporte?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Mudança mín rep",
         "min_rep_interval": "Intervalo mín rep",
         "model": "Modelo",
+        "native": "Native",
         "network_address": "Endereço de rede",
         "network_address_dec": "Endereço (dec)",
         "network_address_hex": "Endereço (hex)",

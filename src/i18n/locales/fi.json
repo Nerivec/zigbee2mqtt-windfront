@@ -101,6 +101,7 @@
         "source": "Lähde",
         "source_endpoint": "Lähde-endpoint",
         "state": "Tila",
+        "support": "Support",
         "sync": "Synk.",
         "sync_reporting": "Synk. raportointi",
         "terminate": "Lopeta",
@@ -275,6 +276,7 @@
         "zoom_out": "Loitonna"
     },
     "ota": {
+        "abort": "Abort",
         "app": "Sovellus",
         "available": "Saatavilla",
         "available_firmware_version": "Saatavilla oleva versio",
@@ -310,8 +312,7 @@
         "update": "Päivitä firmware",
         "update_selected": "Päivitä valitut",
         "update_selected_info": "OTA kuormittaa verkkoa voimakkaasti. Varmista vakaus.",
-        "updating": "Päivitetään",
-        "abort": "Abort"
+        "updating": "Päivitetään"
     },
     "scene": {
         "add_update_header": "Lisää / päivitä skenaario",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Lähetä cache käynnistyksessä",
         "advanced-channel": "Zigbee-kanava",
         "advanced-elapsed": "Lisää elapsed",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Extended PAN ID (Tämän muuttaminen vaatii kaikkien laitteiden uudelleenparituksen!)",
         "advanced-last_seen": "Lisää last_seen",
         "advanced-log_console_json": "JSON-loki konsoliin",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Minimi väli payloadien välillä (s)",
         "definitions-group-homeassistant-name": "Ryhmän nimi Home Assistantissa",
         "definitions-group-off_state": "Milloin julkaista OFF/CLOSE",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "Ryhmän QoS",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Ota todennus käyttöön",
         "frontend-base_url": "Frontend Base URL",
         "frontend-disable_ui_serving": "True = vain WebSocket",
@@ -470,6 +474,7 @@
         "mqtt-password": "MQTT salasana",
         "mqtt-reject_unauthorized": "Poista self-signed SSL käytöstä",
         "mqtt-server": "MQTT-palvelimen URL (mqtts://)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT käyttäjä",
         "mqtt-version": "MQTT-protokollaversio",
         "ota-default_maximum_data_size": "Block koko (tavut)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Baud rate",
         "serial-disable_led": "Poista adapterin LED",
         "serial-port": "Adapterin portti (null auto)",
-        "serial-rtscts": "RTS/CTS flow",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS flow"
     },
     "stats": {
         "byModel": "Mallin mukaan",
@@ -518,13 +520,11 @@
         "in_progress": "käynnissä",
         "leaking": "vuoto",
         "normal": "normaali",
-        "not_supported": "ei tuettu",
         "null": "Null",
         "occupied": "varattu",
         "Occupied": "Varattu",
         "open": "avoin",
         "Open": "Avoin",
-        "supported": "tuettu",
         "tampered": "manipuloitu",
         "true": "true"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Päätelaite",
         "endpoint": "Endpoint",
         "extended_pan_id": "Laajennettu PAN ID",
+        "external": "External",
         "firmware_build_date": "Build-päivä",
         "firmware_id": "Firmware ID",
         "force_remove": "Pakota poisto",
         "force_remove_notice": "Vain viimeinen keino (ei välity verkkoon)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Ryhmä",
         "how_to_add_support": "Miten lisään tuen?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Pienin muutos",
         "min_rep_interval": "Pienin raportointiväli",
         "model": "Malli",
+        "native": "Native",
         "network_address": "Verkko-osoite",
         "network_address_dec": "Verkko-osoite (dec)",
         "network_address_hex": "Verkko-osoite (hex)",

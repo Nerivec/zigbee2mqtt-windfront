@@ -101,6 +101,7 @@
         "source": "Forrás",
         "source_endpoint": "Forrás endpoint",
         "state": "Állapot",
+        "support": "Support",
         "sync": "Szinkr.",
         "sync_reporting": "Szinkr. jelentés",
         "terminate": "Megszakít",
@@ -275,6 +276,7 @@
         "zoom_out": "Kicsinyítés"
     },
     "ota": {
+        "abort": "Abort",
         "app": "App",
         "available": "Elérhető",
         "available_firmware_version": "Elérhető verzió",
@@ -310,8 +312,7 @@
         "update": "Firmware frissítés",
         "update_selected": "Kijelöltek frissítése",
         "update_selected_info": "Az OTA erősen terheli a hálózatot. Legyen stabil.",
-        "updating": "Frissítés folyamatban",
-        "abort": "Abort"
+        "updating": "Frissítés folyamatban"
     },
     "scene": {
         "add_update_header": "Jelenet hozzáadása / frissítése",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Cache küldése induláskor",
         "advanced-channel": "Zigbee csatorna",
         "advanced-elapsed": "elapsed hozzáadása",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Bővített PAN ID (A módosítás az összes eszköz újrapárosítását igényli!)",
         "advanced-last_seen": "last_seen hozzáadása",
         "advanced-log_console_json": "Konzol JSON log",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Min idő payloadok közt (s)",
         "definitions-group-homeassistant-name": "A csoport neve a Home Assistantban",
         "definitions-group-off_state": "Csoport OFF/CLOSE publikálás ideje",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "Csoport QoS",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Auth engedélyezése",
         "frontend-base_url": "Frontend base URL",
         "frontend-disable_ui_serving": "True = csak WebSocket",
@@ -470,6 +474,7 @@
         "mqtt-password": "MQTT jelszó",
         "mqtt-reject_unauthorized": "Self-signed SSL tiltása",
         "mqtt-server": "MQTT szerver URL (mqtts://)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT felhasználó",
         "mqtt-version": "MQTT protokoll verzió",
         "ota-default_maximum_data_size": "Blokk méret (byte)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Soros baud rate",
         "serial-disable_led": "Adapter LED tiltás",
         "serial-port": "Adapter port (null auto)",
-        "serial-rtscts": "RTS/CTS flow",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS flow"
     },
     "stats": {
         "byModel": "Modell szerint",
@@ -518,13 +520,11 @@
         "in_progress": "folyamatban",
         "leaking": "szivárgás",
         "normal": "normál",
-        "not_supported": "nem támogatott",
         "null": "Null",
         "occupied": "foglalt",
         "Occupied": "Foglalt",
         "open": "nyitott",
         "Open": "Nyitott",
-        "supported": "támogatott",
         "tampered": "manipulált",
         "true": "true"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Végponti eszköz",
         "endpoint": "Endpoint",
         "extended_pan_id": "Kiterjesztett PAN ID",
+        "external": "External",
         "firmware_build_date": "Firmware build dátum",
         "firmware_id": "Firmware ID",
         "force_remove": "Kényszer törlés",
         "force_remove_notice": "Utolsó lehetőség (nem terjesztett)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Csoport",
         "how_to_add_support": "Hogyan adhatok támogatást?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Min riport változás",
         "min_rep_interval": "Min riport intervallum",
         "model": "Modell",
+        "native": "Native",
         "network_address": "Hálózati cím",
         "network_address_dec": "Hálózati cím (dec)",
         "network_address_hex": "Hálózati cím (hex)",

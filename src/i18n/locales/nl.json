@@ -101,6 +101,7 @@
         "source": "Bron",
         "source_endpoint": "Bron-endpoint",
         "state": "Status",
+        "support": "Support",
         "sync": "Synchr.",
         "sync_reporting": "Synchr. rapportage",
         "terminate": "Beëindigen",
@@ -275,6 +276,7 @@
         "zoom_out": "Uitzoomen"
     },
     "ota": {
+        "abort": "Abort",
         "app": "App",
         "available": "Beschikbaar",
         "available_firmware_version": "Beschikbare versie",
@@ -310,8 +312,7 @@
         "update": "Firmware bijwerken",
         "update_selected": "Geselecteerden updaten",
         "update_selected_info": "Een OTA-update belast het netwerk sterk. Zorg voor stabiliteit.",
-        "updating": "Bezig met bijwerken",
-        "abort": "Abort"
+        "updating": "Bezig met bijwerken"
     },
     "scene": {
         "add_update_header": "Scène toevoegen/bijwerken",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Cache bij start verzenden",
         "advanced-channel": "Zigbee kanaal",
         "advanced-elapsed": "elapsed attribuut toevoegen",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Uitgebreide PAN-ID (Wijzigen vereist het opnieuw koppelen van alle apparaten!)",
         "advanced-last_seen": "last_seen attribuut toevoegen",
         "advanced-log_console_json": "Console JSON-log",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Min tijd tussen payloads (s)",
         "definitions-group-homeassistant-name": "Naam van de groep in Home Assistant",
         "definitions-group-off_state": "Wanneer OFF/CLOSE voor groep publiceren",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "QoS groep",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Authenticatie inschakelen",
         "frontend-base_url": "Frontend basis-URL",
         "frontend-disable_ui_serving": "True = alleen WebSocket, geen UI",
@@ -470,6 +474,7 @@
         "mqtt-password": "MQTT-wachtwoord",
         "mqtt-reject_unauthorized": "Zelfondertekend SSL-cert uitschakelen",
         "mqtt-server": "MQTT-server URL (mqtts:// voor SSL/TLS)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT-gebruiker",
         "mqtt-version": "MQTT-protocolversie",
         "ota-default_maximum_data_size": "Blokgrootte tijdens updates (bytes)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Seriële baudrate",
         "serial-disable_led": "Adapter-LED uitschakelen",
         "serial-port": "Locatie adapter (null autodetectie)",
-        "serial-rtscts": "RTS/CTS flow control",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS flow control"
     },
     "stats": {
         "byModel": "Per model",
@@ -518,13 +520,11 @@
         "in_progress": "bezig",
         "leaking": "lekkage",
         "normal": "normaal",
-        "not_supported": "niet ondersteund",
         "null": "Null",
         "occupied": "bezet",
         "Occupied": "Bezet",
         "open": "open",
         "Open": "Open",
-        "supported": "ondersteund",
         "tampered": "manipulatie",
         "true": "waar"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Eindapparaat",
         "endpoint": "Endpoint",
         "extended_pan_id": "Uitgebreide PAN-ID",
+        "external": "External",
         "firmware_build_date": "Builddatum firmware",
         "firmware_id": "Firmware-ID",
         "force_remove": "Geforceerd verwijderen",
         "force_remove_notice": "Alleen als laatste redmiddel (niet gepropageerd)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Groep",
         "how_to_add_support": "Hoe ondersteuning toevoegen?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Min rapportwijziging",
         "min_rep_interval": "Min rapportinterval",
         "model": "Model",
+        "native": "Native",
         "network_address": "Netwerkadres",
         "network_address_dec": "Netwerkadres dec",
         "network_address_hex": "Netwerkadres hex",

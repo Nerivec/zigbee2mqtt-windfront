@@ -101,6 +101,7 @@
         "source": "Källa",
         "source_endpoint": "Käll-endpoint",
         "state": "Status",
+        "support": "Support",
         "sync": "Synk.",
         "sync_reporting": "Synk. rapportering",
         "terminate": "Avsluta",
@@ -275,6 +276,7 @@
         "zoom_out": "Zooma ut"
     },
     "ota": {
+        "abort": "Abort",
         "app": "App",
         "available": "Tillgänglig",
         "available_firmware_version": "Tillgänglig version",
@@ -310,8 +312,7 @@
         "update": "Uppdatera firmware",
         "update_selected": "Uppdatera valda",
         "update_selected_info": "En OTA-uppdatering belastar nätet kraftigt. Säkerställ stabilitet.",
-        "updating": "Uppdaterar",
-        "abort": "Abort"
+        "updating": "Uppdaterar"
     },
     "scene": {
         "add_update_header": "Lägg till / uppdatera scen",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Skicka cache vid start",
         "advanced-channel": "Zigbee-kanal",
         "advanced-elapsed": "Lägg till elapsed-attribut",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Extended PAN ID (Att ändra detta kräver att alla enheter paras om!)",
         "advanced-last_seen": "Lägg till last_seen-attribut",
         "advanced-log_console_json": "Konsol JSON-logg",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Min tid mellan payloads (s)",
         "definitions-group-homeassistant-name": "Gruppens namn i Home Assistant",
         "definitions-group-off_state": "När publicera OFF/CLOSE för grupp",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "Grupp QoS",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Aktivera autentisering",
         "frontend-base_url": "Frontend bas-URL",
         "frontend-disable_ui_serving": "True = endast WebSocket, ingen UI",
@@ -470,6 +474,7 @@
         "mqtt-password": "MQTT-lösenord",
         "mqtt-reject_unauthorized": "Stäng av självsignerat SSL-cert",
         "mqtt-server": "MQTT-server URL (mqtts:// för SSL/TLS)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT-användare",
         "mqtt-version": "MQTT protokollversion",
         "ota-default_maximum_data_size": "Blockstorlek uppdatering (bytes)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Seriell baudrate",
         "serial-disable_led": "Avaktivera adapter-LED",
         "serial-port": "Adapterplats (null för autodetektering)",
-        "serial-rtscts": "RTS/CTS hårdvaruflöde",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS hårdvaruflöde"
     },
     "stats": {
         "byModel": "Per modell",
@@ -518,13 +520,11 @@
         "in_progress": "pågår",
         "leaking": "läckage",
         "normal": "normal",
-        "not_supported": "stöds ej",
         "null": "Null",
         "occupied": "upptaget",
         "Occupied": "Upptaget",
         "open": "öppen",
         "Open": "Öppen",
-        "supported": "stöds",
         "tampered": "manipulerad",
         "true": "sann"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Ändenhet",
         "endpoint": "Endpoint",
         "extended_pan_id": "Utökat PAN-ID",
+        "external": "External",
         "firmware_build_date": "Firmware build-datum",
         "firmware_id": "Firmware-ID",
         "force_remove": "Tvinga bort",
         "force_remove_notice": "Endast sista utväg (sprids ej i nätet)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Grupp",
         "how_to_add_support": "Hur lägger man till stöd?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Min rapportändring",
         "min_rep_interval": "Min rapportintervall",
         "model": "Modell",
+        "native": "Native",
         "network_address": "Nätverksadress",
         "network_address_dec": "Nätverksadress (dec)",
         "network_address_hex": "Nätverksadress (hex)",

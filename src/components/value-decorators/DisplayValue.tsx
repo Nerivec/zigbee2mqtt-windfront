@@ -38,9 +38,6 @@ const BooleanValueView = memo((props: DisplayValueProps) => {
         case "warming_up": {
             return value ? <span className="text-warning animate-pulse">{t(($) => $.in_progress)}</span> : t(($) => $.done);
         }
-        case "supported": {
-            return value ? t(($) => $.supported) : t(($) => $.not_supported);
-        }
         default: {
             return value ? t(($) => $.true) : t(($) => $.false);
         }

@@ -101,6 +101,7 @@
         "source": "Source",
         "source_endpoint": "Point de terminaison source",
         "state": "État",
+        "support": "Support",
         "sync": "Synchro",
         "sync_reporting": "Synchro rapports",
         "terminate": "Terminer",
@@ -275,6 +276,7 @@
         "zoom_out": "Dézoomer"
     },
     "ota": {
+        "abort": "Abort",
         "app": "App",
         "available": "Disponible",
         "available_firmware_version": "Version du firmware disponible",
@@ -310,8 +312,7 @@
         "update": "Mettre à jour le firmware de l'appareil",
         "update_selected": "Mettre à jour la sélection",
         "update_selected_info": "Une mise à jour OTA est très exigeante pour un réseau. Assurez-vous qu'il est stable et optez pour des moments moins utilisés.",
-        "updating": "Mise à jour",
-        "abort": "Abort"
+        "updating": "Mise à jour"
     },
     "scene": {
         "add_update_header": "Ajouter/mettre à jour une scène",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Envoyer l'état mis en cache au démarrage (si cache_state = vrai)",
         "advanced-channel": "Canal Zigbee, le changer peut nécessiter de ré-appairer certains appareils ! (Utiliser un canal ZLL : 11, 15, 20 ou 25 pour éviter les problèmes)",
         "advanced-elapsed": "Ajouter un attribut elapsed aux messages MQTT, indiquant les ms depuis le message précédent",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "PAN ID étendu Zigbee (La modification nécessite de ré-appairer tous les appareils !)",
         "advanced-last_seen": "Ajouter un attribut last_seen aux messages MQTT, contenant la date/heure du dernier message Zigbee",
         "advanced-log_console_json": "Log JSON console",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Temps minimum entre deux payloads (en secondes). Les payloads reçus pendant une limitation seront ignorés",
         "definitions-group-homeassistant-name": "Nom du groupe dans Home Assistant",
         "definitions-group-off_state": "Contrôle la publication de l'état OFF/FERMÉ pour un groupe: 'all_members_off' = publier OFF/CLOSE quand tous les membres sont OFF/CLOSE ; 'last_member_state' = publier OFF dès qu'un membre passe à OFF",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "Level QoS pour messages MQTT de ce groupe",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Active l'authentification, désactivée par défaut",
         "frontend-base_url": "URL de base de l'interface. Si elle est hébergée sous un sous-chemin (ex. '/z2m'), définissez-le ici.",
         "frontend-disable_ui_serving": "Si vrai, l'interface n'est pas servie, seul le WebSocket est maintenu par Zigbee2MQTT (vous devez servir vous-même une interface autonome selon vos besoins).",
@@ -470,6 +474,7 @@
         "mqtt-password": "Mot de passe pour l'authentification au serveur MQTT",
         "mqtt-reject_unauthorized": "Désactiver certificat SSL auto-signé",
         "mqtt-server": "URL du serveur MQTT (utiliser mqtts:// pour TLS/SSL)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "Utilisateur pour l'authentification au serveur MQTT",
         "mqtt-version": "Version du protocole MQTT",
         "ota-default_maximum_data_size": "Taille des blocs envoyés pendant la mise à jour (en octets). Note : certains fabricants exigent une valeur spécifique, ce qui peut ignorer cette valeur.",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Vitesse du port série (baud rate). Doit correspondre à ce que prend en charge le firmware de votre adaptateur (couramment 115200).",
         "serial-disable_led": "Désactiver la LED de l'adaptateur si supporté",
         "serial-port": "Emplacement de l'adaptateur. Pour autodétecter le port, mettre null",
-        "serial-rtscts": "Contrôle de flux matériel RTS/CTS pour port série",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "Contrôle de flux matériel RTS/CTS pour port série"
     },
     "stats": {
         "byModel": "Par modèle",
@@ -518,13 +520,11 @@
         "in_progress": "En cours",
         "leaking": "Fuite détectée",
         "normal": "Normal",
-        "not_supported": "Non pris en charge",
         "null": "Null",
         "occupied": "Occupé",
         "Occupied": "Occupé",
         "open": "Ouvert",
         "Open": "Ouvert",
-        "supported": "Pris en charge",
         "tampered": "Altéré",
         "true": "Vrai"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Appareil terminal",
         "endpoint": "Point de terminaison",
         "extended_pan_id": "PAN ID étendu",
+        "external": "External",
         "firmware_build_date": "Date de compilation du firmware",
         "firmware_id": "ID du firmware",
         "force_remove": "Forcer la suppression",
         "force_remove_notice": "À utiliser seulement en dernier recours (ne se propagera pas sur le réseau)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Groupe",
         "how_to_add_support": "Comment ajouter la prise en charge ?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Changement min de rapport",
         "min_rep_interval": "Intervalle min de rapport",
         "model": "Modèle",
+        "native": "Native",
         "network_address": "Adresse réseau",
         "network_address_dec": "Adresse réseau (décimal)",
         "network_address_hex": "Adresse réseau (hexadécimal)",
