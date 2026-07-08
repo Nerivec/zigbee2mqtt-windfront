@@ -199,7 +199,7 @@ const ReportingRow = memo(
                             ) : null}
                             {!showOnlyApply && !stateRule.isNew ? (
                                 <ConfirmButton<void>
-                                    title={t(($) => $.reset, { ns: "common" })}
+                                    title={t(($) => $.disable_periodic, { ns: "common" })}
                                     className="btn btn-square btn-error btn-outline join-item"
                                     onClick={async () => {
                                         // disable periodic reporting
