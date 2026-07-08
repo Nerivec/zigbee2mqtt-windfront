@@ -136,7 +136,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
             let icon: string | undefined;
 
             if (config.showIcons && device) {
-                icon = device.definition?.icon ?? getZ2MDeviceImage(device);
+                icon = device.definition?.icon ?? getZ2MDeviceImage(device)[0];
 
                 if (icon === genericDevice) {
                     icon = undefined;

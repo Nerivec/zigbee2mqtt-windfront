@@ -48,7 +48,7 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
                 return { ...prev, [device.ieee_address]: "init" };
             });
 
-            const imageUrl = getZ2MDeviceImage(device);
+            const imageUrl = getZ2MDeviceImage(device)[0];
             const imageContent = await downloadImage(imageUrl);
 
             await sendMessage(sourceIdx, "bridge/request/device/options", { id: device.ieee_address, options: { icon: imageContent } });
