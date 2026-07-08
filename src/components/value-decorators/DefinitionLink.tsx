@@ -8,21 +8,18 @@ import type { Device } from "../../types.js";
 import { normalizeDefinitionModel } from "../../utils.js";
 
 type DefinitionLinkProps = {
-    modelId: Device["model_id"];
     supported: Device["supported"];
     definitionModel?: NonNullable<Device["definition"]>["model"];
     icon?: boolean;
 };
 
-const DefinitionLink = memo(({ modelId, supported, definitionModel, icon = false }: DefinitionLinkProps) => {
+const DefinitionLink = memo(({ supported, definitionModel, icon = false }: DefinitionLinkProps) => {
     const { t } = useTranslation("zigbee");
-    let label = modelId || t(($) => $.unknown);
-    let url = SUPPORT_NEW_DEVICES_DOCS_URL;
-
-    if (supported && definitionModel) {
-        url = `https://www.zigbee2mqtt.io/devices/${encodeURIComponent(normalizeDefinitionModel(definitionModel))}.html`;
-        label = definitionModel;
-    }
+    const label = definitionModel || t(($) => $.unknown);
+    const url =
+        supported && definitionModel
+            ? `https://www.zigbee2mqtt.io/devices/${encodeURIComponent(normalizeDefinitionModel(definitionModel))}.html`
+            : SUPPORT_NEW_DEVICES_DOCS_URL;
 
     return (
         <Link target="_blank" rel="noopener noreferrer" to={url} className="link link-hover">

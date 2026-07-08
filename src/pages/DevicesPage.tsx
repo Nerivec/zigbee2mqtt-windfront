@@ -206,7 +206,7 @@ export default function DevicesPage(): JSX.Element {
                     },
                 }) => (
                     <>
-                        <DefinitionLink modelId={device.model_id} supported={device.supported} definitionModel={device.definition?.model} />
+                        <DefinitionLink supported={device.supported} definitionModel={device.definition?.model} />
                         <div className="flex flex-row gap-1">
                             <span className="badge badge-ghost badge-sm tooltip tooltip-bottom" data-tip={t(($) => $.manufacturer)}>
                                 <VendorLink supported={device.supported} definitionVendor={device.definition?.vendor} />

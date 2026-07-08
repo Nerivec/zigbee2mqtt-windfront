@@ -340,7 +340,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <div className="font-semibold text-base-content/70">{t(($) => $.definition, { ns: "common" })} (Zigbee2MQTT)</div>
                     <div className="min-w-0">
                         <p className="font-semibold break-all">
-                            <DefinitionLink modelId={device.model_id} supported={device.supported} definitionModel={device.definition?.model} icon />
+                            <DefinitionLink supported={device.supported} definitionModel={device.definition?.model} icon />
                             {device.definition?.version && device.definition.version !== "0.0.0" ? ` (v${device.definition.version})` : null}
                         </p>
                         <p className="text-base-content/50">

@@ -14,13 +14,11 @@ type VendorLinkProps = {
 
 const VendorLink = memo(({ supported, definitionVendor, icon = false }: VendorLinkProps) => {
     const { t } = useTranslation("zigbee");
-    let label = t(($) => $.unsupported);
-    let url = SUPPORT_NEW_DEVICES_DOCS_URL;
-
-    if (supported && definitionVendor) {
-        url = `https://www.zigbee2mqtt.io/supported-devices/#v=${encodeURIComponent(definitionVendor)}`;
-        label = definitionVendor;
-    }
+    const label = definitionVendor || t(($) => $.unknown);
+    const url =
+        supported && definitionVendor
+            ? `https://www.zigbee2mqtt.io/supported-devices/#v=${encodeURIComponent(definitionVendor)}`
+            : SUPPORT_NEW_DEVICES_DOCS_URL;
 
     return (
         <Link target="_blank" rel="noopener noreferrer" to={url} className="link link-hover">
