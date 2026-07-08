@@ -49,7 +49,7 @@ export default function Dashboard() {
             const availabilityEnabled = bridgeInfo[sourceIdx].config.availability.enabled;
 
             for (const device of devices[sourceIdx]) {
-                if (device.disabled || !device.supported || !device.definition) {
+                if (device.disabled || !device.definition) {
                     continue;
                 }
 

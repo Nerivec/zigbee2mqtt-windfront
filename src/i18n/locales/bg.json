@@ -101,6 +101,7 @@
         "source": "Източник",
         "source_endpoint": "Изходен endpoint",
         "state": "Състояние",
+        "support": "Support",
         "sync": "Синхр.",
         "sync_reporting": "Синхр. отчитане",
         "terminate": "Прекрати",
@@ -275,6 +276,7 @@
         "zoom_out": "Намали"
     },
     "ota": {
+        "abort": "Abort",
         "app": "App",
         "available": "Налично",
         "available_firmware_version": "Налична версия",
@@ -310,8 +312,7 @@
         "update": "Обнови фърмуер",
         "update_selected": "Обнови избраните",
         "update_selected_info": "OTA натоварва мрежата силно – уверете се, че е стабилно.",
-        "updating": "Актуализира се",
-        "abort": "Abort"
+        "updating": "Актуализира се"
     },
     "scene": {
         "add_update_header": "Добавяне/обновяване сцена",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Изпрати при старт",
         "advanced-channel": "Zigbee канал",
         "advanced-elapsed": "Добави elapsed",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Extended PAN ID (Промяната изисква повторно сдвояване на всички устройства!)",
         "advanced-last_seen": "Добави last_seen",
         "advanced-log_console_json": "Конзола JSON лог",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Мин интервал (сек)",
         "definitions-group-homeassistant-name": "Име на групата в Home Assistant",
         "definitions-group-off_state": "Кога OFF/CLOSE",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "QoS група",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Активира auth",
         "frontend-base_url": "Base URL",
         "frontend-disable_ui_serving": "True = само WebSocket",
@@ -470,6 +474,7 @@
         "mqtt-password": "MQTT парола",
         "mqtt-reject_unauthorized": "Деактивирай self-signed SSL",
         "mqtt-server": "MQTT сървър URL (mqtts://)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT потребител",
         "mqtt-version": "MQTT версия",
         "ota-default_maximum_data_size": "Размер блок (байтове)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Baudrate",
         "serial-disable_led": "Изключи LED",
         "serial-port": "Порт (null авто)",
-        "serial-rtscts": "RTS/CTS",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS"
     },
     "stats": {
         "byModel": "По модел",
@@ -518,13 +520,11 @@
         "in_progress": "в процес",
         "leaking": "теч",
         "normal": "нормално",
-        "not_supported": "неподдържано",
         "null": "Null",
         "occupied": "заето",
         "Occupied": "Заето",
         "open": "отворено",
         "Open": "Отворено",
-        "supported": "поддържано",
         "tampered": "манипулирано",
         "true": "true"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Крайно устройство",
         "endpoint": "Endpoint",
         "extended_pan_id": "Разширен PAN ID",
+        "external": "External",
         "firmware_build_date": "Дата на build",
         "firmware_id": "Firmware ID",
         "force_remove": "Принудително премахване",
         "force_remove_notice": "Последна мярка (не се разпространява)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Група",
         "how_to_add_support": "Как да добавя поддръжка?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Мин промяна",
         "min_rep_interval": "Мин интервал отчет",
         "model": "Модел",
+        "native": "Native",
         "network_address": "Мрежови адрес",
         "network_address_dec": "Мрежови адрес (dec)",
         "network_address_hex": "Мрежови адрес (hex)",

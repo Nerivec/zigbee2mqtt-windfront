@@ -101,6 +101,7 @@
         "source": "Zdroj",
         "source_endpoint": "Koncový bod zdroja",
         "state": "Stav",
+        "support": "Support",
         "sync": "Synchron.",
         "sync_reporting": "Synchron. hlásenia",
         "terminate": "Ukončiť",
@@ -275,6 +276,7 @@
         "zoom_out": "Oddialiť"
     },
     "ota": {
+        "abort": "Abort",
         "app": "Aplikácia",
         "available": "Dostupné",
         "available_firmware_version": "Dostupná verzia firmvéru",
@@ -310,8 +312,7 @@
         "update": "Aktualizovať firmvér zariadenia",
         "update_selected": "Aktualizovať vybrané",
         "update_selected_info": "Aktualizácia OTA je pre sieť veľmi náročná. Uistite sa, že je stabilná a zvoľte menej používané časy.",
-        "updating": "Aktualizuje sa",
-        "abort": "Abort"
+        "updating": "Aktualizuje sa"
     },
     "scene": {
         "add_update_header": "Pridať/aktualizovať scénu",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Udržať uložený stav v cache, používa sa len v prípade cache_state: true",
         "advanced-channel": "Zigbee kanál, zmena môže vyžadovať opätovné spárovanie niektorých zariadení! (Poznámka: použite ZLL kanál: 11, 15, 20 alebo 25, aby ste sa vyhli problémom)",
         "advanced-elapsed": "Pridať atribút uplynutého času do správ MQTT, obsahuje milisekundy od predchádzajúcej správy",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Zigbee rozšírené pan ID, zmena vyžaduje opätovné spárovanie všetkých zariadení!",
         "advanced-last_seen": "Pridať atribút last_seen do MQTT správ, obsahuje dátum/čas poslednej Zigbee správy",
         "advanced-log_console_json": "Záznam json konzoly",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Minimálny čas medzi payloadmi v sekundách. Payloady prijaté počas throttlingu zariadenia budú zahodené",
         "definitions-group-homeassistant-name": "Názov skupiny v Home Assistante",
         "definitions-group-off_state": "Kontrolovať, kedy zverejniť stav OFF alebo CLOSE pre skupinu. 'all_members_off': zverejniť stav OFF/CLOSE iba vtedy, keď sú všetci členovia skupiny v stave OFF/CLOSE, 'last_member_state': zverejniť stav OFF vždy, keď sa jeden z jej členov zmení na OFF",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "Úroveň QoS pre MQTT správy tejto skupiny",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Povolí autentifikáciu, predvolene zakázané",
         "frontend-base_url": "Základná URL adresa pre používateľské rozhranie. Ak je umiestnený v podadresári, napr. 'http://localhost:8080/z2m', nastavte toto na '/z2m'",
         "frontend-disable_ui_serving": "Ak je to pravda, používateľské rozhranie nie je poskytované, Zigbee2MQTT udržiava iba WebSocket (podľa potreby musíte sami poskytovať samostatné používateľské rozhranie).",
@@ -470,6 +474,7 @@
         "mqtt-password": "Heslo pre autentifikáciu na MQTT serveri",
         "mqtt-reject_unauthorized": "Zakázať self-signed SSL certifikát",
         "mqtt-server": "URL adresa MQTT servera (použite mqtts:// pre SSL/TLS pripojenie)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "Používateľ pre autentifikáciu na MQTT serveri",
         "mqtt-version": "Verzia MQTT protokolu",
         "ota-default_maximum_data_size": "Veľkosť blokov súborov odosielaných počas aktualizácie (v bajtoch). Poznámka: Táto hodnota môže byť ignorovaná výrobcami, ktorí vyžadujú špecifické hodnoty.",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Rýchlosť prenosu dát pre sériový port. Musí sa zhodovať s tým, čo podporuje firmvér na vašom adaptéri (najčastejšie 115200).",
         "serial-disable_led": "Zakázať LED diódu adaptéra, ak je funkcia podporovaná",
         "serial-port": "Umiestnenie adaptéra. Pre automatickú detekciu portu nastavte null",
-        "serial-rtscts": "RTS / CTS Hardware Flow Control pre sériový port",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS / CTS Hardware Flow Control pre sériový port"
     },
     "stats": {
         "byModel": "Podľa modelu",
@@ -518,13 +520,11 @@
         "in_progress": "prebieha",
         "leaking": "Uniká",
         "normal": "normálne",
-        "not_supported": "Nepodporované",
         "null": "Null",
         "occupied": "Obsadené",
         "Occupied": "Obsadené",
         "open": "Otvorené",
         "Open": "Otvorené",
-        "supported": "Podporované",
         "tampered": "Neoprávnená manipulácia",
         "true": "True"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Koncové zariadenie",
         "endpoint": "Koncový bod",
         "extended_pan_id": "Rozšírené PAN ID",
+        "external": "External",
         "firmware_build_date": "Dátum zostavenia firmvéru",
         "firmware_id": "ID firmvéru",
         "force_remove": "Vynútiť odstránenie",
         "force_remove_notice": "Používajte iba ako poslednú možnosť (neprenesie sa do siete)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Skupina",
         "how_to_add_support": "Ako pridať podporu?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Min. zmena hlásenia",
         "min_rep_interval": "Min. interval hlásenia",
         "model": "Model",
+        "native": "Native",
         "network_address": "Adresa siete",
         "network_address_dec": "Adresa siete v desiatkovom formáte",
         "network_address_hex": "Adresa siete v hexadecimálnom formáte",

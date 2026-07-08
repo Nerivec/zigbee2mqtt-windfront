@@ -101,6 +101,7 @@
         "source": "Джерело",
         "source_endpoint": "Джерело endpoint",
         "state": "Стан",
+        "support": "Support",
         "sync": "Синхр.",
         "sync_reporting": "Синхр. звітність",
         "terminate": "Завершити",
@@ -275,6 +276,7 @@
         "zoom_out": "Віддалити"
     },
     "ota": {
+        "abort": "Abort",
         "app": "App",
         "available": "Доступний",
         "available_firmware_version": "Доступна версія",
@@ -310,8 +312,7 @@
         "update": "Оновити прошивку",
         "update_selected": "Оновити вибрані",
         "update_selected_info": "OTA сильно навантажує мережу — забезпечте стабільність.",
-        "updating": "Оновлення",
-        "abort": "Abort"
+        "updating": "Оновлення"
     },
     "scene": {
         "add_update_header": "Додати/оновити сцену",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Надсилати при старті",
         "advanced-channel": "Zigbee канал",
         "advanced-elapsed": "Додати elapsed",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Extended PAN ID (Зміна вимагає повторного парування всіх пристроїв!)",
         "advanced-last_seen": "Додати last_seen",
         "advanced-log_console_json": "Консоль JSON лог",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Мін інтервал (с)",
         "definitions-group-homeassistant-name": "Назва групи в Home Assistant",
         "definitions-group-off_state": "Коли OFF/CLOSE",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "QoS групи",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Увімкнути auth",
         "frontend-base_url": "Базовий URL",
         "frontend-disable_ui_serving": "True = лише WebSocket",
@@ -470,6 +474,7 @@
         "mqtt-password": "MQTT пароль",
         "mqtt-reject_unauthorized": "Вимкнути self-signed SSL",
         "mqtt-server": "MQTT сервер URL (mqtts://)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT користувач",
         "mqtt-version": "Версія MQTT",
         "ota-default_maximum_data_size": "Розмір блоку (байти)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Baudrate",
         "serial-disable_led": "Вимкнути LED",
         "serial-port": "Порт адаптера (null авто)",
-        "serial-rtscts": "RTS/CTS",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS"
     },
     "stats": {
         "byModel": "За моделлю",
@@ -518,13 +520,11 @@
         "in_progress": "у процесі",
         "leaking": "протікання",
         "normal": "нормально",
-        "not_supported": "не підтримується",
         "null": "Null",
         "occupied": "зайнято",
         "Occupied": "Зайнято",
         "open": "відкрито",
         "Open": "Відкрито",
-        "supported": "підтримується",
         "tampered": "втручання",
         "true": "true"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Кінцевий пристрій",
         "endpoint": "Endpoint",
         "extended_pan_id": "Розширений PAN ID",
+        "external": "External",
         "firmware_build_date": "Дата збірки",
         "firmware_id": "Firmware ID",
         "force_remove": "Примусове видалення",
         "force_remove_notice": "Лише крайній випадок (не розповсюджується)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Група",
         "how_to_add_support": "Як додати підтримку?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Мін зміна",
         "min_rep_interval": "Мін інтервал звіту",
         "model": "Модель",
+        "native": "Native",
         "network_address": "Мережевий адрес",
         "network_address_dec": "Мережевий адрес (dec)",
         "network_address_hex": "Мережевий адрес (hex)",

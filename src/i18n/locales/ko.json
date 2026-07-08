@@ -101,6 +101,7 @@
         "source": "소스",
         "source_endpoint": "소스 엔드포인트",
         "state": "상태",
+        "support": "Support",
         "sync": "동기",
         "sync_reporting": "동기 리포팅",
         "terminate": "종료",
@@ -275,6 +276,7 @@
         "zoom_out": "축소"
     },
     "ota": {
+        "abort": "Abort",
         "app": "앱",
         "available": "사용 가능",
         "available_firmware_version": "가능한 버전",
@@ -310,8 +312,7 @@
         "update": "디바이스 펌웨어 업데이트",
         "update_selected": "선택 항목 업데이트",
         "update_selected_info": "OTA 업데이트는 네트워크에 큰 부하를 줍니다. 안정성을 확보하세요.",
-        "updating": "업데이트 중",
-        "abort": "Abort"
+        "updating": "업데이트 중"
     },
     "scene": {
         "add_update_header": "씬 추가/업데이트",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "시작 시 캐시 전송",
         "advanced-channel": "Zigbee 채널",
         "advanced-elapsed": "elapsed 속성 추가",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Zigbee Extended PAN ID (변경하면 모든 장치를 다시 페어링해야 합니다!)",
         "advanced-last_seen": "last_seen 속성 추가",
         "advanced-log_console_json": "콘솔 JSON 로그",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "페이로드 사이 최소 시간(초)",
         "definitions-group-homeassistant-name": "Home Assistant의 그룹 이름",
         "definitions-group-off_state": "OFF/CLOSE 발행 시점 제어",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "이 그룹 MQTT QoS",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "인증 활성화",
         "frontend-base_url": "프론트엔드 베이스 URL",
         "frontend-disable_ui_serving": "true 시 WebSocket만 제공, UI 미제공",
@@ -470,6 +474,7 @@
         "mqtt-password": "MQTT 비밀번호",
         "mqtt-reject_unauthorized": "자체 서명 SSL 인증서 비활성",
         "mqtt-server": "MQTT 서버 URL (SSL/TLS: mqtts://)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT 사용자",
         "mqtt-version": "MQTT 프로토콜 버전",
         "ota-default_maximum_data_size": "업데이트 중 블록 크기(바이트)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "시리얼 보드레이트",
         "serial-disable_led": "어댑터 LED 비활성",
         "serial-port": "어댑터 위치 (null 자동탐지)",
-        "serial-rtscts": "RTS/CTS 하드웨어 플로우 제어",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS 하드웨어 플로우 제어"
     },
     "stats": {
         "byModel": "모델별",
@@ -518,13 +520,11 @@
         "in_progress": "진행 중",
         "leaking": "누수",
         "normal": "정상",
-        "not_supported": "미지원",
         "null": "Null",
         "occupied": "점유",
         "Occupied": "점유",
         "open": "열림",
         "Open": "열림",
-        "supported": "지원됨",
         "tampered": "변조",
         "true": "참"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "엔드 디바이스",
         "endpoint": "엔드포인트",
         "extended_pan_id": "확장 PAN ID",
+        "external": "External",
         "firmware_build_date": "펌웨어 빌드일",
         "firmware_id": "펌웨어 ID",
         "force_remove": "강제 제거",
         "force_remove_notice": "최후 수단으로만 사용 (네트워크 전파 안 됨)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "그룹",
         "how_to_add_support": "지원 추가 방법?",
@@ -579,6 +581,7 @@
         "min_rep_change": "최소 변화",
         "min_rep_interval": "최소 리포트 간격",
         "model": "모델",
+        "native": "Native",
         "network_address": "네트워크 주소",
         "network_address_dec": "네트워크 주소 10진",
         "network_address_hex": "네트워크 주소 16진",

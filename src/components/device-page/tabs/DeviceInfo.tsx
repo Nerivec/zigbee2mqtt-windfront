@@ -1,4 +1,4 @@
-import { faCheckCircle, faExclamationTriangle, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCheckCircle, faCode, faExclamationTriangle, faSpinner, faSquareArrowUpRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import snakeCase from "lodash/snakeCase.js";
 import { memo, useCallback, useMemo } from "react";
@@ -21,7 +21,6 @@ import OtaControlGroup, { type OtaControlGroupProps } from "../../ota-page/OtaCo
 import SourceDot from "../../SourceDot.js";
 import Availability from "../../value-decorators/Availability.js";
 import DefinitionLink from "../../value-decorators/DefinitionLink.js";
-import DisplayValue from "../../value-decorators/DisplayValue.js";
 import LastSeen from "../../value-decorators/LastSeen.js";
 import PowerSource from "../../value-decorators/PowerSource.js";
 import VendorLink from "../../value-decorators/VendorLink.js";
@@ -41,7 +40,12 @@ const MARKDOWN_LINK_REGEX = /\[(.*?)]\((.*?)\)/;
 const SOURCE_BADGE_COLOR = {
     native: "badge-success",
     external: "badge-info",
-    generated: "badge-warning",
+    generated: "badge-accent",
+};
+const SOURCE_BADGE_ICON = {
+    native: faCheck,
+    external: faSquareArrowUpRight,
+    generated: faCode,
 };
 
 const endpointsReplacer = (key: string, value: unknown) => {
@@ -260,8 +264,9 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                 </h2>
                 <div className="flex flex-row flex-wrap gap-2">
                     <span className={`badge ${device.definition ? SOURCE_BADGE_COLOR[device.definition.source] : ""}`}>
-                        <DisplayValue name="supported" value={device.supported} />
-                        {device.definition ? `: ${device.definition.source}` : ""}
+                        {t(($) => $.support, { ns: "common" })}:
+                        {device.definition ? <FontAwesomeIcon icon={SOURCE_BADGE_ICON[device.definition.source]} /> : null}
+                        {t(($) => (device.definition ? $[device.definition.source] : $.unsupported))}
                     </span>
                     {!device.supported && (
                         <span className="badge">
@@ -335,7 +340,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <div className="font-semibold text-base-content/70">{t(($) => $.definition, { ns: "common" })} (Zigbee2MQTT)</div>
                     <div className="min-w-0">
                         <p className="font-semibold break-all">
-                            <DefinitionLink modelId={device.model_id} supported={device.supported} definitionModel={device.definition?.model} icon />
+                            <DefinitionLink supported={device.supported} definitionModel={device.definition?.model} icon />
                             {device.definition?.version && device.definition.version !== "0.0.0" ? ` (v${device.definition.version})` : null}
                         </p>
                         <p className="text-base-content/50">
@@ -434,7 +439,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     )}
                 </div>
                 <div className="card-actions justify-center md:justify-end mt-2 me-4">
-                    {device.supported && <ReportProblemLink sourceIdx={sourceIdx} device={device} />}
+                    {<ReportProblemLink sourceIdx={sourceIdx} device={device} />}
                     <DeviceControlGroup
                         sourceIdx={sourceIdx}
                         device={device}

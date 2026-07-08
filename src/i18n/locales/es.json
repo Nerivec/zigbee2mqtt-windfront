@@ -101,6 +101,7 @@
         "source": "Origen",
         "source_endpoint": "Endpoint de origen",
         "state": "Estado",
+        "support": "Support",
         "sync": "Sincron.",
         "sync_reporting": "Sincron. informes",
         "terminate": "Terminar",
@@ -275,6 +276,7 @@
         "zoom_out": "Alejar"
     },
     "ota": {
+        "abort": "Abort",
         "app": "Aplicación",
         "available": "Disponible",
         "available_firmware_version": "Versión disponible",
@@ -310,8 +312,7 @@
         "update": "Actualizar firmware del dispositivo",
         "update_selected": "Actualizar seleccionados",
         "update_selected_info": "Una actualización OTA exige mucho a la red. Asegure estabilidad y elija horas de poco uso.",
-        "updating": "Actualizando",
-        "abort": "Abort"
+        "updating": "Actualizando"
     },
     "scene": {
         "add_update_header": "Agregar/actualizar escena",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Enviar caché al iniciar",
         "advanced-channel": "Canal Zigbee (cambiar puede requerir reemparejar)",
         "advanced-elapsed": "Agregar atributo elapsed",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "PAN ID extendido (Cambiar esto requiere volver a emparejar todos los dispositivos!)",
         "advanced-last_seen": "Agregar atributo last_seen",
         "advanced-log_console_json": "Log JSON en consola",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Tiempo mínimo entre payloads (seg)",
         "definitions-group-homeassistant-name": "Nombre del grupo en Home Assistant",
         "definitions-group-off_state": "Controlar cuándo publicar estado OFF/CLOSE",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "QoS para este grupo",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Habilita autenticación",
         "frontend-base_url": "URL base del frontend",
         "frontend-disable_ui_serving": "Si true, no sirve la UI, solo WebSocket",
@@ -470,6 +474,7 @@
         "mqtt-password": "Contraseña de autenticación",
         "mqtt-reject_unauthorized": "Deshabilitar certificado SSL autofirmado",
         "mqtt-server": "URL del servidor MQTT (use mqtts:// para SSL/TLS)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "Usuario de autenticación",
         "mqtt-version": "Versión del protocolo MQTT",
         "ota-default_maximum_data_size": "Tamaño de fragmento durante actualización (bytes)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Velocidad baud del puerto serie",
         "serial-disable_led": "Deshabilitar LED del adaptador",
         "serial-port": "Ubicación del adaptador (null para autodetección)",
-        "serial-rtscts": "Control de flujo hardware RTS/CTS",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "Control de flujo hardware RTS/CTS"
     },
     "stats": {
         "byModel": "Por modelo",
@@ -518,13 +520,11 @@
         "in_progress": "en progreso",
         "leaking": "fuga",
         "normal": "normal",
-        "not_supported": "no soportado",
         "null": "Nulo",
         "occupied": "ocupado",
         "Occupied": "Ocupado",
         "open": "abierto",
         "Open": "Abierto",
-        "supported": "soportado",
         "tampered": "manipulado",
         "true": "verdadero"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Dispositivo final",
         "endpoint": "Endpoint",
         "extended_pan_id": "PAN ID extendido",
+        "external": "External",
         "firmware_build_date": "Fecha de compilación",
         "firmware_id": "ID de firmware",
         "force_remove": "Forzar eliminación",
         "force_remove_notice": "Usar solo como último recurso (no se propaga en la red)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Grupo",
         "how_to_add_support": "¿Cómo añadir soporte?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Cambio mín rep",
         "min_rep_interval": "Intervalo mín rep",
         "model": "Modelo",
+        "native": "Native",
         "network_address": "Dirección de red",
         "network_address_dec": "Dirección de red en decimal",
         "network_address_hex": "Dirección de red en hexadecimal",

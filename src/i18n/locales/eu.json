@@ -101,6 +101,7 @@
         "source": "Iturburua",
         "source_endpoint": "Iturburu endpoint",
         "state": "Egoera",
+        "support": "Support",
         "sync": "Sinkron.",
         "sync_reporting": "Sinkron. txostenak",
         "terminate": "Amaitu",
@@ -275,6 +276,7 @@
         "zoom_out": "Txikiagotu"
     },
     "ota": {
+        "abort": "Abort",
         "app": "App",
         "available": "Eskuragarri",
         "available_firmware_version": "Bertsio erabilgarria",
@@ -310,8 +312,7 @@
         "update": "Eguneratu firmware",
         "update_selected": "Eguneratu hautatuak",
         "update_selected_info": "OTAk sarean karga handia eragiten du.",
-        "updating": "Eguneratzen",
-        "abort": "Abort"
+        "updating": "Eguneratzen"
     },
     "scene": {
         "add_update_header": "Gehitu/Eguneratu eszena",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Bidali hasieran",
         "advanced-channel": "Zigbee kanal",
         "advanced-elapsed": "elapsed gehitu",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Extended PAN ID (Aldatzeak gailu guztiak berriro parekatzea eskatzen du!)",
         "advanced-last_seen": "last_seen gehitu",
         "advanced-log_console_json": "Console JSON",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Min tarte",
         "definitions-group-homeassistant-name": "Taldearen izena Home Assistant-en",
         "definitions-group-off_state": "Noiz OFF/CLOSE",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "Talde QoS",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Gaitu auth",
         "frontend-base_url": "Base URL",
         "frontend-disable_ui_serving": "True=WebSocket soilik",
@@ -470,6 +474,7 @@
         "mqtt-password": "Pasahitza",
         "mqtt-reject_unauthorized": "Desgaitu self-signed",
         "mqtt-server": "MQTT zerbitzari URL",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "MQTT erabiltzailea",
         "mqtt-version": "MQTT bertsioa",
         "ota-default_maximum_data_size": "Bloke tamaina",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Baudrate",
         "serial-disable_led": "Desgaitu LED",
         "serial-port": "Portua (null auto)",
-        "serial-rtscts": "RTS/CTS",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "RTS/CTS"
     },
     "stats": {
         "byModel": "Modeloaren arabera",
@@ -518,13 +520,11 @@
         "in_progress": "martxan",
         "leaking": "ihes",
         "normal": "normala",
-        "not_supported": "onartzen ez dena",
         "null": "Null",
         "occupied": "okupatuta",
         "Occupied": "Okupatuta",
         "open": "irekita",
         "Open": "Irekita",
-        "supported": "onartua",
         "tampered": "manipulatua",
         "true": "true"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Amaierako gailua",
         "endpoint": "Endpoint",
         "extended_pan_id": "PAN ID hedatua",
+        "external": "External",
         "firmware_build_date": "Build data",
         "firmware_id": "Firmware ID",
         "force_remove": "Behartu kentzea",
         "force_remove_notice": "Azken aukera",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Taldea",
         "how_to_add_support": "Nola gehitu euskarria?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Gut rep aldaketa",
         "min_rep_interval": "Gut rep tartea",
         "model": "Modeloa",
+        "native": "Native",
         "network_address": "Sare helbidea",
         "network_address_dec": "Sare helb (dec)",
         "network_address_hex": "Sare helb (hex)",

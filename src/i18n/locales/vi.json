@@ -101,6 +101,7 @@
         "source": "Nguồn",
         "source_endpoint": "Điểm cuối nguồn",
         "state": "Trạng thái",
+        "support": "Support",
         "sync": "Đ.bộ",
         "sync_reporting": "Đ.bộ báo cáo",
         "terminate": "Chấm dứt",
@@ -275,6 +276,7 @@
         "zoom_out": "Thu nhỏ"
     },
     "ota": {
+        "abort": "Abort",
         "app": "Ứng dụng",
         "available": "Có sẵn",
         "available_firmware_version": "Phiên bản firmware có sẵn",
@@ -310,8 +312,7 @@
         "update": "Cập nhật firmware thiết bị",
         "update_selected": "Cập nhật đã chọn",
         "update_selected_info": "Cập nhật OTA rất tốn tài nguyên mạng. Đảm bảo mạng ổn định và chọn thời gian ít sử dụng.",
-        "updating": "Đang cập nhật",
-        "abort": "Abort"
+        "updating": "Đang cập nhật"
     },
     "scene": {
         "add_update_header": "Thêm/cập nhật cảnh",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Gửi trạng thái được cache khi khởi động, chỉ được sử dụng khi cache_state: true",
         "advanced-channel": "Kênh Zigbee, thay đổi có thể yêu cầu ghép lại một số thiết bị! (Lưu ý: sử dụng kênh ZLL: 11, 15, 20, hoặc 25 để tránh vấn đề)",
         "advanced-elapsed": "Thêm thuộc tính elapsed vào tin nhắn MQTT, chứa mili giây kể từ msg trước đó",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "ID pan mở rộng Zigbee, thay đổi yêu cầu ghép lại tất cả thiết bị!",
         "advanced-last_seen": "Thêm thuộc tính last_seen vào tin nhắn MQTT, chứa ngày/giờ của tin nhắn Zigbee cuối cùng",
         "advanced-log_console_json": "Log json console",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Thời gian tối thiểu giữa các payload tính bằng giây. Payload nhận được trong khi thiết bị đang bị throttle sẽ bị loại bỏ",
         "definitions-group-homeassistant-name": "Tên nhóm trong Home Assistant",
         "definitions-group-off_state": "Điều khiển khi nào xuất bản trạng thái OFF hoặc CLOSE cho nhóm. 'all_members_off': chỉ xuất bản trạng thái OFF/CLOSE khi tất cả thành viên nhóm ở trạng thái OFF/CLOSE, 'last_member_state': xuất bản trạng thái OFF bất cứ khi nào một trong các thành viên của nó thay đổi thành OFF",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "Mức QoS cho tin nhắn MQTT của nhóm này",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Bật xác thực, mặc định bị vô hiệu hóa",
         "frontend-base_url": "URL cơ sở cho frontend. Nếu được lưu trữ dưới đường dẫn con, ví dụ: 'http://localhost:8080/z2m', đặt thành '/z2m'",
         "frontend-disable_ui_serving": "Nếu true, UI frontend không được phục vụ, chỉ WebSocket được duy trì bởi Zigbee2MQTT (bạn cần phải phục vụ UI độc lập theo nhu cầu).",
@@ -470,6 +474,7 @@
         "mqtt-password": "Mật khẩu xác thực máy chủ MQTT",
         "mqtt-reject_unauthorized": "Vô hiệu hóa chứng chỉ SSL tự ký",
         "mqtt-server": "URL máy chủ MQTT (sử dụng mqtts:// cho kết nối SSL/TLS)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "Người dùng xác thực máy chủ MQTT",
         "mqtt-version": "Phiên bản giao thức MQTT",
         "ota-default_maximum_data_size": "Kích thước của các khối tệp được gửi trong quá trình cập nhật (tính bằng byte). Lưu ý: Giá trị này có thể bị bỏ qua đối với các nhà sản xuất yêu cầu giá trị cụ thể.",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Tốc độ baud rate cho cổng serial. Điều này phải khớp với những gì firmware trên adapter của bạn hỗ trợ (thường là 115200).",
         "serial-disable_led": "Vô hiệu hóa LED của adapter nếu được hỗ trợ",
         "serial-port": "Vị trí của adapter. Để tự động phát hiện cổng, đặt null",
-        "serial-rtscts": "Điều khiển luồng phần cứng RTS / CTS cho cổng serial",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "Điều khiển luồng phần cứng RTS / CTS cho cổng serial"
     },
     "stats": {
         "byModel": "Theo mẫu",
@@ -518,13 +520,11 @@
         "in_progress": "đang xử lý",
         "leaking": "Rò rỉ",
         "normal": "bình thường",
-        "not_supported": "Không hỗ trợ",
         "null": "Null",
         "occupied": "Có người",
         "Occupied": "Có người",
         "open": "Mở",
         "Open": "Mở",
-        "supported": "Hỗ trợ",
         "tampered": "Bị can thiệp",
         "true": "Đúng"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Thiết bị cuối",
         "endpoint": "Điểm cuối",
         "extended_pan_id": "PAN ID mở rộng",
+        "external": "External",
         "firmware_build_date": "Ngày build firmware",
         "firmware_id": "ID Firmware",
         "force_remove": "Buộc xóa",
         "force_remove_notice": "Chỉ sử dụng như phương án cuối cùng (sẽ không lan truyền đến mạng)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Nhóm",
         "how_to_add_support": "Làm thế nào để thêm hỗ trợ?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Thay đổi báo cáo tối thiểu",
         "min_rep_interval": "Khoảng thời gian báo cáo tối thiểu",
         "model": "Mẫu",
+        "native": "Native",
         "network_address": "Địa chỉ mạng",
         "network_address_dec": "Địa chỉ mạng ở định dạng thập phân",
         "network_address_hex": "Địa chỉ mạng ở định dạng thập lục phân",

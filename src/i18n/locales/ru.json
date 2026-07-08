@@ -101,6 +101,7 @@
         "source": "Источник",
         "source_endpoint": "Исходный endpoint",
         "state": "Состояние",
+        "support": "Support",
         "sync": "Синхр.",
         "sync_reporting": "Синхр. отчётность",
         "terminate": "Завершить",
@@ -275,6 +276,7 @@
         "zoom_out": "Отдалить"
     },
     "ota": {
+        "abort": "Abort",
         "app": "Приложение",
         "available": "Доступно",
         "available_firmware_version": "Доступная версия",
@@ -310,8 +312,7 @@
         "update": "Обновить прошивку",
         "update_selected": "Обновить выбранные",
         "update_selected_info": "OTA сильно нагружает сеть. Убедитесь в стабильности.",
-        "updating": "Обновляется",
-        "abort": "Abort"
+        "updating": "Обновляется"
     },
     "scene": {
         "add_update_header": "Добавить/обновить сцену",
@@ -383,6 +384,7 @@
         "advanced-cache_state_send_on_startup": "Отправлять кеш при старте",
         "advanced-channel": "Zigbee канал",
         "advanced-elapsed": "Добавить атрибут elapsed",
+        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
         "advanced-ext_pan_id": "Extended PAN ID (Изменение требует повторного сопряжения всех устройств!)",
         "advanced-last_seen": "Добавить атрибут last_seen",
         "advanced-log_console_json": "JSON лог консоли",
@@ -437,7 +439,9 @@
         "definitions-device-throttle": "Мин время между payload (сек)",
         "definitions-group-homeassistant-name": "Имя группы в Home Assistant",
         "definitions-group-off_state": "Когда публиковать OFF/CLOSE для группы",
+        "definitions-group-optimistic": "Publish the expected state of group members after set",
         "definitions-group-qos": "QoS группы",
+        "definitions-group-retain": "Retain MQTT messages of this group",
         "frontend-auth_token": "Включает аутентификацию",
         "frontend-base_url": "Базовый URL фронтенда",
         "frontend-disable_ui_serving": "true = только WebSocket",
@@ -470,6 +474,7 @@
         "mqtt-password": "Пароль MQTT",
         "mqtt-reject_unauthorized": "Отключить self-signed SSL",
         "mqtt-server": "URL сервера MQTT (mqtts:// SSL/TLS)",
+        "mqtt-server_name": "Override the TLS SNI / hostname used for certificate verification when it differs from the host in 'server' (e.g. connecting to an internal service DNS name while validating a public certificate SAN). Leave unset to use the hostname from 'server'.",
         "mqtt-user": "Пользователь MQTT",
         "mqtt-version": "Версия протокола MQTT",
         "ota-default_maximum_data_size": "Размер блока обновления (байт)",
@@ -483,10 +488,7 @@
         "serial-baudrate": "Скорость порта",
         "serial-disable_led": "Отключить LED адаптера",
         "serial-port": "Место адаптера (null автопоиск)",
-        "serial-rtscts": "Аппаратный RTS/CTS",
-        "advanced-enable_external_js": "Enable external JavaScript (extensions and converters) that can execute arbitrary user-provided code. WARNING: If unused, it is advised to disable this.",
-        "definitions-group-optimistic": "Publish the expected state of group members after set",
-        "definitions-group-retain": "Retain MQTT messages of this group"
+        "serial-rtscts": "Аппаратный RTS/CTS"
     },
     "stats": {
         "byModel": "По модели",
@@ -518,13 +520,11 @@
         "in_progress": "в процессе",
         "leaking": "утечка",
         "normal": "нормально",
-        "not_supported": "не поддерживается",
         "null": "Null",
         "occupied": "занято",
         "Occupied": "Занято",
         "open": "открыто",
         "Open": "Открыто",
-        "supported": "поддерживается",
         "tampered": "вмешательство",
         "true": "истина"
     },
@@ -556,10 +556,12 @@
         "EndDevice": "Конечное устройство",
         "endpoint": "Endpoint",
         "extended_pan_id": "Расширенный PAN ID",
+        "external": "External",
         "firmware_build_date": "Дата сборки",
         "firmware_id": "ID прошивки",
         "force_remove": "Принудительно удалить",
         "force_remove_notice": "Использовать как крайний случай (не распространяется)",
+        "generated": "Generated",
         "GreenPower": "GreenPower",
         "group": "Группа",
         "how_to_add_support": "Как добавить поддержку?",
@@ -579,6 +581,7 @@
         "min_rep_change": "Мин изменение отчёта",
         "min_rep_interval": "Мин интервал отчёта",
         "model": "Модель",
+        "native": "Native",
         "network_address": "Сетевой адрес",
         "network_address_dec": "Сетевой адрес dec",
         "network_address_hex": "Сетевой адрес hex",
