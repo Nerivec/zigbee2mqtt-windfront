@@ -1,4 +1,4 @@
-import { faBan, faCode, faExclamationTriangle, faSpinner, faSquareArrowUpRight, faSync } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faCogs, faExclamationTriangle, faFileCode, faSpinner, faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -32,11 +32,11 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
                 </span>
             ) : device.definition?.source === "generated" ? (
                 <span title={`${t(($) => $.support, { ns: "common" })}: ${t(($) => $[device.definition!.source])}`}>
-                    <FontAwesomeIcon icon={faCode} className="indicator-item indicator-bottom indicator-end text-accent" />
+                    <FontAwesomeIcon icon={faCogs} className="indicator-item indicator-bottom indicator-end text-accent" />
                 </span>
             ) : device.definition?.source === "external" ? (
                 <span title={`${t(($) => $.support, { ns: "common" })}: ${t(($) => $[device.definition!.source])}`}>
-                    <FontAwesomeIcon icon={faSquareArrowUpRight} className="indicator-item indicator-bottom indicator-end text-info" />
+                    <FontAwesomeIcon icon={faFileCode} className="indicator-item indicator-bottom indicator-end text-info" />
                 </span>
             ) : null,
         [device.interview_state, device.definition, t],

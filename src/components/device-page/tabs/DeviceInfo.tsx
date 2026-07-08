@@ -1,4 +1,4 @@
-import { faCheck, faCheckCircle, faCode, faExclamationTriangle, faSpinner, faSquareArrowUpRight } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faCogs, faExclamationTriangle, faFileCode, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import snakeCase from "lodash/snakeCase.js";
 import { memo, useCallback, useMemo } from "react";
@@ -43,9 +43,9 @@ const SOURCE_BADGE_COLOR = {
     generated: "badge-accent",
 };
 const SOURCE_BADGE_ICON = {
-    native: faCheck,
-    external: faSquareArrowUpRight,
-    generated: faCode,
+    native: faCheckCircle,
+    external: faFileCode,
+    generated: faCogs,
 };
 
 const endpointsReplacer = (key: string, value: unknown) => {
