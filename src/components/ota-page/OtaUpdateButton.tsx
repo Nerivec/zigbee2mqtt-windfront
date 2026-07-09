@@ -181,7 +181,7 @@ const OtaUpdateButton = memo(({ sourceIdx, device, state, otaSettings, onUpdateC
                                     <OtaDataSettings settings={updateSettings} setSettings={setUpdateSettings} defaultSettings={otaSettings} />
                                 ) : null}
                             </div>
-                            <div className="card-actions justify-end py-2">
+                            <div className="card-actions justify-end py-2 join">
                                 <Button
                                     className="btn btn-square btn-outline btn-error join-item tooltip-left"
                                     onClick={handleAction}

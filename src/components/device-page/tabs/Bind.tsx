@@ -180,7 +180,7 @@ export default function Bind({ sourceIdx, device }: BindProps): JSX.Element {
         <div className="flex flex-col w-full gap-3">
             <div className="flex flex-row flex-wrap gap-3">
                 <ConfirmButton
-                    className="btn btn-outline btn-error join-item"
+                    className="btn btn-outline btn-error"
                     item={[sourceIdx, device.ieee_address, [device.ieee_address]]}
                     onClick={onClear}
                     title={t(($) => $.clear_self_as_source)}
@@ -191,7 +191,7 @@ export default function Bind({ sourceIdx, device }: BindProps): JSX.Element {
                     {t(($) => $.clear_self_as_source)}
                 </ConfirmButton>
                 <ConfirmButton
-                    className="btn btn-outline btn-error join-item"
+                    className="btn btn-outline btn-error"
                     item={[sourceIdx, device.ieee_address, ["0xffffffffffffffff"]]}
                     onClick={onClear}
                     title={t(($) => $.clear_all)}

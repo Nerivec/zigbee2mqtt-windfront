@@ -179,7 +179,7 @@ const OtaControlGroup = memo(
             <>
                 {isScheduled ? (
                     <Button<{ sourceIdx: number; ieee: string }>
-                        className="btn btn-sm btn-square btn-outline btn-error join-item"
+                        className="btn btn-sm btn-square btn-outline btn-error"
                         onClick={onUnscheduleClick}
                         item={{ sourceIdx, ieee: device.ieee_address }}
                         title={t(($) => $.unschedule)}
@@ -190,7 +190,7 @@ const OtaControlGroup = memo(
                     <button
                         ref={refs.setReference}
                         type="button"
-                        className="btn btn-sm btn-square btn-outline btn-primary join-item tooltip tooltip-top"
+                        className="btn btn-sm btn-square btn-outline btn-primary tooltip tooltip-top"
                         {...getReferenceProps()}
                         data-tip="OTA"
                         disabled={disableOta}
@@ -336,9 +336,9 @@ const OtaControlGroup = memo(
                                         )}
                                     </div>
                                 </div>
-                                <div className="card-actions justify-end py-2">
+                                <div className="card-actions justify-end py-2 join">
                                     <Button
-                                        className="btn btn-square btn-outline btn-primary tooltip-left"
+                                        className="btn btn-square btn-outline btn-primary tooltip-left join-item"
                                         onClick={handleAction}
                                         item="check"
                                         title={t(($) => $.check)}
@@ -347,7 +347,7 @@ const OtaControlGroup = memo(
                                         <FontAwesomeIcon icon={faCloudArrowDown} />
                                     </Button>
                                     <Button
-                                        className="btn btn-square btn-outline btn-error tooltip-left"
+                                        className="btn btn-square btn-outline btn-error tooltip-left join-item"
                                         onClick={handleAction}
                                         item="update"
                                         title={t(($) => $.update)}
@@ -356,7 +356,7 @@ const OtaControlGroup = memo(
                                         <FontAwesomeIcon icon={faUpload} />
                                     </Button>
                                     <Button
-                                        className="btn btn-square btn-outline btn-info tooltip-left"
+                                        className="btn btn-square btn-outline btn-info tooltip-left join-item"
                                         onClick={handleAction}
                                         item="schedule"
                                         title={t(($) => $.schedule)}
