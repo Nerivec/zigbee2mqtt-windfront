@@ -49,10 +49,10 @@ const DeviceTile = memo(({ sourceIdx, device, deviceState, deviceAvailability, l
                 </div>
             </div>
             <div className="flex flex-row flex-wrap gap-1 mx-2 mb-2 justify-end items-center">
-                <span className="badge badge-soft badge-ghost cursor-default tooltip" data-tip={t(($) => $.lqi)}>
+                <span className="badge badge-soft cursor-default tooltip" data-tip={t(($) => $.lqi)}>
                     <Lqi value={deviceState.linkquality as number | undefined} />
                 </span>
-                <span className="badge badge-soft badge-ghost cursor-default tooltip" data-tip={t(($) => $.power)}>
+                <span className="badge badge-soft cursor-default tooltip" data-tip={t(($) => $.power)}>
                     <PowerSource
                         device={device}
                         batteryPercent={deviceState.battery as number}

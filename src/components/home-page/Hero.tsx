@@ -84,7 +84,7 @@ const Hero = memo(
                                 <div className="text-sm text-base-content/70">{t(($) => $.devices)}</div>
                                 <div className="font-semibold text-xl">{totalDevices}</div>
                                 {disabledDevices > 0 && (
-                                    <span className="text-sm text-xs text-base-content/50">
+                                    <span className="text-xs text-base-content/50">
                                         +{disabledDevices} {t(($) => $.disabled)}
                                     </span>
                                 )}
@@ -108,7 +108,7 @@ const Hero = memo(
                                         <span className={onlineDevices === totalDevices ? undefined : "text-error"}>{onlineDevices}</span>
                                     </div>
                                     {maybeOnlineDevices > 0 && disabledDevices > 0 && (
-                                        <span className="text-sm text-xs text-base-content/50">
+                                        <span className="text-xs text-base-content/50">
                                             +{maybeOnlineDevices} {t(($) => $.unknown, { ns: "zigbee" })}
                                         </span>
                                     )}

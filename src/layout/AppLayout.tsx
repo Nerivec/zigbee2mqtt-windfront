@@ -95,7 +95,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
                                     setShowNotifications={setShowNotifications}
                                 />
                             </header>
-                            <main className="pt-2 px-2 flex-1 min-h-0 [scrollbar-gutter:stable]">{children}</main>
+                            <main className="pt-2 px-2 flex-1 min-h-0 scrollbar-gutter-stable">{children}</main>
                         </div>
                         <div className="drawer-side">
                             <label
@@ -148,7 +148,7 @@ const AppLayout = memo(({ children }: AppLayoutProps) => {
 
                             <PermitJoinButton sidebarCollapsed={sidebarCollapsed} />
 
-                            <div className={`menu w-full p-2 gap-2 flex-row justify-center p-2 gap-2 ${sidebarCollapsed ? "hidden lg:hidden" : ""}`}>
+                            <div className={`menu w-full p-2 gap-2 flex-row justify-center ${sidebarCollapsed ? "hidden lg:hidden" : ""}`}>
                                 <Link to={HELP_URL} className="btn btn-outline btn-primary" target="_blank" rel="noopener noreferrer">
                                     <FontAwesomeIcon icon={faQuestionCircle} />
                                 </Link>

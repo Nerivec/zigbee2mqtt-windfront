@@ -114,12 +114,7 @@ const LogsTab = memo(({ sourceIdx }: LogsTabProps) => {
                     className="checkbox checkbox-sm"
                 />
                 <fieldset className="fieldset self-end">
-                    <Button<number>
-                        item={sourceIdx}
-                        onClick={clearLogs}
-                        className="btn btn-sm btn-outline btn-warning btn-primary"
-                        disabled={logs.length === 0}
-                    >
+                    <Button<number> item={sourceIdx} onClick={clearLogs} className="btn btn-sm btn-outline btn-warning" disabled={logs.length === 0}>
                         <FontAwesomeIcon icon={faTrashCan} />
                         {t(($) => $.clear, { ns: "common" })}
                     </Button>
@@ -210,7 +205,7 @@ export default function LogsPage() {
                         <div className="menu menu-horizontal justify-end">
                             <ConfirmButton<void>
                                 onClick={clearAllLogs}
-                                className="btn btn-sm btn-outline btn-warning btn-primary"
+                                className="btn btn-sm btn-outline btn-warning"
                                 title={t(($) => $.clear_all, { ns: "common" })}
                                 modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
                                 modalCancelLabel={t(($) => $.cancel, { ns: "common" })}

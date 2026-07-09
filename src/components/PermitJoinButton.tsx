@@ -121,7 +121,7 @@ const PermitJoinButton = memo(({ sidebarCollapsed }: PermitJoinButtonProps) => {
             <li className="w-full">
                 <Button<void>
                     onClick={onPermitJoinClick}
-                    className="btn btn-outline btn-primary grid leading-none py-2.5 lg:tooltip lg:tooltip-right !w-full"
+                    className="btn btn-outline btn-primary grid leading-none py-2.5 lg:tooltip lg:tooltip-right w-full!"
                     data-tip={`${permitJoin ? t(($) => $.disable_join) : t(($) => $.permit_join)}: ${selectedRouter[1] ? selectedRouter[1].friendly_name : t(($) => $.all)}`}
                 >
                     <FontAwesomeIcon icon={faTowerBroadcast} className={permitJoin ? "text-success" : "text-error"} beat={permitJoin} />

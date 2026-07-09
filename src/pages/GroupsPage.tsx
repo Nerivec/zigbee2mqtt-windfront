@@ -121,7 +121,7 @@ export default function GroupsPage() {
                     },
                 }) => (
                     // min-w-0 serves to properly truncate content
-                    <div className="flex-grow flex flex-col min-w-0">
+                    <div className="grow flex flex-col min-w-0">
                         <Link to={`/group/${sourceIdx}/${group.id}/devices`} className="link link-hover truncate">
                             {group.friendly_name}
                         </Link>

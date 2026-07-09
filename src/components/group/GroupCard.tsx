@@ -35,10 +35,10 @@ const GroupCard = ({ sourceIdx, group, endpoint, removeFromGroup }: GroupCardPro
                 </div>
             </div>
             <div className="flex flex-row flex-wrap gap-1 mx-2 mb-2 justify-around items-center">
-                <div className="badge badge-soft badge-ghost cursor-default me-2 tooltip" data-tip={t(($) => $.group_members)}>
+                <div className="badge badge-soft cursor-default me-2 tooltip" data-tip={t(($) => $.group_members)}>
                     <FontAwesomeIcon icon={faListDots} /> {group.members.length}
                 </div>
-                <div className="badge badge-soft badge-ghost cursor-default me-2 tooltip" data-tip={t(($) => $.group_scenes)}>
+                <div className="badge badge-soft cursor-default me-2 tooltip" data-tip={t(($) => $.group_scenes)}>
                     <FontAwesomeIcon icon={faMagicWandSparkles} />
                     {group.scenes.length}
                 </div>

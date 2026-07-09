@@ -218,7 +218,7 @@ export default function OtaPage() {
                             </div>
                         </div>
                         {/* min-w-0 serves to properly truncate content */}
-                        <div className="flex-grow flex flex-col min-w-0">
+                        <div className="grow flex flex-col min-w-0">
                             <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover truncate">
                                 {device.friendly_name}
                             </Link>
@@ -229,7 +229,7 @@ export default function OtaPage() {
                             )}
                             <div className="flex flex-row gap-1 mt-0.5 items-center">
                                 {batteryState && (
-                                    <span className="badge badge-sm badge-soft badge-ghost cursor-default">
+                                    <span className="badge badge-sm badge-soft cursor-default">
                                         <PowerSource device={device} {...batteryState} showLevel />
                                     </span>
                                 )}
