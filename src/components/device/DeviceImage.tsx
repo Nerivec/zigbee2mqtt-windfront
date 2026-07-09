@@ -31,11 +31,11 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
                     <FontAwesomeIcon icon={faExclamationTriangle} beat className="indicator-item indicator-bottom indicator-end text-error" />
                 </span>
             ) : device.definition?.source === "generated" ? (
-                <span title={`${t(($) => $.support, { ns: "common" })}: ${t(($) => $[device.definition!.source])}`}>
+                <span title={t(($) => $[device.definition!.source])}>
                     <FontAwesomeIcon icon={faCode} className="indicator-item indicator-bottom indicator-end text-accent" />
                 </span>
             ) : device.definition?.source === "external" ? (
-                <span title={`${t(($) => $.support, { ns: "common" })}: ${t(($) => $[device.definition!.source])}`}>
+                <span title={t(($) => $[device.definition!.source])}>
                     <FontAwesomeIcon icon={faSquareArrowUpRight} className="indicator-item indicator-bottom indicator-end text-info" />
                 </span>
             ) : null,

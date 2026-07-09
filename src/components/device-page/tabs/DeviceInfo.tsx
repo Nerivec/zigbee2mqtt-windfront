@@ -264,7 +264,6 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                 </h2>
                 <div className="flex flex-row flex-wrap gap-2">
                     <span className={`badge ${device.definition ? SOURCE_BADGE_COLOR[device.definition.source] : ""}`}>
-                        {t(($) => $.support, { ns: "common" })}:
                         {device.definition ? <FontAwesomeIcon icon={SOURCE_BADGE_ICON[device.definition.source]} /> : null}
                         {t(($) => (device.definition ? $[device.definition.source] : $.unsupported))}
                     </span>
