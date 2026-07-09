@@ -91,9 +91,14 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
             for (const device of devices) {
                 if (!device.definition?.icon) {
                     const imageUrls = getZ2MDeviceImage(device);
-                    const validUrl = await findFirstValidImageUrl(imageUrls);
-                    if (validUrl) {
-                        results[device.ieee_address] = validUrl;
+                    if (device.definition?.source !== "native") {
+                        const validUrl = await findFirstValidImageUrl(imageUrls);
+                        if (validUrl) {
+                            results[device.ieee_address] = validUrl;
+                        }
+                    } else if (imageUrls[0] !== genericDevice) {
+                        // for native supported devices the first entry is the model image
+                        results[device.ieee_address] = imageUrls[0];
                     }
                 }
             }
