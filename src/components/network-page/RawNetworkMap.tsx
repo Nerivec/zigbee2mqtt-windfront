@@ -38,6 +38,27 @@ type RawNetworkMapProps = {
     map: Zigbee2MQTTNetworkMap;
 };
 
+async function testImageUrl(url: string): Promise<boolean> {
+    try {
+        const response = await fetch(url, { method: "HEAD" });
+        return response.ok;
+    } catch {
+        return false;
+    }
+}
+
+async function findFirstValidImageUrl(imageUrls: string[]): Promise<string | undefined> {
+    for (const url of imageUrls) {
+        if (url === genericDevice) {
+            continue;
+        }
+        if (await testImageUrl(url)) {
+            return url;
+        }
+    }
+    return undefined;
+}
+
 const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     const { t } = useTranslation("network");
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
@@ -53,11 +74,34 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     const [showParents, setShowParents] = useState(true);
     const [showChildren, setShowChildren] = useState(true);
     const [showSiblings, setShowSiblings] = useState(true);
+    const [validImageUrls, setValidImageUrls] = useState<Record<string, string>>({});
     const graphRef = useRef<GraphCanvasRef | null>(null);
 
     useEffect(() => {
         store2.set(NETWORK_MAP_CONFIG_KEY, config);
     }, [config]);
+
+    useEffect(() => {
+        if (!config.showIcons) {
+            return;
+        }
+
+        const testUrls = async () => {
+            const results: Record<string, string> = {};
+            for (const device of devices) {
+                if (!device.definition?.icon) {
+                    const imageUrls = getZ2MDeviceImage(device);
+                    const validUrl = await findFirstValidImageUrl(imageUrls);
+                    if (validUrl) {
+                        results[device.ieee_address] = validUrl;
+                    }
+                }
+            }
+            setValidImageUrls(results);
+        };
+
+        void testUrls();
+    }, [config.showIcons, devices]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
@@ -136,11 +180,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
             let icon: string | undefined;
 
             if (config.showIcons && device) {
-                icon = device.definition?.icon ?? getZ2MDeviceImage(device)[0];
-
-                if (icon === genericDevice) {
-                    icon = undefined;
-                }
+                icon = device.definition?.icon ?? validImageUrls[device.ieee_address];
             }
 
             computedNodes.push({
@@ -233,7 +273,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         }
 
         return [computedNodes, computedEdges];
-    }, [map, showParents, showChildren, showSiblings, t, devices, config.showIcons]);
+    }, [map, showParents, showChildren, showSiblings, t, devices, config.showIcons, validImageUrls]);
 
     const { selections, actives, onNodeClick, onCanvasClick } = useSelection({
         ref: graphRef,
