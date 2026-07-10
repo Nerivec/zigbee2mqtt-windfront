@@ -334,7 +334,12 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <div className="font-semibold text-base-content/70">{t(($) => $.zigbee_model)}</div>
                     <div className="min-w-0">
                         <p className="font-semibold break-all">{device.model_id}</p>
-                        <p className="text-base-content/50">{device.manufacturer}</p>
+                        <p className="text-base-content/50">
+                            <span className="tooltip tooltip-bottom">
+                                <span className="tooltip-content">{t(($) => $.zigbee_manufacturer)}</span>
+                                {device.manufacturer}
+                            </span>
+                        </p>
                     </div>
                     <div className="font-semibold text-base-content/70">{t(($) => $.definition, { ns: "common" })} (Zigbee2MQTT)</div>
                     <div className="min-w-0">
