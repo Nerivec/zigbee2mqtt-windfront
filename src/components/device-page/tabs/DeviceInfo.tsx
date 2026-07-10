@@ -335,8 +335,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                     <div className="min-w-0">
                         <p className="font-semibold break-all">{device.model_id}</p>
                         <p className="text-base-content/50">
-                            <span className="tooltip tooltip-bottom">
-                                <span className="tooltip-content">{t(($) => $.zigbee_manufacturer)}</span>
+                            <span className="tooltip tooltip-bottom" data-tip={t(($) => $.zigbee_manufacturer)}>
                                 {device.manufacturer}
                             </span>
                         </p>
