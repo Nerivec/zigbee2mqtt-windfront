@@ -15,7 +15,7 @@ import {
 import store2 from "store2";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
-import genericDevice from "../../images/generic-zigbee-device.png";
+// import genericDevice from "../../images/generic-zigbee-device.png";
 import { NETWORK_MAP_CONFIG_KEY } from "../../localStoreConsts.js";
 import { useAppStore } from "../../store.js";
 import fontUrl from "./../../styles/NotoSans-Regular.ttf";
@@ -47,14 +47,18 @@ async function testImageUrl(url: string): Promise<boolean> {
     }
 }
 
-async function findFirstValidImageUrl(imageUrls: string[]): Promise<string | undefined> {
+async function findFirstValidImageUrl(imageUrls: string[], validUrls: Set<string>, invalidUrls: Set<string>): Promise<string | undefined> {
     for (const url of imageUrls) {
-        if (url === genericDevice) {
+        if (validUrls.has(url)) {
+            return url;
+        }
+        if (invalidUrls.has(url)) {
             continue;
         }
         if (await testImageUrl(url)) {
             return url;
         }
+        invalidUrls.add(url);
     }
     return undefined;
 }
@@ -74,35 +78,44 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     const [showParents, setShowParents] = useState(true);
     const [showChildren, setShowChildren] = useState(true);
     const [showSiblings, setShowSiblings] = useState(true);
-    const [validImageUrls, setValidImageUrls] = useState<Record<string, string>>({});
+    const [validImageUrls, setValidImageUrls] = useState<Map<string, string>>(new Map());
+    const [invalidImageUrls, setInvalidImageUrls] = useState<Set<string>>(new Set());
     const graphRef = useRef<GraphCanvasRef | null>(null);
 
     useEffect(() => {
         store2.set(NETWORK_MAP_CONFIG_KEY, config);
     }, [config]);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies(invalidImageUrls): copy state at effect time, avoid re-runs from state changes
+    // biome-ignore lint/correctness/useExhaustiveDependencies(validImageUrls): copy state at effect time, avoid re-runs from state changes
     useEffect(() => {
         if (!config.showIcons) {
             return;
         }
 
         const testUrls = async () => {
-            const results: Record<string, string> = {};
+            const results = new Map(validImageUrls);
+            const invalidUrls = new Set(invalidImageUrls);
             for (const device of devices) {
                 if (!device.definition?.icon) {
                     const imageUrls = getZ2MDeviceImage(device);
                     if (device.definition?.source !== "native") {
-                        const validUrl = await findFirstValidImageUrl(imageUrls);
+                        const validUrl = await findFirstValidImageUrl(imageUrls, new Set(results.values()), invalidUrls);
                         if (validUrl) {
-                            results[device.ieee_address] = validUrl;
+                            results.set(device.ieee_address, validUrl);
+                        } else {
+                            results.delete(device.ieee_address);
                         }
-                    } else if (imageUrls[0] !== genericDevice) {
+                    } else if (imageUrls.length > 0) {
                         // for native supported devices the first entry is the model image
-                        results[device.ieee_address] = imageUrls[0];
+                        results.set(device.ieee_address, imageUrls[0]);
+                    } else {
+                        results.delete(device.ieee_address);
                     }
                 }
             }
             setValidImageUrls(results);
+            setInvalidImageUrls(invalidUrls);
         };
 
         void testUrls();
@@ -185,7 +198,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
             let icon: string | undefined;
 
             if (config.showIcons && device) {
-                icon = device.definition?.icon ?? validImageUrls[device.ieee_address];
+                icon = device.definition?.icon ?? validImageUrls.get(device.ieee_address);
             }
 
             computedNodes.push({

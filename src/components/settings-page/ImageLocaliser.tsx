@@ -60,9 +60,13 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
                 }
             }
 
-            await sendMessage(sourceIdx, "bridge/request/device/options", { id: device.ieee_address, options: { icon: imageContent } });
-            setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "done" }));
-
+            if (!imageContent) {
+                console.error("Error localising image");
+                setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "error" }));
+            } else {
+                await sendMessage(sourceIdx, "bridge/request/device/options", { id: device.ieee_address, options: { icon: imageContent } });
+                setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "done" }));
+            }
             return true;
         },
         [sourceIdx],
@@ -72,10 +76,7 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
         if (currentState === "start") {
             for (const device of devices) {
                 if (device.type !== "Coordinator") {
-                    localiseImage(device).catch((err) => {
-                        console.error("Error localising image", err);
-                        setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "error" }));
-                    });
+                    void localiseImage(device);
                 }
             }
 

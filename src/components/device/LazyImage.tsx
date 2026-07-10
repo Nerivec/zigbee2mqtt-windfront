@@ -22,9 +22,7 @@ const LazyImage = memo(({ device = {} as Device, className }: Readonly<LazyImage
         srcList.push(...fromZ2MDocs);
     }
 
-    if (!fromZ2MDocs.includes(genericDevice)) {
-        srcList.push(genericDevice);
-    }
+    srcList.push(genericDevice);
 
     const { src } = useImage({ srcList });
 
