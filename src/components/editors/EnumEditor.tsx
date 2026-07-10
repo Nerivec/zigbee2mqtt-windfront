@@ -52,7 +52,7 @@ const EnumEditor = memo((props: EnumProps) => {
             })}
         </select>
     ) : (
-        <div className="flex flex-row flex-wrap gap-1 join">
+        <div className="flex flex-row flex-wrap gap-1">
             {values.map((v) => {
                 const primitive = isPrimitive(v);
                 const current = primitive ? v === value : v.value === (primitiveValue ? value : value?.value);
@@ -60,7 +60,7 @@ const EnumEditor = memo((props: EnumProps) => {
                 return (
                     <Button<ValueWithLabelOrPrimitive>
                         key={primitive ? v : v.name}
-                        className={`btn btn-outline btn-primary btn-sm join-item${current ? " btn-active" : ""}`}
+                        className={`btn btn-outline btn-primary btn-sm${current ? " btn-active" : ""}`}
                         onClick={onChange}
                         item={primitive ? v : v.value}
                         title={primitive ? `${v}` : v.description}

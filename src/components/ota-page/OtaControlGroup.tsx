@@ -336,9 +336,9 @@ const OtaControlGroup = memo(
                                         )}
                                     </div>
                                 </div>
-                                <div className="card-actions justify-end py-2 join">
+                                <div className="card-actions justify-end py-2">
                                     <Button
-                                        className="btn btn-square btn-outline btn-primary tooltip-left join-item"
+                                        className="btn btn-square btn-outline btn-primary tooltip-left"
                                         onClick={handleAction}
                                         item="check"
                                         title={t(($) => $.check)}
@@ -347,7 +347,7 @@ const OtaControlGroup = memo(
                                         <FontAwesomeIcon icon={faCloudArrowDown} />
                                     </Button>
                                     <Button
-                                        className="btn btn-square btn-outline btn-error tooltip-left join-item"
+                                        className="btn btn-square btn-outline btn-error tooltip-left"
                                         onClick={handleAction}
                                         item="update"
                                         title={t(($) => $.update)}
@@ -356,7 +356,7 @@ const OtaControlGroup = memo(
                                         <FontAwesomeIcon icon={faUpload} />
                                     </Button>
                                     <Button
-                                        className="btn btn-square btn-outline btn-info tooltip-left join-item"
+                                        className="btn btn-square btn-outline btn-info tooltip-left"
                                         onClick={handleAction}
                                         item="schedule"
                                         title={t(($) => $.schedule)}
