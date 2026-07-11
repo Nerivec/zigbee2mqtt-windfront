@@ -19,11 +19,6 @@ const ZIGBEE_OTA_URL = "https://raw.githubusercontent.com/Koenkk/zigbee-OTA";
 
 const OtaSourceIcon = ({ source }: OtaSourceIconProps) => {
     const { t } = useTranslation("ota");
-
-    if (!source) {
-        return null;
-    }
-
     const isOfficial = source.startsWith(ZIGBEE_OTA_URL);
     const title = t(($) => (isOfficial ? $.official_source : $.custom_source));
     const icon = isOfficial ? faCheckCircle : faSquareArrowUpRight;
