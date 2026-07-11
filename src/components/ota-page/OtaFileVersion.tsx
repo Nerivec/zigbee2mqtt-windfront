@@ -1,8 +1,8 @@
+import { faCheckCircle, faSquareArrowUpRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { formatOtaFileVersion } from "./index.js";
-import { faCheckCircle, faSquareArrowUpRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type OtaFileVersionProps = {
     version?: number | null;
