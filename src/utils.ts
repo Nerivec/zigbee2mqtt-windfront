@@ -83,8 +83,6 @@ export const toHex = (input: number, padding = 4): string => {
     return `0x${(padStr + input.toString(16)).slice(-1 * padding).toUpperCase()}`;
 };
 
-export const sanitizeZ2MDeviceName = (deviceName?: string): string | "NA" => (deviceName ? deviceName.replace(/:|\s|\//g, "-") : "NA");
-
 // #endregion
 
 // #region Device/Group
