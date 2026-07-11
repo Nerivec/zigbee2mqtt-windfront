@@ -12,17 +12,17 @@ type OtaFileVersionProps = {
 };
 
 type OtaSourceIconProps = {
-    source?: string | null;
+    source?: string;
 };
 
 const ZIGBEE_OTA_URL = "https://raw.githubusercontent.com/Koenkk/zigbee-OTA";
 
 const OtaSourceIcon = ({ source }: OtaSourceIconProps) => {
+    const { t } = useTranslation("ota");
+
     if (!source) {
         return null;
     }
-
-    const { t } = useTranslation("ota");
 
     const isOfficial = source.startsWith(ZIGBEE_OTA_URL);
     const title = t(($) => (isOfficial ? $.official_source : $.custom_source));
@@ -48,7 +48,7 @@ const OtaFileVersion = memo(({ version, showRaw, state, source }: OtaFileVersion
         return (
             <span className="flex flex-row">
                 <span>{t(($) => $.up_to_date, { ns: "common" })}</span>
-                <OtaSourceIcon source={source} />
+                {source ? <OtaSourceIcon source={source} /> : null}
             </span>
         );
     }
@@ -64,7 +64,7 @@ const OtaFileVersion = memo(({ version, showRaw, state, source }: OtaFileVersion
                 </span>
                 {showRaw ? <span className="font-mono text-base-content/75">{version}</span> : null}
             </div>
-            <OtaSourceIcon source={source} />
+            {source ? <OtaSourceIcon source={source} /> : null}
         </span>
     );
 });
