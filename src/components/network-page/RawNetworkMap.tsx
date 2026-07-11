@@ -141,7 +141,10 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                 label: node.friendlyName,
                 labelVisible: true,
                 fill: NODE_TYPE_FILL_COLORS[node.type as keyof typeof NODE_TYPE_FILL_COLORS],
-                icon: config.showIcons && device ? (device.definition?.icon ?? getZ2MDeviceImage(device)[0]) : undefined,
+                icon:
+                    config.showIcons && device?.definition
+                        ? device.definition.icon || (device.supported ? getZ2MDeviceImage(device)[0] : undefined)
+                        : undefined,
             });
         }
 
