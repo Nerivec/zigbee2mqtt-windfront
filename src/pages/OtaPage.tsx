@@ -362,7 +362,7 @@ export default function OtaPage() {
                     row: {
                         original: { state },
                     },
-                }) => <OtaFileVersion version={state?.latest_version} />,
+                }) => <OtaFileVersion version={state?.latest_version} state={state?.state} source={state?.latest_source} />,
                 filterFn: "includesString",
                 meta: {
                     filterVariant: "text",
