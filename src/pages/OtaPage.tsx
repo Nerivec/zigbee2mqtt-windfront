@@ -21,6 +21,7 @@ import OtaLink from "../components/value-decorators/OtaLink.js";
 import PowerSource from "../components/value-decorators/PowerSource.js";
 import VendorLink from "../components/value-decorators/VendorLink.js";
 import { useTable } from "../hooks/useTable.js";
+import en from "../i18n/locales/en.json" with { type: "json" };
 import { NavBarContent } from "../layout/NavBarContext.js";
 import { API_NAMES, API_URLS, type AppState, MULTI_INSTANCE, useAppStore } from "../store.js";
 import type { Device, DeviceState } from "../types.js";
@@ -327,7 +328,7 @@ export default function OtaPage() {
                                     className="badge badge-sm badge-ghost tooltip tooltip-bottom"
                                     data-tip={t(($) => $.firmware_build_date, { ns: "zigbee" })}
                                 >
-                                    {device.date_code}
+                                    <span className="font-mono">{device.date_code}</span>
                                 </span>
                             </div>
                         )}
@@ -354,15 +355,15 @@ export default function OtaPage() {
                 },
             },
             {
-                id: "available_firmware_version",
+                id: "latest_firmware_version",
                 minSize: 175,
-                header: t(($) => $.available_firmware_version),
-                accessorFn: ({ state }) => formatOtaFileVersion(state?.latest_version)?.join(" "),
+                header: t(($) => $.latest_firmware_version),
+                accessorFn: ({ state }) => (state?.state === "idle" ? en.common.up_to_date : formatOtaFileVersion(state?.latest_version)?.join(" ")),
                 cell: ({
                     row: {
                         original: { state },
                     },
-                }) => <OtaFileVersion version={state?.latest_version} />,
+                }) => <OtaFileVersion version={state?.latest_version} state={state?.state} source={state?.latest_source} />,
                 filterFn: "includesString",
                 meta: {
                     filterVariant: "text",
