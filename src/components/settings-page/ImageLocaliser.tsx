@@ -79,7 +79,9 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
         if (currentState === "start") {
             for (const device of devices) {
                 if (device.type !== "Coordinator") {
-                    localiseImage(device).catch((err) => { console.log(err); });
+                    localiseImage(device).catch((err) => {
+                        console.log(err);
+                    });
                 }
             }
 
