@@ -41,6 +41,7 @@ type RawNetworkMapProps = {
 async function testImageUrl(url: string): Promise<boolean> {
     try {
         const response = await fetch(url, { method: "HEAD" });
+
         return response.ok;
     } catch {
         return false;
@@ -52,14 +53,18 @@ async function findFirstValidImageUrl(imageUrls: string[], validUrls: Set<string
         if (validUrls.has(url)) {
             return url;
         }
+
         if (invalidUrls.has(url)) {
             continue;
         }
+
         if (await testImageUrl(url)) {
             return url;
         }
+
         invalidUrls.add(url);
     }
+
     return undefined;
 }
 
@@ -96,11 +101,14 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         const testUrls = async () => {
             const results = new Map(validImageUrls);
             const invalidUrls = new Set(invalidImageUrls);
+
             for (const device of devices) {
                 if (!device.definition?.icon) {
                     const imageUrls = getZ2MDeviceImage(device);
+
                     if (device.definition?.source !== "native") {
                         const validUrl = await findFirstValidImageUrl(imageUrls, new Set(results.values()), invalidUrls);
+
                         if (validUrl) {
                             results.set(device.ieee_address, validUrl);
                         } else {
@@ -114,6 +122,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                     }
                 }
             }
+
             setValidImageUrls(results);
             setInvalidImageUrls(invalidUrls);
         };
