@@ -12,19 +12,13 @@ type LazyImageProps = {
 const LazyImage = memo(({ device = {} as Device, className }: Readonly<LazyImageProps>) => {
     const fromDefinition = device.definition?.icon;
     const fromZ2MDocs = getZ2MDeviceImage(device);
-    const srcList: string[] = [];
-
-    if (fromDefinition) {
-        srcList.push(fromDefinition);
-    }
+    const srcList: string[] = fromDefinition ? [fromDefinition] : [];
 
     if (fromZ2MDocs) {
-        srcList.push(fromZ2MDocs);
+        srcList.push(...fromZ2MDocs);
     }
 
-    if (fromZ2MDocs !== genericDevice) {
-        srcList.push(genericDevice);
-    }
+    srcList.push(genericDevice);
 
     const { src } = useImage({ srcList });
 

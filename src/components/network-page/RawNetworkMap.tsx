@@ -15,7 +15,6 @@ import {
 import store2 from "store2";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
-import genericDevice from "../../images/generic-zigbee-device.png";
 import { NETWORK_MAP_CONFIG_KEY } from "../../localStoreConsts.js";
 import { useAppStore } from "../../store.js";
 import fontUrl from "./../../styles/NotoSans-Regular.ttf";
@@ -133,16 +132,6 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                 }
             }
 
-            let icon: string | undefined;
-
-            if (config.showIcons && device) {
-                icon = device.definition?.icon ?? getZ2MDeviceImage(device);
-
-                if (icon === genericDevice) {
-                    icon = undefined;
-                }
-            }
-
             computedNodes.push({
                 id: node.ieeeAddr,
                 data: {
@@ -152,7 +141,10 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                 label: node.friendlyName,
                 labelVisible: true,
                 fill: NODE_TYPE_FILL_COLORS[node.type as keyof typeof NODE_TYPE_FILL_COLORS],
-                icon,
+                icon:
+                    config.showIcons && device?.definition
+                        ? device.definition.icon || (device.supported ? getZ2MDeviceImage(device)[0] : undefined)
+                        : undefined,
             });
         }
 

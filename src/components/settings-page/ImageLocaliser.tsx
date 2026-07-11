@@ -7,13 +7,13 @@ import Button from "../Button.js";
 import { getZ2MDeviceImage } from "../device/index.js";
 
 type LocaliserState = "none" | "start" | "inprogress" | "done";
+// Maps to i18n keys in `common` ns
+type LocaliserStatus = "init" | "error" | "done";
 
 type Props = {
     sourceIdx: number;
     devices: AppState["devices"][number];
 };
-
-type LStatus = "init" | "error" | "done";
 
 async function blobToBase64(blob: Blob): Promise<string> {
     return await new Promise((resolve, reject) => {
@@ -25,21 +25,24 @@ async function blobToBase64(blob: Blob): Promise<string> {
     });
 }
 
-async function downloadImage(imageSrc: string): Promise<string> {
-    const image = await fetch(imageSrc);
+async function downloadImage(imageSrc: string): Promise<string | undefined> {
+    try {
+        const rsp = await fetch(imageSrc);
 
-    if (image.ok) {
-        const blob = await image.blob();
+        if (rsp.ok) {
+            const blob = await rsp.blob();
+            const base64 = await blobToBase64(blob);
 
-        return await blobToBase64(blob);
+            return base64;
+        }
+    } catch {
+        // ignore
     }
-
-    return Promise.reject(image.status);
 }
 
 export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
     const [currentState, setCurrentState] = useState<LocaliserState>("none");
-    const [localisationStatus, setLocalisationStatus] = useState<Record<string, LStatus>>({});
+    const [localisationStatus, setLocalisationStatus] = useState<Record<string, LocaliserStatus>>({});
     const { t } = useTranslation(["settings", "common", "zigbee"]);
 
     const localiseImage = useCallback(
@@ -48,11 +51,24 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
                 return { ...prev, [device.ieee_address]: "init" };
             });
 
-            const imageUrl = getZ2MDeviceImage(device);
-            const imageContent = await downloadImage(imageUrl);
+            const imageUrls = getZ2MDeviceImage(device);
+            let imageContent: string | undefined;
 
-            await sendMessage(sourceIdx, "bridge/request/device/options", { id: device.ieee_address, options: { icon: imageContent } });
-            setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "done" }));
+            for (const url of imageUrls) {
+                imageContent = await downloadImage(url);
+
+                if (imageContent) {
+                    break;
+                }
+            }
+
+            if (!imageContent) {
+                console.error("Error localising image");
+                setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "error" }));
+            } else {
+                await sendMessage(sourceIdx, "bridge/request/device/options", { id: device.ieee_address, options: { icon: imageContent } });
+                setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "done" }));
+            }
 
             return true;
         },
@@ -64,8 +80,7 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
             for (const device of devices) {
                 if (device.type !== "Coordinator") {
                     localiseImage(device).catch((err) => {
-                        console.error("Error localising image", err);
-                        setLocalisationStatus((prev) => ({ ...prev, [device.ieee_address]: "error" }));
+                        console.log(err);
                     });
                 }
             }

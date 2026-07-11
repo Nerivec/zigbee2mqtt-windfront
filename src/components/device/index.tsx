@@ -1,13 +1,19 @@
-import genericDevice from "../../images/generic-zigbee-device.png";
 import type { Device } from "../../types.js";
-import { sanitizeZ2MDeviceName } from "../../utils.js";
 
 const DEVICE_IMAGE_BASE_PATH = "https://www.zigbee2mqtt.io/images/devices/";
+const VENDOR_IMAGE_BASE_PATH = "https://www.zigbee2mqtt.io/images/vendors/";
 
-export const getZ2MDeviceImage = (device: Device): string => {
-    const sanitizedName = sanitizeZ2MDeviceName(device.definition?.model);
+export const getZ2MDeviceImage = (device: Device): string[] => {
+    const modelFilename = device.definition?.model.replace(/:|\s|\//g, "-");
+    const srcList: string[] = modelFilename ? [`${DEVICE_IMAGE_BASE_PATH}${modelFilename}.png`] : [];
 
-    return sanitizedName === "NA" ? genericDevice : `${DEVICE_IMAGE_BASE_PATH}${sanitizedName}.png`;
+    if (device.definition && device.definition.source !== "native") {
+        const vendorFilename = device.definition.vendor.replace(/:|\s|\//g, "-");
+
+        srcList.push(`${VENDOR_IMAGE_BASE_PATH}${vendorFilename}.png`);
+    }
+
+    return srcList;
 };
 
 export const hasOtaCluster = (device: Device): boolean => {
