@@ -15,7 +15,6 @@ import {
 import store2 from "store2";
 import type { Zigbee2MQTTNetworkMap } from "zigbee2mqtt";
 import { useShallow } from "zustand/react/shallow";
-// import genericDevice from "../../images/generic-zigbee-device.png";
 import { NETWORK_MAP_CONFIG_KEY } from "../../localStoreConsts.js";
 import { useAppStore } from "../../store.js";
 import fontUrl from "./../../styles/NotoSans-Regular.ttf";
@@ -38,36 +37,6 @@ type RawNetworkMapProps = {
     map: Zigbee2MQTTNetworkMap;
 };
 
-async function testImageUrl(url: string): Promise<boolean> {
-    try {
-        const response = await fetch(url, { method: "HEAD" });
-
-        return response.ok;
-    } catch {
-        return false;
-    }
-}
-
-async function findFirstValidImageUrl(imageUrls: string[], validUrls: Set<string>, invalidUrls: Set<string>): Promise<string | undefined> {
-    for (const url of imageUrls) {
-        if (validUrls.has(url)) {
-            return url;
-        }
-
-        if (invalidUrls.has(url)) {
-            continue;
-        }
-
-        if (await testImageUrl(url)) {
-            return url;
-        }
-
-        invalidUrls.add(url);
-    }
-
-    return undefined;
-}
-
 const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     const { t } = useTranslation("network");
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
@@ -83,52 +52,11 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     const [showParents, setShowParents] = useState(true);
     const [showChildren, setShowChildren] = useState(true);
     const [showSiblings, setShowSiblings] = useState(true);
-    const [validImageUrls, setValidImageUrls] = useState<Map<string, string>>(new Map());
-    const [invalidImageUrls, setInvalidImageUrls] = useState<Set<string>>(new Set());
     const graphRef = useRef<GraphCanvasRef | null>(null);
 
     useEffect(() => {
         store2.set(NETWORK_MAP_CONFIG_KEY, config);
     }, [config]);
-
-    // biome-ignore lint/correctness/useExhaustiveDependencies(invalidImageUrls): copy state at effect time, avoid re-runs from state changes
-    // biome-ignore lint/correctness/useExhaustiveDependencies(validImageUrls): copy state at effect time, avoid re-runs from state changes
-    useEffect(() => {
-        if (!config.showIcons) {
-            return;
-        }
-
-        const testUrls = async () => {
-            const results = new Map(validImageUrls);
-            const invalidUrls = new Set(invalidImageUrls);
-
-            for (const device of devices) {
-                if (!device.definition?.icon) {
-                    const imageUrls = getZ2MDeviceImage(device);
-
-                    if (device.definition?.source !== "native") {
-                        const validUrl = await findFirstValidImageUrl(imageUrls, new Set(results.values()), invalidUrls);
-
-                        if (validUrl) {
-                            results.set(device.ieee_address, validUrl);
-                        } else {
-                            results.delete(device.ieee_address);
-                        }
-                    } else if (imageUrls.length > 0) {
-                        // for native supported devices the first entry is the model image
-                        results.set(device.ieee_address, imageUrls[0]);
-                    } else {
-                        results.delete(device.ieee_address);
-                    }
-                }
-            }
-
-            setValidImageUrls(results);
-            setInvalidImageUrls(invalidUrls);
-        };
-
-        void testUrls();
-    }, [config.showIcons, devices]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: specific trigger
     useEffect(() => {
@@ -204,12 +132,6 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                 }
             }
 
-            let icon: string | undefined;
-
-            if (config.showIcons && device) {
-                icon = device.definition?.icon ?? validImageUrls.get(device.ieee_address);
-            }
-
             computedNodes.push({
                 id: node.ieeeAddr,
                 data: {
@@ -219,7 +141,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                 label: node.friendlyName,
                 labelVisible: true,
                 fill: NODE_TYPE_FILL_COLORS[node.type as keyof typeof NODE_TYPE_FILL_COLORS],
-                icon,
+                icon: config.showIcons && device ? (device.definition?.icon ?? getZ2MDeviceImage(device)[0]) : undefined,
             });
         }
 
@@ -300,7 +222,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         }
 
         return [computedNodes, computedEdges];
-    }, [map, showParents, showChildren, showSiblings, t, devices, config.showIcons, validImageUrls]);
+    }, [map, showParents, showChildren, showSiblings, t, devices, config.showIcons]);
 
     const { selections, actives, onNodeClick, onCanvasClick } = useSelection({
         ref: graphRef,
