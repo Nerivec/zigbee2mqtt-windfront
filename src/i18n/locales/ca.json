@@ -66,6 +66,7 @@
         "multi_instance": "Múltiples instàncies",
         "name": "Nom",
         "none": "Cap",
+        "not_assessed": "Not assessed",
         "notifications": "Notificacions",
         "optional": "Opcional",
         "overview": "Vista general",
@@ -102,6 +103,7 @@
         "undefined": "Indefinit",
         "unknown_device": "Dispositiu desconegut",
         "unknown_group": "Grup desconegut",
+        "up_to_date": "Up-to-date",
         "write": "Escriu"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Retard de resposta del bloc d'imatge",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Sense suport OTA oficial",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Notes de la versió",
         "remaining_time": "Temps restant",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Desprograma",
         "unschedule_selected": "Desprograma els seleccionats",
-        "up_to_date": "Up-to-date",
         "update": "Actualitza firmware",
         "update_selected": "Actualitza seleccionats",
         "update_selected_info": "Una OTA carrega molt la xarxa.",

@@ -66,6 +66,7 @@
         "multi_instance": "Multi-istanza",
         "name": "Nome",
         "none": "Nessuno",
+        "not_assessed": "Not assessed",
         "notifications": "Notifiche",
         "optional": "Opzionale",
         "overview": "Panoramica",
@@ -102,6 +103,7 @@
         "undefined": "Non definito",
         "unknown_device": "Dispositivo sconosciuto",
         "unknown_group": "Gruppo sconosciuto",
+        "up_to_date": "Up-to-date",
         "write": "Scrivi"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Ritardo risposta blocco immagine",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Nessun supporto OTA ufficiale",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Note di rilascio",
         "remaining_time": "Tempo rimanente",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Annulla pianificazione",
         "unschedule_selected": "Annulla pianificazione selezionati",
-        "up_to_date": "Up-to-date",
         "update": "Aggiorna firmware dispositivo",
         "update_selected": "Aggiorna selezionati",
         "update_selected_info": "Un aggiornamento OTA grava la rete. Assicurare stabilità e orari poco usati.",

@@ -66,6 +66,7 @@
         "multi_instance": "Đa phiên bản",
         "name": "Tên",
         "none": "Không có",
+        "not_assessed": "Not assessed",
         "notifications": "Thông báo",
         "optional": "Tùy chọn",
         "overview": "Tổng quan",
@@ -102,6 +103,7 @@
         "undefined": "Không xác định",
         "unknown_device": "Thiết bị không xác định",
         "unknown_group": "Nhóm không xác định",
+        "up_to_date": "Up-to-date",
         "write": "Ghi"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Độ trễ phản hồi khối ảnh",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Không có hỗ trợ OTA chính thức",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Ghi chú phát hành",
         "remaining_time": "Thời gian còn lại",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Hủy cập nhật đã lên lịch",
         "unschedule_selected": "Hủy lịch đã chọn",
-        "up_to_date": "Up-to-date",
         "update": "Cập nhật firmware thiết bị",
         "update_selected": "Cập nhật đã chọn",
         "update_selected_info": "Cập nhật OTA rất tốn tài nguyên mạng. Đảm bảo mạng ổn định và chọn thời gian ít sử dụng.",

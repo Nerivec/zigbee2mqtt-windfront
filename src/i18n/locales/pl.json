@@ -66,6 +66,7 @@
         "multi_instance": "Wiele instancji",
         "name": "Nazwa",
         "none": "Brak",
+        "not_assessed": "Not assessed",
         "notifications": "Powiadomienia",
         "optional": "Opcjonalne",
         "overview": "Przegląd",
@@ -102,6 +103,7 @@
         "undefined": "Niezdefiniowane",
         "unknown_device": "Nieznane urządzenie",
         "unknown_group": "Nieznana grupa",
+        "up_to_date": "Up-to-date",
         "write": "Zapisz"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Opóźnienie odpowiedzi bloku obrazu",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Brak oficjalnego wsparcia OTA",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Notatki wydania",
         "remaining_time": "Pozostały czas",
@@ -292,7 +293,6 @@
         "stack": "Stos",
         "unschedule": "Anuluj plan",
         "unschedule_selected": "Anuluj zaplanowanie wybranych",
-        "up_to_date": "Up-to-date",
         "update": "Aktualizuj firmware",
         "update_selected": "Aktualizuj zaznaczone",
         "update_selected_info": "Aktualizacja OTA znacząco obciąża sieć. Upewnij się, że sieć funkcjonuje stabilnie i rozważ aktualizację w czasie najmniejszego obciążenia.",

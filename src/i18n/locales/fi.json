@@ -66,6 +66,7 @@
         "multi_instance": "Useita instansseja",
         "name": "Nimi",
         "none": "Ei mitään",
+        "not_assessed": "Not assessed",
         "notifications": "Ilmoitukset",
         "optional": "Valinnainen",
         "overview": "Yleisnäkymä",
@@ -102,6 +103,7 @@
         "undefined": "Määrittelemätön",
         "unknown_device": "Tuntematon laite",
         "unknown_group": "Tuntematon ryhmä",
+        "up_to_date": "Up-to-date",
         "write": "Kirjoita"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Kuvablokin vastausviive",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Ei virallista OTA-tukea",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Julkaisumuistiinpanot",
         "remaining_time": "Jäljellä oleva aika",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Peru ajoitus",
         "unschedule_selected": "Poista aikataulutus valituilta",
-        "up_to_date": "Up-to-date",
         "update": "Päivitä firmware",
         "update_selected": "Päivitä valitut",
         "update_selected_info": "OTA kuormittaa verkkoa voimakkaasti. Varmista vakaus.",

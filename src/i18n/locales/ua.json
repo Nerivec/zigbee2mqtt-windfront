@@ -66,6 +66,7 @@
         "multi_instance": "Багатоекземплярність",
         "name": "Назва",
         "none": "Немає",
+        "not_assessed": "Not assessed",
         "notifications": "Сповіщення",
         "optional": "Необов'язково",
         "overview": "Огляд",
@@ -102,6 +103,7 @@
         "undefined": "Не визначено",
         "unknown_device": "Невідомий пристрій",
         "unknown_group": "Невідома група",
+        "up_to_date": "Up-to-date",
         "write": "Запис"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Затримка відповіді блоку зображення",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Немає офіційної підтримки OTA",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Примітки до релізу",
         "remaining_time": "Залишок часу",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Скасувати план",
         "unschedule_selected": "Скасувати планування вибраних",
-        "up_to_date": "Up-to-date",
         "update": "Оновити прошивку",
         "update_selected": "Оновити вибрані",
         "update_selected_info": "OTA сильно навантажує мережу — забезпечте стабільність.",

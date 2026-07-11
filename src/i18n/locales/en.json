@@ -66,6 +66,7 @@
         "multi_instance": "Multi-Instance",
         "name": "Name",
         "none": "None",
+        "not_assessed": "Not assessed",
         "notifications": "Notifications",
         "optional": "Optional",
         "overview": "Overview",
@@ -102,6 +103,7 @@
         "undefined": "Undefined",
         "unknown_device": "Unknown device",
         "unknown_group": "Unknown group",
+        "up_to_date": "Up-to-date",
         "write": "Write"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Image block response delay",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "No official OTA support",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Release notes",
         "remaining_time": "Remaining time",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Cancel scheduled update",
         "unschedule_selected": "Unschedule selected",
-        "up_to_date": "Up-to-date",
         "update": "Update device firmware",
         "update_selected": "Update selected",
         "update_selected_info": "An OTA update is very taxing for a network. Make sure it is stable and opt for less used times.",

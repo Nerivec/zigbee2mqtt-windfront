@@ -66,6 +66,7 @@
         "multi_instance": "Více instancí",
         "name": "Název",
         "none": "Žádné",
+        "not_assessed": "Not assessed",
         "notifications": "Upozornění",
         "optional": "Volitelné",
         "overview": "Přehled",
@@ -102,6 +103,7 @@
         "undefined": "Nedefinováno",
         "unknown_device": "Neznámé zařízení",
         "unknown_group": "Neznámá skupina",
+        "up_to_date": "Up-to-date",
         "write": "Zapsat"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Zpoždění odpovědi bloku obrázku",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Oficiální podpora OTA není k dispozici",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Poznámky k vydání",
         "remaining_time": "Zbývající čas",
@@ -292,7 +293,6 @@
         "stack": "Síťová část",
         "unschedule": "Zrušit plánovanou aktualizaci",
         "unschedule_selected": "Zrušit plán u vybraných",
-        "up_to_date": "Up-to-date",
         "update": "Aktualizovat firmware zařízení",
         "update_selected": "Aktualizovat vybrané",
         "update_selected_info": "OTA aktualizace výrazně zatěžuje síť. Doporučujeme spustit aktualizaci v době menšího zatížení sítě.",

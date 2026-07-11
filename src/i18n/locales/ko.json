@@ -66,6 +66,7 @@
         "multi_instance": "멀티 인스턴스",
         "name": "이름",
         "none": "없음",
+        "not_assessed": "Not assessed",
         "notifications": "알림",
         "optional": "선택 사항",
         "overview": "개요",
@@ -102,6 +103,7 @@
         "undefined": "정의되지 않음",
         "unknown_device": "알 수 없는 디바이스",
         "unknown_group": "알 수 없는 그룹",
+        "up_to_date": "Up-to-date",
         "write": "쓰기"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "이미지 블록 응답 지연",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "공식 OTA 지원 없음",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "릴리스 노트",
         "remaining_time": "남은 시간",
@@ -292,7 +293,6 @@
         "stack": "스택",
         "unschedule": "예약 취소",
         "unschedule_selected": "선택 항목 일정 해제",
-        "up_to_date": "Up-to-date",
         "update": "디바이스 펌웨어 업데이트",
         "update_selected": "선택 항목 업데이트",
         "update_selected_info": "OTA 업데이트는 네트워크에 큰 부하를 줍니다. 안정성을 확보하세요.",

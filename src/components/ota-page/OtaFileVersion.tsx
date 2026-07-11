@@ -16,7 +16,7 @@ const OtaFileVersion = memo(({ version, showRaw, state, source }: OtaFileVersion
     const versions = useMemo(() => formatOtaFileVersion(version), [version]);
 
     if (versions === undefined) {
-        return <span>{t(($) => $.not_assessed)}</span>;
+        return <span>{t(($) => $.not_assessed, { ns: "common" })}</span>;
     }
 
     const sourceDisplay = source ? (() => {
@@ -35,7 +35,7 @@ const OtaFileVersion = memo(({ version, showRaw, state, source }: OtaFileVersion
     if (state === "idle") {
         return (
             <span className="flex flex-row">
-                <span>{t(($) => $.up_to_date)}</span>
+                <span>{t(($) => $.up_to_date, { ns: "common" })}</span>
                 {sourceDisplay}
             </span>
         );

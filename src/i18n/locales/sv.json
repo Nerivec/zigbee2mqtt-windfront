@@ -66,6 +66,7 @@
         "multi_instance": "Flera instanser",
         "name": "Namn",
         "none": "Ingen",
+        "not_assessed": "Not assessed",
         "notifications": "Aviseringar",
         "optional": "Valfritt",
         "overview": "Översikt",
@@ -102,6 +103,7 @@
         "undefined": "Odefinierad",
         "unknown_device": "Okänd enhet",
         "unknown_group": "Okänd grupp",
+        "up_to_date": "Up-to-date",
         "write": "Skriv"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Fördröjning för bildblocksvar",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Ingen officiell OTA-support",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Versionsanteckningar",
         "remaining_time": "Återstående tid",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Avbryt schema",
         "unschedule_selected": "Ta bort schemaläggning för valda",
-        "up_to_date": "Up-to-date",
         "update": "Uppdatera firmware",
         "update_selected": "Uppdatera valda",
         "update_selected_info": "En OTA-uppdatering belastar nätet kraftigt. Säkerställ stabilitet.",

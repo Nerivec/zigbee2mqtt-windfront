@@ -66,6 +66,7 @@
         "multi_instance": "Viacnásobná inštancia",
         "name": "Názov",
         "none": "Žiadne",
+        "not_assessed": "Not assessed",
         "notifications": "Oznámenia",
         "optional": "Voliteľné",
         "overview": "Prehľad",
@@ -102,6 +103,7 @@
         "undefined": "Nedefinované",
         "unknown_device": "Neznáme zariadenie",
         "unknown_group": "Neznáma skupina",
+        "up_to_date": "Up-to-date",
         "write": "Zapísať"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Oneskorenie odpovede bloku obrázka",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Žiadna oficiálna podpora OTA",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Poznámky k vydaniu",
         "remaining_time": "Zostávajúci čas",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Zrušiť naplánovanú aktualizáciu",
         "unschedule_selected": "Zrušiť naplánovanie vybraných",
-        "up_to_date": "Up-to-date",
         "update": "Aktualizovať firmvér zariadenia",
         "update_selected": "Aktualizovať vybrané",
         "update_selected_info": "Aktualizácia OTA je pre sieť veľmi náročná. Uistite sa, že je stabilná a zvoľte menej používané časy.",

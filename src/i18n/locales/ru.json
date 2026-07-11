@@ -66,6 +66,7 @@
         "multi_instance": "Мульти-инстанс",
         "name": "Имя",
         "none": "Нет",
+        "not_assessed": "Not assessed",
         "notifications": "Уведомления",
         "optional": "Необязательно",
         "overview": "Обзор",
@@ -102,6 +103,7 @@
         "undefined": "Не определено",
         "unknown_device": "Неизвестное устройство",
         "unknown_group": "Неизвестная группа",
+        "up_to_date": "Up-to-date",
         "write": "Запись"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Задержка ответа блока изображения",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Официальная поддержка OTA отсутствует",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Примечания к выпуску",
         "remaining_time": "Оставшееся время",
@@ -292,7 +293,6 @@
         "stack": "Стек",
         "unschedule": "Отменить расписание",
         "unschedule_selected": "Отменить планирование выбранных",
-        "up_to_date": "Up-to-date",
         "update": "Обновить прошивку",
         "update_selected": "Обновить выбранные",
         "update_selected_info": "OTA сильно нагружает сеть. Убедитесь в стабильности.",

@@ -365,7 +365,7 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
                                     {deviceState.update?.installed_version ? (
                                         <span className="font-mono">{deviceState.update.installed_version}</span>
                                     ) : (
-                                        <span>{t(($) => $.not_assessed, { ns: "ota" })}</span>
+                                        <span>{t(($) => $.not_assessed, { ns: "common" })}</span>
                                     )}
                                     <span className="ms-3">
                                         <OtaControlGroup

@@ -66,6 +66,7 @@
         "multi_instance": "Multi-Instance",
         "name": "Nom",
         "none": "Aucun",
+        "not_assessed": "Not assessed",
         "notifications": "Notifications",
         "optional": "Optionnel",
         "overview": "Vue d'ensemble",
@@ -102,6 +103,7 @@
         "undefined": "Indéfini",
         "unknown_device": "Appareil inconnu",
         "unknown_group": "Groupe inconnu",
+        "up_to_date": "Up-to-date",
         "write": "Écrire"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Délai de réponse du bloc d'image",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Pas de prise en charge OTA officielle",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Notes de version",
         "remaining_time": "Temps restant",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Annuler la mise à jour programmée",
         "unschedule_selected": "Déprogrammer la sélection",
-        "up_to_date": "Up-to-date",
         "update": "Mettre à jour le firmware de l'appareil",
         "update_selected": "Mettre à jour la sélection",
         "update_selected_info": "Une mise à jour OTA est très exigeante pour un réseau. Assurez-vous qu'il est stable et optez pour des moments moins utilisés.",

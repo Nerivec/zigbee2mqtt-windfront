@@ -66,6 +66,7 @@
         "multi_instance": "Mehrere Instanzen",
         "name": "Name",
         "none": "Keine",
+        "not_assessed": "Not assessed",
         "notifications": "Benachrichtigungen",
         "optional": "Optional",
         "overview": "Übersicht",
@@ -102,6 +103,7 @@
         "undefined": "Undefiniert",
         "unknown_device": "Unbekanntes Gerät",
         "unknown_group": "Unbekannte Gruppe",
+        "up_to_date": "Up-to-date",
         "write": "Schreiben"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Antwortverzögerung des Bildblocks",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Keine offizielle OTA-Unterstützung",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Versionshinweise",
         "remaining_time": "Verbleibende Zeit",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Geplantes Update abbrechen",
         "unschedule_selected": "Planung für Ausgewählte aufheben",
-        "up_to_date": "Up-to-date",
         "update": "Geräte-Firmware aktualisieren",
         "update_selected": "Ausgewählte aktualisieren",
         "update_selected_info": "Ein OTA-Update belastet das Netzwerk stark. Stellen Sie sicher, dass das Zigbee-Netzwerk stabil ist und wählen Sie wenig frequentierte Zeiten für das Update.",

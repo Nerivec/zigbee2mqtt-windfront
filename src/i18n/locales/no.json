@@ -66,6 +66,7 @@
         "multi_instance": "Flere instanser",
         "name": "Navn",
         "none": "Ingen",
+        "not_assessed": "Not assessed",
         "notifications": "Varsler",
         "optional": "Valgfritt",
         "overview": "Oversikt",
@@ -102,6 +103,7 @@
         "undefined": "Udefinert",
         "unknown_device": "Ukjent enhet",
         "unknown_group": "Ukjent gruppe",
+        "up_to_date": "Up-to-date",
         "write": "Skriv"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Forsinkelse ved respons for bildeblokk",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Ingen offisiell OTA-støtte",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Utgivelsesnotater",
         "remaining_time": "Gjenstående tid",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Avbryt plan",
         "unschedule_selected": "Fjern planlegging for valgte",
-        "up_to_date": "Up-to-date",
         "update": "Oppdater firmware",
         "update_selected": "Oppdater valgte",
         "update_selected_info": "OTA belaster nettverket sterkt.",

@@ -66,6 +66,7 @@
         "multi_instance": "Многократни инстанции",
         "name": "Име",
         "none": "Няма",
+        "not_assessed": "Not assessed",
         "notifications": "Известия",
         "optional": "Незадължително",
         "overview": "Преглед",
@@ -102,6 +103,7 @@
         "undefined": "Неопределено",
         "unknown_device": "Непознато устройство",
         "unknown_group": "Непозната група",
+        "up_to_date": "Up-to-date",
         "write": "Писане"
     },
     "contribute": {
@@ -277,7 +279,6 @@
         "image_block_response_delay": "Забавяне на отговора на блок изображение",
         "latest_firmware_version": "Latest firmware version",
         "no_official_ota_support": "Няма официална поддръжка за OTA",
-        "not_assessed": "Not assessed",
         "official_source": "Official source",
         "release_notes": "Бележки към изданието",
         "remaining_time": "Оставащо време",
@@ -292,7 +293,6 @@
         "stack": "Stack",
         "unschedule": "Отмени планиране",
         "unschedule_selected": "Отмени насрочването на избраните",
-        "up_to_date": "Up-to-date",
         "update": "Обнови фърмуер",
         "update_selected": "Обнови избраните",
         "update_selected_info": "OTA натоварва мрежата силно – уверете се, че е стабилно.",
