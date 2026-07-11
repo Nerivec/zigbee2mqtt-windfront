@@ -12,7 +12,7 @@ type OtaFileVersionProps = {
 };
 
 type OtaSourceIconProps = {
-    source?: string;
+    source: string;
 };
 
 const ZIGBEE_OTA_URL = "https://raw.githubusercontent.com/Koenkk/zigbee-OTA";
