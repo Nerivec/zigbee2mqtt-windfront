@@ -15,7 +15,7 @@ const OtaFileVersion = memo(({ version, showRaw, state, source }: OtaFileVersion
     const { t } = useTranslation("ota");
     const versions = useMemo(() => formatOtaFileVersion(version), [version]);
 
-    if (versions === undefined) {
+    if (versions == null) {
         return <span>{t(($) => $.not_assessed, { ns: "common" })}</span>;
     }
 
