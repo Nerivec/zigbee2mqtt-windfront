@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { InterviewState } from "../../consts.js";
-import genericDevice from "../../images/generic-zigbee-device.png";
+import genericDevice from "../../images/generic-zigbee-device.svg";
 import type { Device, DeviceState } from "../../types.js";
 import ErrorBoundary from "./ErrorBoundary.js";
 import LazyImage from "./LazyImage.js";
