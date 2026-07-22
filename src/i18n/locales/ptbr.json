@@ -508,6 +508,7 @@
         "battery_low": "Bateria fraca",
         "block_join": "Bloquear re-associação",
         "channel": "Canal",
+        "clear_cache": "Clear cache",
         "cluster": "Cluster",
         "command_has_response": "Este comando geralmente gera uma resposta",
         "command_not_required": "O suporte para este comando não é necessário",

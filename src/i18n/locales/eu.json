@@ -508,6 +508,7 @@
         "battery_low": "Bateria baxua",
         "block_join": "Blokeatu berriz sartzea",
         "channel": "Kanal",
+        "clear_cache": "Clear cache",
         "cluster": "Cluster",
         "command_has_response": "Agindu honek normalean erantzuna sortzen du",
         "command_not_required": "Agindu honen laguntza ez da beharrezkoa",

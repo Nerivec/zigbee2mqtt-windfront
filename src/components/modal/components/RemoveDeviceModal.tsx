@@ -9,13 +9,13 @@ import Modal from "../Modal.js";
 type DeviceRemovalButtonProps = {
     sourceIdx: number;
     device: Device;
-    removeDevice(sourceIdx: number, ieee: string, force: boolean, block: boolean): Promise<void>;
+    removeDevice(sourceIdx: number, ieee: string, force: boolean, block: boolean, clearCache: boolean): Promise<void>;
 };
 
 export const RemoveDeviceModal = NiceModal.create(({ sourceIdx, device, removeDevice }: DeviceRemovalButtonProps): JSX.Element => {
     const modal = useModal();
     const { t } = useTranslation(["zigbee", "common"]);
-    const [removeParams, setRemoveParams] = useState({ block: false, force: false });
+    const [removeParams, setRemoveParams] = useState({ block: false, force: false, clearCache: false });
 
     const onDeviceRemovalParamChange = useCallback((e: ChangeEvent<HTMLInputElement>): void => {
         const { checked, name } = e.target;
@@ -25,7 +25,7 @@ export const RemoveDeviceModal = NiceModal.create(({ sourceIdx, device, removeDe
 
     const onRemoveClick = useCallback(async () => {
         modal.remove();
-        await removeDevice(sourceIdx, device.ieee_address, removeParams.force, removeParams.block);
+        await removeDevice(sourceIdx, device.ieee_address, removeParams.force, removeParams.block, removeParams.clearCache);
     }, [sourceIdx, modal, removeDevice, device.ieee_address, removeParams]);
 
     useEffect(() => {
@@ -60,6 +60,12 @@ export const RemoveDeviceModal = NiceModal.create(({ sourceIdx, device, removeDe
                 <CheckboxField label={t(($) => $.force_remove)} name="force" onChange={onDeviceRemovalParamChange} checked={removeParams.force} />
                 <span className="text-xs opacity-50">{t(($) => $.force_remove_notice)}</span>
                 <CheckboxField label={t(($) => $.block_join)} name="block" onChange={onDeviceRemovalParamChange} checked={removeParams.block} />
+                <CheckboxField
+                    label={t(($) => $.clear_cache)}
+                    name="clearCache"
+                    onChange={onDeviceRemovalParamChange}
+                    checked={removeParams.clearCache}
+                />
             </div>
         </Modal>
     );

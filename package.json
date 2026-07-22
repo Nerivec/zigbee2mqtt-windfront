@@ -1,6 +1,6 @@
 {
     "name": "zigbee2mqtt-windfront",
-    "version": "2.13.0",
+    "version": "2.14.0",
     "license": "GPL-3.0-or-later",
     "type": "module",
     "main": "./index.js",
@@ -38,7 +38,7 @@
         "build-storybook": "storybook build"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.5.4",
+        "@biomejs/biome": "^2.5.5",
         "@ebay/nice-modal-react": "^1.2.13",
         "@floating-ui/react": "^0.27.20",
         "@fortawesome/fontawesome-svg-core": "^7.3.1",

@@ -508,6 +508,7 @@
         "battery_low": "Alacsony töltöttség",
         "block_join": "Újracsatl. tiltása",
         "channel": "Csatorna",
+        "clear_cache": "Clear cache",
         "cluster": "Cluster",
         "command_has_response": "Ez a parancs általában választ ad",
         "command_not_required": "Ennek a parancsnak a támogatása nem kötelező",

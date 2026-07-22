@@ -508,6 +508,7 @@
         "battery_low": "电量低",
         "block_join": "阻止重新加入",
         "channel": "信道",
+        "clear_cache": "Clear cache",
         "cluster": "簇",
         "command_has_response": "此命令通常会生成响应",
         "command_not_required": "不要求支持此命令",

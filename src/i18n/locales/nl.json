@@ -508,6 +508,7 @@
         "battery_low": "Batterij bijna leeg",
         "block_join": "Herjoin blokkeren",
         "channel": "Kanaal",
+        "clear_cache": "Clear cache",
         "cluster": "Cluster",
         "command_has_response": "Dit commando genereert meestal een antwoord",
         "command_not_required": "Ondersteuning voor dit commando is niet vereist",

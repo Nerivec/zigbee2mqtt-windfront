@@ -508,6 +508,7 @@
         "battery_low": "Niski poziom baterii",
         "block_join": "Blokuj ponowne dołączenie",
         "channel": "Kanał",
+        "clear_cache": "Clear cache",
         "cluster": "Klaster",
         "command_has_response": "To polecenie zwykle generuje odpowiedź",
         "command_not_required": "Obsługa tego polecenia nie jest wymagana",

@@ -508,6 +508,7 @@
         "battery_low": "Slabá baterie",
         "block_join": "Zablokovat opětovné párování",
         "channel": "Kanál",
+        "clear_cache": "Clear cache",
         "cluster": "Cluster",
         "command_has_response": "Tento příkaz obvykle generuje odpověď",
         "command_not_required": "Podpora tohoto příkazu není vyžadována",

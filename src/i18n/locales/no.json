@@ -508,6 +508,7 @@
         "battery_low": "Lavt batteri",
         "block_join": "Blokker re-join",
         "channel": "Kanal",
+        "clear_cache": "Clear cache",
         "cluster": "Cluster",
         "command_has_response": "Denne kommandoen gir vanligvis et svar",
         "command_not_required": "Støtte for denne kommandoen er ikke nødvendig",

@@ -508,6 +508,7 @@
         "battery_low": "배터리 부족",
         "block_join": "재조인 차단",
         "channel": "채널",
+        "clear_cache": "Clear cache",
         "cluster": "클러스터",
         "command_has_response": "이 명령은 일반적으로 응답을 생성합니다",
         "command_not_required": "이 명령에 대한 지원은 필요하지 않습니다",

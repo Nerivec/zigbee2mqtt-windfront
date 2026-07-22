@@ -18,7 +18,7 @@ interface DeviceControlGroupProps {
     renameDevice: (sourceIdx: number, from: string, to: string, homeassistantRename: boolean) => Promise<void>;
     configureDevice: ([sourceIdx, id]: [number, string]) => Promise<void>;
     interviewDevice: ([sourceIdx, id]: [number, string]) => Promise<void>;
-    removeDevice: (sourceIdx: number, id: string, force: boolean, block: boolean) => Promise<void>;
+    removeDevice: (sourceIdx: number, id: string, force: boolean, block: boolean, clearCache: boolean) => Promise<void>;
     btnClassName?: string;
 }
 

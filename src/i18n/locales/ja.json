@@ -508,6 +508,7 @@
         "battery_low": "バッテリー低下",
         "block_join": "再参加をブロック",
         "channel": "チャネル",
+        "clear_cache": "Clear cache",
         "cluster": "クラスタ",
         "command_has_response": "このコマンドは通常応答を生成します",
         "command_not_required": "このコマンドのサポートは必要ありません",

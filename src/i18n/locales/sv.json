@@ -508,6 +508,7 @@
         "battery_low": "Låg batterinivå",
         "block_join": "Blockera återanslutning",
         "channel": "Kanal",
+        "clear_cache": "Clear cache",
         "cluster": "Kluster",
         "command_has_response": "Detta kommando genererar vanligtvis ett svar",
         "command_not_required": "Stöd för detta kommando krävs inte",
