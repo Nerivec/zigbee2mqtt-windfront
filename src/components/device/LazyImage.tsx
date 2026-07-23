@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useImage } from "react-image";
-import genericDevice from "../../images/generic-zigbee-device.svg";
+import genericDevice from "../../images/generic-zigbee-device.png";
 import type { Device } from "../../types.js";
 import { getZ2MDeviceImage } from "./index.js";
 
