@@ -43,7 +43,7 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
     );
 
     return (
-        <Suspense fallback={<img alt={device.ieee_address} src={genericDevice} />}>
+        <Suspense fallback={<img alt={device.ieee_address} src={genericDevice} className="opacity-50"/>}>
             <ErrorBoundary>
                 {noIndicator ? (
                     <LazyImage device={device} className={`grid place-items-center${className ? ` ${className}` : ""}`} />
