@@ -1,4 +1,4 @@
-import { faAnglesDown, faBan, faBattery, faHeartPulse, faLeaf, faPlug, faSignal, faSlash } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesDown, faBan, faHeartPulse, faLeaf, faSignal, faSlash, faTowerCell, faWalkieTalkie } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, type SetStateAction, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -143,7 +143,7 @@ const Hero = memo(
                                     onClick={onFilterClick}
                                     item={SEARCH_TYPE_ROUTER}
                                 >
-                                    <FontAwesomeIcon icon={faPlug} size="xl" />
+                                    <FontAwesomeIcon icon={faTowerCell} size="xl" />
                                 </Button>
                             </div>
                         </div>
@@ -159,7 +159,7 @@ const Hero = memo(
                                     onClick={onFilterClick}
                                     item={SEARCH_TYPE_END_DEVICE}
                                 >
-                                    <FontAwesomeIcon icon={faBattery} size="xl" />
+                                    <FontAwesomeIcon icon={faWalkieTalkie} size="xl" />
                                 </Button>
                             </div>
                         </div>
