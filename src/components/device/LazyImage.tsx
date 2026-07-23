@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { useImage } from "react-image";
-import genericDevice from "../../images/generic-zigbee-device.png";
+import genericDevice from "../../images/generic-zigbee-device.svg";
+import { GenericDevice } from "../../images/generic-zigbee-device";
 import type { Device } from "../../types.js";
 import { getZ2MDeviceImage } from "./index.js";
 
@@ -21,6 +22,10 @@ const LazyImage = memo(({ device = {} as Device, className }: Readonly<LazyImage
     srcList.push(genericDevice);
 
     const { src } = useImage({ srcList });
+
+    if (src === genericDevice) {
+        return <GenericDevice className={`text-base-content object-contain ${className ?? ""}`} />;
+    }
 
     return <img alt={device.ieee_address} src={src} className={`object-contain ${className ?? ""}`} />;
 });

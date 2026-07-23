@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, Suspense, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { InterviewState } from "../../consts.js";
-import genericDevice from "../../images/generic-zigbee-device.png";
+import { GenericDevice } from "../../images/generic-zigbee-device";
 import type { Device, DeviceState } from "../../types.js";
 import ErrorBoundary from "./ErrorBoundary.js";
 import LazyImage from "./LazyImage.js";
@@ -43,7 +43,7 @@ const DeviceImage = memo((props: Readonly<DeviceImageProps>) => {
     );
 
     return (
-        <Suspense fallback={<img alt={device.ieee_address} src={genericDevice} />}>
+        <Suspense fallback={<GenericDevice className="text-base-content/80" />}>
             <ErrorBoundary>
                 {noIndicator ? (
                     <LazyImage device={device} className={`grid place-items-center${className ? ` ${className}` : ""}`} />
