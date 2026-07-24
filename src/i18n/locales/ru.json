@@ -508,6 +508,7 @@
         "battery_low": "Низкий заряд батареи",
         "block_join": "Блокировать повторное присоединение",
         "channel": "Канал",
+        "clear_cache": "Clear cache",
         "cluster": "Кластер",
         "command_has_response": "Эта команда обычно генерирует ответ",
         "command_not_required": "Поддержка этой команды не требуется",

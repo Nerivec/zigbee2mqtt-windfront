@@ -508,6 +508,7 @@
         "battery_low": "Pin yếu",
         "block_join": "Chặn tham gia lại",
         "channel": "Kênh",
+        "clear_cache": "Clear cache",
         "cluster": "Cụm",
         "command_has_response": "Lệnh này thường tạo ra một phản hồi",
         "command_not_required": "Không cần hỗ trợ cho lệnh này",

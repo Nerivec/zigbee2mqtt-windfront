@@ -508,6 +508,7 @@
         "battery_low": "Batterie faible",
         "block_join": "Interdire l'appairage",
         "channel": "Canal",
+        "clear_cache": "Clear cache",
         "cluster": "Groupe de fonctionnalités",
         "command_has_response": "Cette commande génère généralement une réponse",
         "command_not_required": "La prise en charge de cette commande n'est pas requise",

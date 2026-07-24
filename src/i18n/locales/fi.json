@@ -508,6 +508,7 @@
         "battery_low": "Akku vähissä",
         "block_join": "Estä uudelleenliittyminen",
         "channel": "Kanava",
+        "clear_cache": "Clear cache",
         "cluster": "Cluster",
         "command_has_response": "Tämä komento yleensä tuottaa vastauksen",
         "command_not_required": "Tämän komennon tuki ei ole pakollinen",

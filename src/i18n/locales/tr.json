@@ -508,6 +508,7 @@
         "battery_low": "Düşük pil",
         "block_join": "Yeniden katılımı engelle",
         "channel": "Kanal",
+        "clear_cache": "Clear cache",
         "cluster": "Küme (Cluster)",
         "command_has_response": "Bu komut genellikle bir yanıt üretir",
         "command_not_required": "Bu komut için destek gerekli değildir",
