@@ -146,15 +146,15 @@ const ColorEditor = memo(({ onChange, value: initialValue = {} as AnyColor, form
     }, []);
 
     const onInputBlur = useCallback(
-        (e: FocusEvent<HTMLInputElement>) => {
+        async (e: FocusEvent<HTMLInputElement>) => {
             setInputStates((states) => ({ ...states, [e.target.name]: false }));
-            onChange(convertFromColor(color, format));
+            await onChange(convertFromColor(color, format));
         },
         [color, format, onChange],
     );
 
-    const onRangeSubmit = useCallback(() => {
-        onChange(convertFromColor(color, format));
+    const onRangeSubmit = useCallback(async () => {
+        await onChange(convertFromColor(color, format));
     }, [color, format, onChange]);
 
     const hueBackgroundColor = useMemo(() => `hsl(${color.color_hs[0]}, 100%, 50%)`, [color.color_hs[0]]);
