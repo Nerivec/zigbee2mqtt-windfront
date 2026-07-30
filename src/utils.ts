@@ -155,14 +155,16 @@ export const parseAndCloneExpose = (
 // #region Browser
 
 export const downloadAsZip = async (data: Record<string, unknown>, filename: string) => {
-    const { default: JSZip } = await import("jszip");
-    const zip = new JSZip();
+    const { strToU8, zip } = await import("fflate");
+    const content = await new Promise<Uint8Array<ArrayBuffer>>((resolve, reject) => {
+        // `fflate` deflates at level 6 by default, matching what `JSZip` produced for `compression: "DEFLATE"`,
+        // and always allocates a plain `ArrayBuffer`, never a `SharedArrayBuffer`, so it is a valid `BlobPart`
+        zip({ [filename]: strToU8(JSON.stringify(data, null, 4)) }, (error, zipped) =>
+            error ? reject(error) : resolve(zipped as Uint8Array<ArrayBuffer>),
+        );
+    });
 
-    zip.file(filename, JSON.stringify(data, null, 4), { compression: "DEFLATE" });
-
-    const content = await zip.generateAsync({ type: "blob" });
-
-    saveAs(content, `${filename}.zip`);
+    saveAs(new Blob([content], { type: "application/zip" }), `${filename}.zip`);
 };
 
 // #endregion
