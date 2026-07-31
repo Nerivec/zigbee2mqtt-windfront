@@ -235,7 +235,13 @@ const CommandExecutor = memo(({ sourceIdx, device, lastLog }: CommandExecutorPro
                                     {param.maxLen != null ? <span>Max len: {param.maxLen}</span> : null}
                                     {param.length != null ? <span>Length: {param.length}</span> : null}
                                     {param.special != null ? (
-                                        <span>Special: [{param.special.map((sp) => `${sp[0]}=${sp[1]}`).join(" ")}]</span>
+                                        <span>
+                                            Special: [
+                                            {Object.keys(param.special)
+                                                .map((key) => `${key}=${param.special![key]}`)
+                                                .join(" ")}
+                                            ]
+                                        </span>
                                     ) : null}
                                     {param.conditions != null ? <span>Conditions: {getConditionStr(param.conditions)}</span> : null}
                                 </div>
