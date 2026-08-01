@@ -11,7 +11,7 @@
     },
     "author": "Nerivec",
     "engines": {
-        "node": ">=22.12.0"
+        "node": ">=22.22.0"
     },
     "repository": {
         "type": "git",
@@ -73,7 +73,7 @@
         "react-dom": "^19.2.8",
         "react-i18next": "^17.0.11",
         "react-image": "^4.1.0",
-        "react-router": "^7.18.0",
+        "react-router": "^8.3.0",
         "react-select": "^5.10.2",
         "react-virtuoso": "^4.18.11",
         "reagraph": "^4.32.0",
