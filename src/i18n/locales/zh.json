@@ -539,6 +539,7 @@
         "interview_failed": "訪談失敗",
         "interview_state": "訪談狀態",
         "interviewing": "訪談中",
+        "keep_config": "Keep device configuration",
         "last_seen": "最後出現",
         "low_lqi": "低 LQI",
         "lqi": "LQI",

@@ -539,6 +539,7 @@
         "interview_failed": "Interrogation échouée",
         "interview_state": "État de l'interrogation",
         "interviewing": "En cours d'interrogation",
+        "keep_config": "Keep device configuration",
         "last_seen": "Dernière vue",
         "low_lqi": "LQI faible",
         "lqi": "LQI",

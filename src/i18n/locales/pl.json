@@ -539,6 +539,7 @@
         "interview_failed": "Wywiad nieudany",
         "interview_state": "Stan wywiadu",
         "interviewing": "Wywiad w toku",
+        "keep_config": "Keep device configuration",
         "last_seen": "Ostatnio widziane",
         "low_lqi": "Niskie LQI",
         "lqi": "LQI",

@@ -539,6 +539,7 @@
         "interview_failed": "Röportaj başarısız",
         "interview_state": "Röportaj durumu",
         "interviewing": "Röportaj yapılıyor",
+        "keep_config": "Keep device configuration",
         "last_seen": "Son görüldü",
         "low_lqi": "Düşük LQI",
         "lqi": "LQI",

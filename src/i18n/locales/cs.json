@@ -539,6 +539,7 @@
         "interview_failed": "Načtení informací selhalo",
         "interview_state": "Stav načítání informací",
         "interviewing": "Probíhá načítání",
+        "keep_config": "Keep device configuration",
         "last_seen": "Naposledy viděno",
         "low_lqi": "Nízké LQI",
         "lqi": "LQI (kvalita spojení)",
