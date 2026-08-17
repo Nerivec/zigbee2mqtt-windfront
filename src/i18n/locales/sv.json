@@ -539,6 +539,7 @@
         "interview_failed": "Intervju misslyckades",
         "interview_state": "Intervjustatus",
         "interviewing": "Intervju pågår",
+        "keep_config": "Keep device configuration",
         "last_seen": "Senast sedd",
         "low_lqi": "Låg LQI",
         "lqi": "LQI",

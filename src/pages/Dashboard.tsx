@@ -25,7 +25,7 @@ export interface DashboardTableData {
     featureTypes: string[]; // for filtering purposes
     featureNames: string[]; // for filtering purposes
     lastSeenConfig: LastSeenConfig;
-    removeDevice: (sourceIdx: number, id: string, force: boolean, block: boolean, clearCache: boolean) => Promise<void>;
+    removeDevice: (sourceIdx: number, id: string, force: boolean, block: boolean, keepConfig: boolean, clearCache: boolean) => Promise<void>;
 }
 
 export default function Dashboard() {
@@ -37,9 +37,12 @@ export default function Dashboard() {
     const devices = useAppStore((state) => state.devices);
     const columnCount = useColumnCount();
 
-    const removeDevice = useCallback(async (sourceIdx: number, id: string, force: boolean, block: boolean, clearCache: boolean): Promise<void> => {
-        await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block, clear_cache: clearCache });
-    }, []);
+    const removeDevice = useCallback(
+        async (sourceIdx: number, id: string, force: boolean, block: boolean, keepConfig: boolean, clearCache: boolean): Promise<void> => {
+            await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block, keep_config: keepConfig, clear_cache: clearCache });
+        },
+        [],
+    );
 
     const data = useMemo(() => {
         const elements: DashboardTableData[] = [];

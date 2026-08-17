@@ -539,6 +539,7 @@
         "interview_failed": "Interview failed",
         "interview_state": "Interview state",
         "interviewing": "Interviewing",
+        "keep_config": "Keep device configuration",
         "last_seen": "Last seen",
         "low_lqi": "Low LQI",
         "lqi": "LQI",

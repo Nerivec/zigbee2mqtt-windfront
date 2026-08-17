@@ -99,9 +99,12 @@ export default function DevicesPage(): JSX.Element {
         await sendMessage(sourceIdx, "bridge/request/device/interview", { id });
     }, []);
 
-    const removeDevice = useCallback(async (sourceIdx: number, id: string, force: boolean, block: boolean, clearCache: boolean): Promise<void> => {
-        await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block, clear_cache: clearCache });
-    }, []);
+    const removeDevice = useCallback(
+        async (sourceIdx: number, id: string, force: boolean, block: boolean, keepConfig: boolean, clearCache: boolean): Promise<void> => {
+            await sendMessage(sourceIdx, "bridge/request/device/remove", { id, force, block, keep_config: keepConfig, clear_cache: clearCache });
+        },
+        [],
+    );
 
     const columns = useMemo<ColumnDef<DeviceTableData, unknown>[]>(
         () => [

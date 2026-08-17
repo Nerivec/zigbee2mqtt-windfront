@@ -539,6 +539,7 @@
         "interview_failed": "Haastattelu epäonnistui",
         "interview_state": "Haastattelutila",
         "interviewing": "Haastatellaan",
+        "keep_config": "Keep device configuration",
         "last_seen": "Viimeksi nähty",
         "low_lqi": "Matala LQI",
         "lqi": "LQI",
