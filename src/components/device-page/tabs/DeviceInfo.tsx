@@ -175,9 +175,12 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     const interviewDevice = useCallback(async ([source, id]: [number, string]): Promise<void> => {
         await sendMessage(source, "bridge/request/device/interview", { id });
     }, []);
-    const removeDevice = useCallback(async (source: number, id: string, force: boolean, block: boolean, clearCache: boolean): Promise<void> => {
-        await sendMessage(source, "bridge/request/device/remove", { id, force, block, clear_cache: clearCache });
-    }, []);
+    const removeDevice = useCallback(
+        async (source: number, id: string, force: boolean, block: boolean, keepConfig: boolean, clearCache: boolean): Promise<void> => {
+            await sendMessage(source, "bridge/request/device/remove", { id, force, block, keep_config: keepConfig, clear_cache: clearCache });
+        },
+        [],
+    );
 
     const onOtaCheckClick: OtaControlGroupProps["onCheckClick"] = useCallback(
         async ({ sourceIdx, ieee, ...rest }) => await sendMessage(sourceIdx, "bridge/request/device/ota_update/check", { id: ieee, ...rest }),

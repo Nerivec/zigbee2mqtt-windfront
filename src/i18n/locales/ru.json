@@ -539,6 +539,7 @@
         "interview_failed": "Интервью не удалось",
         "interview_state": "Состояние интервью",
         "interviewing": "Интервью в процессе",
+        "keep_config": "Keep device configuration",
         "last_seen": "Последнее появление",
         "low_lqi": "Низкий LQI",
         "lqi": "LQI",
