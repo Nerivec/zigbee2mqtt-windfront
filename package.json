@@ -11,7 +11,7 @@
     },
     "author": "Nerivec",
     "engines": {
-        "node": ">=22.22.0"
+        "node": ">=22.22.2"
     },
     "repository": {
         "type": "git",
