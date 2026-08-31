@@ -38,7 +38,7 @@
         "build-storybook": "storybook build"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.5.10",
+        "@biomejs/biome": "^2.5.11",
         "@ebay/nice-modal-react": "^1.2.13",
         "@floating-ui/react": "^0.27.20",
         "@fortawesome/fontawesome-svg-core": "^7.3.1",
@@ -50,7 +50,7 @@
         "@tailwindcss/vite": "^4.3.3",
         "@tanstack/react-table": "^8.21.3",
         "@testing-library/dom": "^10.4.1",
-        "@testing-library/react": "^16.3.2",
+        "@testing-library/react": "^16.3.3",
         "@testing-library/user-event": "^14.6.6",
         "@types/file-saver": "^2.0.7",
         "@types/json-schema": "^7.0.15",
