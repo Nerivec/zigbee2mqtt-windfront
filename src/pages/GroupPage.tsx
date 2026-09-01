@@ -42,6 +42,8 @@ export default function GroupPage() {
     const { t } = useTranslation(["groups", "common"]);
     const { sourceIdx, groupId, tab } = useParams<GroupPageUrlParams>();
     const [numSourceIdx, validSourceIdx] = getValidSourceIdx(sourceIdx);
+    // considered ready once most of essential `bridge/` topics received on first source
+    const ready = useAppStore(useShallow((state) => state.webSocketMetrics[numSourceIdx].messagesBridge >= 5));
     const groupIdNum = Number.parseInt(groupId!, 10);
     const group = useAppStore(useShallow((state) => (groupId ? state.groups[numSourceIdx].find((group) => group.id === groupIdNum) : undefined)));
 
@@ -50,10 +52,18 @@ export default function GroupPage() {
             if (!tab) {
                 void navigate(`/group/${sourceIdx}/${group.id}/devices`, { replace: true });
             }
-        } else {
+        } else if (ready) {
             void navigate("/groups", { replace: true });
         }
-    }, [sourceIdx, validSourceIdx, tab, group, navigate]);
+    }, [sourceIdx, validSourceIdx, tab, group, navigate, ready]);
+
+    if (!ready) {
+        return (
+            <div className="flex flex-row justify-center items-center">
+                <span className="loading loading-infinity loading-xl" />
+            </div>
+        );
+    }
 
     return (
         <>

@@ -47,7 +47,7 @@ function App() {
             <AppLayout>
                 <Suspense
                     fallback={
-                        <div className="flex flex-row justify-center items-center gap-2">
+                        <div className="flex flex-row justify-center items-center">
                             <span className="loading loading-infinity loading-xl" />
                         </div>
                     }
