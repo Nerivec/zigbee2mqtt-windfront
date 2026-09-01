@@ -111,6 +111,7 @@ export default function HomePage(): JSX.Element {
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             totalInstances += 1;
+
             if (readyState[sourceIdx] === WebSocket.OPEN) {
                 onlineInstances += 1;
             }

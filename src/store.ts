@@ -112,7 +112,6 @@ interface AppActions {
     setReadyState: (sourceIdx: number, readyState: number) => void;
     /** @see setPendingRequestsCount for `pendingRequests` */
     updateWebSocketMetrics: (sourceIdx: number, delta: Omit<WebSocketMetrics, "pendingRequests">) => void;
-    resetWebSocketMetrics: (sourceIdx: number) => void;
     setPendingRequestsCount: (sourceIdx: number, pending: number) => void;
 
     //-- non source dependent
@@ -841,23 +840,6 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
 
             return { webSocketMetrics: { ...state.webSocketMetrics, [sourceIdx]: updated } };
         }),
-    resetWebSocketMetrics: (sourceIdx) =>
-        set((state) => ({
-            webSocketMetrics: {
-                ...state.webSocketMetrics,
-                [sourceIdx]: {
-                    messagesSent: 0,
-                    bytesSent: 0,
-                    messagesReceived: 0,
-                    messagesBridge: 0,
-                    messagesDevice: 0,
-                    bytesReceived: 0,
-                    reconnects: 0,
-                    lastMessageTs: 0,
-                    pendingRequests: 0,
-                },
-            },
-        })),
     setPendingRequestsCount: (sourceIdx, pending) =>
         set((state) => ({
             webSocketMetrics: {

@@ -94,6 +94,8 @@ export default function DevicePage(): JSX.Element {
     const { t } = useTranslation(["devicePage", "common"]);
     const { sourceIdx, deviceId, tab } = useParams<DevicePageUrlParams>();
     const [numSourceIdx, validSourceIdx] = getValidSourceIdx(sourceIdx);
+    // considered ready once most of essential `bridge/` topics received on first source
+    const ready = useAppStore(useShallow((state) => state.webSocketMetrics[numSourceIdx].messagesBridge >= 5));
     const device = useAppStore(
         useShallow((state) => (deviceId ? state.devices[numSourceIdx].find((device) => device.ieee_address === deviceId) : undefined)),
     );
@@ -105,10 +107,18 @@ export default function DevicePage(): JSX.Element {
             } else if (!tab) {
                 void navigate(`/device/${sourceIdx}/${device.ieee_address}/info`, { replace: true });
             }
-        } else {
+        } else if (ready) {
             void navigate("/devices", { replace: true });
         }
-    }, [sourceIdx, validSourceIdx, tab, device, navigate]);
+    }, [sourceIdx, validSourceIdx, tab, device, navigate, ready]);
+
+    if (!ready) {
+        return (
+            <div className="flex flex-row justify-center items-center">
+                <span className="loading loading-infinity loading-xl" />
+            </div>
+        );
+    }
 
     return (
         <>
