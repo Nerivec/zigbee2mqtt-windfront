@@ -2,6 +2,7 @@ import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { HomePageDeviceData } from "../../pages/HomePage.js";
+import { getDeviceDescription } from "../../utils/exposeTranslations.js";
 import SourceDot from "../SourceDot.js";
 import LastSeen from "../value-decorators/LastSeen.js";
 import Lqi from "../value-decorators/Lqi.js";
@@ -11,8 +12,9 @@ import DeviceImage from "./DeviceImage.js";
 export interface DeviceTileProps extends HomePageDeviceData {}
 
 const DeviceTile = memo(({ sourceIdx, device, deviceState, deviceAvailability, lastSeenConfig, onClick }: DeviceTileProps) => {
-    const { t } = useTranslation("zigbee");
-    const description = device.description ?? device.definition?.description;
+    const { t, i18n } = useTranslation("zigbee");
+    const locale = i18n.language?.split("-")[0] ?? "en";
+    const description = device.description ?? getDeviceDescription(device, locale);
 
     return (
         <article

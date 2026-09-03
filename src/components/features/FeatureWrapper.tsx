@@ -4,6 +4,7 @@ import startCase from "lodash/startCase.js";
 import { type PropsWithChildren, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { type ColorFeature, FeatureAccessMode, type FeatureWithAnySubFeatures } from "../../types.js";
+import { getExposeDescription, getExposeLabel } from "../../utils/exposeTranslations.js";
 import Button from "../Button.js";
 import { getFeatureIcon } from "./index.js";
 
@@ -27,18 +28,21 @@ export default function FeatureWrapper({
     endpointSpecific,
     parentFeatures,
 }: PropsWithChildren<FeatureWrapperProps>) {
-    const { t } = useTranslation("zigbee");
+    const { t, i18n } = useTranslation("zigbee");
+    const locale = i18n.language?.split("-")[0] ?? "en";
     // @ts-expect-error `undefined` is fine
     const unit = feature.unit as string | undefined;
     const [fi, fiClassName] = getFeatureIcon(feature.name, deviceValue, unit);
     const isReadable = onRead !== undefined && (Boolean(feature.property && feature.access & FeatureAccessMode.GET) || isColorFeature(feature));
     const parentFeature = parentFeatures[parentFeatures.length - 1];
     const featureName = feature.name === "state" ? feature.property : feature.name;
-    let label = feature.label || startCase(featureName);
+    let label = getExposeLabel(feature, locale) || startCase(featureName);
 
     if (parentFeature?.label && feature.name === "state" && parentFeature.type !== "light" && parentFeature.type !== "switch") {
-        label = `${parentFeature.label} ${feature.label.charAt(0).toLowerCase()}${feature.label.slice(1)}`;
+        label = `${getExposeLabel(parentFeature, locale)} ${label.charAt(0).toLowerCase()}${label.slice(1)}`;
     }
+
+    const description = getExposeDescription(feature, locale);
 
     const onSyncClick = useCallback(
         (item: FeatureWithAnySubFeatures) => {
@@ -62,7 +66,7 @@ export default function FeatureWrapper({
                     {label}
                     {!endpointSpecific && feature.endpoint ? ` (${t(($) => $.endpoint)}: ${feature.endpoint})` : ""}
                 </div>
-                <div className="text-xs font-semibold opacity-60">{feature.description}</div>
+                {description && <div className="text-xs font-semibold opacity-60">{description}</div>}
             </div>
             <div className="list-col-wrap flex flex-col gap-2">{children}</div>
             {isReadable && (

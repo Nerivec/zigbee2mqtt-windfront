@@ -8,6 +8,7 @@ import { useShallow } from "zustand/react/shallow";
 import { InterviewState, SUPPORT_NEW_DEVICES_DOCS_URL, Z2M_NEW_GITHUB_ISSUE_URL } from "../../../consts.js";
 import { OUI } from "../../../oui.js";
 import { API_URLS, MULTI_INSTANCE, useAppStore } from "../../../store.js";
+import { getDeviceDescription } from "../../../utils/exposeTranslations.js";
 import type { Device, SnakeCasePowerSource } from "../../../types.js";
 import { toHex } from "../../../utils.js";
 import { sendMessage } from "../../../websocket/WebSocketManager.js";
@@ -216,8 +217,11 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
     );
 
     const deviceAvailability = bridgeConfig.devices[device.ieee_address]?.availability;
+    const { i18n } = useTranslation();
+    const locale = i18n.language?.split("-")[0] ?? "en";
     const definitionDescription = useMemo(() => {
-        const result = device.definition?.description ? MARKDOWN_LINK_REGEX.exec(device.definition?.description) : undefined;
+        const desc = getDeviceDescription(device, locale);
+        const result = desc ? MARKDOWN_LINK_REGEX.exec(desc) : undefined;
 
         if (result) {
             const [, title, link] = result;
@@ -229,8 +233,8 @@ export default function DeviceInfo({ sourceIdx, device }: DeviceInfoProps) {
             );
         }
 
-        return <>{device.definition?.description}</>;
-    }, [device.definition]);
+        return <>{desc}</>;
+    }, [device]);
 
     const deviceInterviewState = useMemo(() => {
         switch (device.interview_state) {

@@ -79,6 +79,14 @@ export type BasicFeatureType = "binary" | "list" | "numeric" | "enum" | "text";
 
 export type FeatureWithSubFeaturesType = "switch" | "lock" | "composite" | "light" | "cover" | "fan" | "climate";
 
+export type LocaleTranslations = {
+    label?: string;
+    description?: string;
+    values?: Record<string, string>;
+};
+
+export type Translations = Record<string, LocaleTranslations>;
+
 export enum FeatureAccessMode {
     /**
      * Bit 0: The property can be found in the published state of this device
@@ -149,9 +157,9 @@ export type ColorFeature = CompositeFeature & {
     features: PublishedBasicFeature<"numeric">[];
 };
 
-export type BasicFeature = BinaryFeature | ListFeature | NumericFeature | TextFeature | EnumFeature;
+export type BasicFeature = (BinaryFeature | ListFeature | NumericFeature | TextFeature | EnumFeature) & {translations?: Translations};
 
-export type FeatureWithSubFeatures = CompositeFeature | LightFeature | SwitchFeature | CoverFeature | LockFeature | FanFeature | ClimateFeature;
+export type FeatureWithSubFeatures = (CompositeFeature | LightFeature | SwitchFeature | CoverFeature | LockFeature | FanFeature | ClimateFeature) & {translations?: Translations};
 
 // fix generic assigning from e.g. device definition `exposes` & `options`
 export type WithAnySubFeatures<T> = Omit<T, "features"> & { features: (BasicFeature | WithAnySubFeatures<FeatureWithSubFeatures>)[] };
