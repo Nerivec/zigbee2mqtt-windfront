@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type ChangeEvent, memo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { type BinaryFeature, FeatureAccessMode } from "../../types.js";
+import { getExposeValueLabel } from "../../utils/exposeTranslations.js";
 import Button from "../Button.js";
 import DisplayValue from "../value-decorators/DisplayValue.js";
 import BaseViewer from "./BaseViewer.js";
@@ -18,7 +19,9 @@ const Binary = memo((props: BinaryProps) => {
         onChange,
         minimal,
     } = props;
-    const { t } = useTranslation("zigbee");
+    const { t, i18n } = useTranslation("zigbee");
+    const locale = i18n.language?.split("-")[0] ?? "en";
+    const translations = (props.feature as { translations?: Record<string, { values?: Record<string, string> }> }).translations;
     const onButtonClick = useCallback((value: string | boolean) => onChange(property ? { [property]: value } : value), [property, onChange]);
     const onCheckboxChange = useCallback(
         async (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,11 +36,14 @@ const Binary = memo((props: BinaryProps) => {
         const valueExists = deviceValue != null;
         const showOnOffButtons = !minimal || (minimal && !valueExists);
 
+        const renderValue = (value: string | boolean) =>
+            typeof value === "string" ? getExposeValueLabel(value, translations, locale) : <DisplayValue value={value} name={name} />;
+
         return (
             <div>
                 {showOnOffButtons && (
                     <Button<string | boolean> className="btn btn-link" item={valueOff} onClick={onButtonClick}>
-                        <DisplayValue value={valueOff} name={name} />
+                        {renderValue(valueOff)}
                     </Button>
                 )}
                 {valueExists ? (
@@ -49,7 +55,7 @@ const Binary = memo((props: BinaryProps) => {
                 )}
                 {showOnOffButtons && (
                     <Button<string | boolean> className="btn btn-link" item={valueOn} onClick={onButtonClick}>
-                        <DisplayValue value={valueOn} name={name} />
+                        {renderValue(valueOn)}
                     </Button>
                 )}
             </div>
