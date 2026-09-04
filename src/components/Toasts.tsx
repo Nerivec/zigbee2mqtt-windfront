@@ -13,7 +13,7 @@ type ToastProps = {
 const TOAST_EXPIRY_TIME = 5000;
 
 const Toast = memo(({ idx, toast, remove }: ToastProps) => {
-    const [initialTimeout] = useState(Date.now() + TOAST_EXPIRY_TIME);
+    const [initialTimeout] = useState(Date.now() + (toast.duration || TOAST_EXPIRY_TIME));
 
     useEffect(() => {
         const timer = setTimeout(() => {

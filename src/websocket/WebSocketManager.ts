@@ -400,9 +400,11 @@ class WebSocketManager {
             // this toast is crafted to show specific info, does not follow usual "response-derived" pattern
             useAppStore.getState().addToast({
                 sourceIdx: conn.idx,
+                duration: RECONNECT_INTERVAL_MS,
                 topic: "WebSocket",
                 status: "ok",
                 error: "Reconnecting...",
+                transaction: `${conn.attempts}`,
             });
             this.#open(conn);
         }, RECONNECT_INTERVAL_MS);
