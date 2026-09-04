@@ -366,6 +366,14 @@ class WebSocketManager {
                 namespace: "frontend:ws",
             });
 
+            useAppStore.getState().addToast({
+                sourceIdx: conn.idx,
+                topic: "WebSocket",
+                status: "error",
+                error: `Failed to connect to WebSocket after ${conn.attempts} tries`,
+                transaction: `${conn.attempts + 1}`,
+            });
+
             return;
         }
 
