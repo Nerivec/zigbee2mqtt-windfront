@@ -672,6 +672,8 @@ export const getLinkQualityIcon = (linkQuality: number | undefined): [IconDefini
 export const getFeatureIcon = (name: string, value: unknown, unit?: unknown): [IconDefinition, string] => {
     let icon: IconDefinition | undefined;
     let className = "";
+    // Remove analog_in_ and analog_out_ prefix
+    name = name.replace(/^(?:analog_in_|analog_out_)/, "");
 
     switch (name) {
         case "linkquality": {
