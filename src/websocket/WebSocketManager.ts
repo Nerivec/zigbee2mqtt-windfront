@@ -313,7 +313,7 @@ class WebSocketManager {
                 sourceIdx: conn.idx,
                 topic: "WebSocket",
                 status: "ok",
-                error: "Connected",
+                error: "Reconnected",
             });
         }
     }
