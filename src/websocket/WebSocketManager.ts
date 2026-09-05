@@ -371,7 +371,6 @@ class WebSocketManager {
                 topic: "WebSocket",
                 status: "error",
                 error: `Failed to connect to WebSocket after ${conn.attempts} tries`,
-                transaction: `${conn.attempts + 1}`,
             });
 
             return;

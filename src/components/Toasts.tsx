@@ -49,7 +49,9 @@ export default function Toasts() {
                 break;
             }
 
-            elements.push(<Toast key={`${i}-${toast.transaction}`} idx={i} toast={toast} remove={removeToast} />);
+            elements.push(
+                <Toast key={`${i}-${toast.status}-${toast.topic}-${toast.error}-${toast.transaction}`} idx={i} toast={toast} remove={removeToast} />,
+            );
         }
 
         return elements;
