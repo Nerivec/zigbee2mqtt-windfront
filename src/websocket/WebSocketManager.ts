@@ -306,6 +306,13 @@ class WebSocketManager {
 
         useAppStore.getState().setReadyState(conn.idx, conn.socket?.readyState ?? WebSocket.OPEN);
         console.log("WebSocket opened", conn);
+
+        useAppStore.getState().addToast({
+            sourceIdx: conn.idx,
+            topic: "WebSocket",
+            status: "ok",
+            error: "Connected",
+        });
     }
 
     #onClose(conn: Connection, event: CloseEvent): void {
@@ -370,7 +377,7 @@ class WebSocketManager {
                 sourceIdx: conn.idx,
                 topic: "WebSocket",
                 status: "error",
-                error: `Failed to connect to WebSocket after ${conn.attempts} tries`,
+                error: `Failed to connect after ${conn.attempts} tries`,
             });
 
             return;
