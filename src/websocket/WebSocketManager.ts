@@ -302,17 +302,20 @@ class WebSocketManager {
             return;
         }
 
+        const displayToast = conn.attempts > 0;
         conn.attempts = 0;
 
         useAppStore.getState().setReadyState(conn.idx, conn.socket?.readyState ?? WebSocket.OPEN);
         console.log("WebSocket opened", conn);
 
-        useAppStore.getState().addToast({
-            sourceIdx: conn.idx,
-            topic: "WebSocket",
-            status: "ok",
-            error: "Connected",
-        });
+        if (displayToast) {
+            useAppStore.getState().addToast({
+                sourceIdx: conn.idx,
+                topic: "WebSocket",
+                status: "ok",
+                error: "Connected",
+            });
+        }
     }
 
     #onClose(conn: Connection, event: CloseEvent): void {
