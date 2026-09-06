@@ -4,12 +4,14 @@ type LocaleExposeTranslation = {
     label?: string;
     description?: string;
     values?: Record<string, string>;
+    presets?: Record<string, {name?: string; description?: string}>;
 };
 
 type BackendLocaleTranslations = {
     label?: string;
     description?: string;
     values?: Record<string, string>;
+    presets?: Record<string, {name?: string; description?: string}>;
     exposes?: Record<string, LocaleExposeTranslation>;
 };
 
@@ -30,6 +32,7 @@ function getTranslations(feature: FeatureWithAnySubFeatures): Record<string, Loc
                 if (entry.label) flat[locale].label = entry.label;
                 if (entry.description) flat[locale].description = entry.description;
                 if (entry.values) flat[locale].values = { ...(flat[locale].values ?? {}), ...entry.values };
+                if (entry.presets) flat[locale].presets = { ...(flat[locale].presets ?? {}), ...entry.presets };
             }
         } else {
             flat[locale] = localeData as LocaleExposeTranslation;
@@ -45,6 +48,10 @@ export function getExposeLabel(feature: FeatureWithAnySubFeatures, locale: strin
 
 export function getExposeDescription(feature: FeatureWithAnySubFeatures, locale: string): string | undefined {
     return getTranslations(feature)?.[locale]?.description ?? feature.description;
+}
+
+export function getExposePresets(feature: FeatureWithAnySubFeatures, locale: string): Record<string, {name?: string; description?: string}> | undefined {
+    return getTranslations(feature)?.[locale]?.presets;
 }
 
 export function getExposeValueLabel(value: string, translations: Record<string, BackendLocaleTranslations> | undefined, locale: string): string {
