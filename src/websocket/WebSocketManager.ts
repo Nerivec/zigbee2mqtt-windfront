@@ -302,10 +302,20 @@ class WebSocketManager {
             return;
         }
 
+        const displayToast = conn.attempts > 0;
         conn.attempts = 0;
 
         useAppStore.getState().setReadyState(conn.idx, conn.socket?.readyState ?? WebSocket.OPEN);
         console.log("WebSocket opened", conn);
+
+        if (displayToast) {
+            useAppStore.getState().addToast({
+                sourceIdx: conn.idx,
+                topic: "WebSocket",
+                status: "ok",
+                error: "Reconnected",
+            });
+        }
     }
 
     #onClose(conn: Connection, event: CloseEvent): void {
@@ -366,6 +376,13 @@ class WebSocketManager {
                 namespace: "frontend:ws",
             });
 
+            useAppStore.getState().addToast({
+                sourceIdx: conn.idx,
+                topic: "WebSocket",
+                status: "error",
+                error: `Failed to connect after ${conn.attempts} tries`,
+            });
+
             return;
         }
 
@@ -400,9 +417,11 @@ class WebSocketManager {
             // this toast is crafted to show specific info, does not follow usual "response-derived" pattern
             useAppStore.getState().addToast({
                 sourceIdx: conn.idx,
+                duration: RECONNECT_INTERVAL_MS,
                 topic: "WebSocket",
                 status: "ok",
                 error: "Reconnecting...",
+                transaction: `${conn.attempts}`,
             });
             this.#open(conn);
         }, RECONNECT_INTERVAL_MS);

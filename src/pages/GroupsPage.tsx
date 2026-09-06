@@ -80,7 +80,7 @@ export default function GroupsPage() {
         }
 
         const id = Number(newGroupId);
-        if (!Number.isFinite(id) || id < 0x0001 || id > 0xfff7) {
+        if (!Number.isInteger(id) || id < 0x0001 || id > 0xfff7) {
             return false;
         }
 
