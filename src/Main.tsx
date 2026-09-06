@@ -1,5 +1,5 @@
 import NiceModal from "@ebay/nice-modal-react";
-import React, { lazy, Suspense, useEffect } from "react";
+import { lazy, StrictMode, Suspense, useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import { HashRouter, Route, Routes } from "react-router";
 import { useShallow } from "zustand/react/shallow";
@@ -80,7 +80,7 @@ function App() {
 
 export function Main() {
     return (
-        <React.StrictMode>
+        <StrictMode>
             <ErrorBoundary>
                 <NiceModal.Provider>
                     <I18nextProvider i18n={i18n}>
@@ -88,6 +88,6 @@ export function Main() {
                     </I18nextProvider>
                 </NiceModal.Provider>
             </ErrorBoundary>
-        </React.StrictMode>
+        </StrictMode>
     );
 }
