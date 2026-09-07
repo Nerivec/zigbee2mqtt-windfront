@@ -60,7 +60,7 @@
         "@types/ws": "^8.18.1",
         "@virtuoso.dev/masonry": "^1.4.3",
         "@vitejs/plugin-react": "^5.2.0",
-        "@vitest/coverage-v8": "^4.1.11",
+        "@vitest/coverage-v8": "^5.0.0",
         "daisyui": "^5.7.28",
         "fflate": "^0.8.3",
         "file-saver": "^2.0.5",
