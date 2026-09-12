@@ -13,16 +13,16 @@ import {
 import EnumEditor, { type ValueWithLabelOrPrimitive } from "./EnumEditor.js";
 
 type RangeProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
-    value: number | "";
+    value: number | string;
     unit?: string;
-    onChange(value: number | null): Promise<void>;
+    onChange(value: number | string | null): Promise<void>;
     steps?: ValueWithLabelOrPrimitive[];
     minimal?: boolean;
 };
 
 const RangeEditor = memo((props: RangeProps) => {
     const { onChange, value, min, max, unit, steps, minimal, ...rest } = props;
-    const [currentValue, setCurrentValue] = useState<number | "">(value);
+    const [currentValue, setCurrentValue] = useState<number | string>(value);
     const showRange = min != null && max != null;
 
     useEffect(() => {
