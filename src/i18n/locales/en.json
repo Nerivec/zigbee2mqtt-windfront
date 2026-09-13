@@ -63,7 +63,7 @@
         "min": "Min",
         "mismatching_types": "Mismatching types",
         "more": "More",
-        "multi_instance": "Multi-Instance",
+        "multi_instance": "Multi-instance",
         "name": "Name",
         "none": "None",
         "not_assessed": "Not assessed",
@@ -121,8 +121,8 @@
         "codespace_info": "A Github Codespace is available to help in development",
         "create_new_converter": "Create new converter",
         "create_new_extension": "Create new extension",
-        "external_converters": "External Converters",
-        "external_extensions": "External Extensions",
+        "external_converters": "External converters",
+        "external_extensions": "External extensions",
         "generate_external_definition": "Generate external definition",
         "generated_external_definition": "Generated external definition",
         "hide_definition": "Hide definition",
@@ -304,7 +304,7 @@
         "recall": "Recall",
         "remove_all": "Remove all",
         "scene_id": "Scene ID",
-        "scene_name": "Scene Name",
+        "scene_name": "Scene name",
         "store": "Store"
     },
     "settings": {
@@ -314,7 +314,7 @@
         "availability": "Availability",
         "bridge": "Bridge",
         "coordinator": "Coordinator",
-        "coordinator_ieee_address": "Coordinator IEEE Address",
+        "coordinator_ieee_address": "Coordinator IEEE address",
         "default_page": "Default page",
         "dev_console": "Dev console",
         "download_state": "Download state",
@@ -533,7 +533,7 @@
         "GreenPower": "GreenPower",
         "group": "Group",
         "how_to_add_support": "How to add support?",
-        "ieee_address": "IEEE Address",
+        "ieee_address": "IEEE address",
         "input_clusters": "Input clusters (Server)",
         "interview": "Interview",
         "interview_failed": "Interview failed",
@@ -583,7 +583,7 @@
         "update_description": "Update description",
         "update_Home_assistant_entity_id": "Update Home Assistant entity ID",
         "updating_firmware": "Updating firmware",
-        "zigbee_manufacturer": "Zigbee Manufacturer",
-        "zigbee_model": "Zigbee Model"
+        "zigbee_manufacturer": "Zigbee manufacturer",
+        "zigbee_model": "Zigbee model"
     }
 }
