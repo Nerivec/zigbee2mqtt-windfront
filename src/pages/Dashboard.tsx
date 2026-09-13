@@ -5,11 +5,14 @@ import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../components/Button.js";
+import CompactViewToggle from "../components/CompactViewToggle.js";
 import DashboardItem from "../components/dashboard-page/DashboardItem.js";
 import TableSearch from "../components/table/TableSearch.js";
 import { useColumnCount } from "../hooks/useColumnCount.js";
+import { useCompactView } from "../hooks/useCompactView.js";
 import { useTable } from "../hooks/useTable.js";
 import { NavBarContent } from "../layout/NavBarContext.js";
+import { DASHBOARD_COMPACT_KEY } from "../localStoreConsts.js";
 import { API_NAMES, API_URLS, useAppStore } from "../store.js";
 import type { Device, DeviceAvailability, DeviceState, FeatureWithAnySubFeatures, LastSeenConfig } from "../types.js";
 import { getLastSeenEpoch, toHex } from "../utils.js";
@@ -21,6 +24,7 @@ export interface DashboardTableData {
     deviceState: DeviceState;
     deviceAvailability: DeviceAvailability;
     batteryLow: boolean | undefined;
+    collapsed: boolean;
     features: FeatureWithAnySubFeatures[];
     featureTypes: string[]; // for filtering purposes
     featureNames: string[]; // for filtering purposes
@@ -36,6 +40,7 @@ export default function Dashboard() {
     const bridgeInfo = useAppStore((state) => state.bridgeInfo);
     const devices = useAppStore((state) => state.devices);
     const columnCount = useColumnCount();
+    const [compact, setCompact] = useCompactView(DASHBOARD_COMPACT_KEY);
 
     const removeDevice = useCallback(
         async (sourceIdx: number, id: string, force: boolean, block: boolean, keepConfig: boolean, clearCache: boolean): Promise<void> => {
@@ -130,6 +135,7 @@ export default function Dashboard() {
                     deviceState,
                     deviceAvailability,
                     batteryLow,
+                    collapsed: compact,
                     features: dashboardFeatures,
                     featureTypes: Array.from(featureTypes),
                     featureNames: Array.from(featureNames),
@@ -140,7 +146,7 @@ export default function Dashboard() {
         }
 
         return elements;
-    }, [devices, deviceStates, deviceDashbordFeatures, bridgeInfo, availability, removeDevice]);
+    }, [devices, deviceStates, deviceDashbordFeatures, bridgeInfo, availability, removeDevice, compact]);
 
     const columns = useMemo<ColumnDef<DashboardTableData, unknown>[]>(
         () => [
@@ -272,7 +278,10 @@ export default function Dashboard() {
     return (
         <>
             <NavBarContent>
-                <TableSearch {...table} />
+                <div className="flex flex-row flex-wrap gap-2 items-center">
+                    <TableSearch {...table} />
+                    <CompactViewToggle compact={compact} setCompact={setCompact} />
+                </div>
             </NavBarContent>
 
             <div>

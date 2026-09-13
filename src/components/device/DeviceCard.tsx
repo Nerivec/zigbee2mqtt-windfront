@@ -20,6 +20,8 @@ type Props = Omit<BaseWithSubFeaturesProps<FeatureWithAnySubFeatures>, "feature"
         features: FeatureWithAnySubFeatures[];
         lastSeenConfig: LastSeenConfig;
         endpoint?: number;
+        collapsed?: boolean;
+        headerAction?: JSX.Element;
     }>;
 
 const DeviceCard = memo(
@@ -34,12 +36,18 @@ const DeviceCard = memo(
         lastSeenConfig,
         features,
         featureWrapperClass,
+        collapsed = false,
+        headerAction,
         children,
     }: Props) => {
         const { t } = useTranslation(["zigbee", "common"]);
         const endpointName = endpoint != null ? device.endpoints[endpoint]?.name : undefined;
         const displayedFeatures = useMemo(() => {
             const elements: JSX.Element[] = [];
+
+            if (collapsed) {
+                return elements;
+            }
 
             for (const feature of features) {
                 // XXX: show if feature has no endpoint?
@@ -64,7 +72,7 @@ const DeviceCard = memo(
             }
 
             return elements;
-        }, [endpointName, device, endpoint, deviceState, features, featureWrapperClass, onChange, onRead]);
+        }, [collapsed, endpointName, device, endpoint, deviceState, features, featureWrapperClass, onChange, onRead]);
 
         return (
             <>
@@ -75,11 +83,15 @@ const DeviceCard = memo(
                             <DeviceImage disabled={false} device={device} otaState={deviceState.update?.state} />
                         </div>
                         <div className="min-w-0">
-                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/info`} className="link link-hover font-semibold">
+                            <Link
+                                to={`/device/${sourceIdx}/${device.ieee_address}/info`}
+                                title={device.friendly_name}
+                                className={`link link-hover font-semibold ${collapsed ? "block truncate" : ""}`}
+                            >
                                 {device.friendly_name}
                                 {endpoint != null ? ` (${t(($) => $.endpoint)}: ${endpointName ? `${endpointName} / ` : ""}${endpoint})` : ""}
                             </Link>
-                            {device.description && (
+                            {!collapsed && device.description && (
                                 <div className="text-xs opacity-50 truncate" title={device.description}>
                                     {device.description}
                                 </div>
@@ -87,21 +99,24 @@ const DeviceCard = memo(
                             <div className="text-xs opacity-50">
                                 <LastSeen lastSeen={deviceState.last_seen} config={lastSeenConfig} />
                             </div>
-                            {!hideSourceDot && (
-                                <span className="absolute top-2 right-2">
-                                    <SourceDot idx={sourceIdx} autoHide />
-                                </span>
-                            )}
                         </div>
+                        {(headerAction || !hideSourceDot) && (
+                            <div className="flex flex-none flex-row gap-1 items-center self-start ml-auto">
+                                {headerAction}
+                                {!hideSourceDot && <SourceDot idx={sourceIdx} autoHide />}
+                            </div>
+                        )}
                     </div>
-                    <div className="text-sm w-full p-2">{displayedFeatures}</div>
-                    <div className="flex flex-row justify-end mb-2">
-                        <Link to={`/device/${sourceIdx}/${device.ieee_address}/exposes`} className="btn btn-xs">
-                            {t(($) => $.exposes, { ns: "common" })} <FontAwesomeIcon icon={faRightLong} size="lg" />
-                        </Link>
-                    </div>
+                    {!collapsed && <div className="text-sm w-full p-2">{displayedFeatures}</div>}
+                    {!collapsed && (
+                        <div className="flex flex-row justify-end mb-2">
+                            <Link to={`/device/${sourceIdx}/${device.ieee_address}/exposes`} className="btn btn-xs">
+                                {t(($) => $.exposes, { ns: "common" })} <FontAwesomeIcon icon={faRightLong} size="lg" />
+                            </Link>
+                        </div>
+                    )}
                 </div>
-                <div className="flex flex-row flex-wrap gap-1 mx-2 mb-2 justify-around items-center">
+                <div className="flex flex-row flex-wrap gap-1 mx-2 mb-2 justify-start items-center">
                     <span className="badge badge-soft badge-ghost cursor-default tooltip" data-tip={t(($) => $.lqi)}>
                         <Lqi value={deviceState.linkquality as number | undefined} />
                     </span>
@@ -114,7 +129,7 @@ const DeviceCard = memo(
                             showLevel
                         />
                     </span>
-                    {children}
+                    <span className="ml-auto">{children}</span>
                 </div>
             </>
         );

@@ -2,9 +2,12 @@ import { VirtuosoMasonry } from "@virtuoso.dev/masonry";
 import { memo, useCallback, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useColumnCount } from "../../hooks/useColumnCount.js";
+import { useCompactView } from "../../hooks/useCompactView.js";
+import { GROUP_MEMBERS_COMPACT_KEY } from "../../localStoreConsts.js";
 import { useAppStore } from "../../store.js";
 import type { Device, Group } from "../../types.js";
 import { sendMessage } from "../../websocket/WebSocketManager.js";
+import CompactViewToggle from "../CompactViewToggle.js";
 import GroupMember, { type GroupMemberProps } from "./GroupMember.js";
 
 interface GroupMembersProps {
@@ -19,6 +22,7 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
     const deviceStates = useAppStore(useShallow((state) => state.deviceStates[sourceIdx]));
     const lastSeenConfig = useAppStore(useShallow((state) => state.bridgeInfo[sourceIdx].config.advanced.last_seen));
     const columnCount = useColumnCount();
+    const [compact, setCompact] = useCompactView(GROUP_MEMBERS_COMPACT_KEY);
 
     const removeDeviceFromGroup = useCallback(
         async (deviceIeee: string, endpoint: number): Promise<void> =>
@@ -64,6 +68,7 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
                     deviceState: deviceStates[device.friendly_name] ?? {},
                     deviceAvailability,
                     lastSeenConfig,
+                    collapsed: compact,
                     removeDeviceFromGroup,
                     setDeviceState,
                 });
@@ -73,10 +78,13 @@ const GroupMembers = memo(({ sourceIdx, devices, group }: GroupMembersProps) => 
         elements.sort((elA, elB) => elA.device.ieee_address.localeCompare(elB.device.ieee_address));
 
         return elements;
-    }, [sourceIdx, group, devices, lastSeenConfig, deviceStates, bridgeInfo, availability, removeDeviceFromGroup, setDeviceState]);
+    }, [sourceIdx, group, devices, lastSeenConfig, deviceStates, bridgeInfo, availability, removeDeviceFromGroup, setDeviceState, compact]);
 
     return (
         <div>
+            <div className="flex flex-row justify-end mb-2">
+                <CompactViewToggle compact={compact} setCompact={setCompact} />
+            </div>
             <VirtuosoMasonry
                 key={`groupmembers-${filteredData.length}`}
                 useWindowScroll={true}

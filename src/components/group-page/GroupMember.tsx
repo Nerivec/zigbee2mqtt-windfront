@@ -1,10 +1,11 @@
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useShallow } from "zustand/react/shallow";
 import { type AppState, useAppStore } from "../../store.js";
 import type { DeviceAvailability } from "../../types.js";
+import Button from "../Button.js";
 import ConfirmButton from "../ConfirmButton.js";
 import DashboardFeatureWrapper from "../dashboard-page/DashboardFeatureWrapper.js";
 import DeviceCard from "../device/DeviceCard.js";
@@ -17,6 +18,7 @@ export type GroupMemberProps = {
         deviceAvailability: DeviceAvailability;
         groupMember: AppState["groups"][number][number]["members"][number];
         lastSeenConfig: AppState["bridgeInfo"][number]["config"]["advanced"]["last_seen"];
+        collapsed: boolean;
         removeDeviceFromGroup(deviceIeee: string, endpoint: number): Promise<void>;
         setDeviceState(ieee: string, value: Record<string, unknown>): Promise<void>;
     };
@@ -29,12 +31,16 @@ const GroupMember = ({
     deviceAvailability,
     groupMember,
     lastSeenConfig,
+    collapsed,
     removeDeviceFromGroup,
     setDeviceState,
 }: GroupMemberProps["data"]) => {
     const { endpoint } = groupMember;
     const { t } = useTranslation(["groups", "common"]);
     const scenesFeatures = useAppStore(useShallow((state) => state.deviceScenesFeatures[sourceIdx][device.ieee_address] ?? []));
+    // tile-level expansion override on top of the page-level compact setting
+    const [expanded, setExpanded] = useState(false);
+    const tileCollapsed = collapsed && !expanded;
 
     const onCardChange = useCallback(
         async (value: Record<string, unknown>) => await setDeviceState(device.ieee_address, value),
@@ -46,9 +52,20 @@ const GroupMember = ({
         [device.ieee_address, endpoint, removeDeviceFromGroup],
     );
 
+    const onTileClick = tileCollapsed
+        ? (e: React.MouseEvent<HTMLDivElement>) => {
+              // ignore clicks on interactive elements inside the tile
+              if (!(e.target as HTMLElement).closest("a, button, input, select, textarea, label")) {
+                  setExpanded(true);
+              }
+          }
+        : undefined;
+
     return (
         <div
-            className={`mb-3 card card-border bg-base-200 rounded-box shadow-md ${deviceAvailability === "offline" ? "border-error/50" : "border-base-300"}`}
+            className={`mb-3 card card-border bg-base-200 rounded-box shadow-md ${tileCollapsed ? "cursor-pointer" : ""} ${deviceAvailability === "offline" ? "border-error/50" : "border-base-300"}`}
+            title={tileCollapsed ? t(($) => $.expand, { ns: "common" }) : undefined}
+            onClick={onTileClick}
         >
             <DeviceCard
                 sourceIdx={sourceIdx}
@@ -60,16 +77,31 @@ const GroupMember = ({
                 onChange={onCardChange}
                 featureWrapperClass={DashboardFeatureWrapper}
                 lastSeenConfig={lastSeenConfig}
+                collapsed={tileCollapsed}
+                headerAction={
+                    collapsed ? (
+                        <Button
+                            onClick={() => setExpanded(!expanded)}
+                            className="btn btn-ghost btn-square btn-xs"
+                            title={expanded ? t(($) => $.collapse, { ns: "common" }) : t(($) => $.expand, { ns: "common" })}
+                            aria-label={expanded ? t(($) => $.collapse, { ns: "common" }) : t(($) => $.expand, { ns: "common" })}
+                        >
+                            <FontAwesomeIcon icon={expanded ? faChevronUp : faChevronDown} />
+                        </Button>
+                    ) : undefined
+                }
             >
-                <ConfirmButton<string>
-                    onClick={onCardRemove}
-                    className="btn btn-square btn-outline btn-error btn-sm"
-                    title={t(($) => $.remove_from_group)}
-                    modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
-                    modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
-                >
-                    <FontAwesomeIcon icon={faTrash} />
-                </ConfirmButton>
+                <div className="join join-horizontal">
+                    <ConfirmButton<string>
+                        onClick={onCardRemove}
+                        className="btn btn-square btn-outline btn-error btn-sm join-item"
+                        title={t(($) => $.remove_from_group)}
+                        modalDescription={t(($) => $.dialog_confirmation_prompt, { ns: "common" })}
+                        modalCancelLabel={t(($) => $.cancel, { ns: "common" })}
+                    >
+                        <FontAwesomeIcon icon={faTrash} />
+                    </ConfirmButton>
+                </div>
             </DeviceCard>
         </div>
     );

@@ -15,6 +15,12 @@ export const TABLE_FILTERS_KEY = "table-filters";
 export const TABLE_COLUMNS_KEY = "table-columns";
 export const TABLE_SORTING_KEY = "table-sorting";
 
+//-- Dashboard
+export const DASHBOARD_COMPACT_KEY = "dashboard-compact";
+
+//-- Group
+export const GROUP_MEMBERS_COMPACT_KEY = "group-members-compact";
+
 //-- Home
 export const HOME_QUICK_FILTER_KEY = "home-quick-filter";
 export const HOME_SHOW_ACTIVITY_KEY = "home-show-activity-key";
