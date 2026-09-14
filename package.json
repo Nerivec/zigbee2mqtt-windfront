@@ -49,7 +49,7 @@
         "@storybook/react-vite": "^10.6.0",
         "@tailwindcss/vite": "^4.3.3",
         "@tanstack/react-table": "^8.21.3",
-        "@testing-library/dom": "^10.4.1",
+        "@testing-library/dom": "^10.4.2",
         "@testing-library/react": "^16.3.3",
         "@testing-library/user-event": "^14.6.7",
         "@types/file-saver": "^2.0.7",
@@ -60,7 +60,7 @@
         "@types/ws": "^8.18.1",
         "@virtuoso.dev/masonry": "^1.4.3",
         "@vitejs/plugin-react": "^5.2.0",
-        "@vitest/coverage-v8": "^4.1.11",
+        "@vitest/coverage-v8": "^5.0.0",
         "daisyui": "^5.7.37",
         "fflate": "^0.8.3",
         "file-saver": "^2.0.5",
@@ -71,20 +71,20 @@
         "react": "^19.3.0",
         "react-app-polyfill": "^3.0.0",
         "react-dom": "^19.3.0",
-        "react-i18next": "^17.0.13",
+        "react-i18next": "^17.0.14",
         "react-image": "^4.1.0",
         "react-router": "^8.3.1",
         "react-select": "^5.10.2",
         "react-virtuoso": "^4.18.13",
         "reagraph": "^4.32.0",
         "store2": "^2.14.4",
-        "storybook": "^10.5.10",
+        "storybook": "^10.6.0",
         "tailwindcss": "^4.2.4",
         "timeago.js": "^4.0.2",
         "typescript": "^7.0.2",
         "vite": "^7.3.6",
         "vite-plugin-compression2": "^2.5.3",
-        "vitest": "^4.1.6",
+        "vitest": "^5.0.0",
         "ws": "^8.21.3",
         "zigbee2mqtt": "github:Koenkk/zigbee2mqtt#dev-types",
         "zustand": "^5.0.15"
@@ -106,5 +106,8 @@
     "funding": {
         "type": "github",
         "url": "https://github.com/sponsors/Nerivec"
+    },
+    "allowScripts": {
+        "esbuild@0.28.2": true
     }
 }
