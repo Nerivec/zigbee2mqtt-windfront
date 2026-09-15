@@ -3,6 +3,9 @@ export const AUTH_TOKEN_KEY = "z2m-token";
 export const AUTH_FLAG_KEY = "z2m-auth";
 export const LAST_API_URL_KEY = "last-api-url";
 
+//-- Groups
+export const GROUP_MEMBERS_VIEW_KEY = "group-members-view";
+
 //-- General
 export const THEME_KEY = "theme";
 export const SIDEBAR_COLLAPSED_KEY = "windfront-sidebar-collapsed";

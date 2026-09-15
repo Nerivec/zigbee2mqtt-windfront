@@ -161,7 +161,9 @@
         "remove_from_group": "Remove from group",
         "remove_group": "Remove group",
         "rename_group": "Rename group",
-        "settings": "Settings"
+        "settings": "Settings",
+        "view_cards": "Cards view",
+        "view_list": "List view"
     },
     "health": {
         "awaiting_next_check": "Awaiting next check",
