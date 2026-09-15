@@ -18,10 +18,11 @@ type RangeProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "valu
     onChange(value: number | null): Promise<void>;
     steps?: ValueWithLabelOrPrimitive[];
     minimal?: boolean;
+    inputStep?: InputHTMLAttributes<HTMLInputElement>["step"];
 };
 
 const RangeEditor = memo((props: RangeProps) => {
-    const { onChange, value, min, max, unit, steps, minimal, ...rest } = props;
+    const { onChange, value, min, max, unit, steps, minimal, inputStep, ...rest } = props;
     const [currentValue, setCurrentValue] = useState<number | "">(value);
     const showRange = min != null && max != null;
 
@@ -78,6 +79,7 @@ const RangeEditor = memo((props: RangeProps) => {
                         min={min}
                         max={max}
                         {...rest}
+                        step={inputStep ?? rest.step}
                     />
                     {unit}
                 </label>
