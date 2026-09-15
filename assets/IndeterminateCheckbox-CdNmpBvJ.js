@@ -1,0 +1,1 @@
+import{r as t,j as r}from"./index-D_twJ9uP.js";function n({indeterminate:e,...o}){const c=t.useRef(null);return t.useEffect(()=>{typeof e=="boolean"&&(c.current.indeterminate=!o.checked&&e)},[c,e]),r.jsx("input",{ref:c,type:"checkbox",className:"checkbox",...o})}export{n as I};
