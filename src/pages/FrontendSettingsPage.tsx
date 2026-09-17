@@ -10,6 +10,7 @@ import {
     AUTH_FLAG_KEY,
     AUTH_TOKEN_KEY,
     DEFAULT_ROUTE_KEY,
+    DEVICE_TEMPERATURE_UNIT_KEY,
     HIDE_STATIC_INFO_ALERTS_KEY,
     HOME_QUICK_FILTER_KEY,
     HOME_SHOW_ACTIVITY_KEY,
@@ -24,9 +25,18 @@ import {
     TABLE_COLUMNS_KEY,
     TABLE_FILTERS_KEY,
     TABLE_SORTING_KEY,
+    TEMPERATURE_SCOPE_KEY,
+    TEMPERATURE_UNIT_KEY,
     THEME_KEY,
 } from "../localStoreConsts.js";
 import { MULTI_INSTANCE } from "../store.js";
+import {
+    getTemperatureScope,
+    getTemperatureUnitPreference,
+    notifyTemperatureSettingsChanged,
+    type TemperatureScope,
+    type TemperatureUnitPreference,
+} from "../temperature.js";
 
 export default function FrontendSettingsPage() {
     const { t } = useTranslation(["settings", "navbar", "network", "common"]);
@@ -38,6 +48,8 @@ export default function FrontendSettingsPage() {
     const [homeShowActivity, setHomeShowActivity] = useState<boolean>(store2.get(HOME_SHOW_ACTIVITY_KEY, true));
     const [homeShowGroupScenes, setHomeShowGroupScenes] = useState<boolean>(store2.get(HOME_SHOW_GROUP_SCENES_KEY, true));
     const [miShowSourceName, setMiShowSourceName] = useState<boolean>(store2.get(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, true));
+    const [temperatureUnit, setTemperatureUnit] = useState<TemperatureUnitPreference>(getTemperatureUnitPreference);
+    const [temperatureScope, setTemperatureScope] = useState<TemperatureScope>(getTemperatureScope);
 
     useEffect(() => {
         store2.set(PERMIT_JOIN_TIME_KEY, permitJoinTime);
@@ -71,6 +83,16 @@ export default function FrontendSettingsPage() {
         store2.set(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY, miShowSourceName);
     }, [miShowSourceName]);
 
+    useEffect(() => {
+        store2.set(TEMPERATURE_UNIT_KEY, temperatureUnit);
+        notifyTemperatureSettingsChanged();
+    }, [temperatureUnit]);
+
+    useEffect(() => {
+        store2.set(TEMPERATURE_SCOPE_KEY, temperatureScope);
+        notifyTemperatureSettingsChanged();
+    }, [temperatureScope]);
+
     const resetSettings = useCallback(() => {
         const keys = store2.keys();
 
@@ -85,10 +107,17 @@ export default function FrontendSettingsPage() {
         store2.remove(NETWORK_RAW_DISPLAY_TYPE_KEY);
         store2.remove(NETWORK_MAP_CONFIG_KEY);
         store2.remove(MULTI_INSTANCE_SHOW_SOURCE_NAME_KEY);
+        store2.remove(TEMPERATURE_UNIT_KEY);
+        store2.remove(TEMPERATURE_SCOPE_KEY);
         store2.remove(I18NEXTLNG_KEY);
 
         for (const key of keys) {
-            if (key.startsWith(TABLE_COLUMNS_KEY) || key.startsWith(TABLE_FILTERS_KEY) || key.startsWith(TABLE_SORTING_KEY)) {
+            if (
+                key.startsWith(TABLE_COLUMNS_KEY) ||
+                key.startsWith(TABLE_FILTERS_KEY) ||
+                key.startsWith(TABLE_SORTING_KEY) ||
+                key.startsWith(DEVICE_TEMPERATURE_UNIT_KEY)
+            ) {
                 store2.remove(key);
             }
         }
@@ -195,6 +224,25 @@ export default function FrontendSettingsPage() {
                     <option value="/logs">{t(($) => $.logs, { ns: "navbar" })}</option>
                     <option value="/activity">{t(($) => $.activity, { ns: "navbar" })}</option>
                     <option value="/settings">{t(($) => $.settings, { ns: "navbar" })}</option>
+                </SelectField>
+                <SelectField
+                    name="temperature_unit"
+                    label={t(($) => $.temperature_unit)}
+                    value={temperatureUnit}
+                    onChange={(event) => setTemperatureUnit(event.target.value as TemperatureUnitPreference)}
+                >
+                    <option value="native">{t(($) => $.temperature_unit_native)}</option>
+                    <option value="celsius">{t(($) => $.temperature_unit_celsius)}</option>
+                    <option value="fahrenheit">{t(($) => $.temperature_unit_fahrenheit)}</option>
+                </SelectField>
+                <SelectField
+                    name="temperature_scope"
+                    label={t(($) => $.temperature_scope)}
+                    value={temperatureScope}
+                    onChange={(event) => setTemperatureScope(event.target.value as TemperatureScope)}
+                >
+                    <option value="climate">{t(($) => $.temperature_scope_climate)}</option>
+                    <option value="all">{t(($) => $.temperature_scope_all)}</option>
                 </SelectField>
                 <CheckboxField
                     name="hide_static_info_alerts"
