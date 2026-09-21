@@ -114,7 +114,7 @@ export function ImageLocaliser({ sourceIdx, devices }: Props): JSX.Element {
             );
         case "done":
             return <div>{t(($) => $.unknown, { ns: "zigbee" })}</div>;
+        default:
+            return <div>{t(($) => $.unknown, { ns: "zigbee" })}</div>;
     }
-
-    return <div>{t(($) => $.unknown, { ns: "zigbee" })}</div>;
 }
