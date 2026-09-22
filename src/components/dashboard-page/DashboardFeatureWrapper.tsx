@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import startCase from "lodash/startCase.js";
 import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
+import { getLabelFromName } from "../../utils.js";
 import type { FeatureWrapperProps } from "../features/FeatureWrapper.js";
 import { getFeatureIcon } from "../features/index.js";
 
@@ -16,7 +16,7 @@ export default function DashboardFeatureWrapper({ children, feature, deviceValue
         <div className="flex flex-row items-center gap-1 mb-2">
             <FontAwesomeIcon icon={fi} className={fiClassName} />
             <div className="grow-1" title={featureName}>
-                {startCase(featureName)}
+                {feature.label || getLabelFromName(featureName)}
                 {!endpointSpecific && <span title={t(($) => $.endpoint)}>{feature.endpoint ? ` (${feature.endpoint})` : null}</span>}
             </div>
             <div className="shrink-1 *:bg-base-200">{children}</div>
