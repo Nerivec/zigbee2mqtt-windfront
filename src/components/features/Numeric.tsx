@@ -25,7 +25,7 @@ const Numeric = memo((props: NumericProps) => {
                 onChange={async (value) => {
                     await onChange(property ? { [property]: value } : value);
                 }}
-                value={typeof deviceValue === "number" ? deviceValue : ""}
+                value={typeof deviceValue === "number" || typeof deviceValue === "string" ? deviceValue : ""}
                 min={valueMin}
                 max={valueMax}
                 step={valueStep}
