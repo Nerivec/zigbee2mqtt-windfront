@@ -58,6 +58,15 @@ export const normalizeDefinitionModel = (model: string): string => {
 
 // #region Format/Convert
 
+/**
+ * Mirrors `getLabelFromName` from zigbee-herdsman-converters, which default-labels every expose on the bridge.
+ * Used as fallback for exposes without a label, so they render exactly like the bridge would label them.
+ */
+export const getLabelFromName = (name: string | undefined): string => {
+    const label = (name ?? "").replace(/_/g, " ");
+    return label.length === 0 ? label : label[0].toUpperCase() + label.slice(1);
+};
+
 export const stringifyWithUndefinedAsNull = (data: Record<string, unknown>): string => JSON.stringify(data, (_k, v) => (v === undefined ? null : v));
 
 export const getLastSeenEpoch = (lastSeen: unknown, lastSeenConfig: LastSeenConfig): number | undefined => {
