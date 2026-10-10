@@ -1,7 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
 import { useAppStore } from "../../../store.js";
 import type { Device } from "../../../types.js";
-import AddScene from "../AddScene.js";
+import AddUpdateScene from "../AddUpdateScene";
 import RecallRemove from "../RecallRemove.js";
 
 type SceneProps = {
@@ -16,7 +16,7 @@ export default function Scene({ sourceIdx, device }: SceneProps) {
         <div className="flex flex-row flex-wrap gap-4 w-full">
             <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">
                 <div className="card-body p-4">
-                    <AddScene sourceIdx={sourceIdx} target={device} deviceState={deviceState ?? {}} />
+                    <AddUpdateScene sourceIdx={sourceIdx} target={device} deviceState={deviceState ?? {}} />
                 </div>
             </div>
             <div className="card card-border bg-base-200 border-base-300 rounded-box shadow-md flex-1">
