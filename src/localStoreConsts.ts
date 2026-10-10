@@ -10,6 +10,9 @@ export const PERMIT_JOIN_TIME_KEY = "permit-join-time";
 export const MAX_ON_SCREEN_NOTIFICATIONS_KEY = "max-on-screen-notifications";
 export const HIDE_STATIC_INFO_ALERTS_KEY = "hide-static-info-alerts";
 export const DEFAULT_ROUTE_KEY = "default-route";
+export const TEMPERATURE_UNIT_KEY = "temperature-unit";
+export const TEMPERATURE_SCOPE_KEY = "temperature-scope";
+export const DEVICE_TEMPERATURE_UNIT_KEY = "device-temperature-unit";
 
 export const TABLE_FILTERS_KEY = "table-filters";
 export const TABLE_COLUMNS_KEY = "table-columns";
