@@ -4,7 +4,7 @@ import { useAppStore } from "../store";
 import type { Device, Group } from "../types";
 import { isDevice } from "../utils";
 
-export const DEFAULT_SCENE_CONFIRM_TIMEOUT_MS = 5000;
+export const DEFAULT_SCENE_CONFIRM_TIMEOUT_MS = 10000;
 
 export function useSceneWait(sourceIdx: number, target: Device | Group) {
     const sceneExistsInStore = useCallback(
