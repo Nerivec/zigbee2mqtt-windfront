@@ -2,47 +2,47 @@ name: Bug report
 description: Create a report to help us improve
 labels: [bug]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        ### Before submitting any bug report, make sure that you can reproduce the issue with latest browsers versions and on latest demo
-        https://nerivec.github.io/zigbee2mqtt-windfront/iframe.html?viewMode=story&id=app--single-instance
-        Thanks for taking the time to fill out this bug report!
-  - type: textarea
-    id: describe
-    attributes:
-      label: Describe the bug
-      description: |
-        A clear and concise description of what the bug is<br>
-        If relevant, attach the state file downloaded from the error page or from `Zigbee2MQTT frontend > Settings > Tools > Download state` using the button below the text box (or drag & drop)
-    validations:
-      required: true
-  - type: textarea
-    id: reproduce
-    attributes:
-      label: To Reproduce
-      description: Steps to reproduce the behavior
-    validations:
-      required: true
-  - type: textarea
-    id: expected
-    attributes:
-      label: Expected behavior
-      description: A clear and concise description of what you expected to happen
-  - type: dropdown
-    id: browsers
-    validations:
-      required: true
-    attributes:
-      label: Affected browsers
-      multiple: true
-      options:
-        - Firefox
-        - Chrome
-        - Safari
-        - Microsoft Edge
-  - type: textarea
-    id: stacktrace
-    attributes:
-      label: Stacktrace
-      render: shell
+    - type: markdown
+      attributes:
+          value: |
+              ### Before submitting any bug report, make sure that you can reproduce the issue with latest browsers versions and on latest demo
+              https://nerivec.github.io/zigbee2mqtt-windfront/iframe.html?viewMode=story&id=app--single-instance
+              Thanks for taking the time to fill out this bug report!
+    - type: textarea
+      id: describe
+      attributes:
+          label: Describe the bug
+          description: |
+              A clear and concise description of what the bug is<br>
+              If relevant, attach the state file downloaded from the error page or from `Zigbee2MQTT frontend > Settings > Tools > Download state` using the button below the text box (or drag & drop)
+      validations:
+          required: true
+    - type: textarea
+      id: reproduce
+      attributes:
+          label: To Reproduce
+          description: Steps to reproduce the behavior
+      validations:
+          required: true
+    - type: textarea
+      id: expected
+      attributes:
+          label: Expected behavior
+          description: A clear and concise description of what you expected to happen
+    - type: dropdown
+      id: browsers
+      validations:
+          required: true
+      attributes:
+          label: Affected browsers
+          multiple: true
+          options:
+              - Firefox
+              - Chrome
+              - Safari
+              - Microsoft Edge
+    - type: textarea
+      id: stacktrace
+      attributes:
+          label: Stacktrace
+          render: shell

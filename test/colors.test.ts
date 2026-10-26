@@ -157,7 +157,7 @@ describe("color conversions", () => {
         expect(convertHexToRgb(hex)).toEqual([10, 21, 31]);
     });
 
-    it("supports convertFromColor mappings", () => {
+    it("supports convertFromColor mappings 1", () => {
         const gamut = SUPPORTED_GAMUTS.cie1931;
         const color = convertToColor({ r: 10, g: 20, b: 30 }, "color_rgb", gamut);
 
@@ -167,7 +167,7 @@ describe("color conversions", () => {
         expect(convertFromColor(color, "hex")).toEqual({ hex: color.hex });
     });
 
-    it("supports convertFromColor mappings", () => {
+    it("supports convertFromColor mappings 2", () => {
         const gamut = SUPPORTED_GAMUTS.cie1931;
         const color = convertToColor({ r: 60, g: 138, b: 164 }, "color_rgb", gamut);
 

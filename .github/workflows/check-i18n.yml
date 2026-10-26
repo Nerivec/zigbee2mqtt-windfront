@@ -1,23 +1,23 @@
 name: Check i18n
 
 on:
-  pull_request:
-    paths: ["src/i18n/locales/**", "!src/i18n/locales/en.json"]
+    pull_request:
+        paths: ["src/i18n/locales/**", "!src/i18n/locales/en.json"]
 
 permissions:
-  contents: read
+    contents: read
 
 jobs:
-  checks:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
+    checks:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: "package.json"
+            - uses: actions/setup-node@v7
+              with:
+                  node-version-file: "package.json"
 
-      - run: npm ci
+            - run: npm ci
 
-      - name: Check changed i18n JSON file matches EN
-        run: node ./scripts/check-i18n.mjs
+            - name: Check changed i18n JSON file matches EN
+              run: node ./scripts/check-i18n.mjs
