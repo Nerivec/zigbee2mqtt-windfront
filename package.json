@@ -84,7 +84,7 @@
         "typescript": "^7.0.2",
         "vite": "^7.3.7",
         "vite-plugin-compression2": "^2.5.3",
-        "vitest": "^4.1.6",
+        "vitest": "^5.0.5",
         "ws": "^8.22.0",
         "zigbee2mqtt": "github:Koenkk/zigbee2mqtt#dev-types",
         "zustand": "^5.0.16"
