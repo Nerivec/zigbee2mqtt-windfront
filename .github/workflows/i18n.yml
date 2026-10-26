@@ -1,42 +1,42 @@
 name: Update i18n EN translations
 
 on:
-  schedule:
-    - cron: "0 12 * * 3"
-  workflow_dispatch:
+    schedule:
+        - cron: "0 12 * * 3"
+    workflow_dispatch:
 
 permissions:
-  contents: read
+    contents: read
 
 jobs:
-  update:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v7
+    update:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: "package.json"
+            - uses: actions/setup-node@v7
+              with:
+                  node-version-file: "package.json"
 
-      - run: npm ci
+            - run: npm ci
 
-      - run: npm i -D zigbee-herdsman-converters
+            - run: npm i -D zigbee-herdsman-converters
 
-      - name: Update EN i18n JSON file
-        run: node ./scripts/override-z2m-en.mjs
+            - name: Update EN i18n JSON file
+              run: node ./scripts/override-z2m-en.mjs
 
-      - name: Order EN i18n JSON file
-        run: node ./scripts/fix-i18n-order.mjs
+            - name: Order EN i18n JSON file
+              run: node ./scripts/fix-i18n-order.mjs
 
-      - name: Format
-        run: npm run check
+            - name: Format
+              run: npm run check
 
-      - name: Commit changes
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add ./src/i18n/locales/en.json
-          git commit -m "fix: update i18n EN translations" || echo 'Nothing to commit'
-          git push
+            - name: Commit changes
+              run: |
+                  git config --global user.name 'github-actions[bot]'
+                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+                  git add ./src/i18n/locales/en.json
+                  git commit -m "fix: update i18n EN translations" || echo 'Nothing to commit'
+                  git push

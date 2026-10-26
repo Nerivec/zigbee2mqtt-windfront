@@ -438,7 +438,7 @@ export const useAppStore = create<AppState & AppActions>((set, _get, store) => (
             const prev = state.logs[sourceIdx];
             const total = prev.length + newEntries.length;
             const limitDrop = total > state.logsLimit ? total - state.logsLimit : 0;
-            const newLogs = prev.slice(limitDrop > 0 ? limitDrop : 0);
+            const newLogs = prev.slice(Math.max(limitDrop, 0));
             const newNotifications = Array.from(prevNotifications);
             const newToasts = Array.from(state.toasts);
             let addedToasts = false;
