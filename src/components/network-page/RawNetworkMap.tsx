@@ -227,6 +227,12 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         return [computedNodes, computedEdges];
     }, [map, showParents, showChildren, showSiblings, t, devices, config.showIcons]);
 
+    // reagraph resets dragged positions whenever this reference changes, keep it stable across renders
+    const layoutOverrides = useMemo(
+        () => ({ nodeStrength: config.nodeStrength, linkDistance: config.linkDistance }),
+        [config.nodeStrength, config.linkDistance],
+    );
+
     const { selections, actives, onNodeClick, onCanvasClick } = useSelection({
         ref: graphRef,
         nodes: nodes,
@@ -264,10 +270,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                     onCanvasClick={onCanvasClick}
                     onNodeClick={onNodeClick}
                     layoutType={config.layoutType}
-                    layoutOverrides={{
-                        nodeStrength: config.nodeStrength,
-                        linkDistance: config.linkDistance,
-                    }}
+                    layoutOverrides={layoutOverrides}
                     sizingType="centrality"
                     labelType={config.labelType}
                     labelFontUrl={fontUrl}
