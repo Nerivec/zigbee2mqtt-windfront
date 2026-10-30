@@ -1,0 +1,1 @@
+import{d3 as u}from"./index-DXq-nO0B.js";import{r as C}from"./_createCompounder-CMv8mJd6.js";var e,r;function i(){if(r)return e;r=1;var a=C(),s=a(function(o,n,t){return o+(t?"_":"")+n.toLowerCase()});return e=s,e}var m=i();const k=u(m);export{k as s};
