@@ -56,18 +56,15 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
         return elements;
     }, [groups, tab]);
 
+    const value = useMemo(
+        () => (currentGroup && currentSourceIdx !== undefined ? options.find((option) => option.value === currentGroup.friendly_name) : undefined),
+        [options, currentGroup, currentSourceIdx],
+    );
+
     return (
         <Select<SelectOption>
             unstyled
-            placeholder={
-                currentGroup && currentSourceIdx !== undefined ? (
-                    <>
-                        <SourceDot idx={currentSourceIdx} autoHide namePostfix=" – " /> {currentGroup.friendly_name}
-                    </>
-                ) : (
-                    t(($) => $.select_group)
-                )
-            }
+            defaultValue={value}
             aria-label={t(($) => $.select_group)}
             options={options}
             isSearchable

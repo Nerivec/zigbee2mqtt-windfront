@@ -60,18 +60,15 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
         return elements;
     }, [devices, tab]);
 
+    const value = useMemo(
+        () => (currentDevice && currentSourceIdx !== undefined ? options.find((option) => option.value === currentDevice.friendly_name) : undefined),
+        [options, currentDevice, currentSourceIdx],
+    );
+
     return (
         <Select<SelectOption>
             unstyled
-            placeholder={
-                currentDevice && currentSourceIdx !== undefined ? (
-                    <>
-                        <SourceDot idx={currentSourceIdx} autoHide namePostfix=" – " /> {currentDevice.friendly_name}
-                    </>
-                ) : (
-                    t(($) => $.select_device)
-                )
-            }
+            defaultValue={value}
             aria-label={t(($) => $.select_device)}
             options={options}
             isSearchable
