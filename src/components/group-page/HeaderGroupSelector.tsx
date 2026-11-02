@@ -38,10 +38,6 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             for (const group of groups[sourceIdx]) {
-                if (sourceIdx === currentSourceIdx && group.id === currentGroup?.id) {
-                    continue;
-                }
-
                 elements.push({
                     value: group.friendly_name,
                     label: (
@@ -58,7 +54,7 @@ const HeaderGroupSelector = memo(({ currentSourceIdx, currentGroup, tab = "devic
         elements.sort((elA, elB) => elA.name.localeCompare(elB.name));
 
         return elements;
-    }, [groups, currentSourceIdx, currentGroup, tab]);
+    }, [groups, tab]);
 
     return (
         <Select<SelectOption>

@@ -38,7 +38,7 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
 
         for (let sourceIdx = 0; sourceIdx < API_URLS.length; sourceIdx++) {
             for (const device of devices[sourceIdx]) {
-                if (device.type === "Coordinator" || (sourceIdx === currentSourceIdx && device.ieee_address === currentDevice?.ieee_address)) {
+                if (device.type === "Coordinator") {
                     continue;
                 }
 
@@ -58,7 +58,7 @@ const HeaderDeviceSelector = memo(({ currentSourceIdx, currentDevice, tab = "inf
         elements.sort((elA, elB) => elA.name.localeCompare(elB.name));
 
         return elements;
-    }, [devices, currentSourceIdx, currentDevice, tab]);
+    }, [devices, tab]);
 
     return (
         <Select<SelectOption>
