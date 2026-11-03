@@ -303,9 +303,15 @@
         "manage_scenes_header": "Manage scenes",
         "recall": "Recall",
         "remove_all": "Remove all",
+        "remove_timeout": "Scene removal was not confirmed within {{seconds}} seconds",
         "scene_id": "Scene ID",
+        "store_timeout": "Scene store was not confirmed within {{seconds}} seconds",
         "scene_name": "Scene Name",
-        "store": "Store"
+        "update": "Update",
+        "select_scene": "Select Scene",
+        "update_scene": "Update Scene",
+        "update_confirmation_message": "This will delete and re-create the selected scene. Are you sure?",
+        "add_scene": "Add Scene"
     },
     "settings": {
         "about": "About",
