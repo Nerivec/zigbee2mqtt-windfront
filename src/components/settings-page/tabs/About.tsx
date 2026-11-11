@@ -101,6 +101,12 @@ export default function About({ sourceIdx }: AboutProps) {
             {bridgeInfo.zigbee_herdsman.version}
         </a>
     );
+    const coordinatorMeta = bridgeInfo.coordinator.meta;
+    const coordinatorType = coordinatorMeta.stack || bridgeInfo.coordinator.type;
+    const coordinatorRevision =
+        coordinatorMeta.stack === "ZeroStack"
+            ? `${coordinatorMeta.majorrel}.${coordinatorMeta.minorrel}.${coordinatorMeta.maintrel}`
+            : coordinatorMeta.revision || t(($) => $.unknown, { ns: "zigbee" });
 
     return (
         <div className="flex flex-col gap-3 items-center text-center w-full">
@@ -159,14 +165,14 @@ export default function About({ sourceIdx }: AboutProps) {
                 </div>
                 <div className="stat place-items-center">
                     <div className="stat-title">{t(($) => $.coordinator)}</div>
-                    <div className="stat-value text-lg">{bridgeInfo.coordinator.type}</div>
+                    <div className="stat-value text-lg">{coordinatorType}</div>
                     <div className="stat-desc">
                         <span className="badge badge-sm badge-primary" title={t(($) => $.coordinator_ieee_address)}>
                             {bridgeInfo.coordinator.ieee_address}
                         </span>
                     </div>
                     <div className="stat-desc">
-                        {t(($) => $.revision)}: {bridgeInfo.coordinator.meta.revision || t(($) => $.unknown, { ns: "zigbee" })}
+                        {t(($) => $.revision)}: {coordinatorRevision}
                     </div>
                 </div>
             </div>
