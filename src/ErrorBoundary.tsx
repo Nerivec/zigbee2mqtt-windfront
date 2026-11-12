@@ -56,14 +56,64 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         const { didCatch, error } = this.state;
 
         if (didCatch) {
-            if (typeof error?.message === "string" && error.message.includes("dynamically imported module")) {
-                // error has several variants:
-                // - error loading dynamically imported module
-                // - Failed to fetch dynamically imported module
-                // usually, a page refresh takes care of it (although can also be due to bad cache or HA background errors)
-                window.location.reload();
+            if (typeof error?.message === "string") {
+                if (error.message.includes("dynamically imported module")) {
+                    // error has several variants:
+                    // - error loading dynamically imported module
+                    // - Failed to fetch dynamically imported module
+                    // usually, a page refresh takes care of it (although can also be due to bad cache or HA background errors)
+                    window.location.reload();
 
-                return null;
+                    return null;
+                }
+
+                if (error.message.includes("WebGL")) {
+                    return (
+                        <div>
+                            <div className="hero bg-base-200 min-h-screen">
+                                <div className="hero-content text-center">
+                                    <div className="max-w-lg">
+                                        <h1 className="text-3xl font-bold">Unable to render WebGL content</h1>
+                                        <ul className="list bg-base-100 rounded-box shadow-md my-3">
+                                            <li className="list-row">
+                                                <div />
+                                                <div>
+                                                    <div>Check your browser's settings</div>
+                                                    <div className="text-xs font-semibold opacity-60">
+                                                        If hardware/graphics acceleration is turned off, turn it on then restart your browser.
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li className="list-row">
+                                                <div />
+                                                <div>
+                                                    <div>chrome://gpu</div>
+                                                    <div className="text-xs font-semibold opacity-60">Graphics status page on Chrome & derived</div>
+                                                </div>
+                                            </li>
+                                            <li className="list-row">
+                                                <div />
+                                                <div>
+                                                    <div>about:support#graphics</div>
+                                                    <div className="text-xs font-semibold opacity-60">Graphics status page on Firefox & derived</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <fieldset className="fieldset my-3">
+                                            <legend className="fieldset-legend">Error details</legend>
+                                            <textarea
+                                                className="textarea w-full"
+                                                readOnly
+                                                rows={10}
+                                                defaultValue={`${error.name}\n${error.message}\n\n${error.stack}`}
+                                            />
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                }
             }
 
             const githubUrlParams = {
