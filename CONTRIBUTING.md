@@ -67,13 +67,16 @@ You can edit the JSON files directly from Github, using the [EN](./src/i18n/loca
 For example:
 
 en.json
+
 ```json
 {
     "common": {
         "action": "Action",
         [...]
 ```
+
 es.json
+
 ```json
 {
     "common": {
