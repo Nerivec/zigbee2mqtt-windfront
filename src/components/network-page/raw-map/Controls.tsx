@@ -5,6 +5,7 @@ import {
     faDownload,
     faExpand,
     faIcons,
+    faLinkSlash,
     faMagnet,
     faMinusSquare,
     faPlusSquare,
@@ -165,6 +166,14 @@ const Controls = memo(
                         title={t(($) => $.icons)}
                     >
                         <FontAwesomeIcon icon={faIcons} />
+                    </Button>
+                    <Button<boolean>
+                        className={`btn btn-square btn-neutral btn-sm tooltip-bottom ${config.segregateUnlinked ? "" : "btn-outline"}`}
+                        item={!config.segregateUnlinked}
+                        onClick={(value) => setConfig((prev) => ({ ...prev, segregateUnlinked: value }))}
+                        title={t(($) => $.segregate_unlinked)}
+                    >
+                        <FontAwesomeIcon icon={faLinkSlash} />
                     </Button>
                     <select className="select select-sm w-36" defaultValue="" onChange={findNode}>
                         <option value="">{t(($) => $.find_node)}</option>

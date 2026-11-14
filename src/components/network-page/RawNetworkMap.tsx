@@ -19,10 +19,18 @@ import { NETWORK_MAP_CONFIG_KEY } from "../../localStoreConsts.js";
 import { useAppStore } from "../../store.js";
 import fontUrl from "./../../styles/NotoSans-Regular.ttf";
 import { getZ2MDeviceImage } from "../device/index.js";
-import { cssColorToRgba, EDGE_RELATIONSHIP_FILL_COLORS, type NetworkMapLink, NODE_TYPE_FILL_COLORS, ZigbeeRelationship } from "./index.js";
+import {
+    cssColorToRgba,
+    EDGE_RELATIONSHIP_FILL_COLORS,
+    getUnlinkedNodes,
+    type NetworkMapLink,
+    NODE_TYPE_FILL_COLORS,
+    ZigbeeRelationship,
+} from "./index.js";
 import ContextMenu from "./raw-map/ContextMenu.js";
 import Controls from "./raw-map/Controls.js";
 import Legend from "./raw-map/Legend.js";
+import UnlinkedNodes from "./raw-map/UnlinkedNodes.js";
 
 export type NetworkMapConfig = {
     layoutType: LayoutTypes;
@@ -30,6 +38,17 @@ export type NetworkMapConfig = {
     nodeStrength: number;
     linkDistance: number;
     showIcons: boolean;
+    /** Move the nodes without any link out of the graph, into a separate list */
+    segregateUnlinked: boolean;
+};
+
+const DEFAULT_CONFIG: NetworkMapConfig = {
+    layoutType: "forceDirected2d",
+    labelType: "all",
+    nodeStrength: -750,
+    linkDistance: 50,
+    showIcons: false,
+    segregateUnlinked: true,
 };
 
 type RawNetworkMapProps = {
@@ -40,15 +59,8 @@ type RawNetworkMapProps = {
 const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
     const { t } = useTranslation("network");
     const devices = useAppStore(useShallow((state) => state.devices[sourceIdx]));
-    const [config, setConfig] = useState<NetworkMapConfig>(
-        store2.get(NETWORK_MAP_CONFIG_KEY, {
-            layoutType: "forceDirected2d",
-            labelType: "all",
-            nodeStrength: -750,
-            linkDistance: 50,
-            showIcons: false,
-        } satisfies NetworkMapConfig),
-    );
+    // merge with defaults to account for configs stored before a given option existed
+    const [config, setConfig] = useState<NetworkMapConfig>(() => ({ ...DEFAULT_CONFIG, ...store2.get(NETWORK_MAP_CONFIG_KEY, {}) }));
     const [showParents, setShowParents] = useState(true);
     const [showChildren, setShowChildren] = useState(true);
     const [showSiblings, setShowSiblings] = useState(true);
@@ -108,12 +120,19 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         });
     }, []);
 
+    const unlinkedNodes = useMemo(() => getUnlinkedNodes(map), [map]);
+
     const [nodes, edges] = useMemo(() => {
         const computedNodes: GraphNode[] = [];
         const computedEdges: GraphEdge[] = [];
         const processedLinks: [NetworkMapLink, NetworkMapLink | undefined][] = [];
 
         for (const node of map.nodes) {
+            if (config.segregateUnlinked && unlinkedNodes.includes(node)) {
+                // displayed separately
+                continue;
+            }
+
             const device = devices.find((device) => device.ieee_address === node.ieeeAddr);
             // determine the parent friendly name for clustering from either the target (parent is source) or the source (parent is target)
             const parent = map.links.find(
@@ -225,7 +244,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
         }
 
         return [computedNodes, computedEdges];
-    }, [map, showParents, showChildren, showSiblings, t, devices, config.showIcons]);
+    }, [map, unlinkedNodes, showParents, showChildren, showSiblings, t, devices, config.showIcons, config.segregateUnlinked]);
 
     // reagraph resets dragged positions whenever this reference changes, keep it stable across renders
     const layoutOverrides = useMemo(
@@ -259,6 +278,7 @@ const RawNetworkMap = memo(({ sourceIdx, map }: RawNetworkMapProps) => {
                     showSiblings={showSiblings}
                     setShowSiblings={setShowSiblings}
                 />
+                {config.segregateUnlinked && unlinkedNodes.length > 0 && <UnlinkedNodes sourceIdx={sourceIdx} nodes={unlinkedNodes} />}
                 <GraphCanvas
                     ref={graphRef}
                     theme={theme}
