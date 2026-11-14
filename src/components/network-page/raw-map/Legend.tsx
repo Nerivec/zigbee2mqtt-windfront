@@ -46,6 +46,7 @@ const Legend = memo(() => {
                 <p>{t(($) => $.legend_node_select)}</p>
                 <p>{t(($) => $.legend_node_fold)}</p>
                 <p>{t(($) => $.legend_edge_toggle)}</p>
+                <p>{t(($) => $.legend_node_unlinked)}</p>
             </div>
         </details>
     );

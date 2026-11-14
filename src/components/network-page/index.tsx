@@ -26,6 +26,21 @@ export const EDGE_RELATIONSHIP_FILL_COLORS = {
 };
 
 /**
+ * Find the nodes that are not part of any link in the given map (neither as source nor as target).
+ * This is based on the raw links, so it is not affected by which relationships are currently displayed.
+ */
+export function getUnlinkedNodes(map: Zigbee2MQTTNetworkMap): NetworkMapNode[] {
+    const linked = new Set<string>();
+
+    for (const link of map.links) {
+        linked.add(link.source.ieeeAddr);
+        linked.add(link.target.ieeeAddr);
+    }
+
+    return map.nodes.filter((node) => !linked.has(node.ieeeAddr));
+}
+
+/**
  * Convert a CSS color using `OffscreenCanvas` to RGBA.
  * @param ctx Rendering context to convert color with.
  * @param color expect in CSS format (e.g. `oklch(25.33% 0.016 252.42);`)
