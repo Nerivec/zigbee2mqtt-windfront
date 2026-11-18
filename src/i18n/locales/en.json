@@ -426,6 +426,7 @@
         "frontend-ssl_cert": "SSL Certificate file path for exposing HTTPS. The sibling property 'ssl_key' must be set for HTTPS to be activated.",
         "frontend-ssl_key": "SSL key file path for exposing HTTPS. The sibling property 'ssl_cert' must be set for HTTPS to be activated.",
         "frontend-url": "URL on which the frontend can be reached, currently only used for the Home Assistant device configuration page",
+        "frontend-websocket_ping_interval": "Interval in seconds between WebSocket pings sent to connected frontend clients. Keeps the socket alive through reverse proxies that drop idle connections (for example Home Assistant Ingress, about 40 seconds). Set to 0 to disable.",
         "health": "Periodically check the health of Zigbee2MQTT",
         "health-interval": "Interval between checks in minutes",
         "health-reset_on_check": "If true, will reset stats every time the health check is executed (only applicable to stats that can be reset).",
