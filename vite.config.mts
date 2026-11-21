@@ -34,9 +34,6 @@ export default defineConfig(async ({ command, mode }) => {
                 enabled: true,
             },
             mockReset: true,
-            onConsoleLog() {
-                return false;
-            },
             coverage: {
                 enabled: false,
                 include: ["src/**/*.{ts,tsx}"],
