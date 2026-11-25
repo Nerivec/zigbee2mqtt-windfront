@@ -510,6 +510,7 @@ export const OUI = new Map([
     ["685e1c", "Texas Instruments"],
     ["685edf", "NXP Semiconductors Taiwan Ltd."],
     ["686725", "Espressif Inc."],
+    ["68709e", "Silicon Laboratories"],
     ["689e19", "Texas Instruments"],
     ["68b6b3", "Espressif Inc."],
     ["68b8bb", "Beijing Xiaomi Electronics Co.,Ltd"],
